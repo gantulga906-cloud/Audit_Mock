@@ -1,2 +1,2 @@
-import AuditWorkspace from '@/components/audit-workspace';
-export default function Page() { return <AuditWorkspace />; }
+import AuditWorkspaceV2 from '@/components/audit-workspace-v2';
+export default function Page() { return <AuditWorkspaceV2 />; }

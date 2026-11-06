@@ -1,0 +1,892 @@
+{
+  "research_date": "2026-11-06",
+  "scope": "Audit-product workflow and interface inspiration; primary design track",
+  "method": "Official public operational help, guides, release notes and explicitly labeled vendor lifecycle descriptions. No commercial tenant or live-product usability test.",
+  "product_count": 10,
+  "engagement_platform_count": 6,
+  "specialist_count": 4,
+  "pattern_count": 16,
+  "minimum_selection": {
+    "audit_patterns": 8,
+    "total_patterns_with_external_track": 12
+  },
+  "patterns": [
+    {
+      "id": "AUD-PAT-001",
+      "product": "Caseware",
+      "name": "Phase-to-document drill-through",
+      "sources": [
+        {
+          "url": "https://documentation.caseware.com/2025/Audit/27_00/en/Content/User_Client_File_Setup/c_Work_Flow_Panel_Work_Flow_Panel.htm",
+          "title": "Work Flow Panel",
+          "locator": "Workflow areas; boxes; Document Manager",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official operational help",
+          "observed_in_running_product": false,
+          "limits": "Audit2025/27 template reference, not all Cloud products"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "User opens an engagement phase",
+        "actions": "Select a phase step and open its associated documents; use the document tree when useful",
+        "result": "Work is reachable through process and document contexts",
+        "correction": "Return to the tree to tailor file contents"
+      },
+      "audit_fit": {
+        "processes": [
+          "P03",
+          "P16"
+        ],
+        "cases": [
+          "P03-UC03",
+          "P16-UC02"
+        ],
+        "roles": [
+          "R1",
+          "R2",
+          "R3"
+        ],
+        "screens": [
+          "S04",
+          "S01",
+          "S07"
+        ],
+        "adaptation": "Use readiness rows and stage tiles that open exact underlying work. Preserve a searchable form index alongside process navigation; form numbering does not impose order.",
+        "data_and_authority": "Applicable work units, explicit readiness predicates, permitted engagement scope and exact target IDs",
+        "edge_states": [
+          "No applicable work",
+          "Unknown readiness input",
+          "Missing upstream decision",
+          "Denied deep link"
+        ]
+      },
+      "decision": "Adapt; priority P0",
+      "frontend_effort": "Medium",
+      "verification": "Given a stage with two unresolved items, opening its count lists those same permitted items and each row opens its owning work.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-002",
+      "product": "Caseware",
+      "name": "Anchored review history",
+      "sources": [
+        {
+          "url": "https://www.caseware.com/docs/en/cloud/global-statutory-reporting/documentation-and-review/add-and-complete-review-notes-issues",
+          "title": "Add and complete review notes",
+          "locator": "Document issues; summary; resolve/clear",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official operational help",
+          "observed_in_running_product": false,
+          "limits": "Global Statutory Reporting example; exact role policy is product-specific"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Reviewer identifies additional work",
+        "actions": "Create an issue in context, inspect replies/status history, resolve or clear",
+        "result": "Context and retained issue history remain inspectable",
+        "correction": "Resolved issues remain available rather than being deleted"
+      },
+      "audit_fit": {
+        "processes": [
+          "P11",
+          "P15"
+        ],
+        "cases": [
+          "P11-UC01",
+          "P11-UC02",
+          "P15-UC01"
+        ],
+        "roles": [
+          "R1",
+          "R2",
+          "R3",
+          "R4"
+        ],
+        "screens": [
+          "S07",
+          "S19"
+        ],
+        "adaptation": "Anchor a note to a field/procedure/revision. Keep preparer response separate from authorized reviewer clearance. Show open, responded, cleared and reopened history.",
+        "data_and_authority": "Note target/version/anchor, actual preparer and assigned reviewer; per-work policy governs clearance",
+        "edge_states": [
+          "Anchor changed",
+          "Open note on old revision",
+          "Unsaved response",
+          "No independent reviewer"
+        ]
+      },
+      "decision": "Adapt; priority P0",
+      "frontend_effort": "Medium",
+      "verification": "Given an open note, saving a preparer response leaves it unresolved until its permitted reviewer clears it.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-003",
+      "product": "Inflo Working Papers",
+      "name": "Applicability-led programme tailoring",
+      "sources": [
+        {
+          "url": "https://www.inflo.com/wp-content/uploads/2025/08/Workflow-Overview-Planning_v2.pdf",
+          "title": "Workpaper Planning Activities",
+          "locator": "pp.3-4 configuration; later planning links",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official workflow guide",
+          "observed_in_running_product": false,
+          "limits": "US GAAS content pack; other packs vary"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Practitioner configures and plans engagement work",
+        "actions": "Choose relevant content/applicability and connect assessed risks to responses",
+        "result": "The programme reflects engagement circumstances",
+        "correction": "Reconsider affected content when circumstances change"
+      },
+      "audit_fit": {
+        "processes": [
+          "P04",
+          "P06",
+          "P07"
+        ],
+        "cases": [
+          "P04-UC03",
+          "P06-UC02",
+          "P07-UC01"
+        ],
+        "roles": [
+          "R1",
+          "R2",
+          "R3"
+        ],
+        "screens": [
+          "S06",
+          "S09",
+          "S11"
+        ],
+        "adaptation": "Show why a procedure applies and its risk/assertion link. Preserve unanswered applicability as unknown. Draft unrelated sections while a decision is pending.",
+        "data_and_authority": "Adopted methodology version, applicability decision/reason, risk/response/procedure IDs and change history",
+        "edge_states": [
+          "Not assessed",
+          "Approved N/A",
+          "Changed risk",
+          "Procedure removed with existing answers"
+        ]
+      },
+      "decision": "Adapt; priority P1",
+      "frontend_effort": "Medium",
+      "verification": "Given a revised risk, show the affected responses and retain prior procedures/answers until an explicit tailoring decision.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-004",
+      "product": "Inflo Working Papers",
+      "name": "Include review demand in the plan",
+      "sources": [
+        {
+          "url": "https://www.inflo.com/wp-content/uploads/2025/08/Workflow-Overview-Planning_v2.pdf",
+          "title": "Workpaper Planning Activities",
+          "locator": "p.4 Engagement Plan activities",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official workflow guide",
+          "observed_in_running_product": false,
+          "limits": "A methodology example, not a calendar/scheduling-engine specification"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Team plans an engagement",
+        "actions": "Assign responsibilities, dates, resources and review time",
+        "result": "Preparation and review work have planned owners/windows",
+        "correction": "Reconsider resource/date conflicts"
+      },
+      "audit_fit": {
+        "processes": [
+          "P03",
+          "P14"
+        ],
+        "cases": [
+          "P03-UC02",
+          "P03-UC03",
+          "P14-UC03"
+        ],
+        "roles": [
+          "R1",
+          "R2",
+          "R3",
+          "R4"
+        ],
+        "screens": [
+          "S05",
+          "S24"
+        ],
+        "adaptation": "Use shared assignment records in timeline/calendar/task views. Separate preparation duration from review bookings and significant decision milestones.",
+        "data_and_authority": "Named capacity, assignee, due date, estimates and separate planned/actual dates; delegated scheduling authority",
+        "edge_states": [
+          "Reviewer unavailable",
+          "Unscheduled work",
+          "Capacity conflict",
+          "Plan revised after actual work"
+        ]
+      },
+      "decision": "Adapt; priority P0",
+      "frontend_effort": "Medium",
+      "verification": "Changing a permitted planned task date updates its calendar/timeline without altering an actual performed-at timestamp.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-005",
+      "product": "CCH Axcess Engagement",
+      "name": "Status-rich workpaper index",
+      "sources": [
+        {
+          "url": "https://help-engagement.cchaxcess.com/Engagement/Content/Engagement-View/Engagement-View.htm",
+          "title": "Using the Engagement View",
+          "locator": "Index grid columns and notes pane",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official operational help",
+          "observed_in_running_product": false,
+          "limits": "Status/editing features vary by module"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Senior scans an engagement file",
+        "actions": "Filter/navigate indexed work and inspect notes/status/attribution",
+        "result": "Review demand is visible without opening every file",
+        "correction": "Open the associated notes or owning content"
+      },
+      "audit_fit": {
+        "processes": [
+          "P15",
+          "P16"
+        ],
+        "cases": [
+          "P15-UC03",
+          "P16-UC02"
+        ],
+        "roles": [
+          "R2",
+          "R3",
+          "R4"
+        ],
+        "screens": [
+          "S07",
+          "S19"
+        ],
+        "adaptation": "Provide a compact index with reference, title, current state, preparer, reviewer, due date, open notes and changed-after-review marker. Use text and icons, not color alone.",
+        "data_and_authority": "Current permitted population, exact status definitions, review assignments and revisions",
+        "edge_states": [
+          "No matching rows",
+          "Unknown due date",
+          "Changed content",
+          "Restricted record"
+        ]
+      },
+      "decision": "Adapt; priority P0",
+      "frontend_effort": "Small",
+      "verification": "A reviewer can filter submitted work, inspect an exact record and return to the same queue context.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-006",
+      "product": "CCH Axcess Engagement",
+      "name": "Visible change after review",
+      "sources": [
+        {
+          "url": "https://help-engagement.cchaxcess.com/Engagement/Content/Workpaper-Monitor/Workpaper-Monitor-Overview.htm",
+          "title": "Workpaper Monitor Overview",
+          "locator": "Editing activity and changes after sign-off",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official operational help",
+          "observed_in_running_product": false,
+          "limits": "Native applications/Monitor required; behavior is not our snapshot policy"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Reviewed workpaper is edited",
+        "actions": "Save changed content; index indicates post-review changes",
+        "result": "Reviewer can identify content changed since sign-off",
+        "correction": "Reinspect affected work"
+      },
+      "audit_fit": {
+        "processes": [
+          "P11",
+          "P15"
+        ],
+        "cases": [
+          "P11-UC07",
+          "P15-UC02"
+        ],
+        "roles": [
+          "R1",
+          "R2",
+          "R3",
+          "R4"
+        ],
+        "screens": [
+          "S07",
+          "S19"
+        ],
+        "adaptation": "Retain immutable submitted/reviewed snapshots and mark the new working revision as requiring impact assessment. Include evidence-link changes, not only textarea edits.",
+        "data_and_authority": "Snapshot ID, current/submitted/reviewed versions and downstream reliance links",
+        "edge_states": [
+          "Evidence replaced",
+          "Content changed during review",
+          "Old review retained",
+          "Unrelated work unaffected"
+        ]
+      },
+      "decision": "Adapt; priority P0",
+      "frontend_effort": "Medium",
+      "verification": "After changing reviewed work, the prior signed snapshot remains visible and the new revision does not inherit its review.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-007",
+      "product": "AuditFile",
+      "name": "Personal next-action dashboard",
+      "sources": [
+        {
+          "url": "https://auditfile.com/support",
+          "title": "Getting Started with AuditFile",
+          "locator": "Dashboard and navigation; engagement creation",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official illustrated quick start",
+          "observed_in_running_product": false,
+          "limits": "Public guide; current tenant behavior not executed"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Practitioner signs in or receives a review comment",
+        "actions": "Open relevant engagement/comment/workpaper from dashboard",
+        "result": "The practitioner reaches work needing attention",
+        "correction": "Return to the relevant action after feedback"
+      },
+      "audit_fit": {
+        "processes": [
+          "P16"
+        ],
+        "cases": [
+          "P16-UC01",
+          "P16-UC02"
+        ],
+        "roles": [
+          "R1",
+          "R2",
+          "R3",
+          "R4"
+        ],
+        "screens": [
+          "S01"
+        ],
+        "adaptation": "Build distinct role landing queues with next owner/action, engagement context, due date and blocker. Submitted review, returned preparation and partner decisions are different queues.",
+        "data_and_authority": "Work assignment plus capacity and access scope; exact note/work IDs; defined badge counts",
+        "edge_states": [
+          "No assigned work",
+          "Returned item",
+          "Unknown owner",
+          "Revoked scope"
+        ]
+      },
+      "decision": "Adapt; priority P0",
+      "frontend_effort": "Small",
+      "verification": "A returned workpaper appears for the preparer with the reason, while its reviewer sees it waiting on the preparer.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-008",
+      "product": "AuditFile",
+      "name": "Separate workpaper and procedure progress",
+      "sources": [
+        {
+          "url": "https://auditfile.com/new-features",
+          "title": "New Features",
+          "locator": "Workpaper Status; roll-forward options",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official release notes",
+          "observed_in_running_product": false,
+          "limits": "Optional status does not affect procedure/engagement progress"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Several workpapers support a procedure",
+        "actions": "Track individual workpaper status separately from procedure review",
+        "result": "Supporting-work status is distinguishable from overall progress",
+        "correction": "Keep or reconsider prior-year content selectively"
+      },
+      "audit_fit": {
+        "processes": [
+          "P09",
+          "P16"
+        ],
+        "cases": [
+          "P09-UC11",
+          "P16-UC02"
+        ],
+        "roles": [
+          "R1",
+          "R2",
+          "R3"
+        ],
+        "screens": [
+          "S15",
+          "S01",
+          "S04"
+        ],
+        "adaptation": "Separate preparation submitted, required review, evidence gaps and milestone readiness. Expose each numerator/denominator and drill-through population.",
+        "data_and_authority": "Applicable units, current revision rules, authorized N/A and independent review requirements",
+        "edge_states": [
+          "Reopened work",
+          "Scope added",
+          "Valid N/A",
+          "Unknown support"
+        ]
+      },
+      "decision": "Adapt; priority P0",
+      "frontend_effort": "Medium",
+      "verification": "One completed attachment cannot mark an incomplete procedure reviewed or an engagement ready for issue.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-009",
+      "product": "BrightWorkpapers",
+      "name": "Blank judgments and stable table orientation",
+      "sources": [
+        {
+          "url": "https://www.brightworkpapers.com/product/product-release-timeline/",
+          "title": "Product Release Timeline",
+          "locator": "25.2.0 conclusion UI;25.3.0 sign-offs;25.9.0 outstanding work",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official release notes",
+          "observed_in_running_product": false,
+          "limits": "Features and template behavior may vary by region/edition"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Preparer works through a long programme",
+        "actions": "Use a blank conclusion until selected, sticky headers and outstanding-work filtering",
+        "result": "Unanswered professional work remains visible",
+        "correction": "Return to incomplete procedures"
+      },
+      "audit_fit": {
+        "processes": [
+          "P04",
+          "P09"
+        ],
+        "cases": [
+          "P04-UC01",
+          "P09-UC11"
+        ],
+        "roles": [
+          "R1",
+          "R2"
+        ],
+        "screens": [
+          "S07",
+          "S11",
+          "S15"
+        ],
+        "adaptation": "Render typed source choices with no fabricated default conclusion. Keep procedure/assertion headers visible and offer an unanswered/returned filter.",
+        "data_and_authority": "Source schema, explicit null/false/zero/N/A distinctions and required-to-progress rules",
+        "edge_states": [
+          "No conclusion",
+          "Long Mongolian label",
+          "Repeated row",
+          "Required explanation absent"
+        ]
+      },
+      "decision": "Adopt blank initial judgment; adapt table pattern; priority P0",
+      "frontend_effort": "Small",
+      "verification": "Opening a new form leaves its conclusion unanswered; filtering outstanding work retains all applicable unanswered procedures.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-010",
+      "product": "BrightWorkpapers",
+      "name": "Mapping defects before export",
+      "sources": [
+        {
+          "url": "https://www.brightworkpapers.com/product/product-release-timeline/",
+          "title": "Product Release Timeline",
+          "locator": "v26.5.1 BrightAP mapping screen",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official release notes",
+          "observed_in_running_product": false,
+          "limits": "A specific integration capability, not a generic import guarantee"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Practitioner exports mapped balances",
+        "actions": "Review suggested mappings and unresolved accounts, then export",
+        "result": "Unmapped accounts are exposed before use",
+        "correction": "Correct mapping and reuse approved mappings"
+      },
+      "audit_fit": {
+        "processes": [
+          "P05"
+        ],
+        "cases": [
+          "P05-UC01",
+          "P05-UC02"
+        ],
+        "roles": [
+          "R1",
+          "R2"
+        ],
+        "screens": [
+          "S08"
+        ],
+        "adaptation": "Use a data-hub preview showing accepted/quarantined/excluded rows and unmapped/ambiguous accounts. Retain original package, mapping version and reconciliation bridge.",
+        "data_and_authority": "Dataset scope/version, row lineage and reviewer-approved mapping; no live provider connection assumed",
+        "edge_states": [
+          "Duplicate key",
+          "Wrong period",
+          "Unmapped account",
+          "Partial import"
+        ]
+      },
+      "decision": "Adapt; priority P1",
+      "frontend_effort": "Medium",
+      "verification": "An unmapped account remains visible and cannot disappear into a zero residual or a successful financial-statement bridge.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-011",
+      "product": "Fieldguide",
+      "name": "Request table with review inspector",
+      "sources": [
+        {
+          "url": "https://help.fieldguide.io/en/articles/7207259-managing-requests",
+          "title": "Managing requests",
+          "locator": "Individual request; Requests menu; statuses",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official operational help",
+          "observed_in_running_product": false,
+          "limits": "Visibility is independent of status; client notifications not implied locally"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Information request needs response or review",
+        "actions": "Open table row in Overview/Comments/Activity; send for review; complete or request changes",
+        "result": "Request handoff and remaining work are visible",
+        "correction": "Changes requested routes work back to its responsible party"
+      },
+      "audit_fit": {
+        "processes": [
+          "P08"
+        ],
+        "cases": [
+          "P08-UC01",
+          "P08-UC02"
+        ],
+        "roles": [
+          "R1",
+          "R2"
+        ],
+        "screens": [
+          "S13"
+        ],
+        "adaptation": "Use an item-level request register and inspector. Distinguish requested, partial receipt, received awaiting evaluation, accepted and rejected. Link exact received evidence versions.",
+        "data_and_authority": "Request owner/source contact, entity/period, due date, receipt/version and evaluator authority",
+        "edge_states": [
+          "Partial receipt",
+          "Rejected file",
+          "Changed source",
+          "No external portal"
+        ]
+      },
+      "decision": "Adapt; priority P0",
+      "frontend_effort": "Medium",
+      "verification": "Receiving one of three required items leaves the request partial; evaluator rejection creates a specific next action rather than marking complete.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-012",
+      "product": "Fieldguide",
+      "name": "Defined progress and waiting-time drill-through",
+      "sources": [
+        {
+          "url": "https://help.fieldguide.io/en/articles/9047554-fieldguide-insights",
+          "title": "Fieldguide Insights",
+          "locator": "Milestone Status; Engagement Progress; Request Cycle Time; permissions",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official operational help",
+          "observed_in_running_product": false,
+          "limits": "Premium/Enterprise and explicit Insights permissions; not a quality score"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Leader inspects progress or delay",
+        "actions": "Filter engagement/milestone/request metrics and drill into details",
+        "result": "Open work and waiting periods are identifiable",
+        "correction": "Act on the actual underlying request or work"
+      },
+      "audit_fit": {
+        "processes": [
+          "P03",
+          "P16"
+        ],
+        "cases": [
+          "P03-UC03",
+          "P16-UC02"
+        ],
+        "roles": [
+          "R2",
+          "R3",
+          "R4"
+        ],
+        "screens": [
+          "S01",
+          "S04",
+          "S05"
+        ],
+        "adaptation": "Add separate review waiting, evidence waiting, overdue and milestone readiness views with as-of date and exact population. Display unknown/stale data explicitly.",
+        "data_and_authority": "Status entry time, current milestone definition, visibility scope and metric freshness",
+        "edge_states": [
+          "Stale source",
+          "No applicable denominator",
+          "Unknown due date",
+          "Restricted totals"
+        ]
+      },
+      "decision": "Adapt; priority P0",
+      "frontend_effort": "Medium",
+      "verification": "Opening an overdue count yields the same permitted rows under the displayed as-of/date definition.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-013",
+      "product": "DataSnipper",
+      "name": "Result-to-evidence anchor",
+      "sources": [
+        {
+          "url": "https://knowledge.datasnipper.com/en/articles/676042-how-to-automate-your-test-with-document-matching",
+          "title": "Document Matching",
+          "locator": "Input mapping; match results; review",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official operational help",
+          "observed_in_running_product": false,
+          "limits": "v5+; advanced features vary; no OCR implementation inferred"
+        },
+        {
+          "url": "https://knowledge.datasnipper.com/en/articles/676049-faqs-for-document-matching",
+          "title": "Document Matching FAQs",
+          "locator": "Review results; rerun overwrite",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official operational help",
+          "observed_in_running_product": false,
+          "limits": "Manual edits may be overwritten by the vendor rerun behavior"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Auditor checks a matching result",
+        "actions": "Open the result's source reference and evaluate the supporting document",
+        "result": "A machine match is inspectable at source",
+        "correction": "Adjust supported parameters or record an exception"
+      },
+      "audit_fit": {
+        "processes": [
+          "P08",
+          "P09"
+        ],
+        "cases": [
+          "P08-UC02",
+          "P09-UC02"
+        ],
+        "roles": [
+          "R1",
+          "R2"
+        ],
+        "screens": [
+          "S07",
+          "S13",
+          "S16"
+        ],
+        "adaptation": "Display result/evidence side by side with page/cell anchor, source version and human disposition. Preserve previous runs and manual conclusions when rerunning.",
+        "data_and_authority": "EvidenceUse stable ID, anchor, actual source availability, run ID and reviewer",
+        "edge_states": [
+          "No match",
+          "Ambiguous match",
+          "Unavailable file",
+          "Rerun after source change"
+        ]
+      },
+      "decision": "Adapt anchor mechanism; defer OCR; priority P1",
+      "frontend_effort": "Medium",
+      "verification": "Selecting an exception opens the exact supporting source version; a rerun retains the old result and does not erase a manual investigation.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-014",
+      "product": "MindBridge",
+      "name": "Versioned analysis with explainable exceptions",
+      "sources": [
+        {
+          "url": "https://support.mindbridge.ai/hc/en-us/articles/360058012013-Run-an-analysis",
+          "title": "Run an analysis",
+          "locator": "Required files; rerun; Run history",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official operational help",
+          "observed_in_running_product": false,
+          "limits": "Run history and risk-range application have different semantics"
+        },
+        {
+          "url": "https://support.mindbridge.ai/hc/en-us/articles/1500001228061-Transaction-and-entry-details",
+          "title": "Transaction and entry details",
+          "locator": "Data table to detail; contributing control points",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official operational help",
+          "observed_in_running_product": false,
+          "limits": "Specialist signals are not a professional conclusion"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Required data is ready or a prior run is stale",
+        "actions": "Run analysis, inspect results and contributing signals, rerun after relevant input/settings changes",
+        "result": "Results are linked to an execution and explainable inputs",
+        "correction": "Retain prior runs and reassess changed-source use"
+      },
+      "audit_fit": {
+        "processes": [
+          "P05",
+          "P09",
+          "P11"
+        ],
+        "cases": [
+          "P05-UC01",
+          "P09-UC04",
+          "P11-UC07"
+        ],
+        "roles": [
+          "R1",
+          "R2"
+        ],
+        "screens": [
+          "S08",
+          "S16",
+          "S19"
+        ],
+        "adaptation": "Create a common automation run panel with input/method versions, parameters, readiness, running/failed/complete states, exception reasons and stale markers. No risk-scoring model is claimed.",
+        "data_and_authority": "Immutable input/run IDs, supported deterministic method, configuration version and human dispositions",
+        "edge_states": [
+          "Invalid input",
+          "Partial run",
+          "Zero exceptions",
+          "Changed input",
+          "Unsupported method"
+        ]
+      },
+      "decision": "Adapt execution/explanation pattern; priority P1",
+      "frontend_effort": "Medium",
+      "verification": "A changed source marks prior results stale and requires a new run; a failed run never shows a clean zero-exception result.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-015",
+      "product": "Circit Confirm",
+      "name": "Confirmation lifecycle register",
+      "sources": [
+        {
+          "url": "https://www.circit.io/platform/confirm",
+          "title": "Confirm",
+          "locator": "Confirmations Lifecycle; Tracking & Collaboration; Evidence Finalisation",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official product lifecycle with captioned UI references",
+          "observed_in_running_product": false,
+          "limits": "Vendor-described workflow; provider connectivity and verification not tested"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Auditor prepares or follows a confirmation case",
+        "actions": "Create request, track sub-status, review response, flag exceptions and export case material",
+        "result": "Request, response and evaluated outcome remain distinct",
+        "correction": "Reject insufficient responses or resolve exceptions"
+      },
+      "audit_fit": {
+        "processes": [
+          "P08"
+        ],
+        "cases": [
+          "P08-UC03",
+          "P08-UC04"
+        ],
+        "roles": [
+          "R1",
+          "R2"
+        ],
+        "screens": [
+          "S14"
+        ],
+        "adaptation": "Provide a confirmation case with recipient/source, authority, actual dispatch, response, discrepancy, alternative work and conclusion. Maintain an explicit manual/simulated channel.",
+        "data_and_authority": "Case ID, authorization evidence, actual event provenance and assigned evaluator",
+        "edge_states": [
+          "Not authorized",
+          "No response",
+          "Discrepant response",
+          "Partial response",
+          "Failed external dispatch"
+        ]
+      },
+      "decision": "Adapt case register; defer live network; priority P1",
+      "frontend_effort": "Medium",
+      "verification": "A received response is not automatically accepted; unresolved discrepancies remain visible with a next owner.",
+      "status": "Research recommendation; implementation must be checked separately"
+    },
+    {
+      "id": "AUD-PAT-016",
+      "product": "Thomson Reuters Confirmation",
+      "name": "Authorization before initiation",
+      "sources": [
+        {
+          "url": "https://eu-en.confirmation.com/how-it-works/",
+          "title": "How it works",
+          "locator": "How do I send confirmations? five-step sequence",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official regional workflow",
+          "observed_in_running_product": false,
+          "limits": "Older regional page; current UI, terms and availability require separate verification"
+        },
+        {
+          "url": "https://www.confirmation.com/",
+          "title": "Confirmation global overview",
+          "locator": "Every person validated; attributable activity",
+          "accessed_on": "2026-11-06",
+          "evidence_type": "Official vendor overview",
+          "observed_in_running_product": false,
+          "limits": "Identity/security claims not independently verified"
+        }
+      ],
+      "documented_interaction": {
+        "trigger": "Auditor initiates a confirmation",
+        "actions": "Identify client/responder, obtain client authorization, initiate and retain the response",
+        "result": "Authorization and actual request/response events are separated",
+        "correction": "Keep unauthorized or unanswered work pending"
+      },
+      "audit_fit": {
+        "processes": [
+          "P08"
+        ],
+        "cases": [
+          "P08-UC03",
+          "P08-UC04"
+        ],
+        "roles": [
+          "R1",
+          "R2"
+        ],
+        "screens": [
+          "S14"
+        ],
+        "adaptation": "Expose authorization as a named prerequisite with evidence and owner. A manual or simulated dispatch action must say which event was recorded and must not claim provider delivery.",
+        "data_and_authority": "Actual authorizing party, evidence reference, recipient and dated dispatch/receipt records",
+        "edge_states": [
+          "Authorization missing",
+          "Wrong recipient",
+          "Resubmission",
+          "No provider integration"
+        ]
+      },
+      "decision": "Adapt prerequisite/event distinction; priority P1",
+      "frontend_effort": "Small",
+      "verification": "Without actual authorization evidence, initiation remains pending while the auditor can continue drafting the request.",
+      "status": "Research recommendation; implementation must be checked separately"
+    }
+  ]
+}

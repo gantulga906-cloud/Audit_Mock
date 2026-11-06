@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "issues": [],
+  "checks": [
+    "Unique IDs in all current populations",
+    "All current case/criterion/screen references resolve",
+    "Every automation has its bounded method/input/output/human/limits contract",
+    "All70forms have traceable fields; select/table/procedure structures are nonempty",
+    "Fixed document clauses remain non-editable",
+    "Curated dependency form endpoints and evidence are present",
+    "Coverage ledger has1269 distinct kind/ID rows",
+    "Source-specific QA:1.1.1 decision fields remain individual;1.1.2 questionnaire remains individual;1.3 read-only bands excluded; strategy children retain separate area anchors; unused communication rows excluded; expert tables remain distinct; sampling selected-unit table retains exact rows; allprogramme result columns resolve"
+  ],
+  "fieldTypes": {
+    "textarea": 472,
+    "select": 396,
+    "text": 67,
+    "table": 41,
+    "procedure": 258,
+    "date": 2
+  },
+  "curatedDependencyConfidence": {
+    "confirmed field/source reference": 7,
+    "confirmed workflow; proposed/conditional form association": 13
+  },
+  "baselineCaseStatus": {
+    "absent from baseline workflow": 58,
+    "partial local simulation": 17
+  },
+  "coverageKinds": {
+    "case": 75,
+    "criterion": 315,
+    "feature": 136,
+    "automation": 58,
+    "automation extension": 58,
+    "area variant": 22,
+    "e2e step": 476,
+    "companion form": 70,
+    "screen group": 25,
+    "open decision": 29,
+    "bpmn": 5
+  }
+}

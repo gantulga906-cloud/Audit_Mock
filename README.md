@@ -1,56 +1,57 @@
-# Veritech Audit — first interactive prototype
+# Veritech Audit workspace
 
-A Mongolian-language audit workspace built with Next.js 16, React, TypeScript and Tailwind CSS 4. The application runs entirely in the browser with fictional engagement data and local persistence.
+A Mongolian-language, browser-local frontend prototype for connected audit work. Next.js, React, TypeScript, Tailwind and Lucide. Three fictional engagements and four people demonstrate different preparation, review, partner and quality responsibilities.
 
 ## Run
 
-Requires Node.js 20.9+ and npm or pnpm.
+Node.js20.9+ is required. The lockfile uses pnpm. npm is also supported.
 
 ```sh
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
-Open http://localhost:3000. With pnpm, use `pnpm install` and `pnpm dev` instead. The dependency lockfile is `pnpm-lock.yaml`.
+Open http://localhost:3000.
 
 ```sh
 npm run typecheck
 npm test
 npm run build
+npm start
 ```
 
-The build produces a static `out/` directory. Any static web host can serve it. No database, credentials, external APIs, or server deployment are needed for this version.
+The build creates a static `out/` export. `npm start` serves it locally. No database, production identity or external service is required for the prototype.
 
-## Try these journeys
+## Explore
 
-1. **Preparation and review:** As Б. Номин, open **3.1.2**, enter a procedure result, link evidence and submit. Switch to Т. Тэмүүлэн, write a note and return it. Switch back to respond and resubmit. The reviewer separately clears the note and reviews the submitted version.
-2. **Non-sequential forms:** Open **1.1.1**. Draft work is possible while the acceptance decision is missing. Follow its link to **1.4.1**, switch to Д. Бат-Эрдэнэ and record the acceptance decision. Return to **1.1.1** to see the linked result and updated readiness.
-3. **Materiality:** Open **1.3** and change the fictional benchmark and selected percentage. Missing/invalid inputs remain distinct from a valid zero. The selected percentage is a demonstration parameter, not a professional default.
-4. **Changed reviewed work:** After a review, edit the content as its preparer. The new revision requires review; prior submitted answer snapshots are visible under **Хувилбарын түүх**.
-5. **Controlled template changes:** Т. Тэмүүлэн can draft a change to the **1.1.1** template. Д. Бат-Эрдэнэ has a separate demonstration publisher assignment. Publication does not change the engagement automatically; the senior explicitly adopts it while existing answers remain.
-6. **Quality scope:** С. Саруул has a separate quality-confirmation action on **4.6**. It does not issue a report or grant administrator powers.
+- **Senior delivery:** start as Т. Тэмүүлэн. Inspect the review queue, detailed Gantt, stage/status matrix, dependency references, assignments and workload. Open a workpaper in its inspector without leaving the list. Change its due date and see the same deadline in the calendar.
+- **Calendars/tasks:** all four personas have personal planning and task destinations, with different menus and engagement scopes. Month/agenda views combine authoritative work deadlines, manual tasks and planned event windows. A task checkbox cannot approve audit work.
+- **Prepare/review:** switch to Б. Номин, open3.1.2, change a result/conclusion, save and submit. Switch to Т. Тэмүүлэн, write a note and return. The preparer responds and resubmits; the reviewer separately clears the note and reviews the exact revision. A permitted owning workspace survives a role switch.
+- **Native forms:** all70 source contracts open, with typed choices, fixed letter/report clauses, programme results/assertions/hours, repeated rows, strategy anchors and source coordinates. These are derived product contracts, not exact Excel parity.
+- **Non-sequential work:**1.1.1 uses acceptance/independence outcomes from their owning decisions. Drafting is possible while a decision is pending. Sampling links to materiality; form numbers do not define execution order.
+- **Requests/evidence:** partial receipt is separate from auditor acceptance. Register a small actual file locally or inspect the explicitly fictional specimen. Replacement creates a separate version record; old evidence links remain.
+- **Data/automation:** import the example CSV, inspect accepted/quarantined/excluded rows and run reconciliation. Seven bounded demo methods use the actual browser state: AUTO-003,028,046,047,048,056,058. The other51 source cards are visibly unavailable as engines. Failed attempts, parameters and stale results stay in history.
+- **Sampling:** propose size/seed, review the exact population/design and perform a reproducible selection. A replaced dataset invalidates design review; earlier selections remain.
+- **Reporting/archive:** agreed/unposted adjustments remain outstanding. Exact report/statement authorization, issue, recipient attempts, file lock and custody are distinct. The same issue is idempotent; release versions are retained. A hold prevents disposal, not legitimate custody.
+- **Controlled configuration:** the senior has a one-form author assignment; the partner has a separate publisher assignment. Publication changes no engagement until explicit adoption. Existing answers remain.
 
-## Included
+## Research and traceability
 
-- Role-specific queues and action availability for four named fictional participants.
-- Five audit stages and a searchable catalogue of 70 form definitions.
-- Original Mongolian question/procedure text extracted from the five repaired stage workbooks.
-- Questionnaire, programme, document-text and calculation editors.
-- A sample acceptance dependency, evidence register, review notes, replies, revision history, answer snapshots and JSON export.
-- One fictional engagement, local browser persistence, responsive layouts and resettable demo state.
+The supplied61-page brief informed this iteration. Audit products are the primary design benchmark; cross-industry patterns supplement them.
+
+- [Audit products](docs/research/audit-products.md): ten product families, journeys, interface references and16 audit-derived pattern cards.
+- [External software](docs/research/external-products.md): eight products and20 further pattern cards.
+- [Design specification](docs/research/design-spec.md): nine flows,16 processes, role menus, metrics, dependencies, configuration costs, wireframes, priorities and scenarios.
+- [Source review](docs/research/source-review.md): originals, editions, worksheet/field evidence and review limits.
+- [Implementation/verification](docs/research/implementation.md): actual depth and remaining work.
+- [Current coverage](docs/research/current-coverage.json):1,269 separate current source dispositions. The baseline ledger remains frozen to581b70c.
+
+The populations reconcile136 feature/common-scope items,75 cases,315 criteria,58 automation minimums plus58 extensions,22 area variants,476 E2E steps,70 forms,25 screen groups,29 decisions and five BPMNs. Mapping a requirement is different from completing it. Conditional services, excluded inferences and unresolved decisions retain their scope.
 
 ## Boundaries
 
-This is a product prototype, not an operational audit system. Roles are simulated client-side. There is no production authentication, server-enforced access, secure file storage, simultaneous multi-user support or audit-compliance certification.
+This is a local prototype with fictional data and simulated identities/scopes. Client checks demonstrate rules; they are not production access enforcement, professional signatures or compliance certification. The metric reference day is6November2026. Calendar dates are date-only; recurrence, timed timezone behavior and Google/Outlook synchronization remain future work.
 
-The form catalogue is a **first rendering of extracted source text**. Native Excel layouts, assertions grids, every typed option set and all domain-specific calculations have not been reproduced. Long fixed clauses and headings may still need classification during design refinement. All forms can be opened; this does not mean every source acceptance criterion is implemented.
+Original ZIPs/workbooks were read unchanged and are not redistributed. Derived form/requirement content is published under the owner's authorization. Public vendor documentation supports the research; commercial tenant usability tests, unobserved screenshots and efficiency percentages are not invented.
 
-Only selected dependencies are demonstrated. Other related-work links are navigation examples and are not a verified complete dependency graph. Review routes are demonstrative, not a finalized per-work authority matrix. A draft can be submitted with incomplete procedures for review; submission does not certify performance or completion.
-
-The evidence viewer clearly identifies generated specimen documents. File registration keeps metadata and short text previews locally, not the original binary files. It does not upload evidence to a service.
-
-Research and design decisions: [docs/design-research.md](docs/design-research.md).
-
-## Source handling
-
-Source ZIPs and workbooks were read without modification and are not included here. `src/data/forms.json` contains derived product form definitions and source worksheet/cell locators. The wider wishlists, process specifications, roles and ERD informed the mockup; the code does not claim the entire source corpus has been implemented.
+Actual local files are capped at500KB per file; browser storage limits apply. This prototype is not a secure custody/retention or backup service. Settings exports and resets the v2 demo. The original v1 source and [first-version notes](docs/first-prototype.md) remain for reference; the old browser storage key is not overwritten.

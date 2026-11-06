@@ -1,0 +1,29 @@
+{
+  "rows": 1269,
+  "unique": 1269,
+  "statuses": {
+    "source reference / planned": 114,
+    "connected local workflow / partial source coverage": 900,
+    "conditional mandate / source reference only": 34,
+    "excluded source inference retained": 1,
+    "source method visible / engine not implemented": 51,
+    "bounded interactive demo / partial minimum": 7,
+    "future extension retained / not implemented": 58,
+    "derived typed editor / fidelity partial": 70,
+    "open decision retained": 29,
+    "structural graph review / semantic limits retained": 5
+  },
+  "kinds": {
+    "case": 75,
+    "criterion": 315,
+    "feature": 136,
+    "automation": 58,
+    "automation extension": 58,
+    "area variant": 22,
+    "e2e step": 476,
+    "companion form": 70,
+    "screen group": 25,
+    "open decision": 29,
+    "bpmn": 5
+  }
+}
