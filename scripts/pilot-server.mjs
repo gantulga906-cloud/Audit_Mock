@@ -3,6 +3,7 @@ import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import { accounts, emptyWorkspace, PilotError, pilotAction, pilotView } from './pilot-workflow.mjs';
+import { createArchiveStore } from './pilot-archive.mjs';
 
 const prefix = '/api/pilot';
 const digest = value => createHash('sha256').update(value).digest('hex');
@@ -43,8 +44,10 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     CREATE TABLE IF NOT EXISTS workspace (id INTEGER PRIMARY KEY CHECK(id=1), revision INTEGER NOT NULL, body TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS evidence (id TEXT PRIMARY KEY, name TEXT NOT NULL, sha256 TEXT NOT NULL, bytes BLOB NOT NULL);
     CREATE TABLE IF NOT EXISTS authorizations (id INTEGER PRIMARY KEY, snapshot TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS pilot_templates (digest TEXT PRIMARY KEY, body TEXT NOT NULL);
   `);
   db.prepare('INSERT OR IGNORE INTO workspace VALUES (1, 0, ?)').run(JSON.stringify(emptyWorkspace()));
+  const archive = createArchiveStore(db);
   const configured = () => db.prepare('SELECT COUNT(*) AS total FROM accounts').get().total !== 0;
   const transaction = fn => {
     db.exec('BEGIN IMMEDIATE');
@@ -61,6 +64,15 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     get: id => db.prepare('SELECT name, sha256 FROM evidence WHERE id = ?').get(id),
     add: (id, name, bytes) => db.prepare('INSERT INTO evidence VALUES (?, ?, ?, ?)').run(id, name, digest(bytes), bytes),
     authorize: (authorization, evidence) => db.prepare('INSERT INTO authorizations (snapshot) VALUES (?)').run(JSON.stringify({ authorization, evidence })),
+    authorization: () => {
+      const saved = db.prepare('SELECT snapshot FROM authorizations ORDER BY id DESC LIMIT 1').get();
+      return saved && JSON.parse(saved.snapshot);
+    },
+    storeTemplate: (hash, contract) => db.prepare('INSERT OR IGNORE INTO pilot_templates VALUES (?, ?)').run(hash, JSON.stringify(contract)),
+    template: hash => JSON.parse(db.prepare('SELECT body FROM pilot_templates WHERE digest = ?').get(hash)?.body ?? 'null'),
+    checkArchiveRecord: archive.checkRecord,
+    approveArchiveRecord: archive.approveRecord,
+    archive,
   };
   const load = role => {
     const { body, revision } = db.prepare('SELECT body, revision FROM workspace WHERE id = 1').get();
@@ -158,7 +170,13 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           return pilotView(model, role, revision + 1, files);
         });
         json(res, 200, result);
+      } else if (req.method === 'POST' && /^\/archive-export\/[a-f0-9-]{36}$/.test(route)) {
+        const { model } = load(role);
+        const bundle = transaction(() => archive.exportPackage(model, route.split('/').at(-1), role));
+        json(res, 200, bundle);
       } else if (req.method === 'GET' && /^\/evidence\/[a-f0-9-]{36}$/.test(route)) {
+        const { model } = load(role);
+        if (archive.isSealed(model)) throw new PilotError(403, 'Түгжсэн файлыг зөвшөөрсөн архивын багцаас авна уу.');
         const file = db.prepare('SELECT name, bytes FROM evidence WHERE id = ?').get(route.split('/').at(-1));
         if (!file) throw new PilotError(404, 'Эх файл олдсонгүй.');
         res.writeHead(200, { 'Content-Type': 'application/octet-stream',

@@ -2,7 +2,7 @@
 
 A Mongolian-language, browser-local frontend prototype for connected audit work. Next.js, React, TypeScript, Tailwind and Lucide. Three fictional engagements and four people demonstrate different preparation, review, partner and quality responsibilities.
 
-**Local shared pilot.** Run `npm run build` and `npm run pilot`, then open the URL printed in the terminal. Set up the three separate sign-ins with the one-time code. The pilot uses SQLite for one fixed-asset engagement, original evidence, review history, and package authorization. [Pilot walkthrough](docs/research/implementation-pilot.md)
+**Local shared pilot.** Run `npm run build` and `npm run pilot`, then open the URL printed in the terminal. Set up the three separate sign-ins with the one-time code. The extended pilot uses SQLite for one engagement from firm setup and acceptance through programme selection, evidence, review, authorization, and archive. [Pilot walkthrough](docs/research/implementation-pilot.md) · [34-feature verification ledger](docs/research/pilot-feature-coverage.md)
 
 **New in v5.** In **Үйлчлүүлэгчид**, register a client and open a fresh engagement with real reporting dates and an assigned demo team. Once the partner activates it, track evidence requests and tailor the procedures in a programme workpaper. See [v5 walkthrough and scope](docs/research/implementation-v5.md).
 
