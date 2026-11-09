@@ -205,7 +205,7 @@ export function currentPackage(m:Model,eid:string):ReportPackage{
  const paper=content(m.work[workKey(eid,reportForm(e))]);
  const forms=new Set(['1.1.1','1.3','2.6','3.1.2','4.4']);
  for(const w of Object.values(m.work))if(w.engagement===eid&&m.bench?.applied[w.id]?.fields.some(f=>f.tailoring))forms.add(w.form);
- const reliedOn=[...forms].map(f=>content(m.work[workKey(eid,f)]));
+ const reliedOn=[...forms].flatMap(f=>{const w=m.work[workKey(eid,f)];return w?[content(w)]:[];});
  const ids=new Set([paper,...reliedOn].flatMap(w=>w.evidence));
  const sample=e.intake?currentSelection(m,eid):undefined;
  return {report:e.reportVersion,fs:e.fsVersion,...(e.reportForm&&{reportDate:e.reportDate}),paper,statements:e.statements?{...e.statements}:{version:e.fsVersion,statements:'',notes:''},reliedOn,decisions:structuredClone(e.decisions??[]),findings:m.findings.filter(f=>f.engagement===eid).map(f=>({...f})),evidence:m.evidence.filter(ev=>ev.engagement===eid&&ids.has(ev.id)).map(({id,version,status})=>({id,version,status})),sample:sample?{ids:[...sample.ids],stamp:sample.stamp,version:sample.version}:undefined,quality:e.formalEqr?e.eqrReview?.at??'pending':'not_required'};

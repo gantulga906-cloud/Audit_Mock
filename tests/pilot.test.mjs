@@ -821,7 +821,7 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
       write(role, 'register', { kind, id, operation, ...extra }, status);
     const save = async (role, kind, values, id = '', status = 200) => {
       const value = await action(role, kind, id, 'save', Object.fromEntries(Object.entries(values).map(([k,v]) => ['field.'+k,v])), status);
-      return status === 200 ? (id || value.registers.at(-1).id) : value;
+      return status === 200 ? (id || value.registers.findLast(row=>row.kind===kind).id) : value;
     };
     const approve = async (kind, values, owner='reviewer', reviewer='partner', id='') => {
       const record = await save(owner, kind, values, id);
@@ -843,6 +843,13 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
     }
     const rule = await approve('M02-F05', { programme: '3.1.2', profile: 'framework', match: 'Test', outcome: 'required', override: 'no', basis: 'Fixture programme applicability' });
     const excluded = await approve('M02-F05', { programme: '3.1.3', profile: 'all', outcome: 'excluded', override: 'no', basis: 'Fixture programme exclusion' });
+    const stockSource = await service.fetch('/template/3.1.4?version=source',cookies.reviewer);
+    assert.equal(stockSource.status,200);
+    const stockTemplate = {...await stockSource.json(),title:'Reviewed stock count programme'};
+    await write('partner','template-grant',{form:'3.1.4',actor:'reviewer',access:'grant',note:'Stock template only'});
+    await write('reviewer','template-save',{form:'3.1.4',body:JSON.stringify(stockTemplate)});
+    await write('reviewer','template-submit',{form:'3.1.4',note:'Prepared local stock version'});
+    const publishedStock = (await write('partner','template-publish',{form:'3.1.4',note:'Reviewed stock version'})).formLibrary.releases.find(r=>r.id==='3.1.4');
     await write('reviewer', 'create', { ...create, extended: 'yes', synthetic: 'yes' });
     const activation = { independence: 'I-1', letter: 'L-1', assessment: 'Synthetic case accepted' };
     await write('reviewer', 'support-upload', { name: 'registry.csv', source: 'Synthetic registry', base64: Buffer.from('id,owner\n1,Parent').toString('base64') });
@@ -1012,6 +1019,80 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
     await write('partner', 'authorize', {}, 409);
     assert.deepEqual([...new Set(current.registers.map(r => r.kind))].sort(), registers.map(r => r.id).sort());
     assert.ok(registers.every(r => current.registers.some(row => row.kind === r.id && row.status === 'approved')));
+
+    // Versioned planning after the archived first release. The excluded file stays out.
+    const materiality = {benchmark:'1000',percentage:'2',performance:'60',trivial:'5',benchmarkSource:'Reviewed draft trial balance'};
+    await write('preparer','save',{form:'1.3',execution:'Compared candidate benchmarks',conclusion:'Selected current draft balances',
+      ...materiality,performance:'100'});
+    await write('preparer','submit',{form:'1.3'},409);
+    await checkPaper('1.3','preparer','reviewer',materiality);
+    await checkPaper('2.6','preparer','reviewer',{reliance:'partial',relianceEvidence:registryFile});
+    const stockRule = await approve('M02-F05',{programme:'3.1.4',profile:'all',outcome:'optional',override:'no',basis:'Inventory in scope'});
+    const stockRisk = await approve('M06-F09',{...riskValues,risk:'Stock counts',target:'Inventory',response:'Observe count and reconcile',programme:'3.1.4'});
+    const scope = {templateVersion:'source',nature:'Test the balance',timing:'At the end of the period',extent:'Cover the documented stratum'};
+    const assetsPlan = {rule,risk,decision:'adopt',basis:'Use the tested controls and corroborate',approach:'reliance',procedure:'r15',...scope};
+    const stockPlan = {rule:stockRule,risk:stockRisk,decision:'adopt',basis:'Substantive response',approach:'substantive',procedure:'r11',...scope,templateVersion:'1'};
+    await save('reviewer','M07-F01',{...assetsPlan,procedure:'not-in-template'},programme);
+    await action('reviewer','M07-F01',programme,'submit',{},409);
+    await save('reviewer','M07-F01',assetsPlan,programme);
+    await action('reviewer','M07-F01',programme,'submit');
+    await checkPaper('2.6','preparer','reviewer',{reliance:'full',relianceEvidence:registryFile});
+    await action('partner','M07-F01',programme,'approve',{reason:'Stale control basis'},409);
+    await action('partner','M07-F01',programme,'return',{reason:'Update to the reviewed reliance version'});
+    await action('reviewer','M07-F01',programme,'submit');
+    await action('partner','M07-F01',programme,'approve',{reason:'Latest basis reviewed'});
+    const stock = await approve('M07-F01',stockPlan);
+    const paper = form => current.papers.find(p=>p.form===form);
+    assert.equal(paper('3.1.2').planning.basis.risk.target,'PPE');
+    assert.equal(paper('3.1.2').planning.basis.procedure.key,'r15');
+    assert.equal(paper('3.1.2').planning.basis.materiality.performance,12);
+    assert.equal(paper('3.1.2').planning.basis.reliance.evidence,registryFile);
+    assert.equal(paper('3.1.2').template.digest,find(programme).template.digest);
+    assert.equal(paper('3.1.4').planning.basis.reliance,undefined);
+    assert.equal(paper('3.1.4').template.digest,publishedStock.digest);
+    assert.equal(paper('3.1.4').title,stockTemplate.title);
+    assert.equal(paper('3.1.3'),undefined);
+    await write('reviewer','form-use',{form:'3.1.2',version:'source'},409);
+    await write('preparer','request',{form:'3.1.3',title:'Excluded work',due:'2026-03-30'},409);
+    const stockRequest = (await write('preparer','request',{form:'3.1.4',title:'Stock',due:'2026-03-30'})).requests[0].id;
+    await write('preparer','upload',{request:stockRequest,name:'stock.csv',source:'Synthetic stock sheet',base64:'c3RvY2s='});
+    await write('preparer','accept',{request:stockRequest});
+    const perform = async (form,key) => {
+      const {digest,body} = paper(form).template;
+      const outcome = body.fields.find(f=>f.key===key).options[0];
+      const fields = {form,templateDigest:digest,execution:'Performed the response',conclusion:'Documented outcome'};
+      await write('preparer','save',{...fields,answers:JSON.stringify({r10:'An unrelated procedure'})});
+      await write('preparer','submit',{form},409);
+      const unresolved = body.fields.find(f=>f.key===key).options.find(v=>v.includes('(UNABLE_TO_COMPLETE)'));
+      await write('preparer','save',{...fields,answers:JSON.stringify({[key]:'Attempted the mapped procedure',
+        [key+'.outcome']:unresolved,[key+'.result']:'Awaiting further evidence'})});
+      await write('preparer','submit',{form},409);
+      await write('preparer','save',{...fields,answers:JSON.stringify({[key]:'Performed the mapped procedure',
+        [key+'.outcome']:outcome,[key+'.result']:'Agreed with source evidence'})});
+      await write('preparer','submit',{form});
+      await write('reviewer','review',{form});
+    };
+    await perform('3.1.2','r15');
+    await perform('3.1.4','r11');
+    const stockVersion = paper('3.1.4').version;
+    const assetsVersion = paper('3.1.2').version;
+    await checkPaper('2.6','preparer','reviewer',{reliance:'partial',relianceEvidence:registryFile});
+    assert.deepEqual(current.impacts.find(i=>i.source==='2.6').targets,['3.1.2']);
+    assert.equal(paper('3.1.2').status,'changed');
+    assert.equal(paper('3.1.2').pendingPlanning,true);
+    assert.ok(paper('3.1.2').history.some(h=>h.version===assetsVersion&&h.by==='temuulen'));
+    assert.equal(paper('3.1.4').reviewedVersion,stockVersion);
+    assert.equal(paper('3.1.4').status,'reviewed');
+    assert.equal(find(stock).stale,false);
+    assert.equal(find(blocked).stale,false);
+    await write('preparer','submit',{form:'3.1.2'},409);
+    await approve('M07-F01',assetsPlan,'reviewer','partner',programme);
+    await write('preparer','submit',{form:'3.1.2'});
+    await write('reviewer','review',{form:'3.1.2'});
+    await checkPaper('1.3','preparer','reviewer',{...materiality,percentage:'1'});
+    assert.ok(['3.1.2','3.1.4'].every(form=>paper(form).status==='changed'&&paper(form).pendingPlanning));
+    assert.equal(find(blocked).stale,false);
+    assert.ok(find(programme).history.some(h=>h.status==='approved'&&h.programmeBasis?.materiality.overall===20));
     await service.close();
     service = null;
     service = await start(database);
@@ -1019,6 +1100,7 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
     assert.equal(reloaded.archive.packages.find(p => p.id === archive).disposed, 1);
     assert.equal(reloaded.registers.find(r => r.id === opinion).values.opinion, 'qualified');
     assert.equal(reloaded.registers.find(r => r.id === restore).verification.restored, true);
+    assert.ok(reloaded.papers.find(p=>p.form==='3.1.4').pendingPlanning);
   } finally {
     if (service) await service.close();
     for (const suffix of ['', '-shm', '-wal']) await rm(database + suffix, { force: true });

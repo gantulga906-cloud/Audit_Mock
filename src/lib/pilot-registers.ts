@@ -4,10 +4,17 @@ export type RecordStatus='draft'|'submitted'|'returned'|'approved';
 type Choice=readonly [value:string,label:string];
 export type RegisterField={key:string;label:string;type?:'long'|'date'|'number'|'choice'|'record'|'evidence'|'form'|'programme';optional?:boolean;choices?:readonly Choice[];target?:string};
 type Register={id:string;label:string;section:string;writers:readonly PilotRole[];approvers:readonly PilotRole[];fields:readonly RegisterField[]};
-export type RegisterRevision={version:number;status:RecordStatus;values:Record<string,string>;references:Record<string,number>;by:PilotRole;at:string;reason:string};
+export type ProgrammeBasis={
+ risk:{id:string;version:number;name:string;target:string;assertion:string;response:string};
+ materiality?:{version:number;overall:number;performance:number;trivial:number;source?:string};
+ reliance?:{version:number;level:string;basis:string;evidence?:string;evidenceVersion?:number};
+ procedure?:{key:string;label:string;nature:string;timing:string;extent:string};
+};
+export type RegisterRevision={version:number;status:RecordStatus;values:Record<string,string>;references:Record<string,number>;by:PilotRole;at:string;reason:string;
+ programmeBasis?:ProgrammeBasis;template?:{form:string;sheet:string;digest:string;number?:number}};
 export type PilotRecord=RegisterRevision&{
  id:string;kind:string;owner:PilotRole;history:RegisterRevision[];stale?:boolean;
- template?:{form:string;sheet:string;digest:string};statementVersion?:number;
+ statementVersion?:number;
  paperVersions?:Record<string,number>;
  declaration?:{text:string;by:PilotRole;at:string;evidence?:string};
  discussion?:{text:string;by:PilotRole;at:string}[];
@@ -46,7 +53,10 @@ export const registers:readonly Register[]=[
  define('M06-F05','Бусдын ажил ба эхний үлдэгдэл','planning',[short('area','Данс / тайлангийн хэсэг'),long('reliance','Ашигласан өмнөх буюу бусдын ажил'),long('test','Эхний үлдэгдлийн шалгалт'),evidence('evidence','Нотлох баримт',true),long('limitations','Хязгаарлалт'),long('effect','Одоогийн аудитын хандлагад үзүүлэх нөлөө')],team,senior),
  define('M06-F06','Урьдчилсан шинжилгээ ба хамрах хүрээ','planning',[short('area','Данс / мөчлөг'),number('expected','Өмнөх үе эсвэл хүлээгдэж буй дүн'),number('actual','Бүртгэлтэй дүн'),number('threshold','Сонгосон босго'),short('source','Оролтын эх сурвалж'),long('investigation','Зөрүүний шинжилгээ',true),long('scope','Мөчлөгийн хамрах хүрээ ба дүгнэлт')],team,senior),
  define('M06-F09','Эрсдэл ба тайлангийн хэсгийн холбоос','planning',[short('risk','Эрсдэлийн нэр'),link('entity','Байгууллагын ойлголтын бүртгэл','M06-F02',true),link('fraud','Залилангийн эрсдэлийн бүртгэл','M06-F04',true),link('analytics','Урьдчилсан шинжилгээ','M06-F06',true),choice('type','Холбоосын төрөл',['account','Данс'],['line','Тайлангийн мөр'],['disclosure','Тодруулга'],['process','Процесс'],['control','Хяналт']),short('target','Данс, мөр эсвэл хяналтын код'),short('assertion','Батламж'),long('response','Төлөвлөсөн хариу арга хэмжээ'),{key:'programme',label:'Санал болгох хөтөлбөр',type:'programme'}],team,senior),
- define('M07-F01','Хэрэгжүүлэх хөтөлбөрийг сонгох','planning',[link('rule','Батлагдсан арга зүйн дүрэм','M02-F05'),link('risk','Батлагдсан эрсдэл ба хариу','M06-F09'),choice('decision','Гэрээт ажлын сонголт',['adopt','Хэрэгжүүлнэ'],['exclude','Хамаарахгүй']),long('basis','Шийдвэр / зөрүүний үндэслэл')]),
+ define('M07-F01','Хэрэгжүүлэх хөтөлбөрийг сонгох','planning',[link('rule','Батлагдсан арга зүйн дүрэм','M02-F05'),link('risk','Батлагдсан эрсдэл ба хариу','M06-F09'),choice('decision','Гэрээт ажлын сонголт',['adopt','Хэрэгжүүлнэ'],['exclude','Хамаарахгүй']),long('basis','Шийдвэр / зөрүүний үндэслэл'),
+  { ...choice('approach','Аудитын арга хандлага',['substantive','Хяналтад найдахгүй · мөн чанарын горим'],['reliance','Хяналтад найдаж, мөн чанарын горим хэрэгжүүлэх']), optional:true },
+  short('templateVersion','Хөтөлбөрийн маягтын хувилбар',true),short('procedure','Хариу горим',true),
+  long('nature','Горимын шинж',true),long('timing','Хугацааны төлөвлөгөө',true),long('extent','Хамрах хүрээ',true)]),
  define('M07-F06','Мөн чанарын шинжилгээ','fieldwork',[link('programme','Хэрэгжүүлсэн хөтөлбөр','M07-F01'),number('expected','Хүлээгдэж буй дүн'),number('actual','Бодит дүн'),number('precision','Нарийвчлал'),number('threshold','Зөрүүний босго'),long('reliability','Өгөгдлийн найдвартай байдал'),evidence('evidence','Нотлох баримт'),long('investigation','Шинжилгээ',true),long('conclusion','Дүгнэлт')],team,senior),
  define('M07-F08','Гуравдагч талын баталгаажуулалт','fieldwork',[link('programme','Хэрэгжүүлсэн хөтөлбөр','M07-F01'),short('recipient','Хүлээн авагч'),short('address','Хянасан холбоо барих хаяг'),date('sent','Бодитоор гаргасан өдөр',true),date('due','Хариу авах өдөр'),choice('result','Хариуны төлөв',['pending','Хүлээгдэж буй'],['received','Ирсэн'],['difference','Зөрүүтэй'],['none','Хариугүй']),evidence('response','Ирсэн эх файл',true),long('provenance','Суваг, гарал үүсэл, хяналт'),long('resolution','Зөрүү / өөр горимын шийдэл',true)],team,senior),
  define('M07-F09','Журналын бичилтийн сорил','fieldwork',[link('programme','Хэрэгжүүлсэн хөтөлбөр','M07-F01'),evidence('population','Эх олонлогийн файл'),short('entry','Сонгосон бичилтийн ID'),short('line','Мөр / дансны код'),long('selection','Сонгосон шалгуур'),evidence('evidence','Шалгалтын нотолгоо'),long('test','Гүйцэтгэсэн сорил'),long('exception','Зөрүү / илрүүлэлт',true),long('conclusion','Дүгнэлт')],team,senior),

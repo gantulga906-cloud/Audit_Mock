@@ -1,12 +1,12 @@
 'use client';
 
 import {useEffect,useRef,useState,type FormEvent,type ReactNode} from 'react';
-import PilotRegisters,{type RegisterResources} from './pilot-registers';
+import PilotRegisters,{PlanningBasis,type RegisterResources} from './pilot-registers';
 import {AdoptPilotForm,NativeFields,PilotFormLibrary} from './pilot-forms';
 import {IntakeProvenance,PilotIntake,TermsEditor} from './pilot-intake';
 import {EngagementStaffing,RosterOverview,WorkAssignmentEditor} from './pilot-staffing';
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
-import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
+import {pilotScope,type PilotRole,type ProgrammeBasis} from '@/lib/pilot-registers';
 import {fieldAnswers,type LibraryView,type PaperForm} from '@/lib/pilot-forms';
 import type {Enquiry,IntakeClient,IntakeContext,IntakeTerms} from '@/lib/pilot-intake';
 import type {RosterAvailability,StaffingView,StaffSignoff,WorkAssignment} from '@/lib/pilot-staffing';
@@ -21,7 +21,9 @@ const staffNames=(staffing?:StaffingView)=>Object.fromEntries((staffing?.seats??
 const status:Record<WorkItem['status'],string>={not_started:'Эхлээгүй',in_progress:'Бэлтгэж буй',waiting:'Хүлээгдэж буй',submitted:'Хяналтад ирсэн',returned:'Засварт буцаасан',reviewed:'Хянагдсан',changed:'Дахин хянуулах'};
 const partStatus={missing:'Ирээгүй',received:'Үнэлэх',accepted:'Зөвшөөрсөн',rejected:'Буцаасан'};
 type Paper=WorkItem&{editable:boolean;reviewable:boolean;template?:PaperForm;oldTemplates?:Record<string,Template>;nativeGaps?:string[];
- assignmentHistory?:WorkAssignment[];staffingSignoffs?:StaffSignoff[]};
+ assignmentHistory?:WorkAssignment[];staffingSignoffs?:StaffSignoff[];pendingPlanning?:boolean;
+ materiality?:{overall:number;performance:number;trivial:number}|null;
+ planning?:{id:string;version:number;basis?:ProgrammeBasis;template:{form:string;sheet:string;digest:string;number?:number}}};
 type PortfolioItem={id:string;client:string;start:string;end:string;reportDate:string;active:boolean;
  progress?:null|{reviewed:number;applicable:number;tasks:number;deadlines:{form:string;title:string;due:string}[]}};
 type View=RegisterResources&{
@@ -251,6 +253,12 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing}
  return <section id={'pilot-paper-'+paper.id} tabIndex={-1} className="card pad bench-card feature-desk">
   <div className="section-heading"><h2>{form} · {paper.title}</h2><span className="pill">v{paper.version} · {status[paper.status]}</span></div>
   <p className="micro">{people[paper.owner]??names[paper.owner]} → {people[paper.reviewer]??names[paper.reviewer]} · {paper.evidence.length} холбоотой баримт</p>
+  {paper.pendingPlanning&&<p className="callout amber">Төлөвлөлтийн шийдвэрийн шинэ хувилбар батлагдсаны дараа хяналтад илгээнэ.</p>}
+  {paper.planning?.basis&&<details className="feature-detail" open>
+   <summary>Баталсан төлөвлөлтийн суурь · v{paper.planning.version}</summary>
+   <PlanningBasis basis={paper.planning.basis}/>
+  </details>}
+  {paper.materiality&&<p>Хадгалсан тооцоо · Нийт {paper.materiality.overall.toLocaleString()} · Гүйцэтгэл {paper.materiality.performance.toLocaleString()} · Илт бага {paper.materiality.trivial.toLocaleString()}</p>}
   {active&&!sealed&&role!=='preparer'&&form!=='4.4'&&!/^4\.1\.A[1-4]$/.test(form)&&
    <WorkAssignmentEditor paper={paper} history={paper.assignmentHistory??[]} staffing={staffing} run={run}/>}
   {paper.due&&<p className="micro">Төлөвлөсөн хугацаа {paper.start} — {paper.due} · Суурь {paper.baselineDue}</p>}
@@ -264,8 +272,16 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing}
   {native&&<p className="micro">{native.number?'Баталсан маягт v'+native.number:'Эх маягт'} · {native.body.sheet} · {native.digest.slice(0,12)}</p>}
   {!!paper.nativeGaps?.length&&<p className="micro text-amber">{paper.nativeGaps.join(' · ')}</p>}
   {paper.editable?<ActionForm key={paper.version} run={run} action="save" extra={payload} button="Ажлыг хадгалах">
-   {form==='1.3'&&<div className="field-grid">{[['benchmark','Суурь дүн'],['percentage','Материаллаг байдлын хувь'],['performance','Гүйцэтгэлийн хувь'],['trivial','Илт бага зөрүүний хувь']].map(([key,label])=><label key={key}>{label}<input type="number" step="any" name={key} defaultValue={paper.values[key]} required/></label>)}</div>}
-   {form==='2.6'&&<label>Хяналтад найдах түвшин<select name="reliance" defaultValue={paper.values.controlsReliance??'none'}><option value="none">Найдахгүй</option><option value="partial">Хэсэгчлэн</option><option value="full">Бүрэн</option><option value="na">Хамаарахгүй</option></select></label>}
+   {form==='1.3'&&<>
+    <div className="field-grid">{[['benchmark','Суурь дүн'],['percentage','Материаллаг байдлын хувь'],['performance','Гүйцэтгэлийн хувь'],['trivial','Илт бага зөрүүний хувь']].map(([key,label])=><label key={key}>{label}<input type="number" step="any" name={key} defaultValue={paper.values[key]} required/></label>)}</div>
+    <label>Суурь дүнгийн эх сурвалж<input name="benchmarkSource" defaultValue={paper.values.benchmarkSource}/></label>
+   </>}
+   {form==='2.6'&&<div className="field-grid">
+    <label>Хяналтад найдах түвшин<select name="reliance" defaultValue={paper.values.controlsReliance??'none'}><option value="none">Найдахгүй</option><option value="partial">Хэсэгчлэн</option><option value="full">Бүрэн</option><option value="na">Хамаарахгүй</option></select></label>
+    <label>Хяналтын үнэлж зөвшөөрсөн баримт<select name="relianceEvidence" defaultValue={paper.values.relianceEvidence??''}>
+     <option value="">Сонгох</option>{evidence?.filter(file=>file.status==='accepted').map(file=><option key={file.id} value={file.id}>{file.name} · v{file.version}</option>)}
+    </select></label>
+   </div>}
    {native&&<NativeFields template={native.body} answers={answers} set={(k,v)=>setAnswers(p=>({...p,[k]:v}))} evidence={evidence} shared={native.shared} linked={native.linked}/>}
    {summaryNeeded&&<>
     <label>Хийсэн ажил<textarea name="execution" defaultValue={paper.values.execution} required/></label>
@@ -276,7 +292,7 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing}
    <p>{paper.values.execution}</p><p>{paper.values.conclusion}</p>
   </>}
   {paper.editable&&!['submitted','reviewed'].includes(paper.status)&&<button type="button" className="btn secondary space-top"
-   disabled={!!paper.nativeGaps?.length||summaryNeeded&&(!paper.values.execution||!paper.values.conclusion)} onClick={()=>void run('submit',reference)}>Хадгалсан v{paper.version} хувилбарыг хяналтад илгээх</button>}
+   disabled={paper.pendingPlanning||!!paper.nativeGaps?.length||summaryNeeded&&(!paper.values.execution||!paper.values.conclusion)} onClick={()=>void run('submit',reference)}>Хадгалсан v{paper.version} хувилбарыг хяналтад илгээх</button>}
   {paper.reviewable&&<div className="space-top">
    <button type="button" className="btn primary" disabled={paper.notes.some(n=>!n.cleared)} onClick={()=>void run('review',reference)}>v{paper.version} хувилбарыг хянаж батлах</button>
    <ActionForm run={run} action="return" extra={reference} button="Засварт буцаах"><label>Хяналтын тэмдэглэл<input name="reason" required/></label></ActionForm>
@@ -400,7 +416,8 @@ export default function PilotWorkspace(){
       {engagement.active&&<details><summary>Хүлээн авах шийдвэрийн түүх</summary>{engagement.decisions.map(d=><p key={d.version}>v{d.version} · {d.assessment||d.letter||d.independence} · {new Date(d.at).toLocaleString()}</p>)}</details>}
      </section>
      {!sealed&&<SupportingEvidence view={view} run={run} onError={setError}/>}
-     {!sealed&&view.role!=='preparer'&&<AdoptPilotForm forms={view.forms} library={view.formLibrary}
+     {!sealed&&view.role!=='preparer'&&<AdoptPilotForm forms={view.forms.filter(f=>!view.extended||!view.programmes.some(p=>p.id===f.id)||
+      view.papers?.some(p=>p.form===f.id&&p.planning?.template.number===undefined)&&view.fieldwork?.includes(f.id))} library={view.formLibrary}
       pins={Object.fromEntries((view.papers??[]).flatMap(p=>p.template?[[p.form,p.template.number]]:[]))} run={run}/>}
      {engagement.active&&<>
       {!sealed&&<Delivery view={view} run={run}/>}

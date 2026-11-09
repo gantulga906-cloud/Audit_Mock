@@ -2,7 +2,7 @@ import { validDate } from '../src/lib/feature-workflows.ts';
 import { fieldAnswers, fieldPrefix, formKinds, procedureOutcomes, sharedBindings, yesNo } from '../src/lib/pilot-forms.ts';
 import { sharedFields, sharedForWork, tableColumns, validateTemplate, visibleField } from '../src/lib/workbench.ts';
 import { isCurrentReview, recordEvent, reportForm, snapshot, workKey } from '../src/lib/workspace.ts';
-import { formContract } from './pilot-registers.mjs';
+import { excludedForms, formContract } from './pilot-registers.mjs';
 import { sha256 } from './pilot-report.mjs';
 import { accounts, input, PilotError } from './pilot-workflow.mjs';
 
@@ -251,16 +251,17 @@ export function nativeGaps(m, paper, files) {
   return gaps;
 }
 
-export function bindForm(m, role, form, fields, files) {
+export function bindForm(m, role, form, fields, files, programmeTemplate) {
   allowed(role !== 'preparer');
   if (!formId.test(form)) fail('Маягтын дугаар буруу байна.');
   const release = byId(m.pilotFormLibrary, form), source = sourceTemplate(form);
-  if (fields.version !== 'source' && (!release || fields.version !== String(release.number))) fail('Одоогийн батлагдсан хувилбарыг сонгоно уу.', 409);
+  if (!programmeTemplate && fields.version !== 'source' && (!release || fields.version !== String(release.number))) fail('Одоогийн батлагдсан хувилбарыг сонгоно уу.', 409);
   if (fields.version === 'source' && !source) fail('Эх маягт олдсонгүй.', 404);
-  const contract = fields.version === 'source' ? source : files.template(release.digest);
+  const contract = programmeTemplate ? files.template(programmeTemplate.digest) : fields.version === 'source' ? source : files.template(release.digest);
   if (!contract) fail('Маягтын хувилбар олдсонгүй.', 409);
   if (!m.engagements[0].intake.active && contract.stage !== 1) fail('Эхлээд гэрээт ажлыг идэвхжүүлнэ үү.', 409);
-  const version = fields.version === 'source' ? { number: 0, digest: store(files, contract) } : { number: release.number, digest: release.digest };
+  const version = programmeTemplate ? {number:programmeTemplate.number,digest:programmeTemplate.digest}
+    : fields.version === 'source' ? { number: 0, digest: store(files, contract) } : { number: release.number, digest: release.digest };
   const current = effectiveForm(m, form, files);
   if (current?.digest === version.digest) return false;
   const key = workKey(m.engagement, form);
@@ -297,6 +298,7 @@ export function bindForm(m, role, form, fields, files) {
 }
 
 export const nativePapers = m => Object.keys(m.pilotForms ?? {})
+  .filter(form => !m.extendedPilot || !excludedForms(m).includes(form))
   .filter(form => !/^4\.1\.A[1-4]$/.test(form) || form === reportForm(m.engagements[0]))
   .map(form => m.work[workKey(m.engagement, form)]);
 export const nativeReviewGaps = m => nativePapers(m).filter(w => !isCurrentReview(w)).map(w => w.form+' · Маягтын одоогийн хяналт шаардлагатай');

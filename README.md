@@ -34,6 +34,8 @@ Record `/build-info.json` for each acceptance run. It identifies the built UI, G
 
 In the shared pilot portfolio, open **Маягтын сан ба бүтэц** to draft or approve a template. A partner can grant authoring on a specific form. In an engagement, use **Эх маягт ба баталсан хувилбар холбох** to pin a source or published version and work on its typed fields. A published revision takes effect in an engagement after explicit adoption. Excel import reads a question-list worksheet with a `Question` column and optional `Type`, `Choices`, `Section` and `Required` columns.
 
+In an extended engagement, review **1.3** and the relevant **2.6** reliance basis, then open **Аудитын бүртгэл ба шийдвэр → Төлөвлөлт ба эрсдэл → M07-F01**. Choose the applicable methodology rule and reviewed risk, then select the approach, template version and procedure. A partner approves the decision. The workpaper shows the approved planning basis alongside the fields for actual execution. An exclusion stays out of fieldwork, and a changed planning input reopens the dependent work.
+
 Open **Үйлчлүүлэгч ба аудитын хүсэлт** in the portfolio to record an enquiry, search clients or maintain contact history. The reviewer converts a forwarded enquiry after confirming the current client profile, contact and reporting period. The partner approves the signed engagement letter revision before activating a converted engagement.
 
 Open **Фирмийн мэргэжилтэн ба боломжит цаг** for roster and workload. The firm registers record the practitioner, credential and appointment. The engagement's **Багийн томилгоо ба нөөц** panel shows the approved staffing and its scope. For managed engagements, workpaper schedules and tasks use current approved appointments and retain earlier sign-off attribution.

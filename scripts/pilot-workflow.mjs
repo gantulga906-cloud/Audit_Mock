@@ -7,10 +7,11 @@ import {
   reassign, reportForm, reschedule, returnWork, reviewWork, saveStatements, setEngagementDecision, snapshot, submitWork, workKey,
 } from '../src/lib/workspace.ts';
 import {
-  acceptanceRegisterGaps, adoptedForms, archiveGrantKinds, completionRegisterGaps, currentOpinion, firmSnapshot, formContract, opinionForm, pilotProgrammes, programmeView,
+  acceptanceRegisterGaps, adoptedForms, archiveGrantKinds, completionRegisterGaps, currentOpinion, excludedForms, firmSnapshot, formContract, opinionForm, pendingProgrammes, pilotProgrammes, programmeDecision, programmeTemplates, programmeView,
   registerAction, registerEvidence, registerPackage, registerStamp, registerView,
 } from './pilot-registers.mjs';
 import { registers } from '../src/lib/pilot-registers.ts';
+import { procedureOutcomes } from '../src/lib/pilot-forms.ts';
 import { renderReport, sha256 } from './pilot-report.mjs';
 import { bindForm, effectiveForm, nativeGaps, nativePapers, nativeReviewGaps, paperFormView, pinLinkedDecisions, readTypedAnswers } from './pilot-forms.mjs';
 import { approvedStaffing, managedStaffing, requireSeat, seatFor, seats, staffingGaps } from './pilot-staffing.mjs';
@@ -20,8 +21,45 @@ const roleOf = person => seats.find(role => accounts[role] === person);
 const workstream = '3.1.2';
 const forms = JSON.parse(readFileSync(new URL('../src/data/forms.json', import.meta.url), 'utf8'));
 const shownForms = m => [...new Set([...(m.extendedPilot ? ['1.3','2.6','4.4'] : [workstream,'4.4']),
-  reportForm(m.engagements[0]), ...adoptedForms(m), ...nativePapers(m).map(w => w.form)])];
+  reportForm(m.engagements[0]), ...adoptedForms(m), ...(m.extendedPilot ? pendingProgrammes(m) : []), ...nativePapers(m).map(w => w.form)])];
 const fieldworkForms = m => m.extendedPilot ? adoptedForms(m) : [workstream, ...adoptedForms(m).filter(f => f !== workstream)];
+const decisionRef = decision => decision ? decision.id + ':v' + decision.version : '';
+const activeItems = (m, items) => {
+  const excluded = m.extendedPilot ? new Set(excludedForms(m)) : new Set();
+  return items.filter(item => !excluded.has(item.form));
+};
+
+function planningChanged(m, paper) {
+  if (!m.extendedPilot || !['submitted','reviewed'].includes(paper.status)) return false;
+  if (paper.values['planning.decision']) {
+    const current = programmeDecision(m, paper.form);
+    return current?.values.decision !== 'adopt' || decisionRef(current) !== paper.values['planning.decision'];
+  }
+  return pendingProgrammes(m).includes(paper.form) || excludedForms(m).includes(paper.form);
+}
+
+function syncPlanningPapers(m) {
+  for (const paper of Object.values(m.work).filter(w => planningChanged(m, w))) {
+    snapshot(paper, m.person, 'Төлөвлөлтийн өмнөх шийдвэрийн хувилбар');
+    paper.version++;
+    paper.status = 'changed';
+    paper.submittedVersion = undefined;
+    paper.completedAt = undefined;
+    recordEvent(m, paper.form + ' · Төлөвлөлтийн шийдвэр өөрчлөгдөв', paper.form);
+  }
+}
+
+export function validMateriality(m) {
+  const amounts = materiality(m,m.engagement);
+  return amounts && Number.isFinite(amounts.overall) && amounts.performance < amounts.overall &&
+    amounts.trivial <= amounts.performance ? amounts : null;
+}
+
+function reportWorkspace(m) {
+  if (!m.extendedPilot || !excludedForms(m).length) return m;
+  const work = Object.fromEntries(activeItems(m,Object.values(m.work)).map(w => [w.id,w]));
+  return {...m,work,requests:activeItems(m,m.requests)};
+}
 
 export function emptyWorkspace() {
   return {
@@ -71,7 +109,7 @@ function pilotGaps(m) {
   return [
     ...fieldworkForms(m).flatMap(form => evidenceGaps(m, form)),
     ...(!m.extendedPilot && !isCurrentReview(m.work[workKey(m.engagement, workstream)]) ? ['3.1.2 · Одоогийн хувилбарын ахлахын хяналт'] : []),
-    ...reportGaps(m, m.engagement),
+    ...reportGaps(reportWorkspace(m), m.engagement),
     ...completionRegisterGaps(m),
     ...nativeReviewGaps(m),
     ...staffingGaps(m),
@@ -79,7 +117,7 @@ function pilotGaps(m) {
 }
 
 function currentApproval(m, engagement) {
-  return authorizationCurrent(m, engagement) &&
+  return authorizationCurrent(reportWorkspace(m), engagement) &&
     (m.pilotAuthorization ? m.pilotAuthorization === registerStamp(m) : !registerPackage(m).length) &&
     (!m.extendedPilot || !!m.pilotReportDigest) &&
     !completionRegisterGaps(m).length && !nativeReviewGaps(m).length && !staffingGaps(m).length;
@@ -142,20 +180,29 @@ export function pilotView(m, role, revision, files) {
   }
   const papers = shownForms(m).map(form => {
     const w = m.work[workKey(engagement.id, form)];
+    const decision = programmeDecision(m, form);
+    const changed = planningChanged(m,w);
+    const planning = decision?.values.decision === 'adopt' ? {id:decision.id,version:decision.version,
+      basis:decision.programmeBasis,template:decision.template} : undefined;
+    const pendingPlanning = m.extendedPilot && pendingProgrammes(m).includes(form);
     const template = paperFormView(m, w, files);
     const oldDigests = new Set(w.history.flatMap(h => h.values.templateDigest && h.values.templateDigest !== template?.digest ? [h.values.templateDigest] : []));
     const canWork = !engagement.intake.active || !managedStaffing(m) || !!seatFor(m,role,w.start||w.due,w.due||w.start);
-    return { ...w, ...(template && { template, nativeGaps: nativeGaps(m, w, files) }),
+    return { ...w, ...(changed && {status:'changed',completedAt:undefined}),
+      ...(planning && {planning}), ...(pendingPlanning && {pendingPlanning}),
+      ...(form === '1.3' && {materiality:validMateriality(m)}),
+      ...(template && { template, nativeGaps: nativeGaps(m, w, files) }),
       ...(oldDigests.size && { oldTemplates: Object.fromEntries([...oldDigests].map(hash => [hash, files.template(hash)])) }),
       ...(m.pilotWorkAssignments?.[form] && { assignmentHistory: m.pilotWorkAssignments[form] }),
       ...(m.pilotStaffSignoffs?.[form] && { staffingSignoffs: m.pilotStaffSignoffs[form] }),
-      editable: !sealed && canWork && canEdit(m, w), reviewable: !sealed && canWork && canReviewWork(m, w) };
+      editable: !sealed && canWork && canEdit(m, w), reviewable: !sealed && !changed && !pendingPlanning && canWork && canReviewWork(m, w) };
   });
   return {
     role, revision, ...resources, fieldwork: fieldworkForms(m), statementLines: m.pilotStatementLines ?? {},
+    ...(m.extendedPilot && engagement.intake.active && !sealed && role !== 'preparer' && {programmeTemplates:programmeTemplates(m,files)}),
     delivery: {
       id: engagement.id, person: m.person,
-      tasks: m.tasks.filter(t => t.engagement === engagement.id && (role !== 'preparer' || t.owner === m.person)),
+      tasks: activeItems(m,m.tasks).filter(t => t.engagement === engagement.id && (role !== 'preparer' || t.owner === m.person)),
       events: m.events.filter(e => e.engagement === engagement.id && (role !== 'preparer' || e.owner === m.person)),
     },
     impacts: m.impacts.filter(i => !i.resolved),
@@ -164,7 +211,7 @@ export function pilotView(m, role, revision, files) {
       reportDate: engagement.reportDate, statements: engagement.statements, decisions: engagement.decisions ?? [],
       acceptanceGaps: acceptanceRegisterGaps(m), firm: m.pilotFirm ?? [],
     },
-    papers, requests: m.requests, evidence: m.evidence.map(e => ({ ...e, sha256: files.get(e.id)?.sha256 })),
+    papers, requests: activeItems(m,m.requests), evidence: m.evidence.map(e => ({ ...e, sha256: files.get(e.id)?.sha256 })),
     gaps: pilotGaps(m), activity: m.activity.slice(0, 30),
     authorized: engagement.authorized && {
       at: engagement.authorized.at, report: engagement.authorized.report, fs: engagement.authorized.fs,
@@ -179,11 +226,11 @@ export function deliverySummary(m, role, archive) {
   if (!engagement.intake.active || archive.isSealed(m)) return null;
   const papers = shownForms(m).map(form => m.work[workKey(engagement.id, form)])
     .filter(w => w.required && !w.naReason && (role !== 'preparer' || w.owner === m.person));
-  const open = papers.filter(w => !isCurrentReview(w));
+  const open = papers.filter(w => !isCurrentReview(w) || planningChanged(m,w));
   return {
     reviewed: papers.length - open.length,
     applicable: papers.length,
-    tasks: m.tasks.filter(t => t.engagement === engagement.id && !t.done && (role !== 'preparer' || t.owner === m.person)).length,
+    tasks: activeItems(m,m.tasks).filter(t => t.engagement === engagement.id && !t.done && (role !== 'preparer' || t.owner === m.person)).length,
     deadlines: open.filter(w => w.due).sort((a, b) => a.due.localeCompare(b.due)).slice(0, 3)
       .map(({ form, title, due }) => ({ form, title, due })),
   };
@@ -191,12 +238,20 @@ export function deliverySummary(m, role, archive) {
 
 export function pilotAction(m, role, action, data, files) {
   const sealed = files.archive.isSealed(m);
+  if (!sealed) syncPlanningPapers(m);
   if (action === 'register') {
     const section = registers.find(r => r.id === data?.kind)?.section;
     if (sealed && section && !['archive', 'firm'].includes(section)) throw new PilotError(409, 'Архив түгжээтэй. Агуулгын өөрчлөлт зөвшөөрнө үү.');
     if (m.engagements[0]?.intake.active && managedStaffing(m) && ['planning','fieldwork','completion'].includes(section)) requireSeat(m,files,role);
     const before = registerStamp(m);
     registerAction(m, role, data, files);
+    if (m.extendedPilot && data.kind === 'M07-F01' && data.operation === 'approve') {
+      const adopted = adoptedForms(m).map(form => programmeDecision(m,form)).find(row => row.id === data.id);
+      if (adopted?.template.number !== undefined) {
+        bindForm(m,role,adopted.template.form,{},files,adopted.template);
+      }
+    }
+    if (!sealed) syncPlanningPapers(m);
     if (m.engagements.length) syncReportForm(m);
     if (before !== registerStamp(m) && !sealed) invalidateReport(m, 'Тайланд ашиглах бүртгэлийн хувилбар өөрчлөгдөв');
     return;
@@ -268,6 +323,9 @@ export function pilotAction(m, role, action, data, files) {
     if (m.extendedPilot && formContract(form)?.family === 'programme' && !adoptedForms(m).includes(form)) {
       throw new PilotError(409, 'Баталж хэрэгжүүлсэн аудитын хөтөлбөр шаардлагатай.');
     }
+    if (m.extendedPilot && programmeDecision(m,form)?.template.number !== undefined) {
+      throw new PilotError(409, 'Хөтөлбөрийн маягтын хувилбарыг төлөвлөлтийн шийдвэрээр шинэчилнэ үү.');
+    }
     if (bindForm(m, role, form, data, files) && form !== reportForm(engagement)) invalidateReport(m, 'Тайланд ашиглах маягтын хувилбар өөрчлөгдөв');
     return;
   }
@@ -277,7 +335,7 @@ export function pilotAction(m, role, action, data, files) {
   if (action === 'archive-seal' || action === 'archive-dispose') {
     requireActor(role === 'partner');
     if (action === 'archive-seal') {
-      if (!currentRelease(m, engagement) || !currentApproval(m, engagement) || m.pilotIssue?.authorizationAt !== engagement.authorized.at) throw new PilotError(409, 'Одоогийн зөвшөөрсөн багцыг гаргана уу.');
+      if (!currentRelease(reportWorkspace(m), engagement) || !currentApproval(m, engagement) || m.pilotIssue?.authorizationAt !== engagement.authorized.at) throw new PilotError(409, 'Одоогийн зөвшөөрсөн багцыг гаргана уу.');
       files.archive.seal(m, files.authorization());
     } else files.archive.dispose(m, input(data, 'id', 40));
     recordEvent(m, action === 'archive-seal' ? 'Эцсийн архивын багцыг түгжив' : 'Туршилтын архивын устгалын шийдвэрийг хэрэгжүүлэв');
@@ -302,7 +360,7 @@ export function pilotAction(m, role, action, data, files) {
     if (!currentApproval(m, engagement) || pilotGaps(m).length) throw new PilotError(409, 'Одоогийн багцын зөвшөөрөл шаардлагатай.');
     if (m.pilotIssue?.authorizationAt === engagement.authorized.at) return;
     const reference = input(data, 'reference', 200);
-    issueReport(m);
+    issueReport(reportWorkspace(m));
     const artifact = files.authorization()?.authorization.artifact;
     if (m.pilotReportDigest && (!artifact || artifact.sha256 !== m.pilotReportDigest || sha256(artifact.html) !== artifact.sha256)) {
       throw new PilotError(409, 'Зөвшөөрсөн тайлангийн хэш таарахгүй.');
@@ -327,6 +385,7 @@ export function pilotAction(m, role, action, data, files) {
   if (action === 'upload' || action === 'accept' || action === 'reject') {
     const request = m.requests.find(r => r.id === data?.request);
     if (!request) throw new PilotError(404, 'Хүсэлт олдсонгүй.');
+    if (m.extendedPilot && excludedForms(m).includes(request.form)) throw new PilotError(409, 'Хамаарахгүй хөтөлбөрийн хүсэлт.');
     requireActor(request.owner === m.person);
     if (managedStaffing(m)) requireSeat(m,files,role);
     const part = request.parts[0];
@@ -363,8 +422,9 @@ export function pilotAction(m, role, action, data, files) {
     const gaps = pilotGaps(m);
     if (gaps.length) throw new PilotError(409, gaps.join(' · '));
     if (currentApproval(m, engagement)) return;
-    if (authorizationCurrent(m, engagement)) engagement.reportVersion++;
-    authorizeReport(m);
+    const reporting = reportWorkspace(m);
+    if (authorizationCurrent(reporting, engagement)) engagement.reportVersion++;
+    authorizeReport(reporting);
     m.pilotAuthorization = registerStamp(m);
     const programmes = adoptedForms(m).map(form => m.work[workKey(m.engagement, form)]);
     const native = nativePapers(m);
@@ -422,6 +482,7 @@ export function pilotAction(m, role, action, data, files) {
   if (action === 'task-status') {
     const task = m.tasks.find(t => t.id === data?.id && t.engagement === engagement.id);
     requireActor(task?.owner === m.person);
+    if (!activeItems(m,[task]).length) throw new PilotError(409, 'Хамаарахгүй хөтөлбөрийн даалгавар.');
     requireSeat(m, files, role, task.due);
     if (!['yes','no'].includes(data.done)) throw new PilotError(400, 'Даалгаврын төлөвийг шалгана уу.');
     const done = data.done === 'yes';
@@ -480,28 +541,58 @@ export function pilotAction(m, role, action, data, files) {
     case 'save': {
       requireActor(canEdit(m, paper));
       const version = paper.version;
+      const planning = ['1.3','2.6'].includes(paper.form);
+      const before = planning ? registerStamp(m) : '';
+      const dependants = planning && m.extendedPilot ? adoptedForms(m)
+        .filter(form => programmeDecision(m,form).paperVersions?.[paper.form] === version) : [];
       const typed = data?.answers !== undefined ? readTypedAnswers(m, paper, data, files) : null;
       const values = { ...(typed?.values ?? paper.values) };
       if (!paper.form.startsWith('F-')) {
         values.execution = input(data, 'execution');
         values.conclusion = input(data, 'conclusion');
       }
-      if (paper.form === '1.3') for (const key of ['benchmark','percentage','performance','trivial']) values[key] = input(data, key, 32);
+      if (paper.form === '1.3') {
+        for (const key of ['benchmark','percentage','performance','trivial']) values[key] = input(data, key, 32);
+        if (data.benchmarkSource !== undefined) values.benchmarkSource = data.benchmarkSource === '' ? '' : input(data,'benchmarkSource');
+      }
       if (paper.form === '2.6') {
         if (!['none','partial','full','na'].includes(data.reliance)) throw new PilotError(400, 'Хяналтад найдах шийдвэр шаардлагатай.');
         values.controlsReliance = data.reliance;
         values.relianceBasis = values.conclusion;
+        if (data.relianceEvidence !== undefined) {
+          if (data.relianceEvidence !== '' && !m.evidence.some(e => e.id === data.relianceEvidence && e.status === 'accepted')) {
+            throw new PilotError(400, 'Хяналтын үнэлж зөвшөөрсөн эх баримт сонгоно уу.');
+          }
+          values.relianceEvidence = data.relianceEvidence;
+        }
       }
       changeWork(m, paper.id, values, typed?.evidence);
-      if (paper.form !== reportForm(engagement) && version !== paper.version) invalidateReport(m, 'Тайланд тулгуурласан ажлын хувилбар өөрчлөгдөв');
+      if (planning) {
+        syncPlanningPapers(m);
+        if (paper.form === '1.3' && version !== paper.version) {
+          const impact = m.impacts[0];
+          impact.targets = [...new Set([...impact.targets,...dependants])];
+        }
+        if (paper.form === '2.6' && version !== paper.version && dependants.length) {
+          m.impacts.unshift({id:randomUUID(),engagement:m.engagement,source:paper.form,targets:dependants,
+            reason:'Хяналтад найдах шийдвэрийн шинэ хувилбар. Холбогдох горимын нөлөөг үнэлнэ.',resolved:false});
+        }
+      }
+      if (paper.form !== reportForm(engagement) && version !== paper.version && (!planning ||
+          paper.form === '1.3' || before !== registerStamp(m))) invalidateReport(m, 'Тайланд тулгуурласан ажлын хувилбар өөрчлөгдөв');
       break;
     }
     case 'submit':
       requireActor(canEdit(m, paper));
       if (!paper.form.startsWith('F-') && (!paper.values.execution || !paper.values.conclusion)) throw new PilotError(409, 'Хийсэн ажил ба дүгнэлтийг хадгална уу.');
       checkNative(m, paper, files);
+      checkPlanning(m,paper,files);
       if (fieldworkForms(m).includes(paper.form) && evidenceGaps(m, paper.form).length) throw new PilotError(409, evidenceGaps(m, paper.form)[0]);
-      if (paper.form === '1.3' && !materiality(m, m.engagement)) throw new PilotError(409, 'Материаллаг байдлын дүн ба хувийг шалгана уу.');
+      if (paper.form === '1.3') {
+        if (!validMateriality(m)) throw new PilotError(409, 'Материаллаг байдлын дүн ба хувийг шалгана уу.');
+      }
+      const decision = programmeDecision(m,paper.form);
+      if (m.extendedPilot && decision?.values.decision === 'adopt') paper.values['planning.decision'] = decisionRef(decision);
       pinLinkedDecisions(m, paper, files);
       submitWork(m, paper.id);
       if (actorSeat) recordStaffSignoff(m,paper,'submit',actorSeat);
@@ -513,6 +604,7 @@ export function pilotAction(m, role, action, data, files) {
     case 'review':
       requireActor(canReviewWork(m, paper));
       checkNative(m, paper, files);
+      checkPlanning(m,paper,files);
       reviewWork(m, paper.id);
       if (actorSeat) recordStaffSignoff(m,paper,'review',actorSeat);
       break;
@@ -541,11 +633,23 @@ function recordStaffSignoff(m, paper, action, seat) {
 
 function checkNative(m, paper, files) {
   if (!effectiveForm(m, paper.form, files)) return;
-  if (m.extendedPilot && formContract(paper.form)?.family === 'programme' && !adoptedForms(m).includes(paper.form)) {
-    throw new PilotError(409, 'Аудитын хөтөлбөрийн одоогийн шийдвэр шаардлагатай.');
-  }
   const gaps = nativeGaps(m, paper, files);
   if (gaps.length) throw new PilotError(409, gaps.join(' · '));
+}
+
+function checkPlanning(m, paper, files) {
+  if (!m.extendedPilot || formContract(paper.form)?.family !== 'programme') return;
+  const decision = programmeDecision(m, paper.form);
+  if (decision?.values.decision !== 'adopt') throw new PilotError(409, 'Аудитын хөтөлбөрийн одоогийн шийдвэр шаардлагатай.');
+  const key = decision.programmeBasis?.procedure?.key;
+  if (!key) return;
+  const template = effectiveForm(m,paper.form,files);
+  const procedure = template?.body.fields.find(f => f.key === key);
+  const outcome = paper.values['field.'+key+'.outcome'];
+  if (template?.digest !== decision.template.digest || !procedure || !paper.values['field.'+key]?.trim() ||
+      procedureOutcomes(procedure).length && (!outcome || /\((NOT_APPLICABLE|UNABLE_TO_COMPLETE)\)/.test(outcome))) {
+    throw new PilotError(409, 'Төлөвлөгөөнд сонгосон горимын гүйцэтгэл ба үр дүнг оруулна уу · '+key);
+  }
 }
 
 function parseStatementLines(text) {

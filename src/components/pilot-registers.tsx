@@ -1,5 +1,5 @@
 import {useState,type FormEvent} from 'react';
-import {pilotScope,registers,roleChoices,sections,type PilotRecord,type PilotRole,type RegisterField,type RecordStatus} from '@/lib/pilot-registers';
+import {pilotScope,registers,roleChoices,sections,type PilotRecord,type PilotRole,type ProgrammeBasis,type RegisterField,type RecordStatus} from '@/lib/pilot-registers';
 import type {Evidence} from '@/lib/workspace';
 
 export type PilotAction=(action:string,fields?:Record<string,string>)=>Promise<boolean>;
@@ -12,6 +12,7 @@ type ArchiveItem={
 export type RegisterResources={
  registers:PilotRecord[];forms:NamedForm[];programmes:NamedForm[];
  rules:{id:string;form:string;matches:boolean;outcome:string;basis:string}[];
+ programmeTemplates?:Record<string,{version:string;procedures:{key:string;label:string}[]}[]>;
  archive:{packages:ArchiveItem[];reopened:{package:string;basis:string}|null;issue:{at:string;reference:string}|null};
  extended:boolean;
 };
@@ -23,12 +24,38 @@ const heading=(r:PilotRecord)=>Object.values(r.values).find((v,i)=>v&&spec(r.kin
 const canReview=(r:PilotRecord,role:PilotRole)=>spec(r.kind)?.approvers.includes(role)&&r.status==='submitted'&&
  (r.kind==='M04-F04'?r.declaration?.by!==role:r.owner!==role);
 
+const programmeFields=['approach','templateVersion','procedure','nature','timing','extent'];
+export function PlanningBasis({basis}:{basis:ProgrammeBasis}){
+ const {risk,materiality,reliance,procedure}=basis;
+ const levels:Record<string,string>={none:'Найдахгүй',partial:'Хэсэгчлэн',full:'Бүрэн',na:'Хамаарахгүй'};
+ return <div className="space-top">
+  <p><b>{risk.name}</b> · v{risk.version} · {risk.target} · {risk.assertion}</p>
+  <p>{risk.response}</p>
+  {materiality&&<p>1.3 · v{materiality.version} · Нийт {materiality.overall.toLocaleString()} · Гүйцэтгэл {materiality.performance.toLocaleString()} · Илт бага {materiality.trivial.toLocaleString()}{materiality.source?' · '+materiality.source:''}</p>}
+  {reliance&&<p>2.6 · v{reliance.version} · {levels[reliance.level]??reliance.level} · {reliance.basis}</p>}
+  {procedure&&<dl className="register-values">
+   <div><dt>Төлөвлөсөн горим · {procedure.key}</dt><dd>{procedure.label}</dd></div>
+   <div><dt>Шинж</dt><dd>{procedure.nature}</dd></div>
+   <div><dt>Хугацаа</dt><dd>{procedure.timing}</dd></div>
+   <div><dt>Хамрах хүрээ</dt><dd>{procedure.extent}</dd></div>
+  </dl>}
+ </div>;
+}
+
 function Editor({kind,row,resources,evidence,run,onDone}:{
  kind:string;row?:PilotRecord;resources:RegisterResources;evidence:Evidence[];run:PilotAction;onDone:()=>void;
 }){
  const def=spec(kind)!;
  const [values,setValues]=useState<Record<string,string>>(row?.values??{});
- const set=(key:string,value:string)=>setValues(v=>({...v,[key]:value}));
+ const planning=kind==='M07-F01';
+ const selectedForm=resources.rules.find(r=>r.id===values.rule)?.form;
+ const templates=resources.programmeTemplates?.[selectedForm??'']??[];
+ const set=(key:string,value:string)=>setValues(v=>{
+  const next={...v,[key]:value};
+  if(planning&&key==='rule'){next.risk='';next.templateVersion='';next.procedure='';}
+  if(planning&&key==='templateVersion')next.procedure='';
+  return next;
+ });
  function save(e:FormEvent<HTMLFormElement>){
   e.preventDefault();
   const fields=Object.fromEntries(Object.entries(values).map(([key,value])=>['field.'+key,value]));
@@ -36,7 +63,11 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
  }
  function options(field:RegisterField):readonly (readonly [string,string])[]|undefined{
   if(field.type==='choice')return field.choices;
-  if(field.type==='record')return resources.registers.filter(r=>r.kind===field.target&&r.id!==row?.id&&r.status==='approved'&&!r.stale).map(r=>[r.id,heading(r)+' · v'+r.version]);
+  if(planning&&field.key==='templateVersion')return templates.map(t=>[t.version,t.version==='source'?'Эх маягт':'Баталсан v'+t.version]);
+  if(planning&&field.key==='procedure')return (templates.find(t=>t.version===values.templateVersion)?.procedures??[]).map(p=>[p.key,p.key+' · '+p.label]);
+  if(field.type==='record')return resources.registers.filter(r=>r.kind===field.target&&r.id!==row?.id&&r.status==='approved'&&!r.stale&&
+   (!planning||field.key!=='rule'||resources.rules.some(rule=>rule.id===r.id&&rule.matches))&&
+   (!planning||field.key!=='risk'||r.values.programme===selectedForm)).map(r=>[r.id,heading(r)+' · v'+r.version]);
   if(field.type==='programme'||field.type==='form')return (field.type==='programme'?resources.programmes:resources.forms).map(f=>[f.id,f.id+' · '+f.title]);
   if(field.type==='evidence')return evidence.map(e=>[e.id,e.name+' · v'+e.version]);
   if(field.key==='package')return resources.archive.packages.map(p=>[p.id,p.summary.client+' · '+p.sealed.slice(0,16)+' · '+p.id.slice(0,8)]);
@@ -44,9 +75,9 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
   if(kind==='M12-F08'&&values.type==='release'&&field.key==='reference')return resources.registers.filter(r=>r.kind===kind&&r.values.package===values.package&&r.values.type==='hold').map(r=>[r.id,r.values.reference]);
  }
  return <form className="feature-form" onSubmit={save}>
-  <div className="field-grid">{def.fields.map(f=>{
+  <div className="field-grid">{def.fields.filter(f=>!planning||!programmeFields.includes(f.key)||resources.extended&&values.decision==='adopt').map(f=>{
    const choices=options(f),v=values[f.key]??'';
-   return <label key={f.key}>{f.label}{f.optional?' (сонголтоор)':''}
+   return <label key={f.key}>{f.label}{f.optional&&!(planning&&programmeFields.includes(f.key))?' (сонголтоор)':''}
     {choices?<select value={v} onChange={e=>set(f.key,e.target.value)}>
      <option value="">Сонгох</option>
      {v&&!choices.some(([id])=>id===v)&&<option value={v}>Өмнөх сонголт · {v}</option>}
@@ -54,6 +85,7 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
     </select>:f.type==='long'?<textarea value={v} onChange={e=>set(f.key,e.target.value)} maxLength={4000}/>:<input value={v} onChange={e=>set(f.key,e.target.value)} type={f.type==='date'?'date':f.type==='number'?'number':'text'} step={f.type==='number'?'any':undefined} maxLength={4000}/>}
    </label>;
   })}</div>
+  {planning&&resources.extended&&values.decision==='adopt'&&<p className="micro">Шийдвэрийг илгээхийн өмнө арга хандлага, хувилбар, горимын шинж, хугацаа, хамрах хүрээг бүрэн оруулна уу.</p>}
   <div className="row-actions"><button className="btn primary">Ноорог хадгалах</button><button type="button" className="btn secondary" onClick={onDone}>Болих</button></div>
  </form>;
 }
@@ -85,6 +117,7 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
    return <div key={f.key}><dt>{f.label}</dt><dd>{file?(resources.archive.packages.length&&!resources.archive.reopened?fileLabel:<a href={'/api/pilot/evidence/'+file.id+pilotScope(engagementId)}>{fileLabel}</a>):linked?<button type="button" className="quiet" onClick={()=>open(linked.id)}>{heading(linked)} · {linked.kind}</button>:f.choices?.find(([key])=>key===v)?.[1]??v}</dd></div>;
   })}</dl>
   {row.template&&<p className="micro">{row.template.form} · {row.template.sheet} · {row.template.digest.slice(0,16)}</p>}
+  {row.programmeBasis&&<PlanningBasis basis={row.programmeBasis}/>}
   {row.statementVersion&&<p className="micro">Санхүүгийн тайлан v{row.statementVersion}</p>}
   {row.values.expected&&row.values.actual&&<p>Зөрүү {Number(row.values.actual)-Number(row.values.expected)}</p>}
   {row.declaration&&<p>{roleName[row.declaration.by]} · {new Date(row.declaration.at).toLocaleString()} · {row.declaration.text} {row.declaration.evidence}</p>}
@@ -107,7 +140,10 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
    <Reason label="Буцаах шалтгаан" action={reason=>command('return',reason)}/>
   </div>}
   {related.length>0&&<div className="row-actions space-top">{related.map(r=><button type="button" className="quiet" key={r.id} onClick={()=>open(r.id)}>{r.kind} · {heading(r)}</button>)}</div>}
-  <details className="feature-detail"><summary>Хувилбарын түүх ({row.history.length})</summary>{row.history.map((h,i)=><details key={i}><summary>v{h.version} · {state[h.status]} · {roleName[h.by]} · {h.reason}</summary><p>{new Date(h.at).toLocaleString()}</p><dl className="register-values">{def.fields.filter(f=>h.values[f.key]).map(f=><div key={f.key}><dt>{f.label}</dt><dd>{f.choices?.find(([key])=>key===h.values[f.key])?.[1]??h.values[f.key]}</dd></div>)}</dl></details>)}</details>
+  <details className="feature-detail"><summary>Хувилбарын түүх ({row.history.length})</summary>{row.history.map((h,i)=><details key={i}><summary>v{h.version} · {state[h.status]} · {roleName[h.by]} · {h.reason}</summary><p>{new Date(h.at).toLocaleString()}</p><dl className="register-values">{def.fields.filter(f=>h.values[f.key]).map(f=><div key={f.key}><dt>{f.label}</dt><dd>{f.choices?.find(([key])=>key===h.values[f.key])?.[1]??h.values[f.key]}</dd></div>)}</dl>
+   {h.template&&<p className="micro">{h.template.form} · {h.template.sheet} · {h.template.digest.slice(0,16)}</p>}
+   {h.programmeBasis&&<PlanningBasis basis={h.programmeBasis}/>}
+  </details>)}</details>
  </details>;
 }
 

@@ -51,7 +51,7 @@ export function AdoptPilotForm({forms,library,pins,run}:{
  const [id,setId]=useState(''),[version,setVersion]=useState('source');
  const published=library.releases.find(r=>r.id===id);
  const builtIn=forms.some(f=>f.id===id);
- const catalogue=[...forms,...library.releases.filter(r=>!forms.some(f=>f.id===r.id))];
+ const catalogue=[...forms,...library.releases.filter(r=>r.id.startsWith('F-'))];
  return <details className="card pad bench-card">
   <summary>Эх маягт ба баталсан хувилбар холбох</summary>
   <form className="feature-form" onSubmit={e=>{e.preventDefault();void run('form-use',{form:id,version});}}>

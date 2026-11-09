@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { registers } from '../src/lib/pilot-registers.ts';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { isCurrentReview, recordEvent, workKey } from '../src/lib/workspace.ts';
-import { PilotError, input } from './pilot-workflow.mjs';
+import { PilotError, input, validMateriality } from './pilot-workflow.mjs';
 import { nativePapers } from './pilot-forms.mjs';
 import { checkStaffing } from './pilot-staffing.mjs';
 
@@ -22,6 +22,9 @@ function stale(m, row, seen = new Set()) {
   if (seen.has(row.id)) return true;
   const path = new Set([...seen, row.id]);
   if (row.statementVersion && row.statementVersion !== m.engagements[0]?.fsVersion) return true;
+  const reliance = row.programmeBasis?.reliance;
+  if (reliance?.evidence && !m.evidence.some(e => e.id === reliance.evidence && e.status === 'accepted' &&
+      (reliance.evidenceVersion === undefined || e.version === reliance.evidenceVersion))) return true;
   if (Object.entries(row.paperVersions ?? {}).some(([form, version]) => {
     const w = m.work[workKey(m.engagement, form)];
     return !isCurrentReview(w) || w.version !== version;
@@ -52,9 +55,24 @@ export function programmeView(m) {
   return rules.map(r => ({ id: r.id, form: r.values.programme, matches: ruleMatches(m, r), outcome: r.values.outcome, basis: r.values.basis }));
 }
 
-export function adoptedForms(m) {
-  return approvedRows(m, 'M07-F01').filter(r => r.values.decision === 'adopt').map(r => r.template.form);
+export function programmeTemplates(m, files) {
+  const forms = new Set(programmeView(m).filter(r => r.matches).map(r => r.form));
+  const option = (version, body) => ({version, procedures:body.fields
+    .filter(f => f.type === 'procedure' && !f.when).map(f => ({key:f.key,label:f.label}))});
+  return Object.fromEntries([...forms].map(form => [form, [option('source',formContract(form)),
+    ...(m.pilotFormLibrary?.releases[form] ?? []).flatMap(r => {
+      const body = files.template(r.digest);
+      return body ? [option(String(r.number),body)] : [];
+    })]]));
 }
+
+const programmeRows = m => approvedRows(m, 'M07-F01');
+export const programmeDecision = (m, form) => programmeRows(m).find(r => r.template.form === form);
+export const adoptedForms = m => programmeRows(m).filter(r => r.values.decision === 'adopt').map(r => r.template.form);
+export const excludedForms = m => programmeRows(m).filter(r => r.values.decision === 'exclude').map(r => r.template.form);
+export const pendingProgrammes = m => [...new Set(rows(m, 'M07-F01').flatMap(r => r.history
+  .filter(h => h.status === 'approved' && h.values.decision === 'adopt' && h.template)
+  .map(h => h.template.form)))].filter(form => !programmeDecision(m, form));
 
 const unresolved = (m, kind, key, acceptable) => rows(m, kind).some(r => !approved(m, r) || !acceptable.includes(r.values[key]));
 export function acceptanceRegisterGaps(m) {
@@ -102,6 +120,7 @@ export function completionRegisterGaps(m) {
     for (const rule of programmeView(m).filter(r => r.matches && r.outcome === 'required')) {
       if (!approvedRows(m, 'M07-F01').some(r => r.values.rule === rule.id)) gaps.push(rule.form + ' · Хөтөлбөрийн шийдвэр');
     }
+    for (const form of pendingProgrammes(m)) gaps.push(form + ' · Хөтөлбөрийн шийдвэрийг дахин хянана уу');
     for (const form of adoptedForms(m)) {
       const w = m.work[workKey(m.engagement, form)];
       if (w?.status !== 'reviewed' || w.reviewedVersion !== w.version) gaps.push(form + ' · Хэрэгжүүлсэн хөтөлбөрийн хяналт');
@@ -114,6 +133,7 @@ export function registerPackage(m) {
   return registerRows(m).filter(r => supportKinds.includes(r.kind) && approved(m, r)).map(r => ({
     id: r.id, kind: r.kind, version: r.version, values: r.values, references: r.references, by: r.by, at: r.at,
     ...(r.template && { template: r.template }), ...(r.declaration && { declaration: r.declaration }),
+    ...(r.programmeBasis && { programmeBasis: r.programmeBasis }),
     ...(r.staffingBasis && { staffingBasis: r.staffingBasis }),
   }));
 }
@@ -149,6 +169,61 @@ function validateInput(m, spec, data) {
     )) bad('Утгыг шалгана уу · ' + f.label);
     return [f.key, value];
   }));
+}
+
+function checkProgramme(m, row, files) {
+  const v = row.values, rule = find(m, v.rule), risk = find(m, v.risk);
+  if (!ruleMatches(m, rule) || risk.values.programme !== rule.values.programme) {
+    bad('Дүрэм, тайлагналын хүрээ болон төлөвлөсөн хөтөлбөр тохирохгүй.');
+  }
+  const form = rule.values.programme, outcome = rule.values.outcome, adopt = v.decision === 'adopt';
+  if (row.history.some(h => h.status === 'approved' && h.template.form !== form)) {
+    bad('Өмнө баталсан хөтөлбөрийн дугаарыг солихгүй. Шинэ шийдвэр үүсгэнэ үү.');
+  }
+  if ((outcome === 'excluded' && adopt || outcome === 'required' && !adopt) && rule.values.override !== 'yes') {
+    bad('Энэ дүрмийн сонголтыг өөрчлөх эрхгүй.');
+  }
+  const current = programmeDecision(m, form);
+  if (current && current.id !== row.id) {
+    bad('Энэ хөтөлбөрт нэг шийдвэр бүртгэнэ үү.');
+  }
+
+  const source = formContract(form);
+  const selected = adopt && m.extendedPilot && !!(m.pilotStaffingEnabled || v.approach || v.templateVersion || v.procedure || v.nature || v.timing || v.extent);
+  const release = selected && v.templateVersion !== 'source' &&
+    m.pilotFormLibrary?.releases[form]?.find(r => String(r.number) === v.templateVersion);
+  if (selected && (!v.approach || !v.templateVersion || !v.procedure || !v.nature || !v.timing || !v.extent ||
+      v.templateVersion !== 'source' && !release)) bad('Арга хандлага, маягтын хувилбар, горимын шинж, хугацаа, хамрах хүрээг сонгоно уу.');
+  const contract = release ? files.template(release.digest) : source;
+  if (!contract) bad('Баталсан маягтын хувилбар олдсонгүй.');
+  const procedure = selected && contract.fields.find(f => f.key === v.procedure && f.type === 'procedure' && !f.when);
+  if (selected && !procedure) bad('Сонгосон хувилбараас хэрэгжүүлэх горимыг сонгоно уу.');
+  row.template = { form, sheet: contract.sheet, digest: release ? release.digest : hash(contract),
+    ...(selected && { number: release ? release.number : 0 }) };
+  files.storeTemplate(row.template.digest, contract);
+  row.programmeBasis = {
+    risk:{ id:risk.id,version:risk.version,name:risk.values.risk,target:risk.values.target,
+      assertion:risk.values.assertion,response:risk.values.response },
+    ...(procedure && { procedure:{key:procedure.key,label:procedure.label,nature:v.nature,timing:v.timing,extent:v.extent} }),
+  };
+  if (!adopt || !(m.extendedPilot || selected)) return;
+
+  const mat = m.work[workKey(m.engagement, '1.3')], controls = m.work[workKey(m.engagement, '2.6')];
+  const amounts = validMateriality(m);
+  if (!isCurrentReview(mat) || !amounts || selected && !mat.values.benchmarkSource) {
+    bad('1.3 · Материаллаг байдал болон суурь дүнгийн эх сурвалжийг хянана уу.');
+  }
+  row.paperVersions = {'1.3':mat.version};
+  row.programmeBasis.materiality = {version:mat.version,...amounts,source:mat.values.benchmarkSource};
+  if (v.approach === 'substantive') return;
+  const {controlsReliance:level,relianceBasis:basis,relianceEvidence:evidenceId} = controls.values;
+  const evidence = m.evidence.find(e => e.id === evidenceId && e.status === 'accepted');
+  if (!isCurrentReview(controls) || selected && (!['partial','full'].includes(level) || !evidence)) {
+    bad('2.6 · Хяналтад найдах шийдвэр ба хүлээн зөвшөөрсөн нотолгоо шаардлагатай.');
+  }
+  row.paperVersions['2.6'] = controls.version;
+  row.programmeBasis.reliance = {version:controls.version,level,basis,
+    ...(evidence && {evidence:evidence.id,evidenceVersion:evidence.version})};
 }
 
 function checkBusiness(m, row, spec, files) {
@@ -199,19 +274,7 @@ function checkBusiness(m, row, spec, files) {
       checkStaffing(m, row, files);
       break;
     case 'M07-F01': {
-      const rule = find(m, v.rule), risk = find(m, v.risk);
-      if (!ruleMatches(m, rule) || risk.values.programme !== rule.values.programme) bad('Дүрэм, тайлагналын хүрээ болон төлөвлөсөн хөтөлбөр тохирохгүй.');
-      const outcome = rule.values.outcome;
-      if ((outcome === 'excluded' && v.decision === 'adopt' || outcome === 'required' && v.decision === 'exclude') && rule.values.override !== 'yes') bad('Энэ дүрмийн сонголтыг өөрчлөх эрхгүй.');
-      const contract = contracts.find(f => f.id === rule.values.programme);
-      if (approvedRows(m, row.kind).some(r => r.id !== row.id && r.template.form === contract.id)) bad('Энэ хөтөлбөрт нэг шийдвэр бүртгэнэ үү.');
-      row.template = { form: contract.id, sheet: contract.sheet, digest: hash(contract) };
-      files.storeTemplate(row.template.digest, contract);
-      if (m.extendedPilot) {
-        const basis = ['1.3','2.6'].map(form => m.work[workKey(m.engagement, form)]);
-        if (!basis.every(isCurrentReview)) bad('1.3 · Материаллаг байдал болон 2.6 · Хяналтын арга хандлагыг хянана уу.');
-        row.paperVersions = Object.fromEntries(basis.map(w => [w.form, w.version]));
-      }
+      checkProgramme(m, row, files);
       break;
     }
     case 'M06-F06':
@@ -296,6 +359,7 @@ export function registerAction(m, role, data, files) {
     delete row.statementVersion;
     delete row.template;
     delete row.paperVersions;
+    delete row.programmeBasis;
     delete row.staffingBasis;
     row.version++;
     remember(row, role, 'draft', 'Ноорог хадгалав');
@@ -323,6 +387,7 @@ export function registerAction(m, role, data, files) {
     } else if (operation === 'submit') {
       requireRole(row.owner === role);
       if (!['draft','returned'].includes(row.status)) bad('Зөвхөн ноорог эсвэл засварт буцаасан хувилбар илгээнэ.');
+      if (spec.id === 'M07-F01' && row.status === 'returned' && stale(m,row)) row.version++;
       row.references = checkBusiness(m, row, spec, files);
       remember(row, role, 'submitted', 'Хяналтад илгээв');
     } else if (operation === 'approve' || operation === 'return') {
@@ -346,5 +411,8 @@ export function registerAction(m, role, data, files) {
 }
 
 export function registerEvidence(m) {
-  return [...new Set(registerPackage(m).flatMap(r => definition(r.kind).fields.filter(f => f.type === 'evidence').map(f => r.values[f.key]).filter(Boolean)))];
+  return [...new Set(registerPackage(m).flatMap(r => [
+    ...definition(r.kind).fields.filter(f => f.type === 'evidence').map(f => r.values[f.key]),
+    r.programmeBasis?.reliance?.evidence,
+  ].filter(Boolean)))];
 }
