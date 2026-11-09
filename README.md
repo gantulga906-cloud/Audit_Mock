@@ -2,6 +2,8 @@
 
 A Mongolian-language, browser-local frontend prototype for connected audit work. Next.js, React, TypeScript, Tailwind and Lucide. Three fictional engagements and four people demonstrate different preparation, review, partner and quality responsibilities.
 
+**New in v4:** open **Миний ажил → Ажлын баримтууд** for the full-page editor. Open **Үйлчлүүлэгчид** for the company record, evidence library, Form Builder, and contextual data checks. See [v4 scope and verification](docs/research/implementation-v4.md).
+
 **New in v3:** open **Урсгал нээх** on the home page to start the fixed-asset additions scenario at Оргил Технологи. See the [walkthrough and verification notes](docs/research/implementation-v3.md). v3 uses a separate browser storage key so the earlier v2 demo data is retained.
 
 ## Run

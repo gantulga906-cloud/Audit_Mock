@@ -17,7 +17,7 @@ export function IntakeEditor({model,eng,mutate,go}:Props){
   <p className="muted">Тайлант жил тодорхойгүй үед ч хүсэлтийн мэдээллийг хадгалж болно.</p>
   <div className="field-grid">
    <label>Хүсэлтийн эх үүсвэр<select disabled={locked} value={draft.origin} onChange={e=>setDraft({...draft,origin:e.target.value as 'client'|'firm'})}><option value="client">Үйлчлүүлэгчээс</option><option value="firm">Манай фирмээс</option></select></label>
-   <label>Тайлант жил<input disabled={locked} placeholder="Тодорхойгүй" value={draft.period} onChange={e=>setDraft({...draft,period:e.target.value})}/></label>
+   <div><p className="micro">Тайлант үе: {model.bench?.periods[eng.id]?.start??'Тодорхойгүй'} — {model.bench?.periods[eng.id]?.end??''}</p><button className="quiet" onClick={()=>go('profile')}>Компанийн бүртгэлээс сонгох</button></div>
   </div>
   <label>Холбоо барих хүн<input disabled={locked} value={draft.contact} onChange={e=>setDraft({...draft,contact:e.target.value})}/></label>
   <label>Мэдэгдэж буй мэдээлэл<textarea disabled={locked} value={draft.facts} onChange={e=>setDraft({...draft,facts:e.target.value})}/></label>
@@ -29,7 +29,7 @@ export function IntakeEditor({model,eng,mutate,go}:Props){
  </section>;
 }
 
-function RequestParts({model,eng,mutate}:Props){
+export function RequestParts({model,eng,mutate}:Props){
  const r=model.requests.find(r=>r.engagement===eng.id&&r.form==='3.1.2'&&r.parts);
  const [references,setReferences]=useState<Record<string,string>>({});
  const [reasons,setReasons]=useState<Record<string,string>>({});
@@ -52,7 +52,7 @@ function RequestParts({model,eng,mutate}:Props){
  </section>;
 }
 
-function SampleUnit({model,eng,mutate,id,selectionStamp}:Props&{id:string;selectionStamp:string}){
+export function SampleUnit({model,eng,mutate,id,selectionStamp}:Props&{id:string;selectionStamp:string}){
  const [detail,setDetail]=useState(''),[amount,setAmount]=useState(''),[result,setResult]=useState<'pass'|'exception'>('pass');
  const work=model.work[workKey(eng.id,'3.1.2')];
  const saved=work.values[`sample.${selectionStamp}.${id}`];
@@ -108,7 +108,7 @@ export function NextActions({model,eng,go,open}:Pick<Props,'model'|'eng'|'go'|'o
  const gaps=role==='partner'?reportGaps(model,eng.id):[];
  if(!requests.length&&!rows.length&&!gaps.length)return null;
  return <section className="card pad next-actions"><div className="section-heading"><h2>Дараагийн үйлдэл</h2><Clock3 size={18}/></div>
-  {requests.map(r=><button key={r.id} onClick={()=>go(r.parts?'journey':'requests')}><span><b>{r.id} · {r.title}</b><small>{r.parts?.find(p=>p.state==='rejected')?.reason??(r.status==='ready'?'Ирсэн баримтыг үнэлэх':'Дутуу баримтыг тодруулах')} · {personById(r.owner).name} · {r.due}</small></span><ChevronRight size={16}/></button>)}
+  {requests.map(r=><button key={r.id} onClick={()=>go('requests')}><span><b>{r.id} · {r.title}</b><small>{r.parts?.find(p=>p.state==='rejected')?.reason??(r.status==='ready'?'Ирсэн баримтыг үнэлэх':'Дутуу баримтыг тодруулах')} · {personById(r.owner).name} · {r.due}</small></span><ChevronRight size={16}/></button>)}
   {rows.map(w=><button key={w.id} onClick={()=>open(w.form)}><span><b>{w.form} · {w.title}</b><small>{w.notes.find(n=>!n.cleared)?.text??(w.status==='submitted'?'Илгээсэн хувилбарыг хянах':role==='quality'?'Томилсон чанарын ажил':'Эх баримт эсвэл шинэ хувилбар хүлээгдэж байна')} · {personById(w.status==='submitted'?w.reviewer:w.owner).name} · {w.due||'Товлоогүй'}</small></span><ChevronRight size={16}/></button>)}
   {gaps.map(g=><button key={g} onClick={()=>go(g.startsWith('1.4')||g.includes('идэвхжээгүй')?'decisions':'reporting')}><span><b>{g}</b><small>Гаргалтын шаардлага · {eng.reportDate}</small></span><ChevronRight size={16}/></button>)}
  </section>;

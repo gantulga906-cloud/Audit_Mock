@@ -32,3 +32,25 @@
 .audit-app .plan-outside button{display:flex;margin:6px 0}
 @media(max-width:840px){.audit-app .journey-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.audit-app .journey-grid{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:500px){.audit-app .journey-launch{align-items:flex-start;flex-direction:column}.audit-app .journey-steps{grid-template-columns:minmax(0,1fr)}}
+.audit-app .engagement-tabs{display:flex;gap:5px;flex-wrap:wrap;padding:8px;margin:0 0 18px;border:1px solid #dce7d9;border-radius:12px;background:#fff}
+.audit-app .engagement-tabs button{padding:8px 11px;border-radius:8px;color:#425b45;font-size:12px;font-weight:650}
+.audit-app .engagement-tabs button:hover,.audit-app .engagement-tabs button.active{background:#e8f2e5;color:#245135}
+.audit-app .workbench-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:16px}
+.audit-app .bench-card h2{margin:5px 0 12px}
+.audit-app .bench-card label{margin:9px 0}
+.audit-app .bench-item{padding:12px 0;border-top:1px solid #dfe7db;margin-top:10px}
+.audit-app .bench-hidden{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0}
+.audit-app .paper-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid #e2eadf}
+.audit-app .paper-bar a{color:#246543;text-decoration:underline}
+.audit-app .paper-section-index{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.audit-app .paper-section-index button{border:1px solid #dce7d9;border-radius:8px;padding:5px 8px}
+.audit-app .linked-value{padding:10px 12px;border-radius:8px;background:#eff6ec;color:#244832;display:flex;flex-direction:column;gap:4px;overflow-wrap:anywhere}
+.audit-app .bench-preview-image{display:block;max-width:100%;max-height:55vh;object-fit:contain;margin:12px auto}
+.audit-app .bench-preview-text{white-space:pre-wrap;overflow:auto;max-height:45vh;padding:12px;border:1px solid #dce7d9;border-radius:8px}
+.audit-app[data-theme=dark]{color-scheme:dark;--border:#36453b;--ink:#eff5ef;background:#111a15;color:#edf4ee}
+.audit-app[data-theme=dark] :is(.app-main,.app-topbar,.card,.modal,.app-content,.workpaper-editor,.engagement-tabs,.table-scroll,.calendar-cell,.gantt-header,.gantt-row,.plan-controls,.gantt-group,.editor-sticky,.greeting-strip,.agenda-item,.metric-card,.calendar-tools,.tabs,.filter-bar,.notification-panel,.command-modal,.specimen){background:#19251e;color:#edf4ee;border-color:#36453b}
+.audit-app[data-theme=dark] :is(input,select,textarea,.field-block,.linked-value,.btn.secondary,.timeline-caption,.callout,.subtle-note,.history-card,.note-card,.readiness-list>div,th,.row-actions a){background:#23342a;color:#edf4ee;border-color:#465a4a}
+.audit-app[data-theme=dark] :is(.muted,.micro,.quiet,.engagement-tabs button,.eyebrow,.section-heading p,.form-section-label){color:#c0d2c0}
+.audit-app[data-theme=dark] :is(.bench-item,.paper-bar,.editor-section,td){border-color:#36453b}
+.audit-app[data-theme=dark] .engagement-tabs button.active{background:#34543e;color:#eff9f0}
+@media(max-width:820px){.audit-app .workbench-grid{grid-template-columns:minmax(0,1fr)}}
