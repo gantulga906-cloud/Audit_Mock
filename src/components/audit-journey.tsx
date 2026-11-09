@@ -1,3 +1,4 @@
+import {issuedRequest} from '@/lib/feature-workflows';
 import {useState} from 'react';
 import {ArrowRight,CheckCircle2,ChevronRight,Clock3,FileCheck2,GitBranch,ShieldCheck} from 'lucide-react';
 import {
@@ -30,7 +31,7 @@ export function IntakeEditor({model,eng,mutate,go}:Props){
 }
 
 export function RequestParts({model,eng,mutate}:Props){
- const r=model.requests.find(r=>r.engagement===eng.id&&r.form==='3.1.2'&&r.parts);
+ const r=model.requests.find(r=>r.engagement===eng.id&&!r.dispatch&&r.form==='3.1.2'&&r.parts);
  const [references,setReferences]=useState<Record<string,string>>({});
  const [reasons,setReasons]=useState<Record<string,string>>({});
  if(!r)return null;
@@ -66,7 +67,7 @@ export function SampleUnit({model,eng,mutate,id,selectionStamp}:Props&{id:string
 export function AuditJourney(props:Props){
  const {model,eng,mutate,open,go}=props,role=personById(model.person).role,work=model.work[workKey(eng.id,'3.1.2')],selection=currentSelection(model,eng.id);
  const [qualityNotes,setQualityNotes]=useState<Record<string,string>>({});
- const request=model.requests.find(r=>r.engagement===eng.id&&r.form==='3.1.2'&&r.parts);
+ const request=model.requests.find(r=>r.engagement===eng.id&&!r.dispatch&&r.form==='3.1.2'&&r.parts);
  const steps=[
   {title:'Хүсэлт ба шийдвэр',detail:eng.intake?.active?'Идэвхжсэн':acceptanceGaps(eng).join(' · ')||'Идэвхжүүлэх',done:!!eng.intake?.active,action:()=>go(role==='partner'?'decisions':'engagements')},
   {title:'Томилгоо ба хугацаа',detail:`${personById(work.owner).name} · ${work.due||'Товлоогүй'}`,done:!!work.due,action:()=>go(role==='preparer'?'tasks':'progress')},
@@ -103,7 +104,7 @@ export function AuditJourney(props:Props){
 
 export function NextActions({model,eng,go,open}:Pick<Props,'model'|'eng'|'go'|'open'>){
  const role=personById(model.person).role;
- const requests=model.requests.filter(r=>r.engagement===eng.id&&r.owner===model.person&&r.status!=='complete');
+ const requests=model.requests.filter(r=>r.engagement===eng.id&&r.owner===model.person&&issuedRequest(r)&&r.status!=='complete');
  const rows=Object.values(model.work).filter(w=>w.engagement===eng.id&&(role==='quality'?w.form==='4.6':w.owner===model.person&&['returned','waiting','changed'].includes(w.status)||w.reviewer===model.person&&w.status==='submitted')).slice(0,5);
  const gaps=role==='partner'?reportGaps(model,eng.id):[];
  if(!requests.length&&!rows.length&&!gaps.length)return null;
