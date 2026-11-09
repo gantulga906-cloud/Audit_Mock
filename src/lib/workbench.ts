@@ -4,7 +4,7 @@ export type Theme='light'|'dark'|'system';
 export type Contact={id:string;name:string;role:string;email:string;body:string;signer:boolean};
 export type Client={name:string;legalForm:string;registration:string;framework:string;contacts:Contact[];bodies:string[]};
 export type Period={start:string;end:string};
-export type Field={key:string;label:string;type:string;source:string;section?:string;options?:string[];required?:boolean;instruction?:string;binding?:'name'|'legalForm'|'registration'|'period'|'contacts';when?:{key:string;value:string};columns?:{key:string;label:string;type:string}[]};
+export type Field={key:string;label:string;type:string;source:string;section?:string;options?:string[];required?:boolean;instruction?:string;binding?:'name'|'legalForm'|'registration'|'period'|'contacts';when?:{key:string;value:string};columns?:{key:string;label:string;type:string}[];tailoring?:{state:'added'|'adapted'|'na';reason:string;risk?:string;assertion?:string;by:string;at:string}};
 export type Template={id:string;title:string;stage:number;fields:Field[];family:string;sheet:string;purpose?:string;clauses?:{text?:string;label?:string;source?:string}[]};
 type Revision={number:number;body:Template;by:string;at:string;note:string};
 type Draft={body:Template;by:string;submitted:boolean;note:string};
@@ -46,7 +46,14 @@ export function saveClient(m:Model,id:string,client:Client,period?:Period){
  if(period&&(!valid(period.start)||!valid(period.end)||period.start>period.end))throw Error('Тайлант үеийн эхлэх, дуусах өдрийг шалгана уу.');
  if(!period&&e.intake?.active)throw Error('Идэвхтэй гэрээт ажилд тайлант үе шаардлагатай.');
  const b=bench(m),prior=sharedFields(m,id);
+ if(e.team){
+  if(!period||period.end>e.reportDate)throw Error('Тайлант үе зорилтот гаргалтын өдрөөс хэтэрч болохгүй.');
+  if(m.engagements.some(other=>{const p=b.periods[other.id];return other.id!==id&&other.companyId===e.companyId&&p&&p.start<=period.end&&p.end>=period.start;}))throw Error('Энэ компанийн тайлант үетэй давхцаж байна.');
+  if(e.carriedFrom&&b.periods[e.carriedFrom]?.end>=period.start)throw Error('Өмнөх ажлын үеэс хойших огноо сонгоно уу.');
+  if(m.engagements.some(other=>other.carriedFrom===id&&b.periods[other.id]?.start<=period.end))throw Error('Дараагийн ажлын үеэс өмнөх огноо сонгоно уу.');
+ }
  b.clients[id]=structuredClone(client);
+ if(e.companyId&&m.companies?.[e.companyId])m.companies[e.companyId].profile=structuredClone(client);
  if(period)b.periods[id]={...period};else delete b.periods[id];
  e.client=client.name;e.period=period?.end.slice(0,4)??'';
  if(e.intake)e.intake.period=e.period;
@@ -63,7 +70,8 @@ export function saveClient(m:Model,id:string,client:Client,period?:Period){
 export function accessOverride(m:Model,w:WorkItem,person:string,action:Access){return m.bench?.access[w.id]?.[person]?.[action];}
 export function grant(m:Model,w:WorkItem,actor:{id:string;role:string},person:{id:string;scope:string[];role:string},action:Access,value:boolean|undefined){
  requireOpen(m,w.engagement);
- if(actor.id!==m.person||actor.id===person.id||!person.scope.includes(w.engagement)||person.role==='quality'||!['reviewer','partner'].includes(actor.role))throw Error('Энэ эрхийг өөрчлөх боломжгүй.');
+ const scope=m.engagements.find(e=>e.id===w.engagement)?.team;
+ if(actor.id!==m.person||actor.id===person.id||!(person.scope.includes(w.engagement)||scope&&Object.values(scope).includes(person.id))||person.role==='quality'||!['reviewer','partner'].includes(actor.role))throw Error('Энэ эрхийг өөрчлөх боломжгүй.');
  if(action==='assign'&&actor.role!=='partner')throw Error('Томилгооны эрхийг партнер олгоно.');
  if(value&&action==='prepare'&&(w.reviewer===person.id||accessOverride(m,w,person.id,'review')))throw Error('Хянагч өөрийн ажлыг бэлтгэх эрхгүй.');
  if(value&&action==='review'&&(w.owner===person.id||accessOverride(m,w,person.id,'prepare')))throw Error('Бэлтгэгч өөрийн ажлыг хянах эрхгүй.');
@@ -108,7 +116,9 @@ export function visibleField(f:Field,values:Record<string,string>){return !f.whe
 export function missingFields(m:Model,w:WorkItem){
  const t=m.bench?.applied[w.id],shared=sharedFields(m,w.engagement);
  return t?.fields.filter(f=>visibleField(f,w.values)).flatMap(f=>{
+  if(f.tailoring?.state==='na')return [];
   const v=f.binding?shared[f.binding]:w.values[f.key];
+  if(f.type==='procedure'&&f.tailoring&&(!v?.trim()||!w.values[f.key+'.result']?.trim()))return [f.label+' · Гүйцэтгэл ба үр дүн'];
   if(f.required&&(!v?.trim()||v==='[]'))return [f.label];
   if(v==='Хамаарахгүй'&&!w.values[f.key+'.reason']?.trim())return [f.label+' · Хамаарахгүй үндэслэл'];
   return [];

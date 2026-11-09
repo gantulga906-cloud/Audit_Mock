@@ -54,3 +54,16 @@
 .audit-app[data-theme=dark] :is(.bench-item,.paper-bar,.editor-section,td){border-color:#36453b}
 .audit-app[data-theme=dark] .engagement-tabs button.active{background:#34543e;color:#eff9f0}
 @media(max-width:820px){.audit-app .workbench-grid{grid-template-columns:minmax(0,1fr)}}
+
+.audit-app .feature-desk{margin-bottom:16px}
+.audit-app .feature-detail{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px}
+.audit-app .feature-detail>summary{cursor:pointer;font-weight:650}
+.audit-app .feature-detail>summary .pill{margin-left:8px}
+.audit-app .feature-form,.audit-app .feature-fields{display:grid;gap:12px;margin-top:12px}
+.audit-app .feature-fields{padding:0;border:0;min-width:0}
+.audit-app .feature-form>.btn,.audit-app .feature-fields>.btn{justify-self:start}
+.audit-app .feature-summary{display:flex;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-top:12px}
+.audit-app .feature-summary>label{margin-left:auto}
+.audit-app .feature-part{display:grid;justify-items:start;gap:8px;padding:12px;border:1px solid var(--line);border-radius:8px}
+.audit-app .feature-part form{width:100%}
+.audit-app .feature-form form .btn{margin-top:6px}

@@ -1,4 +1,5 @@
 import type {Role} from './workflow';
+import type {Company,EngagementTeam} from './feature-workflows';
 import {accessOverride,missingFields,sharedFields,type Bench,type Template} from './workbench.ts';
 
 export type StageStatus='not_started'|'in_progress'|'waiting'|'submitted'|'returned'|'reviewed'|'changed';
@@ -23,10 +24,10 @@ type SnapshotContent={id:string;version:number;reviewedVersion?:number;values:Re
 type Authorization={report:number;fs:number;by:string;at:string;package?:ReportPackage};
 type Release={report:number;fs:number;authorizedAt:string;issuedAt:string;recipients:{name:string;status:string}[];package?:ReportPackage};
 export type WorkItem={id:string;engagement:string;form:string;title:string;stage:number;owner:string;reviewer:string;start:string;due:string;baselineStart:string;baselineDue:string;estimate:number;actual:number;status:StageStatus;version:number;submittedVersion?:number;submittedBy?:string;reviewedVersion?:number;values:Record<string,string>;evidence:string[];notes:Note[];history:Snapshot[];required:boolean;naReason?:string;completedAt?:string;qualityVersion?:number};
-export type Engagement={id:string;client:string;initials:string;industry:string;period:string;kind:string;phase:string;reportDate:string;acceptance:'pending'|'accepted'|'declined'|'conditional';termsAgreed:boolean;independence:boolean;formalEqr:boolean;eqrComplete:boolean;fsVersion:number;reportVersion:number;reportFsVersion:number;authorized?:Authorization;issued?:{report:number;fs:number;at:string};recipients:{name:string;status:'pending'|'delivered'|'failed'}[];locked:boolean;custody:'none'|'offered'|'accepted';hold:boolean;followup:boolean;qualityConcerns:{id:string;text:string;resolved:boolean}[];releaseHistory?:Release[];decisionVersion?:number;intake?:Intake;decisions?:DecisionRecord[];statements?:Statements;authorizationHistory?:Authorization[];eqrReview?:{by:string;at:string;basis:string}};
+export type Engagement={id:string;companyId?:string;team?:EngagementTeam;carriedFrom?:string;client:string;initials:string;industry:string;period:string;kind:string;phase:string;reportDate:string;acceptance:'pending'|'accepted'|'declined'|'conditional';termsAgreed:boolean;independence:boolean;formalEqr:boolean;eqrComplete:boolean;fsVersion:number;reportVersion:number;reportFsVersion:number;authorized?:Authorization;issued?:{report:number;fs:number;at:string};recipients:{name:string;status:'pending'|'delivered'|'failed'}[];locked:boolean;custody:'none'|'offered'|'accepted';hold:boolean;followup:boolean;qualityConcerns:{id:string;text:string;resolved:boolean}[];releaseHistory?:Release[];decisionVersion?:number;intake?:Intake;decisions?:DecisionRecord[];statements?:Statements;authorizationHistory?:Authorization[];eqrReview?:{by:string;at:string;basis:string}};
 export type Evidence={id:string;engagement:string;name:string;version:number;type:string;obtained:string;status:'received'|'accepted'|'rejected';source:string;anchor:string;text:string;specimen:boolean;dataUrl?:string;original?:boolean;channel?:string;request?:string;replaces?:string;assessment?:string};
 export type RequestPart={id:string;title:string;evidence?:string;state:'missing'|'received'|'accepted'|'rejected';reason?:string};
-export type RequestItem={id:string;engagement:string;title:string;form:string;contact:string;owner:string;due:string;status:'open'|'partial'|'ready'|'changes_requested'|'complete';received:number;expected:number;message:string;evidence:string[];history:string[];parts?:RequestPart[]};
+export type RequestItem={id:string;dispatch?:'draft'|'issued'|'cancelled';contactId?:string;contactEmail?:string;issuedAt?:string;followUps?:{at:string;by:string;text:string}[];engagement:string;title:string;form:string;contact:string;owner:string;due:string;status:'open'|'partial'|'ready'|'changes_requested'|'complete';received:number;expected:number;message:string;evidence:string[];history:string[];parts?:RequestPart[]};
 export type ManualTask={id:string;engagement:string;title:string;owner:string;due:string;done:boolean;kind:'task'|'decision'|'meeting';form?:string};
 export type Event={id:string;engagement:string;title:string;owner:string;start:string;end:string;kind:'meeting'|'fieldwork'|'review'|'focus'};
 export type Finding={id:string;engagement:string;form:string;title:string;amount:number;status:'identified'|'agreed'|'posted_verified';evidence:string;qualitative:string;resolution?:string;sampleId?:string};
@@ -35,13 +36,15 @@ export type Dataset={version:number;name:string;rows:DataRow[];sourceTotal:numbe
 export type Run={id:string;engagement:string;automation:string;inputStamp:string;at:string;by:string;status:'complete'|'failed';summary:string;rows:{label:string;value:string}[];exceptions:string[];dispositions:Record<string,string>};
 export type Risk={id:string;engagement:string;title:string;assertion:string;significance:string;response:string;forms:string[];conclusion:string};
 export type SampleDesign={size:number;seed:number;designVersion:number;reviewedVersion?:number;reviewedStamp?:string;reviewedBy?:string;selected:string[];selections?:{ids:string[];stamp:string;at:string;by:string;version:number}[]};
-export type Model={schema:2;bench?:Bench;person:string;engagement:string;work:Record<string,WorkItem>;engagements:Engagement[];evidence:Evidence[];requests:RequestItem[];tasks:ManualTask[];events:Event[];findings:Finding[];datasets:Record<string,Dataset>;runs:Run[];risks:Risk[];impacts:{id:string;engagement:string;source:string;targets:string[];reason:string;resolved:boolean;resolution?:string}[];samples:Record<string,SampleDesign>;library:{version:number;draft:string;phase:'published'|'draft'|'in_review';adopted:Record<string,number>;releases:{version:number;text:string}[]};activity:{id:string;engagement:string;text:string;by:string;at:string;form?:string}[]};
+export type Model={schema:2;bench?:Bench;companies?:Record<string,Company>;person:string;engagement:string;work:Record<string,WorkItem>;engagements:Engagement[];evidence:Evidence[];requests:RequestItem[];tasks:ManualTask[];events:Event[];findings:Finding[];datasets:Record<string,Dataset>;runs:Run[];risks:Risk[];impacts:{id:string;engagement:string;source:string;targets:string[];reason:string;resolved:boolean;resolution?:string}[];samples:Record<string,SampleDesign>;library:{version:number;draft:string;phase:'published'|'draft'|'in_review';adopted:Record<string,number>;releases:{version:number;text:string}[]};activity:{id:string;engagement:string;text:string;by:string;at:string;form?:string}[]};
 export const workKey=(e:string,f:string)=>`${e}/${f}`;
 export const personById=(id:string)=>PERSONS.find(p=>p.id===id)!;
-export function permitted(m:Model,e:string){return personById(m.person).scope.includes(e)}
+export function inScope(m:Model,person:string,id:string){const e=m.engagements.find(x=>x.id===id);return !!e&&(e.team?Object.values(e.team).includes(person):personById(person)?.scope.includes(id));}
+export function permitted(m:Model,e:string){return inScope(m,m.person,e)}
 export function exportWorkspace(m:Model):Model{
- const result=structuredClone(m),allowed=new Set(personById(m.person).scope);
+ const result=structuredClone(m),allowed=new Set(m.engagements.filter(e=>permitted(m,e.id)).map(e=>e.id));
  result.engagements=result.engagements.filter(e=>allowed.has(e.id));
+ if(result.companies)result.companies=Object.fromEntries(Object.entries(result.companies).filter(([id,c])=>personById(m.person).role!=='quality'&&(c.by===m.person||result.engagements.some(e=>e.companyId===id))));
  if(!allowed.has(result.engagement))result.engagement=result.engagements[0]?.id??'';
  result.work=Object.fromEntries(Object.entries(result.work).filter(([,w])=>canReadWork(m,w)));
  result.datasets=Object.fromEntries(Object.entries(result.datasets).filter(([id])=>allowed.has(id)));
@@ -68,10 +71,10 @@ export function changeWork(m:Model,id:string,values:Record<string,string>,eviden
  recordEvent(m,`${w.form} · v${w.version} агуулга шинэчлэгдэв`,w.form);
 }
 export function acceptanceGaps(e:Engagement){const gaps:string[]=[];const decision=e.decisions?.at(-1);if(e.acceptance!=='accepted')gaps.push('1.4.1/1.4.2 · Хүлээн авах шийдвэр');if(!e.independence||!decision?.independence)gaps.push('1.4.5 · Хараат бус байдлын шийдвэрийн ишлэл');if(!e.termsAgreed||!decision?.letter)gaps.push('1.4.3 · Тохиролцсон захидлын хувилбар');return gaps;}
-export function readiness(m:Model,w:WorkItem){const e=m.engagements.find(x=>x.id===w.engagement)!;const missing=w.form==='1.1.1'?acceptanceGaps(e):[];if(w.stage>1&&e.intake&&!e.intake.active)missing.push('Гэрээт ажлыг идэвхжүүлнэ үү');if(w.form==='3.1.2'&&e.intake){const request=m.requests.find(r=>r.engagement===e.id&&r.form===w.form);if(request&&request.status!=='complete')missing.push(`${request.id} · Эх баримтын үнэлгээ дутуу`);}if(e.locked)missing.push('Эцсийн файл түгжээтэй');return missing;}
+export function readiness(m:Model,w:WorkItem){const e=m.engagements.find(x=>x.id===w.engagement)!;const missing=w.form==='1.1.1'?acceptanceGaps(e):[];if(w.stage>1&&e.intake&&!e.intake.active)missing.push('Гэрээт ажлыг идэвхжүүлнэ үү');{const request=m.requests.find(r=>r.engagement===e.id&&r.form===w.form&&(r.dispatch==='issued'||!r.dispatch&&w.form==='3.1.2'&&e.intake)&&r.status!=='complete');if(request)missing.push(`${request.id} · Эх баримтын үнэлгээ дутуу`);}if(e.locked)missing.push('Эцсийн файл түгжээтэй');return missing;}
 export function submissionGaps(m:Model,w:WorkItem){
  const gaps=[...readiness(m,w),...missingFields(m,w)];
- if(w.form==='3.1.2'&&m.engagements.find(e=>e.id===w.engagement)?.intake){
+ if(w.form==='3.1.2'&&w.engagement==='E2'&&m.engagements.find(e=>e.id===w.engagement)?.intake){
   const selection=currentSelection(m,w.engagement);
   if(!selection||selection.ids.some(id=>!w.values[`sample.${selection.stamp}.${id}`]))gaps.push('Сонгосон бүх нэгжийн шалгалтыг бүртгэнэ үү');
  }
@@ -83,7 +86,7 @@ export function returnWork(m:Model,id:string,text:string,anchor=''){const w=m.wo
 export function respondNote(m:Model,id:string,note:string,text:string){const w=m.work[id];if(!canEdit(m,w)||!text.trim())throw Error('Бэлтгэгчийн бодит хариу шаардлагатай.');w.notes.find(n=>n.id===note)!.response=text;recordEvent(m,`${w.form} · Хариу тайлбар бүртгэв`,w.form);}
 export function clearNote(m:Model,id:string,note:string){const w=m.work[id],n=w.notes.find(n=>n.id===note)!;if(m.person!==n.author||w.owner===m.person||!canReadWork(m,w)||m.engagements.find(e=>e.id===w.engagement)?.locked||!n.response.trim())throw Error('Тэмдэглэлийн хянагч хариуг үзэж шийдвэрлэнэ.');n.cleared=true;recordEvent(m,`${w.form} · Хянагч тэмдэглэл шийдвэрлэв`,w.form);}
 export function reschedule(m:Model,id:string,due:string,start?:string){const w=m.work[id];if(!permitted(m,w.engagement)||m.engagements.find(e=>e.id===w.engagement)?.locked||!(w.owner===m.person||['reviewer','partner'].includes(personById(m.person).role)))throw Error('Хугацаа өөрчлөх томилгоо байхгүй.');if(due&&(!/^\d{4}-\d{2}-\d{2}$/.test(due)||due<(start??w.start)))throw Error('Дуусах өдөр эхлэх өдрөөс өмнө байна.');w.due=due;if(start!==undefined)w.start=start;recordEvent(m,`${w.form} · ${due?'Төлөвлөсөн хугацаа '+due:'Товлоогүй'}`,w.form);}
-export function reassign(m:Model,id:string,owner:string,reviewer:string){const w=m.work[id];if(!(accessOverride(m,w,m.person,'assign')??['reviewer','partner'].includes(personById(m.person).role))||!canReadWork(m,w)||m.engagements.find(e=>e.id===w.engagement)?.locked)throw Error('Багийн томилгооны эрх шаардлагатай.');if(owner===reviewer)throw Error('Хөндлөнгийн хяналтыг өөртөө томилохгүй.');if(!personById(owner).scope.includes(w.engagement)||!personById(reviewer).scope.includes(w.engagement)||[owner,reviewer].some(id=>personById(id).role==='quality'))throw Error('Бэлтгэх/хянах хүчинтэй томилгоо шаардлагатай.');w.owner=owner;w.reviewer=reviewer;recordEvent(m,`${w.form} · Томилгоо шинэчлэв`,w.form);}
+export function reassign(m:Model,id:string,owner:string,reviewer:string){const w=m.work[id];if(!(accessOverride(m,w,m.person,'assign')??['reviewer','partner'].includes(personById(m.person).role))||!canReadWork(m,w)||m.engagements.find(e=>e.id===w.engagement)?.locked)throw Error('Багийн томилгооны эрх шаардлагатай.');if(owner===reviewer)throw Error('Хөндлөнгийн хяналтыг өөртөө томилохгүй.');if(!inScope(m,owner,w.engagement)||!inScope(m,reviewer,w.engagement)||[owner,reviewer].some(id=>personById(id).role==='quality'))throw Error('Бэлтгэх/хянах хүчинтэй томилгоо шаардлагатай.');w.owner=owner;w.reviewer=reviewer;recordEvent(m,`${w.form} · Томилгоо шинэчлэв`,w.form);}
 export function metrics(items:WorkItem[]){const applicable=items.filter(x=>x.required&&!x.naReason),n=applicable.length;const prepared=applicable.filter(x=>['submitted','reviewed'].includes(x.status)).length;const reviewed=applicable.filter(x=>x.status==='reviewed'&&x.reviewedVersion===x.version).length;return {total:items.length,applicable:n,prepared,reviewed,preparedPct:n?Math.round(prepared/n*100):null,reviewedPct:n?Math.round(reviewed/n*100):null,overdue:applicable.filter(x=>x.due&&x.due<DEMO_DAY&&x.status!=='reviewed').length,blocked:applicable.filter(x=>x.status==='waiting').length,notes:items.reduce((s,x)=>s+x.notes.filter(n=>!n.cleared).length,0)};}
 export function importCsv(text:string,period='2025'):Dataset{
  const lines=text.trim().split(/\r?\n/);if(lines.length<2)throw Error('Толгой мөр болон өгөгдөл шаардлагатай.');const parse=(s:string)=>{const out:string[]=[];let v='',q=false;for(let i=0;i<s.length;i++){if(s[i]==='"'){if(q&&s[i+1]==='"'){v+='"';i++}else q=!q}else if(s[i]===','&&!q){out.push(v);v=''}else v+=s[i]}out.push(v);return out.map(x=>x.trim())};
@@ -100,9 +103,10 @@ export function reportGaps(m:Model,eid:string){
  if(e.reportFsVersion!==e.fsVersion)g.push('Тайлангийн холбосон СТ хувилбар зөрүүтэй');
  if(!e.statements?.statements.trim()||!e.statements.notes.trim()||e.statements.version!==e.fsVersion)g.push('Одоогийн СТ ба тодруулгын бүртгэл');
  if(w.some(x=>x.notes.some(n=>!n.cleared)))g.push('Нээлттэй хяналтын тэмдэглэл');
- for(const f of (e.intake?['3.1.2','4.4','4.1.A1']:['4.4','4.1.A1']))if(!isCurrentReview(m.work[workKey(eid,f)]))g.push(`${f} · Одоогийн хувилбарын хяналт`);
- if(e.intake){const selection=currentSelection(m,eid),work=m.work[workKey(eid,'3.1.2')];if(!selection||selection.ids.some(id=>!work.values[`sample.${selection.stamp}.${id}`]))g.push('3.3.1 / 3.1.2 · Одоогийн түүвэр ба шалгалт');}
- if(e.intake&&m.requests.some(r=>r.engagement===eid&&r.form==='3.1.2'&&r.status!=='complete'))g.push('3.1.2 · Эх баримтын үнэлгээ');
+ for(const f of (e.id==='E2'?['3.1.2','4.4','4.1.A1']:['4.4','4.1.A1']))if(!isCurrentReview(m.work[workKey(eid,f)]))g.push(`${f} · Одоогийн хувилбарын хяналт`);
+ if(e.id==='E2'){const selection=currentSelection(m,eid),work=m.work[workKey(eid,'3.1.2')];if(!selection||selection.ids.some(id=>!work.values[`sample.${selection.stamp}.${id}`]))g.push('3.3.1 / 3.1.2 · Одоогийн түүвэр ба шалгалт');}
+ if(m.requests.some(r=>r.engagement===eid&&(r.dispatch==='issued'||e.id==='E2'&&!r.dispatch&&r.form==='3.1.2')&&r.status!=='complete'))g.push('Эх баримтын үнэлгээ дуусаагүй хүсэлт');
+ for(const paper of w)if(m.bench?.applied[paper.id]?.fields.some(f=>f.tailoring)&&!isCurrentReview(paper))g.push(paper.form+' · Тохируулсан горимын хяналт');
  if(m.findings.some(f=>f.engagement===eid&&f.status!=='posted_verified'&&!f.resolution))g.push('Залруулагдаагүй илрүүлэлтийн шийдвэр');
  if(e.formalEqr&&e.eqrReview?.basis!==qualityBasis(m,eid))g.push('Шаардлагатай формал EQR · Одоогийн багц');
  if(e.qualityConcerns.some(c=>!c.resolved))g.push('Чанарын шийдэгдээгүй асуудал');
@@ -153,12 +157,12 @@ export function saveIntake(m:Model,intake:Omit<Intake,'active'>){
  const e=m.engagements.find(e=>e.id===m.engagement)!;
  if(!e.intake||e.intake.active||e.locked||!permitted(m,e.id)||personById(m.person).role==='quality')throw Error('Урьдчилсан бүртгэл засах боломжгүй.');
  if(intake.period&&!/^\d{4}$/.test(intake.period))throw Error('Тайлант жилийг дөрвөн оронтой бичнэ үү.');
- e.intake={...intake,active:false};recordEvent(m,'Урьдчилсан хүсэлт хадгалав','1.1.1');
+ e.intake={...intake,period:e.team?m.bench?.periods[e.id]?.end.slice(0,4)??'':intake.period,active:false};recordEvent(m,'Урьдчилсан хүсэлт хадгалав','1.1.1');
 }
 export function activateEngagement(m:Model){
  const e=partnerEngagement(m);if(!e.intake||e.intake.active||e.locked)throw Error('Идэвхжүүлэх урьдчилсан бүртгэл алга.');
  const gaps=acceptanceGaps(e);if(!e.intake.period||!e.intake.contact.trim())gaps.push('Тайлант жил ба холбоо барих хүн');if(gaps.length)throw Error(gaps.join('; '));
- e.intake.active=true;e.period=e.intake.period;e.phase='Төлөвлөлт';recordEvent(m,'Тохиролцсон ажлыг идэвхжүүлэв','1.1.1');
+ e.intake.active=true;if(e.companyId&&m.companies?.[e.companyId]?.status==='prospect')m.companies[e.companyId].status='active';e.period=e.intake.period;e.phase='Төлөвлөлт';recordEvent(m,'Тохиролцсон ажлыг идэвхжүүлэв','1.1.1');
 }
 export function setEngagementDecision(m:Model,field:'acceptance'|'termsAgreed'|'independence',value:Engagement['acceptance']|boolean,reference=''){
  const e=partnerEngagement(m);if(e.locked)throw Error('Файл түгжээтэй.');
@@ -180,7 +184,9 @@ function content(w:WorkItem):SnapshotContent{return {id:w.id,version:w.version,r
 export function currentPackage(m:Model,eid:string):ReportPackage{
  const e=m.engagements.find(e=>e.id===eid)!;
  const paper=content(m.work[workKey(eid,'4.1.A1')]);
- const reliedOn=['1.1.1','1.3','2.6','3.1.2','4.4'].map(f=>content(m.work[workKey(eid,f)]));
+ const forms=new Set(['1.1.1','1.3','2.6','3.1.2','4.4']);
+ for(const w of Object.values(m.work))if(w.engagement===eid&&m.bench?.applied[w.id]?.fields.some(f=>f.tailoring))forms.add(w.form);
+ const reliedOn=[...forms].map(f=>content(m.work[workKey(eid,f)]));
  const ids=new Set([paper,...reliedOn].flatMap(w=>w.evidence));
  const sample=e.intake?currentSelection(m,eid):undefined;
  return {report:e.reportVersion,fs:e.fsVersion,paper,statements:e.statements?{...e.statements}:{version:e.fsVersion,statements:'',notes:''},reliedOn,decisions:structuredClone(e.decisions??[]),findings:m.findings.filter(f=>f.engagement===eid).map(f=>({...f})),evidence:m.evidence.filter(ev=>ev.engagement===eid&&ids.has(ev.id)).map(({id,version,status})=>({id,version,status})),sample:sample?{ids:[...sample.ids],stamp:sample.stamp,version:sample.version}:undefined,quality:e.formalEqr?e.eqrReview?.at??'pending':'not_required'};
@@ -188,7 +194,7 @@ export function currentPackage(m:Model,eid:string):ReportPackage{
 function qualityBasis(m:Model,eid:string){const {quality:_,...p}=currentPackage(m,eid);return JSON.stringify(p);}
 export function completeEqr(m:Model){
  const e=m.engagements.find(e=>e.id===m.engagement)!;
- if(!permitted(m,e.id)||m.person!=='saruul'||!e.formalEqr||e.locked||e.qualityConcerns.some(c=>!c.resolved))throw Error('Томилсон чанарын хянагч ба шийдвэрлэсэн асуудал шаардлагатай.');
+ if(!permitted(m,e.id)||m.person!==(e.team?.quality??'saruul')||!e.formalEqr||e.locked||e.qualityConcerns.some(c=>!c.resolved))throw Error('Томилсон чанарын хянагч ба шийдвэрлэсэн асуудал шаардлагатай.');
  if(!isCurrentReview(m.work[workKey(e.id,'4.1.A1')])||!isCurrentReview(m.work[workKey(e.id,'4.4')])||e.reportFsVersion!==e.fsVersion)throw Error('Тайлан ба дуусгалтын одоогийн хяналт шаардлагатай.');
  e.eqrReview={by:m.person,at:now(),basis:qualityBasis(m,e.id)};e.eqrComplete=true;recordEvent(m,'Томилсон чанарын хянагч багцын демо EQR бүртгэв','4.6');
 }
@@ -240,23 +246,24 @@ export function prepareDemo(m:Model):Model{
 export function recordRequestPart(m:Model,id:string,partId:string,action:'receive'|'accept'|'reject',value=''){
  const r=m.requests.find(r=>r.id===id&&r.engagement===m.engagement),e=m.engagements.find(x=>x.id===m.engagement)!;
  const p=r?.parts?.find(p=>p.id===partId);
- if(!r||!p||!permitted(m,e.id)||e.locked||(e.intake&&!e.intake.active)||r.owner!==m.person)throw Error('Энэ хүсэлтийн томилсон эзэн шаардлагатай.');
+ if(!r||!p||!permitted(m,e.id)||e.locked||(e.intake&&!e.intake.active)||r.owner!==m.person||(r.dispatch&&r.dispatch!=='issued'))throw Error('Энэ хүсэлтийн томилсон эзэн шаардлагатай.');
  if(action==='receive'){
   const ev=m.evidence.find(x=>x.id===value&&x.engagement===e.id);
-  if(!ev||ev.status==='rejected'||r.parts?.some(x=>x.id!==p.id&&x.evidence===ev.id))throw Error('Тус хэсэгт тохирох эх баримт сонгоно уу.');
+  if(!ev||r.dispatch&&(ev.status!=='received'||!['missing','rejected'].includes(p.state))||ev.status==='rejected'||ev.request&&ev.request!==r.id||r.parts?.some(x=>x.id!==p.id&&x.evidence===ev.id))throw Error('Тус хэсэгт тохирох эх баримт сонгоно уу.');
+  if(r.dispatch){ev.request=r.id;if(p.evidence)ev.replaces??=p.evidence;}
   p.evidence=ev.id;p.state='received';p.reason=undefined;
  }else{
   if(p.state!=='received'||!p.evidence)throw Error('Эхлээд баримт бүртгэнэ үү.');
   if(action==='reject'&&!value.trim())throw Error('Буцаах шалтгаан бичнэ үү.');
   p.state=action==='accept'?'accepted':'rejected';p.reason=action==='reject'?value.trim():undefined;
-  const ev=m.evidence.find(x=>x.id===p.evidence)!;ev.status=p.state;
+  const ev=m.evidence.find(x=>x.id===p.evidence)!;ev.status=p.state;if(r.dispatch)ev.assessment=p.reason??'Хүсэлтийн баримтыг үнэлж хүлээн авсан';
  }
  const parts=r.parts!;
  r.received=parts.filter(p=>p.state!=='missing').length;r.evidence=parts.flatMap(p=>p.evidence?[p.evidence]:[]);
  r.status=parts.every(p=>p.state==='accepted')?'complete':parts.some(p=>p.state==='rejected')?'changes_requested':r.received===r.expected?'ready':r.received?'partial':'open';
  r.history.push(`${now()} · ${p.title} · ${p.state} · ${p.evidence??''} ${p.reason??''}`);
  const w=m.work[workKey(e.id,r.form)];
- if(r.status==='complete'&&w.owner===m.person){const accepted=parts.flatMap(x=>x.state==='accepted'&&x.evidence?[x.evidence]:[]);changeWork(m,w.id,w.values,[...new Set([...w.evidence.filter(id=>m.evidence.some(ev=>ev.id===id&&ev.status==='accepted')),...accepted])]);}
+ if(r.status==='complete'&&w&&canEdit(m,w)){const accepted=parts.flatMap(x=>x.state==='accepted'&&x.evidence?[x.evidence]:[]);changeWork(m,w.id,w.values,[...new Set([...w.evidence.filter(id=>m.evidence.some(ev=>ev.id===id&&ev.status==='accepted')),...accepted])]);}
  recordEvent(m,`${r.id} · ${p.title}: ${p.state}`,r.form);
 }
 export function recordSampleTest(m:Model,unit:string,result:'pass'|'exception',detail:string,amount:number){
