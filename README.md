@@ -2,6 +2,8 @@
 
 A Mongolian-language, browser-local frontend prototype for connected audit work. Next.js, React, TypeScript, Tailwind and Lucide. Three fictional engagements and four people demonstrate different preparation, review, partner and quality responsibilities.
 
+**New in v3:** open **Урсгал нээх** on the home page to start the fixed-asset additions scenario at Оргил Технологи. See the [walkthrough and verification notes](docs/research/implementation-v3.md). v3 uses a separate browser storage key so the earlier v2 demo data is retained.
+
 ## Run
 
 Node.js20.9+ is required. The lockfile uses pnpm. npm is also supported.
@@ -24,8 +26,8 @@ The build creates a static `out/` export. `npm start` serves it locally. No data
 
 ## Explore
 
-- **Senior delivery:** start as Т. Тэмүүлэн. Inspect the review queue, detailed Gantt, stage/status matrix, dependency references, assignments and workload. Open a workpaper in its inspector without leaving the list. Change its due date and see the same deadline in the calendar.
-- **Calendars/tasks:** all four personas have personal planning and task destinations, with different menus and engagement scopes. Month/agenda views combine authoritative work deadlines, manual tasks and planned event windows. A task checkbox cannot approve audit work.
+- **Senior delivery:** start as Т. Тэмүүлэн. Inspect the review queue, rolling Gantt, stage/status matrix, dependency references, assignments and scoped workload. Open a workpaper in its inspector without leaving the list. Change its due date and see the same deadline in the calendar.
+- **Calendars/tasks:** all four personas have personal planning and task destinations, with different menus and engagement scopes. Week/month/agenda views combine authoritative work deadlines, manual tasks and planned event windows. A task checkbox cannot approve audit work.
 - **Prepare/review:** switch to Б. Номин, open3.1.2, change a result/conclusion, save and submit. Switch to Т. Тэмүүлэн, write a note and return. The preparer responds and resubmits; the reviewer separately clears the note and reviews the exact revision. A permitted owning workspace survives a role switch.
 - **Native forms:** all70 source contracts open, with typed choices, fixed letter/report clauses, programme results/assertions/hours, repeated rows, strategy anchors and source coordinates. These are derived product contracts, not exact Excel parity.
 - **Non-sequential work:**1.1.1 uses acceptance/independence outcomes from their owning decisions. Drafting is possible while a decision is pending. Sampling links to materiality; form numbers do not define execution order.
