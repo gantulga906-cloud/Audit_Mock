@@ -67,3 +67,6 @@
 .audit-app .feature-part{display:grid;justify-items:start;gap:8px;padding:12px;border:1px solid var(--line);border-radius:8px}
 .audit-app .feature-part form{width:100%}
 .audit-app .feature-form form .btn{margin-top:6px}
+.audit-app .pilot-content{max-width:960px;margin:0 auto;padding:24px}
+.audit-app .pilot-content .feature-fields>.feature-desk{margin-bottom:0}
+.audit-app .pilot-content [role="alert"]{margin-top:12px}
