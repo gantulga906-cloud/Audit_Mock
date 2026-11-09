@@ -40,6 +40,8 @@ In an active pilot engagement, open **Эх олонлог ба санхүүги�
 
 Sales, receivables, purchases, bank, inventory and fixed-assets workpapers also run area checks. Use an optional `reference` column in the approved ledger for exact document matching and attach the area exports as accepted supporting evidence. The workpaper lists each required CSV schema. Select the mapped statement line, run the checks and document each exception before independent review.
 
+Payroll, tax, loans, leases, FX, equity and investment workpapers also ask for a named edition from accepted rule or methodology evidence. Enter basis-point rates and the supplied methods in the listed schemas, and choose separate ledger lines where the workpaper asks for them. The fixture uses synthetic rates. The server blocks missing or unsupported methods and keeps the selected edition with the reviewed result.
+
 Open **Үйлчлүүлэгч ба аудитын хүсэлт** in the portfolio to record an enquiry, search clients or maintain contact history. The reviewer converts a forwarded enquiry after confirming the current client profile, contact and reporting period. The partner approves the signed engagement letter revision before activating a converted engagement.
 
 Open **Фирмийн мэргэжилтэн ба боломжит цаг** for roster and workload. The firm registers record the practitioner, credential and appointment. The engagement's **Багийн томилгоо ба нөөц** panel shows the approved staffing and its scope. For managed engagements, workpaper schedules and tasks use current approved appointments and retain earlier sign-off attribution.

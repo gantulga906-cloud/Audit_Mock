@@ -1482,3 +1482,221 @@ test('commercial fieldwork reconciles revenue, receipts, purchases and bank evid
     await rmdir(dir);
   }
 });
+test('approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs', async () => {
+  const dir=await mkdtemp(join(tmpdir(),'audit-statutory-finance-'));
+  const database=join(dir,'pilot.sqlite');
+  let service;
+  try {
+    service=await start(database);
+    const {view,write}=await fixture(service);
+    const forms=['3.1.18','3.1.14','3.1.9','3.1.21','3.1.20','3.1.15','3.1.3'];
+    async function approve(scope,kind,values) {
+      const fields=Object.fromEntries(Object.entries(values).map(([k,v])=>['field.'+k,v]));
+      const draft=await write('reviewer',scope,'register',{kind,operation:'save',...fields});
+      const id=draft.registers.findLast(r=>r.kind===kind).id;
+      await write('reviewer',scope,'register',{kind,id,operation:'submit'});
+      await write('partner',scope,'register',{kind,id,operation:'approve',reason:'Independent fixture approval'});
+      return id;
+    }
+    const rules={};
+    for (const programme of forms) rules[programme]=await approve('firm','M02-F05',{
+      programme,profile:'all',outcome:'optional',override:'no',basis:'Scoped calculation method'});
+    const engagement=(await write('reviewer','firm','create',create)).selected;
+    const run=(role,action,fields,status=200)=>write(role,engagement,action,fields,status);
+    await run('partner','activate',{assessment:'Accepted',independence:'Reviewed',letter:'Agreed'});
+    for (const programme of forms) {
+      const risk=await approve(engagement,'M06-F09',{programme,risk:'Recalculation '+programme,type:'account',target:programme,
+        assertion:'Accuracy',response:'Compare approved parameters, source amounts and ledger'});
+      await approve(engagement,'M07-F01',{rule:rules[programme],risk,decision:'adopt',basis:'Selected for the reference engagement'});
+    }
+    const file=(name,body)=>({name,base64:Buffer.from(body).toString('base64')});
+    const approvedFile=async (name,body)=>{
+      const uploaded=await run('preparer','support-upload',{...file(name+'.csv',body),source:'Synthetic reviewed '+name});
+      const id=uploaded.evidence.find(row=>row.name===name+'.csv').id;
+      await run('reviewer','support-assess',{id,result:'accepted',reason:'Original and basis reviewed independently'});
+      return id;
+    };
+    const entries=[
+      ['P1','PayrollExpense',1045],['P2','PayrollExpense',525],['P1','PayrollLiability',-222],['P2','PayrollLiability',-115],
+      ['P1','PayrollCash',-823],['P2','PayrollCash',-400],
+      ['2025-12:vat','Tax',-100],['2025-12:withholding','Tax',-25],['2025-12:current','Tax',-200],['2025-12:deferred','Tax',30],
+      ['2025-12:vat','TaxCash',-80],['2025-12:withholding','TaxCash',-25],['2025-12:current','TaxCash',-200],
+      ['L1','Loan',-1100],['L1','Interest',105.04],
+      ['LS1','Lease',-120],['LS2','Lease',-100],['LS1','ROU',130],['LS2','ROU',100],
+      ['F1','FX',25],['F2','FX',-15],['E1','Equity',-1125],['INV1','Investment',130],['INV1','Income',-9],
+    ];
+    const ledger=['id,account,amount,entity,date,currency,reference',...entries.map(([ref,account,amount],i)=>
+      ['ROW-'+i,account,amount,create.registration,'2025-12-31','MNT',ref].join(','))].join('\n');
+    const amount=entries.reduce((sum,row)=>sum+Math.round(row[2]*100),0)/100;
+    const accounts=[...new Set(entries.map(row=>row[1]))];
+    const controls=await approvedFile('controls','Independent signed balance schedule\n'+entries.length+','+amount);
+    const importFields={...file('ledger.csv',ledger),source:'Signed synthetic ledger',currency:'MNT'};
+    await run('preparer','population-import',importFields);
+    const reconciled=await run('preparer','population-reconcile',{version:'1',count:String(entries.length),total:String(amount),
+      source:'Signed separate control',controlEvidence:controls,use:'Recalculations with named profiles',mapping:accounts.map(a=>a+','+a).join('\n'),
+      statements:accounts.map(a=>a+','+entries.filter(r=>r[1]===a).reduce((sum,r)=>sum+Math.round(r[2]*100),0)/100).join('\n')});
+    assert.deepEqual(reconciled.population.current.gaps,[]);
+    await run('reviewer','population-approve',{version:'2',reason:'Verified exact totals and statements'});
+    const csv=(columns,rows)=>[columns,...rows.map(([id,...fields])=>[id,create.registration,'MNT',...fields].join(','))].join('\n');
+    const source=(name,columns,rows)=>approvedFile(name,csv(columns,rows));
+    const edition='SYNTHETIC-2025', through='2026-03-31', params={edition,through};
+    const payroll={...params,form:'3.1.18',line:'PayrollExpense',liability:'PayrollLiability',settlement:'PayrollCash',sign:'debit',
+      payroll:await source('payroll','id,entity,currency,employee,category,date,status,gross,employee_contribution,withholding,employer_contribution,other_deductions,net_adjustment,net',[
+        ['P1','EMP1','standard','2025-12-20','active',1000,80,92,40,10,5,823],
+        ['P2','EMP2','standard','2025-12-21','inactive',500,50,45,25,0,0,410],
+      ]),
+      payrollRules:await source('payroll-rules','id,entity,currency,edition,category,method,from,to,employee_bps,employer_bps,withholding_bps,cap,withholding_base',[
+        ['RULE',edition,'standard','flat_cap','2025-01-01','2025-12-31',1000,500,1000,800,'after_employee'],
+        ['RULE','EXPIRED','standard','flat_cap','2024-01-01','2024-12-31',1000,500,1000,800,'after_employee'],
+        ['RULE','UNSUPPORTED','standard','progressive_unknown','2025-01-01','2025-12-31',1000,500,1000,800,'after_employee'],
+      ]),
+      payrollBank:await source('payroll-bank','id,entity,currency,payroll,employee,date,amount',[
+        ['BANK1','P1','EMP1','2025-12-22',823],['BANK2','P2','EMP2','2025-12-22',400],
+      ]),
+      payrollHistory:await source('payroll-history','id,entity,currency,employee,category,period,gross',[
+        ['PR1','EMP1','standard','2025-11',900],
+      ]),
+      payrollVariance:await source('payroll-variance','id,entity,currency,edition,from,to,method,amount,rate_bps,pay_day',[
+        ['VAR',edition,'2025-01-01','2025-12-31','month_day',60,1500,20],
+      ]),
+    };
+    await run('preparer','area-run',{...payroll,edition:''},400);
+    for (const invalid of ['UNKNOWN','EXPIRED','UNSUPPORTED']) await run('preparer','area-run',{...payroll,edition:invalid},409);
+    assert.equal((await view('reviewer',engagement)).areas,undefined);
+    let state=await run('preparer','area-run',payroll);
+    const payrollRun=state.areas[payroll.form];
+    assert.equal(payrollRun.summary.expectedNet,122800);
+    assert.equal(payrollRun.summary.expectedLiability,34200);
+    assert.equal(payrollRun.summary.ledgerLiability,33700);
+    assert.equal(payrollRun.summary.bankPaid,122300);
+    assert.deepEqual([payrollRun.summary.payChanges,payrollRun.summary.offCycle,payrollRun.summary.missingComparator],[1,1,1]);
+    assert.deepEqual(payrollRun.cases.find(c=>c.label==='EMP2 / P2').flags.sort(),['inactive','settlement','statutory','variance']);
+    assert.equal(payrollRun.links.find(c=>c.label==='EMP1 / P1').metrics.expectedEmployer,4000);
+    assert.deepEqual(payrollRun.cases.find(c=>c.label==='EMP2 / 2025-12').flags,['comparator','off_cycle']);
+    assert.ok(payrollRun.links.find(c=>c.label==='EMP1 / P1').trace.some(t=>t.source==='payrollRules'&&t.row===2));
+    const tax={...params,form:'3.1.14',line:'Tax',settlement:'TaxCash',sign:'credit',
+      tax:await source('tax','id,entity,currency,period,category,date,base,adjustment,offset,tax',[
+        ['T1','2025-12','vat','2025-12-20',1000,0,0,100],['T2','2025-12','withholding','2025-12-20',500,0,0,25],
+        ['T3','2025-12','current','2025-12-20',2000,100,10,200],['T4','2025-12','deferred','2025-12-20',-300,0,0,-30],
+      ]),
+      taxRules:await source('tax-rules','id,entity,currency,edition,category,method,from,to,rate_bps',[
+        ['VAT',edition,'vat','flat','2025-01-01','2025-12-31',1000],['WHT',edition,'withholding','flat','2025-01-01','2025-12-31',500],
+        ['CIT',edition,'current','current','2025-01-01','2025-12-31',1000],['DT',edition,'deferred','temporary','2025-01-01','2025-12-31',1000],
+      ]),
+      taxReturns:await source('filed-returns','id,entity,currency,period,category,date,amount',[
+        ['R1','2025-12','vat','2026-01-05',95],['R2','2025-12','withholding','2026-01-05',25],
+        ['R3','2025-12','current','2026-01-05',200],['R4','2025-12','deferred','2026-01-05',-30],
+      ]),
+      taxPayments:await source('tax-payments','id,entity,currency,period,category,date,amount',[
+        ['B1','2025-12','vat','2025-12-31',80],['B2','2025-12','withholding','2025-12-31',25],['B3','2025-12','current','2025-12-31',200],
+      ]),
+    };
+    const taxRun=(await run('preparer','area-run',tax)).areas[tax.form];
+    assert.deepEqual(taxRun.summary,{expectedTax:32500,recordedTax:32500,deferredTax:-3000,filedTax:32000,taxPaid:30500,
+      ledgerTax:29500,ledgerSettlement:30500});
+    assert.deepEqual(taxRun.cases.find(c=>c.label==='2025-12:vat').flags,['filing']);
+    assert.equal(taxRun.links.find(c=>c.label==='2025-12:vat').metrics.unsettledTax,2000);
+
+    const loan={...params,form:'3.1.9',line:'Loan',interest:'Interest',sign:'credit',
+      loans:await source('loans','id,entity,currency,opening,drawdowns,repayments,movements,closing,recorded_interest,covenant_metric',[
+        ['L1',1000,200,100,0,1100,105.04,2.5],
+      ]),
+      loanTerms:await source('loan-terms','id,entity,currency,loan,edition,method,from,to,rate_bps,day_basis,covenant_direction,covenant_limit,definition',[
+        ['TERM','L1',edition,'simple_segment','2025-01-01','2026-01-01',1000,365,'maximum',2,'Approved leverage metric from loan covenant'],
+      ]),
+      loanSegments:await source('loan-segments','id,entity,currency,loan,from,to,principal',[
+        ['S1','L1','2025-01-01','2025-07-01',1000],['S2','L1','2025-07-01','2026-01-01',1100],
+      ]),
+    };
+    const loanRun=(await run('preparer','area-run',loan)).areas[loan.form];
+    assert.equal(loanRun.summary.loanInterest,10504);
+    assert.equal(loanRun.summary.loanPrincipal,110000);
+    assert.deepEqual(loanRun.cases.map(c=>[c.flags,c.metrics.headroom]),[[['covenant'],-50]]);
+    const leases={...params,form:'3.1.21',line:'Lease',rou:'ROU',sign:'credit',
+      leases:await source('leases','id,entity,currency,edition,method,rate_bps,life,elapsed,initial_adjustment,recorded_liability,recorded_rou',[
+        ['LS1',edition,'fixed_arrears',0,2,1,20,120,130],['LS2',edition,'fixed_arrears',1000,1,0,0,100,100],
+        ['LS1','VARIABLE','variable',0,2,1,20,120,130],
+      ]),
+      leasePayments:await source('lease-payments','id,entity,currency,lease,sequence,amount',[
+        ['P1','LS1',1,120],['P2','LS1',2,120],['P3','LS2',1,110],
+      ]),
+    };
+    await run('preparer','area-run',{...leases,edition:'VARIABLE'},409);
+    const leaseRun=(await run('preparer','area-run',leases)).areas[leases.form];
+    assert.deepEqual(leaseRun.summary,{leaseLiability:22000,leaseRou:23000,ledger:22000,ledgerRou:23000});
+    assert.equal(leaseRun.links.find(c=>c.label==='LS1').metrics.initialLiability,24000);
+    assert.deepEqual(leaseRun.cases,[]);
+    const fx={...params,form:'3.1.20',line:'FX',sign:'debit',
+      fxPositions:await source('fx-positions','id,entity,currency,foreign_currency,date,basis,foreign_amount,recorded',[
+        ['F1','USD','2025-12-15','transaction',10,24],['F2','USD','2025-12-31','monetary_close',-5,-15],
+      ]),
+      fxRates:await source('fx-rates','id,entity,currency,edition,foreign_currency,date,direction,rate_micros',[
+        ['RATE1',edition,'USD','2025-12-15','functional_per_foreign',2500000],
+        ['RATE2',edition,'USD','2025-12-31','functional_per_foreign',3000000],
+        ['RATE1','INCOMPLETE','USD','2025-12-15','functional_per_foreign',2500000],
+      ]),
+    };
+    await run('preparer','area-run',{...fx,edition:'INCOMPLETE'},409);
+    const fxRun=(await run('preparer','area-run',fx)).areas[fx.form];
+    assert.equal(fxRun.summary.fxFunctional,1000);
+    assert.equal(fxRun.links.find(c=>c.label==='F2').metrics.fxFunctional,-1500);
+    assert.deepEqual(fxRun.cases.find(c=>c.label==='F1').flags,['valuation']);
+    const equity={...params,form:'3.1.15',line:'Equity',sign:'credit',
+      equity:await source('equity','id,entity,currency,edition,method,opening,profit,contributions,distributions,transfers,movements,closing',[
+        ['E1',edition,'roll_forward',1000,100,50,20,-5,0,1125],
+      ]),
+      equityActions:await source('equity-actions','id,entity,currency,component,kind,date,amount,reference',[
+        ['C','E1','contribution','2025-11-01',50,'Approved resolution'],['D','E1','distribution','2025-12-01',20,''],
+      ]),
+    };
+    const equityRun=(await run('preparer','area-run',equity)).areas[equity.form];
+    assert.equal(equityRun.summary.equityClosing,112500);
+    assert.deepEqual(equityRun.cases[0].flags,['authority']);
+    const investments={...params,form:'3.1.3',line:'Investment',income:'Income',sign:'debit',
+      investments:await source('investments','id,entity,currency,edition,method,opening_units,acquired_units,disposed_units,other_units,closing_units,opening_cost,additions,disposals,transfers,closing_cost,income,valuation',[
+        ['INV1',edition,'discounted_cash_flows',10,5,3,0,12,100,60,30,0,130,9,199],
+      ]),
+      custody:await source('custody','id,entity,currency,instrument,date,closing_units,closing_cost,income',[
+        ['C','INV1','2025-12-31',12,130,9],
+      ]),
+      investmentCashFlows:await source('investment-flows','id,entity,currency,instrument,edition,method,sequence,rate_bps,amount',[
+        ['CF1','INV1',edition,'period_end',1,1000,110],['CF2','INV1',edition,'period_end',2,1000,121],
+      ]),
+    };
+    const investmentRun=(await run('preparer','area-run',investments)).areas[investments.form];
+    assert.equal(investmentRun.summary.investmentPv,20000);
+    assert.equal(investmentRun.summary.investmentIncome,900);
+    assert.deepEqual(investmentRun.cases[0].flags,['valuation']);
+
+    const review={form:payroll.form,version:String(payrollRun.version),conclusion:'Reviewed employee contribution and payment discrepancies'};
+    await run('reviewer','area-review',review,409);
+    const request=(await run('preparer','request',{form:payroll.form,title:'Payroll review evidence',due:through})).requests[0].id;
+    await run('preparer','upload',{request,source:'Reviewed inquiry',...file('payroll-exception.csv','Payroll exception evidence')});
+    state=await run('preparer','accept',{request});
+    const proof=state.requests[0].parts[0].evidence;
+    for (const item of payrollRun.cases) await run('preparer','area-dispose',{...review,case:item.id,evidence:proof,
+      result:'finding',amount:'5',note:'Investigated payroll and payment evidence'});
+    await run('preparer','area-review',review,403);
+    await run('reviewer','area-review',review);
+    await run('preparer','save',{form:payroll.form,execution:'Compared original ledger, bank and payroll',conclusion:'Escalated payroll discrepancy'});
+    await run('preparer','submit',{form:payroll.form});
+    state=await run('reviewer','review',{form:payroll.form});
+    const paper=state.papers.find(p=>p.form===payroll.form);
+    assert.equal(JSON.parse(paper.values['pilot.area.run']).stamp,payrollRun.stamp);
+    assert.equal(state.fieldFindings[0].amount,5);
+    state=await run('preparer','population-import',importFields);
+    assert.ok(forms.every(form=>state.areas[form].current===false));
+    assert.ok(state.papers.find(p=>p.form===payroll.form).history.some(h=>h.version===paper.version&&h.values['pilot.area.run']));
+    await service.close();
+    service=await start(database);
+    const restarted=await fixture(service,false);
+    state=await restarted.view('reviewer',engagement);
+    assert.equal(state.areas[payroll.form].params.edition,edition);
+    assert.equal(state.areas[payroll.form].approval.conclusion,review.conclusion);
+    assert.equal(state.areas[payroll.form].current,false);
+  } finally {
+    if(service)await service.close();
+    for(const suffix of ['', '-shm', '-wal'])await rm(database+suffix,{force:true});
+    await rmdir(dir);
+  }
+});

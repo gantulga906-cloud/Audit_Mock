@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { canEdit, changeWork, recordEvent, snapshot, workKey } from '../src/lib/workspace.ts';
-import { areaProfiles } from '../src/lib/pilot-area.ts';
+import { areaMethods, areaProfiles } from '../src/lib/pilot-area.ts';
 import { parseAreaFile, runAreaChecks } from './pilot-area-checks.mjs';
 import { approvedPopulation, cents } from './pilot-population.mjs';
 import { programmeDecision } from './pilot-registers.mjs';
@@ -67,27 +67,46 @@ function runChecks(m,role,form,data,files,prior) {
   const population=approvedPopulation(m), bridge=population?.bridge.find(line=>line.line===data.line);
   if (!bridge?.accounts.length) fail('Баталсан олонлогийн тайлангийн мөрийг сонгоно уу.');
   const profile=areaProfiles[form], period=m.bench.periods[m.engagement], through=input(data,'through',10);
+  const method=areaMethods[profile.method];
+  const edition=method?.edition ? input(data,'edition',100) : undefined;
   const sign=profile.method==='bank'?'debit':data.sign;
   if (!validDate(through)||through<period.end||!['debit','credit'].includes(sign)) fail('Хамрах огноо болон дүнгийн тэмдгийг шалгана уу.',400);
-  const scope={...period,through,entity:m.bench.clients[m.engagement].registration,currency:population.currency};
+  const scope={...period,through,edition,entity:m.bench.clients[m.engagement].registration,currency:population.currency};
   const sources={}, records={};
-  for (const kind of profile.inputs) {
+  const optional=['payrollHistory','payrollVariance'];
+  const analytics=profile.method==='payroll'&&optional.some(kind=>data[kind]);
+  const kinds=analytics?[...profile.inputs,...optional]:profile.inputs;
+  for (const kind of kinds) {
     const file=liveEvidence(m,data[kind]), original=file&&files.read(file.id);
     if (!file||!original||! /\.csv$/i.test(file.name)||original.bytes.length>750_000) fail(kind+' · Хүлээн зөвшөөрсөн UTF-8 CSV шаардлагатай.');
     sources[kind]={id:file.id,name:file.name,version:file.version,sha256:original.sha256};
     records[kind]=original.bytes;
   }
-  if (new Set(Object.values(sources).map(source=>source.sha256)).size!==profile.inputs.length) fail('Эх баримт бүр тусдаа өгөгдлийн файл байна.');
-  const params={line:bridge.line,through,sign}, identity=stamp(m,form,population,params,sources);
+  if (new Set(Object.values(sources).map(source=>source.sha256)).size!==kinds.length) fail('Эх баримт бүр тусдаа өгөгдлийн файл байна.');
+  const extraBridges=Object.fromEntries((method?.lines??[]).map(([kind,label])=>{
+    const selected=population.bridge.find(b=>b.line===data[kind]);
+    if (!selected?.accounts.length) fail(label+' · Дэвтрийн баталсан мөр шаардлагатай.');
+    return [kind,selected];
+  }));
+  if (new Set([bridge.line,...Object.values(extraBridges).map(b=>b.line)]).size!==1+Object.keys(extraBridges).length) {
+    fail('Дэвтрийн зураглалын мөрүүд тусдаа байна.');
+  }
+  const params={line:bridge.line,through,sign,...(edition&&{edition}),
+    ...(method?.lines&&{lines:Object.fromEntries(Object.entries(extraBridges).map(([kind,b])=>[kind,b.line]))})};
+  const identity=stamp(m,form,population,params,sources);
   if (identity===prior?.stamp) return false;
   if (prior&&current(m,prior)&&digest(prior.files)===digest(sources)&&(!prior.approval||prior.cases.some(item=>!resolved(m,item)))) {
     fail('Ижил эхийн өмнөх зөрүүг хянасны дараа шалгуурыг өөрчилнө.');
   }
-  const accounts=new Set(bridge.accounts);
-  const ledger=population.rows.filter(row=>row.state==='accepted'&&accounts.has(row.account)).map(row=>({...row,
-    source:'ledger',amount:row.cents*(sign==='credit'?-1:1)}));
-  const inputs=Object.fromEntries(profile.inputs.map(kind=>[kind,parseAreaFile(kind,records[kind])]));
-  const output=runAreaChecks(profile.method,scope,inputs,ledger);
+  function postings(line,polarity) {
+    const accounts=new Set(line.accounts);
+    return population.rows.filter(row=>row.state==='accepted'&&accounts.has(row.account)).map(row=>({...row,
+      source:'ledger',amount:row.cents*polarity}));
+  }
+  const ledger=postings(bridge,sign==='credit'?-1:1);
+  const additional=Object.fromEntries((method?.lines??[]).map(([kind,,polarity])=>[kind,postings(extraBridges[kind],polarity==='debit'?1:-1)]));
+  const inputs=Object.fromEntries(kinds.map(kind=>[kind,parseAreaFile(kind,records[kind])]));
+  const output=runAreaChecks(profile.method,scope,inputs,ledger,additional);
   (((m.pilotAreaRuns??={})[form])??=[]).push({version:(prior?.version??0)+1,form,population:population.version,
     source:population.evidence,line:bridge.line,through,currency:scope.currency,files:sources,params,stamp:identity,
     by:role,at:now(),...output});

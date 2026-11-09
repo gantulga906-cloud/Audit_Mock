@@ -2,18 +2,25 @@ import { validDate } from '../src/lib/feature-workflows.ts';
 import { cents, csvRows } from './pilot-population.mjs';
 import { areaSources } from '../src/lib/pilot-area.ts';
 import { PilotError } from './pilot-workflow.mjs';
+import { payroll, tax } from './pilot-area-statutory.mjs';
+import { equity, fx, investments, leases, loans } from './pilot-area-finance.mjs';
 
 const fail = message => { throw new PilotError(400,message); };
 const day = 86_400_000;
 const dates = ['date','invoice_date','delivery_date','due_date','from','to'];
 const amounts = ['amount','open_amount','unit_price','discount','max_discount','closing_value','opening_cost','additions',
-  'disposals','transfers','closing_cost','opening_accumulated','charge','disposed_accumulated','adjustments','closing_accumulated'];
-const quantities = ['quantity','opening_qty','closing_qty','counted_qty'];
+  'disposals','transfers','closing_cost','opening_accumulated','charge','disposed_accumulated','adjustments','closing_accumulated',
+  'gross','employee_contribution','withholding','employer_contribution','other_deductions','net_adjustment','net','cap','base','adjustment','offset','tax',
+  'opening','drawdowns','repayments','movements','closing','recorded_interest','covenant_metric','covenant_limit','principal',
+  'initial_adjustment','recorded_liability','recorded_rou','foreign_amount','recorded','profit','contributions','distributions','income','valuation'];
+const quantities = ['quantity','opening_qty','closing_qty','counted_qty','life','elapsed','sequence','rate_micros','pay_day',
+  'opening_units','acquired_units','disposed_units','other_units','closing_units'];
+const rates = ['employee_bps','employer_bps','withholding_bps','rate_bps'];
 const entityKey = value => value.replace(/\s/g,'').toLowerCase();
 const sum = (rows,key='amount') => rows.reduce((total,row)=>total+row[key],0);
 const key = (...parts) => JSON.stringify(parts);
 
-function grouped(rows, value) {
+export function grouped(rows, value) {
   const result=new Map();
   for (const row of rows) {
     const id=value(row), list=result.get(id)??[];
@@ -37,19 +44,27 @@ export function parseAreaFile(kind, bytes) {
     if (!row[kind==='prices'?'sku':'id']||!row.entity||!row.currency) fail(kind+' · Түлхүүр/байгууллага/валют · '+line);
     for (const name of dates) if (name in row&&!validDate(row[name])) fail(kind+' · Огноо · '+line+' · '+name);
     for (const name of amounts) if (name in row) {
-      const amount=cents(row[name]), signed=['transfers','adjustments'].includes(name)||['bank','reconciliation'].includes(kind)&&name==='amount';
+      const amount=cents(row[name]), signed=['transfers','adjustments','net_adjustment','adjustment','movements','initial_adjustment',
+        'foreign_amount','recorded','profit','covenant_metric','covenant_limit'].includes(name)||
+        kind==='equity'&&['opening','closing'].includes(name)||
+        row.category==='deferred'&&['base','tax','amount'].includes(name)||['bank','reconciliation'].includes(kind)&&name==='amount';
       if (amount===null||!signed&&amount<0) fail(kind+' · Дүн · '+line+' · '+name);
       row[name]=amount;
     }
     for (const name of quantities) if (name in row) {
       const value=row[name], number=Number(value);
-      const signed=['opening_qty','closing_qty'].includes(name)||kind==='movements'&&row.kind==='adjustment';
-      if (!/^-?\d{1,9}$/.test(value)||!signed&&number<0||kind==='invoices'&&(number<1||number>99999)) {
+      const signed=['opening_qty','closing_qty','other_units'].includes(name)||kind==='movements'&&row.kind==='adjustment';
+      const digits=name==='rate_micros'?12:9;
+      if (!new RegExp('^-?\\d{1,'+digits+'}$').test(value)||!signed&&number<0||kind==='invoices'&&(number<1||number>99999)) {
         fail(kind+' · Тоо ширхэг · '+line+' · '+name);
       }
       row[name]=number;
     }
-    if (kind==='prices'&&row.from>row.to) fail(kind+' · Үнийн хугацаа · '+line);
+    for (const name of rates) if (name in row) {
+      if (!/^\d{1,5}$/.test(row[name])||Number(row[name])>10000) fail(kind+' · Basis point · '+line+' · '+name);
+      row[name]=Number(row[name]);
+    }
+    if ('from' in row&&row.from>row.to) fail(kind+' · Дүрмийн хугацаа · '+line);
     if (kind==='invoices'&&row.due_date<row.invoice_date) fail(kind+' · Төлөх хугацаа нэхэмжлэлийн өдрөөс өмнө · '+line);
     return {...row,source:kind,row:line};
   });
@@ -72,7 +87,8 @@ function caseBook(scope) {
     cases.set(id,entry);
     traces.set(id,seen);
   }
-  const link=(id,label,rows,metrics)=>links.push({id,label,trace:rows.filter(Boolean).map(({source,row})=>({source,row})),metrics});
+  const link=(id,label,rows,metrics)=>links.push({id,label,
+    trace:[...new Map(rows.filter(Boolean).map(({source,row})=>[key(source,row),{source,row}])).values()],metrics});
   function qualified(source, rows, unique=true) {
     const scoped=rows.filter(row=>{
       const eligible=entityKey(row.entity)===entityKey(scope.entity)&&row.currency.toUpperCase()===scope.currency;
@@ -313,8 +329,8 @@ function assets(scope,inputs,ledger,book) {
   return {...totals,residual};
 }
 
-export function runAreaChecks(method,scope,inputs,postings) {
+export function runAreaChecks(method,scope,inputs,postings,additional) {
   const book=caseBook(scope);
-  const summary=({sales,purchases,bank,inventory,assets})[method](scope,inputs,postings,book);
+  const summary=({sales,purchases,bank,inventory,assets,payroll,tax,loans,leases,fx,equity,investments})[method](scope,inputs,postings,book,additional);
   return {summary,...book.results()};
 }
