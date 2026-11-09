@@ -36,6 +36,8 @@ In the shared pilot portfolio, open **Маягтын сан ба бүтэц** to
 
 Open **Үйлчлүүлэгч ба аудитын хүсэлт** in the portfolio to record an enquiry, search clients or maintain contact history. The reviewer converts a forwarded enquiry after confirming the current client profile, contact and reporting period. The partner approves the signed engagement letter revision before activating a converted engagement.
 
+Open **Фирмийн мэргэжилтэн ба боломжит цаг** for roster and workload. The firm registers record the practitioner, credential and appointment. The engagement's **Багийн томилгоо ба нөөц** panel shows the approved staffing and its scope. For managed engagements, workpaper schedules and tasks use current approved appointments and retain earlier sign-off attribution.
+
 ## Explore
 
 - **Senior delivery:** start as Т. Тэмүүлэн. Inspect the review queue, rolling Gantt, stage/status matrix, dependency references, assignments and scoped workload. Open a workpaper in its inspector without leaving the list. Change its due date and see the same deadline in the calendar.

@@ -4,25 +4,31 @@ import {useEffect,useRef,useState,type FormEvent,type ReactNode} from 'react';
 import PilotRegisters,{type RegisterResources} from './pilot-registers';
 import {AdoptPilotForm,NativeFields,PilotFormLibrary} from './pilot-forms';
 import {IntakeProvenance,PilotIntake,TermsEditor} from './pilot-intake';
+import {EngagementStaffing,RosterOverview,WorkAssignmentEditor} from './pilot-staffing';
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
 import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
 import {fieldAnswers,type LibraryView,type PaperForm} from '@/lib/pilot-forms';
 import type {Enquiry,IntakeClient,IntakeContext,IntakeTerms} from '@/lib/pilot-intake';
+import type {RosterAvailability,StaffingView,StaffSignoff,WorkAssignment} from '@/lib/pilot-staffing';
 import type {DecisionRecord,Evidence,Model,RequestItem,Statements,WorkItem} from '@/lib/workspace';
 import type {Period,Template} from '@/lib/workbench';
 
 const api='/api/pilot';
 const roles={preparer:'Бэлтгэгч',reviewer:'Ахлах хянагч',partner:'Партнер'};
 const names:Record<string,string>={nomin:roles.preparer,temuulen:roles.reviewer,bat:roles.partner};
+const accountByRole={preparer:'nomin',reviewer:'temuulen',partner:'bat'};
+const staffNames=(staffing?:StaffingView)=>Object.fromEntries((staffing?.seats??[]).flatMap(s=>s.current&&s.account?[[accountByRole[s.account],s.name]]:[]));
 const status:Record<WorkItem['status'],string>={not_started:'Эхлээгүй',in_progress:'Бэлтгэж буй',waiting:'Хүлээгдэж буй',submitted:'Хяналтад ирсэн',returned:'Засварт буцаасан',reviewed:'Хянагдсан',changed:'Дахин хянуулах'};
 const partStatus={missing:'Ирээгүй',received:'Үнэлэх',accepted:'Зөвшөөрсөн',rejected:'Буцаасан'};
-type Paper=WorkItem&{editable:boolean;reviewable:boolean;template?:PaperForm;oldTemplates?:Record<string,Template>;nativeGaps?:string[]};
+type Paper=WorkItem&{editable:boolean;reviewable:boolean;template?:PaperForm;oldTemplates?:Record<string,Template>;nativeGaps?:string[];
+ assignmentHistory?:WorkAssignment[];staffingSignoffs?:StaffSignoff[]};
 type PortfolioItem={id:string;client:string;start:string;end:string;reportDate:string;active:boolean;
  progress?:null|{reviewed:number;applicable:number;tasks:number;deadlines:{form:string;title:string;due:string}[]}};
 type View=RegisterResources&{
  role:PilotRole;revision:number;selected:string|null;portfolio:PortfolioItem[];members?:PilotRole[];formLibrary:LibraryView;
  intake?:{clients:IntakeClient[];enquiries:Enquiry[]};intakeContext?:IntakeContext;
  intakeTerms?:IntakeTerms;intakeTermsHistory?:IntakeTerms[];
+ roster?:RosterAvailability[];staffing?:StaffingView;
  engagement:null|{client:string;period:Period;active:boolean;reportDate:string;statements?:Statements;decisions:DecisionRecord[];acceptanceGaps:string[];firm:{id:string;kind:string;version:number;values:Record<string,string>}[]};
  papers?:Paper[];requests?:RequestItem[];evidence?:(Evidence&{sha256:string})[];gaps?:string[];
  fieldwork?:string[];statementLines?:Record<string,number>;impacts?:Model['impacts'];
@@ -152,11 +158,11 @@ function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string
      <p className="micro">{file.source} · {file.assessment??partStatus[file.status]}</p>
      <small style={{overflowWrap:'anywhere'}}>SHA-256 {file.sha256}</small>
     </div>)}
-    {view.role==='preparer'&&['missing','rejected'].includes(part.state)&&<form className="feature-form" onSubmit={e=>upload(e,r.id)}>
+    {r.owner===accountByRole[view.role]&&['missing','rejected'].includes(part.state)&&<form className="feature-form" onSubmit={e=>upload(e,r.id)}>
      <label>Эх файл<input name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv" required/></label>
      <label>Файл нийлүүлсэн эх сурвалж<input name="source" required/></label><button className="btn primary">Эх файл бүртгэх</button>
     </form>}
-    {view.role==='preparer'&&part.state==='received'&&<>
+    {r.owner===accountByRole[view.role]&&part.state==='received'&&<>
      <button type="button" className="btn secondary space-top" onClick={()=>void run('accept',{request:r.id})}>Баримт зөвшөөрөх</button>
      <ActionForm run={run} action="reject" extra={{request:r.id}} button="Баримт буцаах"><label>Буцаах шалтгаан<input name="reason" required/></label></ActionForm>
     </>}
@@ -193,6 +199,9 @@ function Delivery({view,run}:{view:View;run:Action}){
  if(!view.delivery||!view.engagement)return null;
  const delivery=view.delivery,papers=view.papers??[],reportDate=view.engagement.reportDate;
  const canSchedule=view.role!=='preparer',today=new Date().toISOString().slice(0,10);
+ const people=staffNames(view.staffing);
+ const assignable=Object.keys(roles).filter(r=>view.staffing?.members.includes(r as PilotRole)&&
+  (!view.staffing.managed||view.staffing.seats.some(s=>s.current&&s.capacity===r))) as PilotRole[];
  const open=(id:string)=>{
   const target=document.getElementById(id);
   target?.focus({preventScroll:true});
@@ -209,14 +218,15 @@ function Delivery({view,run}:{view:View;run:Action}){
    {tasks.length===0&&<p className="muted">Даалгавар бүртгэгдээгүй.</p>}
    {tasks.map(t=><div className="bench-item" key={t.id}>
     <label><input type="checkbox" checked={t.done} disabled={t.owner!==delivery.person} onChange={e=>void run('task-status',{id:t.id,done:e.target.checked?'yes':'no'})}/> {t.title}</label>
-    <p className="micro">{names[t.owner]} · {t.due}{t.done?' · Дууссан':''}</p>
+    <p className="micro">{people[t.owner]??names[t.owner]} · {t.due}{t.done?' · Дууссан':''}</p>
     {t.form&&papers.some(p=>p.form===t.form)&&<button type="button" className="quiet" onClick={()=>openPaper(papers.find(p=>p.form===t.form)!.id)}>{t.form} · Ажлын баримт</button>}
    </div>)}
    <details className="feature-detail"><summary>Даалгавар нэмэх</summary>
     <ActionForm action="task-add" run={run} button="Даалгавар хадгалах">
      <label>Гарчиг<input name="title" maxLength={200} required/></label>
      <label>Дуусах өдөр<input name="due" type="date" required/></label>
-     {canSchedule&&<label>Хариуцагч<select name="owner" defaultValue={view.role}>{Object.entries(roles).map(([key,name])=><option value={key} key={key}>{name}</option>)}</select></label>}
+     {canSchedule&&<label>Хариуцагч<select name="owner" defaultValue={assignable.includes(view.role)?view.role:''} required><option value="">Сонгох</option>
+      {assignable.map(key=><option value={key} key={key}>{people[accountByRole[key]]??roles[key]}</option>)}</select></label>}
      <label>Ажлын баримт<select name="form"><option value="">Сонголтоор</option>{papers.map(p=><option value={p.form} key={p.id}>{p.form} · {p.title}</option>)}</select></label>
     </ActionForm>
    </details>
@@ -226,20 +236,23 @@ function Delivery({view,run}:{view:View;run:Action}){
     tasksView={()=>open('pilot-tasks')} initialDay={calendarDay} today={today} teamCalendar={canSchedule}/>
   </details>
   {canSchedule&&<details className="feature-detail"><summary>Ажлын явц · Гантт</summary>
-   <DeliveryTimeline items={papers} select={openPaper} baseline milestone={reportDate} initialStart={calendarDay.slice(0,7)+'-01'} today={today}/>
+   <DeliveryTimeline items={papers} select={openPaper} baseline milestone={reportDate} initialStart={calendarDay.slice(0,7)+'-01'} today={today} staffNames={people}/>
   </details>}
  </section>;
 }
 
-function Workpaper({paper,run,role,evidence,sealed,engagementId}:{paper:Paper;run:Action;role:View['role'];evidence:View['evidence'];sealed:boolean;engagementId:string|null}){
+function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing}:{paper:Paper;run:Action;role:View['role'];evidence:View['evidence'];sealed:boolean;active:boolean;engagementId:string|null;staffing?:StaffingView}){
  const form=paper.form,reference={form};
  const [answers,setAnswers]=useState(()=>fieldAnswers(paper.values));
  const native=paper.template;
+ const people=staffNames(staffing);
  const summaryNeeded=!form.startsWith('F-');
  const payload=native?{...reference,answers:JSON.stringify(answers),templateDigest:native.digest}:reference;
  return <section id={'pilot-paper-'+paper.id} tabIndex={-1} className="card pad bench-card feature-desk">
   <div className="section-heading"><h2>{form} · {paper.title}</h2><span className="pill">v{paper.version} · {status[paper.status]}</span></div>
-  <p className="micro">{names[paper.owner]} → {names[paper.reviewer]} · {paper.evidence.length} холбоотой баримт</p>
+  <p className="micro">{people[paper.owner]??names[paper.owner]} → {people[paper.reviewer]??names[paper.reviewer]} · {paper.evidence.length} холбоотой баримт</p>
+  {active&&!sealed&&role!=='preparer'&&form!=='4.4'&&!/^4\.1\.A[1-4]$/.test(form)&&
+   <WorkAssignmentEditor paper={paper} history={paper.assignmentHistory??[]} staffing={staffing} run={run}/>}
   {paper.due&&<p className="micro">Төлөвлөсөн хугацаа {paper.start} — {paper.due} · Суурь {paper.baselineDue}</p>}
   {!sealed&&role!=='preparer'&&<details className="feature-detail"><summary>Ажлын хугацаа тохируулах</summary>
    <ActionForm key={paper.start+'/'+paper.due} action="schedule" extra={reference} run={run} button="Хугацаа хадгалах">
@@ -289,6 +302,9 @@ function Workpaper({paper,run,role,evidence,sealed,engagementId}:{paper:Paper;ru
    })()}
    <small>{h.evidence.length} холбоостой баримт · {new Date(h.at).toLocaleString()}</small>
   </div>)}</details>}
+  {!!paper.staffingSignoffs?.length&&<details className="feature-detail"><summary>Томилгоотой хяналтын түүх</summary>
+   {paper.staffingSignoffs.map((s,i)=><p className="micro" key={i}>v{s.version} · {s.action==='review'?'Хянав':'Илгээв'} · {s.seat.name} · {s.at.slice(0,10)} · {s.seat.credential.title} v{s.seat.credential.version}</p>)}
+  </details>}
  </section>;
 }
 
@@ -361,6 +377,7 @@ export default function PilotWorkspace(){
     {data&&'setup' in data&&<Access key={String(data.setup)} setup={data.setup} send={send}/>}
     {view&&<EngagementPicker view={view} open={(id,form)=>void openEngagement(id,form)}/>}
     {view&&!engagement&&view.intake&&<PilotIntake data={view.intake} role={view.role} run={run} open={id=>void openEngagement(id)}/>}
+    {view&&!engagement&&view.role!=='preparer'&&view.roster&&<RosterOverview roster={view.roster} open={id=>void openEngagement(id)}/>}
     {view&&!engagement&&<PilotFormLibrary role={view.role} forms={view.forms} library={view.formLibrary} run={run} onError={setError}/>}
    {view&&<PilotRegisters key={view.selected??'firm'} role={view.role} resources={view} evidence={view.evidence??[]} engagementId={view.selected} active={!!engagement?.active} run={run} onError={setError}/>}
     {view&&engagement&&<div key={view.selected}>
@@ -368,6 +385,7 @@ export default function PilotWorkspace(){
       <div className="section-heading"><h2>{engagement.client}</h2><span className="pill">{engagement.active?'Идэвхтэй':'Идэвхжүүлэхийг хүлээж байна'}</span></div>
       <p>{engagement.period.start} — {engagement.period.end} · Зорилтот тайлан {engagement.reportDate}</p>
       {view.members&&<EngagementAccess members={view.members} run={run}/>}
+      {view.staffing&&<EngagementStaffing staffing={view.staffing} role={view.role} sealed={sealed} run={run}/>}
       {view.intakeContext&&<IntakeProvenance context={view.intakeContext} active={engagement.active} role={view.role}
        priorVisible={view.portfolio.some(p=>p.id===view.intakeContext?.prior)} run={run} open={id=>void openEngagement(id)}/>}
       {view.selected&&view.intakeContext&&!sealed&&<TermsEditor id={view.selected} role={view.role} active={engagement.active}
@@ -389,7 +407,8 @@ export default function PilotWorkspace(){
       {(!view.archive.packages.length||view.archive.reopened)&&<Requests view={view} run={run} onError={setError}/>}
      </>}
      {view.papers?.filter(paper=>engagement.active||paper.stage===1&&paper.template).map(paper=>
-      <Workpaper key={paper.id+'/'+paper.version} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed} engagementId={view.selected}/>)}
+      <Workpaper key={paper.id+'/'+paper.version} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed}
+       active={engagement.active} engagementId={view.selected} staffing={view.staffing}/>)}
      {engagement.active&&<>
       {view.impacts?.map(impact=><section className="card pad bench-card" key={impact.id}><h2>{impact.source} · Өөрчлөлтийн нөлөө</h2><p>{impact.reason} · {impact.targets.join(', ')}</p>
        {view.role==='reviewer'&&<ActionForm run={run} action="resolve-impact" extra={{id:impact.id}} button="Нөлөөллийн үнэлгээг бүртгэх"><label>Шийдвэрийн үндэслэл<input name="reason" required/></label></ActionForm>}

@@ -121,6 +121,15 @@ export function createPilotStore(db) {
     db.prepare('UPDATE pilot_firm SET revision = revision + 1 WHERE id = 1').run();
   }
 
+  function staffingModels(model) {
+    const firm = firmRecords(model);
+    return [model, ...db.prepare('SELECT body FROM pilot_engagements WHERE id <> ?').all(model.engagement).map(({body}) => {
+      const m = JSON.parse(body);
+      m.pilotRecords = [...firm, ...(m.pilotRecords ?? [])];
+      return m;
+    })];
+  }
+
   function members(id) {
     return db.prepare('SELECT role FROM pilot_engagement_members WHERE engagement_id = ? ORDER BY role').all(id).map(r => r.role);
   }
@@ -130,5 +139,5 @@ export function createPilotStore(db) {
     return db.prepare('DELETE FROM pilot_engagement_members WHERE engagement_id = ? AND role = ?').run(id, role).changes > 0;
   }
 
-  return { transaction, portfolio, load, save, members, setMember, touchFirm, legacyId };
+  return { transaction, portfolio, load, save, members, setMember, touchFirm, staffingModels, legacyId };
 }

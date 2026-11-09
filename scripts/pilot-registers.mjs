@@ -5,6 +5,7 @@ import { validDate } from '../src/lib/feature-workflows.ts';
 import { isCurrentReview, recordEvent, workKey } from '../src/lib/workspace.ts';
 import { PilotError, input } from './pilot-workflow.mjs';
 import { nativePapers } from './pilot-forms.mjs';
+import { checkStaffing } from './pilot-staffing.mjs';
 
 const contracts = JSON.parse(readFileSync(new URL('../src/data/source-registers.json', import.meta.url), 'utf8')).forms;
 const definition = id => registers.find(r => r.id === id);
@@ -113,6 +114,7 @@ export function registerPackage(m) {
   return registerRows(m).filter(r => supportKinds.includes(r.kind) && approved(m, r)).map(r => ({
     id: r.id, kind: r.kind, version: r.version, values: r.values, references: r.references, by: r.by, at: r.at,
     ...(r.template && { template: r.template }), ...(r.declaration && { declaration: r.declaration }),
+    ...(r.staffingBasis && { staffingBasis: r.staffingBasis }),
   }));
 }
 export const registerStamp = m => hash({
@@ -163,12 +165,19 @@ function checkBusiness(m, row, spec, files) {
       !m.evidence.some(e => e.id === v[f.key] && e.status === 'accepted'))) bad('Үнэлж зөвшөөрсөн эх файл шаардлагатай.');
   if (spec.section === 'archive') files.checkArchiveRecord(m, row);
   switch (row.kind) {
-    case 'M01-F03':
+    case 'M01-F03': {
       if (rows(m, row.kind).some(r => r.id !== row.id && r.values.reference.toLowerCase() === v.reference.toLowerCase())) bad('Ажилтны дугаар давхардсан.');
       if (v.availableFrom && v.availableTo && v.availableFrom > v.availableTo) bad('Боломжит хугацааг шалгана уу.');
+      if (v.capacityHours && (!v.availableFrom || !v.availableTo || Number(v.capacityHours) <= 0)) bad('Боломжит хугацаа ба эерэг нийт цагийг оруулна уу.');
+      const bound = row.history.find(h => h.status === 'approved' && h.values.account)?.values.account;
+      if (bound && bound !== v.account || v.account && (v.status === 'external' ||
+          rows(m, row.kind).some(r => r.id !== row.id && (r.values.account === v.account ||
+            r.history.some(h => h.status === 'approved' && h.values.account === v.account))))) bad('Нэвтрэх дүрийн түүхэн холбоосыг давхардуулах эсвэл өөрчлөх боломжгүй.');
       break;
+    }
     case 'M01-F04':
-      if (v.validTo < v.validFrom) bad('Үнэмлэхийн хүчинтэй хугацааг шалгана уу.');
+      if (v.validTo && (!v.validFrom || v.validTo < v.validFrom) || v.validity === 'dated' && !v.validTo || v.validity === 'no-expiry' && !v.validFrom ||
+          ['unknown','no-expiry'].includes(v.validity) && v.validTo) bad('Үнэмлэхийн хүчинтэй хугацааг шалгана уу.');
       break;
     case 'M01-F06':
       if (v.to && v.to < v.from) bad('Томилгооны хүчинтэй хугацааг шалгана уу.');
@@ -186,17 +195,9 @@ function checkBusiness(m, row, spec, files) {
     case 'M04-F04':
       if (!row.declaration || (v.assignee === 'external' && find(m, v.person)?.values.status !== 'external')) bad('Мэдүүлэгчийн эх мэдүүлэг шаардлагатай.');
       break;
-    case 'M04-F06': {
-      const person = find(m, v.person).values, credential = find(m, v.credential)?.values;
-      if (v.result === 'suitable' && (person.status === 'inactive' || Number(v.hours) <= 0 ||
-          person.availableFrom && v.assignmentDate < person.availableFrom || person.availableTo && v.assignmentDate > person.availableTo ||
-          !credential || credential.person !== v.person || v.assignmentDate < credential.validFrom || v.assignmentDate > credential.validTo)) {
-        bad('Идэвхтэй мэргэжилтэн, хүчинтэй үнэмлэх, боломжит өдөр ба цаг шаардлагатай.');
-      }
-      if (v.result === 'suitable' && approvedRows(m, row.kind).some(r => r.id !== row.id && r.values.result === 'suitable' &&
-          (r.values.capacity === v.capacity || r.values.person === v.person))) bad('Гэрээт ажлын үүрэг бүр тусдаа мэргэжилтэнтэй байна.');
+    case 'M04-F06':
+      checkStaffing(m, row, files);
       break;
-    }
     case 'M07-F01': {
       const rule = find(m, v.rule), risk = find(m, v.risk);
       if (!ruleMatches(m, rule) || risk.values.programme !== rule.values.programme) bad('Дүрэм, тайлагналын хүрээ болон төлөвлөсөн хөтөлбөр тохирохгүй.');
@@ -295,6 +296,7 @@ export function registerAction(m, role, data, files) {
     delete row.statementVersion;
     delete row.template;
     delete row.paperVersions;
+    delete row.staffingBasis;
     row.version++;
     remember(row, role, 'draft', 'Ноорог хадгалав');
   } else {

@@ -8,6 +8,7 @@ import { archiveGrantKinds } from './pilot-registers.mjs';
 import { createPilotStore, firmCommand } from './pilot-store.mjs';
 import { isLibraryAction, libraryAction, libraryTemplate, libraryView } from './pilot-forms.mjs';
 import { createIntakeStore, isIntakeAction, termsAction, termsGaps } from './pilot-intake.mjs';
+import { approvedStaffing, managedStaffing, rosterView, seatFor, staffingGaps } from './pilot-staffing.mjs';
 import { recordEvent } from '../src/lib/workspace.ts';
 
 const prefix = '/api/pilot';
@@ -79,6 +80,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       archive.checkRecord(model, row);
     },
     approveArchiveRecord: archive.approveRecord,
+    member: role => !!engagementId && store.members(engagementId).includes(role),
+    staffingModels: store.staffingModels,
     archive,
   });
   function resolveScope(role, url) {
@@ -98,11 +101,15 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     const files = filesFor(id);
     const payload = pilotView(model, role, revision, files);
     if (payload.engagement && !payload.engagement.active) {
-      payload.engagement.acceptanceGaps.push(...intake.activationGaps(model), ...termsGaps(model, files));
+      payload.engagement.acceptanceGaps.push(...intake.activationGaps(model), ...termsGaps(model, files), ...staffingGaps(model));
     }
     return { ...payload, selected: id, portfolio,
       formLibrary: libraryView(model.pilotFormLibrary, role, files, !id),
-      ...(!id && { intake: intake.view(role) }),
+      ...(!id && { intake: intake.view(role), roster: rosterView(model, files, role, new Set(portfolio.map(item=>item.id))) }),
+      ...(id && (role === 'partner' || !archive.isSealed(model)) && {
+        staffing: { managed: managedStaffing(model), members: store.members(id), seats: approvedStaffing(model),
+          gaps: staffingGaps(model), accepted: model.pilotStaffingAccepted },
+      }),
       ...(id && model.pilotIntake && (role === 'partner' || !archive.isSealed(model)) && { intakeContext: intake.contextView(model) }),
       ...(id && !archive.isSealed(model) && model.pilotTerms && {
         intakeTerms: model.pilotTerms, intakeTermsHistory: model.pilotTermsHistory ?? [],
@@ -114,6 +121,9 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     const role = input(fields, 'role', 20), access = input(fields, 'access', 12);
     if (!['preparer','reviewer'].includes(role) || !['grant','revoke'].includes(access)) throw new PilotError(400, 'Томилгоог шалгана уу.');
     const reason = input(fields, 'reason'), grant = access === 'grant';
+    if (grant && context.model.engagements[0].intake.active && managedStaffing(context.model) && !seatFor(context.model, role)) {
+      throw new PilotError(409, 'Одоогийн баталсан ажилтны томилгоо шаардлагатай.');
+    }
     if (!store.setMember(context.id, role, grant)) return;
     const model = context.model;
     if (!grant) {

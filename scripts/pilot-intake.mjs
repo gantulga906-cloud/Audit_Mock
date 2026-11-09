@@ -245,6 +245,7 @@ export function createIntakeStore(db, store) {
         model.companies = { [client.id]: { id: client.id, profile, industry: profile.industry, status: 'active', by: model.person } };
         const extended = data.synthetic === 'yes' && data.extended === 'no' ? 'no' : 'yes';
         const engagement = openPilotEngagement(model, { ...data, extended }, client.id);
+        if (extended === 'yes') model.pilotStaffingEnabled = true;
         engagement.intake.origin = previous.origin;
         engagement.intake.facts = previous.facts;
         if (earlier.length) engagement.kind = 'Үргэлжилсэн аудит';

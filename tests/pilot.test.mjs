@@ -62,6 +62,142 @@ async function fixture(service, setup = true) {
   return { cookies, scoped, view, write };
 }
 
+test('approved roster capacity and reassignment preserve historical staff sign-offs', async () => {
+  const dir = await mkdtemp(join(tmpdir(),'audit-staffing-'));
+  const database = join(dir,'staffing.sqlite');
+  let service;
+  try {
+    service = await start(database);
+    const { view,write } = await fixture(service);
+    const fields=values=>Object.fromEntries(Object.entries(values).map(([key,value])=>['field.'+key,value]));
+    const register=(role,scope,kind,operation,values={},id='',status=200)=>write(role,scope,'register',{
+      kind,operation,id,...(operation==='save'?fields(values):values),
+    },status);
+    const draft=async(scope,kind,values,id='')=>{
+      const result=await register('reviewer',scope,kind,'save',values,id);
+      return id||result.registers.at(-1).id;
+    };
+    const approve=async(scope,kind,values,id='')=>{
+      const row=await draft(scope,kind,values,id);
+      await register('reviewer',scope,kind,'submit',{},row);
+      await register('partner',scope,kind,'approve',{reason:'Verified source and suitability'},row);
+      return row;
+    };
+    const roster={};
+    for (const capacity of ['preparer','reviewer','partner','specialist']) {
+      const external=capacity==='specialist';
+      const facts={name:'Staff '+capacity,reference:'TEST-'+capacity,status:external?'external':'active',
+        account:external?'':capacity,availableFrom:'2026-01-01',availableTo:'2026-06-30',capacityHours:'100'};
+      const person=await approve('firm','M01-F03',facts);
+      const credential=await approve('firm','M01-F04',{person,qualification:'Credential '+capacity,issuer:'Fixture issuer',
+        sector:'Manufacturing',skill:'Fixed assets',validFrom:'2025-01-01',validTo:external?'':'2026-05-31',
+        validity:external?'no-expiry':'dated',source:'Exact issuer record'});
+      const appointment=await approve('firm','M01-F06',{person,role:'Firm appointment',capacity,employment:external?'external':'employee',
+        from:'2026-01-01',to:'2026-06-30',basis:'Recorded appointment'});
+      roster[capacity]={person,credential,appointment,facts};
+    }
+    const unknown=await approve('firm','M01-F04',{person:roster.preparer.person,qualification:'Unverified credential',
+      sector:'Manufacturing',skill:'Fixed assets',validity:'unknown',source:'Awaiting confirmation'});
+    const a=(await write('reviewer','firm','create',create)).selected;
+    const b=(await write('reviewer','firm','create',{...create,client:'Restricted workload',registration:'STAFF-2'})).selected;
+    const activate={independence:'I-Staff',letter:'L-Staff',assessment:'Synthetic staffing scenario'};
+    await write('partner',a,'activate',activate);
+    await write('partner',b,'activate',activate);
+    await write('partner',a,'staffing-enable',{},409);
+    const booking=(capacity,hours='10')=>{
+      const {person,credential,appointment}=roster[capacity];
+      return {capacity,person,credential,appointment,assignmentDate:'2026-02-01',assignmentEnd:'2026-05-30',hours,
+        needs:'Fixed asset file and review',result:'suitable',basis:'Checked dated suitability'};
+    };
+    const primary=booking('preparer','80');
+    const prep=await draft(a,'M04-F06',{...primary,credential:unknown});
+    await register('reviewer',a,'M04-F06','submit',{},prep,409);
+    await draft(a,'M04-F06',{...primary,assignmentEnd:'2026-06-15'},prep);
+    await register('reviewer',a,'M04-F06','submit',{},prep,409);
+    await draft(a,'M04-F06',{...primary,appointment:roster.partner.appointment},prep);
+    await register('reviewer',a,'M04-F06','submit',{},prep,409);
+    await approve(a,'M04-F06',primary,prep);
+    await approve(a,'M04-F06',booking('reviewer'));
+    await approve(a,'M04-F06',booking('partner'));
+
+    const external=await draft(a,'M04-F04',{assignee:'external',person:roster.specialist.person,scope:'Valuation',due:'2026-03-01'});
+    await register('reviewer',a,'M04-F04','declare',{reason:'Verified declaration',source:'Signed declaration ref'},external);
+    await register('reviewer',a,'M04-F04','submit',{},external);
+    await register('partner',a,'M04-F04','approve',{reason:'Independent review'},external);
+    const expert=booking('specialist');
+    const expertId=await draft(a,'M04-F06',expert);
+    await register('reviewer',a,'M04-F06','submit',{},expertId,409);
+    await approve(a,'M04-F06',{...expert,declaration:external,supervisor:'reviewer',deliverable:'Signed valuation memorandum'},expertId);
+    const enabled=await write('partner',a,'staffing-enable',{});
+    assert.equal(enabled.staffing.managed,true);
+    assert.equal(enabled.staffing.accepted.length,4);
+    assert.equal(enabled.staffing.seats.find(s=>s.capacity==='specialist').deliverable,'Signed valuation memorandum');
+    assert.deepEqual(enabled.staffing.members.sort(),['partner','preparer','reviewer']);
+
+    const competing=await draft(b,'M04-F06',booking('preparer','30'));
+    await register('reviewer',b,'M04-F06','submit',{},competing,409);
+    await approve(b,'M04-F06',booking('preparer','20'),competing);
+    const personBefore=(await view('reviewer','firm')).roster.find(r=>r.id===roster.preparer.person);
+    assert.equal(personBefore.committed,100);
+    assert.equal(personBefore.assignments.length,2);
+    assert.ok(personBefore.credentials.some(c=>c.id===unknown&&c.validity==='unknown'));
+    await write('partner',b,'access',{role:'reviewer',access:'revoke',reason:'Scoped portfolio'});
+    const visible=(await view('reviewer','firm')).roster.find(r=>r.id===roster.preparer.person);
+    assert.equal(visible.committed,80);
+    assert.deepEqual(visible.assignments.map(x=>x.engagement),[a]);
+
+    const form='3.1.2';
+    const schedule={form,start:'2026-03-01',due:'2026-04-01'};
+    await write('reviewer',a,'schedule',{...schedule,due:'2026-06-01'},409);
+    await write('reviewer',a,'schedule',schedule);
+    await write('reviewer',a,'task-add',{owner:'preparer',title:'Check fixture',due:'2026-04-01',form});
+    const req=(await write('reviewer',a,'request',{form,title:'Fixture ledger',due:'2026-03-20'})).requests[0].id;
+    await write('preparer',a,'upload',{request:req,name:'ledger.csv',source:'Fixture',base64:'bGVkZ2Vy'});
+    await write('preparer',a,'accept',{request:req});
+    await write('preparer',a,'save',{form,execution:'Prepared',conclusion:'Agreed'});
+    await write('preparer',a,'submit',{form});
+    await write('reviewer',a,'work-assign',{form,owner:'reviewer',reviewer:'preparer',reason:'Try changing submitted route'},409);
+    const signed=(await write('reviewer',a,'review',{form})).papers.find(p=>p.form===form);
+    assert.deepEqual(signed.staffingSignoffs.map(s=>[s.action,s.seat.name]),[['review','Staff reviewer'],['submit','Staff preparer']]);
+    assert.equal(signed.staffingSignoffs[0].seat.credential.source,'Exact issuer record');
+
+    await approve('firm','M01-F03',{...roster.preparer.facts,status:'inactive'},roster.preparer.person);
+    await write('reviewer',a,'task-add',{owner:'preparer',title:'Do not assign',due:'2026-04-01',form},409);
+    await write('preparer',a,'save',{form,execution:'New edits',conclusion:'Blocked'},409);
+    const replacement=(await write('reviewer',a,'work-assign',{form,owner:'reviewer',reviewer:'partner',reason:'Preparer unavailable'})).papers.find(p=>p.form===form);
+    assert.deepEqual([replacement.owner,replacement.reviewer,replacement.due],['temuulen','bat',schedule.due]);
+    assert.equal(replacement.reviewedVersion,signed.reviewedVersion);
+    assert.equal(replacement.status,'reviewed');
+    assert.deepEqual(replacement.staffingSignoffs,signed.staffingSignoffs);
+    assert.equal(replacement.assignmentHistory[0].reason,'Preparer unavailable');
+    assert.equal(replacement.assignmentHistory[0].ownerBasis.name,'Staff reviewer');
+    const assignedView=await view('partner',a);
+    assert.equal(assignedView.staffing.seats.find(s=>s.capacity==='preparer').current,false);
+    assert.equal(assignedView.staffing.accepted.find(s=>s.capacity==='preparer').name,'Staff preparer');
+    assert.equal(assignedView.requests.find(r=>r.id===req).owner,'nomin');
+    const later=(await write('partner',a,'request',{form,title:'Follow-up ledger',due:'2026-04-05'})).requests[0];
+    assert.equal(later.owner,'temuulen');
+    const rerouted=await write('reviewer',a,'work-assign',{form,owner:'partner',reviewer:'reviewer',reason:'Route outstanding follow-up'});
+    assert.equal(rerouted.requests.find(r=>r.id===later.id).owner,'bat');
+    assert.equal(rerouted.requests.find(r=>r.id===req).owner,'nomin');
+    await write('reviewer',a,'upload',{request:later.id,name:'new.csv',source:'Fixture',base64:'bGVkZ2Vy'},403);
+    await write('partner',a,'upload',{request:later.id,name:'new.csv',source:'Fixture',base64:'bGVkZ2Vy'});
+    assert.equal((await write('partner',a,'accept',{request:later.id})).requests[0].status,'complete');
+
+    await service.close();
+    service=null;
+    service=await start(database);
+    const again=await fixture(service,false);
+    const restored=(await again.view('partner',a)).papers.find(p=>p.form===form);
+    assert.deepEqual(restored.staffingSignoffs,signed.staffingSignoffs);
+    assert.equal(restored.owner,'bat');
+  } finally {
+    if (service) await service.close();
+    for (const suffix of ['', '-shm', '-wal']) await rm(database+suffix,{force:true});
+    await rmdir(dir);
+  }
+});
+
 test('provisional intake, subsequent-period confirmation and signed terms survive independent review', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'audit-intake-'));
   const database = join(dir, 'intake.sqlite');

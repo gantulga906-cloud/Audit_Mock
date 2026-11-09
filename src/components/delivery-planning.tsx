@@ -11,7 +11,7 @@ const monthLabel=(s:string)=>new Intl.DateTimeFormat('mn-MN',{month:'long',year:
 const daysFrom=(s:string,count:number)=>Array.from({length:count},(_,i)=>add(s,i));
 const names=['Да','Мя','Лх','Пү','Ба','Бя','Ня'];
 
-export function DeliveryTimeline({items,select,baseline,milestone,initialStart='2026-11-02',today=DEMO_DAY}:{items:WorkItem[];select:(id:string)=>void;baseline:boolean;milestone:string;initialStart?:string;today?:string}){
+export function DeliveryTimeline({items,select,baseline,milestone,initialStart='2026-11-02',today=DEMO_DAY,staffNames}:{items:WorkItem[];select:(id:string)=>void;baseline:boolean;milestone:string;initialStart?:string;today?:string;staffNames?:Record<string,string>}){
  const [start,setStart]=useState(initialStart),[span,setSpan]=useState(28),[owner,setOwner]=useState(''),[reviewer,setReviewer]=useState('');
  const days=daysFrom(start,span),end=days.at(-1)!;
  const filtered=items.filter(w=>(!owner||w.owner===owner)&&(!reviewer||w.reviewer===reviewer));
@@ -29,8 +29,8 @@ export function DeliveryTimeline({items,select,baseline,milestone,initialStart='
    <label>Эхлэх өдөр<input type="date" value={start} onChange={e=>e.target.value&&setStart(e.target.value)}/></label>
    <button className="btn secondary" aria-label="Дараагийн хугацаа" onClick={()=>setStart(add(start,span))}><ChevronRight size={16}/></button>
    <label>Хугацааны цонх<select value={span} onChange={e=>setSpan(Number(e.target.value))}><option value={7}>7 хоног</option><option value={14}>14 хоног</option><option value={28}>28 хоног</option></select></label>
-   <label>Бэлтгэгч<select value={owner} onChange={e=>setOwner(e.target.value)}><option value="">Бүгд</option>{[...new Set(items.map(w=>w.owner))].map(id=><option key={id} value={id}>{personById(id).name}</option>)}</select></label>
-   <label>Хянагч<select value={reviewer} onChange={e=>setReviewer(e.target.value)}><option value="">Бүгд</option>{[...new Set(items.map(w=>w.reviewer))].map(id=><option key={id} value={id}>{personById(id).name}</option>)}</select></label>
+   <label>Бэлтгэгч<select value={owner} onChange={e=>setOwner(e.target.value)}><option value="">Бүгд</option>{[...new Set(items.map(w=>w.owner))].map(id=><option key={id} value={id}>{staffNames?.[id]??personById(id).name}</option>)}</select></label>
+   <label>Хянагч<select value={reviewer} onChange={e=>setReviewer(e.target.value)}><option value="">Бүгд</option>{[...new Set(items.map(w=>w.reviewer))].map(id=><option key={id} value={id}>{staffNames?.[id]??personById(id).name}</option>)}</select></label>
   </div>
   <div className="timeline-caption"><span>{start} — {end}</span><span>◆ Тайлангийн зорилтот өдөр: {milestone}</span><span>● Бодитоор хянасан өдөр</span></div>
   <div className="gantt-scroll"><div className="gantt" style={{minWidth:span>14?1060:720}}>
@@ -38,7 +38,7 @@ export function DeliveryTimeline({items,select,baseline,milestone,initialStart='
    {[1,2,3,4,5].map(stage=>{const rows=inRange.filter(w=>w.stage===stage);return rows.length>0&&<div key={stage}><div className="gantt-group"><b>{stage} · {['Хүлээн авах','Төлөвлөлт','Гүйцэтгэл','Тайлагнал','Архив'][stage-1]}</b><span>{rows.length} ажил</span></div>{rows.map(w=>{
     const planned=range(w.start,w.due),original=range(w.baselineStart,w.baselineDue),actual=w.completedAt?.slice(0,10),actualStyle=actual?range(actual,actual):undefined;
     return <div className="gantt-row" key={w.id}>
-     <button className="gantt-name" onClick={()=>select(w.id)}><span className={`status-dot ${w.status}`}/><div><small>{w.form} · {personById(w.owner).initials} → {personById(w.reviewer).initials}</small><b>{w.title}</b><small>{STATUS[w.status]}{w.status==='submitted'&&w.history.find(h=>h.version===w.submittedVersion)?' · '+w.history.find(h=>h.version===w.submittedVersion)?.at.slice(0,10):''}{w.notes.some(n=>!n.cleared)?' · Нээлттэй тэмдэглэл':''}</small></div></button>
+     <button className="gantt-name" onClick={()=>select(w.id)}><span className={`status-dot ${w.status}`}/><div><small>{w.form} · {staffNames?.[w.owner]??personById(w.owner).initials} → {staffNames?.[w.reviewer]??personById(w.reviewer).initials}</small><b>{w.title}</b><small>{STATUS[w.status]}{w.status==='submitted'&&w.history.find(h=>h.version===w.submittedVersion)?' · '+w.history.find(h=>h.version===w.submittedVersion)?.at.slice(0,10):''}{w.notes.some(n=>!n.cleared)?' · Нээлттэй тэмдэглэл':''}</small></div></button>
      <div className="gantt-track" style={{backgroundSize:`${100/span}% 100%`}}>
       {baseline&&original&&<i className="baseline" title={`Суурь: ${w.baselineStart} – ${w.baselineDue}`} style={original}/>}
       {planned&&<button className={`gantt-bar ${w.status}`} aria-label={`${w.form} төлөвлөгөө`} title={`${w.start} – ${w.due} · ${STATUS[w.status]}`} style={planned} onClick={()=>select(w.id)}>{w.form}</button>}
