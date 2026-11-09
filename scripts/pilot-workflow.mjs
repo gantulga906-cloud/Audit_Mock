@@ -152,6 +152,21 @@ export function pilotView(m, role, revision, files) {
   };
 }
 
+export function deliverySummary(m, role, archive) {
+  const engagement = m.engagements[0];
+  if (!engagement.intake.active || archive.isSealed(m)) return null;
+  const papers = shownForms(m).map(form => m.work[workKey(engagement.id, form)])
+    .filter(w => w.required && !w.naReason && (role !== 'preparer' || w.owner === m.person));
+  const open = papers.filter(w => !isCurrentReview(w));
+  return {
+    reviewed: papers.length - open.length,
+    applicable: papers.length,
+    tasks: m.tasks.filter(t => t.engagement === engagement.id && !t.done && (role !== 'preparer' || t.owner === m.person)).length,
+    deadlines: open.filter(w => w.due).sort((a, b) => a.due.localeCompare(b.due)).slice(0, 3)
+      .map(({ form, title, due }) => ({ form, title, due })),
+  };
+}
+
 export function pilotAction(m, role, action, data, files) {
   const sealed = files.archive.isSealed(m);
   if (action === 'register') {
@@ -166,6 +181,7 @@ export function pilotAction(m, role, action, data, files) {
   if (action === 'create') {
     requireActor(role === 'reviewer' || role === 'partner');
     if (m.engagements.length) throw new PilotError(409, 'Туршилтын гэрээт ажил бүртгэгдсэн.');
+    if (data?.includePreparer !== undefined && !['yes','no'].includes(data.includePreparer)) throw new PilotError(400, 'Бэлтгэгчийн томилгоог шалгана уу.');
     const contact = { id: randomUUID(), name: input(data, 'contact', 150), email: input(data, 'email', 254), role: '', body: '', signer: true };
     const company = createCompany(m, {
       name: input(data, 'client', 200), legalForm: input(data, 'legalForm', 50), registration: input(data, 'registration', 50),

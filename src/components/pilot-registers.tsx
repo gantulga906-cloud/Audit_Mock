@@ -1,5 +1,5 @@
 import {useState,type FormEvent} from 'react';
-import {registers,roleChoices,sections,type PilotRecord,type PilotRole,type RegisterField,type RecordStatus} from '@/lib/pilot-registers';
+import {pilotScope,registers,roleChoices,sections,type PilotRecord,type PilotRole,type RegisterField,type RecordStatus} from '@/lib/pilot-registers';
 import type {Evidence} from '@/lib/workspace';
 
 export type PilotAction=(action:string,fields?:Record<string,string>)=>Promise<boolean>;
@@ -66,14 +66,14 @@ function Reason({action,label,source=false}:{action:(reason:string,source:string
  </form>;
 }
 
-function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive}:{
+function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,engagementId,readOnly}:{
  row:PilotRecord;role:PilotRole;resources:RegisterResources;evidence:Evidence[];run:PilotAction;edit:()=>void;
- open:(id:string)=>void;exportArchive:(id:string)=>void;
+ open:(id:string)=>void;exportArchive:(id:string)=>void;engagementId:string|null;readOnly:boolean;
 }){
  const def=spec(row.kind)!;
  const command=(operation:string,reason='',source='')=>void run('register',{kind:row.kind,id:row.id,operation,reason,source});
  const submitted=row.status==='submitted',draft=['draft','returned'].includes(row.status);
- const canEdit=def.writers.includes(role)&&row.owner===role&&!submitted&&!(def.section==='archive'&&row.status==='approved');
+ const canEdit=!readOnly&&def.writers.includes(role)&&row.owner===role&&!submitted&&!(def.section==='archive'&&row.status==='approved');
  const declaration=row.kind==='M04-F04';
  const related=resources.registers.filter(r=>r.id!==row.id&&Object.values(r.values).includes(row.id));
  const archiveGrant=row.status==='approved'&&['M12-F07','M12-F10'].includes(row.kind);
@@ -82,7 +82,7 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive}:{
   <dl className="register-values">{def.fields.filter(f=>row.values[f.key]).map(f=>{
    const v=row.values[f.key],file=f.type==='evidence'&&evidence.find(e=>e.id===v),linked=f.type==='record'&&resources.registers.find(r=>r.id===v);
    const fileLabel=file?file.name+' · v'+file.version:'';
-   return <div key={f.key}><dt>{f.label}</dt><dd>{file?(resources.archive.packages.length&&!resources.archive.reopened?fileLabel:<a href={'/api/pilot/evidence/'+file.id}>{fileLabel}</a>):linked?<button type="button" className="quiet" onClick={()=>open(linked.id)}>{heading(linked)} · {linked.kind}</button>:f.choices?.find(([key])=>key===v)?.[1]??v}</dd></div>;
+   return <div key={f.key}><dt>{f.label}</dt><dd>{file?(resources.archive.packages.length&&!resources.archive.reopened?fileLabel:<a href={'/api/pilot/evidence/'+file.id+pilotScope(engagementId)}>{fileLabel}</a>):linked?<button type="button" className="quiet" onClick={()=>open(linked.id)}>{heading(linked)} · {linked.kind}</button>:f.choices?.find(([key])=>key===v)?.[1]??v}</dd></div>;
   })}</dl>
   {row.template&&<p className="micro">{row.template.form} · {row.template.sheet} · {row.template.digest.slice(0,16)}</p>}
   {row.statementVersion&&<p className="micro">Санхүүгийн тайлан v{row.statementVersion}</p>}
@@ -97,12 +97,12 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive}:{
   {row.revoked&&<p>Хандалт цуцалсан · {new Date(row.revoked.at).toLocaleString()} · {row.revoked.reason}</p>}
   <div className="row-actions space-top">
    {canEdit&&<button type="button" className="btn secondary" onClick={edit}>Бүртгэл засах</button>}
-   {row.owner===role&&draft&&<button type="button" className="btn primary" disabled={declaration&&!row.declaration} onClick={()=>command('submit')}>v{row.version} хувилбар илгээх</button>}
+   {!readOnly&&row.owner===role&&draft&&<button type="button" className="btn primary" disabled={declaration&&!row.declaration} onClick={()=>command('submit')}>v{row.version} хувилбар илгээх</button>}
    {archiveGrant&&!row.revoked&&row.values.accessor===role&&<button type="button" className="btn secondary" onClick={()=>exportArchive(row.id)}>Зөвшөөрсөн багцыг татах</button>}
    {row.kind==='M12-F11'&&role==='partner'&&row.status==='approved'&&!row.executedAt&&row.eligibility?.synthetic&&<button type="button" className="btn secondary" onClick={()=>void run('archive-dispose',{id:row.id})}>Зохиомол архивын устгалыг хэрэгжүүлэх</button>}
   </div>
   {archiveGrant&&!row.revoked&&role==='partner'&&<Reason label="Хандалт цуцлах шалтгаан" action={reason=>command('revoke',reason)}/>}
-  {canReview(row,role)&&<div className="field-grid">
+  {!readOnly&&canReview(row,role)&&<div className="field-grid">
    <Reason label="Батлах үндэслэл" action={reason=>command('approve',reason)}/>
    <Reason label="Буцаах шалтгаан" action={reason=>command('return',reason)}/>
   </div>}
@@ -111,23 +111,25 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive}:{
  </details>;
 }
 
-export default function PilotRegisters({role,resources,evidence,engagement,active,run,onError}:{
- role:PilotRole;resources:RegisterResources;evidence:Evidence[];engagement:boolean;active:boolean;run:PilotAction;onError:(message:string)=>void;
+export default function PilotRegisters({role,resources,evidence,engagementId,active,run,onError}:{
+ role:PilotRole;resources:RegisterResources;evidence:Evidence[];engagementId:string|null;active:boolean;run:PilotAction;onError:(message:string)=>void;
 }){
- const [section,setSection]=useState('firm'),[kind,setKind]=useState(''),[editId,setEdit]=useState<string|null>(null),[focus,setFocus]=useState(''),[unit,setUnit]=useState('');
- const available=sections.filter(([key])=>key==='firm'||key==='acceptance'&&engagement||active);
+ const [section,setSection]=useState(engagementId?'acceptance':'firm'),[kind,setKind]=useState(''),[editId,setEdit]=useState<string|null>(null),[focus,setFocus]=useState(''),[unit,setUnit]=useState('');
+ const available=sections.filter(([key])=>key==='firm'||key==='acceptance'&&engagementId||active);
  const current=available.some(([key])=>key===section)?section:'firm';
  const group=registers.filter(r=>r.section===current),def=group.find(r=>r.id===kind)??group[0];
+ const readOnly=!!engagementId&&current==='firm';
  const data=resources.registers.filter(r=>r.kind===def.id&&(def.id!=='M01-F03'||!unit||r.values.unit===unit||r.id===focus))
   .sort((a,b)=>a.id===focus?-1:b.id===focus?1:0);
- const queue=resources.registers.filter(r=>canReview(r,role)||r.kind==='M04-F04'&&r.values.assignee===role&&!r.declaration||r.owner===role&&r.status==='returned');
+ const queue=resources.registers.filter(r=>(!engagementId||spec(r.kind)?.section!=='firm')&&
+  (canReview(r,role)||r.kind==='M04-F04'&&r.values.assignee===role&&!r.declaration||r.owner===role&&r.status==='returned'));
  function open(id:string){
   const row=resources.registers.find(r=>r.id===id),target=row&&spec(row.kind);
   if(target){setSection(target.section);setKind(target.id);setEdit(null);setFocus(id);}
  }
  async function exportArchive(id:string){
   try{
-   const res=await fetch('/api/pilot/archive-export/'+id,{method:'POST'});
+   const res=await fetch('/api/pilot/archive-export/'+id+pilotScope(engagementId),{method:'POST'});
    const bundle=await res.json();
    if(!res.ok)throw Error(bundle.error);
    const url=URL.createObjectURL(new Blob([JSON.stringify(bundle,null,2)],{type:'application/json'}));
@@ -150,9 +152,10 @@ export default function PilotRegisters({role,resources,evidence,engagement,activ
   </div>}
   <label className="space-top">Эх шаардлага<select value={def.id} onChange={e=>{setKind(e.target.value);setEdit(null);setFocus('');}}>{group.map(r=><option value={r.id} key={r.id}>{r.id} · {r.label}</option>)}</select></label>
   {def.id==='M01-F03'&&<label>Нэгжээр шүүх<select value={unit} onChange={e=>setUnit(e.target.value)}><option value="">Бүх нэгж</option>{resources.registers.filter(r=>r.kind==='M01-F02'&&r.status==='approved').map(r=><option value={r.id} key={r.id}>{r.values.name}</option>)}</select></label>}
-  {def.writers.includes(role)&&editId===null&&<button type="button" className="btn secondary space-top" onClick={()=>setEdit('new')}>Шинэ бүртгэл</button>}
+  {readOnly&&<p className="muted">Энэ бүртгэлийг гэрээт ажлын жагсаалтаас нээж өөрчилнө.</p>}
+  {!readOnly&&def.writers.includes(role)&&editId===null&&<button type="button" className="btn secondary space-top" onClick={()=>setEdit('new')}>Шинэ бүртгэл</button>}
   {editId!==null&&<Editor key={def.id+'/'+editId} kind={def.id} row={editing} resources={resources} evidence={evidence} run={run} onDone={()=>setEdit(null)}/>}
   {data.length===0&&editId===null&&<p className="muted">Энэ шаардлагын бүртгэл алга.</p>}
-  {data.map(r=><RecordCard key={r.id} row={r} role={role} resources={resources} evidence={evidence} run={run} edit={()=>setEdit(r.id)} open={open} exportArchive={exportArchive}/>)}
+  {data.map(r=><RecordCard key={r.id} row={r} role={role} resources={resources} evidence={evidence} run={run} edit={()=>setEdit(r.id)} open={open} exportArchive={exportArchive} engagementId={engagementId} readOnly={readOnly}/>)}
  </section>;
 }

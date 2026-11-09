@@ -34,10 +34,11 @@ export function createArchiveStore(db) {
     );
     CREATE TEMP TABLE IF NOT EXISTS pilot_archive_restore (id TEXT PRIMARY KEY, name TEXT NOT NULL, bytes BLOB NOT NULL);
   `);
-  const read = id => db.prepare('SELECT * FROM pilot_archives WHERE id = ?').get(id);
-  const list = () => db.prepare('SELECT id, previous, issued, sealed, digest, synthetic, summary, payload IS NULL AS disposed FROM pilot_archives ORDER BY sealed DESC').all()
+  const read = (m, id) => db.prepare('SELECT * FROM pilot_archives WHERE engagement_id = ? AND id = ?').get(m.engagement, id);
+  const list = m => db.prepare(`SELECT id, previous, issued, sealed, digest, synthetic, summary, payload IS NULL AS disposed
+    FROM pilot_archives WHERE engagement_id = ? ORDER BY sealed DESC, rowid DESC`).all(m.engagement)
     .map(r => ({ ...r, summary: JSON.parse(r.summary) }));
-  const latest = () => list()[0];
+  const latest = m => list(m)[0];
   function checkPayload(row) {
     if (!row?.payload) fail('Сэргээх архивын агуулга байхгүй.');
     if (sha(row.payload) !== row.digest) fail('Архивын хэш таарахгүй.');
@@ -52,12 +53,13 @@ export function createArchiveStore(db) {
     })) fail('Эх файлын хэмжээ эсвэл хэш таарахгүй.');
     return bundle;
   }
-  function insert(bundle, previous, issued, synthetic) {
+  function insert(m, bundle, previous, issued, synthetic) {
     const payload = JSON.stringify(bundle), id = randomUUID(), sealed = new Date().toISOString();
     if (Buffer.byteLength(payload) > 30_000_000) fail('Туршилтын архивын багц 30 MB-аас их байна.');
     const summary = { client: bundle.client, files: bundle.evidence.map(({ id, name, version, sha256 }) => ({ id, name, version, sha256 })),
       changes: bundle.changes ?? null };
-    db.prepare('INSERT INTO pilot_archives VALUES (?, ?, ?, ?, ?, ?, ?, ?)').run(id, previous, issued, sealed, sha(payload), synthetic, JSON.stringify(summary), payload);
+    db.prepare(`INSERT INTO pilot_archives (id, previous, issued, sealed, digest, synthetic, summary, payload, engagement_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`).run(id, previous, issued, sealed, sha(payload), synthetic, JSON.stringify(summary), payload, m.engagement);
     return id;
   }
   function seal(m, signed) {
@@ -65,24 +67,24 @@ export function createArchiveStore(db) {
     if (!issue || !signed) fail('Яг зөвшөөрсөн багцыг эхлээд гаргана уу.');
     const artifact = signed.authorization.artifact;
     if (artifact && (sha(artifact.html) !== artifact.sha256 || artifact.sha256 !== issue.reportSha256)) fail('Зөвшөөрсөн тайлангийн хэш таарахгүй.');
-    const prior = latest();
+    const prior = latest(m);
     if (prior?.issued === issue.at) return prior.id;
     if (prior && (!m.archiveReopen || m.archiveReopen.package !== prior.id)) fail('Агуулгын өөрчлөлтийг зөвшөөрнө үү.');
     const evidence = signed.evidence.map(metadata => {
-      const file = db.prepare('SELECT bytes FROM evidence WHERE id = ?').get(metadata.id);
+      const file = db.prepare('SELECT bytes FROM evidence WHERE engagement_id = ? AND id = ?').get(m.engagement, metadata.id);
       if (!file || sha(file.bytes) !== metadata.sha256) fail('Архивлах эх файл эсвэл хэш таарахгүй.');
       return { ...metadata, size: file.bytes.length, base64: Buffer.from(file.bytes).toString('base64') };
     });
-    const id = insert({ ...signed, client: m.engagements[0].client, issue, evidence,
+    const id = insert(m, { ...signed, client: m.engagements[0].client, issue, evidence,
       ...(m.archiveReopen && { changes: m.archiveReopen }) }, prior?.id ?? null, issue.at, m.syntheticPilot ? 1 : 0);
     delete m.archiveReopen;
     return id;
   }
   function checkRecord(m, row) {
-    const v = row.values, archive = read(v.package);
+    const v = row.values, archive = read(m, v.package);
     if (!archive) fail('Архивын багц олдсонгүй.');
     if (!archive.payload && !(row.kind === 'M12-F08' && v.type === 'hold')) fail('Архивын агуулга байхгүй.');
-    if (row.kind === 'M12-F04' && latest()?.id !== archive.id) fail('Одоогийн архивын багцыг сонгоно уу.');
+    if (row.kind === 'M12-F04' && latest(m)?.id !== archive.id) fail('Одоогийн архивын багцыг сонгоно уу.');
     if (row.kind === 'M12-F08') {
       if (v.type === 'policy' && (!validDate(v.anchor) || v.anchor > today() || !/^\d{1,2}$/.test(v.years) || Number(v.years) < 1)) fail('Бодлогын огноо ба бүтэн жилийн тоо шаардлагатай.');
       if (v.type === 'release' && !activeHolds(m, archive.id).some(r => r.id === v.reference)) fail('Идэвхтэй хоригийн ID шаардлагатай.');
@@ -101,7 +103,7 @@ export function createArchiveStore(db) {
   function approveRecord(m, row, role) {
     const v = row.values;
     if (row.kind === 'M12-F09') {
-      const archive = read(v.package);
+      const archive = read(m, v.package);
       if (v.type === 'restore' && !archive.synthetic) fail('Сэргээх туршилтад зөвхөн зохиомол багц ашиглана.');
       const meta = { at: new Date().toISOString(), by: role, restored: v.type === 'restore' };
       try {
@@ -123,13 +125,13 @@ export function createArchiveStore(db) {
     }
     if (row.kind !== 'M12-F04') return;
     if (m.archiveReopen) fail('Өмнөх архивын өөрчлөлтийг дуусгана уу.');
-    const archive = read(v.package);
+    const archive = read(m, v.package);
     const changes = { package: v.package, id: row.id, type: v.type, changes: v.changes, basis: v.basis, approvedBy: role, at: new Date().toISOString() };
     if (v.type === 'substantive') {
       m.archiveReopen = changes;
       invalidateReport(m, 'Архивын агуулгын өөрчлөлт зөвшөөрөв');
     } else {
-      row.successor = insert({ ...checkPayload(archive), changes }, archive.id, archive.issued, archive.synthetic);
+      row.successor = insert(m, { ...checkPayload(archive), changes }, archive.id, archive.issued, archive.synthetic);
     }
   }
   function dispose(m, id) {
@@ -137,15 +139,15 @@ export function createArchiveStore(db) {
     if (!row) fail('Батлагдсан устгалын шийдвэр шаардлагатай.');
     if (row.executedAt) return;
     checkRecord(m, row);
-    const archive = read(row.values.package);
+    const archive = read(m, row.values.package);
     if (!archive.synthetic) fail('Туршилтаар бодит баримтын агуулгыг устгахгүй.');
-    db.prepare('UPDATE pilot_archives SET payload = NULL WHERE id = ?').run(archive.id);
+    db.prepare('UPDATE pilot_archives SET payload = NULL WHERE engagement_id = ? AND id = ?').run(m.engagement, archive.id);
     row.executedAt = new Date().toISOString();
   }
   function exportPackage(m, grantId, role) {
     const grant = (m.pilotRecords ?? []).find(r => r.id === grantId && r.status === 'approved' && archiveGrantKinds.includes(r.kind));
     if (!grant || grant.revoked || grant.values.accessor !== role || grant.values.until < today()) throw new PilotError(403, 'Хандалтын зөвшөөрөл шаардлагатай.');
-    const v = grant.values, archive = read(v.package), bundle = checkPayload(archive);
+    const v = grant.values, archive = read(m, v.package), bundle = checkPayload(archive);
     const scope = grant.kind === 'M12-F07' ? 'full' : v.scope;
     const content = scope === 'full' ? bundle : scope === 'report' ? {
       report: bundle.authorization.artifact ?? bundle.authorization.package.paper, issue: bundle.issue,
@@ -156,7 +158,7 @@ export function createArchiveStore(db) {
       .run(archive.id, grant.id, role, at, v.reason, scope);
     return { id: archive.id, scope, at, digest: sha(JSON.stringify(content)), content };
   }
-  const view = (m, role) => ({ packages: list().map(p => {
+  const view = (m, role) => ({ packages: list(m).map(p => {
     const { digest, summary, ...index } = p;
     const metadata = { client: summary.client, fileCount: summary.files.length };
     return {
@@ -165,6 +167,6 @@ export function createArchiveStore(db) {
         access: db.prepare('SELECT actor, at, reason, scope FROM pilot_archive_access WHERE package = ? ORDER BY id DESC LIMIT 25').all(p.id) }),
     };
   }), reopened: m.archiveReopen ?? null, issue: role === 'partner' ? m.pilotIssue ?? null : null });
-  const isSealed = m => !m.archiveReopen && !!db.prepare('SELECT 1 FROM pilot_archives LIMIT 1').get();
+  const isSealed = m => !m.archiveReopen && !!db.prepare('SELECT 1 FROM pilot_archives WHERE engagement_id = ? LIMIT 1').get(m.engagement);
   return { seal, checkRecord, approveRecord, dispose, exportPackage, view, isSealed };
 }

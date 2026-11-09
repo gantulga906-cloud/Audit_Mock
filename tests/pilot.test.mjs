@@ -1,11 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createHash, randomUUID } from 'node:crypto';
+import { createHash, randomUUID, scryptSync } from 'node:crypto';
 import { mkdtemp, rm, rmdir } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { DatabaseSync } from 'node:sqlite';
 import { createPilot } from '../scripts/pilot-server.mjs';
+import { accounts, emptyWorkspace, pilotAction } from '../scripts/pilot-workflow.mjs';
 import { registers } from '../src/lib/pilot-registers.ts';
 
 const passwords = { preparer: 'test-preparer-pass', reviewer: 'test-reviewer-pass', partner: 'test-partner-pass' };
@@ -35,6 +37,191 @@ async function start(database) {
     },
   };
 }
+
+async function fixture(service, setup = true) {
+  if (setup) assert.equal((await service.fetch('/setup', '', { code: 'test-bootstrap-only', ...passwords })).status, 201);
+  const cookies = {};
+  for (const role of Object.keys(passwords)) {
+    const response = await service.fetch('/login', '', { role, password: passwords[role] });
+    assert.equal(response.status, 200);
+    cookies[role] = response.headers.get('set-cookie').split(';')[0];
+  }
+  const scoped = (path, id) => path + '?engagement=' + id;
+  const view = async (role, id, status = 200) => {
+    const response = await service.fetch(scoped('', id), cookies[role]);
+    assert.equal(response.status, status);
+    return response.json();
+  };
+  async function write(role, id, action, fields, status = 200, options = {}) {
+    const revision = options.revision ?? (await view(role, id)).revision;
+    const response = await service.fetch(scoped('/action', id), cookies[role], { action, fields, revision, idempotencyKey: options.key });
+    const result = await response.json();
+    assert.equal(response.status, status, action + ' · ' + (result.error ?? ''));
+    return result;
+  }
+  return { cookies, scoped, view, write };
+}
+
+test('two engagements isolate revisions, work, reports, grants and archive access', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'audit-multi-'));
+  const database = join(dir, 'multi.sqlite');
+  let service = await start(database);
+  try {
+    const { cookies, scoped, view, write } = await fixture(service);
+    const a = (await write('reviewer', 'firm', 'create', { ...create, synthetic: 'yes' })).selected;
+    const createB = { ...create, client: 'Private second engagement', registration: 'QA-PILOT-2', synthetic: 'yes', includePreparer: 'no' };
+    const key = randomUUID();
+    const revision = (await view('reviewer', 'firm')).revision;
+    const b = (await write('reviewer', 'firm', 'create', createB, 200, { key, revision })).selected;
+    assert.notEqual(a, b);
+    assert.equal((await write('reviewer', 'firm', 'create', createB, 200, { key, revision })).selected, b);
+    assert.deepEqual((await view('reviewer', 'firm')).portfolio.map(e => e.id).sort(), [a, b].sort());
+    assert.deepEqual((await view('preparer', 'firm')).portfolio.map(e => e.id), [a]);
+    assert.doesNotMatch(JSON.stringify(await view('preparer', b, 404)), /Private second/);
+    await write('reviewer', 'firm', 'create', { ...createB, registration: ' qa-pilot-1 ' }, 409);
+    const activate = { independence: 'I1', letter: 'L1', assessment: 'Synthetic acceptance' };
+    await write('partner', a, 'activate', activate);
+    await write('partner', b, 'activate', activate);
+    const schedule = { form: '3.1.2', start: '2026-03-01', due: '2026-03-15' };
+    const revA = (await view('reviewer', a)).revision, revB = (await view('reviewer', b)).revision;
+    await write('reviewer', a, 'schedule', schedule, 200, { revision: revA });
+    assert.equal((await view('reviewer', b)).revision, revB);
+    await write('reviewer', b, 'schedule', { ...schedule, due: '2026-03-16' }, 200, { revision: revB });
+    await write('reviewer', a, 'schedule', { ...schedule, due: '2026-03-17' }, 409, { revision: revA });
+    assert.equal((await view('reviewer', a)).papers[0].due, '2026-03-15');
+    assert.equal((await view('reviewer', b)).papers[0].due, '2026-03-16');
+    const portfolio = (await view('reviewer', 'firm')).portfolio;
+    assert.equal(portfolio.find(e => e.id === a).progress.deadlines[0].due, '2026-03-15');
+    assert.equal(portfolio.find(e => e.id === b).progress.deadlines[0].due, '2026-03-16');
+    assert.deepEqual((await view('preparer', 'firm')).portfolio.map(e => e.progress.deadlines[0].due), ['2026-03-15']);
+    const access = { role: 'preparer', access: 'grant', reason: 'Assigned fieldwork' };
+    await write('reviewer', b, 'access', access, 403);
+    await write('partner', b, 'access', access);
+
+    const requestFields = { title: 'Audit evidence', due: '2026-03-20' };
+    const requestKey = randomUUID();
+    const request = (await write('reviewer', a, 'request', requestFields, 200, { key: requestKey })).requests[0].id;
+    await write('reviewer', b, 'request', requestFields, 409, { key: requestKey });
+    await write('preparer', b, 'accept', { request }, 404);
+    async function finish(id, requestId, label) {
+      const bytes = Buffer.from(label);
+      const upload = await write('preparer', id, 'upload', { request: requestId, name: label + '.csv', source: label, base64: bytes.toString('base64') });
+      const evidence = upload.evidence[0].id;
+      await write('preparer', id, 'accept', { request: requestId });
+      await write('partner', id, 'statements', { statements: label + ' statements', disclosures: label + ' disclosures' });
+      for (const [form, owner, reviewer] of [['3.1.2','preparer','reviewer'], ['4.4','reviewer','partner'], ['4.1.A1','reviewer','partner']]) {
+        await write(owner, id, 'save', { form, execution: 'Work reviewed', conclusion: label + ' conclusion' });
+        await write(owner, id, 'submit', { form });
+        await write(reviewer, id, 'review', { form });
+      }
+      await write('partner', id, 'authorize', {});
+      await write('partner', id, 'issue', { reference: label + ' issue' });
+      return evidence;
+    }
+    const evidenceA = await finish(a, request, 'Engagement A');
+    assert.equal((await service.fetch(scoped('/evidence/' + evidenceA, b), cookies.reviewer)).status, 404);
+    const sealedA = await write('partner', a, 'archive-seal', {});
+    const archiveA = sealedA.archive.packages[0].id;
+    assert.deepEqual((await view('partner', b)).archive.packages, []);
+    const requestB = (await write('reviewer', b, 'request', requestFields)).requests[0].id;
+    const evidenceB = await finish(b, requestB, 'Engagement B');
+    assert.equal(await (await service.fetch(scoped('/evidence/' + evidenceB, b), cookies.preparer)).text(), 'Engagement B');
+    await write('partner', b, 'access', { ...access, access: 'revoke' });
+    assert.equal((await service.fetch(scoped('/evidence/' + evidenceB, b), cookies.preparer)).status, 404);
+    await write('preparer', b, 'save', { form: '3.1.2', execution: 'X', conclusion: 'Y' }, 404, { revision: 1 });
+    assert.equal((await view('preparer', a)).selected, a);
+    for (const [id,label] of [[a,'Engagement A'],[b,'Engagement B']]) {
+      const report = await (await service.fetch(scoped('/report', id), cookies.partner)).text();
+      assert.match(report, new RegExp(label + ' statements'));
+      const approvals = await (await service.fetch(scoped('/authorizations', id), cookies.partner)).json();
+      assert.equal(approvals.length, 1);
+      assert.match(approvals[0].authorization.artifact.html, new RegExp(label + ' statements'));
+    }
+    const sealedB = await write('partner', b, 'archive-seal', {});
+    assert.notEqual(sealedB.archive.packages[0].id, archiveA);
+    assert.equal(sealedB.archive.packages[0].previous, null);
+    const grantFields = { 'field.package': archiveA, 'field.accessor': 'reviewer', 'field.reason': 'Audit inspection', 'field.until': '2099-01-01' };
+    const wrong = await write('reviewer', b, 'register', { kind: 'M12-F07', operation: 'save', ...grantFields });
+    await write('reviewer', b, 'register', { kind: 'M12-F07', id: wrong.registers.at(-1).id, operation: 'submit' }, 409);
+    const grant = (await write('reviewer', a, 'register', { kind: 'M12-F07', operation: 'save', ...grantFields })).registers.at(-1).id;
+    await write('reviewer', a, 'register', { kind: 'M12-F07', id: grant, operation: 'submit' });
+    await write('partner', a, 'register', { kind: 'M12-F07', id: grant, operation: 'approve', reason: 'Approved' });
+    const archivePath = '/archive-export/' + grant;
+    assert.equal((await service.fetch(scoped(archivePath, a), cookies.reviewer, {})).status, 200);
+    assert.equal((await service.fetch(scoped(archivePath, b), cookies.reviewer, {})).status, 403);
+    await write('partner', a, 'access', { ...access, role: 'reviewer', access: 'revoke' });
+    assert.equal((await service.fetch(scoped(archivePath, a), cookies.reviewer, {})).status, 404);
+    await write('partner', a, 'access', { ...access, role: 'reviewer' });
+    assert.equal((await service.fetch(scoped(archivePath, a), cookies.reviewer, {})).status, 403);
+    await service.close();
+    service = null;
+    service = await start(database);
+    const reloaded = await fixture(service, false);
+    assert.deepEqual((await reloaded.view('preparer', 'firm')).portfolio.map(e => e.id), [a]);
+    assert.deepEqual((await reloaded.view('partner', a)).archive.packages.map(p => p.id), [archiveA]);
+    assert.deepEqual((await reloaded.view('partner', b)).archive.packages.map(p => p.id), [sealedB.archive.packages[0].id]);
+  } finally {
+    if (service) await service.close();
+    for (const suffix of ['', '-shm', '-wal']) await rm(database + suffix, { force: true });
+    await rmdir(dir);
+  }
+});
+
+test('a single-workspace database migrates with its original IDs, versions and archive bytes', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'audit-legacy-'));
+  const database = join(dir, 'legacy.sqlite');
+  let service;
+  try {
+    const legacy = { ...emptyWorkspace(), person: accounts.reviewer };
+    pilotAction(legacy, 'reviewer', 'create', { ...create, synthetic: 'yes' }, { archive: { isSealed: () => false } });
+    const id = legacy.engagement;
+    const fileId = randomUUID(), archiveId = randomUUID(), grantId = randomUUID();
+    const file = Buffer.from('Legacy evidence fixture');
+    const sha256 = createHash('sha256').update(file).digest('hex');
+    legacy.pilotRecords = [{ id: grantId, kind: 'M12-F07', owner: 'reviewer', status: 'approved', version: 1,
+      references: {}, history: [], values: { package: archiveId, accessor: 'preparer', until: '2099-01-01', reason: 'Historical grant' } }];
+    const packageEvidence = { id: fileId, name: 'legacy.csv', sha256, version: 2, size: file.length, base64: file.toString('base64') };
+    const authorization = { package: { paper: { id: id + '/4.1.A1', version: 3, values: { conclusion: 'Historical report' } } } };
+    const archived = { authorization, client: create.client, issue: { reference: 'Historical issue' }, evidence: [packageEvidence] };
+    const payload = JSON.stringify(archived), digest = createHash('sha256').update(payload).digest('hex');
+    const db = new DatabaseSync(database);
+    db.exec(`
+      CREATE TABLE accounts (role TEXT PRIMARY KEY, salt TEXT NOT NULL, hash BLOB NOT NULL);
+      CREATE TABLE workspace (id INTEGER PRIMARY KEY, revision INTEGER NOT NULL, body TEXT NOT NULL);
+      CREATE TABLE evidence (id TEXT PRIMARY KEY, name TEXT NOT NULL, sha256 TEXT NOT NULL, bytes BLOB NOT NULL);
+      CREATE TABLE authorizations (id INTEGER PRIMARY KEY, snapshot TEXT NOT NULL);
+      CREATE TABLE pilot_archives (id TEXT PRIMARY KEY, previous TEXT, issued TEXT NOT NULL, sealed TEXT NOT NULL, digest TEXT NOT NULL, synthetic INTEGER NOT NULL, summary TEXT NOT NULL, payload TEXT);
+    `);
+    for (const [role, password] of Object.entries(passwords)) {
+      db.prepare('INSERT INTO accounts VALUES (?, ?, ?)').run(role, 'migration-fixture', scryptSync(password, 'migration-fixture', 64));
+    }
+    db.prepare('INSERT INTO workspace VALUES (1, 19, ?)').run(JSON.stringify(legacy));
+    db.prepare('INSERT INTO evidence VALUES (?, ?, ?, ?)').run(fileId, 'legacy.csv', sha256, file);
+    db.prepare('INSERT INTO authorizations VALUES (1, ?)').run(JSON.stringify({ authorization }));
+    db.prepare('INSERT INTO pilot_archives VALUES (?, NULL, ?, ?, ?, 1, ?, ?)').run(archiveId, '2026-04-01', '2026-04-05', digest,
+      JSON.stringify({ client: create.client, files: [{ id: fileId, name: 'legacy.csv', version: 2, sha256 }] }), payload);
+    db.close();
+    service = await start(database);
+    const { cookies, scoped, view } = await fixture(service, false);
+    const migrated = await view('partner', id);
+    assert.equal(migrated.revision, 19);
+    assert.equal(migrated.archive.packages[0].digest, digest);
+    assert.equal(migrated.archive.packages[0].id, archiveId);
+    const exportPath = scoped('/archive-export/' + grantId, id);
+    assert.deepEqual((await (await service.fetch(exportPath, cookies.preparer, {})).json()).content, archived);
+    await service.close();
+    service = await start(database);
+    const res = await service.fetch('/login', '', { role: 'partner', password: passwords.partner });
+    const reloaded = await res.json();
+    assert.equal(reloaded.selected, id);
+    assert.equal(reloaded.revision, 19);
+    assert.equal(reloaded.archive.packages[0].id, archiveId);
+  } finally {
+    if (service) await service.close();
+    for (const suffix of ['', '-shm', '-wal']) await rm(database + suffix, { force: true });
+    await rmdir(dir);
+  }
+});
 
 test('separate accounts hand off one persisted audit engagement and authorize exact evidence and report versions', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'audit-pilot-'));

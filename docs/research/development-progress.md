@@ -18,7 +18,10 @@ Report issue records the external issue reference and the authorized artifact ha
 
 | Work package and source | Implemented behavior and verification |
 |---|---|
-| WP-02 · D08/D09 | Authenticated command retries are deduplicated per account with the workspace write in one transaction. Tests replay a request after a newer write and after restart, and reject a changed payload using the same key. |
-| WP-04 · CC03/CC08 · A04/A05 | The pilot calendar, personal tasks and senior Gantt read the same server records as workpapers. A revised due date preserves the original schedule and content revision. Tests verify cross-account visibility, task ownership, and persistence after restart. |
+| WP-02 · D07–D09 | SQLite separates engagement records, revisions, membership, evidence, authorizations and archive packages. Firm registers are shared. Command retries bind to the original scope. Tests cover independent revisions, duplicate periods, retry across restart and migration with unchanged IDs and archive bytes. |
+| WP-03 · CC01/CC02 · D05/D07 | The partner grants or revokes the pilot reviewer and preparer on an engagement. Every scoped read and write checks membership, including direct evidence, report and archive routes. Revocation also closes existing archive grants for that role in the engagement. Tests cover denial, revocation and regrant. |
+| WP-04 · CC03/CC08 · A04/A05 | Tasks, calendar, Gantt and the scoped portfolio read workpaper deadlines and statuses from the server. Tests verify cross-account visibility, task ownership, isolated portfolio deadlines and persistence after restart. |
 
-The pilot currently serves one engagement. The shared multi-engagement data model, account scopes, typed workpaper migration, and role-specific portfolio planning are still open in Wave 1.
+The pilot still uses three preset accounts. Dynamic firm identities, independent quality and custody roles, and the typed workpaper and Form Builder migration remain open.
+
+Before upgrading a pilot database, stop the earlier pilot process and back up the database. The first new startup imports the single-workspace record into the engagement tables and tags its existing evidence, authorizations and archive rows with that engagement ID. The upgrade preserves archive payload bytes and SHA-256 hashes. Use the backup when returning to an earlier server version.

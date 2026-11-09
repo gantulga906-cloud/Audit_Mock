@@ -1,4 +1,5 @@
 export type PilotRole='preparer'|'reviewer'|'partner';
+export const pilotScope=(id:string|null)=>'?engagement='+encodeURIComponent(id??'firm');
 export type RecordStatus='draft'|'submitted'|'returned'|'approved';
 type Choice=readonly [value:string,label:string];
 export type RegisterField={key:string;label:string;type?:'long'|'date'|'number'|'choice'|'record'|'evidence'|'form'|'programme';optional?:boolean;choices?:readonly Choice[];target?:string};

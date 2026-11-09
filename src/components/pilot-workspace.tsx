@@ -3,6 +3,7 @@
 import {useEffect,useRef,useState,type FormEvent,type ReactNode} from 'react';
 import PilotRegisters,{type RegisterResources} from './pilot-registers';
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
+import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
 import type {DecisionRecord,Evidence,Model,RequestItem,Statements,WorkItem} from '@/lib/workspace';
 import type {Period} from '@/lib/workbench';
 
@@ -12,8 +13,10 @@ const names:Record<string,string>={nomin:roles.preparer,temuulen:roles.reviewer,
 const status:Record<WorkItem['status'],string>={not_started:'Эхлээгүй',in_progress:'Бэлтгэж буй',waiting:'Хүлээгдэж буй',submitted:'Хяналтад ирсэн',returned:'Засварт буцаасан',reviewed:'Хянагдсан',changed:'Дахин хянуулах'};
 const partStatus={missing:'Ирээгүй',received:'Үнэлэх',accepted:'Зөвшөөрсөн',rejected:'Буцаасан'};
 type Paper=WorkItem&{editable:boolean;reviewable:boolean};
+type PortfolioItem={id:string;client:string;start:string;end:string;reportDate:string;active:boolean;
+ progress?:null|{reviewed:number;applicable:number;tasks:number;deadlines:{form:string;title:string;due:string}[]}};
 type View=RegisterResources&{
- role:keyof typeof roles;revision:number;
+ role:PilotRole;revision:number;selected:string|null;portfolio:PortfolioItem[];members?:PilotRole[];
  engagement:null|{client:string;period:Period;active:boolean;reportDate:string;statements?:Statements;decisions:DecisionRecord[];acceptanceGaps:string[];firm:{id:string;kind:string;version:number;values:Record<string,string>}[]};
  papers?:Paper[];requests?:RequestItem[];evidence?:(Evidence&{sha256:string})[];gaps?:string[];
  fieldwork?:string[];statementLines?:Record<string,number>;impacts?:Model['impacts'];
@@ -24,13 +27,17 @@ type Action=(action:string,fields?:Record<string,string>)=>Promise<boolean>;
 type Result=View|{setup:boolean};
 type PilotFile=Evidence&{sha256:string;uploadedBy?:View['role']};
 
+class PilotRequestError extends Error{
+ constructor(message:string,readonly status:number){super(message);}
+}
+
 async function request(path='',body?:unknown):Promise<Result>{
  const response=await fetch(api+path,body===undefined?{cache:'no-store'}:{
   method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),
  });
  if(response.status===404&&!path)throw Error('Туршилтын сервер ажиллахгүй байна. npm run pilot командаар эхлүүлнэ үү.');
  const result=await response.json();
- if(!response.ok)throw Error(result.error||'Хүсэлтийг гүйцэтгэж чадсангүй.');
+ if(!response.ok)throw new PilotRequestError(result.error||'Хүсэлтийг гүйцэтгэж чадсангүй.',response.status);
  return result;
 }
 
@@ -89,8 +96,50 @@ function SetupEngagement({run}:{run:Action}){
   </div>
    <label className="checkbox-line"><input type="checkbox" name="extended" value="yes" defaultChecked/>Нэгдсэн бүртгэл, үнэлгээ, батлах шаардлагыг идэвхжүүлэх</label>
    <label className="checkbox-line"><input type="checkbox" name="synthetic" value="yes"/>Зохиомол өгөгдөлтэй архивын туршилт</label>
+   <label>Бэлтгэгчийн анхны хандалт<select name="includePreparer"><option value="yes">Томилох</option><option value="no">Дараа томилох</option></select></label>
   </ActionForm>
  </section>;
+}
+
+function EngagementPicker({view,open}:{view:View;open:(id:string|null,form?:string)=>void}){
+ return <section className="card pad bench-card">
+  <div className="section-heading"><div><h2>Гэрээт ажлууд</h2><p>Таны хандах эрхтэй ажлууд</p></div>
+   {view.selected&&<button type="button" className="btn secondary" onClick={()=>open(null)}>Жагсаалт ба фирмийн бүртгэл</button>}
+  </div>
+  <div className="row-actions">
+   {view.portfolio.map(item=><button type="button" key={item.id} className={item.id===view.selected?'btn primary':'btn secondary'}
+    aria-current={item.id===view.selected?'page':undefined} onClick={()=>open(item.id)}>
+    {item.client} · {item.end.slice(0,4)}
+   </button>)}
+  </div>
+  {!view.portfolio.length&&<p className="muted">Хандах эрхтэй гэрээт ажил алга.</p>}
+  {!view.selected&&view.portfolio.map(item=><div key={item.id} className="bench-item">
+   <b>{item.client}</b>
+   <p className="micro">{item.start} — {item.end} · {item.active?'Идэвхтэй':'Хүлээн авах'} · Зорилтот тайлан {item.reportDate}</p>
+   {item.progress&&<>
+    <p>{item.progress.reviewed}/{item.progress.applicable} ажлын баримт хянагдсан · {item.progress.tasks} нээлттэй даалгавар</p>
+    {item.progress.deadlines.map(w=><button key={w.form} type="button" className="quiet" onClick={()=>open(item.id,w.form)}>
+     {w.due} · {w.form} · {w.title}
+    </button>)}
+   </>}
+  </div>)}
+ </section>;
+}
+
+function EngagementAccess({members,run}:{members:PilotRole[];run:Action}){
+ return <details className="feature-detail">
+  <summary>Гэрээт ажилд хандах эрх</summary>
+  <p className="muted">Өөрчлөлт зөвхөн энэ гэрээт ажилд үйлчилнэ.</p>
+  {(['preparer','reviewer'] as const).map(role=>{
+   const granted=members.includes(role);
+   return <div className="bench-item" key={role}>
+    <p>{roles[role]} · {granted?'Хандах эрхтэй':'Хандах эрхгүй'}</p>
+    <ActionForm key={String(granted)} run={run} action="access" extra={{role,access:granted?'revoke':'grant'}} button={granted?'Хандах эрх цуцлах':'Хандах эрх олгох'}>
+     <label>Үндэслэл<input name="reason" required/></label>
+    </ActionForm>
+   </div>;
+  })}
+ </details>;
 }
 
 function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string)=>void}){
@@ -114,7 +163,7 @@ function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string
     <p>{r.form} · {r.contact} · {r.due} · {r.id}</p>
     {part.reason&&<p>{part.reason}</p>}
     {view.evidence?.filter(e=>e.request===r.id).map(file=><div className="bench-item" key={file.id}>
-     <a className="btn secondary" href={api+'/evidence/'+file.id}>{file.name} · v{file.version} татах</a>
+     <a className="btn secondary" href={api+'/evidence/'+file.id+pilotScope(view.selected)}>{file.name} · v{file.version} татах</a>
      <p className="micro">{file.source} · {file.assessment??partStatus[file.status]}</p>
      <small style={{overflowWrap:'anywhere'}}>SHA-256 {file.sha256}</small>
     </div>)}
@@ -145,7 +194,7 @@ function SupportingEvidence({view,run,onError}:{view:View;run:Action;onError:(me
    <label>Файлын эх сурвалж<input name="source" required/></label><button className="btn secondary">Үнэлгээний эх файл нэмэх</button>
   </form>
   {evidence.filter(e=>!e.request).map(e=><div className="bench-item" key={e.id}>
-   <a href={api+'/evidence/'+e.id}>{e.name} · v{e.version}</a>
+   <a href={api+'/evidence/'+e.id+pilotScope(view.selected)}>{e.name} · v{e.version}</a>
    <p>{e.source} · {partStatus[e.status]} · {e.assessment}</p>
    {view.role!=='preparer'&&e.uploadedBy!==view.role&&e.status==='received'&&<ActionForm action="support-assess" extra={{id:e.id}} run={run} button="Эх файлыг үнэлэх">
     <label>Үнэлгээ<select name="result"><option value="accepted">Зөвшөөрөх</option><option value="rejected">Буцаах</option></select></label>
@@ -197,7 +246,7 @@ function Delivery({view,run}:{view:View;run:Action}){
  </section>;
 }
 
-function Workpaper({paper,run,role,evidence,sealed}:{paper:Paper;run:Action;role:View['role'];evidence:View['evidence'];sealed:boolean}){
+function Workpaper({paper,run,role,evidence,sealed,engagementId}:{paper:Paper;run:Action;role:View['role'];evidence:View['evidence'];sealed:boolean;engagementId:string|null}){
  const form=paper.form,reference={form};
  return <section id={'pilot-paper-'+paper.id} tabIndex={-1} className="card pad bench-card feature-desk">
   <div className="section-heading"><h2>{form} · {paper.title}</h2><span className="pill">v{paper.version} · {status[paper.status]}</span></div>
@@ -209,7 +258,7 @@ function Workpaper({paper,run,role,evidence,sealed}:{paper:Paper;run:Action;role
     <label>Дуусах өдөр<input name="due" type="date" defaultValue={paper.due} required/></label>
    </ActionForm>
   </details>}
-  {evidence?.filter(file=>paper.evidence.includes(file.id)).map(file=><a className="btn secondary space-top" href={api+'/evidence/'+file.id} key={file.id}>{file.name} · v{file.version}</a>)}
+  {evidence?.filter(file=>paper.evidence.includes(file.id)).map(file=><a className="btn secondary space-top" href={api+'/evidence/'+file.id+pilotScope(engagementId)} key={file.id}>{file.name} · v{file.version}</a>)}
   {paper.editable?<ActionForm key={paper.version} run={run} action="save" extra={reference} button="Ажлыг хадгалах">
    {form==='1.3'&&<div className="field-grid">{[['benchmark','Суурь дүн'],['percentage','Материаллаг байдлын хувь'],['performance','Гүйцэтгэлийн хувь'],['trivial','Илт бага зөрүүний хувь']].map(([key,label])=><label key={key}>{label}<input type="number" step="any" name={key} defaultValue={paper.values[key]} required/></label>)}</div>}
    {form==='2.6'&&<label>Хяналтад найдах түвшин<select name="reliance" defaultValue={paper.values.controlsReliance??'none'}><option value="none">Найдахгүй</option><option value="partial">Хэсэгчлэн</option><option value="full">Бүрэн</option><option value="na">Хамаарахгүй</option></select></label>}
@@ -239,42 +288,78 @@ function Workpaper({paper,run,role,evidence,sealed}:{paper:Paper;run:Action;role
 export default function PilotWorkspace(){
  const [data,setData]=useState<Result|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false);
  const pending=useRef<{intent:string;key:string}|null>(null);
- const outdated=!!(data&&'role' in data&&!Array.isArray(data.registers));
+ const selection=useRef<string|null>(null);
+ const outdated=!!(data&&'role' in data&&!Array.isArray(data.portfolio));
  const view=data&&'role' in data&&!outdated?data:null,engagement=view?.engagement;
  const sealed=!!view?.archive.packages.length&&!view?.archive.reopened;
- useEffect(()=>{request().then(setData).catch(e=>setError(e.message));},[]);
+ function show(result:Result){
+  if('role' in result&&Array.isArray(result.portfolio)){
+   selection.current=result.selected;
+   window.history.replaceState(null,'',window.location.pathname+pilotScope(result.selected));
+  }
+  setData(result);
+ }
+ useEffect(()=>{request(window.location.search).then(show).catch(e=>setError(e.message));},[]);
  async function send(path:string,body?:unknown){
   setBusy(true);setError('');
-  try {setData(await request(path,body));if(path==='/logout')pending.current=null;return true;}
-  catch(e){setError((e as Error).message);return false;}
+  try {
+   let result=await request(path,body);
+   if(path==='/login'&&window.location.search){
+    try{result=await request(window.location.search);}catch{result=await request(pilotScope(null));}
+   }
+   if(path==='/logout'){
+    pending.current=null;selection.current=null;
+    window.history.replaceState(null,'',window.location.pathname);
+   }
+   show(result);return true;
+  }
+  catch(e){
+   if(e instanceof PilotRequestError&&e.status===404&&path.startsWith('?engagement=')&&path!==pilotScope(null)){
+    try{show(await request(pilotScope(null)));}catch{setData(null);}
+   }
+   setError((e as Error).message);return false;
+  }
   finally{setBusy(false);}
  }
  const run:Action=async(action,values={})=>{
-  const intent=JSON.stringify([view?.role,action,Object.entries(values).sort(([a],[b])=>a.localeCompare(b))]);
+  if(!view||selection.current!==view.selected)return false;
+  const intent=JSON.stringify([view.role,view.selected,action,Object.entries(values).sort(([a],[b])=>a.localeCompare(b))]);
   const command=pending.current?.intent===intent?pending.current:{intent,key:crypto.randomUUID()};
   pending.current=command;
-  const ok=await send('/action',{action,fields:values,revision:view?.revision,idempotencyKey:command.key});
+  const ok=await send('/action'+pilotScope(view.selected),{action,fields:values,revision:view.revision,idempotencyKey:command.key});
   if(ok&&pending.current===command)pending.current=null;
   return ok;
  };
+ async function openEngagement(id:string|null,form?:string){
+  if(await send(pilotScope(id))&&id&&form){
+   window.requestAnimationFrame(()=>{
+    const target=document.getElementById('pilot-paper-'+id+'/'+form);
+    target?.focus({preventScroll:true});
+    target?.scrollIntoView({block:'start'});
+   });
+  }
+ }
  return <main className="audit-app">
   <div className="app-content pilot-content">
    <header className="page-heading">
     <div><span className="eyebrow">VERITECH AUDIT · ЛОКАЛ ТУРШИЛТ</span><h1>Хамтарсан гэрээт ажил</h1><p>Үндсэн хөрөнгийн баримтаас партнерын багцын зөвшөөрөл хүртэл.</p></div>
     <a className="btn secondary" href="/">Локал загвар</a>
    </header>
-   {view&&<div className="row-actions space-top"><b>{roles[view.role]}</b><button className="btn secondary" disabled={busy} onClick={()=>void send('')}>Бүртгэл шинэчлэх</button><button className="btn secondary" disabled={busy} onClick={()=>void send('/logout',{})}>Гарах</button></div>}
+   {view&&<div className="row-actions space-top"><b>{roles[view.role]}</b><button className="btn secondary" disabled={busy} onClick={()=>void send(pilotScope(view.selected))}>Бүртгэл шинэчлэх</button><button className="btn secondary" disabled={busy} onClick={()=>void send('/logout',{})}>Гарах</button></div>}
    {error&&<p className="callout amber" role="alert">{error}</p>}
+   {error&&!data&&<button type="button" className="btn secondary" onClick={()=>void send(pilotScope(null))}>Гэрээт ажлын жагсаалт нээх</button>}
    {outdated&&<p className="callout amber">Шинэчилсэн туршилтын серверийг дахин эхлүүлээд хуудсаа шинэчилнэ үү.</p>}
    <fieldset disabled={busy} className="feature-fields">
     {!data&&!error&&<p>Ачаалж байна…</p>}
     {data&&'setup' in data&&<Access key={String(data.setup)} setup={data.setup} send={send}/>}
-    {view&&!engagement&&(view.role==='preparer'?<p>Ахлах эсвэл партнер гэрээт ажил үүсгэнэ.</p>:<SetupEngagement run={run}/>)}
-   {view&&<PilotRegisters role={view.role} resources={view} evidence={view.evidence??[]} engagement={!!engagement} active={!!engagement?.active} run={run} onError={setError}/>}
-    {view&&engagement&&<>
+    {view&&<EngagementPicker view={view} open={(id,form)=>void openEngagement(id,form)}/>}
+    {view&&!engagement&&view.role!=='preparer'&&<SetupEngagement run={run}/>}
+   {view&&<PilotRegisters key={view.selected??'firm'} role={view.role} resources={view} evidence={view.evidence??[]} engagementId={view.selected} active={!!engagement?.active} run={run} onError={setError}/>}
+    {view&&engagement&&<div key={view.selected}>
      <section className="card pad bench-card">
       <div className="section-heading"><h2>{engagement.client}</h2><span className="pill">{engagement.active?'Идэвхтэй':'Идэвхжүүлэхийг хүлээж байна'}</span></div>
       <p>{engagement.period.start} — {engagement.period.end} · Зорилтот тайлан {engagement.reportDate}</p>
+      {view.members&&<EngagementAccess members={view.members} run={run}/>}
       {!!engagement.acceptanceGaps.length&&<ul>{engagement.acceptanceGaps.map(gap=><li key={gap}>{gap}</li>)}</ul>}
       {engagement.firm.find(r=>r.kind==='M01-F01')&&<p className="micro">Хүлээн авахад ашигласан фирмийн бүртгэл · {engagement.firm.find(r=>r.kind==='M01-F01')?.values.reporting}</p>}
       {!engagement.active&&(view.role==='partner'?<ActionForm run={run} action="activate" button="Шийдвэр бүртгэж идэвхжүүлэх">
@@ -288,7 +373,7 @@ export default function PilotWorkspace(){
      {engagement.active&&<>
       {!sealed&&<Delivery view={view} run={run}/>}
       {(!view.archive.packages.length||view.archive.reopened)&&<Requests view={view} run={run} onError={setError}/>}
-      {view.papers?.map(paper=><Workpaper key={paper.id} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed}/>)}
+      {view.papers?.map(paper=><Workpaper key={paper.id} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed} engagementId={view.selected}/>)}
       {view.impacts?.map(impact=><section className="card pad bench-card" key={impact.id}><h2>{impact.source} · Өөрчлөлтийн нөлөө</h2><p>{impact.reason} · {impact.targets.join(', ')}</p>
        {view.role==='reviewer'&&<ActionForm run={run} action="resolve-impact" extra={{id:impact.id}} button="Нөлөөллийн үнэлгээг бүртгэх"><label>Шийдвэрийн үндэслэл<input name="reason" required/></label></ActionForm>}
       </section>)}
@@ -307,8 +392,8 @@ export default function PilotWorkspace(){
        {view.authorized?.current&&view.authorized.artifactSha256&&<p className="micro break-all">SHA-256 {view.authorized.artifactSha256}</p>}
        {view.role==='partner'&&<div className="row-actions space-top">
         {(!view.archive.packages.length||view.archive.reopened)&&<button type="button" className="btn primary" disabled={!!view.gaps?.length||view.authorized?.current} onClick={()=>void run('authorize')}>Одоогийн багцыг зөвшөөрөх</button>}
-        {(!sealed&&!view.gaps?.length||view.authorized?.current&&view.authorized.artifactSha256)&&<a className="btn secondary" href={api+'/report'}>{view.authorized?.current?'Зөвшөөрсөн тайлан татах':'Хянах тайлан татах'}</a>}
-        {view.authorized&&<a href={api+'/authorizations'} className="btn secondary">Зөвшөөрлийн түүх татах ({view.authorized.count})</a>}
+        {(!sealed&&!view.gaps?.length||view.authorized?.current&&view.authorized.artifactSha256)&&<a className="btn secondary" href={api+'/report'+pilotScope(view.selected)}>{view.authorized?.current?'Зөвшөөрсөн тайлан татах':'Хянах тайлан татах'}</a>}
+        {view.authorized&&<a href={api+'/authorizations'+pilotScope(view.selected)} className="btn secondary">Зөвшөөрлийн түүх татах ({view.authorized.count})</a>}
        </div>}
        {view.role==='partner'&&view.authorized?.current&&(!view.archive.packages.length||view.archive.reopened)&&<>
         <ActionForm run={run} action="issue" button="Гаргалтыг бүртгэх"><label>Бодит гаргалтын бүртгэлийн ишлэл<input name="reference" required/></label></ActionForm>
@@ -317,7 +402,7 @@ export default function PilotWorkspace(){
       </section>
      </>}
      <details className="card pad bench-card"><summary>Үйлдлийн түүх</summary>{view.activity?.map(a=><p key={a.id}>{names[a.by]} · {a.text} · {new Date(a.at).toLocaleString()}</p>)}</details>
-    </>}
+    </div>}
    </fieldset>
   </div>
  </main>;
