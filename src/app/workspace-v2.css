@@ -70,3 +70,7 @@
 .audit-app .pilot-content{max-width:960px;margin:0 auto;padding:24px}
 .audit-app .pilot-content .feature-fields>.feature-desk{margin-bottom:0}
 .audit-app .pilot-content [role="alert"]{margin-top:12px}
+.audit-app .pilot-content .tabs{display:flex;flex-wrap:wrap}
+.audit-app .register-values{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin:12px 0}
+.audit-app .register-values dt{font-size:.8rem;color:var(--muted)}
+.audit-app .register-values dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}
