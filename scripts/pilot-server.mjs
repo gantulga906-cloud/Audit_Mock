@@ -65,6 +65,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
   const configured = () => db.prepare('SELECT COUNT(*) AS total FROM accounts').get().total !== 0;
   const filesFor = engagementId => ({
     get: id => db.prepare('SELECT name, sha256 FROM evidence WHERE engagement_id = ? AND id = ?').get(engagementId, id),
+    read: id => db.prepare('SELECT bytes, sha256 FROM evidence WHERE engagement_id = ? AND id = ?').get(engagementId,id),
     add: (id, name, bytes) => db.prepare(`INSERT INTO evidence (id, name, sha256, bytes, engagement_id)
       VALUES (?, ?, ?, ?, ?)`).run(id, name, digest(bytes), bytes, engagementId),
     authorize: (authorization, evidence) => db.prepare('INSERT INTO authorizations (snapshot, engagement_id) VALUES (?, ?)').run(JSON.stringify({ authorization, evidence }), engagementId),

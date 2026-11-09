@@ -2,7 +2,7 @@ import type {PilotRole} from './pilot-registers.ts';
 
 export type PopulationRow={
  row:number;id:string;account:string;entity:string;date:string;currency:string;rawAmount:string;cents:number|null;
- journal?:string;entryType?:string;
+ journal?:string;entryType?:string;reference?:string;
  issues:string[];state:'accepted'|'quarantined'|'excluded';reason?:string;
 };
 export type PopulationControls={count:number;cents:number;source:string;mapping:string;statements:string;exclusions:string;use:string;

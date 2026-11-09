@@ -7,6 +7,7 @@ import {IntakeProvenance,PilotIntake,TermsEditor} from './pilot-intake';
 import {EngagementStaffing,RosterOverview,WorkAssignmentEditor} from './pilot-staffing';
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
 import {JournalDesk,PopulationDesk,SampleDesk} from './pilot-population';
+import {AreaDesk} from './pilot-area';
 import {pilotScope,type PilotRole,type ProgrammeBasis} from '@/lib/pilot-registers';
 import {fieldAnswers,type LibraryView,type PaperForm} from '@/lib/pilot-forms';
 import type {Enquiry,IntakeClient,IntakeContext,IntakeTerms} from '@/lib/pilot-intake';
@@ -14,6 +15,7 @@ import type {RosterAvailability,StaffingView,StaffSignoff,WorkAssignment} from '
 import type {DecisionRecord,Evidence,Finding,Model,RequestItem,Statements,WorkItem} from '@/lib/workspace';
 import type {Period,Template} from '@/lib/workbench';
 import type {JournalRun,PopulationView,SampleView} from '@/lib/pilot-population';
+import type {AreaRun} from '@/lib/pilot-area';
 
 const api='/api/pilot';
 const roles={preparer:'Бэлтгэгч',reviewer:'Ахлах хянагч',partner:'Партнер'};
@@ -39,7 +41,7 @@ type View=RegisterResources&{
  confirmations?:{request:string;part:string;recipient:string;sent:string;state:string;response?:string;received?:string;evidence?:string}[];
  confirmationLink?:{token:string;request:string;part:string};
  population?:PopulationView;
- samples?:Record<string,SampleView>;journals?:Record<string,JournalRun>;fieldFindings?:Finding[];
+ samples?:Record<string,SampleView>;journals?:Record<string,JournalRun>;areas?:Record<string,AreaRun>;fieldFindings?:Finding[];
  fieldwork?:string[];statementLines?:Record<string,number>;impacts?:Model['impacts'];
  delivery?:Pick<Model,'person'|'tasks'|'events'>&{id:string};
  activity?:Model['activity'];authorized?:{current:boolean;at:string;report:number;fs:number;count:number;artifactSha256?:string};
@@ -479,6 +481,9 @@ function SharedPilotWorkspace(){
          engagement={view.selected} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===paper.form&&f.id.startsWith('SAMPLE-'))} run={run}/>
         <JournalDesk population={view.population} journal={view.journals?.[paper.form]} paper={paper} role={view.role}
          engagement={view.selected} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===paper.form&&f.id.startsWith('JOURNAL-'))} run={run}/>
+        <AreaDesk population={view.population} area={view.areas?.[paper.form]} paper={paper} role={view.role}
+         engagement={view.selected} through={engagement.reportDate} evidence={view.evidence??[]}
+         findings={(view.fieldFindings??[]).filter(f=>f.form===paper.form&&f.id.startsWith('AREA-'))} run={run}/>
        </>}/>)}
      {engagement.active&&<>
       {view.impacts?.map(impact=><section className="card pad bench-card" key={impact.id}><h2>{impact.source} · Өөрчлөлтийн нөлөө</h2><p>{impact.reason} · {impact.targets.join(', ')}</p>

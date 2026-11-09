@@ -1288,3 +1288,197 @@ test('approved data feeds the same scoped analytics, multipart confirmation and 
     await rmdir(dir);
   }
 });
+test('commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review', async () => {
+  const dir=await mkdtemp(join(tmpdir(),'audit-commercial-'));
+  const database=join(dir,'pilot.sqlite');
+  let service;
+  try {
+    service=await start(database);
+    const {cookies,scoped,view,write}=await fixture(service);
+    const programForms=['3.1.16','3.1.5','3.1.10','3.1.8','3.1.4','3.1.2'];
+    const register=async (id,kind,values) => {
+      const fields=Object.fromEntries(Object.entries(values).map(([key,value])=>['field.'+key,value]));
+      const draft=await write('reviewer',id,'register',{kind,operation:'save',...fields});
+      const row=draft.registers.findLast(row=>row.kind===kind);
+      await write('reviewer',id,'register',{kind,id:row.id,operation:'submit'});
+      await write('partner',id,'register',{kind,id:row.id,operation:'approve',reason:'Independently reviewed'});
+      return row.id;
+    };
+    const rules={};
+    for (const programme of programForms) rules[programme]=await register('firm','M02-F05',{programme,profile:'all',
+      outcome:'optional',override:'no',basis:'Commercial reference scenario'});
+    const engagement=(await write('reviewer','firm','create',create)).selected;
+    const run=(role,action,fields,status=200)=>write(role,engagement,action,fields,status);
+    await run('partner','activate',{assessment:'Accepted',independence:'Independent',letter:'Agreed'});
+    for (const programme of programForms) {
+      const risk=await register(engagement,'M06-F09',{programme,risk:'Testing '+programme,type:'account',target:programme,
+        assertion:'Accuracy and cut-off',response:'Reconcile source documents and investigate the exceptions'});
+      await register(engagement,'M07-F01',{rule:rules[programme],risk,decision:'adopt',basis:'Procedure in scope'});
+    }
+    const file=(name,contents)=>({name,base64:Buffer.from(contents).toString('base64')});
+    const evidence=async (name,contents)=>{
+      const loaded=await run('preparer','support-upload',{...file(name+'.csv',contents),source:'Synthetic independently retained '+name});
+      const id=loaded.evidence.find(e=>e.name===name+'.csv').id;
+      await run('reviewer','support-assess',{id,result:'accepted',reason:'Verified source and coverage'});
+      return id;
+    };
+    const proof=await evidence('control','Independent control report\n10 rows,673 net');
+    const posting=(id,account,amount,reference)=>[id,account,amount,create.registration,'2025-12-30','MNT',reference].join(',');
+    const ledger=['id,account,amount,entity,date,currency,reference',
+      posting('G1','4100',-100,'I1'),posting('G2','4100',-200,'I2'),posting('G3','4100',-12,'UNEXPLAINED'),
+      posting('A1','1200',100,'I1'),posting('A2','1200',200,'I2'),posting('P1','2100',-80,'B1'),
+      posting('C1','1010',150,'BANK1'),posting('C2','1010',-30,'BANK2'),
+      posting('STK','1300',500,'STOCK'),posting('FA','1500',145,'FA1')].join('\n');
+    const importFields={...file('approved-ledger.csv',ledger),source:'Year-end signed ledger export',currency:'MNT'};
+    await run('preparer','population-import',importFields);
+    const data=await run('preparer','population-reconcile',{version:'1',count:'10',total:'673',source:'Signed control report',
+      controlEvidence:proof,use:'Fieldwork on source references',mapping:'4100,Sales\n1200,AR\n2100,AP\n1010,Cash\n1300,Inventory\n1500,PPE',
+      statements:'Sales,-312\nAR,300\nAP,-80\nCash,120\nInventory,500\nPPE,145'});
+    assert.deepEqual(data.population.current.gaps,[]);
+    await run('reviewer','population-approve',{version:'2',reason:'Reviewed account mapping and original'});
+    const source=(header,rows)=>[header,...rows.map(([id,...fields])=>[id,create.registration,'MNT',...fields].join(','))].join('\n');
+    const salesEvidence={
+      invoices:await evidence('invoices',source('id,entity,currency,invoice_date,delivery_date,due_date,amount,open_amount,sku,quantity,unit_price,discount',[
+        ['I1','2025-12-30','2026-01-02','2026-01-10',100,100,'SKU1',2,50,0],
+        ['I2','2025-11-15','2025-11-15','2025-11-20',200,195,'SKU2',1,200,0],
+        ['I3','2026-01-02','2025-12-29','2026-02-15',50,0,'SKU1',1,50,0],
+      ])+'\nWRONG,OTHER,MNT,2025-12-30,2025-12-30,2026-01-15,75,75,SKU1,1,75,0'),
+      credits:await evidence('credits',source('id,entity,currency,invoice,date,amount',[
+        ['DUP','I1','2025-12-31',10],['DUP','I1','2025-12-31',12],['POST','I1','2026-01-02',10],['PRE','I2','2025-12-18',5],
+      ])),
+      cash:await evidence('cash',source('id,entity,currency,invoice,date,amount',[
+        ['RC1','I1','2026-01-10',25],['RC2','I2','2026-01-11',220],['RC3','NO-INVOICE','2026-01-11',3],
+      ])),
+      prices:await evidence('prices',source('sku,entity,currency,unit_price,max_discount,from,to',[
+        ['SKU1',45,0,'2025-01-01','2026-12-31'],
+      ])),
+    };
+    const purchaseEvidence={
+      receipts:await evidence('receipts',source('id,entity,currency,vendor,date,amount',[
+        ['R1','V1','2025-12-01',80],['R2','V2','2025-12-29',50],['R3','V3','2025-12-30',25],
+      ])),
+      bills:await evidence('bills',source('id,entity,currency,receipt,vendor,date,amount',[
+        ['B1','R1','V1','2025-12-02',80],['B2','R2','V2','2026-01-03',50],
+      ])),
+      payments:await evidence('payments',source('id,entity,currency,invoice,vendor,date,amount',[
+        ['PAY1','B1','V1','2025-12-10',40],['PAY2','B1','V1','2025-12-10',40],['PAY3','NO-BILL','V3','2026-01-11',10],
+        ['PAY4','B2','V2','2026-01-15',25],
+      ])),
+    };
+    const bankEvidence={
+      bank:await evidence('bank',source('id,entity,currency,reference,date,amount',[
+        ['ST1','BANK1','2025-12-30',150],['ST2','BANK3','2025-12-30',-10],
+      ])),
+      reconciliation:await evidence('reconciliation',source('id,entity,currency,kind,reference,date,amount,reason',[
+        ['B0','bank_opening','','2025-01-01',1000,'Signed opening'],
+        ['B1','bank_closing','','2025-12-31',1140,'Signed closing'],
+        ['L0','book_opening','','2025-01-01',1000,'Signed opening'],
+        ['L1','book_closing','','2025-12-31',1120,'Signed closing'],
+        ['AD','bank_adjustment','BANK2','2025-12-31',-30,'Outstanding cheque'],
+      ])),
+    };
+    const through='2026-03-31', sales={form:'3.1.16',line:'Sales',through,sign:'credit',...salesEvidence};
+    let state=await run('preparer','area-run',sales);
+    const salesRun=state.areas[sales.form], i1=salesRun.cases.find(item=>item.label==='I1');
+    assert.deepEqual(i1.flags.sort(),['credit','cutoff','partial','price']);
+    assert.ok(i1.trace.some(t=>t.source==='ledger'&&t.row===2));
+    assert.equal(i1.metrics.remaining,7500);
+    assert.equal(salesRun.links.find(item=>item.label==='RC2').metrics.allocated,19500);
+    assert.ok(salesRun.cases.find(item=>item.label==='DUP').flags.includes('duplicate'));
+    assert.ok(salesRun.cases.find(item=>item.label==='I2').flags.includes('terms'));
+    assert.ok(salesRun.cases.find(item=>item.label==='WRONG').flags.includes('scope'));
+    assert.deepEqual(salesRun.summary,{invoices:30000,ledger:31200,creditAtClose:500,open:29500,subsequentCash:22000,
+      remaining:7500,notDue:10000,days1to30:0,days31to60:19500,days61to90:0,over90:0});
+    assert.equal((await run('preparer','area-run',sales)).areas[sales.form].stamp,salesRun.stamp);
+    await run('preparer','area-run',{...sales,through:'2026-02-01'},409);
+    const ar={...sales,form:'3.1.5',line:'AR',sign:'debit'};
+    const arRun=(await run('preparer','area-run',ar)).areas[ar.form];
+    assert.equal(arRun.summary.ledger,30000);
+    assert.equal(arRun.summary.remaining,7500);
+    const purchases={form:'3.1.10',line:'AP',through,sign:'credit',...purchaseEvidence};
+    const purchaseRun=(await run('preparer','area-run',purchases)).areas[purchases.form];
+    assert.equal(purchaseRun.summary.candidateLiability,7500);
+    assert.equal(purchaseRun.summary.payments,2500);
+    assert.deepEqual(purchaseRun.links.find(link=>link.label==='B2').trace.map(trace=>trace.source),['receipts','bills','payments']);
+    assert.ok(purchaseRun.cases.find(item=>item.label==='B2').flags.includes('liability'));
+    assert.ok(purchaseRun.cases.some(item=>item.flags.includes('payment_duplicate')));
+    assert.ok(purchaseRun.cases.find(item=>item.label==='PAY3').flags.includes('unmatched'));
+    const cash={form:'3.1.8',line:'Cash',through,...bankEvidence};
+    const bankRun=(await run('preparer','area-run',cash)).areas[cash.form];
+    assert.equal(bankRun.summary.matched,1);
+    assert.deepEqual(bankRun.links.find(link=>link.label==='BANK1').trace.map(trace=>trace.source),['bank','ledger']);
+    assert.equal(bankRun.summary.residual,-1000);
+    assert.ok(bankRun.cases.find(item=>item.label==='AD').flags.includes('reconciling'));
+    assert.ok(bankRun.cases.find(item=>item.label==='ST2').flags.includes('unmatched'));
+    const stock={form:'3.1.4',line:'Inventory',through,sign:'debit',
+      inventory:await evidence('inventory',source('id,entity,currency,item,location,unit,opening_qty,closing_qty,closing_value',[
+        ['ITEM1','A','Main','EA',10,11,330],['ITEM2','B','Annex','EA',5,5,160],
+      ])),
+      movements:await evidence('movements',source('id,entity,currency,item,location,unit,date,kind,quantity',[
+        ['IN','A','Main','EA','2025-12-01','receipt',5],['OUT','A','Main','EA','2025-12-02','issue',3],
+      ])),
+      counts:await evidence('counts',source('id,entity,currency,item,location,unit,date,counted_qty',[
+        ['CT1','A','Main','EA','2025-12-31',10],['CT2','B','Annex','EA','2025-12-31',5],
+      ])),
+    };
+    const stockRun=(await run('preparer','area-run',stock)).areas[stock.form];
+    assert.deepEqual(stockRun.summary,{inventoryValue:49000,ledger:50000,countedItems:2,unresolvedCounts:1,residual:-1000});
+    const mismatch=stockRun.cases.find(item=>item.label==='A / Main / EA');
+    assert.deepEqual(mismatch.flags,['rollforward','count']);
+    assert.deepEqual(mismatch.metrics,{expectedQuantity:12,closingQuantity:11,countedQuantity:10});
+    await run('reviewer','area-review',{form:stock.form,version:'1',conclusion:'Count differences unresolved'},409);
+    const assetHeader='id,entity,currency,class,opening_cost,additions,disposals,transfers,closing_cost,opening_accumulated,charge,disposed_accumulated,adjustments,closing_accumulated';
+    const assetRow=['FA1','Equipment',100,60,0,0,160,10,5,0,0,15];
+    const assets={form:'3.1.2',line:'PPE',through,sign:'debit',
+      assets:await evidence('assets',source(assetHeader,[assetRow])),
+      additions:await evidence('additions',source('id,entity,currency,asset,date,amount',[
+        ['ACQUISITION','FA1','2025-07-01',60],
+      ])),
+    };
+    const assetRun=(await run('preparer','area-run',assets)).areas[assets.form];
+    assert.deepEqual(assetRun.summary,{assetCost:16000,accumulated:1500,carrying:14500,additions:6000,ledger:14500,residual:0});
+    assert.deepEqual(assetRun.cases,[]);
+    await run('reviewer','area-review',{form:assets.form,version:'1',conclusion:'Register and addition agree'});
+    const incorrect=assetRow.map((value,i)=>i===6?158:value);
+    const revisedAsset=await evidence('revised-assets',source(assetHeader,[incorrect]));
+    const revisedRun=(await run('preparer','area-run',{...assets,assets:revisedAsset})).areas[assets.form];
+    assert.equal(revisedRun.summary.residual,-200);
+    assert.ok(revisedRun.cases.some(c=>c.flags.includes('rollforward')));
+    assert.equal(revisedRun.history[0].approval.conclusion,'Register and addition agree');
+
+    const request=(await run('preparer','request',{form:sales.form,title:'Sales test support',due:through})).requests[0].id;
+    await run('preparer','upload',{request,source:'Auditor inquiry',...file('signed-response.csv','Reviewed commercial exceptions')});
+    state=await run('preparer','accept',{request});
+    const support=state.requests[0].parts[0].evidence;
+    const review={form:sales.form,version:String(salesRun.version),conclusion:'Independently reviewed the sales and cut-off exceptions'};
+    await run('reviewer','area-review',review,409);
+    await run('preparer','submit',{form:sales.form},409);
+    for (const item of salesRun.cases) await run('preparer','area-dispose',{...review,case:item.id,evidence:support,
+      result:item.id===i1.id?'finding':'explained',amount:'0',note:'Examined exact source rows for '+item.label});
+    await run('preparer','area-review',review,403);
+    state=await run('reviewer','area-review',review);
+    assert.equal(state.areas[sales.form].approval.conclusion,review.conclusion);
+    await run('preparer','save',{form:sales.form,execution:'Reconciled the sales ledger and source files',conclusion:'Cut-off issue escalated'});
+    await run('preparer','submit',{form:sales.form});
+    state=await run('reviewer','review',{form:sales.form});
+    const signed=state.papers.find(p=>p.form===sales.form);
+    assert.equal(JSON.parse(signed.values['pilot.area.run']).stamp,salesRun.stamp);
+    assert.equal(state.fieldFindings[0].form,sales.form);
+    assert.equal(await (await service.fetch(scoped('/evidence/'+salesEvidence.credits,engagement),cookies.reviewer)).status,200);
+    await run('partner','fieldwork-resolve-finding',{id:state.fieldFindings[0].id,reason:'Retained the year-end cut-off issue'});
+    state=await run('preparer','population-import',importFields);
+    assert.ok(programForms.every(form=>state.areas[form].current===false));
+    assert.equal(state.papers.find(p=>p.form===sales.form).status,'changed');
+    assert.ok(state.papers.find(p=>p.form===sales.form).history.some(h=>h.version===signed.version&&h.values['pilot.area.run']));
+    await service.close();
+    service=await start(database);
+    const reloaded=await fixture(service,false);
+    state=await reloaded.view('reviewer',engagement);
+    assert.equal(state.areas[sales.form].approval.conclusion,review.conclusion);
+    assert.equal(state.areas[sales.form].current,false);
+  } finally {
+    if(service)await service.close();
+    for(const suffix of ['', '-shm', '-wal'])await rm(database+suffix,{force:true});
+    await rmdir(dir);
+  }
+});

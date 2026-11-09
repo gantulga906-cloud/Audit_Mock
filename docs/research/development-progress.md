@@ -56,3 +56,13 @@ The linked programme workflow records one risk response and one selected templat
 | WP-13 · P09-UC04 · AUTO-009 | Run manual-entry, posting-amount and period-end filters on the approved journal CSV. Selected journals show their source postings and exact filter reasons. Repeated inputs produce the same run. Independent review requires a documented investigation of every selected journal. |
 
 The integration scenario takes a fixed-assets file through all four work packages, including an independent confirmation session, partial receipt, replacement, stale population and a restart. The pilot currently uses one signed-amount population and one currency per approved revision. Full ledger-to-trial-balance roll-forward, richer import profiles, external message delivery and identity verification, statistical sample methods, and the remaining fieldwork automations and variants are open.
+
+### Area workpapers
+
+| Work package and source | Implemented behavior and verification |
+|---|---|
+| WP-14 · P09-UC02/11 · AUTO-012–014 · 3.1.5/3.1.16 | Approved invoice, credit, cash and pricing files reconcile to the selected ledger line. Date crossings, duplicate credits, missing terms and unauthorized prices produce separate cases. Aging uses the supplied closing open amount and due date. Exact-reference later receipts are allocated in date and row order, capped at the remaining balance. Source rows remain inspectable for both matches and exceptions. |
+| WP-15 · P09-UC02/11 · AUTO-016/018–020 · 3.1.8/3.1.10 | Trace the supplier receipt, invoice, approved ledger posting and payment. Duplicate payment candidates stay out of matched totals. A late or missing posting for a pre-close receipt creates a potential liability case. Bank matching uses unique exact references and signed amounts. Opening-plus-movement checks and documented reconciling items show the remaining balance residual. |
+| WP-16 · P09-UC05/11 · AUTO-022/023/027 · 3.1.2/3.1.4 | Roll inventory forward by item, location and unit and compare it with the year-end count. Show separate quantity and ledger-value differences. Roll asset cost and accumulated depreciation forward, tie additions to their original supporting rows and compare net carrying value with the mapped ledger. |
+
+The area integration scenario independently calculates expected results for all six workpapers. It verifies case disposition, independent review, the exact run reference on the signed workpaper, re-opening after a changed population and retention after restart. Current methods use normalized single-currency exports and exact references. Revenue recognition schedules, supplier identity analysis, alternative bank matching methods, inventory costing and NRV, and asset useful-life analysis remain open.

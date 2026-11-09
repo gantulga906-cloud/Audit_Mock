@@ -19,7 +19,7 @@ export const populationView = m => current(m) && {
   current:current(m), usable:!!approvedPopulation(m), history:revisions(m).slice(0,-1).reverse().map(({rows:_,...revision})=>revision),
 };
 
-function csvRows(text) {
+export function csvRows(text) {
   const rows = [];
   let row = [], cell = '', line = 1, start = 1, quoted = false, closed = false;
   const pushCell = () => { row.push(cell.trim()); cell = ''; closed = false; };
@@ -67,7 +67,7 @@ function parseRows(m, text, currency) {
   if (missing.length) issues.push('Дутуу багана · '+missing.join(', '));
   if (new Set(columns).size !== columns.length) issues.push('Баганын нэр давхардсан.');
   const indexes = requiredColumns.map(key=>columns.indexOf(key));
-  const journalIndex=columns.indexOf('journal'), typeIndex=columns.indexOf('entry_type');
+  const journalIndex=columns.indexOf('journal'), typeIndex=columns.indexOf('entry_type'), referenceIndex=columns.indexOf('reference');
   const engagement = m.engagements[0];
   const {start,end} = m.bench.periods[engagement.id];
   const entity = m.bench.clients[engagement.id].registration;
@@ -83,7 +83,7 @@ function parseRows(m, text, currency) {
     else if (date<start || date>end) rowIssues.push('period');
     if (rowCurrency.toUpperCase()!==currency) rowIssues.push('currency');
     return {row:line,id,account,entity:rowEntity,date,currency:rowCurrency.toUpperCase(),rawAmount,cents:amount,issues:rowIssues,
-      journal:cells[journalIndex]||undefined,entryType:cells[typeIndex]?.toLowerCase()||undefined};
+      journal:cells[journalIndex]||undefined,entryType:cells[typeIndex]?.toLowerCase()||undefined,reference:cells[referenceIndex]||undefined};
   });
   return {rows,issues};
 }

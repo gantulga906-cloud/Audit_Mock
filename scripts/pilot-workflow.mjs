@@ -19,6 +19,7 @@ import { approvedPopulation, populationAction, populationView } from './pilot-po
 import { samplingAction, samplingGap, samplingView, syncSamplePapers } from './pilot-sampling.mjs';
 import { evidenceCurrent, isRequestAction, requestAction } from './pilot-requests.mjs';
 import { journalAction, journalGap, journalView, syncJournalPapers } from './pilot-journals.mjs';
+import { areaAction, areaEvidence, areaGap, areaView, areaWorkpaperRef, syncAreaPapers } from './pilot-area.mjs';
 
 export const accounts = { preparer: 'nomin', reviewer: 'temuulen', partner: 'bat' };
 const roleOf = person => seats.find(role => accounts[role] === person);
@@ -57,9 +58,10 @@ function syncFieldwork(m) {
   syncPlanningPapers(m);
   syncSamplePapers(m);
   syncJournalPapers(m);
+  syncAreaPapers(m);
 }
 
-const fieldworkGap = (m,form) => samplingGap(m,form)||journalGap(m,form);
+const fieldworkGap = (m,form) => samplingGap(m,form)||journalGap(m,form)||areaGap(m,form);
 
 export function validMateriality(m) {
   const amounts = materiality(m,m.engagement);
@@ -232,7 +234,8 @@ export function pilotView(m, role, revision, files) {
     ...(populationView(m) && {population:populationView(m)}),
     ...(m.pilotSamples && {samples:samplingView(m)}),
     ...(m.pilotJournals && {journals:journalView(m)}),
-    ...((m.pilotSamples||m.pilotJournals) && {fieldFindings:m.findings.filter(f=>/^(SAMPLE|JOURNAL)-/.test(f.id))}),
+    ...(m.pilotAreaRuns && {areas:areaView(m)}),
+    ...((m.pilotSamples||m.pilotJournals||m.pilotAreaRuns) && {fieldFindings:m.findings.filter(f=>/^(SAMPLE|JOURNAL|AREA)-/.test(f.id))}),
     gaps: pilotGaps(m), activity: m.activity.slice(0, 30),
     authorized: engagement.authorized && {
       at: engagement.authorized.at, report: engagement.authorized.report, fs: engagement.authorized.fs,
@@ -374,20 +377,21 @@ export function pilotAction(m, role, action, data, files) {
     }
     return;
   }
-  if (action.startsWith('sample-') || action.startsWith('journal-') || action==='fieldwork-resolve-finding') {
+  if (action.startsWith('sample-') || action.startsWith('journal-') || action.startsWith('area-') || action==='fieldwork-resolve-finding') {
     if (managedStaffing(m)) requireSeat(m,files,role);
     let changed;
     if (action==='sample-resolve-finding'||action==='fieldwork-resolve-finding') {
-      const finding=m.findings.find(f=>f.id===data.id&&/^(SAMPLE|JOURNAL)-/.test(f.id));
+      const finding=m.findings.find(f=>f.id===data.id&&/^(SAMPLE|JOURNAL|AREA)-/.test(f.id));
       requireActor(role==='partner'&&finding);
       const reason=input(data,'reason');
       if (finding.resolution===reason) return;
       resolveFinding(m,data.id,reason);
       changed=true;
     } else if (action.startsWith('journal-')) changed=journalAction(m,role,action,data,fieldworkForms(m));
+    else if (action.startsWith('area-')) changed=areaAction(m,role,action,data,files,fieldworkForms(m));
     else changed=samplingAction(m,role,action,data,fieldworkForms(m));
     syncFieldwork(m);
-    if (changed&&['sample-resolve-finding','fieldwork-resolve-finding','sample-design','sample-test','journal-run','journal-investigate'].includes(action)) {
+    if (changed&&['sample-resolve-finding','fieldwork-resolve-finding','sample-design','sample-test','journal-run','journal-investigate','area-run','area-dispose'].includes(action)) {
       invalidateReport(m,'Тайланд ашиглах гүйцэтгэлийн ажил өөрчлөгдөв');
     }
     return;
@@ -463,7 +467,7 @@ export function pilotAction(m, role, action, data, files) {
     const confirmations = files.confirmations().filter(c=>c.state==='received'&&requestAudit.some(r=>r.id===c.request));
     const ids = new Set([...engagement.authorized.package.evidence.map(e => e.id), ...registerEvidence(m),
       ...[...programmes,...native].flatMap(w => w.evidence), ...(m.pilotTerms ? [m.pilotTerms.evidence] : []),
-      ...(population?[population.evidence,population.controls.evidence.id]:[])]);
+      ...(population?[population.evidence,population.controls.evidence.id]:[]),...areaEvidence(m,fieldworkForms(m))]);
     const historical = new Set([...populationHistory.flatMap(v=>[v.evidence,v.controls.evidence.id]),
       ...requestAudit.flatMap(r=>(r.parts??[]).flatMap(p=>p.uses?.map(use=>use.evidence)??[])),...confirmations.map(c=>c.evidence)]);
     const linked = [...m.evidence.filter(e=>ids.has(e.id)),...m.evidence.filter(e=>!ids.has(e.id)&&historical.has(e.id))]
@@ -484,6 +488,7 @@ export function pilotAction(m, role, action, data, files) {
       ...(confirmations.length && {confirmations}),
       ...(m.pilotSamples && { samples:Object.fromEntries(Object.entries(samplingView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
       ...(m.pilotJournals && { journals:Object.fromEntries(Object.entries(journalView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
+      ...(m.pilotAreaRuns && { areas:Object.fromEntries(Object.entries(areaView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
       ...(m.pilotIntake && { intake: m.pilotIntake }),
       ...(managedStaffing(m) && { staffing: approvedStaffing(m).filter(s=>s.current), acceptedStaffing: m.pilotStaffingAccepted,
         staffSignoffs: m.pilotStaffSignoffs ?? {} }),
@@ -631,6 +636,8 @@ export function pilotAction(m, role, action, data, files) {
       }
       const decision = programmeDecision(m,paper.form);
       if (m.extendedPilot && decision?.values.decision === 'adopt') paper.values['planning.decision'] = decisionRef(decision);
+      const areaReference=areaWorkpaperRef(m,paper.form);
+      if (areaReference) paper.values['pilot.area.run']=areaReference;
       pinLinkedDecisions(m, paper, files);
       submitWork(m, paper.id);
       if (actorSeat) recordStaffSignoff(m,paper,'submit',actorSeat);
