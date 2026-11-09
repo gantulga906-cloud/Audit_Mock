@@ -5,8 +5,8 @@ import type {Evidence} from '@/lib/workspace';
 export type PilotAction=(action:string,fields?:Record<string,string>)=>Promise<boolean>;
 type NamedForm={id:string;title:string};
 type ArchiveItem={
- id:string;previous?:string;issued:string;sealed:string;digest:string;synthetic:number;disposed:number;holds:number;
- summary:{client:string;files:{id:string;name:string;version:number;sha256:string}[]};
+ id:string;previous?:string;issued:string;sealed:string;digest?:string;synthetic:number;disposed:number;holds:number;
+ summary:{client:string;fileCount:number;files?:{id:string;name:string;version:number;sha256:string}[]};
  access?:{actor:PilotRole;at:string;reason:string;scope:string}[];
 };
 export type RegisterResources={
@@ -40,7 +40,7 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
   if(field.type==='programme'||field.type==='form')return (field.type==='programme'?resources.programmes:resources.forms).map(f=>[f.id,f.id+' · '+f.title]);
   if(field.type==='evidence')return evidence.map(e=>[e.id,e.name+' · v'+e.version]);
   if(field.key==='package')return resources.archive.packages.map(p=>[p.id,p.summary.client+' · '+p.sealed.slice(0,16)+' · '+p.id.slice(0,8)]);
-  if(field.key==='evidenceId')return (resources.archive.packages.find(p=>p.id===values.package)?.summary.files??[]).map(f=>[f.id,f.name+' · v'+f.version]);
+  if(field.key==='evidenceId')return resources.archive.packages.find(p=>p.id===values.package)?.summary.files?.map(f=>[f.id,f.name+' · v'+f.version]);
   if(kind==='M12-F08'&&values.type==='release'&&field.key==='reference')return resources.registers.filter(r=>r.kind===kind&&r.values.package===values.package&&r.values.type==='hold').map(r=>[r.id,r.values.reference]);
  }
  return <form className="feature-form" onSubmit={save}>
@@ -76,7 +76,7 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive}:{
  const canEdit=def.writers.includes(role)&&row.owner===role&&!submitted&&!(def.section==='archive'&&row.status==='approved');
  const declaration=row.kind==='M04-F04';
  const related=resources.registers.filter(r=>r.id!==row.id&&Object.values(r.values).includes(row.id));
- const archiveGrant=row.status==='approved'&&['M12-F07','M12-F10'].includes(row.kind)&&row.values.accessor===role;
+ const archiveGrant=row.status==='approved'&&['M12-F07','M12-F10'].includes(row.kind);
  return <details className="feature-detail">
   <summary>{heading(row)} <span className="pill">{state[row.status]} · v{row.version}</span>{row.stale&&<span className="pill amber">Эх хувилбар өөрчлөгдсөн</span>}</summary>
   <dl className="register-values">{def.fields.filter(f=>row.values[f.key]).map(f=>{
@@ -94,12 +94,14 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive}:{
   {row.verification&&<p>{row.verification.restored?'Сэргээх шалгалт':'Бүрэн байдлын шалгалт'} · {row.verification.ok?row.verification.files+' файл · '+row.verification.digest?.slice(0,16):row.verification.error}</p>}
   {row.eligibility&&<p>Хугацаа дууссан өдөр {row.eligibility.expires} · {row.executedAt?'Агуулгын хуулбарыг устгасан':'Шийдвэрийн бүртгэл'}</p>}
   {row.successor&&<p>Үүсгэсэн дараагийн багц {row.successor}</p>}
+  {row.revoked&&<p>Хандалт цуцалсан · {new Date(row.revoked.at).toLocaleString()} · {row.revoked.reason}</p>}
   <div className="row-actions space-top">
    {canEdit&&<button type="button" className="btn secondary" onClick={edit}>Бүртгэл засах</button>}
    {row.owner===role&&draft&&<button type="button" className="btn primary" disabled={declaration&&!row.declaration} onClick={()=>command('submit')}>v{row.version} хувилбар илгээх</button>}
-   {archiveGrant&&<button type="button" className="btn secondary" onClick={()=>exportArchive(row.id)}>Зөвшөөрсөн багцыг татах</button>}
+   {archiveGrant&&!row.revoked&&row.values.accessor===role&&<button type="button" className="btn secondary" onClick={()=>exportArchive(row.id)}>Зөвшөөрсөн багцыг татах</button>}
    {row.kind==='M12-F11'&&role==='partner'&&row.status==='approved'&&!row.executedAt&&row.eligibility?.synthetic&&<button type="button" className="btn secondary" onClick={()=>void run('archive-dispose',{id:row.id})}>Зохиомол архивын устгалыг хэрэгжүүлэх</button>}
   </div>
+  {archiveGrant&&!row.revoked&&role==='partner'&&<Reason label="Хандалт цуцлах шалтгаан" action={reason=>command('revoke',reason)}/>}
   {canReview(row,role)&&<div className="field-grid">
    <Reason label="Батлах үндэслэл" action={reason=>command('approve',reason)}/>
    <Reason label="Буцаах шалтгаан" action={reason=>command('return',reason)}/>
@@ -142,7 +144,7 @@ export default function PilotRegisters({role,resources,evidence,engagement,activ
    {resources.archive.issue&&<p>Гаргалтын бүртгэл · {resources.archive.issue.reference} · {new Date(resources.archive.issue.at).toLocaleString()}</p>}
    {resources.archive.reopened&&<p>Агуулгын өөрчлөлт нээлттэй · {resources.archive.reopened.basis}</p>}
    {resources.archive.packages.map(p=><details className="feature-detail" key={p.id}><summary>{p.summary.client} · {p.sealed.slice(0,16)} · {p.disposed?'Агуулга устгасан':'Түгжсэн'}</summary>
-    <p>{p.id} · {p.summary.files.length} файл · {p.holds} идэвхтэй хориг</p><p className="micro">SHA-256 {p.digest}</p>
+    <p>{p.id} · {p.summary.fileCount} файл · {p.holds} идэвхтэй хориг</p>{p.digest&&<p className="micro">SHA-256 {p.digest}</p>}
     {p.access?.map((a,i)=><p key={i}>{roleName[a.actor]} · {a.scope} · {a.reason} · {new Date(a.at).toLocaleString()}</p>)}
    </details>)}
   </div>}

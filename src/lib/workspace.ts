@@ -19,19 +19,19 @@ export type Snapshot={version:number;values:Record<string,string>;evidence:strin
 export type Intake={contact:string;origin:'client'|'firm';period:string;facts:string;active:boolean};
 export type DecisionRecord={version:number;by:string;at:string;decision:Engagement['acceptance'];assessment:string;independence:string;letter:string};
 export type Statements={version:number;statements:string;notes:string};
-export type ReportPackage={report:number;fs:number;paper:SnapshotContent;statements:Statements;reliedOn:SnapshotContent[];decisions:DecisionRecord[];findings:Finding[];evidence:{id:string;version:number;status:Evidence['status']}[];sample?:{ids:string[];stamp:string;version:number};quality:string};
+export type ReportPackage={report:number;fs:number;reportDate?:string;paper:SnapshotContent;statements:Statements;reliedOn:SnapshotContent[];decisions:DecisionRecord[];findings:Finding[];evidence:{id:string;version:number;status:Evidence['status']}[];sample?:{ids:string[];stamp:string;version:number};quality:string};
 type SnapshotContent={id:string;version:number;reviewedVersion?:number;values:Record<string,string>;evidence:string[]};
 type Authorization={report:number;fs:number;by:string;at:string;package?:ReportPackage};
 type Release={report:number;fs:number;authorizedAt:string;issuedAt:string;recipients:{name:string;status:string}[];package?:ReportPackage};
 export type WorkItem={id:string;engagement:string;form:string;title:string;stage:number;owner:string;reviewer:string;start:string;due:string;baselineStart:string;baselineDue:string;estimate:number;actual:number;status:StageStatus;version:number;submittedVersion?:number;submittedBy?:string;reviewedVersion?:number;values:Record<string,string>;evidence:string[];notes:Note[];history:Snapshot[];required:boolean;naReason?:string;completedAt?:string;qualityVersion?:number};
-export type Engagement={id:string;companyId?:string;team?:EngagementTeam;carriedFrom?:string;client:string;initials:string;industry:string;period:string;kind:string;phase:string;reportDate:string;acceptance:'pending'|'accepted'|'declined'|'conditional';termsAgreed:boolean;independence:boolean;formalEqr:boolean;eqrComplete:boolean;fsVersion:number;reportVersion:number;reportFsVersion:number;authorized?:Authorization;issued?:{report:number;fs:number;at:string};recipients:{name:string;status:'pending'|'delivered'|'failed'}[];locked:boolean;custody:'none'|'offered'|'accepted';hold:boolean;followup:boolean;qualityConcerns:{id:string;text:string;resolved:boolean}[];releaseHistory?:Release[];decisionVersion?:number;intake?:Intake;decisions?:DecisionRecord[];statements?:Statements;authorizationHistory?:Authorization[];eqrReview?:{by:string;at:string;basis:string}};
+export type Engagement={id:string;companyId?:string;team?:EngagementTeam;carriedFrom?:string;client:string;initials:string;industry:string;period:string;kind:string;phase:string;reportDate:string;reportForm?:string;acceptance:'pending'|'accepted'|'declined'|'conditional';termsAgreed:boolean;independence:boolean;formalEqr:boolean;eqrComplete:boolean;fsVersion:number;reportVersion:number;reportFsVersion:number;authorized?:Authorization;issued?:{report:number;fs:number;at:string};recipients:{name:string;status:'pending'|'delivered'|'failed'}[];locked:boolean;custody:'none'|'offered'|'accepted';hold:boolean;followup:boolean;qualityConcerns:{id:string;text:string;resolved:boolean}[];releaseHistory?:Release[];decisionVersion?:number;intake?:Intake;decisions?:DecisionRecord[];statements?:Statements;authorizationHistory?:Authorization[];eqrReview?:{by:string;at:string;basis:string}};
 export type Evidence={id:string;engagement:string;name:string;version:number;type:string;obtained:string;status:'received'|'accepted'|'rejected';source:string;anchor:string;text:string;specimen:boolean;dataUrl?:string;original?:boolean;channel?:string;request?:string;replaces?:string;assessment?:string};
 export type RequestPart={id:string;title:string;evidence?:string;state:'missing'|'received'|'accepted'|'rejected';reason?:string};
 export type RequestItem={id:string;dispatch?:'draft'|'issued'|'cancelled';contactId?:string;contactEmail?:string;issuedAt?:string;followUps?:{at:string;by:string;text:string}[];engagement:string;title:string;form:string;contact:string;owner:string;due:string;status:'open'|'partial'|'ready'|'changes_requested'|'complete';received:number;expected:number;message:string;evidence:string[];history:string[];parts?:RequestPart[]};
 export type ManualTask={id:string;engagement:string;title:string;owner:string;due:string;done:boolean;kind:'task'|'decision'|'meeting';form?:string};
 export type Event={id:string;engagement:string;title:string;owner:string;start:string;end:string;kind:'meeting'|'fieldwork'|'review'|'focus'};
 export type Finding={id:string;engagement:string;form:string;title:string;amount:number;status:'identified'|'agreed'|'posted_verified';evidence:string;qualitative:string;resolution?:string;sampleId?:string};
-export type DataRow={id:string;account:string;amount:number;period:string;state:'accepted'|'quarantined'|'excluded';reason:string;sourceRow:number};
+export type DataRow={id:string;account:string;amount:number|null;rawAmount?:string;period:string;state:'accepted'|'quarantined'|'excluded';reason:string;sourceRow:number};
 export type Dataset={version:number;name:string;rows:DataRow[];sourceTotal:number;importedAt:string;controlTotal?:number};
 export type Run={id:string;engagement:string;automation:string;inputStamp:string;at:string;by:string;status:'complete'|'failed';summary:string;rows:{label:string;value:string}[];exceptions:string[];dispositions:Record<string,string>};
 export type Risk={id:string;engagement:string;title:string;assertion:string;significance:string;response:string;forms:string[];conclusion:string};
@@ -90,20 +90,39 @@ export function reassign(m:Model,id:string,owner:string,reviewer:string){const w
 export function metrics(items:WorkItem[]){const applicable=items.filter(x=>x.required&&!x.naReason),n=applicable.length;const prepared=applicable.filter(x=>['submitted','reviewed'].includes(x.status)).length;const reviewed=applicable.filter(x=>x.status==='reviewed'&&x.reviewedVersion===x.version).length;return {total:items.length,applicable:n,prepared,reviewed,preparedPct:n?Math.round(prepared/n*100):null,reviewedPct:n?Math.round(reviewed/n*100):null,overdue:applicable.filter(x=>x.due&&x.due<DEMO_DAY&&x.status!=='reviewed').length,blocked:applicable.filter(x=>x.status==='waiting').length,notes:items.reduce((s,x)=>s+x.notes.filter(n=>!n.cleared).length,0)};}
 export function importCsv(text:string,period='2025'):Dataset{
  const lines=text.trim().split(/\r?\n/);if(lines.length<2)throw Error('Толгой мөр болон өгөгдөл шаардлагатай.');const parse=(s:string)=>{const out:string[]=[];let v='',q=false;for(let i=0;i<s.length;i++){if(s[i]==='"'){if(q&&s[i+1]==='"'){v+='"';i++}else q=!q}else if(s[i]===','&&!q){out.push(v);v=''}else v+=s[i]}out.push(v);return out.map(x=>x.trim())};
- const head=parse(lines[0]);if(head.join(',')!=='id,account,amount,period')throw Error('CSV баганууд: id,account,amount,period');const seen=new Set<string>();let sourceTotal=0;const rows=lines.slice(1).filter(Boolean).map((l,i)=>{const v=parse(l),amount=Number(v[2]);let reason='';if(!v[0]||!v[1])reason='Таних код/данс дутуу';else if(v[2]===''||!Number.isFinite(amount))reason='Дүн тоон утга биш';else if(v[3]!==period)reason=`Тайлант үе ${period} биш`;else if(seen.has(v[0]))reason='Таних код давхардсан';if(!reason)seen.add(v[0]);if(Number.isFinite(amount))sourceTotal+=amount;return {id:v[0]||`row-${i+2}`,account:v[1],amount:Number.isFinite(amount)?amount:0,period:v[3],state:reason?'quarantined':'accepted',reason,sourceRow:i+2} as DataRow});return {version:1,name:'CSV импорт',rows,sourceTotal,importedAt:now()};
+ const head=parse(lines[0]);
+ if(head.join(',')!=='id,account,amount,period')throw Error('CSV баганууд: id,account,amount,period');
+ const seen=new Set<string>();
+ let sourceTotal=0;
+ const rows=lines.slice(1).flatMap((line,i):DataRow[]=>{
+  if(!line.trim())return [];
+  const [id,account='',rawAmount='',rowPeriod='']=parse(line);
+  const numeric=Number(rawAmount);
+  const amount=/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(rawAmount)&&Number.isFinite(numeric)?numeric:null;
+  let reason='';
+  if(!id||!account)reason='Таних код/данс дутуу';
+  else if(amount===null)reason='Дүн тоон утга биш';
+  else if(rowPeriod!==period)reason=`Тайлант үе ${period} биш`;
+  else if(seen.has(id))reason='Таних код давхардсан';
+  if(!reason)seen.add(id);
+  if(amount!==null)sourceTotal+=amount;
+  return [{id:id||`row-${i+2}`,account,amount,rawAmount,period:rowPeriod,state:reason?'quarantined':'accepted',reason,sourceRow:i+2}];
+ });
+ return {version:1,name:'CSV импорт',rows,sourceTotal,importedAt:now()};
 }
 export const SAMPLE_CSV='id,account,amount,period\nGL-001,1010,25000000,2025\nGL-002,1010,18000000,2025\nGL-003,1220,45000000,2025\nGL-004,1220,32000000,2025\nGL-005,1520,64000000,2025\nGL-006,1520,16000000,2025\nGL-007,3310,12000000,2025\nGL-008,3310,28000000,2025\nGL-009,4410,7000000,2024\nGL-010,4410,3000000,2025';
 export function selectSample(ids:string[],size:number,seed:number){if(!Number.isInteger(size)||size<1||size>ids.length)throw Error('Түүврийн хэмжээ эх олонлогоос их эсвэл буруу.');let s=seed>>>0;const pool=[...ids].sort();for(let i=pool.length-1;i>0;i--){s=(Math.imul(s,1664525)+1013904223)>>>0;const j=s%(i+1);[pool[i],pool[j]]=[pool[j],pool[i]]}return pool.slice(0,size);}
 export function materiality(m:Model,e:string){const v=m.work[workKey(e,'1.3')].values;const b=Number(v.benchmark),p=Number(v.percentage),perf=Number(v.performance),trivial=Number(v.trivial);if(!v.benchmark?.trim()||!v.percentage?.trim()||!v.performance?.trim()||!v.trivial?.trim()||![b,p,perf,trivial].every(Number.isFinite)||b<=0||p<0||p>100||perf<0||perf>100||trivial<0||trivial>100)return null;const overall=b*p/100;return {overall,performance:overall*perf/100,trivial:overall*trivial/100};}
 export function outstanding(m:Model,e:string){return m.findings.filter(f=>f.engagement===e&&f.status!=='posted_verified').reduce((s,f)=>s+f.amount,0);}
 export function isCurrentReview(w:WorkItem|undefined){return !!w&&w.status==='reviewed'&&w.reviewedVersion===w.version;}
+export const reportForm=(e:Engagement)=>e.reportForm??'4.1.A1';
 export function reportGaps(m:Model,eid:string){
  const e=m.engagements.find(x=>x.id===eid)!,w=Object.values(m.work).filter(x=>x.engagement===eid),g=acceptanceGaps(e);
  if(e.intake&&!e.intake.active)g.push('Гэрээт ажил идэвхжээгүй');
  if(e.reportFsVersion!==e.fsVersion)g.push('Тайлангийн холбосон СТ хувилбар зөрүүтэй');
  if(!e.statements?.statements.trim()||!e.statements.notes.trim()||e.statements.version!==e.fsVersion)g.push('Одоогийн СТ ба тодруулгын бүртгэл');
  if(w.some(x=>x.notes.some(n=>!n.cleared)))g.push('Нээлттэй хяналтын тэмдэглэл');
- for(const f of (e.id==='E2'?['3.1.2','4.4','4.1.A1']:['4.4','4.1.A1']))if(!isCurrentReview(m.work[workKey(eid,f)]))g.push(`${f} · Одоогийн хувилбарын хяналт`);
+ for(const f of (e.id==='E2'?['3.1.2','4.4',reportForm(e)]:['4.4',reportForm(e)]))if(!isCurrentReview(m.work[workKey(eid,f)]))g.push(`${f} · Одоогийн хувилбарын хяналт`);
  if(e.id==='E2'){const selection=currentSelection(m,eid),work=m.work[workKey(eid,'3.1.2')];if(!selection||selection.ids.some(id=>!work.values[`sample.${selection.stamp}.${id}`]))g.push('3.3.1 / 3.1.2 · Одоогийн түүвэр ба шалгалт');}
  if(m.requests.some(r=>r.engagement===eid&&(r.dispatch==='issued'||e.id==='E2'&&!r.dispatch&&r.form==='3.1.2')&&r.status!=='complete'))g.push('Эх баримтын үнэлгээ дуусаагүй хүсэлт');
  for(const paper of w)if(m.bench?.applied[paper.id]?.fields.some(f=>f.tailoring)&&!isCurrentReview(paper))g.push(paper.form+' · Тохируулсан горимын хяналт');
@@ -183,19 +202,19 @@ export function setEngagementDecision(m:Model,field:'acceptance'|'termsAgreed'|'
 function content(w:WorkItem):SnapshotContent{return {id:w.id,version:w.version,reviewedVersion:w.reviewedVersion,values:{...w.values},evidence:[...w.evidence]};}
 export function currentPackage(m:Model,eid:string):ReportPackage{
  const e=m.engagements.find(e=>e.id===eid)!;
- const paper=content(m.work[workKey(eid,'4.1.A1')]);
+ const paper=content(m.work[workKey(eid,reportForm(e))]);
  const forms=new Set(['1.1.1','1.3','2.6','3.1.2','4.4']);
  for(const w of Object.values(m.work))if(w.engagement===eid&&m.bench?.applied[w.id]?.fields.some(f=>f.tailoring))forms.add(w.form);
  const reliedOn=[...forms].map(f=>content(m.work[workKey(eid,f)]));
  const ids=new Set([paper,...reliedOn].flatMap(w=>w.evidence));
  const sample=e.intake?currentSelection(m,eid):undefined;
- return {report:e.reportVersion,fs:e.fsVersion,paper,statements:e.statements?{...e.statements}:{version:e.fsVersion,statements:'',notes:''},reliedOn,decisions:structuredClone(e.decisions??[]),findings:m.findings.filter(f=>f.engagement===eid).map(f=>({...f})),evidence:m.evidence.filter(ev=>ev.engagement===eid&&ids.has(ev.id)).map(({id,version,status})=>({id,version,status})),sample:sample?{ids:[...sample.ids],stamp:sample.stamp,version:sample.version}:undefined,quality:e.formalEqr?e.eqrReview?.at??'pending':'not_required'};
+ return {report:e.reportVersion,fs:e.fsVersion,...(e.reportForm&&{reportDate:e.reportDate}),paper,statements:e.statements?{...e.statements}:{version:e.fsVersion,statements:'',notes:''},reliedOn,decisions:structuredClone(e.decisions??[]),findings:m.findings.filter(f=>f.engagement===eid).map(f=>({...f})),evidence:m.evidence.filter(ev=>ev.engagement===eid&&ids.has(ev.id)).map(({id,version,status})=>({id,version,status})),sample:sample?{ids:[...sample.ids],stamp:sample.stamp,version:sample.version}:undefined,quality:e.formalEqr?e.eqrReview?.at??'pending':'not_required'};
 }
 function qualityBasis(m:Model,eid:string){const {quality:_,...p}=currentPackage(m,eid);return JSON.stringify(p);}
 export function completeEqr(m:Model){
  const e=m.engagements.find(e=>e.id===m.engagement)!;
  if(!permitted(m,e.id)||m.person!==(e.team?.quality??'saruul')||!e.formalEqr||e.locked||e.qualityConcerns.some(c=>!c.resolved))throw Error('Томилсон чанарын хянагч ба шийдвэрлэсэн асуудал шаардлагатай.');
- if(!isCurrentReview(m.work[workKey(e.id,'4.1.A1')])||!isCurrentReview(m.work[workKey(e.id,'4.4')])||e.reportFsVersion!==e.fsVersion)throw Error('Тайлан ба дуусгалтын одоогийн хяналт шаардлагатай.');
+ if(!isCurrentReview(m.work[workKey(e.id,reportForm(e))])||!isCurrentReview(m.work[workKey(e.id,'4.4')])||e.reportFsVersion!==e.fsVersion)throw Error('Тайлан ба дуусгалтын одоогийн хяналт шаардлагатай.');
  e.eqrReview={by:m.person,at:now(),basis:qualityBasis(m,e.id)};e.eqrComplete=true;recordEvent(m,'Томилсон чанарын хянагч багцын демо EQR бүртгэв','4.6');
 }
 export function saveStatements(m:Model,statements:string,notes:string){
@@ -203,7 +222,7 @@ export function saveStatements(m:Model,statements:string,notes:string){
  if(e.statements?.statements===statements.trim()&&e.statements.notes===notes.trim())return;
  e.fsVersion++;e.statements={version:e.fsVersion,statements:statements.trim(),notes:notes.trim()};recordEvent(m,`СТ/тодруулгын v${e.fsVersion} хадгалав`);
 }
-export function bindStatements(m:Model){const e=partnerEngagement(m);if(e.locked||!e.statements)throw Error('Холбох СТ багц алга.');if(e.reportFsVersion!==e.fsVersion){e.reportFsVersion=e.fsVersion;e.reportVersion++;recordEvent(m,'Тайланг одоогийн СТ багцтай холбов','4.1.A1');}}
+export function bindStatements(m:Model){const e=partnerEngagement(m);if(e.locked||!e.statements)throw Error('Холбох СТ багц алга.');if(e.reportFsVersion!==e.fsVersion){e.reportFsVersion=e.fsVersion;e.reportVersion++;recordEvent(m,'Тайланг одоогийн СТ багцтай холбов',reportForm(e));}}
 function samePackage(a:ReportPackage|undefined,b:ReportPackage){return !!a&&JSON.stringify(a)===JSON.stringify(b);}
 export function authorizationCurrent(m:Model,e:Engagement){return samePackage(e.authorized?.package,currentPackage(m,e.id));}
 export function currentRelease(m:Model,e:Engagement){const p=currentPackage(m,e.id);return e.releaseHistory?.find(r=>samePackage(r.package,p));}
@@ -211,13 +230,13 @@ export function authorizeReport(m:Model){
  const e=partnerEngagement(m);const gaps=reportGaps(m,e.id);if(e.locked||gaps.length)throw Error(gaps.join('; ')||'Эцсийн файл түгжээтэй.');
  if(authorizationCurrent(m,e))return;
  e.authorized={report:e.reportVersion,fs:e.fsVersion,by:m.person,at:now(),package:currentPackage(m,e.id)};
- e.authorizationHistory=[...(e.authorizationHistory??[]),e.authorized];recordEvent(m,'Яг энэ тайлан, СТ ба тодруулгын багцыг зөвшөөрөв','4.1.A1');
+ e.authorizationHistory=[...(e.authorizationHistory??[]),e.authorized];recordEvent(m,'Яг энэ тайлан, СТ ба тодруулгын багцыг зөвшөөрөв',reportForm(e));
 }
 export function issueReport(m:Model){
  const e=partnerEngagement(m);if(currentRelease(m,e))return;
  const gaps=reportGaps(m,e.id);if(e.locked||gaps.length||!e.authorized||!authorizationCurrent(m,e))throw Error(gaps.join('; ')||'Багц өөрчлөгдсөн эсвэл зөвшөөрөл дутуу. Одоогийн багцыг дахин зөвшөөрнө үү.');
  e.issued={report:e.reportVersion,fs:e.fsVersion,at:now()};e.recipients=e.recipients.map(r=>({...r,status:'pending'}));e.custody='none';
- e.releaseHistory=[...(e.releaseHistory??[]),{report:e.reportVersion,fs:e.fsVersion,authorizedAt:e.authorized.at,issuedAt:e.issued.at,recipients:e.recipients.map(r=>({...r})),package:structuredClone(e.authorized.package)}];recordEvent(m,'Яг зөвшөөрсөн багцын гаргалт бүртгэв','4.1.A1');
+ e.releaseHistory=[...(e.releaseHistory??[]),{report:e.reportVersion,fs:e.fsVersion,authorizedAt:e.authorized.at,issuedAt:e.issued.at,recipients:e.recipients.map(r=>({...r})),package:structuredClone(e.authorized.package)}];recordEvent(m,'Яг зөвшөөрсөн багцын гаргалт бүртгэв',reportForm(e));
 }
 export function recordDistribution(m:Model,index:number,status:'failed'|'delivered'){const e=partnerEngagement(m),release=currentRelease(m,e);if(!release||!e.recipients[index])throw Error('Одоогийн гаргасан багцын эрх шаардлагатай.');e.recipients[index].status=status;release.recipients[index].status=status;recordEvent(m,'Хүлээн авагчийн демо хүргэлтийн оролдлого бүртгэв');}
 export function advanceCustody(m:Model,action:'lock'|'offer'|'accept'){

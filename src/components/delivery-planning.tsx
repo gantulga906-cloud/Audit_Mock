@@ -11,8 +11,8 @@ const monthLabel=(s:string)=>new Intl.DateTimeFormat('mn-MN',{month:'long',year:
 const daysFrom=(s:string,count:number)=>Array.from({length:count},(_,i)=>add(s,i));
 const names=['Да','Мя','Лх','Пү','Ба','Бя','Ня'];
 
-export function DeliveryTimeline({items,select,baseline,milestone}:{items:WorkItem[];select:(id:string)=>void;baseline:boolean;milestone:string}){
- const [start,setStart]=useState('2026-11-02'),[span,setSpan]=useState(28),[owner,setOwner]=useState(''),[reviewer,setReviewer]=useState('');
+export function DeliveryTimeline({items,select,baseline,milestone,initialStart='2026-11-02',today=DEMO_DAY}:{items:WorkItem[];select:(id:string)=>void;baseline:boolean;milestone:string;initialStart?:string;today?:string}){
+ const [start,setStart]=useState(initialStart),[span,setSpan]=useState(28),[owner,setOwner]=useState(''),[reviewer,setReviewer]=useState('');
  const days=daysFrom(start,span),end=days.at(-1)!;
  const filtered=items.filter(w=>(!owner||w.owner===owner)&&(!reviewer||w.reviewer===reviewer));
  const inRange=filtered.filter(w=>w.due&&w.due>=start&&(w.start||w.due)<=end);
@@ -34,7 +34,7 @@ export function DeliveryTimeline({items,select,baseline,milestone}:{items:WorkIt
   </div>
   <div className="timeline-caption"><span>{start} — {end}</span><span>◆ Тайлангийн зорилтот өдөр: {milestone}</span><span>● Бодитоор хянасан өдөр</span></div>
   <div className="gantt-scroll"><div className="gantt" style={{minWidth:span>14?1060:720}}>
-   <div className="gantt-header"><span>АЖИЛ · БЭЛТГЭГЧ → ХЯНАГЧ</span><div style={{gridTemplateColumns:`repeat(${span},1fr)`}}>{days.map(d=><span key={d} className={d===DEMO_DAY?'today':''} title={d}>{d===milestone?'◆ ':''}{d.slice(8)}<small>{d.slice(5,7)} сар</small></span>)}</div></div>
+   <div className="gantt-header"><span>АЖИЛ · БЭЛТГЭГЧ → ХЯНАГЧ</span><div style={{gridTemplateColumns:`repeat(${span},1fr)`}}>{days.map(d=><span key={d} className={d===today?'today':''} title={d}>{d===milestone?'◆ ':''}{d.slice(8)}<small>{d.slice(5,7)} сар</small></span>)}</div></div>
    {[1,2,3,4,5].map(stage=>{const rows=inRange.filter(w=>w.stage===stage);return rows.length>0&&<div key={stage}><div className="gantt-group"><b>{stage} · {['Хүлээн авах','Төлөвлөлт','Гүйцэтгэл','Тайлагнал','Архив'][stage-1]}</b><span>{rows.length} ажил</span></div>{rows.map(w=>{
     const planned=range(w.start,w.due),original=range(w.baselineStart,w.baselineDue),actual=w.completedAt?.slice(0,10),actualStyle=actual?range(actual,actual):undefined;
     return <div className="gantt-row" key={w.id}>
@@ -51,8 +51,11 @@ export function DeliveryTimeline({items,select,baseline,milestone}:{items:WorkIt
  </>;
 }
 
-export function PlanningCalendar({model,eng,items,select,tasksView}:{model:Model;eng:Engagement;items:WorkItem[];select:(id:string)=>void;tasksView:()=>void}){
- const [cursor,setCursor]=useState(DEMO_DAY),[mode,setMode]=useState<'month'|'week'|'agenda'>('month'),[personal,setPersonal]=useState(true),[expanded,setExpanded]=useState('');
+export function PlanningCalendar({model,eng,items,select,tasksView,initialDay=DEMO_DAY,today=DEMO_DAY,teamCalendar=true}:{
+ model:Pick<Model,'person'|'tasks'|'events'>;eng:Pick<Engagement,'id'|'reportDate'>;items:WorkItem[];
+ select:(id:string)=>void;tasksView:()=>void;initialDay?:string;today?:string;teamCalendar?:boolean;
+}){
+ const [cursor,setCursor]=useState(initialDay),[mode,setMode]=useState<'month'|'week'|'agenda'>('month'),[personal,setPersonal]=useState(true),[expanded,setExpanded]=useState('');
  const role=personById(model.person).role;
  const match=(owner:string,reviewer?:string)=>!personal||owner===model.person||reviewer===model.person;
  const first=cursor.slice(0,7)+'-01';
@@ -75,10 +78,10 @@ export function PlanningCalendar({model,eng,items,select,tasksView}:{model:Model
    <h2>{mode==='week'?`${days[0]} – ${days.at(-1)}`:monthLabel(cursor)}</h2>
    <button className="quiet" aria-label="Хуанлийн дараагийн хугацаа" onClick={()=>move(1)}><ChevronRight size={17}/></button>
   </div><div className="segmented">{([['week','7 хоног'],['month','Сар'],['agenda','Жагсаалт']] as const).map(([k,label])=><button key={k} className={mode===k?'active':''} onClick={()=>setMode(k)}>{label}</button>)}</div>
-  {role!=='quality'&&<select aria-label="Хуанлийн хамрах хүрээ" value={personal?'mine':'team'} onChange={e=>setPersonal(e.target.value==='mine')}><option value="mine">Миний хуанли</option><option value="team">Гэрээт ажлын хуанли</option></select>}</div>
+  {role!=='quality'&&teamCalendar&&<select aria-label="Хуанлийн хамрах хүрээ" value={personal?'mine':'team'} onChange={e=>setPersonal(e.target.value==='mine')}><option value="mine">Миний хуанли</option><option value="team">Гэрээт ажлын хуанли</option></select>}</div>
   {mode==='agenda'?<div className="agenda-list">{entries.filter(e=>within(e.start)||within(e.end)||(e.start<first&&e.end>=first)).map(e=><button key={e.id} className="agenda-item" onClick={e.open}><span>{e.start.slice(5)}</span><div><b>{e.title}</b><small>{e.kind==='work'?'Албан ажлын хугацаа':e.kind==='manual'?'Хувийн даалгавар':'Төлөвлөсөн цонх'}</small></div><ChevronRight size={16}/></button>)}{!entries.some(e=>within(e.start)||within(e.end))&&<p className="pad muted">Энэ хугацаанд товлосон ажил алга.</p>}</div>:<>
    <div className="calendar-weekdays">{names.map(n=><span key={n}>{n}</span>)}</div>
-   <div className="calendar-grid">{days.map(d=>{const list=entries.filter(e=>e.start<=d&&e.end>=d);const limit=expanded===d||mode==='week'?list.length:3;return <div key={d} className={`calendar-cell ${d===DEMO_DAY?'current':''} ${!within(d)?'outside':''}`}><span className="day-number">{d.slice(8)}</span>{list.slice(0,limit).map(e=><button key={e.id} className={`calendar-event ${e.kind}`} title={e.title} onClick={e.open}>{e.title}</button>)}{list.length>limit&&<button className="calendar-more" onClick={()=>setExpanded(d)}>+{list.length-limit} ажил</button>}</div>;})}</div>
+   <div className="calendar-grid">{days.map(d=>{const list=entries.filter(e=>e.start<=d&&e.end>=d);const limit=expanded===d||mode==='week'?list.length:3;return <div key={d} className={`calendar-cell ${d===today?'current':''} ${!within(d)?'outside':''}`}><span className="day-number">{d.slice(8)}</span>{list.slice(0,limit).map(e=><button key={e.id} className={`calendar-event ${e.kind}`} title={e.title} onClick={e.open}>{e.title}</button>)}{list.length>limit&&<button className="calendar-more" onClick={()=>setExpanded(d)}>+{list.length-limit} ажил</button>}</div>;})}</div>
   </>}
   {entries.find(e=>e.id===expanded)&&<div className="callout"><span>{entries.find(e=>e.id===expanded)?.title} · {entries.find(e=>e.id===expanded)?.start}</span></div>}
   <div className="card-foot"><span>Албан хугацаа нь ажлын бүртгэлээс харагдана. Хувийн даалгавар тусдаа.</span><span>Цаггүй огноо</span></div>

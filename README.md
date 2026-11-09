@@ -30,6 +30,8 @@ npm start
 
 The build creates a static `out/` export. `npm start` serves the existing prototype locally. The opt-in `npm run pilot` starts a separate local server with SQLite storage.
 
+Record `/build-info.json` for each acceptance run. It identifies the built UI, Git revision, working-tree state, and source manifest. The local server also sends the build ID with pilot API responses.
+
 ## Explore
 
 - **Senior delivery:** start as Т. Тэмүүлэн. Inspect the review queue, rolling Gantt, stage/status matrix, dependency references, assignments and scoped workload. Open a workpaper in its inspector without leaving the list. Change its due date and see the same deadline in the calendar.
@@ -52,6 +54,7 @@ The supplied61-page brief informed this iteration. Audit products are the primar
 - [Design specification](docs/research/design-spec.md): nine flows,16 processes, role menus, metrics, dependencies, configuration costs, wireframes, priorities and scenarios.
 - [Source review](docs/research/source-review.md): originals, editions, worksheet/field evidence and review limits.
 - [Implementation/verification](docs/research/implementation.md): actual depth and remaining work.
+- [Development progress](docs/research/development-progress.md): work packages and source-linked regression evidence.
 - [Current coverage](docs/research/current-coverage.json):1,269 separate current source dispositions. The baseline ledger remains frozen to581b70c.
 
 The populations reconcile136 feature/common-scope items,75 cases,315 criteria,58 automation minimums plus58 extensions,22 area variants,476 E2E steps,70 forms,25 screen groups,29 decisions and five BPMNs. Mapping a requirement is different from completing it. Conditional services, excluded inferences and unresolved decisions retain their scope.

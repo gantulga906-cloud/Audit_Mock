@@ -1,6 +1,7 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
-import { PilotError } from './pilot-workflow.mjs';
+import { invalidateReport, PilotError } from './pilot-workflow.mjs';
+import { archiveGrantKinds } from './pilot-registers.mjs';
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const today = () => new Date().toISOString().slice(0, 10);
@@ -41,6 +42,10 @@ export function createArchiveStore(db) {
     if (!row?.payload) fail('Сэргээх архивын агуулга байхгүй.');
     if (sha(row.payload) !== row.digest) fail('Архивын хэш таарахгүй.');
     const bundle = JSON.parse(row.payload);
+    const artifact = bundle.authorization.artifact;
+    if (artifact && (sha(artifact.html) !== artifact.sha256 || artifact.sha256 !== bundle.issue.reportSha256)) {
+      fail('Зөвшөөрсөн тайлангийн хэш таарахгүй.');
+    }
     if (bundle.evidence.some(e => {
       const bytes = Buffer.from(e.base64, 'base64');
       return !bytes.length || bytes.length !== e.size || sha(bytes) !== e.sha256;
@@ -58,6 +63,8 @@ export function createArchiveStore(db) {
   function seal(m, signed) {
     const issue = m.pilotIssue;
     if (!issue || !signed) fail('Яг зөвшөөрсөн багцыг эхлээд гаргана уу.');
+    const artifact = signed.authorization.artifact;
+    if (artifact && (sha(artifact.html) !== artifact.sha256 || artifact.sha256 !== issue.reportSha256)) fail('Зөвшөөрсөн тайлангийн хэш таарахгүй.');
     const prior = latest();
     if (prior?.issued === issue.at) return prior.id;
     if (prior && (!m.archiveReopen || m.archiveReopen.package !== prior.id)) fail('Агуулгын өөрчлөлтийг зөвшөөрнө үү.');
@@ -120,12 +127,7 @@ export function createArchiveStore(db) {
     const changes = { package: v.package, id: row.id, type: v.type, changes: v.changes, basis: v.basis, approvedBy: role, at: new Date().toISOString() };
     if (v.type === 'substantive') {
       m.archiveReopen = changes;
-      const report = m.work[m.engagement + '/4.1.A1'];
-      report.history.unshift({ version: report.version, values: { ...report.values }, evidence: [...report.evidence], at: changes.at, by: m.person, action: 'Архивын агуулгын өөрчлөлт зөвшөөрөв' });
-      report.version++;
-      report.status = 'changed';
-      report.completedAt = undefined;
-      report.submittedVersion = undefined;
+      invalidateReport(m, 'Архивын агуулгын өөрчлөлт зөвшөөрөв');
     } else {
       row.successor = insert({ ...checkPayload(archive), changes }, archive.id, archive.issued, archive.synthetic);
     }
@@ -141,21 +143,28 @@ export function createArchiveStore(db) {
     row.executedAt = new Date().toISOString();
   }
   function exportPackage(m, grantId, role) {
-    const grant = (m.pilotRecords ?? []).find(r => r.id === grantId && r.status === 'approved' && ['M12-F07','M12-F10'].includes(r.kind));
-    if (!grant || grant.values.accessor !== role || grant.values.until < today()) throw new PilotError(403, 'Хандалтын зөвшөөрөл шаардлагатай.');
+    const grant = (m.pilotRecords ?? []).find(r => r.id === grantId && r.status === 'approved' && archiveGrantKinds.includes(r.kind));
+    if (!grant || grant.revoked || grant.values.accessor !== role || grant.values.until < today()) throw new PilotError(403, 'Хандалтын зөвшөөрөл шаардлагатай.');
     const v = grant.values, archive = read(v.package), bundle = checkPayload(archive);
     const scope = grant.kind === 'M12-F07' ? 'full' : v.scope;
-    const content = scope === 'full' ? bundle : scope === 'report' ? { report: bundle.authorization.package.paper, issue: bundle.issue } :
+    const content = scope === 'full' ? bundle : scope === 'report' ? {
+      report: bundle.authorization.artifact ?? bundle.authorization.package.paper, issue: bundle.issue,
+    } :
       { evidence: bundle.evidence.filter(e => e.id === v.evidenceId) };
     const at = new Date().toISOString();
     db.prepare('INSERT INTO pilot_archive_access (package, grant_id, actor, at, reason, scope) VALUES (?, ?, ?, ?, ?, ?)')
       .run(archive.id, grant.id, role, at, v.reason, scope);
     return { id: archive.id, scope, at, digest: sha(JSON.stringify(content)), content };
   }
-  const view = (m, role) => ({ packages: list().map(p => ({
-    ...p, holds: activeHolds(m).length,
-    ...(role === 'partner' && { access: db.prepare('SELECT actor, at, reason, scope FROM pilot_archive_access WHERE package = ? ORDER BY id DESC LIMIT 25').all(p.id) }),
-  })), reopened: m.archiveReopen ?? null, issue: m.pilotIssue ?? null });
+  const view = (m, role) => ({ packages: list().map(p => {
+    const { digest, summary, ...index } = p;
+    const metadata = { client: summary.client, fileCount: summary.files.length };
+    return {
+      ...index, summary: metadata, holds: activeHolds(m).length,
+      ...(role === 'partner' && { digest, summary: { ...metadata, files: summary.files },
+        access: db.prepare('SELECT actor, at, reason, scope FROM pilot_archive_access WHERE package = ? ORDER BY id DESC LIMIT 25').all(p.id) }),
+    };
+  }), reopened: m.archiveReopen ?? null, issue: role === 'partner' ? m.pilotIssue ?? null : null });
   const isSealed = m => !m.archiveReopen && !!db.prepare('SELECT 1 FROM pilot_archives LIMIT 1').get();
   return { seal, checkRecord, approveRecord, dispose, exportPackage, view, isSealed };
 }

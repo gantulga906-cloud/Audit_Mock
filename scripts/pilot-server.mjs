@@ -2,7 +2,7 @@ import { createHash, randomBytes, scryptSync, timingSafeEqual } from 'node:crypt
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
-import { accounts, emptyWorkspace, PilotError, pilotAction, pilotView } from './pilot-workflow.mjs';
+import { accounts, emptyWorkspace, PilotError, pilotAction, pilotReport, pilotView, syncReportForm } from './pilot-workflow.mjs';
 import { createArchiveStore } from './pilot-archive.mjs';
 
 const prefix = '/api/pilot';
@@ -45,6 +45,10 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     CREATE TABLE IF NOT EXISTS evidence (id TEXT PRIMARY KEY, name TEXT NOT NULL, sha256 TEXT NOT NULL, bytes BLOB NOT NULL);
     CREATE TABLE IF NOT EXISTS authorizations (id INTEGER PRIMARY KEY, snapshot TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS pilot_templates (digest TEXT PRIMARY KEY, body TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS pilot_commands (
+      actor TEXT NOT NULL, key TEXT NOT NULL, fingerprint TEXT NOT NULL,
+      PRIMARY KEY (actor, key)
+    );
   `);
   db.prepare('INSERT OR IGNORE INTO workspace VALUES (1, 0, ?)').run(JSON.stringify(emptyWorkspace()));
   const archive = createArchiveStore(db);
@@ -78,6 +82,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     const { body, revision } = db.prepare('SELECT body, revision FROM workspace WHERE id = 1').get();
     const model = JSON.parse(body);
     model.person = accounts[role];
+    syncReportForm(model);
     return { model, revision };
   };
   let attempts = 0;
@@ -159,6 +164,20 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             throw new PilotError(401, 'Нэвтрэх хугацаа дууссан.');
           }
           const { model, revision } = load(role);
+          const key = data.idempotencyKey;
+          let fingerprint;
+          if (key !== undefined) {
+            if (typeof key !== 'string' || !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(key)) {
+              throw new PilotError(400, 'Үйлдлийн түлхүүр буруу байна.');
+            }
+            const fields = Object.entries(data.fields ?? {}).sort(([a], [b]) => a.localeCompare(b));
+            fingerprint = digest(JSON.stringify([data.action, fields]));
+            const previous = db.prepare('SELECT fingerprint FROM pilot_commands WHERE actor = ? AND key = ?').get(role, key);
+            if (previous) {
+              if (previous.fingerprint !== fingerprint) throw new PilotError(409, 'Үйлдлийн түлхүүр өөр өгөгдөлд ашиглагдсан.');
+              return pilotView(model, role, revision, files);
+            }
+          }
           if (data.revision !== revision) throw new PilotError(409, 'Бүртгэл өөрчлөгдсөн. Шинэчлээд дахин шалгана уу.');
           try { pilotAction(model, role, data.action, data.fields, files); }
           catch (error) {
@@ -167,12 +186,12 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             throw error;
           }
           db.prepare('UPDATE workspace SET revision = ?, body = ? WHERE id = 1').run(revision + 1, JSON.stringify({ ...model, person: '' }));
+          if (fingerprint) db.prepare('INSERT INTO pilot_commands VALUES (?, ?, ?)').run(role, key, fingerprint);
           return pilotView(model, role, revision + 1, files);
         });
         json(res, 200, result);
       } else if (req.method === 'POST' && /^\/archive-export\/[a-f0-9-]{36}$/.test(route)) {
-        const { model } = load(role);
-        const bundle = transaction(() => archive.exportPackage(model, route.split('/').at(-1), role));
+        const bundle = transaction(() => archive.exportPackage(load(role).model, route.split('/').at(-1), role));
         json(res, 200, bundle);
       } else if (req.method === 'GET' && /^\/evidence\/[a-f0-9-]{36}$/.test(route)) {
         const { model } = load(role);
@@ -183,6 +202,13 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           'Content-Disposition': "attachment; filename*=UTF-8''" + encodeURIComponent(file.name).replace(/['()*]/g, c => '%' + c.charCodeAt(0).toString(16)),
           'Content-Length': file.bytes.length });
         res.end(file.bytes);
+      } else if (req.method === 'GET' && route === '/report' && role === 'partner') {
+        const { model } = load(role);
+        const artifact = pilotReport(model, files);
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'X-Audit-Report-SHA256': artifact.sha256,
+          'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+          'Content-Disposition': `attachment; filename="audit-report-${artifact.form}.html"` });
+        res.end(artifact.html);
       } else if (req.method === 'GET' && route === '/authorizations' && role === 'partner') {
         const snapshots = db.prepare('SELECT snapshot FROM authorizations ORDER BY id DESC').all().map(row => JSON.parse(row.snapshot));
         json(res, 200, snapshots, { 'Content-Disposition': 'attachment; filename="pilot-authorizations.json"' });

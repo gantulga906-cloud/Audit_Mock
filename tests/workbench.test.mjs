@@ -65,3 +65,14 @@ test('evidence coverage excludes wrong engagement and ratio projection avoids co
  assert.equal(out.projection,100);
  assert.throws(()=>projectRatio([{id:'a',amount:0}],[{id:'a',error:0}]));
 });
+
+test('evidence coverage includes issued requests and excludes drafts and cancellations',()=>{
+ const m=fresh(),request=m.requests.find(r=>r.engagement==='E1');
+ m.requests=[
+  {...request,id:'issued',dispatch:'issued'},
+  {...request,id:'draft',dispatch:'draft'},
+  {...request,id:'cancelled',dispatch:'cancelled'},
+  {...request,id:'legacy',dispatch:undefined},
+ ];
+ assert.deepEqual(evidenceCoverage(m,'E1').map(r=>r.id),['issued','legacy']);
+});

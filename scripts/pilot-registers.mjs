@@ -11,6 +11,7 @@ const date = () => new Date().toISOString().slice(0, 10);
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const bad = message => { throw new PilotError(409, message); };
 const requireRole = condition => { if (!condition) throw new PilotError(403, 'Энэ бүртгэлийн үйлдэлд томилгоо шаардлагатай.'); };
+export const archiveGrantKinds = ['M12-F07', 'M12-F10'];
 export const registerRows = m => m.pilotRecords ??= [];
 const find = (m, id) => registerRows(m).find(r => r.id === id);
 const rows = (m, kind) => registerRows(m).filter(r => r.kind === kind);
@@ -31,6 +32,10 @@ function stale(m, row, seen = new Set()) {
 
 const approved = (m, r) => r?.status === 'approved' && !stale(m, r);
 export const approvedRows = (m, kind) => rows(m, kind).filter(r => approved(m, r));
+const opinionForms = { unmodified: '4.1.A1', qualified: '4.1.A2', adverse: '4.1.A3', disclaimer: '4.1.A4' };
+export const opinionForm = opinion => opinionForms[opinion];
+export const formContract = id => contracts.find(f => f.id === id);
+export const currentOpinion = m => approvedRows(m, 'M10-F09')[0];
 export const registerView = m => registerRows(m).map(r => ({ ...r, stale: stale(m, r) }));
 export const pilotProgrammes = contracts.filter(f => f.family === 'programme').map(({ id, title }) => ({ id, title }));
 
@@ -73,6 +78,17 @@ export function completionRegisterGaps(m) {
   const gaps = acceptanceRegisterGaps(m);
   for (const kind of completionKinds) if (rows(m, kind).some(r => !approved(m, r))) gaps.push(kind + ' · Одоогийн хувилбарын хяналт');
   if (unresolved(m, 'M07-F10', 'result', ['resolved', 'na'])) gaps.push('M07-F10 · Дуусгаагүй тусгай горим');
+  const subsequent = rows(m, 'M07-F10').filter(r => r.values.type === 'subsequent');
+  if ((m.extendedPilot || subsequent.length) && !subsequent.some(r =>
+    approved(m, r) && r.values.result === 'resolved' && validDate(r.values.coverageThrough ?? '') &&
+    r.values.coverageThrough >= m.engagements[0].reportDate)) {
+    gaps.push('3.2.1 · Дараа үеийн шалгалт зорилтот тайлангийн өдөр хүртэл хянагдаагүй');
+  }
+  const opinion = currentOpinion(m);
+  if (approvedRows(m, 'M10-F09').length > 1) gaps.push('M10-F09 · Нэг одоогийн санал дүгнэлт шаардлагатай');
+  if (opinion && approvedRows(m, 'M10-F11').some(r => r.values.opinion !== opinion.id || r.values.template !== opinionForm(opinion.values.opinion))) {
+    gaps.push('M10-F11 · Нэмэлт хэсгийг одоогийн санал дүгнэлт ба эх загварт холбоно уу');
+  }
   if (unresolved(m, 'M07-F08', 'result', ['received', 'difference', 'none'])) gaps.push('M07-F08 · Шийдэгдээгүй баталгаажуулалт');
   if (unresolved(m, 'M10-F08', 'result', ['sufficient', 'limited'])) gaps.push('M10-F08 · Нотолгооны дүгнэлт дутуу');
   if (unresolved(m, 'M10-F12', 'result', ['received', 'qualified', 'missing'])) gaps.push('M10-F12 · Бичгээрх мэдэгдлийг үнэлнэ үү');
@@ -213,8 +229,18 @@ function checkBusiness(m, row, spec, files) {
     case 'M08-F07':
       if (v.anchorKind === 'page' && !/^[1-9]\d*$/.test(v.anchor) || v.anchorKind === 'cell' && !/^.+![A-Z]{1,3}[1-9]\d*$/i.test(v.anchor)) bad('Хуудасны дугаар эсвэл Sheet!A1 байршил оруулна уу.');
       break;
+    case 'M07-F10':
+      if (v.type === 'subsequent' && (!validDate(v.coverageThrough) || v.coverageThrough < m.bench.periods[m.engagement].end || v.coverageThrough > date() ||
+          (m.extendedPilot && v.paper !== '3.2.1') || v.result === 'na')) {
+        bad('3.2.1 · Тайлант үеэс хойших шалгасан эцсийн өдөр шаардлагатай.');
+      }
+      break;
+    case 'M10-F09':
+      if (approvedRows(m, row.kind).some(r => r.id !== row.id)) bad('Одоогийн санал дүгнэлтийн бүртгэлийг шинэчилнэ үү.');
+      break;
     case 'M10-F11': {
-      const contract = contracts.find(f => f.id === v.template && f.family === 'document' && f.id.startsWith('4.1.'));
+      const contract = formContract(opinionForm(find(m, v.opinion).values.opinion));
+      if (contract?.id !== v.template) bad('Санал дүгнэлтэд таарсан эх загвар сонгоно уу.');
       if (!contract) bad('Тайлангийн эх загвар сонгоно уу.');
       row.template = { form: contract.id, sheet: contract.sheet, digest: hash(contract) };
       files.storeTemplate(row.template.digest, contract);
@@ -270,7 +296,14 @@ export function registerAction(m, role, data, files) {
     remember(row, role, 'draft', 'Ноорог хадгалав');
   } else {
     if (!row) bad('Бүртгэлээ эхлээд хадгална уу.');
-    if (operation === 'declare') {
+    if (operation === 'revoke') {
+      requireRole(role === 'partner' && archiveGrantKinds.includes(row.kind));
+      if (row.status !== 'approved') bad('Баталсан архивын хандалт шаардлагатай.');
+      if (row.revoked) return;
+      row.revoked = { by: role, at: new Date().toISOString(), reason: input(data, 'reason') };
+      recordEvent(m, 'Архивын хандалтыг цуцлав · ' + row.id);
+      return;
+    } else if (operation === 'declare') {
       const assignee = row.values.assignee;
       requireRole(spec.id === 'M04-F04' && (assignee === role || assignee === 'external' && role === row.owner));
       if (!['draft','returned'].includes(row.status)) bad('Мэдүүлгийн нооргийг нээнэ үү.');

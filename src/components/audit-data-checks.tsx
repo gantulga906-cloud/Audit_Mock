@@ -25,7 +25,8 @@ export function Projection({model}:{model:Model}){
  const id=model.engagement,s=currentSelection(model,id),w=model.work[id+'/3.1.2'];
  if(!s||!w)return null;
  const tested=s.ids.map(i=>({id:i,result:w.values['sample.'+s.stamp+'.'+i],finding:model.findings.find(f=>f.engagement===id&&f.sampleId===i)}));
- const ready=tested.every(x=>x.result?.startsWith('pass:')||x.result?.startsWith('exception:')&&x.finding),population=model.datasets[id].rows.filter(r=>r.state==='accepted');
+ const ready=tested.every(x=>x.result?.startsWith('pass:')||x.result?.startsWith('exception:')&&x.finding);
+ const population=model.datasets[id].rows.flatMap(r=>r.state==='accepted'&&r.amount!==null?[{id:r.id,amount:r.amount}]:[]);
  let result:ReturnType<typeof projectRatio>|undefined;
  if(ready)try{result=projectRatio(population,tested.map(x=>({id:x.id,error:x.result.startsWith('pass:')?0:x.finding!.amount})));}catch{}
  return <section className="card pad bench-card space-top"><h2>Энгийн харьцааны төсөөлөл</h2><p className="micro">Бүх сонгосон нэгжийн одоогийн үр дүн шаардлагатай. Төсөөллийг аудитын шийдвэр эсвэл бүртгэсэн залруулга гэж үзэхгүй.</p>{result?<p>Шалгасан дүн: {result.tested.toLocaleString()} · Зөрүү: {result.error.toLocaleString()} · Төсөөлсөн: <strong>{result.projection.toLocaleString(undefined,{maximumFractionDigits:2})}</strong></p>:<p className="text-amber">Үр дүн дутуу эсвэл суурь дүн тохирохгүй байна.</p>}</section>;
