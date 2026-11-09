@@ -4,6 +4,7 @@ import { registers } from '../src/lib/pilot-registers.ts';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { isCurrentReview, recordEvent, workKey } from '../src/lib/workspace.ts';
 import { PilotError, input } from './pilot-workflow.mjs';
+import { nativePapers } from './pilot-forms.mjs';
 
 const contracts = JSON.parse(readFileSync(new URL('../src/data/source-registers.json', import.meta.url), 'utf8')).forms;
 const definition = id => registers.find(r => r.id === id);
@@ -122,6 +123,7 @@ export const registerStamp = m => hash({
   }),
   statementLines: m.pilotStatementLines ?? {},
   evidence: m.evidence.filter(e => registerEvidence(m).includes(e.id)).map(e => [e.id, e.version, e.status]),
+  ...(m.pilotForms && { native: nativePapers(m).map(w => [w.form,w.version,w.reviewedVersion,w.status,w.values.templateDigest]) }),
 });
 export function firmSnapshot(m) {
   return registerRows(m).filter(r => ['M01-F01','M01-F02','M01-F03','M01-F04','M01-F06'].includes(r.kind) && approved(m, r))

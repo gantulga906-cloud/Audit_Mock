@@ -12,12 +12,13 @@ import {
 } from './pilot-registers.mjs';
 import { registers } from '../src/lib/pilot-registers.ts';
 import { renderReport, sha256 } from './pilot-report.mjs';
+import { bindForm, effectiveForm, nativeGaps, nativePapers, nativeReviewGaps, paperFormView, pinLinkedDecisions, readTypedAnswers } from './pilot-forms.mjs';
 
 export const accounts = { preparer: 'nomin', reviewer: 'temuulen', partner: 'bat' };
 const workstream = '3.1.2';
 const forms = JSON.parse(readFileSync(new URL('../src/data/forms.json', import.meta.url), 'utf8'));
 const shownForms = m => [...new Set([...(m.extendedPilot ? ['1.3','2.6','4.4'] : [workstream,'4.4']),
-  reportForm(m.engagements[0]), ...adoptedForms(m)])];
+  reportForm(m.engagements[0]), ...adoptedForms(m), ...nativePapers(m).map(w => w.form)])];
 const fieldworkForms = m => m.extendedPilot ? adoptedForms(m) : [workstream, ...adoptedForms(m).filter(f => f !== workstream)];
 
 export function emptyWorkspace() {
@@ -60,6 +61,7 @@ function pilotGaps(m) {
     ...(!m.extendedPilot && !isCurrentReview(m.work[workKey(m.engagement, workstream)]) ? ['3.1.2 · Одоогийн хувилбарын ахлахын хяналт'] : []),
     ...reportGaps(m, m.engagement),
     ...completionRegisterGaps(m),
+    ...nativeReviewGaps(m),
   ];
 }
 
@@ -67,7 +69,7 @@ function currentApproval(m, engagement) {
   return authorizationCurrent(m, engagement) &&
     (m.pilotAuthorization ? m.pilotAuthorization === registerStamp(m) : !registerPackage(m).length) &&
     (!m.extendedPilot || !!m.pilotReportDigest) &&
-    !completionRegisterGaps(m).length;
+    !completionRegisterGaps(m).length && !nativeReviewGaps(m).length;
 }
 
 export function invalidateReport(m, reason) {
@@ -127,7 +129,11 @@ export function pilotView(m, role, revision, files) {
   }
   const papers = shownForms(m).map(form => {
     const w = m.work[workKey(engagement.id, form)];
-    return { ...w, editable: !sealed && canEdit(m, w), reviewable: !sealed && canReviewWork(m, w) };
+    const template = paperFormView(m, w, files);
+    const oldDigests = new Set(w.history.flatMap(h => h.values.templateDigest && h.values.templateDigest !== template?.digest ? [h.values.templateDigest] : []));
+    return { ...w, ...(template && { template, nativeGaps: nativeGaps(m, w, files) }),
+      ...(oldDigests.size && { oldTemplates: Object.fromEntries([...oldDigests].map(hash => [hash, files.template(hash)])) }),
+      editable: !sealed && canEdit(m, w), reviewable: !sealed && canReviewWork(m, w) };
   });
   return {
     role, revision, ...resources, fieldwork: fieldworkForms(m), statementLines: m.pilotStatementLines ?? {},
@@ -227,7 +233,20 @@ export function pilotAction(m, role, action, data, files) {
     }
     return;
   }
-  if (!engagement.intake.active) throw new PilotError(409, 'Партнер гэрээт ажлыг идэвхжүүлнэ.');
+  if (action === 'form-use') {
+    requireActor(role !== 'preparer');
+    if (sealed) throw new PilotError(409, 'Архив түгжээтэй.');
+    const form = input(data, 'form', 32);
+    if (/^4\.1\.A[1-4]$/.test(form) && form !== reportForm(engagement)) throw new PilotError(409, 'Одоогийн санал дүгнэлтийн маягтыг ашиглана уу.');
+    if (m.extendedPilot && formContract(form)?.family === 'programme' && !adoptedForms(m).includes(form)) {
+      throw new PilotError(409, 'Баталж хэрэгжүүлсэн аудитын хөтөлбөр шаардлагатай.');
+    }
+    if (bindForm(m, role, form, data, files) && form !== reportForm(engagement)) invalidateReport(m, 'Тайланд ашиглах маягтын хувилбар өөрчлөгдөв');
+    return;
+  }
+  const earlyPaper = ['save','submit','review','return','respond','clear'].includes(action) && m.pilotForms?.[data?.form] &&
+    m.work[workKey(m.engagement, data.form)]?.stage === 1;
+  if (!engagement.intake.active && !earlyPaper) throw new PilotError(409, 'Партнер гэрээт ажлыг идэвхжүүлнэ.');
   if (action === 'archive-seal' || action === 'archive-dispose') {
     requireActor(role === 'partner');
     if (action === 'archive-seal') {
@@ -315,13 +334,14 @@ export function pilotAction(m, role, action, data, files) {
     authorizeReport(m);
     m.pilotAuthorization = registerStamp(m);
     const programmes = adoptedForms(m).map(form => m.work[workKey(m.engagement, form)]);
+    const native = nativePapers(m);
     const supporting = registerPackage(m);
     const artifact = renderReport(m);
     files.storeTemplate(artifact.templateSha256, formContract(artifact.form));
-    const templateIds = [artifact.templateSha256, ...supporting.flatMap(r => r.template ? [r.template.digest] : [])];
+    const templateIds = [artifact.templateSha256, ...supporting.flatMap(r => r.template ? [r.template.digest] : []), ...native.map(w => w.values.templateDigest)];
     const templates = [...new Set(templateIds)].map(hash => ({ hash, contract: files.template(hash) }));
     if (templates.some(t => !t.contract)) throw new PilotError(409, 'Баталсан эх загварын хувилбар олдсонгүй.');
-    const ids = new Set([...engagement.authorized.package.evidence.map(e => e.id), ...registerEvidence(m), ...programmes.flatMap(w => w.evidence)]);
+    const ids = new Set([...engagement.authorized.package.evidence.map(e => e.id), ...registerEvidence(m), ...[...programmes,...native].flatMap(w => w.evidence)]);
     const linked = m.evidence.filter(e => ids.has(e.id)).map(({ id, version, status }) => ({ id, version, status }));
     m.pilotReportDigest = artifact.sha256;
     files.authorize({
@@ -329,6 +349,9 @@ export function pilotAction(m, role, action, data, files) {
       firm: m.pilotFirm, statementLines: m.pilotStatementLines, programmePapers: programmes.map(w => ({
         id: w.id, version: w.version, reviewedVersion: w.reviewedVersion, values: { ...w.values }, evidence: [...w.evidence],
       })),
+      ...(native.length && { nativePapers: native.map(w => ({
+        id: w.id, version: w.version, reviewedVersion: w.reviewedVersion, values: { ...w.values }, evidence: [...w.evidence],
+      })) }),
     }, linked.map(e => {
       const file = files.get(e.id);
       if (!file) throw new PilotError(409, 'Зөвшөөрөх багцын эх файл олдсонгүй.');
@@ -384,22 +407,29 @@ export function pilotAction(m, role, action, data, files) {
     case 'save': {
       requireActor(canEdit(m, paper));
       const version = paper.version;
-      const values = { ...paper.values, execution: input(data, 'execution'), conclusion: input(data, 'conclusion') };
+      const typed = data?.answers !== undefined ? readTypedAnswers(m, paper, data, files) : null;
+      const values = { ...(typed?.values ?? paper.values) };
+      if (!paper.form.startsWith('F-')) {
+        values.execution = input(data, 'execution');
+        values.conclusion = input(data, 'conclusion');
+      }
       if (paper.form === '1.3') for (const key of ['benchmark','percentage','performance','trivial']) values[key] = input(data, key, 32);
       if (paper.form === '2.6') {
         if (!['none','partial','full','na'].includes(data.reliance)) throw new PilotError(400, 'Хяналтад найдах шийдвэр шаардлагатай.');
         values.controlsReliance = data.reliance;
         values.relianceBasis = values.conclusion;
       }
-      changeWork(m, paper.id, values);
+      changeWork(m, paper.id, values, typed?.evidence);
       if (paper.form !== reportForm(engagement) && version !== paper.version) invalidateReport(m, 'Тайланд тулгуурласан ажлын хувилбар өөрчлөгдөв');
       break;
     }
     case 'submit':
       requireActor(canEdit(m, paper));
-      if (!paper.values.execution || !paper.values.conclusion) throw new PilotError(409, 'Хийсэн ажил ба дүгнэлтийг хадгална уу.');
+      if (!paper.form.startsWith('F-') && (!paper.values.execution || !paper.values.conclusion)) throw new PilotError(409, 'Хийсэн ажил ба дүгнэлтийг хадгална уу.');
+      checkNative(m, paper, files);
       if (fieldworkForms(m).includes(paper.form) && evidenceGaps(m, paper.form).length) throw new PilotError(409, evidenceGaps(m, paper.form)[0]);
       if (paper.form === '1.3' && !materiality(m, m.engagement)) throw new PilotError(409, 'Материаллаг байдлын дүн ба хувийг шалгана уу.');
+      pinLinkedDecisions(m, paper, files);
       submitWork(m, paper.id);
       break;
     case 'return':
@@ -408,6 +438,7 @@ export function pilotAction(m, role, action, data, files) {
       break;
     case 'review':
       requireActor(canReviewWork(m, paper));
+      checkNative(m, paper, files);
       reviewWork(m, paper.id);
       break;
     case 'respond':
@@ -425,6 +456,15 @@ export function pilotAction(m, role, action, data, files) {
     }
     default: throw new PilotError(404, 'Үйлдэл олдсонгүй.');
   }
+}
+
+function checkNative(m, paper, files) {
+  if (!effectiveForm(m, paper.form, files)) return;
+  if (m.extendedPilot && formContract(paper.form)?.family === 'programme' && !adoptedForms(m).includes(paper.form)) {
+    throw new PilotError(409, 'Аудитын хөтөлбөрийн одоогийн шийдвэр шаардлагатай.');
+  }
+  const gaps = nativeGaps(m, paper, files);
+  if (gaps.length) throw new PilotError(409, gaps.join(' · '));
 }
 
 function parseStatementLines(text) {

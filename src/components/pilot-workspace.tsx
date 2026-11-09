@@ -2,21 +2,23 @@
 
 import {useEffect,useRef,useState,type FormEvent,type ReactNode} from 'react';
 import PilotRegisters,{type RegisterResources} from './pilot-registers';
+import {AdoptPilotForm,NativeFields,PilotFormLibrary} from './pilot-forms';
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
 import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
+import {fieldAnswers,type LibraryView,type PaperForm} from '@/lib/pilot-forms';
 import type {DecisionRecord,Evidence,Model,RequestItem,Statements,WorkItem} from '@/lib/workspace';
-import type {Period} from '@/lib/workbench';
+import type {Period,Template} from '@/lib/workbench';
 
 const api='/api/pilot';
 const roles={preparer:'Бэлтгэгч',reviewer:'Ахлах хянагч',partner:'Партнер'};
 const names:Record<string,string>={nomin:roles.preparer,temuulen:roles.reviewer,bat:roles.partner};
 const status:Record<WorkItem['status'],string>={not_started:'Эхлээгүй',in_progress:'Бэлтгэж буй',waiting:'Хүлээгдэж буй',submitted:'Хяналтад ирсэн',returned:'Засварт буцаасан',reviewed:'Хянагдсан',changed:'Дахин хянуулах'};
 const partStatus={missing:'Ирээгүй',received:'Үнэлэх',accepted:'Зөвшөөрсөн',rejected:'Буцаасан'};
-type Paper=WorkItem&{editable:boolean;reviewable:boolean};
+type Paper=WorkItem&{editable:boolean;reviewable:boolean;template?:PaperForm;oldTemplates?:Record<string,Template>;nativeGaps?:string[]};
 type PortfolioItem={id:string;client:string;start:string;end:string;reportDate:string;active:boolean;
  progress?:null|{reviewed:number;applicable:number;tasks:number;deadlines:{form:string;title:string;due:string}[]}};
 type View=RegisterResources&{
- role:PilotRole;revision:number;selected:string|null;portfolio:PortfolioItem[];members?:PilotRole[];
+ role:PilotRole;revision:number;selected:string|null;portfolio:PortfolioItem[];members?:PilotRole[];formLibrary:LibraryView;
  engagement:null|{client:string;period:Period;active:boolean;reportDate:string;statements?:Statements;decisions:DecisionRecord[];acceptanceGaps:string[];firm:{id:string;kind:string;version:number;values:Record<string,string>}[]};
  papers?:Paper[];requests?:RequestItem[];evidence?:(Evidence&{sha256:string})[];gaps?:string[];
  fieldwork?:string[];statementLines?:Record<string,number>;impacts?:Model['impacts'];
@@ -248,6 +250,10 @@ function Delivery({view,run}:{view:View;run:Action}){
 
 function Workpaper({paper,run,role,evidence,sealed,engagementId}:{paper:Paper;run:Action;role:View['role'];evidence:View['evidence'];sealed:boolean;engagementId:string|null}){
  const form=paper.form,reference={form};
+ const [answers,setAnswers]=useState(()=>fieldAnswers(paper.values));
+ const native=paper.template;
+ const summaryNeeded=!form.startsWith('F-');
+ const payload=native?{...reference,answers:JSON.stringify(answers),templateDigest:native.digest}:reference;
  return <section id={'pilot-paper-'+paper.id} tabIndex={-1} className="card pad bench-card feature-desk">
   <div className="section-heading"><h2>{form} · {paper.title}</h2><span className="pill">v{paper.version} · {status[paper.status]}</span></div>
   <p className="micro">{names[paper.owner]} → {names[paper.reviewer]} · {paper.evidence.length} холбоотой баримт</p>
@@ -259,14 +265,22 @@ function Workpaper({paper,run,role,evidence,sealed,engagementId}:{paper:Paper;ru
    </ActionForm>
   </details>}
   {evidence?.filter(file=>paper.evidence.includes(file.id)).map(file=><a className="btn secondary space-top" href={api+'/evidence/'+file.id+pilotScope(engagementId)} key={file.id}>{file.name} · v{file.version}</a>)}
-  {paper.editable?<ActionForm key={paper.version} run={run} action="save" extra={reference} button="Ажлыг хадгалах">
+  {native&&<p className="micro">{native.number?'Баталсан маягт v'+native.number:'Эх маягт'} · {native.body.sheet} · {native.digest.slice(0,12)}</p>}
+  {!!paper.nativeGaps?.length&&<p className="micro text-amber">{paper.nativeGaps.join(' · ')}</p>}
+  {paper.editable?<ActionForm key={paper.version} run={run} action="save" extra={payload} button="Ажлыг хадгалах">
    {form==='1.3'&&<div className="field-grid">{[['benchmark','Суурь дүн'],['percentage','Материаллаг байдлын хувь'],['performance','Гүйцэтгэлийн хувь'],['trivial','Илт бага зөрүүний хувь']].map(([key,label])=><label key={key}>{label}<input type="number" step="any" name={key} defaultValue={paper.values[key]} required/></label>)}</div>}
    {form==='2.6'&&<label>Хяналтад найдах түвшин<select name="reliance" defaultValue={paper.values.controlsReliance??'none'}><option value="none">Найдахгүй</option><option value="partial">Хэсэгчлэн</option><option value="full">Бүрэн</option><option value="na">Хамаарахгүй</option></select></label>}
-   <label>Хийсэн ажил<textarea name="execution" defaultValue={paper.values.execution} required/></label>
-   <label>Дүгнэлт<textarea name="conclusion" defaultValue={paper.values.conclusion} required/></label>
-  </ActionForm>:<><p>{paper.values.execution}</p><p>{paper.values.conclusion}</p></>}
+   {native&&<NativeFields template={native.body} answers={answers} set={(k,v)=>setAnswers(p=>({...p,[k]:v}))} evidence={evidence} shared={native.shared} linked={native.linked}/>}
+   {summaryNeeded&&<>
+    <label>Хийсэн ажил<textarea name="execution" defaultValue={paper.values.execution} required/></label>
+    <label>Дүгнэлт<textarea name="conclusion" defaultValue={paper.values.conclusion} required/></label>
+   </>}
+  </ActionForm>:<>
+   {native&&<NativeFields template={native.body} answers={fieldAnswers(paper.values)} set={()=>{}} disabled evidence={evidence} shared={native.shared} linked={native.linked}/>}
+   <p>{paper.values.execution}</p><p>{paper.values.conclusion}</p>
+  </>}
   {paper.editable&&!['submitted','reviewed'].includes(paper.status)&&<button type="button" className="btn secondary space-top"
-   disabled={!paper.values.execution||!paper.values.conclusion} onClick={()=>void run('submit',reference)}>Хадгалсан v{paper.version} хувилбарыг хяналтад илгээх</button>}
+   disabled={!!paper.nativeGaps?.length||summaryNeeded&&(!paper.values.execution||!paper.values.conclusion)} onClick={()=>void run('submit',reference)}>Хадгалсан v{paper.version} хувилбарыг хяналтад илгээх</button>}
   {paper.reviewable&&<div className="space-top">
    <button type="button" className="btn primary" disabled={paper.notes.some(n=>!n.cleared)} onClick={()=>void run('review',reference)}>v{paper.version} хувилбарыг хянаж батлах</button>
    <ActionForm run={run} action="return" extra={reference} button="Засварт буцаах"><label>Хяналтын тэмдэглэл<input name="reason" required/></label></ActionForm>
@@ -280,6 +294,16 @@ function Workpaper({paper,run,role,evidence,sealed,engagementId}:{paper:Paper;ru
   </div>)}
   {paper.history.length>0&&<details className="feature-detail"><summary>Хувилбарын түүх</summary>{paper.history.map((h,i)=><div className="bench-item" key={i}>
    <b>v{h.version} · {names[h.by]} · {h.action}</b><p>{h.values.execution}</p><p>{h.values.conclusion}</p>
+   {h.values.templateDigest&&(()=>{
+    const digest=h.values.templateDigest;
+    const body=digest===native?.digest?native.body:paper.oldTemplates?.[digest];
+    if(!body)return null;
+    const shared=Object.fromEntries(Object.entries(h.values).filter(([k])=>k.startsWith('shared.')).map(([k,v])=>[k.slice(7),v])) as PaperForm['shared'];
+    const linked=Object.fromEntries(Object.entries(h.values).filter(([k])=>k.startsWith('linked.')).map(([k,v])=>[k.slice(7),v]));
+    return <details><summary>{body.title} · {digest.slice(0,12)}</summary>
+     <NativeFields template={body} answers={fieldAnswers(h.values)} set={()=>{}} disabled evidence={evidence} shared={shared} linked={linked}/>
+    </details>;
+   })()}
    <small>{h.evidence.length} холбоостой баримт · {new Date(h.at).toLocaleString()}</small>
   </div>)}</details>}
  </section>;
@@ -289,7 +313,7 @@ export default function PilotWorkspace(){
  const [data,setData]=useState<Result|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false);
  const pending=useRef<{intent:string;key:string}|null>(null);
  const selection=useRef<string|null>(null);
- const outdated=!!(data&&'role' in data&&!Array.isArray(data.portfolio));
+ const outdated=!!(data&&'role' in data&&(!Array.isArray(data.portfolio)||!data.formLibrary));
  const view=data&&'role' in data&&!outdated?data:null,engagement=view?.engagement;
  const sealed=!!view?.archive.packages.length&&!view?.archive.reopened;
  function show(result:Result){
@@ -354,6 +378,7 @@ export default function PilotWorkspace(){
     {data&&'setup' in data&&<Access key={String(data.setup)} setup={data.setup} send={send}/>}
     {view&&<EngagementPicker view={view} open={(id,form)=>void openEngagement(id,form)}/>}
     {view&&!engagement&&view.role!=='preparer'&&<SetupEngagement run={run}/>}
+    {view&&!engagement&&<PilotFormLibrary role={view.role} forms={view.forms} library={view.formLibrary} run={run} onError={setError}/>}
    {view&&<PilotRegisters key={view.selected??'firm'} role={view.role} resources={view} evidence={view.evidence??[]} engagementId={view.selected} active={!!engagement?.active} run={run} onError={setError}/>}
     {view&&engagement&&<div key={view.selected}>
      <section className="card pad bench-card">
@@ -370,10 +395,15 @@ export default function PilotWorkspace(){
       {engagement.active&&<details><summary>Хүлээн авах шийдвэрийн түүх</summary>{engagement.decisions.map(d=><p key={d.version}>v{d.version} · {d.assessment||d.letter||d.independence} · {new Date(d.at).toLocaleString()}</p>)}</details>}
      </section>
      {!sealed&&<SupportingEvidence view={view} run={run} onError={setError}/>}
+     {!sealed&&view.role!=='preparer'&&<AdoptPilotForm forms={view.forms} library={view.formLibrary}
+      pins={Object.fromEntries((view.papers??[]).flatMap(p=>p.template?[[p.form,p.template.number]]:[]))} run={run}/>}
      {engagement.active&&<>
       {!sealed&&<Delivery view={view} run={run}/>}
       {(!view.archive.packages.length||view.archive.reopened)&&<Requests view={view} run={run} onError={setError}/>}
-      {view.papers?.map(paper=><Workpaper key={paper.id} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed} engagementId={view.selected}/>)}
+     </>}
+     {view.papers?.filter(paper=>engagement.active||paper.stage===1&&paper.template).map(paper=>
+      <Workpaper key={paper.id+'/'+paper.version} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed} engagementId={view.selected}/>)}
+     {engagement.active&&<>
       {view.impacts?.map(impact=><section className="card pad bench-card" key={impact.id}><h2>{impact.source} · Өөрчлөлтийн нөлөө</h2><p>{impact.reason} · {impact.targets.join(', ')}</p>
        {view.role==='reviewer'&&<ActionForm run={run} action="resolve-impact" extra={{id:impact.id}} button="Нөлөөллийн үнэлгээг бүртгэх"><label>Шийдвэрийн үндэслэл<input name="reason" required/></label></ActionForm>}
       </section>)}

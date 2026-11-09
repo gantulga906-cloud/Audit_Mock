@@ -1,14 +1,17 @@
 import { accounts, emptyWorkspace, PilotError, syncReportForm } from './pilot-workflow.mjs';
 import { registers } from '../src/lib/pilot-registers.ts';
+import { emptyFormLibrary, isLibraryAction } from './pilot-forms.mjs';
 
 const roles = Object.keys(accounts);
 const firmKinds = new Set(registers.filter(r => r.section === 'firm').map(r => r.id));
 const firmRecords = m => (m.pilotRecords ?? []).filter(row => firmKinds.has(row.kind));
 const clientKey = registration => (registration ?? '').replace(/\s/g, '').toLowerCase();
-const serialize = m => JSON.stringify({ ...m, person: '', pilotRecords: (m.pilotRecords ?? []).filter(row => !firmKinds.has(row.kind)) });
+const serialize = ({ pilotFormLibrary: _, ...m }) => JSON.stringify({
+  ...m, person: '', pilotRecords: (m.pilotRecords ?? []).filter(row => !firmKinds.has(row.kind)),
+});
 const notFound = () => new PilotError(404, 'Гэрээт ажил олдсонгүй.');
 
-export const firmCommand = (action, fields) => action === 'register' && firmKinds.has(fields?.kind);
+export const firmCommand = (action, fields) => isLibraryAction(action) || action === 'register' && firmKinds.has(fields?.kind);
 
 export function createPilotStore(db) {
   function transaction(fn, write = true) {
@@ -55,7 +58,11 @@ export function createPilotStore(db) {
         engagement_id TEXT NOT NULL REFERENCES pilot_engagements(id),
         role TEXT NOT NULL REFERENCES accounts(role), PRIMARY KEY (engagement_id, role)
       );
+      CREATE TABLE IF NOT EXISTS pilot_form_library (
+        id INTEGER PRIMARY KEY CHECK(id=1), body TEXT NOT NULL
+      );
     `);
+    db.prepare('INSERT OR IGNORE INTO pilot_form_library VALUES (1, ?)').run(JSON.stringify(emptyFormLibrary()));
     if (db.prepare('SELECT 1 FROM pilot_firm WHERE id = 1').get()) return;
     db.prepare('INSERT INTO pilot_firm VALUES (1, ?, ?)').run(legacy.revision, JSON.stringify(firmRecords(legacyModel)));
     if (legacyId) insert(legacyModel, legacy.revision, roles.filter(role => db.prepare('SELECT 1 FROM accounts WHERE role = ?').get(role)));
@@ -76,12 +83,16 @@ export function createPilotStore(db) {
 
   function load(role, id) {
     const firm = db.prepare('SELECT revision, records FROM pilot_firm WHERE id = 1').get();
-    if (!id) return { id: null, revision: firm.revision, model: { ...emptyWorkspace(), person: accounts[role], pilotRecords: JSON.parse(firm.records) } };
+    const pilotFormLibrary = JSON.parse(db.prepare('SELECT body FROM pilot_form_library WHERE id = 1').get().body);
+    if (!id) return { id: null, revision: firm.revision, model: {
+      ...emptyWorkspace(), person: accounts[role], pilotRecords: JSON.parse(firm.records), pilotFormLibrary,
+    } };
     const engagement = db.prepare(`SELECT e.body, e.revision FROM pilot_engagements e
       JOIN pilot_engagement_members m ON m.engagement_id = e.id WHERE e.id = ? AND m.role = ?`).get(id, role);
     if (!engagement) throw notFound();
     const model = JSON.parse(engagement.body);
     model.person = accounts[role];
+    model.pilotFormLibrary = pilotFormLibrary;
     model.pilotRecords = [...JSON.parse(firm.records), ...(model.pilotRecords ?? [])];
     syncReportForm(model);
     return { id, model, revision: engagement.revision };
@@ -92,6 +103,7 @@ export function createPilotStore(db) {
     if (firmCommand(action, fields)) {
       db.prepare('UPDATE pilot_firm SET revision = revision + 1, records = ? WHERE id = 1').run(JSON.stringify(firmRecords(model)));
     }
+    if (isLibraryAction(action)) db.prepare('UPDATE pilot_form_library SET body = ? WHERE id = 1').run(JSON.stringify(model.pilotFormLibrary));
     if (id) {
       const e = model.engagements[0];
       db.prepare(`UPDATE pilot_engagements SET revision = revision + 1, body = ?, active = ?, report_date = ?

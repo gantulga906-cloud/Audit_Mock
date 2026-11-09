@@ -62,6 +62,172 @@ async function fixture(service, setup = true) {
   return { cookies, scoped, view, write };
 }
 
+test('typed workpapers and one-form grants preserve published and reviewed versions', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'audit-forms-'));
+  const database = join(dir, 'forms.sqlite');
+  let service = await start(database);
+  try {
+    const { cookies, scoped, view, write } = await fixture(service);
+    const firm = await view('reviewer','firm');
+    assert.equal(firm.forms.length,70);
+    const fetchTemplate = async id => {
+      const response = await service.fetch(scoped('/template/'+id, 'firm'), cookies.reviewer);
+      assert.equal(response.status,200);
+      return response.json();
+    };
+    for (const listed of firm.forms) {
+      const body = await fetchTemplate(listed.id);
+      assert.equal(body.id, listed.id);
+      assert.ok(body.fields.length && body.fields.every(field => field.source));
+    }
+    const scopeForm = await fetchTemplate('1.1.1');
+    assert.deepEqual(scopeForm.fields.filter(f=>f.key.startsWith('r10_')).map(f=>f.binding), ['name','legalForm','registration']);
+    const body44 = await fetchTemplate('4.4');
+    const body45 = await fetchTemplate('4.5');
+    const save = (role,body,status=200) => write(role,'firm','template-save',{form:body.id,body:JSON.stringify(body)},status);
+    const note = (role,action,id,status=200) => write(role,'firm',action,{form:id,note:'Synthetic methodology review'},status);
+    await save('reviewer',body44,403);
+    await write('reviewer','firm','template-grant',{form:'4.4',actor:'reviewer',access:'grant',note:'Attempt self grant'},403);
+    await write('partner','firm','template-grant',{form:'4.4',actor:'reviewer',access:'grant',note:'One form'});
+    await save('reviewer',body45,403);
+    await save('reviewer',body44);
+    await note('reviewer','template-submit','4.4');
+    await note('reviewer','template-publish','4.4',403);
+    await note('partner','template-return','4.4');
+    await note('reviewer','template-submit','4.4');
+    await note('partner','template-publish','4.4');
+    await write('partner','firm','template-grant',{form:'4.4',actor:'reviewer',access:'revoke',note:'End grant'});
+    await save('reviewer',body44,403);
+
+    const a = (await write('reviewer','firm','create',create)).selected;
+    const b = (await write('reviewer','firm','create',{...create,client:'Another client',registration:'FORMS-2'})).selected;
+    const pick = (v,id) => v.papers.find(p=>p.form===id);
+    const enable = (id,form,version,status=200,role='reviewer') => write(role,id,'form-use',{form,version},status);
+    const intake = pick(await enable(a,'1.1.1','source'),'1.1.1');
+    assert.equal(intake.template.shared.registration,create.registration);
+    assert.equal(intake.template.shared.period,create.start+' — '+create.end);
+    assert.equal(intake.template.linked.r17,'');
+    const input = (form,templateDigest,answers) => ({form,templateDigest,answers:JSON.stringify(answers)});
+    const scopeAnswers = {...input('1.1.1',intake.template.digest,{r26:'Scope documented'}),execution:'Work',conclusion:'Current scope'};
+    await write('preparer',a,'save',{...scopeAnswers,answers:JSON.stringify({r16:'Forged decision'})},400);
+    await write('preparer',a,'save',scopeAnswers);
+    await write('preparer',a,'submit',{form:'1.1.1'},409);
+    await enable(a,'3.1.2','source',409);
+    await write('partner',a,'activate',{independence:'I-typed',letter:'L-typed',assessment:'A-typed'});
+    const submitted = pick(await write('preparer',a,'submit',{form:'1.1.1'}),'1.1.1');
+    assert.equal(submitted.values['linked.r17'],'L-typed');
+    assert.equal(submitted.template.linked.r16,'A-typed');
+    await write('reviewer',a,'review',{form:'1.1.1'});
+    await enable(a,'4.1.A2','source',409);
+
+    const id='F-FORMS001';
+    const question=(key,type,extra={})=>({key,label:key,type,source:'Synthetic workbook',...extra});
+    const custom = {id,title:'Typed pilot fixture',stage:3,fields:[
+      question('amount','number',{required:true}),question('day','date',{required:true}),
+      question('result','yesno',{required:true}),question('reason','textarea',{required:true,when:{key:'result',value:'Үгүй'}}),
+      question('choice','select',{options:['One','Two']}),question('many','multiselect',{options:['A','B']}),
+      question('items','table',{required:true}),question('proof','evidence',{required:true}),question('entity','text',{binding:'name'}),
+    ]};
+    await save('reviewer',custom);
+    await note('reviewer','template-submit',id);
+    assert.equal((await view('preparer','firm')).formLibrary.drafts.length,0);
+    await enable(a,id,'1',409);
+    const pub1=(await note('partner','template-publish',id)).formLibrary.releases.find(r=>r.id===id);
+    await enable(a,id,'1',403,'preparer');
+    const pinned=pick(await enable(a,id,'1'),id);
+    assert.equal(pinned.template.digest,pub1.digest);
+    const attach = async(scope,name) => {
+      const file=(await write('reviewer',scope,'support-upload',{name,source:'Synthetic source',base64:Buffer.from(name).toString('base64')})).evidence[0].id;
+      await write('partner',scope,'support-assess',{id:file,result:'accepted',reason:'Read independently'});
+      return file;
+    };
+    const evidence=await attach(a,'approved.csv'),other=await attach(b,'private.csv');
+    const rowId=randomUUID();
+    const rows=JSON.stringify([{id:rowId,values:{description:'Asset row',amount:'0'}}]);
+    const answers={amount:'0',day:'2026-03-15',result:'Үгүй',choice:'One',many:'["A","B"]',items:rows,proof:evidence};
+    const fields = override => input(id,pub1.digest,{...answers,...override});
+    await write('reviewer',a,'save',fields({day:'2026-02-31'}),400);
+    await write('reviewer',a,'save',fields({many:'["B","Z"]'}),400);
+    await write('reviewer',a,'save',fields({items:'[{"id":"same","values":{}},{"id":"same","values":{}}]'}),400);
+    await write('reviewer',a,'save',fields({proof:other}),400);
+    await write('reviewer',a,'save',fields({entity:'Forged company'}),400);
+    await write('reviewer',a,'save',fields({}));
+    await write('reviewer',a,'submit',{form:id},409);
+    const prepared=pick(await write('reviewer',a,'save',fields({reason:'Observed exception'})),id);
+    assert.equal(prepared.values['field.amount'],'0');
+    assert.equal(JSON.parse(prepared.values['field.items'])[0].id,rowId);
+    assert.deepEqual(prepared.evidence,[evidence]);
+    await write('reviewer',a,'submit',{form:id});
+    await write('reviewer',a,'review',{form:id},403);
+    const signed=pick(await write('partner',a,'review',{form:id}),id);
+    assert.equal(signed.reviewedVersion,signed.version);
+
+    const programme=pick(await enable(a,'3.1.2','source'),'3.1.2');
+    const req=(await write('reviewer',a,'request',{title:'Fixed assets',due:'2026-03-31'})).requests[0].id;
+    await write('preparer',a,'upload',{request:req,name:'assets.csv',source:'Synthetic evidence',base64:'YXNzZXRz'});
+    await write('preparer',a,'accept',{request:req});
+    const procedure=programme.template.body.fields.find(f=>f.type==='procedure');
+    const procAnswers={
+      [procedure.key]:'Compared register and ledger',
+      [procedure.key+'.outcome']:procedure.options[0],
+      [procedure.key+'.result']:'No exception',
+      [procedure.key+'.actualHours']:'0',
+      [procedure.key+'.assertions']:'["О"]',
+      [procedure.key+'.file']:evidence,
+    };
+    await write('preparer',a,'save',{...input('3.1.2',programme.template.digest,procAnswers),execution:'Test',conclusion:'Reviewed results'});
+    await write('preparer',a,'submit',{form:'3.1.2'});
+    await write('reviewer',a,'review',{form:'3.1.2'});
+    await write('partner',a,'statements',{statements:'Synthetic statements',disclosures:'Synthetic disclosures'});
+    for (const form of ['4.4','4.1.A1']) {
+      await write('reviewer',a,'save',{form,execution:'Work',conclusion:'Current report'});
+      await write('reviewer',a,'submit',{form});
+      await write('partner',a,'review',{form});
+    }
+    assert.equal((await write('partner',a,'authorize',{})).authorized.current,true);
+    const [snapshot]=await (await service.fetch(scoped('/authorizations',a),cookies.partner)).json();
+    const archivedNative=snapshot.authorization.nativePapers.find(p=>p.id.endsWith('/'+id));
+    assert.equal(archivedNative.version,signed.version);
+    assert.equal(archivedNative.values['field.amount'],'0');
+    assert.ok(snapshot.authorization.templates.some(t=>t.hash===pub1.digest));
+    assert.ok(snapshot.evidence.some(file=>file.id===evidence));
+
+    await write('partner',b,'activate',{independence:'I2',letter:'L2',assessment:'A2'});
+    await enable(b,id,'1');
+    const newer={...custom,fields:custom.fields.filter(f=>f.key!=='amount'&&f.key!=='proof')};
+    await save('reviewer',newer);
+    await note('reviewer','template-submit',id);
+    const pub2=(await note('partner','template-publish',id)).formLibrary.releases.find(r=>r.id===id);
+    const unchanged=pick(await view('partner',a),id);
+    assert.equal(unchanged.status,'reviewed');
+    assert.equal(unchanged.template.digest,pub1.digest);
+    assert.equal((await view('partner',a)).authorized.current,true);
+    const revision=await enable(a,id,'2');
+    assert.equal(revision.authorized.current,false);
+    const updated=pick(revision,id);
+    assert.equal(updated.status,'changed');
+    assert.equal(updated.template.digest,pub2.digest);
+    assert.equal(updated.values['field.amount'],undefined);
+    assert.deepEqual(updated.evidence,[]);
+    assert.equal(updated.values['field.items'],rows);
+    assert.ok(updated.history.some(h=>h.version===signed.version&&h.values['field.amount']==='0'&&h.values.templateDigest===pub1.digest));
+    assert.equal(updated.oldTemplates[pub1.digest].fields[0].key,'amount');
+    assert.equal(pick(await view('partner',b),id).template.number,1);
+    await write('reviewer',a,'save',fields({reason:'Stale payload'}),409);
+
+    await service.close();
+    service = await start(database);
+    const reloaded=await fixture(service,false);
+    assert.equal(pick(await reloaded.view('partner',a),id).template.number,2);
+    assert.equal(pick(await reloaded.view('partner',b),id).template.number,1);
+    assert.equal(pick(await reloaded.view('partner',a),id).oldTemplates[pub1.digest].title,custom.title);
+  } finally {
+    await service.close();
+    for (const suffix of ['', '-shm', '-wal']) await rm(database + suffix, { force: true });
+    await rmdir(dir);
+  }
+});
+
 test('two engagements isolate revisions, work, reports, grants and archive access', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'audit-multi-'));
   const database = join(dir, 'multi.sqlite');

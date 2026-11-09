@@ -6,6 +6,7 @@ import { accounts, deliverySummary, emptyWorkspace, input, PilotError, pilotActi
 import { createArchiveStore } from './pilot-archive.mjs';
 import { archiveGrantKinds } from './pilot-registers.mjs';
 import { createPilotStore, firmCommand } from './pilot-store.mjs';
+import { isLibraryAction, libraryAction, libraryTemplate, libraryView } from './pilot-forms.mjs';
 import { recordEvent } from '../src/lib/workspace.ts';
 
 const prefix = '/api/pilot';
@@ -92,7 +93,9 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     const portfolio = store.portfolio(role).map(item => id ? item : {
       ...item, progress: deliverySummary(store.load(role, item.id).model, role, archive),
     });
-    return { ...pilotView(model, role, revision, filesFor(id)), selected: id, portfolio,
+    const files = filesFor(id);
+    return { ...pilotView(model, role, revision, files), selected: id, portfolio,
+      formLibrary: libraryView(model.pilotFormLibrary, role, files, !id),
       ...(id && role === 'partner' && { members: store.members(id) }) };
   }
   function changeMembership(context, actor, fields) {
@@ -209,11 +212,12 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           }
           if (data.revision !== revision) throw new PilotError(409, 'Бүртгэл өөрчлөгдсөн. Шинэчлээд дахин шалгана уу.');
           if (firmCommand(data.action, data.fields) && id &&
-              (url.searchParams.has('engagement') || db.prepare('SELECT count(*) AS n FROM pilot_engagements').get().n > 1)) {
+              (isLibraryAction(data.action) || url.searchParams.has('engagement') || db.prepare('SELECT count(*) AS n FROM pilot_engagements').get().n > 1)) {
             throw new PilotError(409, 'Фирмийн бүртгэлийн хэсгээс өөрчилнө үү.');
           }
           try {
             if (data.action === 'access') changeMembership(context, role, data.fields);
+            else if (isLibraryAction(data.action)) libraryAction(model.pilotFormLibrary, role, data.action, data.fields, filesFor(null));
             else pilotAction(model, role, data.action, data.fields, filesFor(id));
           }
           catch (error) {
@@ -233,6 +237,12 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           return archive.exportPackage(model, route.split('/').at(-1), role);
         });
         json(res, 200, bundle);
+      } else if (req.method === 'GET' && /^\/template\/[A-Za-z0-9.-]{1,32}$/.test(route)) {
+        const body = transaction(() => {
+          const { model } = store.load(role, resolveScope(role, url));
+          return libraryTemplate(model.pilotFormLibrary, route.split('/').at(-1), filesFor(null), url.searchParams.get('version') === 'source');
+        }, false);
+        json(res, 200, body);
       } else if (req.method === 'GET' && /^\/evidence\/[a-f0-9-]{36}$/.test(route)) {
         const file = transaction(() => {
           const { model, id } = store.load(role, resolveScope(role, url));

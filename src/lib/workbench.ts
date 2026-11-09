@@ -4,7 +4,7 @@ export type Theme='light'|'dark'|'system';
 export type Contact={id:string;name:string;role:string;email:string;body:string;signer:boolean};
 export type Client={name:string;legalForm:string;registration:string;framework:string;contacts:Contact[];bodies:string[]};
 export type Period={start:string;end:string};
-export type Field={key:string;label:string;type:string;source:string;section?:string;options?:string[];required?:boolean;instruction?:string;binding?:'name'|'legalForm'|'registration'|'period'|'contacts';when?:{key:string;value:string};columns?:{key:string;label:string;type:string}[];tailoring?:{state:'added'|'adapted'|'na';reason:string;risk?:string;assertion?:string;by:string;at:string}};
+export type Field={key:string;label:string;type:string;source:string;section?:string;options?:string[];required?:boolean;instruction?:string;binding?:'name'|'legalForm'|'registration'|'period'|'contacts';decision?:'assessment'|'letter'|'independence';when?:{key:string;value:string};columns?:{key:string;label:string;type:string;options?:string[];source?:string}[];tailoring?:{state:'added'|'adapted'|'na';reason:string;risk?:string;assertion?:string;by:string;at:string}};
 export type Template={id:string;title:string;stage:number;fields:Field[];family:string;sheet:string;purpose?:string;clauses?:{text?:string;label?:string;source?:string}[]};
 type Revision={number:number;body:Template;by:string;at:string;note:string};
 type Draft={body:Template;by:string;submitted:boolean;note:string};
@@ -13,6 +13,7 @@ type Override=Partial<Record<Access,boolean>>;
 export type Bench={clients:Record<string,Client>;periods:Record<string,Period>;drafts:Record<string,Draft>;releases:Record<string,Revision[]>;applied:Record<string,Template>;access:Record<string,Record<string,Override>>;theme:Theme};
 export const DATE=/^\d{4}-\d{2}-\d{2}$/;
 export const today=()=>new Date().toISOString().slice(0,10);
+export const tableColumns=[{key:'description',label:'Тайлбар',type:'text'},{key:'amount',label:'Дүн',type:'number'}];
 const label=(s:string)=>s.trim();
 export function bench(m:Model):Bench {
  return m.bench??={clients:Object.fromEntries(m.engagements.map(e=>[e.id,{name:e.client,legalForm:e.client.endsWith('ХХК')?'ХХК':e.client.endsWith('ХК')?'ХК':'',registration:'',framework:'',bodies:[],contacts:[]}])),periods:Object.fromEntries(m.engagements.filter(e=>/^\d{4}$/.test(e.period)).map(e=>[e.id,{start:e.period+'-01-01',end:e.period+'-12-31'}])),drafts:{},releases:{},applied:{},access:{},theme:'system'};
