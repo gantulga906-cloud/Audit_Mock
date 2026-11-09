@@ -43,4 +43,16 @@ New extended conversions use managed staffing. Existing pilot files can adopt it
 
 Client registration is an internal pilot workflow. Source-system verification and canonical client consolidation are separate. The pilot records the reviewed signed copy as an artifact. External signature and dispatch services remain open.
 
-The linked programme workflow records one risk response and one selected template procedure per decision. Existing decisions retain their review history and can be revised into the linked workflow. The scoped planning handoff still needs multi-risk and multi-procedure tailoring, structured control walkthroughs, specific materiality by area, and the approved dataset and sampling handoffs from WP-10 and WP-12.
+The linked programme workflow records one risk response and one selected template procedure per decision. Existing decisions retain their review history and can be revised into the linked workflow. Multi-risk and multi-procedure tailoring, structured control walkthroughs and specific materiality by area remain open.
+
+## Wave 3 reference workflow
+
+| Work package and source | Implemented behavior and verification |
+|---|---|
+| WP-10 · P05-UC01/02 · A11-P2 · AUTO-006 | Store and hash the original UTF-8 CSV. Quarantine malformed amounts and dates, duplicates, missing keys and entity/period/currency mismatches. True zero stays numeric. An approved independent control artifact supports accepted counts and signed totals. One reviewed account-to-statement mapping per account produces the line bridge. A revised source or reconciliation retains earlier inputs and makes dependent approvals stale. |
+| WP-10/13 · P06-UC03 · M06-F06 | Select a statement bridge line and read its actual amount from the approved population without re-entering it. The record retains the exact population version, line and source hash. |
+| WP-11 · P08-UC01–03 | Multi-part requests have draft, issued, cancelled and per-item use histories. One original can support several requested parts. Reopening a use preserves the original and its signed history and invalidates affected work. An expiring single-use local confirmation link accepts a reply and original for the exact request, item and named contact. The audit team evaluates the reply separately. |
+| WP-12 · DEP-C06/C07 · 3.3.1 | Design and independent approval bind the approved population, selected statement line, 1.3 thresholds, 2.6 reliance and assigned workpaper. Selection is deterministic for a stated size and seed. Every test retains the original row and accepted evidence version. A qualitative zero-amount exception becomes a finding. |
+| WP-13 · P09-UC04 · AUTO-009 | Run manual-entry, posting-amount and period-end filters on the approved journal CSV. Selected journals show their source postings and exact filter reasons. Repeated inputs produce the same run. Independent review requires a documented investigation of every selected journal. |
+
+The integration scenario takes a fixed-assets file through all four work packages, including an independent confirmation session, partial receipt, replacement, stale population and a restart. The pilot currently uses one signed-amount population and one currency per approved revision. Full ledger-to-trial-balance roll-forward, richer import profiles, external message delivery and identity verification, statistical sample methods, and the remaining fieldwork automations and variants are open.

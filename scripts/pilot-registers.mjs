@@ -6,6 +6,8 @@ import { isCurrentReview, recordEvent, workKey } from '../src/lib/workspace.ts';
 import { PilotError, input, validMateriality } from './pilot-workflow.mjs';
 import { nativePapers } from './pilot-forms.mjs';
 import { checkStaffing } from './pilot-staffing.mjs';
+import { approvedPopulation } from './pilot-population.mjs';
+import { evidenceCurrent } from './pilot-requests.mjs';
 
 const contracts = JSON.parse(readFileSync(new URL('../src/data/source-registers.json', import.meta.url), 'utf8')).forms;
 const definition = id => registers.find(r => r.id === id);
@@ -22,9 +24,12 @@ function stale(m, row, seen = new Set()) {
   if (seen.has(row.id)) return true;
   const path = new Set([...seen, row.id]);
   if (row.statementVersion && row.statementVersion !== m.engagements[0]?.fsVersion) return true;
+  if (row.populationBasis && approvedPopulation(m)?.version !== row.populationBasis.version) return true;
   const reliance = row.programmeBasis?.reliance;
-  if (reliance?.evidence && !m.evidence.some(e => e.id === reliance.evidence && e.status === 'accepted' &&
+  if (reliance?.evidence && !m.evidence.some(e => e.id === reliance.evidence && evidenceCurrent(m,e) &&
       (reliance.evidenceVersion === undefined || e.version === reliance.evidenceVersion))) return true;
+  if (row.kind!=='M08-F07' && definition(row.kind)?.fields.some(f=>f.type==='evidence'&&row.values[f.key]&&
+      !evidenceCurrent(m,m.evidence.find(e=>e.id===row.values[f.key])))) return true;
   if (Object.entries(row.paperVersions ?? {}).some(([form, version]) => {
     const w = m.work[workKey(m.engagement, form)];
     return !isCurrentReview(w) || w.version !== version;
@@ -134,6 +139,7 @@ export function registerPackage(m) {
     id: r.id, kind: r.kind, version: r.version, values: r.values, references: r.references, by: r.by, at: r.at,
     ...(r.template && { template: r.template }), ...(r.declaration && { declaration: r.declaration }),
     ...(r.programmeBasis && { programmeBasis: r.programmeBasis }),
+    ...(r.populationBasis && { populationBasis: r.populationBasis }),
     ...(r.staffingBasis && { staffingBasis: r.staffingBasis }),
   }));
 }
@@ -145,6 +151,7 @@ export const registerStamp = m => hash({
   }),
   statementLines: m.pilotStatementLines ?? {},
   evidence: m.evidence.filter(e => registerEvidence(m).includes(e.id)).map(e => [e.id, e.version, e.status]),
+  ...(approvedPopulation(m) && {population:[approvedPopulation(m).version,approvedPopulation(m).sha256]}),
   ...(m.pilotForms && { native: nativePapers(m).map(w => [w.form,w.version,w.reviewedVersion,w.status,w.values.templateDigest]) }),
   ...(m.pilotTerms && { terms: m.pilotTerms }),
 });
@@ -217,7 +224,7 @@ function checkProgramme(m, row, files) {
   row.programmeBasis.materiality = {version:mat.version,...amounts,source:mat.values.benchmarkSource};
   if (v.approach === 'substantive') return;
   const {controlsReliance:level,relianceBasis:basis,relianceEvidence:evidenceId} = controls.values;
-  const evidence = m.evidence.find(e => e.id === evidenceId && e.status === 'accepted');
+  const evidence = m.evidence.find(e => e.id === evidenceId && evidenceCurrent(m,e));
   if (!isCurrentReview(controls) || selected && (!['partial','full'].includes(level) || !evidence)) {
     bad('2.6 · Хяналтад найдах шийдвэр ба хүлээн зөвшөөрсөн нотолгоо шаардлагатай.');
   }
@@ -228,6 +235,11 @@ function checkProgramme(m, row, files) {
 
 function checkBusiness(m, row, spec, files) {
   const v = row.values;
+  if (row.kind==='M06-F06' && v.populationLine) {
+    const population = approvedPopulation(m);
+    const bridge = population?.bridge.find(line=>line.line===v.populationLine);
+    if (!bridge || row.populationBasis?.version !== population.version) bad('Баталсан эх олонлогийн одоогийн мөрийг дахин сонгоно уу.');
+  }
   const need = spec.fields.filter(f => !f.optional && !v[f.key]);
   if (need.length) bad('Дутуу утга · ' + need.map(f => f.label).join(', '));
   const refs = {};
@@ -237,7 +249,7 @@ function checkBusiness(m, row, spec, files) {
     refs[target.id] = target.version;
   }
   if (row.kind !== 'M08-F07' && spec.fields.some(f => f.type === 'evidence' && v[f.key] &&
-      !m.evidence.some(e => e.id === v[f.key] && e.status === 'accepted'))) bad('Үнэлж зөвшөөрсөн эх файл шаардлагатай.');
+      !m.evidence.some(e => e.id === v[f.key] && evidenceCurrent(m,e)))) bad('Үнэлж зөвшөөрсөн эх файл шаардлагатай.');
   if (spec.section === 'archive') files.checkArchiveRecord(m, row);
   switch (row.kind) {
     case 'M01-F03': {
@@ -348,6 +360,14 @@ export function registerAction(m, role, data, files) {
     if (row?.status === 'approved' && spec.section === 'archive') bad('Архивын баталсан үйлдлийг түүхээр хадгална. Шинэ бүртгэл үүсгэнэ үү.');
     if (!row && spec.id === 'M01-F01' && rows(m, spec.id).length) bad('Фирмийн одоогийн бүртгэлийг засна уу.');
     const values = validateInput(m, spec, data);
+    let populationBasis;
+    if (spec.id==='M06-F06' && values.populationLine) {
+      const population = approvedPopulation(m), bridge = population?.bridge.find(line=>line.line===values.populationLine);
+      if (!bridge) bad('Баталсан эх олонлогийн мөрийг сонгоно уу.');
+      values.actual = String(bridge.computed/100);
+      values.source = population.name+' · v'+population.version+' · '+bridge.line;
+      populationBasis = {version:population.version,evidence:population.evidence,line:bridge.line,sha256:population.sha256};
+    }
     if (row && JSON.stringify(values) === JSON.stringify(row.values) && !stale(m, row)) return;
     if (!row) {
       row = { id: randomUUID(), kind: spec.id, owner: role, history: [], version: 0 };
@@ -361,6 +381,7 @@ export function registerAction(m, role, data, files) {
     delete row.paperVersions;
     delete row.programmeBasis;
     delete row.staffingBasis;
+    row.populationBasis = populationBasis;
     row.version++;
     remember(row, role, 'draft', 'Ноорог хадгалав');
   } else {
@@ -414,5 +435,6 @@ export function registerEvidence(m) {
   return [...new Set(registerPackage(m).flatMap(r => [
     ...definition(r.kind).fields.filter(f => f.type === 'evidence').map(f => r.values[f.key]),
     r.programmeBasis?.reliance?.evidence,
+    r.populationBasis?.evidence,
   ].filter(Boolean)))];
 }

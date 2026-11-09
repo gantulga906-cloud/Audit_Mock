@@ -6,12 +6,14 @@ import {AdoptPilotForm,NativeFields,PilotFormLibrary} from './pilot-forms';
 import {IntakeProvenance,PilotIntake,TermsEditor} from './pilot-intake';
 import {EngagementStaffing,RosterOverview,WorkAssignmentEditor} from './pilot-staffing';
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
+import {JournalDesk,PopulationDesk,SampleDesk} from './pilot-population';
 import {pilotScope,type PilotRole,type ProgrammeBasis} from '@/lib/pilot-registers';
 import {fieldAnswers,type LibraryView,type PaperForm} from '@/lib/pilot-forms';
 import type {Enquiry,IntakeClient,IntakeContext,IntakeTerms} from '@/lib/pilot-intake';
 import type {RosterAvailability,StaffingView,StaffSignoff,WorkAssignment} from '@/lib/pilot-staffing';
-import type {DecisionRecord,Evidence,Model,RequestItem,Statements,WorkItem} from '@/lib/workspace';
+import type {DecisionRecord,Evidence,Finding,Model,RequestItem,Statements,WorkItem} from '@/lib/workspace';
 import type {Period,Template} from '@/lib/workbench';
+import type {JournalRun,PopulationView,SampleView} from '@/lib/pilot-population';
 
 const api='/api/pilot';
 const roles={preparer:'Бэлтгэгч',reviewer:'Ахлах хянагч',partner:'Партнер'};
@@ -21,7 +23,7 @@ const staffNames=(staffing?:StaffingView)=>Object.fromEntries((staffing?.seats??
 const status:Record<WorkItem['status'],string>={not_started:'Эхлээгүй',in_progress:'Бэлтгэж буй',waiting:'Хүлээгдэж буй',submitted:'Хяналтад ирсэн',returned:'Засварт буцаасан',reviewed:'Хянагдсан',changed:'Дахин хянуулах'};
 const partStatus={missing:'Ирээгүй',received:'Үнэлэх',accepted:'Зөвшөөрсөн',rejected:'Буцаасан'};
 type Paper=WorkItem&{editable:boolean;reviewable:boolean;template?:PaperForm;oldTemplates?:Record<string,Template>;nativeGaps?:string[];
- assignmentHistory?:WorkAssignment[];staffingSignoffs?:StaffSignoff[];pendingPlanning?:boolean;
+ assignmentHistory?:WorkAssignment[];staffingSignoffs?:StaffSignoff[];pendingPlanning?:boolean;fieldGap?:string;
  materiality?:{overall:number;performance:number;trivial:number}|null;
  planning?:{id:string;version:number;basis?:ProgrammeBasis;template:{form:string;sheet:string;digest:string;number?:number}}};
 type PortfolioItem={id:string;client:string;start:string;end:string;reportDate:string;active:boolean;
@@ -32,7 +34,12 @@ type View=RegisterResources&{
  intakeTerms?:IntakeTerms;intakeTermsHistory?:IntakeTerms[];
  roster?:RosterAvailability[];staffing?:StaffingView;
  engagement:null|{client:string;period:Period;active:boolean;reportDate:string;statements?:Statements;decisions:DecisionRecord[];acceptanceGaps:string[];firm:{id:string;kind:string;version:number;values:Record<string,string>}[]};
- papers?:Paper[];requests?:RequestItem[];evidence?:(Evidence&{sha256:string})[];gaps?:string[];
+ papers?:Paper[];requests?:RequestItem[];evidence?:(Evidence&{sha256:string;current?:boolean})[];gaps?:string[];
+ requestContacts?:{id:string;name:string;email:string}[];
+ confirmations?:{request:string;part:string;recipient:string;sent:string;state:string;response?:string;received?:string;evidence?:string}[];
+ confirmationLink?:{token:string;request:string;part:string};
+ population?:PopulationView;
+ samples?:Record<string,SampleView>;journals?:Record<string,JournalRun>;fieldFindings?:Finding[];
  fieldwork?:string[];statementLines?:Record<string,number>;impacts?:Model['impacts'];
  delivery?:Pick<Model,'person'|'tasks'|'events'>&{id:string};
  activity?:Model['activity'];authorized?:{current:boolean;at:string;report:number;fs:number;count:number;artifactSha256?:string};
@@ -136,45 +143,82 @@ function EngagementAccess({members,run}:{members:PilotRole[];run:Action}){
 }
 
 function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string)=>void}){
+ const files=view.evidence??[];
+ const active=(view.requests??[]).filter(r=>r.dispatch==='issued');
+ const expected=active.reduce((total,r)=>total+(r.parts?.length??0),0);
+ const accepted=active.reduce((total,r)=>total+(r.parts?.filter(p=>p.state==='accepted').length??0),0);
  function upload(e:FormEvent<HTMLFormElement>,id:string){
   e.preventDefault();
-  const form=e.currentTarget,data=new FormData(form),file=data.get('file');
-  void readEvidence(file).then(fileData=>run('upload',{request:id,source:String(data.get('source')),...fileData})).then(ok=>{if(ok)form.reset();}).catch(e=>onError(e.message));
+  const form=e.currentTarget,data=new FormData(form),parts=data.getAll('parts').map(String);
+  if(!parts.length){onError('Хүсэлтийн хэсэг сонгоно уу.');return;}
+  void readEvidence(data.get('file')).then(file=>run('upload',{request:id,parts:parts.join(','),source:String(data.get('source')),...file}))
+   .then(ok=>{if(ok)form.reset();}).catch(e=>onError(e.message));
  }
  return <section className="card pad bench-card feature-desk">
   <h2>Хөтөлбөрийн баримтын хүсэлт</h2>
-  <p className="muted">Хүсэлтийг бүртгэж, авсан эх файлыг хавсаргана. Холбоо барих сувгаар хүргэх ажиллагааг баг хариуцна.</p>
-  {!!view.fieldwork?.length&&<ActionForm run={run} action="request" button="Хүсэлт бүртгэх"><div className="field-grid">
-   <label>Хэрэгжүүлсэн хөтөлбөр<select name="form">{view.fieldwork.map(f=><option key={f} value={f}>{f} · {view.forms.find(p=>p.id===f)?.title}</option>)}</select></label>
-   <label>Шаардлагатай баримт<input name="title" required/></label><label>Хугацаа<input name="due" type="date" required/></label>
-  </div></ActionForm>}
+  <p>{accepted}/{expected} гаргасан хүсэлтийн хэсэг хүлээн авсан</p>
+  {!!view.fieldwork?.length&&<details className="feature-detail"><summary>Шинэ хүсэлт</summary>
+   <ActionForm run={run} action="request-draft" button="Хүсэлтийн ноорог хадгалах"><div className="field-grid">
+    <label>Хэрэгжүүлсэн хөтөлбөр<select name="form">{view.fieldwork.map(f=><option key={f} value={f}>{f} · {view.forms.find(p=>p.id===f)?.title}</option>)}</select></label>
+    <label>Хүсэлтийн нэр<input name="title" required/></label><label>Хугацаа<input name="due" type="date" required/></label>
+    <label>Хүлээн авагч<select name="contactId">{view.requestContacts?.map(c=><option key={c.id} value={c.id}>{c.name} · {c.email}</option>)}</select></label>
+    <label>Хүсэх баримт · мөр бүрт нэг<textarea name="parts" required/></label>
+    <label>Нэмэлт тайлбар<textarea name="message"/></label>
+   </div></ActionForm>
+  </details>}
   {view.requests?.map(r=>{
-   const part=r.parts?.[0];
-   if(!part)return null;
-   return <details key={r.id} open className="feature-detail">
-    <summary>{r.title} <span className="pill">{partStatus[part.state]}</span></summary>
-    <p>{r.form} · {r.contact} · {r.due} · {r.id}</p>
-    {part.reason&&<p>{part.reason}</p>}
-    {view.evidence?.filter(e=>e.request===r.id).map(file=><div className="bench-item" key={file.id}>
-     <a className="btn secondary" href={api+'/evidence/'+file.id+pilotScope(view.selected)}>{file.name} · v{file.version} татах</a>
-     <p className="micro">{file.source} · {file.assessment??partStatus[file.status]}</p>
-     <small style={{overflowWrap:'anywhere'}}>SHA-256 {file.sha256}</small>
-    </div>)}
-    {r.owner===accountByRole[view.role]&&['missing','rejected'].includes(part.state)&&<form className="feature-form" onSubmit={e=>upload(e,r.id)}>
+   const owner=r.owner===accountByRole[view.role],manage=owner||view.role!=='preparer';
+   const current=r.dispatch==='issued',open=(r.parts??[]).filter(p=>p.state==='missing'||p.state==='rejected');
+   const groupFiles=files.filter(e=>e.request===r.id);
+   return <details key={r.id} className="feature-detail" open={current&&r.status!=='complete'}>
+    <summary>{r.title} <span className="pill">{r.dispatch==='draft'?'Ноорог':r.dispatch==='cancelled'?'Цуцалсан':(r.parts??[]).filter(p=>p.state==='accepted').length+'/'+r.expected+' зөвшөөрсөн'}</span></summary>
+    <p>{r.form} · {r.contact} · {r.due} · {r.id} · {names[r.owner]??r.owner}</p>
+    {r.message&&<p>{r.message}</p>}
+    {manage&&r.dispatch==='draft'&&<button type="button" className="btn secondary" onClick={()=>void run('request-issue',{request:r.id})}>Гаргасан гэж бүртгэх</button>}
+    {manage&&r.dispatch!=='cancelled'&&r.status!=='complete'&&<details className="feature-detail"><summary>Дагаж тодруулах эсвэл цуцлах</summary>
+     {current&&<ActionForm run={run} action="request-followup" extra={{request:r.id}} button="Дагаж тодруулсан тэмдэглэл хадгалах">
+      <label>Дагаж тодруулсан тэмдэглэл<input name="reason" required/></label></ActionForm>}
+     <ActionForm run={run} action="request-cancel" extra={{request:r.id}} button="Хүсэлт цуцлах"><label>Цуцлах үндэслэл<input name="reason" required/></label></ActionForm>
+    </details>}
+    {r.parts?.map(part=>{
+     const file=groupFiles.find(e=>e.id===part.evidence),extra={request:r.id,part:part.id};
+     return <div className="bench-item" key={part.id}>
+      <p><b>{part.title}</b> · {partStatus[part.state]}{part.reason?' · '+part.reason:''}</p>
+      {file&&<a href={api+'/evidence/'+file.id+pilotScope(view.selected)}>{file.name} · v{file.version}</a>}
+      {owner&&current&&part.state==='received'&&<>
+       <button type="button" className="btn secondary space-top" onClick={()=>void run('accept',extra)}>Энэ хэсэгт зөвшөөрөх</button>
+       <ActionForm run={run} action="reject" extra={extra} button="Энэ хэсгийг буцаах"><label>Буцаах шалтгаан<input name="reason" required/></label></ActionForm>
+      </>}
+      {view.role!=='preparer'&&current&&['missing','rejected'].includes(part.state)&&<button type="button" className="btn secondary"
+       onClick={()=>void run('confirmation-start',extra)}>Локал баталгаажуулалтын холбоос үүсгэх</button>}
+      {view.confirmationLink?.request===r.id&&view.confirmationLink?.part===part.id&&
+       <p><a href={'/pilot#confirmation='+view.confirmationLink.token} target="_blank" rel="noopener noreferrer">Хүлээн авагчийн нэг удаагийн локал холбоос</a> · 24 цаг хүчинтэй</p>}
+      {view.confirmations?.filter(c=>c.request===r.id&&c.part===part.id).map((c,i)=><p className="micro" key={i}>
+       {c.recipient} · {c.received?'Хариу ирсэн '+c.received.slice(0,16):({pending:'Хариу хүлээгдэж байна',expired:'Хугацаа дууссан',revoked:'Холбоос хүчингүй'})[c.state as 'pending']??c.state}
+       {c.response?' · '+c.response:''}</p>)}
+      {manage&&current&&part.state==='accepted'&&<details className="feature-detail"><summary>Солих баримт дахин хүсэх</summary>
+       <ActionForm run={run} action="request-reopen" extra={extra} button="Хэсгийг дахин нээх"><label>Үндэслэл<input name="reason" required/></label></ActionForm>
+      </details>}
+      {!!part.uses?.length&&<details><summary>Хэрэглээний түүх</summary>{part.uses.map((use,index)=>{
+       const original=groupFiles.find(f=>f.id===use.evidence);
+       return <p key={index}>{use.at.slice(0,16)} · {names[use.by]??use.by} · {use.state==='reopened'?'Дахин нээсэн':partStatus[use.state]} · {use.reason??''}
+        {original&&<> · <a href={api+'/evidence/'+original.id+pilotScope(view.selected)}>{original.name} v{original.version}</a></>}</p>;
+      })}</details>}
+     </div>;
+    })}
+    {owner&&current&&open.length>0&&<form className="feature-form" onSubmit={e=>upload(e,r.id)}>
+     <p>Нэг файлыг хамрах хэд хэдэн хэсэгт холбож болно.</p>
+     {open.map(p=><label key={p.id}><input name="parts" type="checkbox" value={p.id} defaultChecked={open.length===1}/> {p.title}</label>)}
      <label>Эх файл<input name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv" required/></label>
      <label>Файл нийлүүлсэн эх сурвалж<input name="source" required/></label><button className="btn primary">Эх файл бүртгэх</button>
     </form>}
-    {r.owner===accountByRole[view.role]&&part.state==='received'&&<>
-     <button type="button" className="btn secondary space-top" onClick={()=>void run('accept',{request:r.id})}>Баримт зөвшөөрөх</button>
-     <ActionForm run={run} action="reject" extra={{request:r.id}} button="Баримт буцаах"><label>Буцаах шалтгаан<input name="reason" required/></label></ActionForm>
-    </>}
    </details>;
   })}
  </section>;
 }
 
 function SupportingEvidence({view,run,onError}:{view:View;run:Action;onError:(message:string)=>void}){
- const evidence=(view.evidence??[]) as PilotFile[];
+ const evidence=(view.evidence??[]).filter(e=>!e.population) as PilotFile[];
  function upload(e:FormEvent<HTMLFormElement>){
   e.preventDefault();
   const form=e.currentTarget,data=new FormData(form);
@@ -243,7 +287,7 @@ function Delivery({view,run}:{view:View;run:Action}){
  </section>;
 }
 
-function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing}:{paper:Paper;run:Action;role:View['role'];evidence:View['evidence'];sealed:boolean;active:boolean;engagementId:string|null;staffing?:StaffingView}){
+function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,sampling}:{paper:Paper;run:Action;role:View['role'];evidence:View['evidence'];sealed:boolean;active:boolean;engagementId:string|null;staffing?:StaffingView;sampling?:ReactNode}){
  const form=paper.form,reference={form};
  const [answers,setAnswers]=useState(()=>fieldAnswers(paper.values));
  const native=paper.template;
@@ -254,6 +298,8 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing}
   <div className="section-heading"><h2>{form} · {paper.title}</h2><span className="pill">v{paper.version} · {status[paper.status]}</span></div>
   <p className="micro">{people[paper.owner]??names[paper.owner]} → {people[paper.reviewer]??names[paper.reviewer]} · {paper.evidence.length} холбоотой баримт</p>
   {paper.pendingPlanning&&<p className="callout amber">Төлөвлөлтийн шийдвэрийн шинэ хувилбар батлагдсаны дараа хяналтад илгээнэ.</p>}
+  {sampling}
+  {paper.fieldGap&&<p className="callout amber">{paper.fieldGap}</p>}
   {paper.planning?.basis&&<details className="feature-detail" open>
    <summary>Баталсан төлөвлөлтийн суурь · v{paper.planning.version}</summary>
    <PlanningBasis basis={paper.planning.basis}/>
@@ -292,7 +338,7 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing}
    <p>{paper.values.execution}</p><p>{paper.values.conclusion}</p>
   </>}
   {paper.editable&&!['submitted','reviewed'].includes(paper.status)&&<button type="button" className="btn secondary space-top"
-   disabled={paper.pendingPlanning||!!paper.nativeGaps?.length||summaryNeeded&&(!paper.values.execution||!paper.values.conclusion)} onClick={()=>void run('submit',reference)}>Хадгалсан v{paper.version} хувилбарыг хяналтад илгээх</button>}
+   disabled={paper.pendingPlanning||!!paper.fieldGap||!!paper.nativeGaps?.length||summaryNeeded&&(!paper.values.execution||!paper.values.conclusion)} onClick={()=>void run('submit',reference)}>Хадгалсан v{paper.version} хувилбарыг хяналтад илгээх</button>}
   {paper.reviewable&&<div className="space-top">
    <button type="button" className="btn primary" disabled={paper.notes.some(n=>!n.cleared)} onClick={()=>void run('review',reference)}>v{paper.version} хувилбарыг хянаж батлах</button>
    <ActionForm run={run} action="return" extra={reference} button="Засварт буцаах"><label>Хяналтын тэмдэглэл<input name="reason" required/></label></ActionForm>
@@ -324,7 +370,7 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing}
  </section>;
 }
 
-export default function PilotWorkspace(){
+function SharedPilotWorkspace(){
  const [data,setData]=useState<Result|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false);
  const pending=useRef<{intent:string;key:string}|null>(null);
  const selection=useRef<string|null>(null);
@@ -420,12 +466,20 @@ export default function PilotWorkspace(){
       view.papers?.some(p=>p.form===f.id&&p.planning?.template.number===undefined)&&view.fieldwork?.includes(f.id))} library={view.formLibrary}
       pins={Object.fromEntries((view.papers??[]).flatMap(p=>p.template?[[p.form,p.template.number]]:[]))} run={run}/>}
      {engagement.active&&<>
+      {!sealed&&view.selected&&<PopulationDesk key={view.population?.current.version} population={view.population} role={view.role}
+       engagement={view.selected} evidence={view.evidence??[]} run={run} readFile={readEvidence} onError={setError}/>}
       {!sealed&&<Delivery view={view} run={run}/>}
       {(!view.archive.packages.length||view.archive.reopened)&&<Requests view={view} run={run} onError={setError}/>}
      </>}
      {view.papers?.filter(paper=>engagement.active||paper.stage===1&&paper.template).map(paper=>
       <Workpaper key={paper.id+'/'+paper.version} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed}
-       active={engagement.active} engagementId={view.selected} staffing={view.staffing}/>)}
+       active={engagement.active} engagementId={view.selected} staffing={view.staffing}
+       sampling={!sealed&&view.selected&&(view.fieldwork?.includes(paper.form)||!!view.samples?.[paper.form]||!!view.journals?.[paper.form])&&<>
+        <SampleDesk population={view.population} sample={view.samples?.[paper.form]} paper={paper} role={view.role}
+         engagement={view.selected} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===paper.form&&f.id.startsWith('SAMPLE-'))} run={run}/>
+        <JournalDesk population={view.population} journal={view.journals?.[paper.form]} paper={paper} role={view.role}
+         engagement={view.selected} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===paper.form&&f.id.startsWith('JOURNAL-'))} run={run}/>
+       </>}/>)}
      {engagement.active&&<>
       {view.impacts?.map(impact=><section className="card pad bench-card" key={impact.id}><h2>{impact.source} · Өөрчлөлтийн нөлөө</h2><p>{impact.reason} · {impact.targets.join(', ')}</p>
        {view.role==='reviewer'&&<ActionForm run={run} action="resolve-impact" extra={{id:impact.id}} button="Нөлөөллийн үнэлгээг бүртгэх"><label>Шийдвэрийн үндэслэл<input name="reason" required/></label></ActionForm>}
@@ -459,4 +513,49 @@ export default function PilotWorkspace(){
    </fieldset>
   </div>
  </main>;
+}
+
+function ConfirmationRecipient({token}:{token:string}){
+ const [details,setDetails]=useState<{request:string;part:string;recipient:string;contact:string}|null>(null);
+ const [error,setError]=useState(''),[sent,setSent]=useState(false),[busy,setBusy]=useState(false);
+ const path=api+'/confirmation/'+token;
+ useEffect(()=>{
+  let active=true;
+  fetch(path,{cache:'no-store'}).then(async response=>{
+   const result=await response.json();
+   if(!response.ok)throw Error(result.error);
+   if(active)setDetails(result);
+  }).catch(e=>{if(active)setError(e.message);});
+  return ()=>{active=false;};
+ },[path]);
+ async function submit(e:FormEvent<HTMLFormElement>){
+  e.preventDefault();setBusy(true);setError('');
+  try{
+   const data=new FormData(e.currentTarget),file=await readEvidence(data.get('file'));
+   const res=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({...file,response:String(data.get('response'))})});
+   if(!res.ok)throw Error((await res.json()).error);
+   setSent(true);
+  }catch(e){setError((e as Error).message);}finally{setBusy(false);}
+ }
+ return <main className="audit-app"><div className="app-content pilot-content"><section className="card pad bench-card">
+  <h1>Локал баталгаажуулалтын хариу</h1>
+  {error&&<p className="callout amber" role="alert">{error}</p>}
+  {sent?<p>Хариу болон эх файлыг аудитын багт бүртгэлээ.</p>:details&&<>
+   <p>{details.request} · {details.part}</p><p>{details.contact} · {details.recipient}</p>
+   <form className="feature-form" onSubmit={submit}>
+    <label>Хариу<textarea name="response" maxLength={4000} required/></label>
+    <label>Баталгаажуулах эх файл<input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv" required/></label>
+    <button className="btn primary" disabled={busy}>Хариу өгөх</button>
+   </form>
+  </>}
+ </section></div></main>;
+}
+
+export default function PilotWorkspace(){
+ const [confirmation,setConfirmation]=useState<string|null>(null);
+ useEffect(()=>{
+  setConfirmation(/^#confirmation=([a-f0-9]{64})$/.exec(window.location.hash)?.[1]??'');
+ },[]);
+ return confirmation===null?null:confirmation?<ConfirmationRecipient token={confirmation}/>:<SharedPilotWorkspace/>;
 }

@@ -1,6 +1,7 @@
 import {useState,type FormEvent} from 'react';
 import {pilotScope,registers,roleChoices,sections,type PilotRecord,type PilotRole,type ProgrammeBasis,type RegisterField,type RecordStatus} from '@/lib/pilot-registers';
 import type {Evidence} from '@/lib/workspace';
+import type {PopulationView} from '@/lib/pilot-population';
 
 export type PilotAction=(action:string,fields?:Record<string,string>)=>Promise<boolean>;
 type NamedForm={id:string;title:string};
@@ -13,6 +14,7 @@ export type RegisterResources={
  registers:PilotRecord[];forms:NamedForm[];programmes:NamedForm[];
  rules:{id:string;form:string;matches:boolean;outcome:string;basis:string}[];
  programmeTemplates?:Record<string,{version:string;procedures:{key:string;label:string}[]}[]>;
+ population?:PopulationView;
  archive:{packages:ArchiveItem[];reopened:{package:string;basis:string}|null;issue:{at:string;reference:string}|null};
  extended:boolean;
 };
@@ -48,6 +50,7 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
  const def=spec(kind)!;
  const [values,setValues]=useState<Record<string,string>>(row?.values??{});
  const planning=kind==='M07-F01';
+ const sourceLines=resources.population?.usable?resources.population.current.bridge:[];
  const selectedForm=resources.rules.find(r=>r.id===values.rule)?.form;
  const templates=resources.programmeTemplates?.[selectedForm??'']??[];
  const set=(key:string,value:string)=>setValues(v=>{
@@ -65,6 +68,7 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
   if(field.type==='choice')return field.choices;
   if(planning&&field.key==='templateVersion')return templates.map(t=>[t.version,t.version==='source'?'Эх маягт':'Баталсан v'+t.version]);
   if(planning&&field.key==='procedure')return (templates.find(t=>t.version===values.templateVersion)?.procedures??[]).map(p=>[p.key,p.key+' · '+p.label]);
+  if(kind==='M06-F06'&&field.key==='populationLine')return sourceLines.map(l=>[l.line,l.line+' · '+l.computed/100]);
   if(field.type==='record')return resources.registers.filter(r=>r.kind===field.target&&r.id!==row?.id&&r.status==='approved'&&!r.stale&&
    (!planning||field.key!=='rule'||resources.rules.some(rule=>rule.id===r.id&&rule.matches))&&
    (!planning||field.key!=='risk'||r.values.programme===selectedForm)).map(r=>[r.id,heading(r)+' · v'+r.version]);
@@ -76,13 +80,15 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
  }
  return <form className="feature-form" onSubmit={save}>
   <div className="field-grid">{def.fields.filter(f=>!planning||!programmeFields.includes(f.key)||resources.extended&&values.decision==='adopt').map(f=>{
-   const choices=options(f),v=values[f.key]??'';
+   const choices=options(f),bound=kind==='M06-F06'&&!!values.populationLine&&['source','actual'].includes(f.key);
+   const line=bound?sourceLines.find(l=>l.line===values.populationLine):undefined;
+   const v=line?(f.key==='actual'?String(line.computed/100):resources.population!.current.name):(values[f.key]??'');
    return <label key={f.key}>{f.label}{f.optional&&!(planning&&programmeFields.includes(f.key))?' (сонголтоор)':''}
     {choices?<select value={v} onChange={e=>set(f.key,e.target.value)}>
      <option value="">Сонгох</option>
      {v&&!choices.some(([id])=>id===v)&&<option value={v}>Өмнөх сонголт · {v}</option>}
      {choices.map(([id,label])=><option key={id} value={id}>{label}</option>)}
-    </select>:f.type==='long'?<textarea value={v} onChange={e=>set(f.key,e.target.value)} maxLength={4000}/>:<input value={v} onChange={e=>set(f.key,e.target.value)} type={f.type==='date'?'date':f.type==='number'?'number':'text'} step={f.type==='number'?'any':undefined} maxLength={4000}/>}
+    </select>:f.type==='long'?<textarea value={v} onChange={e=>set(f.key,e.target.value)} maxLength={4000}/>:<input value={v} readOnly={bound} onChange={e=>set(f.key,e.target.value)} type={f.type==='date'?'date':f.type==='number'?'number':'text'} step={f.type==='number'?'any':undefined} maxLength={4000}/>}
    </label>;
   })}</div>
   {planning&&resources.extended&&values.decision==='adopt'&&<p className="micro">Шийдвэрийг илгээхийн өмнө арга хандлага, хувилбар, горимын шинж, хугацаа, хамрах хүрээг бүрэн оруулна уу.</p>}

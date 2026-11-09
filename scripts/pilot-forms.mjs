@@ -5,6 +5,7 @@ import { isCurrentReview, recordEvent, reportForm, snapshot, workKey } from '../
 import { excludedForms, formContract } from './pilot-registers.mjs';
 import { sha256 } from './pilot-report.mjs';
 import { accounts, input, PilotError } from './pilot-workflow.mjs';
+import { evidenceCurrent } from './pilot-requests.mjs';
 
 const formId = /^(?:\d+(?:\.\d+)+(?:\.A[1-4])?|F-[A-Z0-9]{8})$/;
 const token = /^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/;
@@ -217,7 +218,7 @@ export function readTypedAnswers(m, paper, data, files) {
     if (visible.has(key) && value !== '') answers[key] = value;
   }
   const ids = typedEvidence(defs, answers);
-  if (ids.some(id => !m.evidence.some(e => e.id === id && e.engagement === m.engagement && e.status === 'accepted'))) {
+  if (ids.some(id => !m.evidence.some(e => e.id === id && e.engagement === m.engagement && evidenceCurrent(m,e)))) {
     fail('Энэ ажлын үнэлж зөвшөөрсөн эх баримтыг сонгоно уу.');
   }
   const old = new Set(typedEvidence(defs, fieldAnswers(paper.values)));
@@ -247,7 +248,7 @@ export function nativeGaps(m, paper, files) {
   });
   if (!template.body.fields.some(f => !f.binding && !f.decision && present(f,answers[f.key])) &&
       !Object.entries(answers).some(([k,v]) => k.endsWith('.result') && v.trim())) gaps.push('Маягтын хариулт оруулна уу.');
-  if (typedEvidence(definitions(template.body), answers).some(id => !m.evidence.some(e => e.id === id && e.status === 'accepted'))) gaps.push('Нотлох баримтын үнэлгээ шаардлагатай.');
+  if (typedEvidence(definitions(template.body), answers).some(id => !m.evidence.some(e => e.id === id && evidenceCurrent(m,e)))) gaps.push('Нотлох баримтын үнэлгээ шаардлагатай.');
   return gaps;
 }
 

@@ -1107,3 +1107,184 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
     await rmdir(dir);
   }
 });
+// Wave 3 reference handoff across data, evidence and sampled work.
+test('approved data feeds the same scoped analytics, multipart confirmation and sampled source rows', async () => {
+  const dir=await mkdtemp(join(tmpdir(),'audit-population-'));
+  const database=join(dir,'pilot.sqlite');
+  let service;
+  try {
+    service=await start(database);
+    const {cookies,scoped,view,write}=await fixture(service);
+    const a=(await write('reviewer','firm','create',create)).selected;
+    const run=(role,action,fields,status=200)=>write(role,a,action,fields,status);
+    await run('partner','activate',{independence:'Reviewed',letter:'Agreed',assessment:'Accepted'});
+    const header='id,account,amount,entity,date,currency,journal,entry_type';
+    const line=(id,amount,date='2025-04-15',entity=create.registration,currency='MNT')=>
+      [id,'1500',amount,entity,date,currency,id==='zero'||id==='add'?'J-add':'J-'+id,id==='add'?'manual':'system'].join(',');
+    const first=[header,line('zero','0'),line('add','125.50'),line('add','125.50'),line('bad','12oops'),
+      line('outside','10','2025-04-15','OTHER'),line('','20'),line('old','30','2024-12-31'),
+      line('date','40','11/11/25'),line('fx','50','2025-04-15',create.registration,'USD')].join('\n');
+    const upload=contents=>({name:'ledger.csv',currency:'MNT',source:'Signed management export',base64:Buffer.from(contents).toString('base64')});
+    let state=await run('preparer','population-import',upload(first));
+    const raw=state.population.current;
+    assert.deepEqual(raw.counts,{read:9,accepted:1,excluded:0,quarantined:8,invalidAmounts:1});
+    assert.equal(raw.rows.find(r=>r.id==='zero').cents,0);
+    assert.equal(raw.rows.find(r=>r.id==='bad').cents,null);
+    assert.equal(raw.readTotals.USD,5000);
+    for (const [id,issue] of [['add','duplicate'],['outside','entity'],['','key'],['old','period'],['date','date'],['fx','currency']]) {
+      assert.ok(raw.rows.find(r=>r.id===id).issues.includes(issue),id+' '+issue);
+    }
+    assert.equal(await (await service.fetch(scoped('/evidence/'+raw.evidence,a),cookies.reviewer)).text(),first);
+    await run('reviewer','population-approve',{version:'1',reason:'Unresolved quarantine'},409);
+    state=await run('preparer','support-upload',{name:'control.csv',source:'Independent report',
+      base64:Buffer.from('count,total\n2,125.50').toString('base64')});
+    const controlEvidence=state.evidence.find(e=>e.name==='control.csv').id;
+    await run('reviewer','support-assess',{id:controlEvidence,result:'accepted',reason:'Verified control report separately'});
+    const controls={count:'2',total:'125.50',source:'Independently produced signed control report',mapping:'1500,PPE',
+      controlEvidence,statements:'PPE,125.50',exclusions:[4,5,6,7,8,9,10].map(r=>r+',Documented outside approved scope').join('\n'),use:'PPE analysis and sample'};
+    await run('preparer','population-reconcile',{...controls,version:'1',controlEvidence:raw.evidence},409);
+    state=await run('preparer','population-reconcile',{...controls,version:'1',total:'0',mapping:'1500,PPE\n1500,OTHER'});
+    assert.ok(state.population.current.gaps.some(g=>g.includes('1500')));
+    assert.equal(state.population.current.counts.accepted,2);
+    await run('reviewer','population-approve',{version:'2',reason:'Mismatched control'},409);
+    state=await run('preparer','population-reconcile',{...controls,version:'2'});
+    assert.deepEqual(state.population.current.gaps,[]);
+    assert.deepEqual(state.population.current.bridge,[{line:'PPE',accounts:['1500'],computed:12550,reported:12550,difference:0}]);
+    await run('preparer','population-approve',{version:'3',reason:'Own version'},403);
+    await run('reviewer','population-approve',{version:'3',reason:'Reviewed independent totals and row exclusions'});
+    const reg=(role,operation,fields)=>run(role,'register',{kind:'M06-F06',operation,...fields});
+    state=await reg('preparer','save',Object.fromEntries(Object.entries({
+      area:'PPE',populationLine:'PPE',expected:'120',actual:'999999',threshold:'10',source:'forged source',scope:'Assess the additions',
+    }).map(([key,value])=>['field.'+key,value])));
+    const analytic=state.registers.find(r=>r.kind==='M06-F06');
+    assert.equal(analytic.values.actual,'125.5');
+    assert.equal(analytic.populationBasis.version,3);
+    await reg('preparer','submit',{id:analytic.id});
+    await reg('reviewer','approve',{id:analytic.id,reason:'Independent comparison'});
+
+    for (const [form,fields] of [['1.3',{benchmark:'1000',percentage:'2',performance:'60',trivial:'5',benchmarkSource:'Management control report'}],['2.6',{reliance:'none'}]]) {
+      await run('preparer','save',{form,execution:'Current planning',conclusion:'Reviewed plan',...fields});
+      await run('preparer','submit',{form});
+      await run('reviewer','review',{form});
+    }
+    const form='3.1.2', requestInfo={title:'Supporting source set',form,due:'2026-03-30',parts:'Schedule A\nSchedule B\nExternal confirmation'};
+    state=await run('preparer','request-draft',requestInfo);
+    const request=state.requests[0].id,[p1,p2,p3]=state.requests[0].parts.map(p=>p.id);
+    assert.equal(state.requests[0].dispatch,'draft');
+    await run('reviewer','confirmation-start',{request,part:p3},409);
+    await run('reviewer','request-issue',{request});
+    const file=(name,body)=>({name,base64:Buffer.from(body).toString('base64')});
+    state=await run('preparer','upload',{request,parts:[p1,p2].join(','),source:'Finance package',...file('schedules.csv','Schedule A and B')});
+    const shared=state.requests[0].parts[0].evidence;
+    assert.equal(state.requests[0].parts[1].evidence,shared);
+    await run('preparer','accept',{request,part:p1});
+    state=await run('preparer','accept',{request,part:p2});
+    assert.equal(state.requests[0].status,'partial');
+    assert.equal(state.requests[0].parts[2].state,'missing');
+    await run('preparer','confirmation-start',{request,part:p3},403);
+    state=await run('reviewer','confirmation-start',{request,part:p3});
+    const expired='/confirmation/'+state.confirmationLink.token;
+    state=await run('reviewer','confirmation-start',{request,part:p3});
+    const link='/confirmation/'+state.confirmationLink.token;
+    assert.equal((await service.fetch(expired)).status,404);
+    const invite=await (await service.fetch(link)).json();
+    assert.deepEqual([invite.request,invite.part,invite.recipient],[request,'External confirmation',create.email]);
+    assert.equal((await service.fetch(link,'',{...file('confirmation.csv','Acknowledged'),response:'Third-party balance agrees'},'https://bad.test')).status,403);
+    const reply={...file('confirmation.csv','Acknowledged'),response:'Third-party balance agrees'};
+    assert.equal((await service.fetch(link,'',reply)).status,201);
+    assert.equal((await service.fetch(link,'',reply)).status,404);
+    state=await view('reviewer',a);
+    const received=state.confirmations.find(c=>c.state==='received');
+    assert.equal(received.response,reply.response);
+    assert.equal(received.request,request);
+    const confirmation=received.evidence;
+    assert.equal(state.requests[0].parts[2].state,'received');
+    state=await run('preparer','accept',{request,part:p3});
+    assert.equal(state.requests[0].status,'complete');
+
+    const filters={form,threshold:'100',days:'7'};
+    state=await run('preparer','journal-run',filters);
+    const journals=state.journals[form], journalRef={form,version:String(journals.version)};
+    assert.deepEqual(journals.cases.map(c=>[c.id,c.criteria,c.postings.map(r=>r.row)]),[['J-add',['amount','manual'],[2,3]]]);
+    assert.equal((await run('preparer','journal-run',filters)).journals[form].stamp,journals.stamp);
+    assert.equal((await run('preparer','journal-run',filters)).journals[form].version,journals.version);
+    await run('reviewer','journal-review',{...journalRef,reason:'Unexplained selected journal'},409);
+    await run('preparer','journal-run',{...filters,threshold:'999'},409);
+    const investigation={...journalRef,entry:'J-add',purpose:'Asset addition',authority:'Signed authorization',
+      accounting:'Checked both postings to the register',amount:'0',evidence:shared};
+    await run('preparer','journal-investigate',{...investigation,result:'incomplete'});
+    await run('reviewer','journal-review',{...journalRef,reason:'Still incomplete'},409);
+    await run('preparer','journal-investigate',{...investigation,result:'explained'});
+    await run('preparer','journal-review',{...journalRef,reason:'Own investigation'},403);
+    await run('reviewer','journal-review',{...journalRef,reason:'Verified exact posting set and authorization'});
+
+    const design={form,line:'PPE',size:'2',seed:'42',purpose:'Inspect both approved source rows'};
+    state=await run('preparer','sample-design',design);
+    const identity={form,version:String(state.samples[form].version)};
+    await run('preparer','sample-select',identity,409);
+    await run('preparer','sample-approve',{...identity,reason:'Own design'},403);
+    await run('reviewer','sample-approve',{...identity,reason:'Reviewed exact inputs'});
+    state=await run('reviewer','sample-select',identity);
+    const selected=state.samples[form].selected;
+    assert.deepEqual(selected.map(r=>[r.id,r.row,r.cents]).sort(),[['add',3,12550],['zero',2,0]]);
+    assert.deepEqual((await run('preparer','sample-select',identity)).samples[form].selected,selected);
+    await run('preparer','save',{form,execution:'Inspected confirmations and schedules',conclusion:'Exception reported'});
+    await run('preparer','sample-test',{...identity,unit:'zero',result:'pass',amount:'0',evidence:shared,detail:'Zero agreed'});
+    await run('preparer','submit',{form},409);
+    await run('preparer','sample-test',{...identity,unit:'add',result:'exception',amount:'0',evidence:confirmation,detail:'Approval missing'});
+    await run('preparer','submit',{form});
+    state=await run('reviewer','review',{form});
+    assert.equal(state.papers.find(p=>p.form===form).status,'reviewed');
+    assert.equal(state.fieldFindings[0].sampleId,'add');
+    const signed=state.papers.find(p=>p.form===form).version;
+    state=await run('reviewer','request-reopen',{request,part:p3,reason:'Replace the confirmation'});
+    assert.equal(state.papers.find(p=>p.form===form).status,'changed');
+    assert.ok(state.papers.find(p=>p.form===form).history.some(h=>h.version===signed&&h.evidence.includes(confirmation)));
+    assert.equal(state.evidence.find(e=>e.id===confirmation).current,false);
+    assert.equal(await (await service.fetch(scoped('/evidence/'+confirmation,a),cookies.reviewer)).text(),'Acknowledged');
+    await run('preparer','upload',{request,part:p3,source:'Updated confirmation',...file('corrected.csv','Replacement')});
+    state=await run('preparer','accept',{request,part:p3});
+    const replacement=state.requests[0].parts[2].evidence;
+    assert.equal(state.evidence.find(e=>e.id===replacement).replaces,confirmation);
+    await run('preparer','sample-test',{...identity,unit:'add',result:'exception',amount:'0',evidence:replacement,detail:'Approval missing in replacement'});
+    await run('preparer','submit',{form});
+    state=await run('reviewer','review',{form});
+    state=await run('partner','sample-resolve-finding',{id:state.fieldFindings[0].id,reason:'Escalated approval control issue'});
+    await run('reviewer','resolve-impact',{id:state.impacts.find(i=>i.source==='1.3').id,reason:'Selected under the current materiality version'});
+    await run('partner','statements',{statements:'Reviewed synthetic statements',disclosures:'Reviewed synthetic disclosures'});
+    for (const form of ['4.4','4.1.A1']) {
+      await run('reviewer','save',{form,execution:'Completed the review',conclusion:'Reviewed current evidence'});
+      await run('reviewer','submit',{form});
+      await run('partner','review',{form});
+    }
+    state=await run('partner','authorize',{});
+    assert.equal(state.authorized.current,true);
+    const [signedBundle]=await (await service.fetch(scoped('/authorizations',a),cookies.partner)).json();
+    assert.equal(signedBundle.authorization.population.version,3);
+    assert.equal(signedBundle.authorization.samples[form].selected.length,2);
+    assert.equal(signedBundle.authorization.journals[form].cases[0].id,'J-add');
+    assert.equal(signedBundle.authorization.confirmations[0].evidence,confirmation);
+    assert.ok(signedBundle.evidence.some(e=>e.id===confirmation));
+    const priorAnalytics=state.registers.find(r=>r.id===analytic.id).version;
+    state=await run('preparer','population-import',upload([header,line('zero','0'),line('add','130')].join('\n')));
+    assert.equal(state.samples[form].current,false);
+    assert.equal(state.journals[form].current,false);
+    assert.equal(state.papers.find(p=>p.form===form).status,'changed');
+    assert.equal(state.registers.find(r=>r.id===analytic.id).stale,true);
+    assert.equal(state.registers.find(r=>r.id===analytic.id).version,priorAnalytics);
+    assert.equal(state.authorized.current,false);
+    assert.ok(state.population.history.some(v=>v.version===3&&v.approval));
+    await service.close();
+    service=await start(database);
+    const {view:reloaded}=await fixture(service,false);
+    state=await reloaded('reviewer',a);
+    assert.equal(state.samples[form].basis.population,3);
+    assert.equal(state.samples[form].current,false);
+    assert.deepEqual(state.samples[form].selected,selected);
+    assert.equal(state.fieldFindings[0].resolution,'Escalated approval control issue');
+  } finally {
+    if(service)await service.close();
+    for(const suffix of ['', '-shm', '-wal'])await rm(database+suffix,{force:true});
+    await rmdir(dir);
+  }
+});

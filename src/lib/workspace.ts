@@ -25,8 +25,9 @@ type Authorization={report:number;fs:number;by:string;at:string;package?:ReportP
 type Release={report:number;fs:number;authorizedAt:string;issuedAt:string;recipients:{name:string;status:string}[];package?:ReportPackage};
 export type WorkItem={id:string;engagement:string;form:string;title:string;stage:number;owner:string;reviewer:string;start:string;due:string;baselineStart:string;baselineDue:string;estimate:number;actual:number;status:StageStatus;version:number;submittedVersion?:number;submittedBy?:string;reviewedVersion?:number;values:Record<string,string>;evidence:string[];notes:Note[];history:Snapshot[];required:boolean;naReason?:string;completedAt?:string;qualityVersion?:number};
 export type Engagement={id:string;companyId?:string;team?:EngagementTeam;carriedFrom?:string;client:string;initials:string;industry:string;period:string;kind:string;phase:string;reportDate:string;reportForm?:string;acceptance:'pending'|'accepted'|'declined'|'conditional';termsAgreed:boolean;independence:boolean;formalEqr:boolean;eqrComplete:boolean;fsVersion:number;reportVersion:number;reportFsVersion:number;authorized?:Authorization;issued?:{report:number;fs:number;at:string};recipients:{name:string;status:'pending'|'delivered'|'failed'}[];locked:boolean;custody:'none'|'offered'|'accepted';hold:boolean;followup:boolean;qualityConcerns:{id:string;text:string;resolved:boolean}[];releaseHistory?:Release[];decisionVersion?:number;intake?:Intake;decisions?:DecisionRecord[];statements?:Statements;authorizationHistory?:Authorization[];eqrReview?:{by:string;at:string;basis:string}};
-export type Evidence={id:string;engagement:string;name:string;version:number;type:string;obtained:string;status:'received'|'accepted'|'rejected';source:string;anchor:string;text:string;specimen:boolean;dataUrl?:string;original?:boolean;channel?:string;request?:string;replaces?:string;assessment?:string};
-export type RequestPart={id:string;title:string;evidence?:string;state:'missing'|'received'|'accepted'|'rejected';reason?:string};
+export type Evidence={id:string;engagement:string;name:string;version:number;type:string;obtained:string;status:'received'|'accepted'|'rejected';source:string;anchor:string;text:string;specimen:boolean;dataUrl?:string;original?:boolean;channel?:string;request?:string;replaces?:string;assessment?:string;population?:boolean};
+export type RequestPart={id:string;title:string;evidence?:string;state:'missing'|'received'|'accepted'|'rejected';reason?:string;
+ uses?:{evidence:string;state:'received'|'accepted'|'rejected'|'reopened';at:string;by:string;reason?:string}[]};
 export type RequestItem={id:string;dispatch?:'draft'|'issued'|'cancelled';contactId?:string;contactEmail?:string;issuedAt?:string;followUps?:{at:string;by:string;text:string}[];engagement:string;title:string;form:string;contact:string;owner:string;due:string;status:'open'|'partial'|'ready'|'changes_requested'|'complete';received:number;expected:number;message:string;evidence:string[];history:string[];parts?:RequestPart[]};
 export type ManualTask={id:string;engagement:string;title:string;owner:string;due:string;done:boolean;kind:'task'|'decision'|'meeting';form?:string};
 export type Event={id:string;engagement:string;title:string;owner:string;start:string;end:string;kind:'meeting'|'fieldwork'|'review'|'focus'};
@@ -262,23 +263,27 @@ export function prepareDemo(m:Model):Model{
  m.work[workKey('E2','3.1.2')].due='';m.work[workKey('E2','3.1.2')].baselineDue='';
  return m;
 }
-export function recordRequestPart(m:Model,id:string,partId:string,action:'receive'|'accept'|'reject',value=''){
+export function recordRequestPart(m:Model,id:string,partId:string,action:'receive'|'accept'|'reject',value='',shared=false){
  const r=m.requests.find(r=>r.id===id&&r.engagement===m.engagement),e=m.engagements.find(x=>x.id===m.engagement)!;
  const p=r?.parts?.find(p=>p.id===partId);
  if(!r||!p||!permitted(m,e.id)||e.locked||(e.intake&&!e.intake.active)||r.owner!==m.person||(r.dispatch&&r.dispatch!=='issued'))throw Error('Энэ хүсэлтийн томилсон эзэн шаардлагатай.');
  if(action==='receive'){
   const ev=m.evidence.find(x=>x.id===value&&x.engagement===e.id);
-  if(!ev||r.dispatch&&(ev.status!=='received'||!['missing','rejected'].includes(p.state))||ev.status==='rejected'||ev.request&&ev.request!==r.id||r.parts?.some(x=>x.id!==p.id&&x.evidence===ev.id))throw Error('Тус хэсэгт тохирох эх баримт сонгоно уу.');
+  if(!ev||r.dispatch&&(ev.status!=='received'||!['missing','rejected'].includes(p.state))||ev.status==='rejected'||ev.request&&ev.request!==r.id||!shared&&r.parts?.some(x=>x.id!==p.id&&x.evidence===ev.id))throw Error('Тус хэсэгт тохирох эх баримт сонгоно уу.');
   if(r.dispatch){ev.request=r.id;if(p.evidence)ev.replaces??=p.evidence;}
   p.evidence=ev.id;p.state='received';p.reason=undefined;
  }else{
   if(p.state!=='received'||!p.evidence)throw Error('Эхлээд баримт бүртгэнэ үү.');
   if(action==='reject'&&!value.trim())throw Error('Буцаах шалтгаан бичнэ үү.');
   p.state=action==='accept'?'accepted':'rejected';p.reason=action==='reject'?value.trim():undefined;
-  const ev=m.evidence.find(x=>x.id===p.evidence)!;ev.status=p.state;if(r.dispatch)ev.assessment=p.reason??'Хүсэлтийн баримтыг үнэлж хүлээн авсан';
+  const ev=m.evidence.find(x=>x.id===p.evidence)!;
+  const uses=r.parts!.filter(part=>part.evidence===p.evidence);
+  ev.status=uses.some(part=>part.state==='accepted')?'accepted':uses.some(part=>part.state==='received')?'received':'rejected';
+  if(r.dispatch)ev.assessment=ev.status==='accepted'?'Хүсэлтийн баримтыг үнэлж хүлээн авсан':p.reason;
  }
+ if(p.evidence)(p.uses??=[]).push({evidence:p.evidence,state:p.state,at:now(),by:m.person,reason:p.reason});
  const parts=r.parts!;
- r.received=parts.filter(p=>p.state!=='missing').length;r.evidence=parts.flatMap(p=>p.evidence?[p.evidence]:[]);
+ r.received=parts.filter(p=>p.state!=='missing').length;r.evidence=[...new Set(parts.flatMap(p=>p.evidence?[p.evidence]:[]))];
  r.status=parts.every(p=>p.state==='accepted')?'complete':parts.some(p=>p.state==='rejected')?'changes_requested':r.received===r.expected?'ready':r.received?'partial':'open';
  r.history.push(`${now()} · ${p.title} · ${p.state} · ${p.evidence??''} ${p.reason??''}`);
  const w=m.work[workKey(e.id,r.form)];
