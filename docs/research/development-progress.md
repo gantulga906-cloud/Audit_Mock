@@ -27,3 +27,13 @@ Report issue records the external issue reference and the authorized artifact ha
 The pilot still uses three preset accounts. Dynamic firm identities and independent quality and custody roles remain open. Workbook formula parity, row-by-row source acceptance, and workflow-specific controls for each form still need verification.
 
 Before upgrading a pilot database, stop the earlier pilot process and back up the database. The first new startup imports the single-workspace record into the engagement tables and tags its existing evidence, authorizations and archive rows with that engagement ID. The upgrade preserves archive payload bytes and SHA-256 hashes. Use the backup when returning to an earlier server version.
+
+## Wave 2 in progress
+
+| Work package and source | Implemented behavior and verification |
+|---|---|
+| WP-06 · M03-F01–F06/F08 · P01-UC01–UC03 · A01 | The portfolio has a scoped client directory and separate enquiry inbox. Drafts retain unknown dates and frameworks. An enquiry can be forwarded, returned with an item and reason, declined, or converted to a pending engagement. Client contacts retain source, effective dates and previous details. The regression covers both enquiry origins, role checks, duplicate periods, declined history and database restart. |
+| WP-06 · P03-UC04 · D01/D04 | A subsequent period can confirm a client-profile version and selected contact with a link to an accessible prior period. The new engagement has its own identity, evidence, terms and approval history. Its intake paper reads the confirmed company name, reporting framework, sector, period and decision references. |
+| WP-08 · A01/A03 · 1.4.3 | A converted enquiry requires the partner to approve the exact signed letter revision, period, client confirmation and evidence hash before activation. A changed confirmation invalidates the old approval. The test blocks activation on unresolved independence, preserves the prior letter version and verifies that the earlier period stays unchanged. |
+
+Client registration is an internal pilot workflow. Source-system verification and canonical client consolidation are separate. The pilot records the reviewed signed copy as an artifact. External signature and dispatch services, full WP-07 staffing workflows, and WP-09 planning handoffs remain open.

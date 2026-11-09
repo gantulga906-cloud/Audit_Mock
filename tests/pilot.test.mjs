@@ -62,6 +62,142 @@ async function fixture(service, setup = true) {
   return { cookies, scoped, view, write };
 }
 
+test('provisional intake, subsequent-period confirmation and signed terms survive independent review', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'audit-intake-'));
+  const database = join(dir, 'intake.sqlite');
+  let service;
+  try {
+    service = await start(database);
+    const { cookies, scoped, view, write } = await fixture(service);
+    const getEnquiry = (v, id) => v.intake.enquiries.find(row => row.id === id);
+    const base = { company:'Source client', contact:'Finance contact', origin:'firm', service:'Financial statement audit', facts:'Reporting period unknown' };
+    const draft = (await write('preparer','firm','intake-save',base)).intake.enquiries[0];
+    assert.deepEqual([draft.status,draft.origin,draft.start,draft.end,draft.framework,draft.contact], ['draft','firm','','','','Finance contact']);
+    assert.equal((await view('reviewer','firm')).intake.enquiries.length, 0);
+    const forwarded = await write('preparer','firm','intake-forward',{id:draft.id,note:'Confirm client identifiers'});
+    assert.equal(getEnquiry(forwarded,draft.id).status,'forwarded');
+    assert.deepEqual(forwarded.portfolio,[]);
+    const returned = await write('reviewer','firm','intake-return',{id:draft.id,item:'Reporting period',note:'Confirm with finance'});
+    assert.equal(getEnquiry(returned,draft.id).history[0].item,'Reporting period');
+    await write('preparer','firm','intake-save',{...base,id:draft.id,start:'2025-01-01',end:'2025-12-31'});
+    await write('preparer','firm','intake-forward',{id:draft.id,note:'Confirmed dates'});
+    const separate = (await write('reviewer','firm','intake-save',{...base,company:'Declined prospect',origin:'client'})).intake.enquiries[0];
+    await write('reviewer','firm','intake-forward',{id:separate.id,note:'Review conflict'});
+    const declined = await write('partner','firm','intake-decline',{id:separate.id,note:'Engagement not offered'});
+    assert.equal(getEnquiry(declined,separate.id).status,'declined');
+    assert.equal(getEnquiry(declined,separate.id).engagement,undefined);
+
+    const clientFields = {name:base.company,registration:'INTAKE-001',legalForm:'ХХК',framework:'',industry:'Manufacturing',bodies:'Board',note:'Client-supplied profile'};
+    await write('preparer','firm','client-save',clientFields,403);
+    const client = (await write('reviewer','firm','client-save',clientFields)).intake.clients[0];
+    await write('reviewer','firm','client-save',{...clientFields,registration:' intake-001 '},409);
+    const contactFields = {id:client.id,name:'First finance contact',email:'first@example.test',capacity:'Finance director',
+      body:'Board',source:'Client confirmation',effective:'2025-03-01',signer:'yes',note:'Record both capacities'};
+    const current = (await write('reviewer','firm','client-contact',contactFields)).intake.clients[0];
+    const contact = current.profile.contacts[0];
+    assert.equal(contact.signer,true);
+    assert.equal(contact.role,'Finance director');
+    assert.equal(contact.source,'Client confirmation');
+    const convert = {id:draft.id,clientId:client.id,contactId:contact.id,synthetic:'yes',extended:'no',note:'Confirmed for the 2025 period'};
+    await write('reviewer','firm','intake-convert',convert,409);
+    await write('reviewer','firm','client-save',{...clientFields,id:client.id,framework:'Approved fixture framework'});
+    await write('reviewer','firm','intake-convert',convert,400);
+    const dates = {start:'2025-01-01',end:'2025-12-31',reportDate:'2026-04-01'};
+    const requestKey=randomUUID(), firmRev=(await view('reviewer','firm')).revision;
+    const original = await write('reviewer','firm','intake-convert',{...convert,...dates},200,{key:requestKey,revision:firmRev});
+    const a=original.selected;
+    assert.equal((await write('reviewer','firm','intake-convert',{...convert,...dates},200,{key:requestKey,revision:firmRev})).selected,a);
+    assert.equal(original.engagement.active,false);
+    assert.deepEqual(original.engagement.decisions,[]);
+    assert.equal(original.intakeContext.by,'reviewer');
+    assert.equal(original.intakeContext.enquiry,draft.id);
+    const activate={assessment:'Accepted on verified evidence',independence:'Reviewed threat assessment',letter:'Forged external reference'};
+    assert.match((await write('partner',a,'activate',activate,409)).error,/1\.4\.3/);
+    const acceptFile=async(scope,bytes)=>{
+      const row=await write('reviewer',scope,'support-upload',{name:'signed-letter.pdf',source:'Client signed copy',base64:Buffer.from(bytes).toString('base64')});
+      const id=row.evidence.at(-1).id;
+      await write('partner',scope,'support-assess',{id,result:'accepted',reason:'Independently verified file'});
+      return id;
+    };
+    const approveTerms=async(scope,evidence,reference,version)=>{
+      const fields={evidence,reference,signatory:'Client director',signedOn:'2026-03-20',scope:'Financial statement audit only'};
+      const saved=await write('reviewer',scope,'intake-terms-save',fields);
+      assert.equal(saved.intakeTerms.version,version);
+      await write('reviewer',scope,'intake-terms-approve',{version:String(version),reason:'Self approval'},403);
+      await write('partner',scope,'intake-terms-approve',{version:String(version+1),reason:'Wrong version'},409);
+      return write('partner',scope,'intake-terms-approve',{version:String(version),reason:'Approved exact version'});
+    };
+    const oldEvidence=await acceptFile(a,'Approved 2025 terms');
+    const first=await approveTerms(a,oldEvidence,'Letter v1',1);
+    assert.equal(first.intakeTerms.sha256,createHash('sha256').update('Approved 2025 terms').digest('hex'));
+    const threatFields={'field.threat':'Conflicting service','field.significance':'high','field.owner':'reviewer','field.safeguard':'Independent review',
+      'field.followup':'2026-03-31','field.residual':'open','field.basis':'Unresolved threat'};
+    const risk=(await write('reviewer',a,'register',{kind:'M04-F05',operation:'save',...threatFields})).registers.at(-1).id;
+    const updateRisk=(role,operation,fields={})=>write(role,a,'register',{kind:'M04-F05',id:risk,operation,...fields});
+    await updateRisk('reviewer','submit');
+    await updateRisk('partner','approve',{reason:'Threat remains open'});
+    assert.match((await write('partner',a,'activate',activate,409)).error,/M04-F05/);
+    await updateRisk('reviewer','save',{...threatFields,'field.residual':'acceptable'});
+    await updateRisk('reviewer','submit');
+    await updateRisk('partner','approve',{reason:'Safeguard verified'});
+    const active = await write('partner',a,'activate',activate);
+    assert.equal(active.engagement.active,true);
+    assert.equal(active.engagement.decisions.at(-1).letter,'1.4.3 v1 · Letter v1');
+    assert.equal((await view('reviewer','firm')).intake.clients[0].status,'active');
+    await write('reviewer',a,'form-use',{form:'1.1.1',version:'source'});
+    const oldIntake=(await view('preparer',a)).papers.find(p=>p.form==='1.1.1');
+    assert.equal(oldIntake.template.shared.framework,'Approved fixture framework');
+    const originalRequest=(await write('reviewer',a,'request',{title:'Prior-period file',due:'2026-03-31'})).requests[0];
+    assert.equal(originalRequest.contactEmail,'first@example.test');
+
+    const next = (await write('reviewer','firm','intake-save',{...base,origin:'client',clientId:client.id})).intake.enquiries[0];
+    await write('reviewer','firm','intake-forward',{id:next.id,note:'Continuance review'});
+    await write('partner','firm','client-status',{id:client.id,status:'suspended',note:'Temporarily suspended'});
+    await write('reviewer','firm','intake-convert',{...convert,id:next.id,...dates},409);
+    await write('partner','firm','client-status',{id:client.id,status:'active',note:'Review complete'});
+    await write('reviewer','firm','intake-convert',{...convert,id:next.id,...dates},409);
+    assert.equal(getEnquiry(await view('reviewer','firm'),next.id).status,'forwarded');
+    const nextPeriod = {start:'2026-01-01',end:'2026-12-31',reportDate:'2027-04-01'};
+    const follow = await write('reviewer','firm','intake-convert',{...convert,id:next.id,...nextPeriod,prior:a,note:'Selected stable client facts only'});
+    const b = follow.selected;
+    assert.notEqual(a,b);
+    assert.equal(follow.intakeContext.prior,a);
+    assert.equal(follow.engagement.active,false);
+    assert.deepEqual(follow.evidence,[]);
+    assert.deepEqual(follow.engagement.decisions,[]);
+    assert.equal((await service.fetch(scoped('/evidence/'+oldEvidence,b),cookies.partner)).status,404);
+    const evidenceB=await acceptFile(b,'Approved 2026 terms');
+    await approveTerms(b,evidenceB,'Second period letter',1);
+    const corrected = await write('reviewer','firm','client-contact',{...contactFields,contactId:contact.id,email:'updated@example.test',effective:'2025-06-01',note:'New verified contact channel'});
+    const currentClient=corrected.intake.clients[0];
+    assert.ok(currentClient.history.some(h=>h.before?.contacts.some(c=>c.email==='first@example.test')));
+    assert.match((await write('partner',b,'activate',activate,409)).error,/дахин/);
+    const refreshed=await write('reviewer',b,'intake-refresh',{contactId:contact.id,note:'Reconfirmed replacement channel'});
+    assert.equal(refreshed.intakeContext.version,currentClient.version);
+    assert.equal(refreshed.intakeContext.history[0].note,'Selected stable client facts only');
+    assert.match((await write('partner',b,'activate',activate,409)).error,/1\.4\.3/);
+    const refreshedTerms=await approveTerms(b,evidenceB,'Second period letter',2);
+    assert.equal(refreshedTerms.intakeTermsHistory[0].version,1);
+    await write('partner',b,'activate',activate);
+    assert.equal((await view('partner',a)).engagement.decisions.at(-1).letter,'1.4.3 v1 · Letter v1');
+    assert.equal((await view('reviewer',a)).requests[0].contactEmail,'first@example.test');
+    assert.equal((await write('reviewer',b,'request',{title:'Current-period file',due:'2027-03-31'})).requests[0].contactEmail,'updated@example.test');
+    assert.equal((await view('partner',b)).engagement.decisions.at(-1).letter,'1.4.3 v2 · Second period letter');
+    await service.close();
+    service=null;
+    service=await start(database);
+    const reloaded=await fixture(service,false);
+    const firm=await reloaded.view('reviewer','firm');
+    assert.deepEqual(firm.intake.clients[0].periods.map(p=>p.id),[b,a]);
+    assert.equal(getEnquiry(firm,separate.id).status,'declined');
+    assert.equal((await reloaded.view('partner',b)).intakeContext.prior,a);
+  } finally {
+    if (service) await service.close();
+    for (const suffix of ['', '-shm', '-wal']) await rm(database + suffix, { force: true });
+    await rmdir(dir);
+  }
+});
+
 test('typed workpapers and one-form grants preserve published and reviewed versions', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'audit-forms-'));
   const database = join(dir, 'forms.sqlite');

@@ -29,6 +29,16 @@ export function emptyWorkspace() {
   };
 }
 
+export function openPilotEngagement(m, data, company) {
+  if (data?.includePreparer !== undefined && !['yes','no'].includes(data.includePreparer)) throw new PilotError(400, 'Бэлтгэгчийн томилгоог шалгана уу.');
+  const id = createEngagement(m, company, { start: input(data, 'start', 10), end: input(data, 'end', 10) },
+    input(data, 'reportDate', 10), accounts, forms);
+  m.extendedPilot = data.extended === 'yes';
+  m.syntheticPilot = data.synthetic === 'yes';
+  syncReportForm(m);
+  return m.engagements.find(e => e.id === id);
+}
+
 export class PilotError extends Error {
   constructor(status, message) {
     super(message);
@@ -187,17 +197,12 @@ export function pilotAction(m, role, action, data, files) {
   if (action === 'create') {
     requireActor(role === 'reviewer' || role === 'partner');
     if (m.engagements.length) throw new PilotError(409, 'Туршилтын гэрээт ажил бүртгэгдсэн.');
-    if (data?.includePreparer !== undefined && !['yes','no'].includes(data.includePreparer)) throw new PilotError(400, 'Бэлтгэгчийн томилгоог шалгана уу.');
     const contact = { id: randomUUID(), name: input(data, 'contact', 150), email: input(data, 'email', 254), role: '', body: '', signer: true };
     const company = createCompany(m, {
       name: input(data, 'client', 200), legalForm: input(data, 'legalForm', 50), registration: input(data, 'registration', 50),
       framework: input(data, 'framework', 100), contacts: [contact], bodies: [],
     }, '');
-    createEngagement(m, company, { start: input(data, 'start', 10), end: input(data, 'end', 10) },
-      input(data, 'reportDate', 10), accounts, forms);
-    m.extendedPilot = data.extended === 'yes';
-    m.syntheticPilot = data.synthetic === 'yes';
-    syncReportForm(m);
+    openPilotEngagement(m, data, company);
     return;
   }
   const engagement = m.engagements[0];
@@ -341,7 +346,8 @@ export function pilotAction(m, role, action, data, files) {
     const templateIds = [artifact.templateSha256, ...supporting.flatMap(r => r.template ? [r.template.digest] : []), ...native.map(w => w.values.templateDigest)];
     const templates = [...new Set(templateIds)].map(hash => ({ hash, contract: files.template(hash) }));
     if (templates.some(t => !t.contract)) throw new PilotError(409, 'Баталсан эх загварын хувилбар олдсонгүй.');
-    const ids = new Set([...engagement.authorized.package.evidence.map(e => e.id), ...registerEvidence(m), ...[...programmes,...native].flatMap(w => w.evidence)]);
+    const ids = new Set([...engagement.authorized.package.evidence.map(e => e.id), ...registerEvidence(m),
+      ...[...programmes,...native].flatMap(w => w.evidence), ...(m.pilotTerms ? [m.pilotTerms.evidence] : [])]);
     const linked = m.evidence.filter(e => ids.has(e.id)).map(({ id, version, status }) => ({ id, version, status }));
     m.pilotReportDigest = artifact.sha256;
     files.authorize({
@@ -352,6 +358,8 @@ export function pilotAction(m, role, action, data, files) {
       ...(native.length && { nativePapers: native.map(w => ({
         id: w.id, version: w.version, reviewedVersion: w.reviewedVersion, values: { ...w.values }, evidence: [...w.evidence],
       })) }),
+      ...(m.pilotTerms && { terms: m.pilotTerms }),
+      ...(m.pilotIntake && { intake: m.pilotIntake }),
     }, linked.map(e => {
       const file = files.get(e.id);
       if (!file) throw new PilotError(409, 'Зөвшөөрөх багцын эх файл олдсонгүй.');

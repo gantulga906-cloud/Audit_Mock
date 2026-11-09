@@ -28,7 +28,7 @@ const canEdit = (library, role, id) => (library.grants[id] ?? []).includes(role)
 function sourceTemplate(id) {
   const template = formContract(id);
   if (id !== '1.1.1' || !template) return template;
-  const bound = { r12:'period', r13:'contacts' }, decisions = { r16:'assessment', r17:'letter', r18:'independence' };
+  const bound = { r11:'industry', r12:'period', r13:'contacts', r21:'framework' }, decisions = { r16:'assessment', r17:'letter', r18:'independence' };
   const fields = template.fields.flatMap(f => {
     if (f.key === 'r10') return ['name','legalForm','registration'].map(binding =>
       ({ ...f, key: f.key+'_'+binding, label: sharedBindings[binding], type: 'text', binding }));

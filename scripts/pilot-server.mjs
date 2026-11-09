@@ -7,6 +7,7 @@ import { createArchiveStore } from './pilot-archive.mjs';
 import { archiveGrantKinds } from './pilot-registers.mjs';
 import { createPilotStore, firmCommand } from './pilot-store.mjs';
 import { isLibraryAction, libraryAction, libraryTemplate, libraryView } from './pilot-forms.mjs';
+import { createIntakeStore, isIntakeAction, termsAction, termsGaps } from './pilot-intake.mjs';
 import { recordEvent } from '../src/lib/workspace.ts';
 
 const prefix = '/api/pilot';
@@ -57,6 +58,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
   db.prepare('INSERT OR IGNORE INTO workspace VALUES (1, 0, ?)').run(JSON.stringify(emptyWorkspace()));
   const archive = createArchiveStore(db);
   const store = createPilotStore(db);
+  const intake = createIntakeStore(db, store);
   const { transaction } = store;
   const configured = () => db.prepare('SELECT COUNT(*) AS total FROM accounts').get().total !== 0;
   const filesFor = engagementId => ({
@@ -94,8 +96,17 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       ...item, progress: deliverySummary(store.load(role, item.id).model, role, archive),
     });
     const files = filesFor(id);
-    return { ...pilotView(model, role, revision, files), selected: id, portfolio,
+    const payload = pilotView(model, role, revision, files);
+    if (payload.engagement && !payload.engagement.active) {
+      payload.engagement.acceptanceGaps.push(...intake.activationGaps(model), ...termsGaps(model, files));
+    }
+    return { ...payload, selected: id, portfolio,
       formLibrary: libraryView(model.pilotFormLibrary, role, files, !id),
+      ...(!id && { intake: intake.view(role) }),
+      ...(id && model.pilotIntake && (role === 'partner' || !archive.isSealed(model)) && { intakeContext: intake.contextView(model) }),
+      ...(id && !archive.isSealed(model) && model.pilotTerms && {
+        intakeTerms: model.pilotTerms, intakeTermsHistory: model.pilotTermsHistory ?? [],
+      }),
       ...(id && role === 'partner' && { members: store.members(id) }) };
   }
   function changeMembership(context, actor, fields) {
@@ -215,9 +226,30 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
               (isLibraryAction(data.action) || url.searchParams.has('engagement') || db.prepare('SELECT count(*) AS n FROM pilot_engagements').get().n > 1)) {
             throw new PilotError(409, 'Фирмийн бүртгэлийн хэсгээс өөрчилнө үү.');
           }
+          if (isIntakeAction(data.action) && id) throw new PilotError(409, 'Үйлчлүүлэгч ба хүсэлтийн хэсгээс өөрчилнө үү.');
+          let enquiry;
           try {
             if (data.action === 'access') changeMembership(context, role, data.fields);
             else if (isLibraryAction(data.action)) libraryAction(model.pilotFormLibrary, role, data.action, data.fields, filesFor(null));
+            else if (isIntakeAction(data.action)) {
+              if (data.action.startsWith('client-')) intake.updateClient(role, data.action, data.fields);
+              else enquiry = intake.enquiryAction(model, role, data.action, data.fields);
+            } else if (data.action === 'intake-refresh') {
+              if (!id) throw new PilotError(409, 'Хүлээн авах шатны ажлыг сонгоно уу.');
+              intake.refresh(model, role, data.fields);
+            } else if (['intake-terms-save','intake-terms-approve'].includes(data.action)) {
+              if (!id) throw new PilotError(409, 'Хүлээн авах шатны ажлыг сонгоно уу.');
+              const gaps = intake.activationGaps(model);
+              if (gaps.length) throw new PilotError(409, gaps.join(' · '));
+              termsAction(model, role, data.action, data.fields, filesFor(id));
+            } else if (data.action === 'activate') {
+              if (role !== 'partner') throw new PilotError(403, 'Партнерын томилгоо шаардлагатай.');
+              const files = filesFor(id), gaps = [...intake.activationGaps(model), ...termsGaps(model, files)];
+              if (gaps.length) throw new PilotError(409, gaps.join(' · '));
+              const terms = model.pilotTerms;
+              const fields = terms ? { ...data.fields, letter: `1.4.3 v${terms.version} · ${terms.reference}` } : data.fields;
+              pilotAction(model, role, data.action, fields, files);
+            }
             else pilotAction(model, role, data.action, data.fields, filesFor(id));
           }
           catch (error) {
@@ -226,6 +258,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             throw error;
           }
           const resultId = store.save(context, data.action, data.fields);
+          intake.finish(model, role, data.action, enquiry);
+          if (isIntakeAction(data.action) && !resultId) store.touchFirm();
           if (fingerprint) db.prepare(`INSERT INTO pilot_commands (actor, key, fingerprint, scope, result_engagement)
             VALUES (?, ?, ?, ?, ?)`).run(role, key, fingerprint, scope, resultId);
           return view(role, resultId);

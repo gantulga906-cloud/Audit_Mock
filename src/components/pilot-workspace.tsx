@@ -3,9 +3,11 @@
 import {useEffect,useRef,useState,type FormEvent,type ReactNode} from 'react';
 import PilotRegisters,{type RegisterResources} from './pilot-registers';
 import {AdoptPilotForm,NativeFields,PilotFormLibrary} from './pilot-forms';
+import {IntakeProvenance,PilotIntake,TermsEditor} from './pilot-intake';
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
 import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
 import {fieldAnswers,type LibraryView,type PaperForm} from '@/lib/pilot-forms';
+import type {Enquiry,IntakeClient,IntakeContext,IntakeTerms} from '@/lib/pilot-intake';
 import type {DecisionRecord,Evidence,Model,RequestItem,Statements,WorkItem} from '@/lib/workspace';
 import type {Period,Template} from '@/lib/workbench';
 
@@ -19,6 +21,8 @@ type PortfolioItem={id:string;client:string;start:string;end:string;reportDate:s
  progress?:null|{reviewed:number;applicable:number;tasks:number;deadlines:{form:string;title:string;due:string}[]}};
 type View=RegisterResources&{
  role:PilotRole;revision:number;selected:string|null;portfolio:PortfolioItem[];members?:PilotRole[];formLibrary:LibraryView;
+ intake?:{clients:IntakeClient[];enquiries:Enquiry[]};intakeContext?:IntakeContext;
+ intakeTerms?:IntakeTerms;intakeTermsHistory?:IntakeTerms[];
  engagement:null|{client:string;period:Period;active:boolean;reportDate:string;statements?:Statements;decisions:DecisionRecord[];acceptanceGaps:string[];firm:{id:string;kind:string;version:number;values:Record<string,string>}[]};
  papers?:Paper[];requests?:RequestItem[];evidence?:(Evidence&{sha256:string})[];gaps?:string[];
  fieldwork?:string[];statementLines?:Record<string,number>;impacts?:Model['impacts'];
@@ -79,27 +83,6 @@ function Access({setup,send}:{setup:boolean;send:(path:string,data:unknown)=>Pro
     <label>Нууц үг<input name="password" type="password" autoComplete="current-password" required/></label></>}
    <button className="btn primary">{setup?'Нэвтрэх эрх үүсгэх':'Нэвтрэх'}</button>
   </form>
- </section>;
-}
-
-function SetupEngagement({run}:{run:Action}){
- return <section className="card pad bench-card">
-  <h2>Шинэ гэрээт ажил</h2>
-  <ActionForm run={run} action="create" button="Гэрээт ажил бүртгэх"><div className="field-grid">
-   <label>Байгууллагын нэр<input name="client" required/></label>
-   <label>Хуулийн хэлбэр<input name="legalForm" required/></label>
-   <label>Бүртгэлийн дугаар<input name="registration" required/></label>
-   <label>Тайлагналын стандарт<input name="framework" required/></label>
-   <label>Холбоо барих хүн<input name="contact" required/></label>
-   <label>Холбоо барих имэйл<input name="email" type="email" required/></label>
-   <label>Тайлант үе эхлэх<input name="start" type="date" required/></label>
-   <label>Тайлант үе дуусах<input name="end" type="date" required/></label>
-   <label>Зорилтот тайлангийн өдөр<input name="reportDate" type="date" required/></label>
-  </div>
-   <label className="checkbox-line"><input type="checkbox" name="extended" value="yes" defaultChecked/>Нэгдсэн бүртгэл, үнэлгээ, батлах шаардлагыг идэвхжүүлэх</label>
-   <label className="checkbox-line"><input type="checkbox" name="synthetic" value="yes"/>Зохиомол өгөгдөлтэй архивын туршилт</label>
-   <label>Бэлтгэгчийн анхны хандалт<select name="includePreparer"><option value="yes">Томилох</option><option value="no">Дараа томилох</option></select></label>
-  </ActionForm>
  </section>;
 }
 
@@ -377,7 +360,7 @@ export default function PilotWorkspace(){
     {!data&&!error&&<p>Ачаалж байна…</p>}
     {data&&'setup' in data&&<Access key={String(data.setup)} setup={data.setup} send={send}/>}
     {view&&<EngagementPicker view={view} open={(id,form)=>void openEngagement(id,form)}/>}
-    {view&&!engagement&&view.role!=='preparer'&&<SetupEngagement run={run}/>}
+    {view&&!engagement&&view.intake&&<PilotIntake data={view.intake} role={view.role} run={run} open={id=>void openEngagement(id)}/>}
     {view&&!engagement&&<PilotFormLibrary role={view.role} forms={view.forms} library={view.formLibrary} run={run} onError={setError}/>}
    {view&&<PilotRegisters key={view.selected??'firm'} role={view.role} resources={view} evidence={view.evidence??[]} engagementId={view.selected} active={!!engagement?.active} run={run} onError={setError}/>}
     {view&&engagement&&<div key={view.selected}>
@@ -385,11 +368,15 @@ export default function PilotWorkspace(){
       <div className="section-heading"><h2>{engagement.client}</h2><span className="pill">{engagement.active?'Идэвхтэй':'Идэвхжүүлэхийг хүлээж байна'}</span></div>
       <p>{engagement.period.start} — {engagement.period.end} · Зорилтот тайлан {engagement.reportDate}</p>
       {view.members&&<EngagementAccess members={view.members} run={run}/>}
+      {view.intakeContext&&<IntakeProvenance context={view.intakeContext} active={engagement.active} role={view.role}
+       priorVisible={view.portfolio.some(p=>p.id===view.intakeContext?.prior)} run={run} open={id=>void openEngagement(id)}/>}
+      {view.selected&&view.intakeContext&&!sealed&&<TermsEditor id={view.selected} role={view.role} active={engagement.active}
+       terms={view.intakeTerms} history={view.intakeTermsHistory??[]} evidence={view.evidence??[]} run={run}/>}
       {!!engagement.acceptanceGaps.length&&<ul>{engagement.acceptanceGaps.map(gap=><li key={gap}>{gap}</li>)}</ul>}
       {engagement.firm.find(r=>r.kind==='M01-F01')&&<p className="micro">Хүлээн авахад ашигласан фирмийн бүртгэл · {engagement.firm.find(r=>r.kind==='M01-F01')?.values.reporting}</p>}
       {!engagement.active&&(view.role==='partner'?<ActionForm run={run} action="activate" button="Шийдвэр бүртгэж идэвхжүүлэх">
        <label>Хараат бус байдлын шийдвэрийн ишлэл<input name="independence" required/></label>
-       <label>Тохиролцсон захидлын хувилбар<input name="letter" required/></label>
+       {!view.intakeContext&&<label>Тохиролцсон захидлын хувилбар<input name="letter" required/></label>}
        <label>Хүлээн авах шийдвэрийн үндэслэл<textarea name="assessment" required/></label>
       </ActionForm>:<p className="muted">Партнер шийдвэрээ бүртгэсний дараа баримт болон ажлын хэсэг нээгдэнэ.</p>)}
       {engagement.active&&<details><summary>Хүлээн авах шийдвэрийн түүх</summary>{engagement.decisions.map(d=><p key={d.version}>v{d.version} · {d.assessment||d.letter||d.independence} · {new Date(d.at).toLocaleString()}</p>)}</details>}

@@ -34,6 +34,8 @@ Record `/build-info.json` for each acceptance run. It identifies the built UI, G
 
 In the shared pilot portfolio, open **Маягтын сан ба бүтэц** to draft or approve a template. A partner can grant authoring on a specific form. In an engagement, use **Эх маягт ба баталсан хувилбар холбох** to pin a source or published version and work on its typed fields. A published revision takes effect in an engagement after explicit adoption. Excel import reads a question-list worksheet with a `Question` column and optional `Type`, `Choices`, `Section` and `Required` columns.
 
+Open **Үйлчлүүлэгч ба аудитын хүсэлт** in the portfolio to record an enquiry, search clients or maintain contact history. The reviewer converts a forwarded enquiry after confirming the current client profile, contact and reporting period. The partner approves the signed engagement letter revision before activating a converted engagement.
+
 ## Explore
 
 - **Senior delivery:** start as Т. Тэмүүлэн. Inspect the review queue, rolling Gantt, stage/status matrix, dependency references, assignments and scoped workload. Open a workpaper in its inspector without leaving the list. Change its due date and see the same deadline in the calendar.

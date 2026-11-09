@@ -2,9 +2,9 @@ import type {Model,WorkItem} from './workspace';
 
 export type Theme='light'|'dark'|'system';
 export type Contact={id:string;name:string;role:string;email:string;body:string;signer:boolean};
-export type Client={name:string;legalForm:string;registration:string;framework:string;contacts:Contact[];bodies:string[]};
+export type Client={name:string;legalForm:string;registration:string;framework:string;industry?:string;contacts:Contact[];bodies:string[]};
 export type Period={start:string;end:string};
-export type Field={key:string;label:string;type:string;source:string;section?:string;options?:string[];required?:boolean;instruction?:string;binding?:'name'|'legalForm'|'registration'|'period'|'contacts';decision?:'assessment'|'letter'|'independence';when?:{key:string;value:string};columns?:{key:string;label:string;type:string;options?:string[];source?:string}[];tailoring?:{state:'added'|'adapted'|'na';reason:string;risk?:string;assertion?:string;by:string;at:string}};
+export type Field={key:string;label:string;type:string;source:string;section?:string;options?:string[];required?:boolean;instruction?:string;binding?:'name'|'legalForm'|'registration'|'period'|'contacts'|'framework'|'industry';decision?:'assessment'|'letter'|'independence';when?:{key:string;value:string};columns?:{key:string;label:string;type:string;options?:string[];source?:string}[];tailoring?:{state:'added'|'adapted'|'na';reason:string;risk?:string;assertion?:string;by:string;at:string}};
 export type Template={id:string;title:string;stage:number;fields:Field[];family:string;sheet:string;purpose?:string;clauses?:{text?:string;label?:string;source?:string}[]};
 type Revision={number:number;body:Template;by:string;at:string;note:string};
 type Draft={body:Template;by:string;submitted:boolean;note:string};
@@ -33,7 +33,9 @@ function stale(m:Model,w:WorkItem,reason:string){
 }
 export function sharedFields(m:Model,id:string) {
  const c=m.bench?.clients[id],p=m.bench?.periods[id];
- return {name:c?.name??'',legalForm:c?.legalForm??'',registration:c?.registration??'',period:p?`${p.start} — ${p.end}`:'',contacts:c?[...c.bodies,...c.contacts.map(x=>[x.name,x.role,x.body,x.signer?'Гарын үсэг зурах эрхтэй':''].filter(Boolean).join(' · '))].join('; '):''};
+ return {name:c?.name??'',legalForm:c?.legalForm??'',registration:c?.registration??'',period:p?`${p.start} — ${p.end}`:'',
+  framework:c?.framework??'',industry:c?.industry??m.engagements.find(e=>e.id===id)?.industry??'',
+  contacts:c?[...c.bodies,...c.contacts.map(x=>[x.name,x.role,x.body,x.signer?'Гарын үсэг зурах эрхтэй':''].filter(Boolean).join(' · '))].join('; '):''};
 }
 export function sharedForWork(m:Model,w:WorkItem) {
  const current=sharedFields(m,w.engagement);
@@ -54,9 +56,12 @@ export function saveClient(m:Model,id:string,client:Client,period?:Period){
   if(m.engagements.some(other=>other.carriedFrom===id&&b.periods[other.id]?.start<=period.end))throw Error('Дараагийн ажлын үеэс өмнөх огноо сонгоно уу.');
  }
  b.clients[id]=structuredClone(client);
- if(e.companyId&&m.companies?.[e.companyId])m.companies[e.companyId].profile=structuredClone(client);
+ if(e.companyId&&m.companies?.[e.companyId]){
+  m.companies[e.companyId].profile=structuredClone(client);
+  if(client.industry!==undefined)m.companies[e.companyId].industry=client.industry;
+ }
  if(period)b.periods[id]={...period};else delete b.periods[id];
- e.client=client.name;e.period=period?.end.slice(0,4)??'';
+ e.client=client.name;e.period=period?.end.slice(0,4)??'';e.industry=client.industry??e.industry;
  if(e.intake)e.intake.period=e.period;
  const next=sharedFields(m,id);
  for(const w of Object.values(m.work)){

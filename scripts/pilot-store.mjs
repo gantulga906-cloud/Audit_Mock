@@ -12,6 +12,7 @@ const serialize = ({ pilotFormLibrary: _, ...m }) => JSON.stringify({
 const notFound = () => new PilotError(404, 'Гэрээт ажил олдсонгүй.');
 
 export const firmCommand = (action, fields) => isLibraryAction(action) || action === 'register' && firmKinds.has(fields?.kind);
+export const createsEngagement = action => action === 'create' || action === 'intake-convert';
 
 export function createPilotStore(db) {
   function transaction(fn, write = true) {
@@ -106,14 +107,18 @@ export function createPilotStore(db) {
     if (isLibraryAction(action)) db.prepare('UPDATE pilot_form_library SET body = ? WHERE id = 1').run(JSON.stringify(model.pilotFormLibrary));
     if (id) {
       const e = model.engagements[0];
-      db.prepare(`UPDATE pilot_engagements SET revision = revision + 1, body = ?, active = ?, report_date = ?
-        WHERE id = ?`).run(serialize(model), +e.intake.active, e.reportDate, id);
-    } else if (action === 'create') {
+      db.prepare(`UPDATE pilot_engagements SET revision = revision + 1, body = ?, active = ?, report_date = ?, client = ?
+        WHERE id = ?`).run(serialize(model), +e.intake.active, e.reportDate, e.client, id);
+    } else if (createsEngagement(action)) {
       insert(model, 1, fields?.includePreparer === 'no' ? ['reviewer', 'partner'] : roles);
       db.prepare('UPDATE pilot_firm SET revision = revision + 1 WHERE id = 1').run();
       return model.engagement;
     }
     return id;
+  }
+
+  function touchFirm() {
+    db.prepare('UPDATE pilot_firm SET revision = revision + 1 WHERE id = 1').run();
   }
 
   function members(id) {
@@ -125,5 +130,5 @@ export function createPilotStore(db) {
     return db.prepare('DELETE FROM pilot_engagement_members WHERE engagement_id = ? AND role = ?').run(id, role).changes > 0;
   }
 
-  return { transaction, portfolio, load, save, members, setMember, legacyId };
+  return { transaction, portfolio, load, save, members, setMember, touchFirm, legacyId };
 }

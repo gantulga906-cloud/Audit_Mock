@@ -7,7 +7,7 @@ import {canReadWork,inScope,PERSONS,personById,type Evidence,type Model,type Wor
 
 type Props={model:Model;change:(fn:(m:Model)=>void)=>void};
 const kind:Record<string,string>={text:'Богино текст',textarea:'Дэлгэрэнгүй текст',yesno:'Тийм / Үгүй',select:'Нэг сонголт',multiselect:'Олон сонголт',date:'Огноо',number:'Тоо / Дүн',evidence:'Баримтын холбоос',table:'Давтагдах мөр',procedure:'Аудитын горим'};
-const binding:Record<NonNullable<Field['binding']>,string>={name:'Байгууллагын нэр',legalForm:'Хуулийн хэлбэр',registration:'Регистрийн дугаар',period:'Тайлант үе',contacts:'Удирдлага ба холбоо барих хүмүүс'};
+const binding:Record<NonNullable<Field['binding']>,string>={name:'Байгууллагын нэр',legalForm:'Хуулийн хэлбэр',registration:'Регистрийн дугаар',period:'Тайлант үе',contacts:'Удирдлага ба холбоо барих хүмүүс',framework:'Тайлагналын хүрээ',industry:'Салбар'};
 const input=(id:string):Template=>({id,title:'',stage:1,family:'questionnaire',sheet:'Арга зүйн сан',fields:[{key:'q'+crypto.randomUUID(),label:'',type:'text',source:'Захиалгат'}]});
 
 export function ClientRegister({model,change}:Props){
