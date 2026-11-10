@@ -1700,3 +1700,226 @@ test('approved payroll, tax and financing editions calculate exact outputs and r
     await rmdir(dir);
   }
 });
+test('technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle', async () => {
+  const dir=await mkdtemp(join(tmpdir(),'audit-completion-cycle-'));
+  const database=join(dir,'pilot.sqlite');
+  let service;
+  try {
+    service=await start(database);
+    const extras={quality:'test-independent-quality',custodian:'test-independent-custody'};
+    assert.equal((await service.fetch('/setup','',{code:'test-bootstrap-only',...passwords,...extras})).status,201);
+    const {cookies,scoped,view,write}=await fixture(service,false);
+    const day=86_400_000, today=new Date().toISOString().slice(0,10);
+    const priorDate=new Date(Date.now()-2*day).toISOString().slice(0,10);
+    const engagement=(await write('reviewer','firm','create',{...create,reportDate:priorDate,synthetic:'yes'})).selected;
+    const run=(role,action,fields,status=200)=>write(role,engagement,action,fields,status);
+    const current=role=>view(role,engagement);
+    const auditRegister=async(kind,values,owner='reviewer',approver='partner',id)=>{
+      const fields=Object.fromEntries(Object.entries(values).map(([k,v])=>['field.'+k,v]));
+      const draft=await run(owner,'register',{kind,id,operation:'save',...fields});
+      const record=id??draft.registers.findLast(r=>r.kind===kind).id;
+      await run(owner,'register',{kind,id:record,operation:'submit'});
+      await run(approver,'register',{kind,id:record,operation:'approve',reason:'Independently checked the exact source'});
+      return record;
+    };
+    const file=(name,text)=>({name,base64:Buffer.from(text).toString('base64')});
+    const evidence=async(name,text)=>{
+      const uploaded=await run('reviewer','support-upload',{...file(name+'.csv',text),source:'Retained original '+name});
+      const id=uploaded.evidence.find(f=>f.name===name+'.csv').id;
+      await run('partner','support-assess',{id,result:'accepted',reason:'Reviewed original file'});
+      return id;
+    };
+    await run('partner','activate',{assessment:'Accepted',independence:'Reviewed',letter:'Agreed'});
+    const original=await evidence('technical-evidence','Original supporting work and schedules');
+    const further=await evidence('component-followup','Specific further tests of the component');
+    const controls=await evidence('population-control','Independently checked signed control report');
+    const importLedger=async(posted)=>{
+      const lines=['id,account,amount,entity,date,currency,reference',
+        ['ORIGINAL','1500',100,create.registration,'2025-10-10','MNT','BASE'].join(',')];
+      if (posted!==undefined) lines.push(['CORRECTION','1500',posted,create.registration,'2025-12-31','MNT','ADJ-1'].join(','));
+      const raw=(await run('preparer','population-import',{...file('ledger.csv',lines.join('\n')),source:'Reviewed ledger export',currency:'MNT'})).population.current;
+      const total=String(100+(posted??0));
+      const reconciled=await run('preparer','population-reconcile',{version:String(raw.version),count:String(lines.length-1),total,
+        source:'Independent controls',controlEvidence:controls,mapping:'1500,PPE',statements:'PPE,'+total,use:'Test the correction'});
+      return run('reviewer','population-approve',{version:String(reconciled.population.current.version),reason:'Approved independent controls'});
+    };
+    await importLedger();
+    const paper=async(form,extra={},owner='preparer',reviewer='reviewer')=>{
+      await run(owner,'save',{form,execution:'Examined exact source records',conclusion:'Completed and documented the selected work',...extra});
+      await run(owner,'submit',{form});
+      return run(reviewer,'review',{form});
+    };
+    await paper('1.3',{benchmark:'10000',percentage:'1',performance:'50',trivial:'5',benchmarkSource:'Approved statement amount'});
+    let state=await current('reviewer');
+    await run('reviewer','resolve-impact',{id:state.impacts[0].id,reason:'Assessed threshold and planned work'});
+    const ownerFacts={name:'Related owner',relation:'owner',share:'80',effective:'2025-01-01',source:'Registry version',basis:'Reviewed owner'};
+    const party=await auditRegister('M03-F04',ownerFacts), group=await auditRegister('M03-F04',{...ownerFacts,name:'Component A',relation:'group',share:'100'});
+    const related={type:'related',paper:'3.2.4',party,sourceRef:'RP-1',evidence:original,work:'Compared relationship and transaction',
+      effect:'Disclose approved relationship and transaction',conclusion:'Prepared related-party note',result:'resolved'};
+    const relatedId=await auditRegister('M07-F10',related);
+    const component={type:'component',paper:'3.1.13',party:group,sourceRef:'COMP-A',criterion:'Selected group method edition',
+      contributor:'Component auditor',scope:'Revenue and cash under group instructions and scoped materiality',
+      eligibility:'Examined competence, objectivity and group involvement',evidence:original,work:'Reviewed delivered scope',
+      contrary:'Missing final revenue confirmations',effect:'Retain limitation in group conclusion',conclusion:'Additional work needed',result:'limited'};
+    const componentId=await auditRegister('M07-F10',component);
+    const estimate={type:'estimate',paper:'3.1.2',sourceRef:'EST-1',criterion:'Auditor range under reviewed methodology',assumptions:'Reviewed lives and market support',
+      recorded:'100',low:'85',high:'110',evidence:original,work:'Recalculated supported range',effect:'Verified disclosures',conclusion:'Within range',result:'resolved'};
+    await auditRegister('M07-F10',estimate);
+    const request=(await run('preparer','request',{form:'3.1.2',title:'PPE estimate original',due:priorDate})).requests[0].id;
+    await run('preparer','upload',{request,source:'Asset register owner',...file('fixed-assets.csv','Asset file original')});
+    await run('preparer','accept',{request});
+    await paper('3.1.2');
+    await paper('3.1.13');
+    state=await paper('3.2.4');
+    const earlier=state.papers.find(w=>w.form==='3.2.4');
+    assert.ok(state.gaps.some(g=>g.includes('M07-F10')));
+    await auditRegister('M03-F04',{...ownerFacts,share:'70',basis:'Confirmed change in ownership'},'reviewer','partner',party);
+    state=await current('reviewer');
+    assert.equal(state.papers.find(w=>w.form==='3.2.4').status,'changed');
+    assert.equal(state.papers.find(w=>w.form==='3.1.2').status,'reviewed');
+    assert.equal(state.papers.find(w=>w.form==='3.1.13').status,'reviewed');
+    assert.ok(state.papers.find(w=>w.form==='3.2.4').history.some(h=>h.version===earlier.version&&h.values['pilot.technical']));
+    await run('preparer','submit',{form:'3.2.4'},409);
+    await auditRegister('M07-F10',{...related,conclusion:'Revised related-party note reflects confirmed ownership'},'reviewer','partner',relatedId);
+    await paper('3.2.4');
+    await auditRegister('M07-F10',{...component,evidence:further,result:'resolved',effect:'Specified revenue work completed; other group areas retain their own conclusions',
+      conclusion:'Received and checked requested limited scope'},'reviewer','partner',componentId);
+    await paper('3.1.13');
+
+    await run('partner','statements',{statements:'Financial statement version one',disclosures:'Initial disclosure'});
+    state=await run('reviewer','completion-finding-record',{form:'3.1.2',title:'Recorded asset correction',reference:'F-PPE',
+      classification:'factual',amount:'100',evidence:original,criterion:'Exact signed asset register',effect:'PPE adjustment'});
+    const finding=state.completion.findings[0].id, correction={id:finding,version:'1'};
+    await run('reviewer','correction-propose',{id:finding,amount:'100',account:'1500',reference:'ADJ-1',sign:'debit',evidence:original,reason:'Correct asset entry'});
+    const managementReply=await evidence('management-reply','Management agrees to post 100');
+    state=await run('reviewer','correction-response',{...correction,amount:'100',result:'accepted',evidence:managementReply,reason:'Confirmed actual acceptance'});
+    assert.equal(state.completion.findings[0].outstanding,10000);
+    assert.equal(state.completion.findings[0].status,'agreed');
+    await run('reviewer','correction-verify',{...correction,reason:'Try self verification'},403);
+    await run('partner','correction-verify',{...correction,reason:'No posted line yet'},409);
+    await run('reviewer','completion-evaluate',{note:'Accepted but unposted remains outstanding'});
+    state=await run('partner','completion-evaluation-approve',{version:'1',reason:'Confirmed unposted amount'});
+    assert.equal(state.completion.evaluation.inputs.gross,10000);
+    await importLedger(60);
+    state=await run('partner','correction-verify',{...correction,reason:'Verified partial amount against approved ledger row'});
+    assert.equal(state.completion.findings[0].outstanding,4000);
+    assert.equal(state.completion.findings[0].correction.response.amount,10000);
+    assert.equal(state.completion.findings[0].correction.postings[0].amount,6000);
+    assert.equal(state.completion.findings[0].correction.postings[0].rows[0].row,3);
+    assert.equal(state.completion.evaluation.current,false);
+    await run('partner','fieldwork-resolve-finding',{id:finding,reason:'Assessed outstanding 40 and retained the effect'});
+    await run('reviewer','completion-evaluate',{note:'Partial posting reduces gross outstanding to 40'});
+    await run('partner','completion-evaluation-approve',{version:'2',reason:'Reviewed remaining effect'});
+
+    const signedFiles={file:await evidence('signed-statements','Signed full financial statements'),
+      notes:await evidence('signed-disclosures','Signed disclosures'),authorization:await evidence('management-authorization','Signed approval and authority')};
+    const attach={...signedFiles,signer:'Finance Director',capacity:'Authorized management',date:'2026-01-03',basis:'Agrees to exact full statement and note set'};
+    await run('reviewer','completion-management-submit',attach);
+    await run('partner','completion-management-approve',{version:'1',reason:'Compared actual authorization and exact artifacts'});
+    await run('partner','authorize',{},409);
+    const representation={requested:'2026-01-01',due:priorDate,signed:'2026-01-03',signer:'Finance Director',capacity:'Authorized management',
+      periodStart:create.start,periodEnd:create.end,evidence:await evidence('representation','Actual signed representation'),result:'received',assessment:'Reviewed full signed statement'};
+    const rep=await auditRegister('M10-F12',representation);
+    const subsequent={type:'subsequent',coverageThrough:priorDate,paper:'3.2.1',evidence:original,work:'Reviewed enquiries and minutes',
+      result:'resolved',conclusion:'Covered through the prior report date'};
+    const subsequentId=await auditRegister('M07-F10',subsequent);
+    state=await run('partner','report-date',{date:today});
+    assert.ok(state.gaps.some(g=>g.includes('3.2.1')));
+    await auditRegister('M07-F10',{...subsequent,coverageThrough:today,conclusion:'Reviewed actual evidence through the extended date'},'reviewer','partner',subsequentId);
+    const communication={paper:'3.1.2',finding,recipient:'Audit committee',message:'Discuss outstanding PPE adjustment',
+      channel:'oral',mandatory:'yes',deliveryStatus:'pending'};
+    const communicationId=await auditRegister('M10-F13',communication);
+    state=await current('partner');
+    assert.ok(state.gaps.some(g=>g.includes('M10-F13')));
+    await auditRegister('M10-F13',{...communication,deliveryStatus:'delivered',deliveredAt:today,outcome:'Discussed the issue at the recorded meeting'},
+      'reviewer','partner',communicationId);
+    state=await run('partner','statements',{statements:'Financial statement version two',disclosures:'Reviewed new disclosure'});
+    assert.equal(state.completion.management.current,false);
+    assert.equal(state.completion.evaluation.current,false);
+    assert.ok(state.registers.find(r=>r.id===rep).stale);
+    await run('reviewer','completion-management-submit',{...attach,file:await evidence('signed-statements-v2','Revised signed statements'),
+      notes:await evidence('signed-disclosures-v2','Revised signed disclosures'),authorization:await evidence('management-authorization-v2','Actual approval of version two')});
+    await run('partner','completion-management-approve',{version:'2',reason:'Reviewed updated signed proof'});
+    await auditRegister('M10-F12',{...representation,evidence:await evidence('representation-v2','Actual new signed letter'),assessment:'New version explicitly verified'},'reviewer','partner',rep);
+    await run('reviewer','completion-evaluate',{note:'Reassessed remaining 40 against the updated statement version'});
+    await run('partner','completion-evaluation-approve',{version:'3',reason:'Approved the updated evaluation'});
+    await paper('4.4',{},'reviewer','partner');
+    await paper('4.1.A1',{},'reviewer','partner');
+
+    await run('partner','quality-policy',{mode:'required',reference:'Synthetic firm policy edition',basis:'Reference case requires formal review',
+      reviewer:'Independent Reviewer',eligibility:'Separate credentials, competence and sufficient time checked'});
+    assert.equal((await service.fetch(scoped('/oversight',engagement),cookies.partner)).status,401);
+    await run('partner','authorize',{},409);
+    const independent=async role=>{
+      const response=await service.fetch('/oversight/login','',{role,password:extras[role]});
+      assert.equal(response.status,200);
+      return response.headers.get('set-cookie').split(';')[0];
+    };
+    const quality=await independent('quality');
+    const qualityState=async()=> (await (await service.fetch(scoped('/oversight',engagement),quality)).json());
+    const qualityAction=(action,basis,reason)=>service.fetch(scoped('/oversight/action',engagement),quality,{action,basis,reason});
+    let q=await qualityState();
+    assert.deepEqual(q.material.gaps,[]);
+    assert.equal((await qualityAction('return',q.material.basis,'Clarify workpaper conclusion')).status,200);
+    q=await qualityState();
+    assert.equal((await qualityAction('approve',q.material.basis,'Without team response')).status,409);
+    await run('partner','quality-response',{id:q.quality.notes[0].id,reason:'Initial exact response'});
+    const oldBasis=q.material.basis;
+    await paper('4.1.A1',{conclusion:'Revised exact report after feedback'},'reviewer','partner');
+    q=await qualityState();
+    assert.notEqual(q.material.basis,oldBasis);
+    assert.equal((await qualityAction('approve',oldBasis,'Stale quality approval')).status,409);
+    assert.equal((await qualityAction('approve',q.material.basis,'Old response for new draft')).status,409);
+    await run('partner','quality-response',{id:q.quality.notes[0].id,reason:'Checked the exact revised report'});
+    assert.equal((await qualityAction('approve',q.material.basis,'Reviewed significant judgments and exact draft')).status,200);
+    state=await run('partner','authorize',{});
+    assert.equal(state.authorized.current,true);
+    await run('partner','issue',{reference:'Before signature'},409);
+    state=await run('partner','report-sign',{});
+    assert.equal(state.release.signature.artifact,state.authorized.artifactSha256);
+    state=await run('partner','issue',{reference:'Synthetic signed issue'});
+    assert.equal((await run('partner','issue',{reference:'Retry same issue'})).archive.issue.at,state.archive.issue.at);
+    await run('partner','archive-seal',{},409);
+    const recipient=state.requestContacts[0].id;
+    state=await run('partner','delivery-start',{recipient});
+    const endpoint='/delivery/'+state.deliveryLink.token, sha=state.authorized.artifactSha256;
+    await run('partner','delivery-start',{recipient},409);
+    assert.equal((await service.fetch(endpoint,'',{sha256:sha,response:'Before download'})).status,409);
+    const downloaded=await service.fetch(endpoint+'/artifact');
+    assert.equal(downloaded.status,200);
+    assert.equal(createHash('sha256').update(await downloaded.text()).digest('hex'),sha);
+    assert.equal((await service.fetch(endpoint,'',{sha256:sha,response:'Received the exact signed report'})).status,200);
+    assert.equal((await service.fetch(endpoint)).status,404);
+    state=await run('partner','archive-seal',{});
+    const archive=state.archive.packages[0];
+    const denied=await current('reviewer');
+    assert.equal(denied.archive.sealed,true);
+    assert.deepEqual(denied.archive.packages,[]);
+    await run('partner','archive-offer-custody',{package:archive.id,recipient:'Independent Custodian'});
+    const custodian=await independent('custodian');
+    const accept=(digest)=>service.fetch(scoped('/oversight/action',engagement),custodian,
+      {action:'accept',package:archive.id,digest,reason:'Read the manifest and verified the exact archive'});
+    assert.equal((await accept(archive.digest)).status,409);
+    const bundle=await service.fetch(scoped('/oversight/download/'+archive.id,engagement),custodian);
+    assert.equal(bundle.status,200);
+    const bytes=await bundle.text();
+    assert.equal(createHash('sha256').update(bytes).digest('hex'),archive.digest);
+    const payload=JSON.parse(bytes);
+    assert.equal(payload.issue.signature.artifact,sha);
+    assert.equal(payload.deliveries[0].state,'received');
+    assert.equal(payload.authorization.completion.evaluation.inputs.gross,4000);
+    assert.equal(payload.authorization.quality.current,true);
+    assert.equal((await accept('0'.repeat(64))).status,409);
+    assert.equal((await accept(archive.digest)).status,200);
+    await service.close();
+    service=await start(database);
+    const reloaded=await fixture(service,false);
+    state=await reloaded.view('partner',engagement);
+    assert.equal(state.oversight.custody[0].accepted.digest,archive.digest);
+    assert.equal(state.authorized.current,true);
+  } finally {
+    if(service)await service.close();
+    for(const suffix of ['', '-shm', '-wal'])await rm(database+suffix,{force:true});
+    await rmdir(dir);
+  }
+});

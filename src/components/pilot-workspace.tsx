@@ -8,6 +8,8 @@ import {EngagementStaffing,RosterOverview,WorkAssignmentEditor} from './pilot-st
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
 import {JournalDesk,PopulationDesk,SampleDesk} from './pilot-population';
 import {AreaDesk} from './pilot-area';
+import {CompletionDesk,type CompletionView} from './pilot-completion';
+import {IndependentDesk,OversightDesk,ReportRecipient,type OversightView,type ReleaseView} from './pilot-oversight';
 import {pilotScope,type PilotRole,type ProgrammeBasis} from '@/lib/pilot-registers';
 import {fieldAnswers,type LibraryView,type PaperForm} from '@/lib/pilot-forms';
 import type {Enquiry,IntakeClient,IntakeContext,IntakeTerms} from '@/lib/pilot-intake';
@@ -41,6 +43,8 @@ type View=RegisterResources&{
  confirmations?:{request:string;part:string;recipient:string;sent:string;state:string;response?:string;received?:string;evidence?:string}[];
  confirmationLink?:{token:string;request:string;part:string};
  population?:PopulationView;
+ completion?:CompletionView;
+ oversight?:OversightView;release?:ReleaseView;deliveryLink?:{token:string;id:string;recipient:string};
  samples?:Record<string,SampleView>;journals?:Record<string,JournalRun>;areas?:Record<string,AreaRun>;fieldFindings?:Finding[];
  fieldwork?:string[];statementLines?:Record<string,number>;impacts?:Model['impacts'];
  delivery?:Pick<Model,'person'|'tasks'|'events'>&{id:string};
@@ -96,10 +100,13 @@ function Access({setup,send}:{setup:boolean;send:(path:string,data:unknown)=>Pro
   <form className="feature-form" onSubmit={submit}>
    {setup?<><label>Эхлүүлэх код<input name="code" type="password" required/></label>
     <div className="field-grid">{Object.entries(roles).map(([id,label])=><label key={id}>{label}ийн нууц үг<input name={id} type="password" autoComplete="new-password" minLength={12} maxLength={128} required/></label>)}</div>
+    <div className="field-grid"><label>Хараат бус чанарын нууц үг (сонголтоор)<input name="quality" type="password" autoComplete="new-password" minLength={12} maxLength={128}/></label>
+     <label>Хадгалалтын нууц үг (сонголтоор)<input name="custodian" type="password" autoComplete="new-password" minLength={12} maxLength={128}/></label></div>
    </>:<><label>Дүр<select name="role">{Object.entries(roles).map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>
     <label>Нууц үг<input name="password" type="password" autoComplete="current-password" required/></label></>}
    <button className="btn primary">{setup?'Нэвтрэх эрх үүсгэх':'Нэвтрэх'}</button>
   </form>
+  <p><a href="/pilot#oversight=quality">Хараат бус чанарын хяналт</a> · <a href="/pilot#oversight=custodian">Хадгалалтын хүлээн авалт</a></p>
  </section>;
 }
 
@@ -378,7 +385,7 @@ function SharedPilotWorkspace(){
  const selection=useRef<string|null>(null);
  const outdated=!!(data&&'role' in data&&(!Array.isArray(data.portfolio)||!data.formLibrary));
  const view=data&&'role' in data&&!outdated?data:null,engagement=view?.engagement;
- const sealed=!!view?.archive.packages.length&&!view?.archive.reopened;
+ const sealed=view?.archive.sealed??(!!view?.archive.packages.length&&!view?.archive.reopened);
  function show(result:Result){
   if('role' in result&&Array.isArray(result.portfolio)){
    selection.current=result.selected;
@@ -468,10 +475,12 @@ function SharedPilotWorkspace(){
       view.papers?.some(p=>p.form===f.id&&p.planning?.template.number===undefined)&&view.fieldwork?.includes(f.id))} library={view.formLibrary}
       pins={Object.fromEntries((view.papers??[]).flatMap(p=>p.template?[[p.form,p.template.number]]:[]))} run={run}/>}
      {engagement.active&&<>
+      {!sealed&&view.selected&&view.completion&&<CompletionDesk data={view.completion} role={view.role} papers={view.papers??[]}
+       evidence={view.evidence??[]} engagement={view.selected} run={run}/>}
       {!sealed&&view.selected&&<PopulationDesk key={view.population?.current.version} population={view.population} role={view.role}
        engagement={view.selected} evidence={view.evidence??[]} run={run} readFile={readEvidence} onError={setError}/>}
       {!sealed&&<Delivery view={view} run={run}/>}
-      {(!view.archive.packages.length||view.archive.reopened)&&<Requests view={view} run={run} onError={setError}/>}
+      {!sealed&&<Requests view={view} run={run} onError={setError}/>}
      </>}
      {view.papers?.filter(paper=>engagement.active||paper.stage===1&&paper.template).map(paper=>
       <Workpaper key={paper.id+'/'+paper.version} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed}
@@ -486,12 +495,13 @@ function SharedPilotWorkspace(){
          findings={(view.fieldFindings??[]).filter(f=>f.form===paper.form&&f.id.startsWith('AREA-'))} run={run}/>
        </>}/>)}
      {engagement.active&&<>
+      {view.oversight&&<OversightDesk view={view.oversight} role={view.role} sealed={sealed} archive={view.archive.packages[0]?.id} run={run}/>}
       {view.impacts?.map(impact=><section className="card pad bench-card" key={impact.id}><h2>{impact.source} · Өөрчлөлтийн нөлөө</h2><p>{impact.reason} · {impact.targets.join(', ')}</p>
        {view.role==='reviewer'&&<ActionForm run={run} action="resolve-impact" extra={{id:impact.id}} button="Нөлөөллийн үнэлгээг бүртгэх"><label>Шийдвэрийн үндэслэл<input name="reason" required/></label></ActionForm>}
       </section>)}
       <section className="card pad bench-card">
        <h2>Партнерын багцын зөвшөөрөл</h2>
-       {view.extended&&view.role==='partner'&&!sealed&&<ActionForm key={engagement.reportDate} run={run} action="report-date" button="Зорилтот тайлангийн өдрийг шинэчлэх">
+       {(view.extended||view.completion?.management)&&view.role==='partner'&&!sealed&&<ActionForm key={engagement.reportDate} run={run} action="report-date" button="Зорилтот тайлангийн өдрийг шинэчлэх">
         <label>Зорилтот тайлангийн өдөр<input type="date" name="date" min={engagement.period.end} defaultValue={engagement.reportDate} required/></label>
        </ActionForm>}
        {view.role==='partner'&&(!view.archive.packages.length||view.archive.reopened)&&<ActionForm key={engagement.statements?.version} run={run} action="statements" button="СТ ба тодруулгыг тайланд холбох">
@@ -508,8 +518,19 @@ function SharedPilotWorkspace(){
         {view.authorized&&<a href={api+'/authorizations'+pilotScope(view.selected)} className="btn secondary">Зөвшөөрлийн түүх татах ({view.authorized.count})</a>}
        </div>}
        {view.role==='partner'&&view.authorized?.current&&(!view.archive.packages.length||view.archive.reopened)&&<>
+        {view.release?.strict&&!view.release.signature&&<button type="button" className="btn secondary" onClick={()=>void run('report-sign')}>Яг энэ тайланд локал гарын үсэг зурах</button>}
+        {view.release?.signature&&<p>Локал гарын үсэг · {view.release.signature.at.slice(0,16)} · {view.release.signature.artifact.slice(0,16)}</p>}
         <ActionForm run={run} action="issue" button="Гаргалтыг бүртгэх"><label>Бодит гаргалтын бүртгэлийн ишлэл<input name="reference" required/></label></ActionForm>
-        {view.archive.issue&&<button type="button" className="btn secondary space-top" onClick={()=>void run('archive-seal')}>Гаргасан багцыг архивт түгжих</button>}
+        {view.archive.issue&&view.release?.signature&&<ActionForm run={run} action="delivery-start" button="Локал хүргэлтийн холбоос үүсгэх">
+         <label>Хянасан хүлээн авагч<select name="recipient" required><option value="">Сонгох</option>
+          {view.requestContacts?.map(contact=><option key={contact.id} value={contact.id}>{contact.name} · {contact.email}</option>)}
+         </select></label>
+        </ActionForm>}
+        {view.deliveryLink&&<p><a href={'/pilot#delivery='+view.deliveryLink.token} target="_blank" rel="noopener noreferrer">Хүлээн авагчийн холбоос</a> · {view.deliveryLink.recipient}</p>}
+        {view.release?.deliveries.map(d=><p key={d.id}>{d.recipient} · {d.received?'Хүлээн авсан '+d.received.slice(0,16):d.state} · {d.response}</p>)}
+        {view.archive.issue&&<button type="button" className="btn secondary space-top"
+         disabled={view.release?.strict&&!view.release.deliveries.some(d=>d.issued===view.archive.issue?.at&&d.state==='received')}
+         onClick={()=>void run('archive-seal')}>Гаргасан багцыг архивт түгжих</button>}
        </>}
       </section>
      </>}
@@ -558,9 +579,20 @@ function ConfirmationRecipient({token}:{token:string}){
 }
 
 export default function PilotWorkspace(){
- const [confirmation,setConfirmation]=useState<string|null>(null);
+ const [route,setRoute]=useState<string|null>(null);
  useEffect(()=>{
-  setConfirmation(/^#confirmation=([a-f0-9]{64})$/.exec(window.location.hash)?.[1]??'');
+  const read=()=>setRoute(window.location.hash);
+  read();
+  window.addEventListener('hashchange',read);
+  return ()=>window.removeEventListener('hashchange',read);
  },[]);
- return confirmation===null?null:confirmation?<ConfirmationRecipient token={confirmation}/>:<SharedPilotWorkspace/>;
+ if(route===null)return null;
+ const confirmation=/^#confirmation=([a-f0-9]{64})$/.exec(route)?.[1], delivery=/^#delivery=([a-f0-9]{64})$/.exec(route)?.[1];
+ if(confirmation)return <ConfirmationRecipient token={confirmation}/>;
+ if(delivery)return <ReportRecipient token={delivery}/>;
+ if(route==='#oversight=quality'||route==='#oversight=custodian'){
+  const role=route==='#oversight=quality'?'quality':'custodian';
+  return <IndependentDesk key={role} role={role}/>;
+ }
+ return <SharedPilotWorkspace/>;
 }

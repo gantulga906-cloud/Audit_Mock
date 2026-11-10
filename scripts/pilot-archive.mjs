@@ -2,6 +2,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { invalidateReport, PilotError } from './pilot-workflow.mjs';
 import { archiveGrantKinds } from './pilot-registers.mjs';
+import { signatureMatches, strictRelease } from './pilot-release.mjs';
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const today = () => new Date().toISOString().slice(0, 10);
@@ -47,6 +48,7 @@ export function createArchiveStore(db) {
     if (artifact && (sha(artifact.html) !== artifact.sha256 || artifact.sha256 !== bundle.issue.reportSha256)) {
       fail('Зөвшөөрсөн тайлангийн хэш таарахгүй.');
     }
+    if (bundle.issue.signature&&!signatureMatches(bundle.issue.signature,artifact)) fail('Тайлангийн локал гарын үсэг таарахгүй.');
     if (bundle.evidence.some(e => {
       const bytes = Buffer.from(e.base64, 'base64');
       return !bytes.length || bytes.length !== e.size || sha(bytes) !== e.sha256;
@@ -62,7 +64,7 @@ export function createArchiveStore(db) {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`).run(id, previous, issued, sealed, sha(payload), synthetic, JSON.stringify(summary), payload, m.engagement);
     return id;
   }
-  function seal(m, signed) {
+  function seal(m, signed, deliveries=[]) {
     const issue = m.pilotIssue;
     if (!issue || !signed) fail('Яг зөвшөөрсөн багцыг эхлээд гаргана уу.');
     const artifact = signed.authorization.artifact;
@@ -75,7 +77,7 @@ export function createArchiveStore(db) {
       if (!file || sha(file.bytes) !== metadata.sha256) fail('Архивлах эх файл эсвэл хэш таарахгүй.');
       return { ...metadata, size: file.bytes.length, base64: Buffer.from(file.bytes).toString('base64') };
     });
-    const id = insert(m, { ...signed, client: m.engagements[0].client, issue, evidence,
+    const id = insert(m, { ...signed, client: m.engagements[0].client, issue, evidence,...(deliveries.length&&{deliveries}),
       ...(m.archiveReopen && { changes: m.archiveReopen }) }, prior?.id ?? null, issue.at, m.syntheticPilot ? 1 : 0);
     delete m.archiveReopen;
     return id;
@@ -158,7 +160,16 @@ export function createArchiveStore(db) {
       .run(archive.id, grant.id, role, at, v.reason, scope);
     return { id: archive.id, scope, at, digest: sha(JSON.stringify(content)), content };
   }
-  const view = (m, role) => ({ packages: list(m).map(p => {
+  function inspectCustody(m,id,mustBeLatest=false) {
+    const row=read(m,id);
+    if (!row||mustBeLatest&&latest(m)?.id!==id) fail('Яг түгжсэн архивын багц олдсонгүй.');
+    return {digest:row.digest,payload:row.payload,bundle:checkPayload(row)};
+  }
+  const view = (m, role) => ({ sealed:isSealed(m),packages: list(m).filter(p=>{
+    if (role==='partner'||!(strictRelease(m)||m.pilotCustody)) return true;
+    return (m.pilotRecords??[]).some(row=>archiveGrantKinds.includes(row.kind)&&row.values.package===p.id&&
+      row.status==='approved'&&!row.revoked&&row.values.accessor===role&&row.values.until>=today());
+  }).map(p => {
     const { digest, summary, ...index } = p;
     const metadata = { client: summary.client, fileCount: summary.files.length };
     return {
@@ -168,5 +179,5 @@ export function createArchiveStore(db) {
     };
   }), reopened: m.archiveReopen ?? null, issue: role === 'partner' ? m.pilotIssue ?? null : null });
   const isSealed = m => !m.archiveReopen && !!db.prepare('SELECT 1 FROM pilot_archives WHERE engagement_id = ? LIMIT 1').get(m.engagement);
-  return { seal, checkRecord, approveRecord, dispose, exportPackage, view, isSealed };
+  return { seal, checkRecord, approveRecord, dispose, exportPackage, inspectCustody, view, isSealed };
 }

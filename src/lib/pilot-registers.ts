@@ -2,7 +2,7 @@ export type PilotRole='preparer'|'reviewer'|'partner';
 export const pilotScope=(id:string|null)=>'?engagement='+encodeURIComponent(id??'firm');
 export type RecordStatus='draft'|'submitted'|'returned'|'approved';
 type Choice=readonly [value:string,label:string];
-export type RegisterField={key:string;label:string;type?:'long'|'date'|'number'|'choice'|'record'|'evidence'|'form'|'programme';optional?:boolean;choices?:readonly Choice[];target?:string};
+export type RegisterField={key:string;label:string;type?:'long'|'date'|'number'|'choice'|'record'|'evidence'|'form'|'programme';optional?:boolean;choices?:readonly Choice[];target?:string;forTypes?:string[]};
 type Register={id:string;label:string;section:string;writers:readonly PilotRole[];approvers:readonly PilotRole[];fields:readonly RegisterField[]};
 export type ProgrammeBasis={
  risk:{id:string;version:number;name:string;target:string;assertion:string;response:string};
@@ -32,6 +32,7 @@ const link=(key:string,label:string,target:string,optional=false):RegisterField=
 const evidence=(key:string,label:string,optional=false):RegisterField=>({key,label,type:'evidence',optional});
 const form=(key:string,label:string,optional=false):RegisterField=>({key,label,type:'form',optional});
 const define=(id:string,label:string,section:string,fields:RegisterField[],writers:PilotRole[]=['reviewer'],approvers:PilotRole[]=['partner']):Register=>({id,label,section,fields,writers,approvers});
+const forTypes=(field:RegisterField,...types:string[]):RegisterField=>({...field,optional:true,forTypes:types});
 const team=['preparer','reviewer'] as PilotRole[];
 const senior=['reviewer','partner'] as PilotRole[];
 export const roleChoices:readonly Choice[]=[['preparer','Бэлтгэгч'],['reviewer','Ахлах хянагч'],['partner','Партнер']];
@@ -61,14 +62,35 @@ export const registers:readonly Register[]=[
  define('M07-F06','Мөн чанарын шинжилгээ','fieldwork',[link('programme','Хэрэгжүүлсэн хөтөлбөр','M07-F01'),number('expected','Хүлээгдэж буй дүн'),number('actual','Бодит дүн'),number('precision','Нарийвчлал'),number('threshold','Зөрүүний босго'),long('reliability','Өгөгдлийн найдвартай байдал'),evidence('evidence','Нотлох баримт'),long('investigation','Шинжилгээ',true),long('conclusion','Дүгнэлт')],team,senior),
  define('M07-F08','Гуравдагч талын баталгаажуулалт','fieldwork',[link('programme','Хэрэгжүүлсэн хөтөлбөр','M07-F01'),short('recipient','Хүлээн авагч'),short('address','Хянасан холбоо барих хаяг'),date('sent','Бодитоор гаргасан өдөр',true),date('due','Хариу авах өдөр'),choice('result','Хариуны төлөв',['pending','Хүлээгдэж буй'],['received','Ирсэн'],['difference','Зөрүүтэй'],['none','Хариугүй']),evidence('response','Ирсэн эх файл',true),long('provenance','Суваг, гарал үүсэл, хяналт'),long('resolution','Зөрүү / өөр горимын шийдэл',true)],team,senior),
  define('M07-F09','Журналын бичилтийн сорил','fieldwork',[link('programme','Хэрэгжүүлсэн хөтөлбөр','M07-F01'),evidence('population','Эх олонлогийн файл'),short('entry','Сонгосон бичилтийн ID'),short('line','Мөр / дансны код'),long('selection','Сонгосон шалгуур'),evidence('evidence','Шалгалтын нотолгоо'),long('test','Гүйцэтгэсэн сорил'),long('exception','Зөрүү / илрүүлэлт',true),long('conclusion','Дүгнэлт')],team,senior),
- define('M07-F10','Дуусгалтад нөлөөлөх тусгай горим','fieldwork',[choice('type','Ажлын төрөл',['subsequent','Дараа үеийн үйл явдал'],['going','Тасралтгүй ажиллагаа'],['legal','Хууль, болзошгүй өр төлбөр'],['related','Холбоотой тал'],['minutes','Хурлын тэмдэглэл']),date('coverageThrough','Дараа үеийн шалгалт хамарсан эцсийн өдөр',true),form('paper','Холбогдох ажлын баримт'),evidence('evidence','Нотлох баримт',true),long('work','Гүйцэтгэсэн ажил'),choice('result','Төлөв',['open','Шийдэгдээгүй'],['resolved','Шийдвэрлэсэн'],['na','Хамаарахгүй']),long('conclusion','Дүгнэлт ба үндэслэл')],team,senior),
+ define('M07-F10','Дуусгалтад нөлөөлөх тусгай горим','fieldwork',[choice('type','Ажлын төрөл',['subsequent','Дараа үеийн үйл явдал'],['going','Тасралтгүй ажиллагаа'],['legal','Хууль, болзошгүй өр төлбөр'],['related','Холбоотой тал'],['minutes','Хурлын тэмдэглэл'],['estimate','Нягтлан бодох бүртгэлийн тооцоолол'],['component','Группийн бүрэлдэхүүн хэсэг']),
+  forTypes(date('coverageThrough','Шалгалтын хамрах эцсийн өдөр'),'subsequent','going'),
+  form('paper','Холбогдох ажлын баримт'),evidence('evidence','Нотлох баримт',true),
+  forTypes(link('party','Баталсан өмчлөл / бүлгийн холбоо','M03-F04'),'related','component'),
+  forTypes(short('sourceRef','Гүйлгээ, асуудал эсвэл бүрэлдэхүүний лавлагаа'),'related','component','estimate','legal','minutes'),
+  forTypes(short('criterion','Хэрэглэсэн аргачлал, хэвлэл эсвэл шаардлага'),'estimate','component','going'),
+  forTypes(long('assumptions','Таамаглал, өгөгдөл ба эрсдэл'),'estimate','going'),
+  forTypes(number('recorded','Удирдлагын тооцоолол'),'estimate'),
+  forTypes(number('low','Дэмжигдсэн доод дүн'),'estimate'),
+  forTypes(number('high','Дэмжигдсэн дээд дүн'),'estimate'),
+  forTypes(short('contributor','Хариуцсан бүрэлдэхүүний аудитор'),'component'),
+  forTypes(long('scope','Хамрах хүрээ, өгсөн заавар ба материаллаг байдал'),'component'),
+  forTypes(long('eligibility','Мэргэшил, хараат бус байдал ба группийн оролцоо'),'component'),
+  forTypes(long('contrary','Зөрчилтэй нотолгоо, хязгаарлалт ба дагах ажил'),'estimate','component','related','going','legal'),
+  forTypes(long('effect','Нягтлан бодох бүртгэл, тодруулга эсвэл группийн дүгнэлтэд үзүүлэх нөлөө'),'estimate','component','related','going','legal'),
+  long('work','Гүйцэтгэсэн ажил'),choice('result','Төлөв',['open','Шийдэгдээгүй'],['resolved','Шийдвэрлэсэн'],['limited','Хязгаарлалттай'],['na','Хамаарахгүй']),long('conclusion','Дүгнэлт ба үндэслэл')],team,senior),
  define('M08-F07','Эх баримтын тэмдэглэгээ','fieldwork',[evidence('evidence','Эх баримтын хувилбар'),choice('anchorKind','Байршлын төрөл',['page','PDF хуудас'],['cell','Хүснэгтийн нүд'],['location','Бусад байршил']),short('anchor','Хуудасны дугаар, Sheet!A1 эсвэл байршил'),choice('mark','Тэмдэглэгээ',['tick','Тулгасан тэмдэг'],['comment','Тайлбар'],['question','Асуулт']),long('comment','Тайлбар')],['preparer','reviewer','partner'],senior),
  define('M10-F06','Эцсийн шинжилгээ','completion',[short('line','Батлагдсан тайлангийн мөр'),number('expected','Хүлээгдэж буй дүн'),number('actual','Эцсийн дүн'),number('threshold','Сонгосон босго'),link('risk','Холбогдох эрсдэл','M06-F09',true),form('paper','Холбогдох ажлын баримт',true),long('investigation','Зөрүүний шинжилгээ',true),long('conclusion','Дүгнэлт')],team,senior),
  define('M10-F08','Нотолгооны хангалттай байдлын дүгнэлт','completion',[link('analytics','Эцсийн шинжилгээ','M10-F06'),long('limitations','Хамрах хүрээний хязгаарлалт'),long('contradictions','Зөрчилтэй баримт'),long('findings','Материаллаг илрүүлэлтүүд'),choice('result','Үнэлгээ',['pending','Шийдэгдээгүй'],['sufficient','Хангалттай'],['limited','Хязгаарлалттай']),long('basis','Дүгнэлт ба үндэслэл')]),
  define('M10-F09','Аудитын санал дүгнэлтийн шийдвэр','completion',[link('sufficiency','Хянасан нотолгооны дүгнэлт','M10-F08'),choice('opinion','Сонгосон санал дүгнэлт',['unmodified','Өөрчлөлтгүй'],['qualified','Хязгаарлалттай'],['adverse','Сөрөг'],['disclaimer','Дүгнэлт өгөхөөс татгалзсан']),choice('basisType','Шийдвэрийн суурь',['none','Өөрчлөлт шаардаагүй'],['evidence','Нотолгооны хязгаарлалт'],['misstatement','Буруу илэрхийлэл']),long('assessment','Материаллаг болон өргөн тархалтын үнэлгээ'),long('basis','Шийдвэрийн үндэслэл')]),
  define('M10-F11','Тайлангийн нэмэлт хэсэг','completion',[link('opinion','Баталсан санал дүгнэлт','M10-F09'),form('template','Батлагдсан тайлангийн эх загвар'),choice('type','Хэсгийн төрөл',['kam','Аудитын гол асуудал'],['emphasis','Онцлон тэмдэглэх'],['other','Бусад асуудал'],['going','Тасралтгүй ажиллагаа']),long('wording','Хэсгийн үг хэллэг'),long('basis','Хэрэглэх үндэслэл')]),
- define('M10-F12','Бичгээрх мэдэгдэл','completion',[date('requested','Хүсэлт гаргасан өдөр'),date('due','Хүлээн авах хугацаа'),choice('result','Үнэлгээ',['pending','Хүлээгдэж буй'],['received','Бүрэн хүлээн авсан'],['qualified','Нөхцөлтэй'],['missing','Ирээгүй']),date('signed','Гарын үсэг зурсан өдөр',true),evidence('evidence','Гарын үсэгтэй эх файл',true),long('assessment','Бүрдэл ба тайланд үзүүлэх нөлөө')],team),
- define('M10-F13','Удирдлага, засаглалд хүргэх мэдээлэл','completion',[form('paper','Илрүүлэлтийн эх ажил'),link('journal','Журналын илрүүлэлт','M07-F09',true),link('analytics','Шинжилгээний илрүүлэлт','M07-F06',true),short('finding','Бусад илрүүлэлтийн ишлэл',true),short('recipient','Хүлээн авагч'),long('message','Хянах агуулга'),long('response','Удирдлагын хариу',true),evidence('delivery','Хүргэлтийн эх баримт',true)],team,senior),
+ define('M10-F12','Бичгээрх мэдэгдэл','completion',[date('requested','Хүсэлт гаргасан өдөр'),date('due','Хүлээн авах хугацаа'),choice('result','Үнэлгээ',['pending','Хүлээгдэж буй'],['received','Бүрэн хүлээн авсан'],['qualified','Нөхцөлтэй'],['missing','Ирээгүй']),date('signed','Гарын үсэг зурсан өдөр',true),
+  short('signer','Гарын үсэг зурсан хүн',true),short('capacity','Албан тушаал ба эрх',true),date('periodStart','Хамарсан хугацааны эхлэл',true),date('periodEnd','Хамарсан хугацааны төгсгөл',true),
+  evidence('evidence','Гарын үсэгтэй эх файл',true),long('assessment','Бүрдэл ба тайланд үзүүлэх нөлөө')],team),
+ define('M10-F13','Удирдлага, засаглалд хүргэх мэдээлэл','completion',[form('paper','Илрүүлэлтийн эх ажил'),link('journal','Журналын илрүүлэлт','M07-F09',true),link('analytics','Шинжилгээний илрүүлэлт','M07-F06',true),short('finding','Бусад илрүүлэлтийн ишлэл',true),short('recipient','Хүлээн авагч'),long('message','Хянах агуулга'),long('response','Удирдлагын хариу',true),
+  {...choice('channel','Суваг',['written','Бичгээр'],['oral','Амаар']),optional:true},
+  {...choice('deliveryStatus','Бодит хүргэлтийн төлөв',['pending','Хүлээгдэж буй'],['delivered','Хүрсэн'],['failed','Амжилтгүй']),optional:true},
+  {...choice('mandatory','Гаргалтаас өмнө заавал хүргэх',['yes','Тийм'],['no','Үгүй']),optional:true},date('deliveredAt','Бодит оролдлогын өдөр',true),
+  long('outcome','Хүргэлтийн бодит үр дүн / тэмдэглэл',true),evidence('delivery','Хүргэлтийн эх баримт',true)],team,senior),
  define('M12-F04','Түгжсэн багцын өөрчлөлт','archive',[short('package','Архивын багцын ID'),choice('type','Өөрчлөлтийн төрөл',['administrative','Захиргааны'],['substantive','Агуулгын']),long('changes','Нөлөөлөх бүртгэл ба хүссэн өөрчлөлт'),long('basis','Үндэслэл')]),
  define('M12-F07','Архивын хандалтын зөвшөөрөл','archive',[short('package','Архивын багцын ID'),choice('accessor','Хандах эрхтэй дүр',...roleChoices),long('reason','Хандалтын шалтгаан'),date('until','Хүчинтэй эцсийн өдөр')],team),
  define('M12-F08','Хадгалалтын хугацаа ба хориг','archive',[short('package','Архивын багцын ID'),choice('type','Бүртгэлийн төрөл',['policy','Хадгалалтын бодлого'],['hold','Хориг'],['release','Хориг цуцлах']),short('reference','Бодлогын ишлэл эсвэл хоригийн ID'),date('anchor','Хадгалалтын эхлэх өдөр',true),number('years','Хадгалах жил',true),long('basis','Үндэслэл')]),

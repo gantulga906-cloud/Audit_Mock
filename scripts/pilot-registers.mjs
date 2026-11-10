@@ -47,6 +47,16 @@ export const opinionForm = opinion => opinionForms[opinion];
 export const formContract = id => contracts.find(f => f.id === id);
 export const currentOpinion = m => approvedRows(m, 'M10-F09')[0];
 export const registerView = m => registerRows(m).map(r => ({ ...r, stale: stale(m, r) }));
+const technicalTypes = new Set(['related','component','estimate']);
+const technicalRows = m => rows(m,'M07-F10').filter(row=>technicalTypes.has(row.values.type));
+export const technicalForms = m => [...new Set(technicalRows(m).map(row=>row.values.paper))];
+export const technicalRef = (m,form) => {
+  const records=technicalRows(m).filter(row=>row.values.paper===form);
+  if (!records.length) return undefined;
+  if (records.some(row=>!approved(m,row)||!['resolved','limited','na'].includes(row.values.result))) return '';
+  return JSON.stringify(records.map(row=>[row.id,row.version]));
+};
+export const technicalEvidence = (m,form) => technicalRows(m).filter(row=>row.values.paper===form&&approved(m,row)).map(row=>row.values.evidence).filter(Boolean);
 export const pilotProgrammes = contracts.filter(f => f.family === 'programme').map(({ id, title }) => ({ id, title }));
 
 function ruleMatches(m, rule) {
@@ -102,9 +112,11 @@ const supportKinds = registers.filter(r => ['acceptance', 'planning', 'fieldwork
 export function completionRegisterGaps(m) {
   const gaps = acceptanceRegisterGaps(m);
   for (const kind of completionKinds) if (rows(m, kind).some(r => !approved(m, r))) gaps.push(kind + ' · Одоогийн хувилбарын хяналт');
-  if (unresolved(m, 'M07-F10', 'result', ['resolved', 'na'])) gaps.push('M07-F10 · Дуусгаагүй тусгай горим');
+  if (unresolved(m, 'M07-F10', 'result', ['resolved', 'limited', 'na'])) gaps.push('M07-F10 · Дуусгаагүй тусгай горим');
+  if (technicalRows(m).some(row=>approved(m,row)&&row.values.result==='limited')&&
+      !approvedRows(m,'M10-F08').some(row=>row.values.result==='limited')) gaps.push('M07-F10 · Хязгаарлалтыг нотолгооны дүгнэлтэд үнэлнэ үү');
   const subsequent = rows(m, 'M07-F10').filter(r => r.values.type === 'subsequent');
-  if ((m.extendedPilot || subsequent.length) && !subsequent.some(r =>
+  if ((m.extendedPilot || m.pilotManagement || subsequent.length) && !subsequent.some(r =>
     approved(m, r) && r.values.result === 'resolved' && validDate(r.values.coverageThrough ?? '') &&
     r.values.coverageThrough >= m.engagements[0].reportDate)) {
     gaps.push('3.2.1 · Дараа үеийн шалгалт зорилтот тайлангийн өдөр хүртэл хянагдаагүй');
@@ -117,6 +129,14 @@ export function completionRegisterGaps(m) {
   if (unresolved(m, 'M07-F08', 'result', ['received', 'difference', 'none'])) gaps.push('M07-F08 · Шийдэгдээгүй баталгаажуулалт');
   if (unresolved(m, 'M10-F08', 'result', ['sufficient', 'limited'])) gaps.push('M10-F08 · Нотолгооны дүгнэлт дутуу');
   if (unresolved(m, 'M10-F12', 'result', ['received', 'qualified', 'missing'])) gaps.push('M10-F12 · Бичгээрх мэдэгдлийг үнэлнэ үү');
+  if (m.pilotManagement) {
+    if (!approvedRows(m,'M10-F12').some(row=>row.statementVersion===m.engagements[0].fsVersion&&row.values.result==='received')) {
+      gaps.push('M10-F12 · Одоогийн тайлант үеийн бүрэн гарын үсэгтэй мэдэгдэл шаардлагатай');
+    }
+    if (approvedRows(m,'M10-F13').some(row=>!row.values.deliveryStatus||row.values.mandatory==='yes'&&row.values.deliveryStatus!=='delivered')) {
+      gaps.push('M10-F13 · Заавал хүргэх мэдээллийн бодит хүргэлт');
+    }
+  }
   for (const kind of ['M07-F06','M07-F09']) if (rows(m, kind).some(r => !approved(m, r))) gaps.push(kind + ' · Гүйцэтгэлийн одоогийн хяналт');
   if (m.extendedPilot) {
     for (const kind of ['M06-F02','M06-F09','M07-F01','M07-F10','M10-F06','M10-F08','M10-F09','M10-F12']) {
@@ -161,7 +181,7 @@ export function firmSnapshot(m) {
 }
 
 function validateInput(m, spec, data) {
-  return Object.fromEntries(spec.fields.map(f => {
+  return Object.fromEntries(spec.fields.filter(f=>!f.forTypes||f.forTypes.includes(data['field.type'])).map(f => {
     const raw = data?.['field.' + f.key] ?? '';
     if (typeof raw !== 'string' || raw.length > 4000) bad('Утгыг шалгана уу · ' + f.label);
     const value = raw.trim();
@@ -313,6 +333,25 @@ function checkBusiness(m, row, spec, files) {
           (m.extendedPilot && v.paper !== '3.2.1') || v.result === 'na')) {
         bad('3.2.1 · Тайлант үеэс хойших шалгасан эцсийн өдөр шаардлагатай.');
       }
+      if (technicalTypes.has(v.type)) {
+        const paper=m.work[workKey(m.engagement,v.paper)];
+        if (paper?.stage!==3||m.extendedPilot&&formContract(v.paper)?.family==='programme'&&!adoptedForms(m).includes(v.paper)) {
+          bad('Тусгай горимын хэрэглэгдэх гүйцэтгэлийн ажлыг сонгоно уу.');
+        }
+        const fixedForms={related:'3.2.4',component:'3.1.13'};
+        if (fixedForms[v.type]&&v.paper!==fixedForms[v.type]) bad('Тусгай горимд тохирох ажлын баримт шаардлагатай.');
+        const prior=row.history.find(h=>h.status==='approved');
+        if (prior&&(prior.values.paper!==v.paper||prior.values.type!==v.type)) bad('Өмнөх хамаарлыг хадгалж, шинэ горим үүсгэнэ үү.');
+        if (!v.sourceRef||!v.effect||v.result!=='na'&&!v.evidence) bad('Эх лавлагаа, нотолгоо ба тайлангийн нөлөөг оруулна уу.');
+        if (v.result==='limited'&&!v.contrary) bad('Хязгаарлалт ба шаардлагатай дагах ажлыг оруулна уу.');
+        if (v.type==='related'&&!v.party) bad('Холбоотой талын баталсан өмчлөлийн бүртгэл шаардлагатай.');
+        if (v.type==='component'&&(find(m,v.party)?.values.relation!=='group'||!v.criterion||!v.contributor||!v.scope||!v.eligibility)) {
+          bad('Группийн холбоо, хамрах хүрээ, мэргэшил ба оролцоог бүртгэнэ үү.');
+        }
+        if (v.type==='estimate'&&(!v.criterion||!v.assumptions||!v.recorded||!v.low||!v.high||Number(v.low)>Number(v.high))) {
+          bad('Тооцооллын арга, таамаглал ба хүчинтэй дүнгийн хүрээ шаардлагатай.');
+        }
+      } else if (v.result==='limited') bad('Хязгаарлалтыг тусгай горимын бүртгэлд холбоно уу.');
       break;
     case 'M10-F09':
       if (approvedRows(m, row.kind).some(r => r.id !== row.id)) bad('Одоогийн санал дүгнэлтийн бүртгэлийг шинэчилнэ үү.');
@@ -328,9 +367,25 @@ function checkBusiness(m, row, spec, files) {
     case 'M10-F12':
       if (v.due < v.requested || v.signed && v.signed < v.requested) bad('Хүсэлт болон гарын үсгийн огноог шалгана уу.');
       if (['received','qualified'].includes(v.result) && (!v.evidence || !v.signed)) bad('Гарын үсэгтэй эх файл, өдөр шаардлагатай.');
+      if (m.pilotManagement&&['received','qualified'].includes(v.result)) {
+        const e=m.engagements[0], period=m.bench.periods[m.engagement];
+        if (!v.signer||!v.capacity||v.periodStart!==period.start||v.periodEnd!==period.end||v.signed<period.end||v.signed>e.reportDate||v.signed>date()) {
+          bad('Гарын үсэг зурсан хүн, эрх, тайлант үе ба бодит өдөр шаардлагатай.');
+        }
+        row.statementVersion=e.fsVersion;
+      }
       break;
     case 'M10-F13':
       if (!v.journal && !v.analytics && !v.finding) bad('Илрүүлэлтийн эх холбоос эсвэл ишлэл шаардлагатай.');
+      if (m.pilotManagement||v.deliveryStatus) {
+        if (!v.channel||!v.deliveryStatus||!v.mandatory||v.deliveryStatus!=='pending'&&
+            (!v.deliveredAt||v.deliveredAt>date()||!v.outcome||v.deliveryStatus==='delivered'&&v.channel==='written'&&!v.delivery)) {
+          bad('Суваг, бодит хүргэлтийн төлөв, өдөр ба эх нотолгоог шалгана уу.');
+        }
+        if (v.mandatory==='yes'&&v.deliveryStatus==='delivered'&&v.deliveredAt>m.engagements[0].reportDate) {
+          bad('Гаргалтаас өмнөх хүргэлтийн өдөр шаардлагатай.');
+        }
+      }
       break;
   }
   if (spec.fields.some(f => f.target === 'M07-F01') && find(m, v.programme)?.values.decision !== 'adopt') bad('Хэрэгжүүлсэн хөтөлбөр сонгоно уу.');
@@ -360,6 +415,8 @@ export function registerAction(m, role, data, files) {
     if (row?.status === 'approved' && spec.section === 'archive') bad('Архивын баталсан үйлдлийг түүхээр хадгална. Шинэ бүртгэл үүсгэнэ үү.');
     if (!row && spec.id === 'M01-F01' && rows(m, spec.id).length) bad('Фирмийн одоогийн бүртгэлийг засна уу.');
     const values = validateInput(m, spec, data);
+    if (spec.id==='M07-F10'&&row&&row.history.some(h=>h.status==='approved'&&technicalTypes.has(h.values.type)&&
+        (h.values.type!==values.type||h.values.paper!==values.paper))) bad('Өмнөх хамаарлыг хадгалж, шинэ горим үүсгэнэ үү.');
     let populationBasis;
     if (spec.id==='M06-F06' && values.populationLine) {
       const population = approvedPopulation(m), bridge = population?.bridge.find(line=>line.line===values.populationLine);

@@ -11,6 +11,8 @@ import { createIntakeStore, isIntakeAction, termsAction, termsGaps } from './pil
 import { approvedStaffing, managedStaffing, rosterView, seatFor, staffingGaps } from './pilot-staffing.mjs';
 import { recordEvent } from '../src/lib/workspace.ts';
 import { createConfirmationStore } from './pilot-confirmations.mjs';
+import { createOversightStore, oversightRoles } from './pilot-oversight.mjs';
+import { createReleaseStore } from './pilot-release.mjs';
 
 const prefix = '/api/pilot';
 const digest = value => createHash('sha256').update(value).digest('hex');
@@ -76,6 +78,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     storeTemplate: (hash, contract) => db.prepare('INSERT OR IGNORE INTO pilot_templates VALUES (?, ?)').run(hash, JSON.stringify(contract)),
     template: hash => JSON.parse(db.prepare('SELECT body FROM pilot_templates WHERE digest = ?').get(hash)?.body ?? 'null'),
     confirmations: () => confirmations.view(engagementId),
+    deliveries: () => releases.view(engagementId),
+    oversightConfigured: role => !!db.prepare('SELECT 1 FROM accounts WHERE role=?').get(role),
     checkArchiveRecord: (model, row) => {
       if (archiveGrantKinds.includes(row.kind) && !store.members(engagementId).includes(row.values.accessor)) {
         throw new PilotError(409, 'Энэ дүр гэрээт ажилд хандах эрхгүй.');
@@ -88,6 +92,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     archive,
   });
   const confirmations = createConfirmationStore(db,store,filesFor);
+  const oversight = createOversightStore(store,filesFor);
+  const releases = createReleaseStore(db,store,filesFor);
   function resolveScope(role, url) {
     const ids = url.searchParams.getAll('engagement');
     if (ids.length > 1 || ids.some(id => id !== 'firm' && !/^E-[a-f0-9-]{36}$/.test(id))) {
@@ -156,6 +162,61 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       const host = req.headers.host;
       if (host !== '127.0.0.1:' + port && host !== 'localhost:' + port) throw new PilotError(403, 'Зөвхөн локал хаягаар нээнэ үү.');
       const route = url.pathname.slice(prefix.length);
+      const delivery=/^\/delivery\/([a-f0-9]{64})(\/artifact)?$/.exec(route);
+      if (delivery&&['GET','POST'].includes(req.method)) {
+        const token=delivery[1];
+        if (req.method==='GET'&&delivery[2]) {
+          const artifact=transaction(()=>releases.download(token));
+          res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; sandbox",
+            'X-Audit-Report-SHA256':artifact.sha256,'Content-Disposition':`attachment; filename="audit-report-${artifact.form}.html"`});
+          res.end(artifact.html);
+        } else if (req.method==='GET') json(res,200,transaction(()=>releases.read(token),false));
+        else {
+          if (delivery[2]||req.headers.origin!=='http://'+host) throw new PilotError(403,'Хүсэлтийн эх хаяг тохирохгүй.');
+          const fields=await readJson(req);
+          json(res,200,transaction(()=>releases.receive(token,fields)));
+        }
+        return true;
+      }
+      if (route.startsWith('/oversight')) {
+        const name='audit_oversight_'+port;
+        const sessionToken=(req.headers.cookie??'').split(';').map(value=>value.trim())
+          .find(value=>value.startsWith(name+'='))?.slice(name.length+1);
+        if (req.method==='POST'&&req.headers.origin!=='http://'+host) throw new PilotError(403,'Хүсэлтийн эх хаяг тохирохгүй.');
+        if (req.method==='POST'&&route==='/oversight/login') {
+          limitAttempts();
+          const {role,password}=await readJson(req);
+          const account=oversightRoles.includes(role)&&db.prepare('SELECT salt,hash FROM accounts WHERE role=?').get(role);
+          if (!account||typeof password!=='string'||password.length>128||!timingSafeEqual(account.hash,scryptSync(password,account.salt,64))) {
+            throw new PilotError(401,'Хараат бус нэвтрэх эрх тохирохгүй.');
+          }
+          const value=randomBytes(32).toString('hex');
+          transaction(()=>{
+            db.prepare('DELETE FROM sessions WHERE expires<=? OR token=?').run(Date.now(),digest(sessionToken??''));
+            db.prepare('INSERT INTO sessions VALUES (?,?,?)').run(digest(value),role,Date.now()+sessionMs);
+          });
+          json(res,200,transaction(()=>oversight.view(role),false),{'Set-Cookie':cookie(name,value,sessionMs/1000)});
+          return true;
+        }
+        const session=sessionToken&&/^[a-f0-9]{64}$/.test(sessionToken)&&
+          db.prepare('SELECT role FROM sessions WHERE token=? AND expires>?').get(digest(sessionToken),Date.now());
+        if (!session||!oversightRoles.includes(session.role)) throw new PilotError(401,'Хараат бус нэвтрэх эрх шаардлагатай.');
+        const id=url.searchParams.get('engagement'), {role}=session;
+        if (req.method==='GET'&&route==='/oversight') json(res,200,transaction(()=>oversight.view(role,id),false));
+        else if (req.method==='POST'&&route==='/oversight/action') {
+          const fields=await readJson(req);
+          json(res,200,transaction(()=>oversight.action(role,id,fields)));
+        } else if (req.method==='GET'&&/^\/oversight\/download\/(report|[a-f0-9-]{36})$/.test(route)) {
+          const file=transaction(()=>oversight.download(role,id,route.split('/').at(-1)),role==='custodian');
+          res.writeHead(200,{'Content-Type':'application/octet-stream','Content-Disposition':
+            "attachment; filename*=UTF-8''"+encodeURIComponent(file.name).replace(/['()*]/g,c=>'%'+c.charCodeAt(0).toString(16))});
+          res.end(file.bytes);
+        } else if (req.method==='POST'&&route==='/oversight/logout') {
+          db.prepare('DELETE FROM sessions WHERE token=?').run(digest(sessionToken));
+          json(res,200,{}, {'Set-Cookie':cookie(name,'',0)});
+        } else throw new PilotError(404,'Хяналтын хуудас олдсонгүй.');
+        return true;
+      }
       const confirmation = /^\/confirmation\/([a-f0-9]{64})$/.exec(route);
       if (confirmation && ['GET','POST'].includes(req.method)) {
         res.setHeader('Cache-Control','no-store');
@@ -184,13 +245,14 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           if (typeof data.code !== 'string' || !timingSafeEqual(Buffer.from(digest(data.code)), Buffer.from(digest(setupCode)))) {
             throw new PilotError(403, 'Эхлүүлэх код тохирохгүй.');
           }
-          const passwords = roles.map(role => data[role]);
-          if (!passwords.every(p => typeof p === 'string' && p.length >= 12 && p.length <= 128) || new Set(passwords).size !== roles.length) {
+          const configuredRoles=[...roles,...oversightRoles.filter(role=>data[role]!==undefined&&data[role]!=='')];
+          const passwords = configuredRoles.map(role => data[role]);
+          if (!passwords.every(p => typeof p === 'string' && p.length >= 12 && p.length <= 128) || new Set(passwords).size !== configuredRoles.length) {
             throw new PilotError(400, 'Дүр бүрт 12–128 тэмдэгттэй, өөр нууц үг оруулна уу.');
           }
           transaction(() => {
             if (configured()) throw new PilotError(409, 'Нэвтрэх эрхүүд бүртгэгдсэн.');
-            for (const [i, role] of roles.entries()) {
+            for (const [i, role] of configuredRoles.entries()) {
               const salt = randomBytes(16).toString('hex');
               db.prepare('INSERT INTO accounts VALUES (?, ?, ?)').run(role, salt, scryptSync(passwords[i], salt, 64));
             }
@@ -213,7 +275,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           return true;
         }
       }
-      if (!session) throw new PilotError(401, 'Нэвтэрч орно уу.');
+      if (!session||!roles.includes(session.role)) throw new PilotError(401, 'Нэвтэрч орно уу.');
       const { role } = session;
       if (req.method === 'GET' && route === '') {
         json(res, 200, transaction(() => view(role, resolveScope(role, url)), false));
@@ -253,7 +315,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             throw new PilotError(409, 'Фирмийн бүртгэлийн хэсгээс өөрчилнө үү.');
           }
           if (isIntakeAction(data.action) && id) throw new PilotError(409, 'Үйлчлүүлэгч ба хүсэлтийн хэсгээс өөрчилнө үү.');
-          let enquiry, confirmationLink;
+          let enquiry, confirmationLink, deliveryLink;
           try {
             if (data.action === 'access') changeMembership(context, role, data.fields);
             else if (isLibraryAction(data.action)) libraryAction(model.pilotFormLibrary, role, data.action, data.fields, filesFor(null));
@@ -271,6 +333,9 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             } else if (data.action === 'confirmation-start') {
               if (!id) throw new PilotError(409,'Гэрээт ажил сонгоно уу.');
               confirmationLink = confirmations.start(model,role,data.fields);
+            } else if (data.action === 'delivery-start') {
+              if (!id) throw new PilotError(409,'Гэрээт ажил сонгоно уу.');
+              deliveryLink=releases.start(model,role,data.fields);
             } else if (data.action === 'activate') {
               if (role !== 'partner') throw new PilotError(403, 'Партнерын томилгоо шаардлагатай.');
               const files = filesFor(id), gaps = [...intake.activationGaps(model), ...termsGaps(model, files)];
@@ -291,7 +356,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           if (isIntakeAction(data.action) && !resultId) store.touchFirm();
           if (fingerprint) db.prepare(`INSERT INTO pilot_commands (actor, key, fingerprint, scope, result_engagement)
             VALUES (?, ?, ?, ?, ?)`).run(role, key, fingerprint, scope, resultId);
-          return {...view(role,resultId),...(confirmationLink && {confirmationLink})};
+          return {...view(role,resultId),...(confirmationLink&&{confirmationLink}),...(deliveryLink&&{deliveryLink})};
         });
         json(res, 200, result);
       } else if (req.method === 'POST' && /^\/archive-export\/[a-f0-9-]{36}$/.test(route)) {

@@ -15,7 +15,7 @@ export type RegisterResources={
  rules:{id:string;form:string;matches:boolean;outcome:string;basis:string}[];
  programmeTemplates?:Record<string,{version:string;procedures:{key:string;label:string}[]}[]>;
  population?:PopulationView;
- archive:{packages:ArchiveItem[];reopened:{package:string;basis:string}|null;issue:{at:string;reference:string}|null};
+ archive:{sealed?:boolean;packages:ArchiveItem[];reopened:{package:string;basis:string}|null;issue:{at:string;reference:string}|null};
  extended:boolean;
 };
 const state:Record<RecordStatus,string>={draft:'Ноорог',submitted:'Хяналтад',returned:'Засварт',approved:'Баталсан'};
@@ -79,7 +79,8 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
   if(kind==='M12-F08'&&values.type==='release'&&field.key==='reference')return resources.registers.filter(r=>r.kind===kind&&r.values.package===values.package&&r.values.type==='hold').map(r=>[r.id,r.values.reference]);
  }
  return <form className="feature-form" onSubmit={save}>
-  <div className="field-grid">{def.fields.filter(f=>!planning||!programmeFields.includes(f.key)||resources.extended&&values.decision==='adopt').map(f=>{
+  <div className="field-grid">{def.fields.filter(f=>(!f.forTypes||f.forTypes.includes(values.type))&&
+   (!planning||!programmeFields.includes(f.key)||resources.extended&&values.decision==='adopt')).map(f=>{
    const choices=options(f),bound=kind==='M06-F06'&&!!values.populationLine&&['source','actual'].includes(f.key);
    const line=bound?sourceLines.find(l=>l.line===values.populationLine):undefined;
    const v=line?(f.key==='actual'?String(line.computed/100):resources.population!.current.name):(values[f.key]??'');
