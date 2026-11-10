@@ -1,5 +1,6 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
+import { isCurrentReview, snapshot, workKey } from '../src/lib/workspace.ts';
 import { invalidateReport, PilotError } from './pilot-workflow.mjs';
 import { archiveGrantKinds } from './pilot-registers.mjs';
 import { signatureMatches, strictRelease } from './pilot-release.mjs';
@@ -9,6 +10,33 @@ const today = () => new Date().toISOString().slice(0, 10);
 const fail = message => { throw new PilotError(409, message); };
 const approvedPolicies = m => (m.pilotRecords ?? []).filter(r =>
   r.kind === 'M12-F08' && r.status === 'approved' && r.values.type === 'policy');
+
+const workBasis = paper => sha(JSON.stringify([
+  Object.entries(paper.values).filter(([key])=>!/^(shared|planning|pilot)\./.test(key)).sort(([a],[b])=>a.localeCompare(b)),
+  [...paper.evidence].sort(),
+]));
+
+export function archiveAmendmentRevision(m) {
+  const amendment=m.archiveReopen, target=amendment?.target;
+  if (!target) return undefined;
+  if (amendment.reportDate!==m.engagements[0].reportDate) return undefined;
+  const paper=m.work[target.id];
+  if (!isCurrentReview(paper)||paper.version<=target.version||workBasis(paper)===target.basis) return undefined;
+  const review=paper.history.find(entry=>entry.version===paper.version&&entry.action==='Хянаж батлав');
+  if (!review||review.at<amendment.at||workBasis(review)!==workBasis(paper)) return undefined;
+  return {id:amendment.id,package:amendment.package,previousDigest:amendment.previousDigest,target,reportDate:amendment.reportDate,
+    review:{id:paper.id,form:paper.form,version:paper.version,reviewedVersion:paper.reviewedVersion,by:review.by,at:review.at,values:review.values,evidence:review.evidence}};
+}
+
+export function archiveAmendmentGap(m) {
+  const amendment=m.archiveReopen;
+  if (!amendment?.target) return '';
+  if (amendment.reportDate!==m.engagements[0].reportDate) return 'Архивын өөрчлөлт · Баталсан шинэ тайлангийн огноо '+amendment.reportDate;
+  return archiveAmendmentRevision(m)?'':amendment.target.form+' · Архивын өөрчлөлтөд шинэ ажил ба хяналт шаардлагатай.';
+}
+export const archiveAmendmentBasis = m => m.archiveReopen?.target
+  ? [m.archiveReopen.target,archiveAmendmentRevision(m)]
+  : m.pilotLastAmendment ? [m.pilotLastAmendment.target,m.pilotLastAmendment] : [];
 
 function expiry(anchor, years) {
   const target = new Date(anchor + 'T00:00:00Z');
@@ -88,16 +116,28 @@ export function createArchiveStore(db) {
     if (!issue || !signed) fail('Яг зөвшөөрсөн багцыг эхлээд гаргана уу.');
     const artifact = signed.authorization.artifact;
     if (artifact && (sha(artifact.html) !== artifact.sha256 || artifact.sha256 !== issue.reportSha256)) fail('Зөвшөөрсөн тайлангийн хэш таарахгүй.');
-    const prior = latest(m);
-    if (prior?.issued === issue.at) return prior.id;
-    if (prior && (!m.archiveReopen || m.archiveReopen.package !== prior.id)) fail('Агуулгын өөрчлөлтийг зөвшөөрнө үү.');
+    const prior = latest(m), amendment=m.archiveReopen;
+    if (prior?.issued === issue.at) {
+      if (amendment) fail('Архивын өөрчлөлтийн шинэ тайланг гаргана уу.');
+      return prior.id;
+    }
+    if (prior && amendment?.package !== prior.id) fail('Агуулгын өөрчлөлтийг зөвшөөрнө үү.');
+    const reviewed=archiveAmendmentRevision(m);
+    if (amendment?.target&&(!reviewed||JSON.stringify(reviewed)!==JSON.stringify(signed.authorization.archiveAmendment))) {
+      fail('Яг энэ өөрчлөлтийн баталсан ажлын хувилбар шаардлагатай.');
+    }
     const evidence = signed.evidence.map(metadata => {
       const file = db.prepare('SELECT bytes FROM evidence WHERE engagement_id = ? AND id = ?').get(m.engagement, metadata.id);
       if (!file || sha(file.bytes) !== metadata.sha256) fail('Архивлах эх файл эсвэл хэш таарахгүй.');
       return { ...metadata, size: file.bytes.length, base64: Buffer.from(file.bytes).toString('base64') };
     });
     const id = insert(m, { ...signed, client: m.engagements[0].client, issue, evidence,...(deliveries.length&&{deliveries}),
-      ...(m.archiveReopen && { changes: m.archiveReopen }) }, prior?.id ?? null, issue.at, m.syntheticPilot ? 1 : 0);
+      ...(amendment && { changes: amendment }) }, prior?.id ?? null, issue.at, m.syntheticPilot ? 1 : 0);
+    if (amendment) {
+      const row=(m.pilotRecords??[]).find(record=>record.id===amendment.id&&record.kind==='M12-F04'&&record.status==='approved');
+      if (row) row.successor=id;
+      if (reviewed) m.pilotLastAmendment=reviewed;
+    }
     delete m.archiveReopen;
     return id;
   }
@@ -105,7 +145,20 @@ export function createArchiveStore(db) {
     const v = row.values, archive = read(m, v.package);
     if (!archive) fail('Архивын багц олдсонгүй.');
     if (!archive.payload && !(row.kind === 'M12-F08' && v.type === 'hold')) fail('Архивын агуулга байхгүй.');
-    if (row.kind === 'M12-F04' && latest(m)?.id !== archive.id) fail('Одоогийн архивын багцыг сонгоно уу.');
+    if (row.kind === 'M12-F04') {
+      if (latest(m)?.id !== archive.id) fail('Одоогийн архивын багцыг сонгоно уу.');
+      if (v.type==='substantive') {
+        const bundle=checkPayload(archive), paper=m.work[workKey(m.engagement,v.paper)];
+        const { package: original, programmePapers=[], nativePapers=[], technicalPapers=[], archiveAmendment }=bundle.authorization;
+        const previousReportDate=original?.reportDate??m.engagements[0].reportDate;
+        if (!validDate(v.reportDate)||v.reportDate<previousReportDate) fail('Өмнөх тайлангаас эртгүй, батлах шинэ тайлангийн огноо шаардлагатай.');
+        const archived=[original?.paper,...(original?.reliedOn??[]),...programmePapers,...nativePapers,...technicalPapers,
+          archiveAmendment?.review].filter(Boolean).find(item=>item.id===paper?.id&&item.version===item.reviewedVersion);
+        if (!isCurrentReview(paper)||!archived||archived.version!==paper.version||workBasis(archived)!==workBasis(paper)) {
+          fail('Анхны багцын одоогийн хянасан, нөлөөлөх ажлын баримтыг сонгоно уу.');
+        }
+      }
+    }
     if (row.kind === 'M12-F08') {
       if (v.type === 'policy' && (!validDate(v.anchor) || v.anchor > today() || !/^\d{1,2}$/.test(v.years) || Number(v.years) < 1)) fail('Бодлогын огноо ба бүтэн жилийн тоо шаардлагатай.');
       if (v.type === 'release' && !activeHolds(m, archive.id).some(r => r.id === v.reference)) fail('Идэвхтэй хоригийн ID шаардлагатай.');
@@ -150,6 +203,15 @@ export function createArchiveStore(db) {
     const archive = read(m, v.package);
     const changes = { package: v.package, id: row.id, type: v.type, changes: v.changes, basis: v.basis, approvedBy: role, at: new Date().toISOString() };
     if (v.type === 'substantive') {
+      const paper=m.work[workKey(m.engagement,v.paper)];
+      changes.previousDigest=archive.digest;
+      changes.target={id:paper.id,form:paper.form,version:paper.version,basis:workBasis(paper)};
+      changes.reportDate=v.reportDate;
+      snapshot(paper,m.person,'Архивын өөрчлөлтийн өмнөх ажил');
+      paper.version++;
+      paper.status='changed';
+      paper.submittedVersion=undefined;
+      paper.completedAt=undefined;
       m.archiveReopen = changes;
       invalidateReport(m, 'Архивын агуулгын өөрчлөлт зөвшөөрөв');
     } else {
@@ -185,6 +247,11 @@ export function createArchiveStore(db) {
     if (!row||mustBeLatest&&latest(m)?.id!==id) fail('Яг түгжсэн архивын багц олдсонгүй.');
     return {digest:row.digest,payload:row.payload,bundle:checkPayload(row)};
   }
+  function currentForRequest(m) {
+    const archive=latest(m);
+    if (!isSealed(m)||!archive||archive.disposed) fail('Хүсэлт гаргах түгжээтэй архивын багц олдсонгүй.');
+    return archive.id;
+  }
   const view = (m, role) => ({ sealed:isSealed(m),packages: list(m).filter(p=>{
     if (role==='partner'||!(strictRelease(m)||m.pilotCustody)) return true;
     return (m.pilotRecords??[]).some(row=>archiveGrantKinds.includes(row.kind)&&row.values.package===p.id&&
@@ -198,7 +265,10 @@ export function createArchiveStore(db) {
         retention: effectiveRetention(m, p.id, approvedPolicies(m)),
         access: db.prepare('SELECT actor, at, reason, scope FROM pilot_archive_access WHERE package = ? ORDER BY id DESC LIMIT 25').all(p.id) }),
     };
-  }), reopened: m.archiveReopen ?? null, issue: role === 'partner' ? m.pilotIssue ?? null : null });
+  }), reopened: role==='partner'?m.archiveReopen??null:m.archiveReopen?{
+    basis:m.archiveReopen.basis,reportDate:m.archiveReopen.reportDate,
+    ...(m.archiveReopen.target&&{target:{form:m.archiveReopen.target.form,version:m.archiveReopen.target.version}}),
+  }:null, issue: role === 'partner' ? m.pilotIssue ?? null : null });
   const isSealed = m => !m.archiveReopen && !!db.prepare('SELECT 1 FROM pilot_archives WHERE engagement_id = ? LIMIT 1').get(m.engagement);
-  return { seal, checkRecord, approveRecord, dispose, exportPackage, inspectCustody, view, isSealed };
+  return { seal, checkRecord, approveRecord, dispose, exportPackage, inspectCustody, currentForRequest, view, isSealed };
 }

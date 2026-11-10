@@ -1,5 +1,6 @@
 export type PilotRole='preparer'|'reviewer'|'partner';
 export const pilotScope=(id:string|null)=>'?engagement='+encodeURIComponent(id??'firm');
+export const latestArchiveSelection='latest-sealed';
 export type RecordStatus='draft'|'submitted'|'returned'|'approved';
 type Choice=readonly [value:string,label:string];
 export type RegisterField={key:string;label:string;type?:'long'|'date'|'number'|'choice'|'record'|'evidence'|'form'|'programme';optional?:boolean;choices?:readonly Choice[];target?:string;forTypes?:string[]};
@@ -91,7 +92,9 @@ export const registers:readonly Register[]=[
   {...choice('deliveryStatus','Бодит хүргэлтийн төлөв',['pending','Хүлээгдэж буй'],['delivered','Хүрсэн'],['failed','Амжилтгүй']),optional:true},
   {...choice('mandatory','Гаргалтаас өмнө заавал хүргэх',['yes','Тийм'],['no','Үгүй']),optional:true},date('deliveredAt','Бодит оролдлогын өдөр',true),
   long('outcome','Хүргэлтийн бодит үр дүн / тэмдэглэл',true),evidence('delivery','Хүргэлтийн эх баримт',true)],team,senior),
- define('M12-F04','Түгжсэн багцын өөрчлөлт','archive',[short('package','Архивын багцын ID'),choice('type','Өөрчлөлтийн төрөл',['administrative','Захиргааны'],['substantive','Агуулгын']),long('changes','Нөлөөлөх бүртгэл ба хүссэн өөрчлөлт'),long('basis','Үндэслэл')]),
+ define('M12-F04','Түгжсэн багцын өөрчлөлт','archive',[short('package','Архивын багцын ID'),choice('type','Өөрчлөлтийн төрөл',['administrative','Захиргааны'],['substantive','Агуулгын']),
+  forTypes(form('paper','Анхны багцын дахин хянах ажил'),'substantive'),forTypes(date('reportDate','Дахин гаргах тайлангийн огноо'),'substantive'),
+  long('changes','Нөлөөлөх бүртгэл ба хүссэн өөрчлөлт'),long('basis','Үндэслэл')]),
  define('M12-F07','Архивын хандалтын зөвшөөрөл','archive',[short('package','Архивын багцын ID'),choice('accessor','Хандах эрхтэй дүр',...roleChoices),long('reason','Хандалтын шалтгаан'),date('until','Хүчинтэй эцсийн өдөр')],team),
  define('M12-F08','Хадгалалтын хугацаа ба хориг','archive',[short('package','Архивын багцын ID'),choice('type','Бүртгэлийн төрөл',['policy','Хадгалалтын бодлого'],['hold','Хориг'],['release','Хориг цуцлах']),short('reference','Бодлогын ишлэл эсвэл хоригийн ID'),date('anchor','Хадгалалтын эхлэх өдөр',true),number('years','Хадгалах жил',true),long('basis','Үндэслэл')]),
  define('M12-F09','Бүрэн байдал ба сэргээх шалгалт','archive',[short('package','Архивын багцын ID'),choice('type','Шалгалтын төрөл',['verify','Бүрэн байдал'],['restore','Туршилтын сэргээх шалгалт']),long('basis','Шалгалтын тэмдэглэл')]),

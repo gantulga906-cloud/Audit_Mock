@@ -1,22 +1,31 @@
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
+import { populationRequiredFields } from '../src/lib/pilot-population.ts';
 import { recordEvent } from '../src/lib/workspace.ts';
 import { fileInput, input, PilotError } from './pilot-workflow.mjs';
 import { evidenceCurrent } from './pilot-requests.mjs';
 
-const requiredColumns = ['id','account','amount','entity','date','currency'];
 const fail = (message,status=409) => { throw new PilotError(status,message); };
 const now = () => new Date().toISOString();
 const entityKey = value => value.replace(/\s/g,'').toLowerCase();
 const revisions = m => m.pilotPopulation ?? [];
 const current = m => revisions(m).at(-1);
 const currentControl = (m,control) => control&&m.evidence.some(e=>e.id===control.id&&e.version===control.version&&evidenceCurrent(m,e));
+const sourcePart = (request, part) => request?.dispatch==='issued'&&request.parts?.find(row=>row.id===part&&row.state==='accepted');
+function currentExtract(m, revision) {
+  if (!revision?.extract) return true;
+  const {request,part,fileVersion}=revision.extract;
+  const accepted=sourcePart(m.requests.find(row=>row.id===request),part);
+  return accepted?.evidence===revision.evidence&&m.evidence.some(file=>file.id===revision.evidence&&
+    file.request===request&&file.version===fileVersion&&file.status==='accepted');
+}
 export const approvedPopulation = m => {
   const revision=current(m);
-  return revision?.approval&&currentControl(m,revision.controls?.evidence)?revision:undefined;
+  return revision?.approval&&currentExtract(m,revision)&&currentControl(m,revision.controls?.evidence)?revision:undefined;
 };
 export const populationView = m => current(m) && {
-  current:current(m), usable:!!approvedPopulation(m), history:revisions(m).slice(0,-1).reverse().map(({rows:_,...revision})=>revision),
+  current:current(m), usable:!!approvedPopulation(m), extractCurrent:currentExtract(m,current(m)),
+  history:revisions(m).slice(0,-1).reverse().map(({rows:_,...revision})=>revision),
 };
 
 export function csvRows(text) {
@@ -58,18 +67,18 @@ export function cents(value) {
   return amount && value.startsWith('-') ? -amount : amount;
 }
 
-function parseRows(m, text, currency) {
+function parseRows(m, text, currency, extract) {
   const [head,...records] = csvRows(text);
   if (!head || !records.length) fail('CSV толгой болон өгөгдлийн мөр оруулна уу.',400);
   const columns = head.cells.map(x=>x.toLowerCase());
-  const missing = requiredColumns.filter(x=>!columns.includes(x));
+  const missing = (extract?.fields??populationRequiredFields).filter(x=>!columns.includes(x));
   const issues = [];
   if (missing.length) issues.push('Дутуу багана · '+missing.join(', '));
   if (new Set(columns).size !== columns.length) issues.push('Баганын нэр давхардсан.');
-  const indexes = requiredColumns.map(key=>columns.indexOf(key));
+  const indexes = populationRequiredFields.map(key=>columns.indexOf(key));
   const journalIndex=columns.indexOf('journal'), typeIndex=columns.indexOf('entry_type'), referenceIndex=columns.indexOf('reference');
   const engagement = m.engagements[0];
-  const {start,end} = m.bench.periods[engagement.id];
+  const {start,end} = extract??m.bench.periods[engagement.id];
   const entity = m.bench.clients[engagement.id].registration;
   if (!entity) fail('Гэрээт ажлын бүртгэлийн дугаар шаардлагатай.');
   const rows = records.map(({line,cells})=>{
@@ -155,33 +164,56 @@ function calculate(base, controls) {
   return {...base,rows,counts,readCents:readTotals.get(base.currency)??0,readTotals:Object.fromEntries(readTotals),acceptedCents,controls,bridge,gaps};
 }
 
+function extractInput(m, data, files) {
+  if (data.name||data.base64||data.source) fail('Хүсэлтээс сонгосон эх файлд шинэ агуулга оруулахгүй.',400);
+  const evidence=input(data,'requestEvidence',64);
+  const file=m.evidence.find(row=>row.id===evidence);
+  const request=m.requests.find(row=>row.id===file?.request);
+  const part=request?.parts?.find(row=>row.evidence===evidence);
+  const original=files.read(evidence);
+  if (!request?.extract||!sourcePart(request,part?.id)||file.status!=='accepted'||String(file.version)!==data.evidenceVersion||
+      !original||createHash('sha256').update(original.bytes).digest('hex')!==original.sha256) {
+    fail('Хүсэлтийн одоогийн зөвшөөрсөн эх файл ба хувилбарыг сонгоно уу.');
+  }
+  const extract={...request.extract,request:request.id,part:part.id,fileVersion:file.version,
+    contact:request.contact,contactEmail:request.contactEmail};
+  return {name:file.name,bytes:original.bytes,evidence,sha256:original.sha256,source:file.source,extract};
+}
+
 export function populationAction(m, role, action, data, files) {
   const prior = current(m);
   const version = (prior?.version??0)+1;
   const history = m.pilotPopulation ??= [];
   if (action==='population-import') {
     if (role==='partner') fail('Өгөгдөл бэлтгэх томилгоо шаардлагатай.',403);
-    const {name,bytes}=fileInput(data);
+    const sourceExtract=data.requestEvidence?extractInput(m,data,files):undefined;
+    if (!sourceExtract&&m.requests.some(row=>row.extract&&row.dispatch==='issued')) {
+      fail('Гаргасан эх олонлогийн хүсэлтийн зөвшөөрсөн файлаас сонгоно уу.');
+    }
+    const {name,bytes}=sourceExtract??fileInput(data);
     if (!/\.csv$/i.test(name) || bytes.length>750_000) fail('UTF-8 CSV файл 750 KB хүртэл байна.',400);
-    const currency=input(data,'currency',3).toUpperCase(), source=input(data,'source',200);
+    const currency=input(data,'currency',3).toUpperCase(), source=sourceExtract?.source??input(data,'source',200);
     if (!/^[A-Z]{3}$/.test(currency)) fail('Валютын 3 үсэгтэй кодыг оруулна уу.',400);
     let text;
     try { text = new TextDecoder('utf-8',{fatal:true}).decode(bytes); } catch { /* Keep malformed original and display its defect. */ }
     let parsed={rows:[],issues:['UTF-8 CSV файл шаардлагатай.']};
     try {
-      if (text!==undefined) parsed=parseRows(m,text,currency);
+      if (text!==undefined) parsed=parseRows(m,text,currency,sourceExtract?.extract);
     } catch (error) {
       if (!(error instanceof PilotError)||error.status!==400) throw error;
       parsed={rows:[],issues:[error.message]};
     }
-    const evidence=randomUUID(), at=now();
-    files.add(evidence,name,bytes);
-    m.evidence.push({id:evidence,engagement:m.engagement,name,source,version,status:'received',
-      type:'FILE',obtained:at.slice(0,10),original:true,specimen:false,anchor:'',text:'',uploadedBy:role,population:true});
-    history.push(calculate({...parsed,version,name,source,evidence,sha256:files.get(evidence).sha256,
-      currency,importedBy:role,preparedBy:role,at},undefined));
+    const evidence=sourceExtract?.evidence??randomUUID(), at=now();
+    if (!sourceExtract) {
+      files.add(evidence,name,bytes);
+      m.evidence.push({id:evidence,engagement:m.engagement,name,source,version,status:'received',
+        type:'FILE',obtained:at.slice(0,10),original:true,specimen:false,anchor:'',text:'',uploadedBy:role,population:true});
+    }
+    history.push(calculate({...parsed,version,name,source,evidence,sha256:sourceExtract?.sha256??files.get(evidence).sha256,
+      currency,importedBy:role,preparedBy:role,at,...(sourceExtract&&{extract:sourceExtract.extract})},undefined));
   } else {
     if (!prior || data.version!==String(prior.version)) fail('Өгөгдлийн одоогийн хувилбарыг сонгоно уу.');
+    if (!currentExtract(m,prior)) fail('Хүсэлтийн эх файл өөрчлөгдсөн. Одоогийн файлыг дахин бүртгэнэ үү.');
     if (action==='population-reconcile') {
       if (role==='partner' || prior.preparedBy!==role) fail('Өгөгдлийн томилсон бэлтгэгч шаардлагатай.',403);
       const count=input(data,'count',8), amount=cents(input(data,'total',24));
@@ -192,6 +224,9 @@ export function populationAction(m, role, action, data, files) {
       const controls={count:Number(count),cents:amount,source:input(data,'source',300),mapping:input(data,'mapping',100_000),
         statements:input(data,'statements',100_000),exclusions:data.exclusions ? input(data,'exclusions',100_000) : '',use:input(data,'use',300),
         evidence:{id:file.id,version:file.version,sha256:original.sha256}};
+      if (data.investigation || prior.extract&&(controls.exclusions||prior.controls&&prior.gaps.length)) {
+        controls.investigation=input(data,'investigation');
+      }
       const {approval:_,...base}=prior;
       history.push(calculate({...base,version,at:now()},controls));
     } else if (action==='population-approve') {
@@ -201,9 +236,11 @@ export function populationAction(m, role, action, data, files) {
       if (!currentControl(m,prior.controls?.evidence)) fail('Хяналтын эх файлын одоогийн зөвшөөрөл шаардлагатай.');
       const reason=input(data,'reason');
       prior.approval={by:role,at:now(),reason};
-      const original=m.evidence.find(e=>e.id===prior.evidence);
-      original.status='accepted';
-      original.assessment=reason;
+      if (!prior.extract) {
+        const original=m.evidence.find(e=>e.id===prior.evidence);
+        original.status='accepted';
+        original.assessment=reason;
+      }
     } else fail('Өгөгдлийн үйлдэл олдсонгүй.',404);
   }
   recordEvent(m,'Эх олонлог · v'+current(m).version+' · '+action);

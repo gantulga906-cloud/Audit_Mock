@@ -5,9 +5,10 @@ import { DatabaseSync } from 'node:sqlite';
 import { accounts, deliverySummary, emptyWorkspace, input, PilotError, pilotAction, pilotReport, pilotView } from './pilot-workflow.mjs';
 import { createArchiveStore } from './pilot-archive.mjs';
 import { archiveGrantKinds } from './pilot-registers.mjs';
+import { registers } from '../src/lib/pilot-registers.ts';
 import { createPilotStore, firmCommand } from './pilot-store.mjs';
 import { isLibraryAction, libraryAction, libraryTemplate, libraryView } from './pilot-forms.mjs';
-import { createIntakeStore, isIntakeAction, termsAction, termsGaps } from './pilot-intake.mjs';
+import { activeTermsGap, canDraftTerms, createIntakeStore, isIntakeAction, termsAction, termsGaps } from './pilot-intake.mjs';
 import { approvedStaffing, managedStaffing, rosterView, seatFor, staffingGaps } from './pilot-staffing.mjs';
 import { recordEvent } from '../src/lib/workspace.ts';
 import { createConfirmationStore } from './pilot-confirmations.mjs';
@@ -15,6 +16,7 @@ import { createOversightStore, oversightRoles } from './pilot-oversight.mjs';
 import { createReleaseStore } from './pilot-release.mjs';
 
 const prefix = '/api/pilot';
+const termsRemediation = new Set(['intake-terms-save','intake-terms-approve','support-upload','support-assess','schedule','access']);
 const digest = value => createHash('sha256').update(value).digest('hex');
 const sessionMs = 8 * 60 * 60 * 1000;
 const roles = Object.keys(accounts);
@@ -123,6 +125,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       ...(id && model.pilotIntake && (role === 'partner' || !archive.isSealed(model)) && { intakeContext: intake.contextView(model) }),
       ...(id && !archive.isSealed(model) && model.pilotTerms && {
         intakeTerms: model.pilotTerms, intakeTermsHistory: model.pilotTermsHistory ?? [],
+        intakeTermsAmendable: !model.pilotIssue&&!model.engagements[0]?.issued,
+        intakeTermsCanDraft: canDraftTerms(model,role),
       }),
       ...(id && !archive.isSealed(model) && {confirmations:confirmations.view(id)}),
       ...(id && role === 'partner' && { members: store.members(id) }) };
@@ -315,6 +319,9 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             throw new PilotError(409, 'Фирмийн бүртгэлийн хэсгээс өөрчилнө үү.');
           }
           if (isIntakeAction(data.action) && id) throw new PilotError(409, 'Үйлчлүүлэгч ба хүсэлтийн хэсгээс өөрчилнө үү.');
+          const termsHold=activeTermsGap(model);
+          const acceptanceRegister=data.action==='register'&&registers.some(row=>row.id===data.fields?.kind&&row.section==='acceptance');
+          if (termsHold&&!termsRemediation.has(data.action)&&!acceptanceRegister) throw new PilotError(409,termsHold);
           let enquiry, confirmationLink, deliveryLink;
           try {
             if (data.action === 'access') changeMembership(context, role, data.fields);
@@ -327,7 +334,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
               intake.refresh(model, role, data.fields);
             } else if (['intake-terms-save','intake-terms-approve'].includes(data.action)) {
               if (!id) throw new PilotError(409, 'Хүлээн авах шатны ажлыг сонгоно уу.');
-              const gaps = intake.activationGaps(model);
+              const gaps = model.engagements[0]?.intake.active ? [] : intake.activationGaps(model);
               if (gaps.length) throw new PilotError(409, gaps.join(' · '));
               termsAction(model, role, data.action, data.fields, filesFor(id));
             } else if (data.action === 'confirmation-start') {

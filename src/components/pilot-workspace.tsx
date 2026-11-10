@@ -37,7 +37,7 @@ type PortfolioItem={id:string;client:string;start:string;end:string;reportDate:s
 type View=RegisterResources&{
  role:PilotRole;revision:number;selected:string|null;portfolio:PortfolioItem[];members?:PilotRole[];formLibrary:LibraryView;
  intake?:{clients:IntakeClient[];enquiries:Enquiry[]};intakeContext?:IntakeContext;
- intakeTerms?:IntakeTerms;intakeTermsHistory?:IntakeTerms[];
+ intakeTerms?:IntakeTerms;intakeTermsHistory?:IntakeTerms[];intakeTermsAmendable?:boolean;intakeTermsCanDraft?:boolean;
  roster?:RosterAvailability[];staffing?:StaffingView;
  engagement:null|{client:string;period:Period;active:boolean;reportDate:string;statements?:Statements;decisions:DecisionRecord[];acceptanceGaps:string[];firm:{id:string;kind:string;version:number;values:Record<string,string>}[]};
  papers?:Paper[];requests?:RequestItem[];evidence?:(Evidence&{sha256:string;current?:boolean})[];gaps?:string[];
@@ -175,7 +175,11 @@ function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string
     <label>Хүлээн авагч<select name="contactId">{view.requestContacts?.map(c=><option key={c.id} value={c.id}>{c.name} · {c.email}</option>)}</select></label>
     <label>Хүсэх баримт · мөр бүрт нэг<textarea name="parts" required/></label>
     <label>Нэмэлт тайлбар<textarea name="message"/></label>
-   </div></ActionForm>
+   </div><details className="feature-detail"><summary>Эх олонлогийн CSV хүсэлт · сонголттой</summary>
+    <p>Нэг файл хүсэж, гэрээт ажлын тайлант үеийг ашиглана.</p>
+    <label>Өгөгдлийн эх систем<input name="extractSystem"/></label>
+    <label>Хүсэх баганууд<input name="extractFields" placeholder="id,account,amount,entity,date,currency"/></label>
+   </details></ActionForm>
   </details>}
   {view.requests?.map(r=>{
    const owner=r.owner===accountByRole[view.role],manage=owner||view.role!=='preparer';
@@ -184,6 +188,7 @@ function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string
    return <details key={r.id} className="feature-detail" open={current&&r.status!=='complete'}>
     <summary>{r.title} <span className="pill">{r.dispatch==='draft'?'Ноорог':r.dispatch==='cancelled'?'Цуцалсан':(r.parts??[]).filter(p=>p.state==='accepted').length+'/'+r.expected+' зөвшөөрсөн'}</span></summary>
     <p>{r.form} · {r.contact} · {r.due} · {r.id} · {names[r.owner]??r.owner}</p>
+    {r.extract&&<p>Эх систем {r.extract.system} · {r.extract.start} — {r.extract.end} · {r.extract.fields.join(', ')}</p>}
     {r.message&&<p>{r.message}</p>}
     {manage&&r.dispatch==='draft'&&<button type="button" className="btn secondary" onClick={()=>void run('request-issue',{request:r.id})}>Гаргасан гэж бүртгэх</button>}
     {manage&&r.dispatch!=='cancelled'&&r.status!=='complete'&&<details className="feature-detail"><summary>Дагаж тодруулах эсвэл цуцлах</summary>
@@ -196,6 +201,10 @@ function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string
      return <div className="bench-item" key={part.id}>
       <p><b>{part.title}</b> · {partStatus[part.state]}{part.reason?' · '+part.reason:''}</p>
       {file&&<a href={api+'/evidence/'+file.id+pilotScope(view.selected)}>{file.name} · v{file.version}</a>}
+      {r.extract&&file&&current&&part.state==='accepted'&&view.role!=='partner'&&<ActionForm run={run} action="population-import"
+       extra={{requestEvidence:file.id,evidenceVersion:String(file.version)}} button="Зөвшөөрсөн CSV-ийг эх олонлогоор бүртгэх">
+       <label>Валют<input name="currency" maxLength={3} placeholder="MNT" required/></label>
+      </ActionForm>}
       {owner&&current&&part.state==='received'&&<>
        <button type="button" className="btn secondary space-top" onClick={()=>void run('accept',extra)}>Энэ хэсэгт зөвшөөрөх</button>
        <ActionForm run={run} action="reject" extra={extra} button="Энэ хэсгийг буцаах"><label>Буцаах шалтгаан<input name="reason" required/></label></ActionForm>
@@ -220,7 +229,7 @@ function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string
     {owner&&current&&open.length>0&&<form className="feature-form" onSubmit={e=>upload(e,r.id)}>
      <p>Нэг файлыг хамрах хэд хэдэн хэсэгт холбож болно.</p>
      {open.map(p=><label key={p.id}><input name="parts" type="checkbox" value={p.id} defaultChecked={open.length===1}/> {p.title}</label>)}
-     <label>Эх файл<input name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv" required/></label>
+     <label>Эх файл<input name="file" type="file" accept={r.extract?'.csv':'.pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv'} required/></label>
      <label>Файл нийлүүлсэн эх сурвалж<input name="source" required/></label><button className="btn primary">Эх файл бүртгэх</button>
     </form>}
    </details>;
@@ -470,6 +479,7 @@ function SharedPilotWorkspace(){
       {view.intakeContext&&<IntakeProvenance context={view.intakeContext} active={engagement.active} role={view.role}
        priorVisible={view.portfolio.some(p=>p.id===view.intakeContext?.prior)} run={run} open={id=>void openEngagement(id)}/>}
       {view.selected&&view.intakeContext&&!sealed&&<TermsEditor id={view.selected} role={view.role} active={engagement.active}
+       amendable={view.intakeTermsAmendable} canDraft={view.intakeTermsCanDraft}
        terms={view.intakeTerms} history={view.intakeTermsHistory??[]} evidence={view.evidence??[]} run={run}/>}
       {!!engagement.acceptanceGaps.length&&<ul>{engagement.acceptanceGaps.map(gap=><li key={gap}>{gap}</li>)}</ul>}
       {engagement.firm.find(r=>r.kind==='M01-F01')&&<p className="micro">Хүлээн авахад ашигласан фирмийн бүртгэл · {engagement.firm.find(r=>r.kind==='M01-F01')?.values.reporting}</p>}
@@ -488,7 +498,8 @@ function SharedPilotWorkspace(){
       {!sealed&&view.selected&&view.completion&&<CompletionDesk data={view.completion} role={view.role} papers={view.papers??[]}
        evidence={view.evidence??[]} engagement={view.selected} run={run}/>}
       {!sealed&&view.selected&&<PopulationDesk key={view.population?.current.version} population={view.population} role={view.role}
-       engagement={view.selected} evidence={view.evidence??[]} run={run} readFile={readEvidence} onError={setError}/>}
+        engagement={view.selected} evidence={view.evidence??[]} run={run} readFile={readEvidence} onError={setError}
+        requestImport={(view.requests??[]).some(request=>request.extract&&request.dispatch==='issued')}/>}
       {!sealed&&<Delivery view={view} run={run}/>}
       {!sealed&&<Requests view={view} run={run} onError={setError}/>}
      </>}
@@ -511,7 +522,7 @@ function SharedPilotWorkspace(){
       </section>)}
       <section className="card pad bench-card">
        <h2>Партнерын багцын зөвшөөрөл</h2>
-       {(view.extended||view.completion?.management)&&view.role==='partner'&&!sealed&&<ActionForm key={engagement.reportDate} run={run} action="report-date" button="Зорилтот тайлангийн өдрийг шинэчлэх">
+       {(view.extended||view.completion?.management||view.archive.reopened?.target)&&view.role==='partner'&&!sealed&&<ActionForm key={engagement.reportDate} run={run} action="report-date" button="Зорилтот тайлангийн өдрийг шинэчлэх">
         <label>Зорилтот тайлангийн өдөр<input type="date" name="date" min={engagement.period.end} defaultValue={engagement.reportDate} required/></label>
        </ActionForm>}
        {view.role==='partner'&&(!view.archive.packages.length||view.archive.reopened)&&<ActionForm key={engagement.statements?.version} run={run} action="statements" button="СТ ба тодруулгыг тайланд холбох">

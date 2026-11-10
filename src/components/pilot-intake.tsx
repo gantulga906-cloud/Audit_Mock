@@ -219,35 +219,47 @@ export function IntakeProvenance({context,active,role,priorVisible,run,open}:{
  </details>;
 }
 
-export function TermsEditor({id,terms,history,role,evidence,active,run}:{
- id:string;terms?:IntakeTerms;history:IntakeTerms[];role:PilotRole;evidence:Evidence[];active:boolean;run:PilotAction;
+export function TermsEditor({id,terms,history,role,evidence,active,amendable,canDraft,run}:{
+ id:string;terms?:IntakeTerms;history:IntakeTerms[];role:PilotRole;evidence:(Evidence&{current?:boolean})[];
+ active:boolean;amendable?:boolean;canDraft?:boolean;run:PilotAction;
 }){
- const accepted=evidence.filter(e=>e.status==='accepted');
- return <details className="feature-detail">
+ const prior=terms?.status==='approved'?terms:history.find(row=>row.status==='approved');
+ const amendment=terms?.amendment;
+ const awaitingAmendment=!!amendment&&terms?.status==='draft';
+ const accepted=evidence.filter(e=>e.status==='accepted'&&e.current!==false&&(!active||e.id!==prior?.evidence));
+ return <details className="feature-detail" open={awaitingAmendment||undefined}>
   <summary>1.4.3 · Гарын үсэгтэй захидал {terms&&' · v'+terms.version}</summary>
   <p className="muted">Үнэлгээний эх баримт хэсэгт захидлыг хавсаргаж, тусдаа хянагчаар зөвшөөрүүлнэ.</p>
+  {awaitingAmendment&&<p className="callout amber">Шинэ хамрах хүрээг партнер дахин батлах хүртэл ажлын гүйцэтгэл түр зогсоно.</p>}
   {terms&&<>
    <p>{terms.reference} · {terms.signatory} · {terms.signedOn} · {terms.status==='approved'?'Партнер баталсан':'Ноорог'}</p>
    <p>{terms.start} — {terms.end} · {terms.scope}</p>
+   {amendment&&<p>Өмнөх баталсан v{amendment.priorVersion} · {amendment.reason}{amendment.scopeAssessment&&' · '+amendment.scopeAssessment}</p>}
    {terms.approvedBy&&<p className="micro">{roles[terms.approvedBy]} · {terms.approvedAt?.slice(0,10)} · {terms.approvalBasis}</p>}
    <p className="micro">Үйлчлүүлэгчийн мэдээлэл v{terms.clientVersion} · SHA-256 {terms.sha256}</p>
    <a className="quiet" href={'/api/pilot/evidence/'+terms.evidence+pilotScope(id)}>Баталгаажуулсан эх файл татах</a>
   </>}
-  {!active&&role==='reviewer'&&<Command key={terms?.version} run={run} action="intake-terms-save" label="Захидлын хувилбар хадгалах">
+  {(!active?role==='reviewer':amendable&&prior&&canDraft)&&<Command key={terms?.version} run={run} action="intake-terms-save"
+   label={active?'Өөрчилсөн захидлыг дахин батлуулахаар хадгалах':'Захидлын хувилбар хадгалах'}>
    <div className="field-grid">
-    <label>Үнэлсэн эх файл<select name="evidence" defaultValue={terms?.evidence??''} required><option value="">Сонгох</option>
+    <label>{active?'Шинэ гарын үсэгтэй, үнэлсэн эх файл':'Үнэлсэн эх файл'}<select name="evidence"
+     defaultValue={active&&!awaitingAmendment?'':terms?.evidence??''} required><option value="">Сонгох</option>
      {accepted.map(e=><option key={e.id} value={e.id}>{e.name} · v{e.version}</option>)}</select></label>
     <label>Захидлын ишлэл<input name="reference" defaultValue={terms?.reference} required/></label>
     <label>Үйлчлүүлэгчийн гарын үсэг зурсан хүн<input name="signatory" defaultValue={terms?.signatory} required/></label>
     <label>Гарын үсгийн огноо<input name="signedOn" type="date" defaultValue={terms?.signedOn} required/></label>
    </div>
    <label>Тохиролцсон хамрах хүрээ<textarea name="scope" defaultValue={terms?.scope} required/></label>
+   {active&&<label>Нөхцөл өөрчилсөн шалтгаан<textarea name="amendmentReason" defaultValue={awaitingAmendment?amendment?.reason:''} required/></label>}
   </Command>}
-  {!active&&role==='partner'&&terms?.status==='draft'&&<Command run={run} action="intake-terms-approve" label="Яг энэ захидлыг батлах" extra={{version:String(terms.version)}}>
+  {(!active||amendable&&awaitingAmendment)&&role==='partner'&&terms?.status==='draft'&&<Command run={run} action="intake-terms-approve"
+   label={active?'Яг энэ хувилбар, шинэ хамрах хүрээг дахин батлах':'Яг энэ захидлыг батлах'} extra={{version:String(terms.version)}}>
+   {active&&<label>Өөрчлөгдсөн хамрах хүрээ, хүлээн авах нөхцөлийн дахин үнэлгээ<textarea name="scopeAssessment" required/></label>}
    <label>Баталсан үндэслэл<input name="reason" required/></label>
   </Command>}
   {history.length>0&&<details><summary>Өмнөх хувилбарууд</summary>{history.map(h=><p className="micro" key={h.version}>
-   v{h.version} · {h.reference} · {h.status} · {h.sha256}
+   v{h.version} · {h.reference} · {h.status} · {h.sha256}{' · '}
+   <a className="quiet" href={'/api/pilot/evidence/'+h.evidence+pilotScope(id)}>Өмнөх эх файл</a>
   </p>)}</details>}
  </details>;
 }

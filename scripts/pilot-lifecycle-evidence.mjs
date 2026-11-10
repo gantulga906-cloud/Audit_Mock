@@ -9,6 +9,15 @@ const branchPlans = {
     'revision-reopens-dependent-work',
     'reopened-benchmark-evidence',
   ],
+  A11: [
+    'invalid-extract-spec',
+    'received-source-is-not-approved',
+    'scoped-extract-access',
+    'source-row-quarantine',
+    'independent-controls-required',
+    'unreconciled-sample-blocked',
+    'reopened-source-invalidates-approval',
+  ],
   A25: [
     'review-return-and-resubmit',
     'unresolved-professional-difference',

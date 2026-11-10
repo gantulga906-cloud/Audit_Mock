@@ -1,21 +1,26 @@
 import type {PilotRole} from './pilot-registers.ts';
 
+export const populationRequiredFields = ['id','account','amount','entity','date','currency'];
+export const populationOptionalFields = ['journal','entry_type','reference'];
+export type PopulationExtractSpec={system:string;start:string;end:string;fields:string[]};
+type PopulationExtract=PopulationExtractSpec&{request:string;part:string;fileVersion:number;contact:string;contactEmail:string};
 export type PopulationRow={
  row:number;id:string;account:string;entity:string;date:string;currency:string;rawAmount:string;cents:number|null;
  journal?:string;entryType?:string;reference?:string;
  issues:string[];state:'accepted'|'quarantined'|'excluded';reason?:string;
 };
-export type PopulationControls={count:number;cents:number;source:string;mapping:string;statements:string;exclusions:string;use:string;
+export type PopulationControls={count:number;cents:number;source:string;mapping:string;statements:string;exclusions:string;use:string;investigation?:string;
  evidence:{id:string;version:number;sha256:string}};
 export type PopulationBridge={line:string;accounts:string[];computed:number;reported:number|null;difference:number|null};
 export type PopulationRevision={
  version:number;name:string;source:string;evidence:string;sha256:string;currency:string;
+ extract?:PopulationExtract;
  importedBy:PilotRole;at:string;rows:PopulationRow[];issues:string[];
  counts:{read:number;accepted:number;quarantined:number;excluded:number;invalidAmounts:number};
  readCents:number;readTotals:Record<string,number>;acceptedCents:number;controls?:PopulationControls;bridge:PopulationBridge[];gaps:string[];
  preparedBy:PilotRole;approval?:{by:PilotRole;at:string;reason:string};
 };
-export type PopulationView={current:PopulationRevision;usable:boolean;history:Omit<PopulationRevision,'rows'>[]};
+export type PopulationView={current:PopulationRevision;usable:boolean;extractCurrent?:boolean;history:Omit<PopulationRevision,'rows'>[]};
 
 export type SampleUnit={id:string;row:number;account:string;date:string;cents:number};
 export type SampleTest={unit:string;row:number;result:'pass'|'exception';detail:string;cents:number;

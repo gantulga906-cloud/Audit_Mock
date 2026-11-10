@@ -1,6 +1,7 @@
 import type {Role} from './workflow';
 import type {Company,EngagementTeam} from './feature-workflows';
 import {accessOverride,missingFields,sharedFields,type Bench,type Template} from './workbench.ts';
+import type {PopulationExtractSpec} from './pilot-population.ts';
 
 export type StageStatus='not_started'|'in_progress'|'waiting'|'submitted'|'returned'|'reviewed'|'changed';
 export type ViewId='home'|'journey'|'profile'|'engagements'|'progress'|'calendar'|'tasks'|'team'|'forms'|'requests'|'evidence'|'data'|'risks'|'sampling'|'automations'|'review'|'decisions'|'reporting'|'archive'|'library'|'coverage'|'settings';
@@ -30,7 +31,7 @@ export type Engagement={id:string;companyId?:string;team?:EngagementTeam;carried
 export type Evidence={id:string;engagement:string;name:string;version:number;type:string;obtained:string;status:'received'|'accepted'|'rejected';source:string;anchor:string;text:string;specimen:boolean;dataUrl?:string;original?:boolean;channel?:string;request?:string;replaces?:string;assessment?:string;population?:boolean};
 export type RequestPart={id:string;title:string;evidence?:string;state:'missing'|'received'|'accepted'|'rejected';reason?:string;
  uses?:{evidence:string;state:'received'|'accepted'|'rejected'|'reopened';at:string;by:string;reason?:string}[]};
-export type RequestItem={id:string;dispatch?:'draft'|'issued'|'cancelled';contactId?:string;contactEmail?:string;issuedAt?:string;followUps?:{at:string;by:string;text:string}[];engagement:string;title:string;form:string;contact:string;owner:string;due:string;status:'open'|'partial'|'ready'|'changes_requested'|'complete';received:number;expected:number;message:string;evidence:string[];history:string[];parts?:RequestPart[]};
+export type RequestItem={id:string;dispatch?:'draft'|'issued'|'cancelled';contactId?:string;contactEmail?:string;issuedAt?:string;followUps?:{at:string;by:string;text:string}[];engagement:string;title:string;form:string;contact:string;owner:string;due:string;status:'open'|'partial'|'ready'|'changes_requested'|'complete';received:number;expected:number;message:string;evidence:string[];history:string[];parts?:RequestPart[];extract?:PopulationExtractSpec};
 export type ManualTask={id:string;engagement:string;title:string;owner:string;due:string;done:boolean;kind:'task'|'decision'|'meeting';form?:string};
 export type Event={id:string;engagement:string;title:string;owner:string;start:string;end:string;kind:'meeting'|'fieldwork'|'review'|'focus'};
 export type Finding={id:string;engagement:string;form:string;title:string;amount:number;status:'identified'|'agreed'|'posted_verified';evidence:string;qualitative:string;resolution?:string;sampleId?:string};

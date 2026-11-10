@@ -9,7 +9,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { createPilot } from '../scripts/pilot-server.mjs';
 import { recordLifecycleEvidence } from '../scripts/pilot-lifecycle-evidence.mjs';
 import { accounts, emptyWorkspace, pilotAction } from '../scripts/pilot-workflow.mjs';
-import { registers } from '../src/lib/pilot-registers.ts';
+import { latestArchiveSelection, registers } from '../src/lib/pilot-registers.ts';
 
 const passwords = { preparer: 'test-preparer-pass', reviewer: 'test-reviewer-pass', partner: 'test-partner-pass' };
 const create = { client: 'Fictional Pilot Company', legalForm: 'ХХК', registration: 'QA-PILOT-1', framework: 'Test',
@@ -287,6 +287,61 @@ test('provisional intake, subsequent-period confirmation and signed terms surviv
     const originalRequest=(await write('reviewer',a,'request',{title:'Prior-period file',due:'2026-03-31'})).requests[0];
     assert.equal(originalRequest.contactEmail,'first@example.test');
 
+    const uploadAmendment=async(bytes)=>(await write('preparer',a,'support-upload',{
+      name:'signed-amendment.pdf',source:'Client signed amendment',base64:Buffer.from(bytes).toString('base64'),
+    })).evidence.at(-1).id;
+    const amendedEvidence=await uploadAmendment('Signed amendment adds the restricted schedule');
+    const amendment={evidence:amendedEvidence,reference:'Letter v2',signatory:'Client director',signedOn:'2026-03-21',
+      scope:'Financial statement audit plus restricted schedule',amendmentReason:'Newly identified reporting requirement'};
+    await write('partner',a,'intake-terms-save',amendment,403);
+    await write('preparer',a,'intake-terms-save',amendment,409);
+    const duplicate=await acceptFile(a,'Approved 2025 terms');
+    await write('preparer',a,'intake-terms-save',{...amendment,evidence:duplicate},409);
+    await write('partner',a,'support-assess',{id:amendedEvidence,result:'accepted',reason:'Matched the signed amended scope to the agreement'});
+    const pending=await write('preparer',a,'intake-terms-save',amendment);
+    assert.equal(pending.intakeTerms.by,'preparer');
+    assert.equal(pending.intakeTermsCanDraft,true);
+    assert.equal(pending.engagement.active,true);
+    assert.deepEqual(pending.engagement.decisions,active.engagement.decisions);
+    assert.deepEqual(pending.intakeTerms.amendment,{priorVersion:1,reason:amendment.amendmentReason});
+    assert.equal(pending.intakeTerms.status,'draft');
+    assert.deepEqual(pending.intakeTermsHistory[0],first.intakeTerms);
+    assert.ok(pending.requests.some(row=>row.id===originalRequest.id));
+    assert.match((await write('reviewer',a,'request',{title:'Premature revised-scope request',due:'2026-03-31'},409)).error,/1\.4\.3/);
+    assert.match((await write('partner',a,'authorize',{},409)).error,/1\.4\.3/);
+    assert.match((await write('preparer',a,'save',{form:'3.1.2',execution:'Premature test',conclusion:'Blocked'},409)).error,/1\.4\.3/);
+    assert.equal((await service.fetch(scoped('/report',a),cookies.partner)).status,409);
+    await write('reviewer',a,'intake-terms-save',{...amendment,scope:'Unmatched wider scope'},409);
+    await write('preparer',a,'intake-terms-approve',{version:'2',reason:'Self approval',scopeAssessment:'Ignored'},403);
+    await write('reviewer',a,'intake-terms-approve',{version:'2',reason:'Self approval',scopeAssessment:'Ignored'},403);
+    await write('partner',a,'intake-terms-approve',{version:'2',reason:'Missing reassessment'},400);
+
+    const revisedEvidence=await acceptFile(a,'Signed revised amendment limits testing to schedule A');
+    const revisedScope='Financial statement audit plus restricted schedule A';
+    await write('preparer',a,'intake-terms-save',{...amendment,evidence:revisedEvidence,reference:'Letter v3',scope:revisedScope});
+    const scopeAssessment='Rechecked the additional deliverable, authority, independence and resources';
+    const reapprove={version:'3',reason:'Verified exact signed file and applicable revised scope',scopeAssessment};
+    await write('partner',a,'intake-terms-approve',{...reapprove,version:'2'},409);
+    await updateRisk('reviewer','save',{...threatFields,'field.residual':'open','field.basis':'Assess possible overlap with the restricted schedule'});
+    await updateRisk('reviewer','submit');
+    await updateRisk('partner','approve',{reason:'Threat is still open on the revised scope'});
+    assert.match((await write('partner',a,'intake-terms-approve',reapprove,409)).error,/M04-F05/);
+    await updateRisk('reviewer','save',{...threatFields,'field.residual':'acceptable','field.basis':'Documented the separation of the additional work'});
+    await updateRisk('reviewer','submit');
+    await updateRisk('partner','approve',{reason:'Reassessed the safeguard under the amended scope'});
+    const amended=await write('partner',a,'intake-terms-approve',reapprove);
+    assert.equal(amended.intakeTerms.status,'approved');
+    assert.equal(amended.intakeTerms.version,3);
+    assert.equal(amended.intakeTerms.scope,revisedScope);
+    assert.equal(amended.intakeTerms.sha256,createHash('sha256').update('Signed revised amendment limits testing to schedule A').digest('hex'));
+    assert.equal(amended.intakeTerms.amendment.scopeAssessment,scopeAssessment);
+    assert.equal(amended.intakeTerms.approvedBy,'partner');
+    assert.equal(amended.engagement.active,true);
+    assert.deepEqual(amended.engagement.decisions,active.engagement.decisions);
+    assert.ok(!amended.gaps.some(gap=>gap.startsWith('1.4.3')));
+    assert.equal(await (await service.fetch(scoped('/evidence/'+oldEvidence,a),cookies.partner)).text(),'Approved 2025 terms');
+    await write('reviewer',a,'request',{title:'Approved revised-scope request',due:'2026-03-31'});
+
     const next = (await write('reviewer','firm','intake-save',{...base,origin:'client',clientId:client.id})).intake.enquiries[0];
     await write('reviewer','firm','intake-forward',{id:next.id,note:'Continuance review'});
     await write('partner','firm','client-status',{id:client.id,status:'suspended',note:'Temporarily suspended'});
@@ -328,6 +383,11 @@ test('provisional intake, subsequent-period confirmation and signed terms surviv
     assert.deepEqual(firm.intake.clients[0].periods.map(p=>p.id),[b,a]);
     assert.equal(getEnquiry(firm,separate.id).status,'declined');
     assert.equal((await reloaded.view('partner',b)).intakeContext.prior,a);
+    const recovered=await reloaded.view('partner',a);
+    assert.equal(recovered.intakeTerms.amendment.scopeAssessment,scopeAssessment);
+    assert.deepEqual(recovered.intakeTermsHistory.map(row=>[row.version,row.status]),[[2,'draft'],[1,'approved']]);
+    assert.deepEqual(recovered.engagement.decisions,active.engagement.decisions);
+    assert.equal(recovered.engagement.active,true);
   } finally {
     if (service) await service.close();
     for (const suffix of ['', '-shm', '-wal']) await rm(database + suffix, { force: true });
@@ -1049,8 +1109,10 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
     const earlyDisposal = await save('reviewer', 'M12-F11', { package: descendant, policy: shorter, basis: 'Shorter schedule elapsed' });
     assert.match((await action('reviewer', 'M12-F11', earlyDisposal, 'submit', {}, 409)).error, /2100-02-28/);
     await write('partner', 'archive-dispose', { id: earlyDisposal }, 409);
-    await approve('M12-F04', { package: descendant, type: 'substantive', changes: 'Correct final line', basis: 'New financial statement figures' });
+    await approve('M12-F04', { package: descendant, type: 'substantive', paper:'4.4', reportDate:'2026-04-03',
+      changes: 'Correct final line', basis: 'New financial statement figures' });
     assert.equal(current.archive.reopened.package, descendant);
+    assert.equal(current.archive.reopened.target.form,'4.4');
     assert.equal((await service.fetch('/evidence/' + evidence, cookies.reviewer)).status, 200);
     await write('partner', 'statements', { statements: 'Synthetic statements', disclosures: 'Synthetic disclosures', lines: 'PPE,130' });
     assert.equal(current.authorized.current, false);
@@ -1160,7 +1222,7 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
   }
 });
 // Wave 3 reference handoff across data, evidence and sampled work.
-test('approved data feeds the same scoped analytics, multipart confirmation and sampled source rows', async () => {
+test('approved data feeds the same scoped analytics, multipart confirmation and sampled source rows', async t => {
   const dir=await mkdtemp(join(tmpdir(),'audit-population-'));
   const database=join(dir,'pilot.sqlite');
   let service;
@@ -1177,8 +1239,45 @@ test('approved data feeds the same scoped analytics, multipart confirmation and 
       line('outside','10','2025-04-15','OTHER'),line('','20'),line('old','30','2024-12-31'),
       line('date','40','11/11/25'),line('fx','50','2025-04-15',create.registration,'USD')].join('\n');
     const upload=contents=>({name:'ledger.csv',currency:'MNT',source:'Signed management export',base64:Buffer.from(contents).toString('base64')});
-    let state=await run('preparer','population-import',upload(first));
+    const form='3.1.2', extractDraft={title:'Signed general ledger extract',form,due:'2026-03-30',parts:'One UTF-8 general ledger CSV',
+      extractSystem:'Fixture ERP general ledger',extractFields:header};
+    const invalidSpec=await run('preparer','request-draft',{...extractDraft,extractFields:'id,account'},400);
+    let state=await run('preparer','request-draft',extractDraft);
+    const extract=state.requests[0], extractPart=extract.parts[0].id;
+    assert.deepEqual(extract.extract,{system:'Fixture ERP general ledger',start:create.start,end:create.end,fields:header.split(',')});
+    assert.equal(extract.contactEmail,create.email);
+    assert.equal(extract.owner,accounts.preparer);
+    assert.equal(extract.due,extractDraft.due);
+    state=await run('reviewer','request-issue',{request:extract.id});
+    const issued=state.requests.find(row=>row.id===extract.id);
+    assert.ok(Number.isFinite(Date.parse(issued.issuedAt)));
+    const rawSource=await run('preparer','upload',{...upload(first),request:extract.id,part:extractPart});
+    const firstFile=rawSource.evidence.find(file=>file.request===extract.id);
+    const requestInput={requestEvidence:firstFile.id,evidenceVersion:'1',currency:'MNT'};
+    assert.deepEqual([firstFile.version,firstFile.status,firstFile.source,firstFile.channel,firstFile.population],
+      [1,'received','Signed management export','auditor-upload',true]);
+    const receivedDenied=await run('preparer','population-import',requestInput,409);
+    await run('preparer','population-import',upload(first),409);
+    const signedOut=(await service.fetch(scoped('/evidence/'+firstFile.id,a))).status;
+    assert.equal(signedOut,401);
+    const wrong=(await write('reviewer','firm','create',{...create,client:'Unrelated fictional audit',registration:'A11-OTHER'})).selected;
+    const wrongScope=(await service.fetch(scoped('/evidence/'+firstFile.id,wrong),cookies.reviewer)).status;
+    assert.equal(wrongScope,404);
+    await write('preparer',wrong,'population-import',requestInput,409);
+    const wrongOrigin=(await service.fetch(scoped('/action',a),cookies.preparer,{
+      action:'population-import',fields:requestInput,revision:rawSource.revision,
+    },'https://unrelated.example.test')).status;
+    assert.equal(wrongOrigin,403);
+    await run('preparer','accept',{request:extract.id,part:extractPart});
+    await run('preparer','population-import',{...requestInput,evidenceVersion:'2'},409);
+    await run('preparer','population-import',{...requestInput,base64:Buffer.from('unretained source').toString('base64')},400);
+    state=await run('preparer','population-import',requestInput);
     const raw=state.population.current;
+    assert.equal(state.population.usable,false);
+    assert.equal(raw.evidence,firstFile.id);
+    assert.equal(raw.sha256,createHash('sha256').update(first).digest('hex'));
+    assert.deepEqual(raw.extract,{...extract.extract,request:extract.id,part:extractPart,fileVersion:1,contact:extract.contact,contactEmail:create.email});
+    assert.equal(state.evidence.filter(file=>file.request===extract.id).length,1);
     assert.deepEqual(raw.counts,{read:9,accepted:1,excluded:0,quarantined:8,invalidAmounts:1});
     assert.equal(raw.rows.find(r=>r.id==='zero').cents,0);
     assert.equal(raw.rows.find(r=>r.id==='bad').cents,null);
@@ -1193,17 +1292,32 @@ test('approved data feeds the same scoped analytics, multipart confirmation and 
     const controlEvidence=state.evidence.find(e=>e.name==='control.csv').id;
     await run('reviewer','support-assess',{id:controlEvidence,result:'accepted',reason:'Verified control report separately'});
     const controls={count:'2',total:'125.50',source:'Independently produced signed control report',mapping:'1500,PPE',
-      controlEvidence,statements:'PPE,125.50',exclusions:[4,5,6,7,8,9,10].map(r=>r+',Documented outside approved scope').join('\n'),use:'PPE analysis and sample'};
-    await run('preparer','population-reconcile',{...controls,version:'1',controlEvidence:raw.evidence},409);
-    state=await run('preparer','population-reconcile',{...controls,version:'1',total:'0',mapping:'1500,PPE\n1500,OTHER'});
+      controlEvidence,statements:'PPE,125.50',exclusions:[4,5,6,7,8,9,10].map(r=>r+',Documented outside approved scope').join('\n'),use:'PPE analysis and sample',
+      investigation:'Traced duplicate, invalid dates and amounts, and out-of-scope rows to the original export. Independent controls account for the two in-scope rows.'};
+    const reusedControl=await run('preparer','population-reconcile',{...controls,version:'1',controlEvidence:raw.evidence},409);
+    state=await run('preparer','population-reconcile',{...controls,version:'1',count:'3',total:'0',mapping:'1500,PPE\n1500,OTHER'});
     assert.ok(state.population.current.gaps.some(g=>g.includes('1500')));
     assert.equal(state.population.current.counts.accepted,2);
+    assert.equal(state.population.usable,false);
+    const unresolved=state.population.current;
+    assert.equal(unresolved.controls.count,3);
     await run('reviewer','population-approve',{version:'2',reason:'Mismatched control'},409);
+    for (const [planningForm,fields] of [['1.3',{benchmark:'1000',percentage:'2',performance:'60',trivial:'5',benchmarkSource:'Management control report'}],['2.6',{reliance:'none'}]]) {
+      await run('preparer','save',{form:planningForm,execution:'Current planning',conclusion:'Reviewed plan',...fields});
+      await run('preparer','submit',{form:planningForm});
+      await run('reviewer','review',{form:planningForm});
+    }
+    const blockedSample=await run('preparer','sample-design',{form,line:'PPE',size:'2',seed:'42',purpose:'Cannot sample an unreconciled extract'},409);
+    assert.match(blockedSample.error,/эх олонлог/i);
+    await run('preparer','population-reconcile',{...controls,version:'2',investigation:''},400);
     state=await run('preparer','population-reconcile',{...controls,version:'2'});
     assert.deepEqual(state.population.current.gaps,[]);
     assert.deepEqual(state.population.current.bridge,[{line:'PPE',accounts:['1500'],computed:12550,reported:12550,difference:0}]);
+    assert.equal(state.population.current.controls.investigation,controls.investigation);
+    assert.ok(state.population.history.some(revision=>revision.version===2&&revision.gaps.length));
     await run('preparer','population-approve',{version:'3',reason:'Own version'},403);
-    await run('reviewer','population-approve',{version:'3',reason:'Reviewed independent totals and row exclusions'});
+    const approved=(await run('reviewer','population-approve',{version:'3',reason:'Reviewed independent totals and row exclusions'})).population;
+    assert.equal(approved.current.controls.mapping,controls.mapping);
     const reg=(role,operation,fields)=>run(role,'register',{kind:'M06-F06',operation,...fields});
     state=await reg('preparer','save',Object.fromEntries(Object.entries({
       area:'PPE',populationLine:'PPE',expected:'120',actual:'999999',threshold:'10',source:'forged source',scope:'Assess the additions',
@@ -1214,12 +1328,7 @@ test('approved data feeds the same scoped analytics, multipart confirmation and 
     await reg('preparer','submit',{id:analytic.id});
     await reg('reviewer','approve',{id:analytic.id,reason:'Independent comparison'});
 
-    for (const [form,fields] of [['1.3',{benchmark:'1000',percentage:'2',performance:'60',trivial:'5',benchmarkSource:'Management control report'}],['2.6',{reliance:'none'}]]) {
-      await run('preparer','save',{form,execution:'Current planning',conclusion:'Reviewed plan',...fields});
-      await run('preparer','submit',{form});
-      await run('reviewer','review',{form});
-    }
-    const form='3.1.2', requestInfo={title:'Supporting source set',form,due:'2026-03-30',parts:'Schedule A\nSchedule B\nExternal confirmation'};
+    const requestInfo={title:'Supporting source set',form,due:'2026-03-30',parts:'Schedule A\nSchedule B\nExternal confirmation'};
     state=await run('preparer','request-draft',requestInfo);
     const request=state.requests[0].id,[p1,p2,p3]=state.requests[0].parts.map(p=>p.id);
     assert.equal(state.requests[0].dispatch,'draft');
@@ -1313,12 +1422,30 @@ test('approved data feeds the same scoped analytics, multipart confirmation and 
     assert.equal(state.authorized.current,true);
     const [signedBundle]=await (await service.fetch(scoped('/authorizations',a),cookies.partner)).json();
     assert.equal(signedBundle.authorization.population.version,3);
+    assert.equal(signedBundle.authorization.population.evidence,firstFile.id);
+    assert.equal(signedBundle.authorization.population.sha256,raw.sha256);
     assert.equal(signedBundle.authorization.samples[form].selected.length,2);
     assert.equal(signedBundle.authorization.journals[form].cases[0].id,'J-add');
     assert.equal(signedBundle.authorization.confirmations[0].evidence,confirmation);
     assert.ok(signedBundle.evidence.some(e=>e.id===confirmation));
     const priorAnalytics=state.registers.find(r=>r.id===analytic.id).version;
-    state=await run('preparer','population-import',upload([header,line('zero','0'),line('add','130')].join('\n')));
+    state=await run('reviewer','request-reopen',{request:extract.id,part:extractPart,reason:'Replacement for changed ERP extract'});
+    const reopened=state;
+    assert.equal(state.population.usable,false);
+    assert.equal(state.population.extractCurrent,false);
+    assert.equal(state.population.current.version,3);
+    await run('preparer','population-import',requestInput,409);
+    await run('reviewer','population-approve',{version:'3',reason:'Try reusing reopened source'},409);
+    const nextExtract=[header,line('zero','0'),line('add','130')].join('\n');
+    const receivedExtract=await run('preparer','upload',{...upload(nextExtract),request:extract.id,part:extractPart});
+    const nextFile=receivedExtract.evidence.find(file=>file.request===extract.id&&file.version===2);
+    assert.equal(nextFile.replaces,firstFile.id);
+    await run('preparer','accept',{request:extract.id,part:extractPart});
+    state=await run('preparer','population-import',{...requestInput,requestEvidence:nextFile.id,evidenceVersion:'2'});
+    assert.equal(state.population.current.evidence,nextFile.id);
+    assert.equal(state.population.current.extract.fileVersion,2);
+    assert.equal(state.population.current.sha256,createHash('sha256').update(nextExtract).digest('hex'));
+    assert.equal(await (await service.fetch(scoped('/evidence/'+firstFile.id,a),cookies.reviewer)).text(),first);
     assert.equal(state.samples[form].current,false);
     assert.equal(state.journals[form].current,false);
     assert.equal(state.papers.find(p=>p.form===form).status,'changed');
@@ -1334,6 +1461,63 @@ test('approved data feeds the same scoped analytics, multipart confirmation and 
     assert.equal(state.samples[form].current,false);
     assert.deepEqual(state.samples[form].selected,selected);
     assert.equal(state.fieldFindings[0].resolution,'Escalated approval control issue');
+    assert.equal(state.population.current.extract.fileVersion,2);
+    assert.ok(state.population.history.some(revision=>revision.version===3&&revision.approval?.by==='reviewer'));
+
+    const proof=(id,actor,action,expected,actual,versions)=>({id,engagement:a,actor,action,expected,actual,versions});
+    const firstDigest=createHash('sha256').update(first).digest('hex');
+    const scopedStatuses=[signedOut,wrongScope,wrongOrigin];
+    recordLifecycleEvidence(t,{lifecycle:'A11',engagement:a,steps:[
+      proof('A11-P1-W1','preparer','request-draft for an exact audit-period ERP extract',
+        {system:extractDraft.extractSystem,start:create.start,end:create.end,fields:header.split(',')},extract.extract,
+        {request:extract.id,engagementPeriod:create.start+' to '+create.end}),
+      proof('A11-P1-W2','preparer and reviewer','issue, receive and accept exact request file',
+        [create.email,extractDraft.due,1,'Signed management export',firstFile.id],
+        [issued.contactEmail,issued.due,raw.extract.fileVersion,raw.source,raw.evidence],
+        {request:extract.id,issued:issued.issuedAt,part:extractPart,file:firstFile.id,fileVersion:firstFile.version}),
+      proof('A11-P1-W3','preparer and reviewer','enforce signed-in scope and request origin on file access',
+        [401,404,403],scopedStatuses,{request:extract.id,file:firstFile.id,sha256:firstDigest}),
+      proof('A11-P2-W1','preparer','reconcile independent signed controls and map ledger account to statement line',
+        [2,12550,'PPE',12550,0],[approved.current.controls.count,approved.current.controls.cents,
+          approved.current.bridge[0].line,approved.current.bridge[0].computed,approved.current.bridge[0].difference],
+        {population:approved.current.version,ledger:firstFile.id,control:controlEvidence,sha256:raw.sha256}),
+      proof('A11-P2-W2','preparer','quarantine duplicate, invalid and out-of-scope rows and reconcile count bridge',
+        [9,1,8,2,7,0],[raw.counts.read,raw.counts.accepted,raw.counts.quarantined,approved.current.counts.accepted,
+          approved.current.counts.excluded,approved.current.counts.quarantined],
+        {import:raw.version,reviewedPopulation:approved.current.version}),
+      proof('A11-P2-W3','preparer and reviewer','retain failed map and control check, then reconcile with documented source investigation',
+        [true,0,controls.investigation],[unresolved.gaps.length>0,approved.current.gaps.length,approved.current.controls.investigation],
+        {failedReconciliation:unresolved.version,correctedReconciliation:approved.current.version,control:controlEvidence}),
+      proof('A11-P3-W1','reviewer','review exact source provenance, independent controls and intended use',
+        [true,'reviewer',firstFile.id,firstDigest,controls.use],[approved.usable,approved.current.approval.by,
+          approved.current.evidence,approved.current.sha256,approved.current.controls.use],
+        {population:approved.current.version,source:firstFile.id,sourceVersion:raw.extract.fileVersion,control:controlEvidence}),
+      proof('A11-P3-W2','preparer and reviewer','deny sample until the material reconciliation gap is resolved',
+        [true,2],[Boolean(blockedSample.error),selected.length],{unresolvedPopulation:unresolved.version,approvedPopulation:approved.current.version}),
+      proof('A11-P3-W3','preparer, reviewer and partner','pin approved population to reviewed analytics, journal work and reproducible sample',
+        [3,3,3,3,firstDigest],[signedBundle.authorization.population.version,analytic.populationBasis.version,
+          signedBundle.authorization.journals[form].population,signedBundle.authorization.samples[form].basis.population,
+          signedBundle.authorization.population.sha256],
+        {population:approved.current.version,authorization:signedBundle.authorization.at,source:firstFile.id}),
+    ],branches:[
+      proof('invalid-extract-spec','preparer','reject draft with omitted required columns',true,Boolean(invalidSpec.error),{request:extract.id}),
+      proof('received-source-is-not-approved','preparer','deny import of a file before request acceptance',
+        ['received',true],[firstFile.status,Boolean(receivedDenied.error)],{file:firstFile.id,fileVersion:firstFile.version}),
+      proof('scoped-extract-access','preparer and reviewer','deny signed-out, wrong-engagement and wrong-origin requests',
+        [401,404,403],scopedStatuses,{source:firstFile.id}),
+      proof('source-row-quarantine','preparer','keep duplicate keys and malformed values identifiable in the raw import',
+        [8,0,null],[raw.counts.quarantined,raw.rows.find(r=>r.id==='zero').cents,raw.rows.find(r=>r.id==='bad').cents],
+        {population:raw.version,source:firstFile.id}),
+      proof('independent-controls-required','preparer and reviewer','deny reuse of the population as independent control and retain unresolved mismatch',
+        [true,true],[Boolean(reusedControl.error),unresolved.gaps.length>0],{population:raw.version,unresolved:unresolved.version,control:controlEvidence}),
+      proof('unreconciled-sample-blocked','preparer','block sample selection basis before approval',
+        true,Boolean(blockedSample.error),{unresolvedPopulation:unresolved.version}),
+      proof('reopened-source-invalidates-approval','reviewer and preparer','reopen accepted source, keep prior approval and stale dependent work after replacement',
+        [false,false,false,false,2,true],[reopened.population.usable,reopened.samples[form].current,
+          reopened.journals[form].current,reopened.authorized.current,state.population.current.extract.fileVersion,
+          state.population.history.some(revision=>revision.version===3&&revision.approval?.by==='reviewer')],
+        {previousPopulation:3,replacementPopulation:state.population.current.version,previousFile:firstFile.id,replacementFile:nextFile.id}),
+    ]});
   } finally {
     if(service)await service.close();
     for(const suffix of ['', '-shm', '-wal'])await rm(database+suffix,{force:true});
@@ -2197,6 +2381,109 @@ test('technical changes, posting verification, exact-package EQR and independent
         [priorDate,0,409],[lateMaterial.reportDate,lateMaterial.gaps.length,lateApproval.status],
         {basis:lateMaterial.basis,reportDate:lateMaterial.reportDate}),
     ]});
+
+    const rerun=(role,action,fields,status=200)=>reloaded.write(role,engagement,action,fields,status);
+    async function approveReissueRecord(kind,values,owner='reviewer',id) {
+      const fields=Object.fromEntries(Object.entries(values).map(([key,value])=>['field.'+key,value]));
+      const draft=await rerun(owner,'register',{kind,id,operation:'save',...fields});
+      const record=id??draft.registers.findLast(row=>row.kind===kind).id;
+      if (values.package===latestArchiveSelection) {
+        assert.deepEqual(draft.archive.packages,[]);
+        assert.equal(draft.registers.find(row=>row.id===record).values.package,latestArchiveSelection);
+        assert.doesNotMatch(JSON.stringify(draft),new RegExp(archive.id));
+      }
+      await rerun(owner,'register',{kind,id:record,operation:'submit'});
+      state=await rerun('partner','register',{kind,id:record,operation:'approve',reason:'Checked source and approved exact request'});
+      return record;
+    }
+    const originalGrant=await approveReissueRecord('M12-F07',{package:latestArchiveSelection,accessor:'reviewer',
+      reason:'Review the original issue during the reissue',until:today},'preparer');
+    assert.equal(state.registers.find(row=>row.id===originalGrant).values.package,archive.id);
+    const targetForm='3.1.13', target=work(state,targetForm);
+    const amendment=await approveReissueRecord('M12-F04',{package:archive.id,type:'substantive',paper:targetForm,reportDate:today,
+      changes:'Rework the component conclusion and amend the report',basis:'New component evidence arrived after issue. Approved same-day report date.'});
+    assert.equal(state.archive.reopened.previousDigest,archive.digest);
+    assert.equal(state.archive.reopened.target.version,target.version);
+    assert.equal(work(state,targetForm).status,'changed');
+    assert.equal(work(state,ppe.form).version,reviewedPpe.version);
+    assert.equal(work(state,ppe.form).status,'reviewed');
+    await rerun('partner','issue',{reference:'Attempt stale reissue'},409);
+    await rerun('partner','archive-seal',{},409);
+    await rerun('preparer','submit',{form:targetForm});
+    await rerun('reviewer','review',{form:targetForm});
+    assert.match((await rerun('partner','authorize',{},409)).error,/3\.1\.13 · Архивын өөрчлөлт/);
+    const laterEvidence='New signed schedules for the component, received after the original issue';
+    const uploaded=await rerun('reviewer','support-upload',{...file('component-after-issue.csv',laterEvidence),source:'Component auditor'});
+    const later=uploaded.evidence.find(item=>item.name==='component-after-issue.csv').id;
+    await rerun('partner','support-assess',{id:later,result:'accepted',reason:'Verified the new component source'});
+    await approveReissueRecord('M07-F10',{...component,evidence:later,result:'resolved',
+      effect:'Amend the audit report for the newly supported component scope',conclusion:'Reviewed signed schedules after initial issue'},'reviewer',componentId);
+    const newConclusion='Reperformed component testing against the subsequently received signed schedules';
+    await rerun('preparer','save',{form:targetForm,execution:'Compared prior component result to the new source',conclusion:newConclusion});
+    await rerun('preparer','submit',{form:targetForm});
+    state=await rerun('reviewer','review',{form:targetForm});
+    const revisedWork=work(state,targetForm);
+    assert.equal(revisedWork.reviewedVersion,revisedWork.version);
+    const revisedReport={form:'4.1.A1',execution:'Report scope reflects additional component procedures',
+      conclusion:'Reissued after review of the new signed component schedules'};
+    await rerun('reviewer','save',revisedReport);
+    await rerun('reviewer','submit',{form:revisedReport.form});
+    await rerun('partner','review',{form:revisedReport.form});
+    assert.match((await rerun('partner','authorize',{},409)).error,/4\.6/);
+    const reissueQuality=await independent('quality');
+    const qualityView=await (await service.fetch(scoped('/oversight',engagement),reissueQuality)).json();
+    assert.deepEqual(qualityView.material.gaps,[]);
+    assert.notEqual(qualityView.material.artifact.sha256,sha);
+    assert.equal((await service.fetch(scoped('/oversight/action',engagement),reissueQuality,{action:'approve',
+      basis:qualityView.material.basis,reason:'Reviewed the actual revised component work and replacement report'})).status,200);
+    state=await rerun('partner','authorize',{});
+    const newDigest=state.authorized.artifactSha256;
+    assert.equal(newDigest,qualityView.material.artifact.sha256);
+    await rerun('partner','issue',{reference:'Attempt to reuse the old signature'},409);
+    await rerun('partner','report-sign',{});
+    state=await rerun('partner','issue',{reference:'Replacement issue after approved substantive amendment'});
+    assert.notEqual(state.archive.issue.at,payload.issue.at);
+    assert.notEqual(state.archive.issue.signature.value,payload.issue.signature.value);
+    await rerun('partner','archive-seal',{},409);
+    state=await rerun('partner','delivery-start',{recipient});
+    const revisedEndpoint='/delivery/'+state.deliveryLink.token;
+    const receivedRevision=await service.fetch(revisedEndpoint+'/artifact');
+    assert.equal(receivedRevision.status,200);
+    assert.equal(createHash('sha256').update(await receivedRevision.text()).digest('hex'),newDigest);
+    assert.equal((await service.fetch(revisedEndpoint,'',{sha256:newDigest,response:'Received the replacement report'})).status,200);
+    state=await rerun('partner','archive-seal',{});
+    const successor=state.archive.packages[0];
+    assert.equal(successor.previous,archive.id);
+    assert.notEqual(successor.digest,archive.digest);
+    assert.equal(state.archive.reopened,null);
+    assert.equal(state.authorized.current,true);
+    assert.equal(state.registers.find(row=>row.id===amendment).successor,successor.id);
+    const previous=await (await service.fetch(scoped('/archive-export/'+originalGrant,engagement),reloaded.cookies.reviewer,{})).json();
+    assert.equal(previous.id,archive.id);
+    assert.equal(previous.digest,archive.digest);
+    assert.deepEqual(previous.content,payload);
+    await rerun('partner','archive-offer-custody',{package:successor.id,recipient:'Independent Custodian'});
+    const reissueCustodian=await independent('custodian');
+    const successorDownload=await service.fetch(scoped('/oversight/download/'+successor.id,engagement),reissueCustodian);
+    assert.equal(successorDownload.status,200);
+    const successorBytes=await successorDownload.text();
+    assert.equal(createHash('sha256').update(successorBytes).digest('hex'),successor.digest);
+    const successorPayload=JSON.parse(successorBytes);
+    const review=successorPayload.authorization.archiveAmendment.review;
+    assert.equal(successorPayload.changes.id,amendment);
+    assert.equal(successorPayload.changes.approvedBy,'partner');
+    assert.equal(successorPayload.changes.previousDigest,archive.digest);
+    assert.equal(successorPayload.changes.reportDate,today);
+    assert.equal(successorPayload.issue.reportSha256,newDigest);
+    assert.equal(successorPayload.deliveries[0].state,'received');
+    assert.deepEqual([review.form,review.version,review.by,review.values.conclusion],
+      [targetForm,revisedWork.reviewedVersion,accounts.reviewer,newConclusion]);
+    assert.ok(review.evidence.includes(later));
+    assert.equal(Buffer.from(successorPayload.evidence.find(item=>item.id===later).base64,'base64').toString(),laterEvidence);
+    const acknowledged=await service.fetch(scoped('/oversight/action',engagement),reissueCustodian,{action:'accept',
+      package:successor.id,digest:successor.digest,reason:'Verified the actual successor bytes and linked predecessor'});
+    assert.equal(acknowledged.status,200);
+    assert.deepEqual((await reloaded.view('partner',engagement)).oversight.custody.map(offer=>offer.accepted.digest),[archive.digest,successor.digest]);
   } finally {
     if(service)await service.close();
     for(const suffix of ['', '-shm', '-wal'])await rm(database+suffix,{force:true});

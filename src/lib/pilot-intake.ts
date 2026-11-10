@@ -25,4 +25,5 @@ export type IntakeTerms={
  version:number;status:'draft'|'approved';evidence:string;sha256:string;reference:string;signatory:string;signedOn:string;
  scope:string;clientVersion:number;confirmation:number;start:string;end:string;by:PilotRole;at:string;
  approvedBy?:PilotRole;approvedAt?:string;approvalBasis?:string;
+ amendment?:{priorVersion:number;reason:string;scopeAssessment?:string};
 };

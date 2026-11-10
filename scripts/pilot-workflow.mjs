@@ -11,7 +11,7 @@ import {
   registerAction, registerEvidence, registerPackage, registerStamp, registerView,
   technicalEvidence, technicalForms, technicalRef,
 } from './pilot-registers.mjs';
-import { registers } from '../src/lib/pilot-registers.ts';
+import { latestArchiveSelection, registers } from '../src/lib/pilot-registers.ts';
 import { procedureOutcomes } from '../src/lib/pilot-forms.ts';
 import { renderReport, sha256 } from './pilot-report.mjs';
 import { bindForm, effectiveForm, nativeGaps, nativePapers, nativeReviewGaps, paperFormView, pinLinkedDecisions, readTypedAnswers } from './pilot-forms.mjs';
@@ -24,7 +24,9 @@ import { areaAction, areaEvidence, areaGap, areaView, areaWorkpaperRef, syncArea
 import { completionAction, completionEvidence, completionGaps, completionRef, completionView, consultationView, syncCompletion } from './pilot-completion.mjs';
 import { oversightTeamAction, oversightTeamView, qualityGaps, qualityRef } from './pilot-oversight.mjs';
 import { currentSignature, signReport, strictRelease } from './pilot-release.mjs';
+import { archiveAmendmentBasis, archiveAmendmentGap, archiveAmendmentRevision } from './pilot-archive.mjs';
 import { materialityBasis, materialityGap, materialityTargets, materialityValues, syncMateriality, updateMaterialityBasis } from './pilot-materiality.mjs';
+import { activeTermsGap } from './pilot-intake.mjs';
 
 export const accounts = { preparer: 'nomin', reviewer: 'temuulen', partner: 'bat' };
 const roleOf = person => seats.find(role => accounts[role] === person);
@@ -146,7 +148,7 @@ function pilotGaps(m,includeQuality=true) {
     ...(!m.extendedPilot && !isCurrentReview(m.work[workKey(m.engagement, workstream)]) ? ['3.1.2 · Одоогийн хувилбарын ахлахын хяналт'] : []),
     ...reportGaps(reportWorkspace(m), m.engagement),
     ...completionRegisterGaps(m),
-    ...completionGaps(m),...[materialityGap(m)].filter(Boolean),
+    ...completionGaps(m),...[materialityGap(m),archiveAmendmentGap(m),activeTermsGap(m)].filter(Boolean),
     ...(includeQuality?qualityGaps(m):[]),
     ...technicalGaps(m),
     ...nativeReviewGaps(m),
@@ -160,7 +162,9 @@ export function currentApproval(m, engagement) {
     (!m.extendedPilot || !!m.pilotReportDigest) &&
     (m.pilotCompletionAuthorization??':')===completionRef(m) &&
     (m.pilotQualityAuthorization??'')===qualityRef(m) && !qualityGaps(m).length &&
-    !completionRegisterGaps(m).length && !completionGaps(m).length && !materialityGap(m) && !technicalGaps(m).length && !nativeReviewGaps(m).length && !staffingGaps(m).length &&
+    !completionRegisterGaps(m).length && !completionGaps(m).length && !materialityGap(m) && !activeTermsGap(m) && !technicalGaps(m).length && !nativeReviewGaps(m).length && !staffingGaps(m).length &&
+    (!m.archiveReopen?.target || !archiveAmendmentGap(m) &&
+      m.pilotAmendmentAuthorization===sha256(JSON.stringify(archiveAmendmentRevision(m)))) &&
     !fieldworkForms(m).some(form=>fieldworkGap(m,form));
 }
 
@@ -172,7 +176,9 @@ export function qualityBasis(m) {
       ...(paper.notes.some(note=>note.decisions?.length)?[paper.notes]:[])];
   });
   const {report:_,...pack}=currentPackage(reportWorkspace(m),e.id);
-  return sha256(JSON.stringify([e.reportDate,pack,renderReport(m).sha256,registerStamp(m),completionRef(m),papers]));
+  const terms=m.pilotTerms;
+  const amendment=terms?.amendment?[['terms-amendment',terms.version,terms.sha256,terms.status]]:[];
+  return sha256(JSON.stringify([e.reportDate,pack,renderReport(m).sha256,registerStamp(m),completionRef(m),papers,...archiveAmendmentBasis(m),...amendment]));
 }
 
 export function qualityMaterial(m) {
@@ -227,7 +233,12 @@ export function pilotView(m, role, revision, files) {
   const sealed = files.archive.isSealed(m);
   if (sealed && role !== 'partner') {
     const archiveKinds = new Set(registers.filter(r => ['archive','firm'].includes(r.section)).map(r => r.id));
-    const hideDigest = ({ verification, ...row }) => {
+    const privateArchive = strictRelease(m)||m.pilotCustody;
+    const knownPackage = id => resources.archive.packages.some(p=>p.id===id);
+    const scopeArchiveRecord = ({ verification, ...row }) => {
+      if (privateArchive&&row.values.package&&!knownPackage(row.values.package)) {
+        row.values={...row.values,package:latestArchiveSelection};
+      }
       if (!verification) return row;
       const { digest: _, ...safe } = verification;
       return { ...row, verification: safe };
@@ -235,8 +246,9 @@ export function pilotView(m, role, revision, files) {
     return {
       role, revision, ...resources, rules: [], registers: resources.registers.filter(r =>
         archiveKinds.has(r.kind) && (!archiveGrantKinds.includes(r.kind) || r.owner === role || r.values.accessor === role) &&
-        (!(strictRelease(m)||m.pilotCustody)||!r.values.package||resources.archive.packages.some(p=>p.id===r.values.package))
-      ).map(r => ({ ...hideDigest(r), history: r.history.map(hideDigest) })),
+        (!privateArchive||!r.values.package||knownPackage(r.values.package)||
+          archiveGrantKinds.includes(r.kind)&&r.owner===role&&r.status!=='approved')
+      ).map(r => ({ ...scopeArchiveRecord(r), history: r.history.map(scopeArchiveRecord) })),
       engagement: { client: engagement.client, active: engagement.intake.active, period: m.bench.periods[engagement.id],
         reportDate: engagement.reportDate, decisions: [], acceptanceGaps: [], firm: [] },
       papers: [], requests: [], evidence: [],
@@ -469,7 +481,7 @@ export function pilotAction(m, role, action, data, files) {
   }
   if (action === 'report-date') {
     requireActor(role === 'partner');
-    if (!m.extendedPilot&&!m.pilotManagement) throw new PilotError(409, 'Дэлгэрэнгүй горим шаардлагатай.');
+    if (!m.extendedPilot&&!m.pilotManagement&&!m.archiveReopen?.target) throw new PilotError(409, 'Дэлгэрэнгүй горим шаардлагатай.');
     const date = input(data, 'date', 10);
     if (!validDate(date) || date < m.bench.periods[engagement.id].end) throw new PilotError(400, 'Зорилтот тайлангийн өдрийг шалгана уу.');
     if (date === engagement.reportDate) return;
@@ -531,6 +543,8 @@ export function pilotAction(m, role, action, data, files) {
     m.pilotAuthorization = registerStamp(m);
     m.pilotCompletionAuthorization = completionRef(m);
     m.pilotQualityAuthorization = qualityRef(m);
+    const archiveAmendment=archiveAmendmentRevision(m);
+    if (archiveAmendment) m.pilotAmendmentAuthorization=sha256(JSON.stringify(archiveAmendment));
     const programmes = adoptedForms(m).map(form => m.work[workKey(m.engagement, form)]);
     const native = nativePapers(m);
     const supporting = registerPackage(m);
@@ -548,14 +562,17 @@ export function pilotAction(m, role, action, data, files) {
     const ids = new Set([...engagement.authorized.package.evidence.map(e => e.id), ...registerEvidence(m),
       ...[...programmes,...native].flatMap(w => w.evidence), ...(m.pilotTerms ? [m.pilotTerms.evidence] : []),
       ...(thresholdBasis?[thresholdBasis.evidence.id]:[]),
-      ...(population?[population.evidence,population.controls.evidence.id]:[]),...areaEvidence(m,fieldworkForms(m)),...completionEvidence(m)]);
+      ...(population?[population.evidence,population.controls.evidence.id]:[]),...areaEvidence(m,fieldworkForms(m)),...completionEvidence(m),
+      ...(archiveAmendment?.review.evidence??[])]);
     const historical = new Set([...populationHistory.flatMap(v=>[v.evidence,v.controls.evidence.id]),
+      ...(m.pilotTermsHistory??[]).map(terms=>terms.evidence),
       ...requestAudit.flatMap(r=>(r.parts??[]).flatMap(p=>p.uses?.map(use=>use.evidence)??[])),...confirmations.map(c=>c.evidence)]);
     const linked = [...m.evidence.filter(e=>ids.has(e.id)),...m.evidence.filter(e=>!ids.has(e.id)&&historical.has(e.id))]
       .map(({ id, version, status }) => ({ id, version, status }));
     m.pilotReportDigest = artifact.sha256;
     files.authorize({
       ...engagement.authorized, artifact, registerStamp: m.pilotAuthorization, registers: supporting, templates,
+      ...(archiveAmendment&&{archiveAmendment}),
       firm: m.pilotFirm, statementLines: m.pilotStatementLines, programmePapers: programmes.map(w => ({
         id: w.id, version: w.version, reviewedVersion: w.reviewedVersion, values: { ...w.values }, evidence: [...w.evidence],
       })),
@@ -565,6 +582,7 @@ export function pilotAction(m, role, action, data, files) {
       reviewNotes:shownForms(m).map(form=>m.work[workKey(m.engagement,form)]).filter(w=>w.notes.length)
         .map(({form,version,notes})=>({form,version,notes})),
       ...(m.pilotTerms && { terms: m.pilotTerms }),
+      ...(m.pilotTermsHistory?.length&&{termsHistory:m.pilotTermsHistory}),
       ...(population && { population }),
       ...(thresholdBasis&&{materiality:{version:thresholdPaper.version,basis:thresholdBasis,amounts:validMateriality(m)}}),
       ...(populationHistory.length && {populationHistory}),

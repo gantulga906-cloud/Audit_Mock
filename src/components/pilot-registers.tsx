@@ -1,5 +1,5 @@
 import {useState,type FormEvent} from 'react';
-import {pilotScope,registers,roleChoices,sections,type PilotRecord,type PilotRole,type ProgrammeBasis,type RegisterField,type RecordStatus} from '@/lib/pilot-registers';
+import {latestArchiveSelection,pilotScope,registers,roleChoices,sections,type PilotRecord,type PilotRole,type ProgrammeBasis,type RegisterField,type RecordStatus} from '@/lib/pilot-registers';
 import type {Evidence} from '@/lib/workspace';
 import type {PopulationView} from '@/lib/pilot-population';
 
@@ -16,12 +16,14 @@ export type RegisterResources={
  rules:{id:string;form:string;matches:boolean;outcome:string;basis:string}[];
  programmeTemplates?:Record<string,{version:string;procedures:{key:string;label:string}[]}[]>;
  population?:PopulationView;
- archive:{sealed?:boolean;packages:ArchiveItem[];reopened:{package:string;basis:string}|null;issue:{at:string;reference:string}|null};
+ archive:{sealed?:boolean;packages:ArchiveItem[];reopened:{package?:string;basis:string;reportDate?:string;target?:{form:string;version:number}}|null;issue:{at:string;reference:string}|null};
  extended:boolean;
 };
 const state:Record<RecordStatus,string>={draft:'Ноорог',submitted:'Хяналтад',returned:'Засварт',approved:'Баталсан'};
 const roleName=Object.fromEntries(roleChoices);
 const rulesText:Record<string,string>={required:'Заавал',optional:'Сонголтоор',excluded:'Хамаарахгүй'};
+const latestPackageLabel='Одоогийн түгжсэн багц';
+const pinnedPackageLabel='Хүсэлтээр сонгосон түгжээтэй багц';
 const spec=(kind:string)=>registers.find(r=>r.id===kind);
 const heading=(r:PilotRecord)=>Object.values(r.values).find((v,i)=>v&&spec(r.kind)?.fields[i]?.type!=='record')||r.kind;
 const canReview=(r:PilotRecord,role:PilotRole)=>spec(r.kind)?.approvers.includes(role)&&r.status==='submitted'&&
@@ -75,7 +77,11 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
    (!planning||field.key!=='risk'||r.values.programme===selectedForm)).map(r=>[r.id,heading(r)+' · v'+r.version]);
   if(field.type==='programme'||field.type==='form')return (field.type==='programme'?resources.programmes:resources.forms).map(f=>[f.id,f.id+' · '+f.title]);
   if(field.type==='evidence')return evidence.map(e=>[e.id,e.name+' · v'+e.version]);
-  if(field.key==='package')return resources.archive.packages.map(p=>[p.id,p.summary.client+' · '+p.sealed.slice(0,16)+' · '+p.id.slice(0,8)]);
+  if(field.key==='package'){
+   const packages=resources.archive.packages.map(p=>[p.id,p.summary.client+' · '+p.sealed.slice(0,16)+' · '+p.id.slice(0,8)] as const);
+   if(kind==='M12-F07'&&resources.archive.sealed)return [[latestArchiveSelection,row?pinnedPackageLabel:latestPackageLabel],...packages];
+   if(packages.length)return packages;
+  }
   if(field.key==='evidenceId')return resources.archive.packages.find(p=>p.id===values.package)?.summary.files?.map(f=>[f.id,f.name+' · v'+f.version]);
   if(kind==='M12-F08'&&values.type==='release'&&field.key==='reference')return resources.registers.filter(r=>r.kind===kind&&r.values.package===values.package&&r.values.type==='hold').map(r=>[r.id,r.values.reference]);
  }
@@ -85,7 +91,7 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
    const choices=options(f),bound=kind==='M06-F06'&&!!values.populationLine&&['source','actual'].includes(f.key);
    const line=bound?sourceLines.find(l=>l.line===values.populationLine):undefined;
    const v=line?(f.key==='actual'?String(line.computed/100):resources.population!.current.name):(values[f.key]??'');
-   return <label key={f.key}>{f.label}{f.optional&&!(planning&&programmeFields.includes(f.key))?' (сонголтоор)':''}
+   return <label key={f.key}>{f.label}{f.optional&&!(planning&&programmeFields.includes(f.key))&&!(kind==='M12-F04'&&f.forTypes)?' (сонголтоор)':''}
     {choices?<select value={v} onChange={e=>set(f.key,e.target.value)}>
      <option value="">Сонгох</option>
      {v&&!choices.some(([id])=>id===v)&&<option value={v}>Өмнөх сонголт · {v}</option>}
@@ -122,7 +128,8 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
   <dl className="register-values">{def.fields.filter(f=>row.values[f.key]).map(f=>{
    const v=row.values[f.key],file=f.type==='evidence'&&evidence.find(e=>e.id===v),linked=f.type==='record'&&resources.registers.find(r=>r.id===v);
    const fileLabel=file?file.name+' · v'+file.version:'';
-   return <div key={f.key}><dt>{f.label}</dt><dd>{file?(resources.archive.packages.length&&!resources.archive.reopened?fileLabel:<a href={'/api/pilot/evidence/'+file.id+pilotScope(engagementId)}>{fileLabel}</a>):linked?<button type="button" className="quiet" onClick={()=>open(linked.id)}>{heading(linked)} · {linked.kind}</button>:f.choices?.find(([key])=>key===v)?.[1]??v}</dd></div>;
+   const display=f.key==='package'&&v===latestArchiveSelection?pinnedPackageLabel:f.choices?.find(([key])=>key===v)?.[1]??v;
+   return <div key={f.key}><dt>{f.label}</dt><dd>{file?(resources.archive.packages.length&&!resources.archive.reopened?fileLabel:<a href={'/api/pilot/evidence/'+file.id+pilotScope(engagementId)}>{fileLabel}</a>):linked?<button type="button" className="quiet" onClick={()=>open(linked.id)}>{heading(linked)} · {linked.kind}</button>:display}</dd></div>;
   })}</dl>
   {row.template&&<p className="micro">{row.template.form} · {row.template.sheet} · {row.template.digest.slice(0,16)}</p>}
   {row.programmeBasis&&<PlanningBasis basis={row.programmeBasis}/>}
@@ -188,7 +195,9 @@ export default function PilotRegisters({role,resources,evidence,engagementId,act
   {current==='planning'&&resources.rules.length>0&&<div className="space-top">{resources.rules.map(r=><p key={r.id}>{r.form} · {rulesText[r.outcome]} · {r.matches?'Тохирсон':'Тохироогүй'} · {r.basis}</p>)}</div>}
   {current==='archive'&&<div className="space-top">
    {resources.archive.issue&&<p>Гаргалтын бүртгэл · {resources.archive.issue.reference} · {new Date(resources.archive.issue.at).toLocaleString()}</p>}
-   {resources.archive.reopened&&<p>Агуулгын өөрчлөлт нээлттэй · {resources.archive.reopened.basis}</p>}
+   {resources.archive.reopened&&<p>Агуулгын өөрчлөлт нээлттэй · {resources.archive.reopened.basis}
+    {resources.archive.reopened.target&&' · Дахин хянах ажил '+resources.archive.reopened.target.form+' · Өмнөх v'+resources.archive.reopened.target.version}
+    {resources.archive.reopened.reportDate&&' · Баталсан тайлангийн өдөр '+resources.archive.reopened.reportDate}</p>}
    {resources.archive.packages.map(p=><details className="feature-detail" key={p.id}><summary>{p.summary.client} · {p.sealed.slice(0,16)} · {p.disposed?'Агуулга устгасан':'Түгжсэн'}</summary>
     <p>{p.id} · {p.summary.fileCount} файл · {p.holds} идэвхтэй хориг</p>{p.digest&&<p className="micro">SHA-256 {p.digest}</p>}
     {p.retention&&<p>Хадгалалтын эцсийн өдөр {p.retention.expires}{p.retention.package!==p.id&&' · Өмнөх багцын бодлого'}</p>}

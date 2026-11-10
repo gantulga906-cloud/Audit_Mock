@@ -2,8 +2,11 @@ import { randomUUID } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { saveClient } from '../src/lib/workbench.ts';
 import { currentClientContact } from '../src/lib/pilot-intake.ts';
-import { recordEvent } from '../src/lib/workspace.ts';
-import { input, openPilotEngagement, PilotError } from './pilot-workflow.mjs';
+import { canEdit, recordEvent, workKey } from '../src/lib/workspace.ts';
+import { input, invalidateReport, openPilotEngagement, PilotError } from './pilot-workflow.mjs';
+import { evidenceCurrent } from './pilot-requests.mjs';
+import { acceptanceRegisterGaps } from './pilot-registers.mjs';
+import { requireSeat } from './pilot-staffing.mjs';
 
 const firmActions = new Set(['client-save','client-contact','client-status','intake-save','intake-forward','intake-return','intake-decline','intake-convert']);
 export const isIntakeAction = action => firmActions.has(action);
@@ -27,7 +30,7 @@ function currentTerms(model, files) {
   const period = model.bench.periods[model.engagement];
   return !!terms && terms.clientVersion === model.pilotIntake.version && terms.confirmation === model.pilotIntake.confirmation &&
     terms.start === period.start && terms.end === period.end &&
-    model.evidence.some(e => e.id === terms.evidence && e.engagement === model.engagement && e.status === 'accepted') &&
+    model.evidence.some(e => e.id === terms.evidence && e.engagement === model.engagement && evidenceCurrent(model,e)) &&
     files.get(terms.evidence)?.sha256 === terms.sha256;
 }
 
@@ -37,29 +40,64 @@ export function termsGaps(model, files) {
     ['1.4.3 · Одоогийн үед хамаарах гарын үсэгтэй захидлыг партнер батална.'];
 }
 
+export function activeTermsGap(model) {
+  const terms=model.pilotTerms;
+  if (!model.engagements[0]?.intake.active||!terms?.amendment) return '';
+  if (terms.status==='approved'&&model.evidence.some(file=>file.id===terms.evidence&&evidenceCurrent(model,file))) return '';
+  return '1.4.3 · Өөрчилсөн нөхцөлийн гарын үсэгтэй хувилбар, хамрах хүрээг партнер дахин батална.';
+}
+
+export function canDraftTerms(model,role) {
+  if (role==='reviewer') return true;
+  if (role!=='preparer'||!model.engagements[0]?.intake.active) return false;
+  const paper=model.work[workKey(model.engagement,'1.4.3')];
+  return !!paper&&paper.owner===model.person&&canEdit(model,paper);
+}
+
 export function termsAction(model, role, action, data, files) {
   const e = model.engagements[0];
-  if (!model.pilotIntake || e.intake.active) fail(409, 'Хүлээн авах шатны ажил сонгоно уу.');
+  if (!model.pilotIntake || !e) fail(409, 'Захидалтай гэрээт ажлыг сонгоно уу.');
+  const active=e.intake.active;
+  if (active&&(files.archive.isSealed(model)||model.pilotIssue||e.issued)) fail(409,'Гаргасан тайлантай ажлын нөхцөлийг энэ хэсгээс өөрчлөхгүй.');
   const terms = model.pilotTerms;
   if (action === 'intake-terms-approve') {
     allowed(role === 'partner' && terms?.by !== role);
-    if (terms?.status !== 'draft' || String(terms.version) !== data?.version || !currentTerms(model, files)) {
+    if (active) requireSeat(model,files,role);
+    if (terms?.status !== 'draft' || active!==!!terms.amendment || String(terms.version) !== data?.version || !currentTerms(model, files)) {
       fail(409, 'Одоогийн захидлын хувилбарыг нягтална уу.');
     }
-    model.pilotTerms = { ...terms, status: 'approved', approvedBy: role, approvedAt: now(), approvalBasis: input(data, 'reason') };
+    const acceptance=active?acceptanceRegisterGaps(model):[];
+    if (acceptance.length) fail(409,acceptance.join(' · '));
+    model.pilotTerms = { ...terms, status: 'approved', approvedBy: role, approvedAt: now(), approvalBasis: input(data, 'reason'),
+      ...(active&&{amendment:{...terms.amendment,scopeAssessment:input(data,'scopeAssessment')}}) };
   } else {
-    allowed(role === 'reviewer');
+    allowed(canDraftTerms(model,role));
+    if (active) requireSeat(model,files,role);
     const evidence = input(data, 'evidence', 64), signedOn = input(data, 'signedOn', 10);
     const file = files.get(evidence);
-    if (!file || !model.evidence.some(item => item.id === evidence && item.status === 'accepted') ||
+    if (!file || !model.evidence.some(item => item.id === evidence && evidenceCurrent(model,item)) ||
         !validDate(signedOn) || signedOn > now().slice(0,10)) fail(409, 'Үнэлж зөвшөөрсөн эх файл болон гарын үсгийн огноог шалгана уу.');
     const { start, end } = model.bench.periods[e.id];
+    const scope=input(data,'scope');
+    let amendment;
+    if (active) {
+      const prior=terms?.status==='approved'?terms:model.pilotTermsHistory?.find(row=>row.status==='approved');
+      const replacingStale=terms?.status==='approved'&&!!activeTermsGap(model);
+      const samePendingFile=terms?.status==='draft'&&terms.scope!==scope&&terms.sha256===file.sha256;
+      if (!prior||prior.scope===scope&&!replacingStale||prior.sha256===file.sha256||samePendingFile||signedOn<prior.signedOn) {
+        fail(409,'Өмнөх баталсан нөхцөлөөс өөр хамрах хүрээ, шинэ гарын үсэгтэй эх файл шаардлагатай.');
+      }
+      amendment={priorVersion:prior.version,reason:input(data,'amendmentReason')};
+    }
     const draft = { status: 'draft', evidence, sha256: file.sha256, signedOn,
       reference: input(data, 'reference', 200), signatory: input(data, 'signatory', 150),
-      scope: input(data, 'scope'), clientVersion: model.pilotIntake.version, confirmation: model.pilotIntake.confirmation, start, end };
-    if (terms && Object.entries(draft).every(([k,v]) => k === 'status' || terms[k] === v)) return;
+      scope, clientVersion: model.pilotIntake.version, confirmation: model.pilotIntake.confirmation, start, end,
+      ...(amendment&&{amendment}) };
+    if (terms&&Object.entries(draft).every(([key,value])=>key==='status'||(key==='amendment'?
+      JSON.stringify(terms.amendment)===JSON.stringify(value):terms[key]===value))) return;
     if (terms) (model.pilotTermsHistory ??= []).unshift(terms);
     model.pilotTerms = { ...draft, version: (terms?.version ?? 0) + 1, by: role, at: now() };
+    if (active) invalidateReport(model,'Тохиролцсон хамрах хүрээ өөрчлөгдөв · 1.4.3 v'+model.pilotTerms.version);
   }
   recordEvent(model, '1.4.3 · Захидал v'+model.pilotTerms.version+' · '+model.pilotTerms.status, '1.4.3');
 }

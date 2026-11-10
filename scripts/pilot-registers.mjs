@@ -1,6 +1,6 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
-import { registers } from '../src/lib/pilot-registers.ts';
+import { latestArchiveSelection, registers } from '../src/lib/pilot-registers.ts';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { isCurrentReview, recordEvent, workKey } from '../src/lib/workspace.ts';
 import { PilotError, input, validMateriality } from './pilot-workflow.mjs';
@@ -415,6 +415,9 @@ export function registerAction(m, role, data, files) {
     if (row?.status === 'approved' && spec.section === 'archive') bad('Архивын баталсан үйлдлийг түүхээр хадгална. Шинэ бүртгэл үүсгэнэ үү.');
     if (!row && spec.id === 'M01-F01' && rows(m, spec.id).length) bad('Фирмийн одоогийн бүртгэлийг засна уу.');
     const values = validateInput(m, spec, data);
+    if (spec.id==='M12-F07'&&values.package===latestArchiveSelection) {
+      values.package=row?.values.package??files.archive.currentForRequest(m);
+    }
     if (spec.id==='M07-F10'&&row&&row.history.some(h=>h.status==='approved'&&technicalTypes.has(h.values.type)&&
         (h.values.type!==values.type||h.values.paper!==values.paper))) bad('Өмнөх хамаарлыг хадгалж, шинэ горим үүсгэнэ үү.');
     let populationBasis;

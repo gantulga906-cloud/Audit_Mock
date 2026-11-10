@@ -3,6 +3,7 @@ import { createRequest, updateRequest } from '../src/lib/feature-workflows.ts';
 import { recordEvent, recordRequestPart, snapshot, workKey } from '../src/lib/workspace.ts';
 import { accounts, fileInput, input, PilotError } from './pilot-workflow.mjs';
 import { requireSeat } from './pilot-staffing.mjs';
+import { populationOptionalFields, populationRequiredFields } from '../src/lib/pilot-population.ts';
 
 const fail = (message,status=409) => { throw new PilotError(status,message); };
 const now = () => new Date().toISOString();
@@ -16,6 +17,19 @@ export function evidenceCurrent(m, evidence) {
   const request=m.requests.find(r=>r.id===evidence.request);
   return !!request && request.dispatch!=='cancelled' &&
     !!request.parts?.some(part=>part.evidence===evidence.id&&part.state==='accepted');
+}
+
+function extractSpec(m, data, parts) {
+  if (!data.extractSystem && !data.extractFields) return undefined;
+  if (parts.length!==1) fail('Эх олонлогийн хүсэлтэд нэг CSV файл сонгоно уу.',400);
+  const system=input(data,'extractSystem',200);
+  const fields=input(data,'extractFields',200).split(',').map(key=>key.trim().toLowerCase());
+  if (new Set(fields).size!==fields.length || populationRequiredFields.some(key=>!fields.includes(key)) ||
+      fields.some(key=>![...populationRequiredFields,...populationOptionalFields].includes(key))) {
+    fail('Эх CSV файлын зайлшгүй баганууд болон зөвшөөрсөн нэмэлт багануудыг сонгоно уу.',400);
+  }
+  const {start,end}=m.bench.periods[m.engagement];
+  return {system,start,end,fields};
 }
 
 function reopen(m, request, part, reason) {
@@ -51,8 +65,10 @@ export function requestAction(m,role,action,data,files,forms,defaultForm) {
     if (parts.length>25||parts.some(p=>p.length>200)) fail('25 хүртэл ялгаатай хэсэг оруулна уу.',400);
     const contacts=m.bench.clients[m.engagement].contacts;
     const contactId=data.contactId||contacts[0]?.id;
+    const extract=extractSpec(m,data,parts);
     createRequest(m,{title,form,contactId,owner,due:input(data,'due',10),
       message:data.message?input(data,'message'): '',parts});
+    if (extract) m.requests[0].extract=extract;
     if (action==='request') updateRequest(m,m.requests[0].id,'issue');
     return action==='request';
   }
@@ -76,7 +92,7 @@ export function requestAction(m,role,action,data,files,forms,defaultForm) {
     const prior=parts.map(p=>m.evidence.find(e=>e.id===p.evidence)).filter(Boolean);
     m.evidence.push({id,name,engagement:m.engagement,version:1+Math.max(0,...prior.map(e=>e.version)),
       type:'FILE',obtained:now().slice(0,10),source,status:'received',specimen:false,request:request.id,
-      anchor:'',text:'',original:true,uploadedBy:role});
+      anchor:'',text:'',original:true,uploadedBy:role,...(request.extract&&{channel:'auditor-upload',population:true})});
     for (const part of parts) recordRequestPart(m,request.id,part.id,'receive',id,true);
     files.add(id,name,bytes);
     return false;

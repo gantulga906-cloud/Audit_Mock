@@ -20,13 +20,15 @@ export function DataAction({run,action,extra,button,children}:{
  return <form className="feature-form" onSubmit={submit}>{children}<button className="btn secondary">{button}</button></form>;
 }
 
-export function PopulationDesk({population,role,engagement,evidence,run,readFile,onError}:{
+export function PopulationDesk({population,role,engagement,evidence,run,readFile,onError,requestImport}:{
  population?:PopulationView;role:PilotRole;engagement:string;run:PilotAction;
  evidence:(Evidence&{current?:boolean})[];
+ requestImport?:boolean;
  readFile:(file:FormDataEntryValue|null)=>Promise<{name:string;base64:string}>;onError:(error:string)=>void;
 }){
  const [page,setPage]=useState(0),[filter,setFilter]=useState('');
  const current=population?.current, controls=current?.controls;
+ const extractCurrent=population?.extractCurrent!==false;
  const rows=(current?.rows??[]).filter(r=>!filter||r.state===filter);
  const pageSize=50, last=Math.max(0,Math.ceil(rows.length/pageSize)-1), index=Math.min(page,last);
  function upload(e:FormEvent<HTMLFormElement>){
@@ -38,7 +40,8 @@ export function PopulationDesk({population,role,engagement,evidence,run,readFile
  const original=(id:string)=>'/api/pilot/evidence/'+id+pilotScope(engagement);
  return <section className="card pad bench-card">
   <h2>Эх олонлог ба санхүүгийн тайлангийн тулгалт</h2>
-  {role!=='partner'&&<details className="feature-detail">
+  {role!=='partner'&&requestImport&&<p>Эх олонлогийн гаргасан хүсэлтээс зөвшөөрсөн CSV файлыг сонгоно.</p>}
+  {role!=='partner'&&!requestImport&&<details className="feature-detail">
    <summary>Үйлчлүүлэгчийн эх CSV файл бүртгэх</summary>
    <p className="micro">id, account, amount, entity, date, currency · YYYY-MM-DD · UTF-8</p>
    <form className="feature-form" onSubmit={upload}>
@@ -49,12 +52,14 @@ export function PopulationDesk({population,role,engagement,evidence,run,readFile
    </form>
   </details>}
   {current&&<>
-   <p><a href={original(current.evidence)}>{current.name}</a> · v{current.version} · {current.currency} · {current.source} · <b>{population?.usable?'Хэрэглэхийг зөвшөөрсөн':current.approval?'Эх хяналт өөрчлөгдсөн':'Хяналт хүлээж байна'}</b></p>
+   <p><a href={original(current.evidence)}>{current.name}</a> · v{current.version} · {current.currency} · {current.source} · <b>{population?.usable?'Хэрэглэхийг зөвшөөрсөн':!extractCurrent?'Хүсэлтийн эх файл өөрчлөгдсөн':current.approval?'Эх хяналт өөрчлөгдсөн':'Хяналт хүлээж байна'}</b></p>
+   {current.extract&&<p>{current.extract.request} · файл v{current.extract.fileVersion} · {current.extract.system} · {current.extract.start} — {current.extract.end} · {current.extract.contact}</p>}
    <p className="micro" style={{overflowWrap:'anywhere'}}>SHA-256 {current.sha256}</p>
    <p>Уншсан {current.counts.read} · Хүлээн авах {current.counts.accepted} · Тусгаарласан {current.counts.quarantined} · Хассан {current.counts.excluded}</p>
    <p>Уншигдсан дүн {Object.entries(current.readTotals??{}).map(([code,amount])=>code+' '+money(amount)).join(' · ')||'—'}
     {' · '}Хамрах хүрээний дүн {money(current.acceptedCents)} {current.currency} · Тоон дүнгүй мөр {current.counts.invalidAmounts}</p>
    {controls&&<p>Хараат бус хяналт {controls.count} мөр · {money(controls.cents)} · <a href={original(controls.evidence.id)}>{controls.source}</a> · Хэрэглэх зорилго {controls.use}</p>}
+   {controls?.investigation&&<p>Зөрүү, хасалтын тайлбар · {controls.investigation}</p>}
    {current.gaps.length>0&&<ul className="callout amber">{current.gaps.slice(0,30).map((gap,i)=><li key={i}>{gap}</li>)}</ul>}
    <details className="feature-detail" open={current.counts.quarantined>0}>
     <summary>Эх мөрийн задрал</summary>
@@ -72,7 +77,7 @@ export function PopulationDesk({population,role,engagement,evidence,run,readFile
    {current.bridge.length>0&&<details className="feature-detail" open><summary>Данс → Тайлангийн мөр</summary>
     {current.bridge.map(b=><p key={b.line}><b>{b.line}</b> · {b.accounts.join(', ')||'—'} · {money(b.computed)} / {b.reported===null?'—':money(b.reported)} · Зөрүү {b.difference===null?'—':money(b.difference)}</p>)}
    </details>}
-   {role===current.preparedBy&&<details className="feature-detail"><summary>Тулгалт ба хамрах хүрээг хадгалах</summary>
+   {role===current.preparedBy&&extractCurrent&&<details className="feature-detail"><summary>Тулгалт ба хамрах хүрээг хадгалах</summary>
     <DataAction key={current.version} run={run} action="population-reconcile" extra={{version:String(current.version)}} button="Тулгалтын шинэ хувилбар хадгалах">
      <div className="field-grid">
       <label>Хараат бус мөрийн тоо<input name="count" type="number" min={1} defaultValue={controls?.count} required/></label>
@@ -86,10 +91,11 @@ export function PopulationDesk({population,role,engagement,evidence,run,readFile
       <label>Данс,тайлангийн мөр<textarea name="mapping" defaultValue={controls?.mapping} placeholder="1500,PPE" required/></label>
       <label>Тайлангийн мөр,батлах дүн<textarea name="statements" defaultValue={controls?.statements} placeholder="PPE,15000" required/></label>
       <label>Хасах эх мөр,үндэслэл<textarea name="exclusions" defaultValue={controls?.exclusions} placeholder="8,Тайлант үеийн гадна"/></label>
+      <label>Зөрүү, хувиргалт ба хасалтын тайлбар<textarea name="investigation" defaultValue={controls?.investigation}/></label>
      </div>
     </DataAction>
    </details>}
-   {role!=='preparer'&&role!==current.preparedBy&&!current.approval&&current.gaps.length===0&&<DataAction run={run}
+   {role!=='preparer'&&role!==current.preparedBy&&extractCurrent&&!current.approval&&current.gaps.length===0&&<DataAction run={run}
     action="population-approve" extra={{version:String(current.version)}} button="Энэ хувилбарыг батлах">
     <label>Хяналтын үндэслэл<input name="reason" required/></label>
    </DataAction>}
