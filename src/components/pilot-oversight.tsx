@@ -5,7 +5,8 @@ import type {PilotAction} from './pilot-registers';
 
 type IndependentRole='quality'|'custodian';
 type QualityNote={id:string;text:string;cleared?:{at:string};responses?:{text:string;at:string}[]};
-type Quality={policy:{version:number;mode:string;reference:string;basis:string;reviewer:string;eligibility:string};current:boolean;notes:QualityNote[]};
+type Quality={policy:{version:number;mode:string;reference:string;basis:string;reviewer:string;eligibility:string;
+ eligibilityStatus?:'eligible'|'ineligible'|'unresolved'|''};current:boolean;notes:QualityNote[]};
 type Custody={id:string;digest:string;recipient:string;offeredAt:string;downloadedAt?:string;accepted?:{at:string;reason:string}};
 export type OversightView={quality?:Quality;custody:Custody[]};
 export type ReleaseView={strict:boolean;signature?:{method:string;at:string;artifact:string};
@@ -15,6 +16,11 @@ const captions={quality:'Хараат бус чанарын хяналт',custod
 
 export function OversightDesk({view,role,sealed,archive,run}:{view:OversightView;role:PilotRole;sealed:boolean;archive?:string;run:PilotAction}){
  const q=view.quality;
+ const status=q?.policy.mode==='not-required'?'Шийдвэрээр шаардлагагүй':
+  q?.policy.mode==='unresolved'?'Хэрэглэх шаардлагыг тогтоогоогүй':
+  q?.policy.eligibilityStatus==='ineligible'?'Хянагч шалгуур хангаагүй':
+  q?.policy.eligibilityStatus==='unresolved'?'Хянагчийн шалгуурыг шийдээгүй':
+  q?.current?'Одоогийн багцыг баталсан':'Хараат бус хяналт хүлээгдэж байна';
  return <details className="card pad bench-card"><summary>Чанарын хяналт ба хадгалалтын хүлээлцэх</summary>
   {!sealed&&role==='partner'&&<DataAction run={run} action="quality-policy" button="Чанарын шийдвэр хадгалах">
    <div className="field-grid">
@@ -23,11 +29,14 @@ export function OversightDesk({view,role,sealed,archive,run}:{view:OversightView
     </select></label>
     <label>Хэрэглэх бодлого, хэвлэл<input name="reference" defaultValue={q?.policy.reference} required/></label>
     <label>Шийдвэрийн үндэслэл<input name="basis" defaultValue={q?.policy.basis} required/></label>
-    <label>Заавал үед томилсон хянагч<input name="reviewer" defaultValue={q?.policy.reviewer}/></label>
-    <label>Мэргэшил, хараат бус байдал ба цаг<input name="eligibility" defaultValue={q?.policy.eligibility}/></label>
+    <label>Заавал үед санал болгосон хянагч<input name="reviewer" defaultValue={q?.policy.reviewer}/></label>
+    <label>Хянагчийн шалгуурын шийдвэр<select name="eligibilityStatus" defaultValue={q?.policy.eligibilityStatus||'unresolved'}>
+     <option value="unresolved">Тодорхойгүй</option><option value="eligible">Шалгуур хангасан</option><option value="ineligible">Шалгуур хангаагүй</option>
+    </select></label>
+    <label>Мэргэшил, эрх, хараат бус байдал, өмнөх оролцоо ба цаг<input name="eligibility" defaultValue={q?.policy.eligibility}/></label>
    </div>
   </DataAction>}
-  {q&&<p>4.6 · v{q.policy.version} · {q.policy.reference} · {q.current?'Шийдвэр одоогийн':'Хараат бус хяналт хүлээгдэж байна'}</p>}
+  {q&&<p>4.6 · v{q.policy.version} · {q.policy.reference} · {status}</p>}
   {q?.notes.map(note=><div className="bench-item" key={note.id}>
    <p>{note.text} · {note.cleared?'Шийдвэрлэсэн':'Нээлттэй'}</p>
    {note.responses?.map((response,i)=><p key={i}>{response.text}</p>)}

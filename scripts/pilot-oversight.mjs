@@ -6,6 +6,7 @@ export const oversightRoles=['quality','custodian'];
 const fail=(message,status=409)=>{throw new PilotError(status,message);};
 const now=()=>new Date().toISOString();
 const policy=m=>m.pilotQuality?.policy;
+const eligible=decision=>decision?.mode==='required'&&(decision.eligibilityStatus??'eligible')==='eligible';
 const approval=m=>m.pilotQuality?.approvals.at(-1);
 const offers=m=>m.pilotCustody??[];
 const currentOffer=m=>offers(m).at(-1);
@@ -14,6 +15,7 @@ export function qualityRef(m) {
   const decision=policy(m);
   if (!decision) return '';
   if (decision.mode==='not-required') return 'not-required:'+decision.version;
+  if (!eligible(decision)) return '';
   const review=approval(m);
   return review?.policy===decision.version&&review.basis===qualityBasis(m)&&
     review.at.slice(0,10)<=m.engagements[0].reportDate?review.basis+':'+review.at:'';
@@ -26,7 +28,7 @@ export function qualityGaps(m) {
 }
 
 export function oversightTeamView(m) {
-  return {quality:m.pilotQuality&&{...m.pilotQuality,current:!!qualityRef(m)},custody:offers(m)};
+  return {quality:m.pilotQuality&&{...m.pilotQuality,current:eligible(policy(m))&&!!qualityRef(m)},custody:offers(m)};
 }
 
 export function oversightTeamAction(m,role,action,data,files) {
@@ -35,13 +37,16 @@ export function oversightTeamAction(m,role,action,data,files) {
     if (!m.engagements[0]?.intake.active||files.archive.isSealed(m)) fail('Нээлттэй гэрээт ажил шаардлагатай.');
     const mode=data.mode, reference=input(data,'reference'), basis=input(data,'basis');
     if (!['required','not-required','unresolved'].includes(mode)) fail('Чанарын шаардлагын шийдвэр буруу.',400);
+    const eligibilityStatus=mode==='required'?(data.eligibilityStatus??'unresolved'):'';
+    if (mode==='required'&&!['eligible','ineligible','unresolved'].includes(eligibilityStatus)) fail('Хянагчийн шалгуурын шийдвэр буруу.',400);
     const reviewer=mode==='required'?input(data,'reviewer',150):'';
     const eligibility=mode==='required'?input(data,'eligibility'):'';
-    if (mode==='required'&&!files.oversightConfigured('quality')) fail('Хараат бус чанарын нэвтрэх эрх шаардлагатай.');
+    if (eligibilityStatus==='eligible'&&!files.oversightConfigured('quality')) fail('Хараат бус чанарын нэвтрэх эрх шаардлагатай.');
     if (m.pilotQuality?.notes.some(note=>!note.cleared)&&mode!=='required') fail('Нээлттэй хараат бус чанарын тэмдэглэлийг эхлээд шийдвэрлэнэ үү.');
     const state=m.pilotQuality??={policies:[],approvals:[],notes:[]}, prior=state.policy;
-    if (prior&&[mode,reference,basis,reviewer,eligibility].every((value,i)=>value===[prior.mode,prior.reference,prior.basis,prior.reviewer,prior.eligibility][i])) return;
-    const row={version:(prior?.version??0)+1,mode,reference,basis,reviewer,eligibility,by:role,at:now()};
+    const decision={mode,reference,basis,reviewer,eligibility,eligibilityStatus};
+    if (prior&&Object.entries(decision).every(([key,value])=>prior[key]===value)) return;
+    const row={...decision,version:(prior?.version??0)+1,by:role,at:now()};
     state.policies.push(row);state.policy=row;
   } else if (action==='quality-response') {
     if (files.archive.isSealed(m)) fail('Архив түгжээтэй.');
@@ -59,7 +64,7 @@ export function oversightTeamAction(m,role,action,data,files) {
 
 export function createOversightStore(store,filesFor) {
   function allowed(role,m) {
-    return role==='quality'?policy(m)?.mode==='required'&&!filesFor(m.engagement).archive.isSealed(m):!!currentOffer(m);
+    return role==='quality'?eligible(policy(m))&&!filesFor(m.engagement).archive.isSealed(m):!!currentOffer(m);
   }
   function contextFor(role,id) {
     if (!/^E-[a-f0-9-]{36}$/.test(id??'')) fail('Томилсон ажил олдсонгүй.',404);

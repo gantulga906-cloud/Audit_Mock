@@ -1846,16 +1846,39 @@ test('technical changes, posting verification, exact-package EQR and independent
     await paper('4.4',{},'reviewer','partner');
     await paper('4.1.A1',{},'reviewer','partner');
 
-    await run('partner','quality-policy',{mode:'required',reference:'Synthetic firm policy edition',basis:'Reference case requires formal review',
-      reviewer:'Independent Reviewer',eligibility:'Separate credentials, competence and sufficient time checked'});
-    assert.equal((await service.fetch(scoped('/oversight',engagement),cookies.partner)).status,401);
-    await run('partner','authorize',{},409);
     const independent=async role=>{
       const response=await service.fetch('/oversight/login','',{role,password:extras[role]});
       assert.equal(response.status,200);
       return response.headers.get('set-cookie').split(';')[0];
     };
     const quality=await independent('quality');
+    const qualityReference='Synthetic firm policy edition';
+    state=await run('partner','quality-policy',{mode:'unresolved',reference:qualityReference,basis:'Mandatory trigger still under assessment'});
+    assert.equal(state.oversight.quality.current,false);
+    await run('partner','authorize',{},409);
+    state=await run('partner','quality-policy',{mode:'not-required',reference:qualityReference,basis:'Initial assessment finds no mandatory trigger'});
+    assert.equal(state.oversight.quality.current,false);
+    assert.deepEqual(state.oversight.quality.approvals,[]);
+    assert.ok(!state.gaps.some(gap=>gap.startsWith('4.6')));
+    const qualityPolicy={mode:'required',reference:qualityReference,basis:'Confirmed trigger requires formal review'};
+    for (const eligibilityStatus of ['unresolved','ineligible']) {
+      state=await run('partner','quality-policy',{...qualityPolicy,reviewer:'Previously involved reviewer',eligibilityStatus,
+        eligibility:eligibilityStatus==='ineligible'?'Prior engagement involvement violates the policy':'Assessment of prior involvement pending'});
+      assert.equal(state.oversight.quality.policy.eligibilityStatus,eligibilityStatus);
+      assert.equal(state.oversight.quality.current,false);
+      assert.equal((await service.fetch(scoped('/oversight',engagement),quality)).status,404);
+      await run('partner','authorize',{},409);
+    }
+    state=await run('partner','quality-policy',{...qualityPolicy,reviewer:'Independent Reviewer',eligibilityStatus:'eligible',
+      eligibility:'Separate credentials, authority, competence and sufficient time checked'});
+    assert.equal(state.oversight.quality.policy.reference,qualityReference);
+    assert.equal(state.oversight.quality.policy.basis,qualityPolicy.basis);
+    assert.equal(state.oversight.quality.policy.by,'partner');
+    assert.deepEqual(state.oversight.quality.policies.map(row=>row.eligibilityStatus),['','','unresolved','ineligible','eligible']);
+    assert.deepEqual(state.oversight.quality.approvals,[]);
+    assert.equal(state.oversight.quality.current,false);
+    assert.equal((await service.fetch(scoped('/oversight',engagement),cookies.partner)).status,401);
+    await run('partner','authorize',{},409);
     const qualityState=async()=> (await (await service.fetch(scoped('/oversight',engagement),quality)).json());
     const qualityAction=(action,basis,reason)=>service.fetch(scoped('/oversight/action',engagement),quality,{action,basis,reason});
     let q=await qualityState();
