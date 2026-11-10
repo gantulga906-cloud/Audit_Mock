@@ -1,6 +1,7 @@
 import {useEffect,useState,type FormEvent} from 'react';
 import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
 import {DataAction} from './pilot-population';
+import type {Consultation} from './pilot-completion';
 import type {PilotAction} from './pilot-registers';
 
 type IndependentRole='quality'|'custodian';
@@ -55,6 +56,7 @@ export function OversightDesk({view,role,sealed,archive,run}:{view:OversightView
 type IndependentView={
  role:IndependentRole;assignments:{id:string;client:string}[];selected?:string;quality?:Quality;custody?:Custody;
  material?:{basis:string;gaps:string[];artifact:{form:string;sha256:string};reportDate:string;
+  consultations:Consultation[];
   papers:{form:string;title:string;version:number;status:string;values:Record<string,string>}[];
   evidence:{id:string;name:string;sha256:string}[]};
  manifest?:{fileCount:number;files:{name:string;sha256:string;size:number}[];report:string};
@@ -101,6 +103,8 @@ export function IndependentDesk({role}:{role:IndependentRole}){
      <details className="feature-detail"><summary>Холбоотой ажлын хувилбар, дүгнэлт, нотолгоо</summary>
       {material.papers.map(p=><details key={p.form}><summary>{p.form} · {p.title} · v{p.version}</summary>
        <p>{p.values.execution}</p><p>{p.values.conclusion}</p></details>)}
+      {material.consultations.map(row=><details key={row.id}><summary>{row.title} · {row.form} v{row.paper}</summary>
+       <p>{row.scope}</p><p>{row.decision?.reason}</p></details>)}
       {material.evidence.map(file=><p key={file.id}><a href={link(file.id)}>{file.name}</a> · {file.sha256.slice(0,16)}</p>)}
      </details>
      {view.quality?.notes.map(n=><div key={n.id}><p>{n.text}</p>{n.responses?.map((r,i)=><p key={i}>{r.text}</p>)}</div>)}

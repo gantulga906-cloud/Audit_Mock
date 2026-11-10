@@ -21,7 +21,7 @@ import { samplingAction, samplingGap, samplingView, syncSamplePapers } from './p
 import { evidenceCurrent, isRequestAction, requestAction } from './pilot-requests.mjs';
 import { journalAction, journalGap, journalView, syncJournalPapers } from './pilot-journals.mjs';
 import { areaAction, areaEvidence, areaGap, areaView, areaWorkpaperRef, syncAreaPapers } from './pilot-area.mjs';
-import { completionAction, completionEvidence, completionGaps, completionRef, completionView, syncCompletion } from './pilot-completion.mjs';
+import { completionAction, completionEvidence, completionGaps, completionRef, completionView, consultationView, syncCompletion } from './pilot-completion.mjs';
 import { oversightTeamAction, oversightTeamView, qualityGaps, qualityRef } from './pilot-oversight.mjs';
 import { currentSignature, signReport, strictRelease } from './pilot-release.mjs';
 
@@ -64,7 +64,6 @@ function syncFieldwork(m) {
   syncSamplePapers(m);
   syncJournalPapers(m);
   syncAreaPapers(m);
-  syncCompletion(m);
   for (const form of technicalForms(m)) {
     const paper=m.work[workKey(m.engagement,form)], ref=technicalRef(m,form);
     if (!paper||!['submitted','reviewed'].includes(paper.status)||ref===paper.values['pilot.technical']) continue;
@@ -75,6 +74,7 @@ function syncFieldwork(m) {
     paper.completedAt=undefined;
     recordEvent(m,form+' · Тусгай горимын эх бүртгэл өөрчлөгдөв',form);
   }
+  syncCompletion(m);
 }
 
 const fieldworkGap = (m,form) => samplingGap(m,form)||journalGap(m,form)||areaGap(m,form);
@@ -181,7 +181,8 @@ export function qualityMaterial(m) {
     return {form,title,version,reviewedVersion,status,values,evidence};
   });
   const evidence=[...new Set([...papers.flatMap(p=>p.evidence),...registerEvidence(m),...completionEvidence(m),...areaEvidence(m,fieldworkForms(m))])];
-  return {basis:qualityBasis(m),gaps:pilotGaps(m,false),artifact:renderReport(m),papers,evidence,client:engagement.client,reportDate:engagement.reportDate};
+  return {basis:qualityBasis(m),gaps:pilotGaps(m,false),artifact:renderReport(m),papers,evidence,
+    consultations:consultationView(m),client:engagement.client,reportDate:engagement.reportDate};
 }
 
 export function invalidateReport(m, reason) {
@@ -281,7 +282,7 @@ export function pilotView(m, role, revision, files) {
     ...(m.pilotSamples && {samples:samplingView(m)}),
     ...(m.pilotJournals && {journals:journalView(m)}),
     ...(m.pilotAreaRuns && {areas:areaView(m)}),
-    ...(engagement.intake.active&&!sealed&&{completion:completionView(m)}),
+    ...(engagement.intake.active&&!sealed&&{completion:completionView(m,role!=='preparer')}),
     ...(role!=='preparer'&&{oversight:oversightTeamView(m)}),
     ...(role==='partner'&&{release:{strict:strictRelease(m),signature:currentSignature(m,files),deliveries:files.deliveries()}}),
     ...((m.pilotSamples||m.pilotJournals||m.pilotAreaRuns) && {fieldFindings:m.findings.filter(f=>/^(SAMPLE|JOURNAL|AREA)-/.test(f.id))}),
@@ -564,7 +565,7 @@ export function pilotAction(m, role, action, data, files) {
       ...(m.pilotSamples && { samples:Object.fromEntries(Object.entries(samplingView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
       ...(m.pilotJournals && { journals:Object.fromEntries(Object.entries(journalView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
       ...(m.pilotAreaRuns && { areas:Object.fromEntries(Object.entries(areaView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
-      ...((m.pilotCorrections||m.pilotEvaluations||m.pilotManagement) && {completion:completionView(m)}),
+      ...((m.pilotCorrections||m.pilotEvaluations||m.pilotManagement||m.pilotConsultations) && {completion:completionView(m)}),
       ...(m.pilotQuality && {quality:oversightTeamView(m).quality}),
       ...(technicalForms(m).length && {technicalPapers:activeItems(m,technicalForms(m).map(form=>m.work[workKey(m.engagement,form)]))
         .map(({id,version,reviewedVersion,values,evidence})=>({id,version,reviewedVersion,values,evidence}))}),

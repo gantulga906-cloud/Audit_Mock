@@ -1773,15 +1773,42 @@ test('technical changes, posting verification, exact-package EQR and independent
     state=await paper('3.2.4');
     const earlier=state.papers.find(w=>w.form==='3.2.4');
     assert.ok(state.gaps.some(g=>g.includes('M07-F10')));
+    const consultation={form:'3.2.4',title:'Ownership disclosure consultation',
+      scope:'Partner must consider the approved ownership revision, relationship and applicable disclosure restriction',
+      restriction:'prohibited',advice:original};
+    await run('preparer','completion-consultation-record',consultation,403);
+    state=await run('reviewer','completion-consultation-record',consultation);
+    const consultationId=state.completion.consultations[0].id;
+    const reviewConsultation=(version,result,reason,status=200)=>run('partner','completion-consultation-review',
+      {id:consultationId,version:String(version),result,reason},status);
+    assert.deepEqual((await current('preparer')).completion.consultations,[]);
+    assert.ok(state.gaps.some(g=>g.startsWith('4.4 · Зөвлөлдөх')));
+    await run('reviewer','save',{form:'4.4',execution:'Reviewed aggregate completion',conclusion:'Waiting for consultation'});
+    await run('reviewer','submit',{form:'4.4'},409);
+    await reviewConsultation(1,'resolved','The partner cannot override the documented prohibition',409);
+    await reviewConsultation(1,'returned','Obtain evidence that the restriction is actually addressed');
+    await run('reviewer','completion-consultation-record',{...consultation,id:consultationId,restriction:'clear'},409);
+    const recommendation={...consultation,id:consultationId,restriction:'clear',advice:further};
+    await run('reviewer','completion-consultation-record',recommendation);
+    await run('reviewer','completion-consultation-review',{id:consultationId,version:'2',result:'resolved',reason:'Attempted self-review'},403);
+    state=await reviewConsultation(2,'resolved','Revised the related-party note and checked the disclosed transaction against the advice');
+    assert.equal(state.completion.consultations[0].scope,consultation.scope);
+    assert.equal(state.completion.consultations[0].current,true);
     await auditRegister('M03-F04',{...ownerFacts,share:'70',basis:'Confirmed change in ownership'},'reviewer','partner',party);
     state=await current('reviewer');
     assert.equal(state.papers.find(w=>w.form==='3.2.4').status,'changed');
     assert.equal(state.papers.find(w=>w.form==='3.1.2').status,'reviewed');
     assert.equal(state.papers.find(w=>w.form==='3.1.13').status,'reviewed');
     assert.ok(state.papers.find(w=>w.form==='3.2.4').history.some(h=>h.version===earlier.version&&h.values['pilot.technical']));
+    assert.equal(state.completion.consultations[0].current,false);
+    assert.equal(state.completion.consultations[0].decision.result,'resolved');
     await run('preparer','submit',{form:'3.2.4'},409);
     await auditRegister('M07-F10',{...related,conclusion:'Revised related-party note reflects confirmed ownership'},'reviewer','partner',relatedId);
     await paper('3.2.4');
+    state=await run('reviewer','completion-consultation-record',{...recommendation,scope:'Reassessed the same advice against the revised ownership and disclosure'});
+    assert.ok(state.completion.consultations[0].history.some(row=>row.version===2&&row.decision.result==='resolved'));
+    await reviewConsultation(2,'resolved','Attempted to clear against the old signed basis',409);
+    await reviewConsultation(3,'resolved','Checked the actual revised disclosure and evidence against the advice');
     await auditRegister('M07-F10',{...component,evidence:further,result:'resolved',effect:'Specified revenue work completed; other group areas retain their own conclusions',
       conclusion:'Received and checked requested limited scope'},'reviewer','partner',componentId);
     await paper('3.1.13');
@@ -1883,7 +1910,9 @@ test('technical changes, posting verification, exact-package EQR and independent
     const qualityAction=(action,basis,reason)=>service.fetch(scoped('/oversight/action',engagement),quality,{action,basis,reason});
     let q=await qualityState();
     assert.deepEqual(q.material.gaps,[]);
+    assert.equal(q.material.consultations[0].decision.result,'resolved');
     assert.equal((await qualityAction('return',q.material.basis,'Clarify workpaper conclusion')).status,200);
+    await run('partner','quality-policy',{mode:'not-required',reference:qualityReference,basis:'Attempted override of unresolved EQR concern'},409);
     q=await qualityState();
     assert.equal((await qualityAction('approve',q.material.basis,'Without team response')).status,409);
     await run('partner','quality-response',{id:q.quality.notes[0].id,reason:'Initial exact response'});
@@ -1931,6 +1960,7 @@ test('technical changes, posting verification, exact-package EQR and independent
     assert.equal(payload.issue.signature.artifact,sha);
     assert.equal(payload.deliveries[0].state,'received');
     assert.equal(payload.authorization.completion.evaluation.inputs.gross,4000);
+    assert.equal(payload.authorization.completion.consultations[0].current,true);
     assert.equal(payload.authorization.quality.current,true);
     assert.equal((await accept('0'.repeat(64))).status,409);
     assert.equal((await accept(archive.digest)).status,200);

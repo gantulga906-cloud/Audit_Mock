@@ -14,6 +14,7 @@ const management=m=>m.pilotManagement?.at(-1);
 const activeEvaluation=m=>!!(m.pilotFindingFacts||m.pilotCorrections||m.pilotEvaluations);
 const actualAmount=finding=>Math.round(Math.abs(finding.amount)*100);
 const findingFact=(m,id)=>m.pilotFindingFacts?.[id]?.at(-1);
+const consultations=m=>Object.values(m.pilotConsultations??{}).map(versions=>versions.at(-1));
 
 function acceptedFile(m,files,id) {
   const evidence=m.evidence.find(e=>e.id===id&&evidenceCurrent(m,e));
@@ -25,6 +26,13 @@ function acceptedFile(m,files,id) {
 function liveFile(m,file) {
   return !!file&&m.evidence.some(e=>e.id===file.id&&e.version===file.version&&evidenceCurrent(m,e));
 }
+
+function consultationBasisCurrent(m,row) {
+  const paper=m.work[workKey(m.engagement,row.form)];
+  return isCurrentReview(paper)&&paper.version===row.paper&&(!row.advice||liveFile(m,row.advice));
+}
+
+const consultationCurrent=(m,row)=>row.decision?.result==='resolved'&&consultationBasisCurrent(m,row);
 
 function effectivePosting(m,revision) {
   const post=revision?.postings?.at(-1), current=approvedPopulation(m);
@@ -72,7 +80,12 @@ export function currentManagement(m) {
     [row.file,row.notes,row.authorization].every(file=>liveFile(m,file))?row:undefined;
 }
 
-export function completionView(m) {
+export function consultationView(m) {
+  return consultations(m).map(row=>({...row,current:consultationCurrent(m,row),
+    basisCurrent:consultationBasisCurrent(m,row),history:m.pilotConsultations[row.id].slice(0,-1).reverse()}));
+}
+
+export function completionView(m,includeConsultations=true) {
   const row=evaluation(m), attachment=management(m);
   return {
     enabled:activeEvaluation(m),inputs:activeEvaluation(m)?evaluationInputs(m):undefined,
@@ -82,6 +95,7 @@ export function completionView(m) {
     evaluationHistory:(m.pilotEvaluations??[]).slice(0,-1).reverse(),
     management:attachment&&{...attachment,current:!!currentManagement(m)},
     managementHistory:(m.pilotManagement??[]).slice(0,-1).reverse(),
+    consultations:includeConsultations?consultationView(m):[],
   };
 }
 
@@ -96,17 +110,21 @@ export function completionGaps(m) {
     const fact=versions.at(-1), paper=m.work[workKey(m.engagement,fact.form)];
     return !isCurrentReview(paper)||paper.version!==fact.paper||!liveFile(m,fact.evidence);
   })) gaps.push('Илрүүлэлтийн эх ажлын шинэ хувилбар ба нотолгоог дахин үнэлнэ үү');
+  if (consultations(m).some(row=>!consultationCurrent(m,row))) gaps.push('4.4 · Зөвлөлдөх асуудлыг одоогийн эх баримтаар шийдвэрлэнэ үү');
   return gaps;
 }
 
 export function completionRef(m) {
-  return [currentEvaluation(m)?.stamp,currentManagement(m)?.stamp].map(x=>x??'').join(':');
+  const reference=[currentEvaluation(m)?.stamp,currentManagement(m)?.stamp].map(x=>x??'');
+  const reviews=consultations(m);
+  if (reviews.length) reference.push(digest(reviews.map(row=>[row.id,row.version,row.decision,consultationCurrent(m,row)])));
+  return reference.join(':');
 }
 
 export function syncCompletion(m) {
   syncCorrectionStatus(m);
   const w=m.work[workKey(m.engagement,'4.4')];
-  if (!w||!['reviewed','submitted'].includes(w.status)||!(activeEvaluation(m)||m.pilotManagement)||
+  if (!w||!['reviewed','submitted'].includes(w.status)||!(activeEvaluation(m)||m.pilotManagement||m.pilotConsultations)||
       w.values['pilot.completion']===completionRef(m)&&!completionGaps(m).length) return;
   snapshot(w,m.person,'Дуусгалтын өмнөх хяналтыг хадгалав');
   w.version++;
@@ -123,7 +141,38 @@ export function completionEvidence(m) {
   }
   for (const row of m.pilotManagement??[]) files.push(row.file.id,row.notes.id,row.authorization.id);
   for (const versions of Object.values(m.pilotFindingFacts??{})) for (const row of versions) files.push(row.evidence.id);
+  for (const versions of Object.values(m.pilotConsultations??{})) for (const row of versions) if (row.advice) files.push(row.advice.id);
   return files;
+}
+
+function consultationAction(m,role,action,data,files) {
+  const versions=typeof data.id==='string'&&Object.hasOwn(m.pilotConsultations??{},data.id)?m.pilotConsultations[data.id]:undefined;
+  const prior=versions?.at(-1);
+  if (data.id&&!prior) fail('Зөвлөлдөх асуудал олдсонгүй.',404);
+  if (action==='completion-consultation-record') {
+    if (role!=='reviewer') fail('Ахлах хянагч зөвлөлдөх асуудлыг бүртгэнэ.',403);
+    const form=prior?.form??input(data,'form',32), paper=m.work[workKey(m.engagement,form)];
+    if (!isCurrentReview(paper)||![2,3].includes(paper.stage)) fail('Төлөвлөлт эсвэл гүйцэтгэлийн одоогийн хянасан ажлыг сонгоно уу.');
+    const {restriction}=data;
+    if (!['open','prohibited','clear'].includes(restriction)) fail('Мэргэжлийн нөхцөлийн төлөвийг сонгоно уу.',400);
+    const advice=data.advice?acceptedFile(m,files,data.advice):undefined;
+    if (restriction==='clear'&&!advice) fail('Хүлээн авсан зөвлөгөө эсвэл шийдлийн эх нотолгоо шаардлагатай.');
+    const prohibition=versions?.findLast(row=>row.restriction==='prohibited');
+    if (restriction==='clear'&&prohibition?.advice&&prohibition.advice.id===advice?.id) fail('Хоригийг шийдсэн шинэ эх нотолгоо шаардлагатай.');
+    const title=input(data,'title',200), scope=input(data,'scope'), id=prior?.id??randomUUID();
+    const row={id,version:(prior?.version??0)+1,form,paper:paper.version,title,scope,restriction,advice,by:role,at:now()};
+    (((m.pilotConsultations??={})[id])??=[]).push(row);
+  } else {
+    if (role!=='partner') fail('Партнер зөвлөлдөх асуудлыг хараат бусаар хянана.',403);
+    if (!prior||String(prior.version)!==data.version||!consultationBasisCurrent(m,prior)) fail('Одоогийн зөвлөлдөх баримт ба эх ажлыг дахин холбоно уу.');
+    if (prior.decision) fail('Хяналтын түүхийг хадгалж, шинэ хувилбарыг илгээнэ үү.');
+    const {result}=data;
+    if (!['returned','resolved'].includes(result)) fail('Хяналтын шийдвэрийг сонгоно уу.',400);
+    if (result==='resolved'&&(prior.restriction!=='clear'||!prior.advice)) fail('Шийдэгдээгүй зөрүү эсвэл хоригтой асуудлыг хаах боломжгүй.');
+    prior.decision={result,by:role,at:now(),reason:input(data,'reason')};
+  }
+  recordEvent(m,action,'4.4');
+  return true;
 }
 
 function correctionAction(m,role,action,data,files) {
@@ -175,6 +224,7 @@ function correctionAction(m,role,action,data,files) {
 
 export function completionAction(m,role,action,data,files) {
   if (action.startsWith('correction-')) return correctionAction(m,role,action,data,files);
+  if (['completion-consultation-record','completion-consultation-review'].includes(action)) return consultationAction(m,role,action,data,files);
   if (action==='completion-finding-record') {
     if (role!=='reviewer') fail('Илрүүлэлт бүртгэх ахлах хянагч шаардлагатай.',403);
     const existing=data.id&&m.findings.find(f=>f.id===data.id&&f.id.startsWith('MANUAL-'));

@@ -13,11 +13,15 @@ type EvaluationInputs={statement:number;materiality:number;limits:{overall:numbe
 type Evaluation={version:number;inputs:EvaluationInputs;note:string;approval?:Approval};
 type Management={version:number;statement:number;file:Attachment;notes:Attachment;authorization:Attachment;
  signer:string;capacity:string;date:string;basis:string;approval?:Approval};
+type ConsultationRevision={id:string;version:number;form:string;paper:number;title:string;scope:string;
+ restriction:'open'|'prohibited'|'clear';advice?:Attachment;decision?:Approval&{result:'returned'|'resolved'}};
+export type Consultation=ConsultationRevision&{current:boolean;basisCurrent:boolean;history:ConsultationRevision[]};
 export type CompletionView={
  enabled:boolean;inputs?:EvaluationInputs;
  findings:(Finding&{outstanding:number;correction?:Correction;postingCurrent:boolean;fact?:FindingFact;history:Correction[]})[];
  evaluation?:Evaluation&{current:boolean};evaluationHistory:Evaluation[];
  management?:Management&{current:boolean};managementHistory:Management[];
+ consultations:Consultation[];
 };
 const money=(minor:number)=>new Intl.NumberFormat(undefined,{maximumFractionDigits:2}).format(minor/100);
 const status:Record<string,string>={identified:'Бүртгэсэн',agreed:'Зөвшөөрсөн',posted_verified:'Бичилт баталгаажсан',
@@ -29,10 +33,23 @@ export function CompletionDesk({data,role,papers,evidence,engagement,run}:{
 }){
  const available=evidence.filter(e=>e.status==='accepted'&&e.current!==false);
  const href=(id:string)=>'/api/pilot/evidence/'+id+pilotScope(engagement);
- const fileChoice=(name:string,label:string,selected?:string)=><label key={name}>{label}<select name={name} defaultValue={selected??''} required>
+ const fileChoice=(name:string,label:string,selected?:string,required=true)=><label key={name}>{label}<select name={name} defaultValue={selected??''} required={required}>
   <option value="">Сонгох</option>{available.map(f=><option value={f.id} key={f.id}>{f.name} · v{f.version}</option>)}
  </select></label>;
  const reviewed=papers.filter(w=>w.stage===3&&w.status==='reviewed'&&w.reviewedVersion===w.version);
+ const judgmentPapers=papers.filter(w=>[2,3].includes(w.stage)&&w.status==='reviewed'&&w.reviewedVersion===w.version);
+ const consultationForm=(row?:Consultation)=><DataAction run={run} action="completion-consultation-record"
+  extra={row?{id:row.id}:undefined} button={row?'Шинэ хувилбар хянуулах':'Зөвлөлдөх асуудал бүртгэх'}>
+  {!row&&<label>Холбоотой хянасан ажил<select name="form" required><option value="">Сонгох</option>
+   {judgmentPapers.map(p=><option key={p.form} value={p.form}>{p.form} · {p.title} · v{p.version}</option>)}
+  </select></label>}
+  <label>Асуудал<input name="title" defaultValue={row?.title} required/></label>
+  <label>Хяналтын хамрах хүрээ ба чухал дүгнэлт<textarea name="scope" defaultValue={row?.scope} required/></label>
+  <label>Мэргэжлийн нөхцөл<select name="restriction" defaultValue={row?.restriction??'open'}>
+   <option value="open">Шийдэгдээгүй</option><option value="prohibited">Хоригтой</option><option value="clear">Зөвлөгөө буюу зөрүүг шийдсэн эхтэй</option>
+  </select></label>
+  {fileChoice('advice','Зөвлөгөө эсвэл шийдлийн эх файл',row?.advice?.id,false)}
+ </DataAction>;
  const findingForm=(finding?:CompletionView['findings'][number])=><DataAction run={run} action="completion-finding-record"
   extra={finding?{id:finding.id}:undefined} button={finding?'Эх ажлын шинэ хувилбарыг үнэлэх':'Илрүүлэлт бүртгэх'}>
   <div className="field-grid">
@@ -52,6 +69,26 @@ export function CompletionDesk({data,role,papers,evidence,engagement,run}:{
  </DataAction>;
  return <section className="card pad bench-card">
   <h2>Илрүүлэлт, залруулга ба дуусгалтын эх баримт</h2>
+  {role!=='preparer'&&(data.consultations.length>0||role==='reviewer'&&judgmentPapers.length>0)&&<details className="feature-detail">
+   <summary>Чухал дүгнэлт, зөвлөлдөх асуудал</summary>
+   {role==='reviewer'&&judgmentPapers.length>0&&consultationForm()}
+   {data.consultations.map(row=><details key={row.id} className="feature-detail">
+    <summary>{row.title} · {row.form} v{row.paper} · {row.current?'Шийдсэн':row.basisCurrent?'Шийдэл хүлээгдэж байна':'Шинэ эх хувилбар хүлээгдэж байна'}</summary>
+    <p>{row.scope}</p>
+    {row.advice&&<a href={href(row.advice.id)}>{row.advice.name}</a>}
+    {row.decision&&<p>{row.decision.reason}</p>}
+    {role==='reviewer'&&judgmentPapers.some(p=>p.form===row.form)&&consultationForm(row)}
+    {role==='partner'&&row.basisCurrent&&!row.decision&&<DataAction run={run} action="completion-consultation-review"
+     extra={{id:row.id,version:String(row.version)}} button="Партнерын шийдвэр бүртгэх">
+     <label>Шийдвэр<select name="result"><option value="returned">Засварт буцаах</option>
+      {row.restriction==='clear'&&<option value="resolved">Шийдсэн</option>}
+     </select></label>
+     <label>Зөвлөгөөг хэрхэн хэрэгжүүлсэн эсвэл буцаах үндэслэл<textarea name="reason" required/></label>
+    </DataAction>}
+    {!!row.history.length&&<details><summary>Өмнөх хувилбар, шийдвэрүүд</summary>{row.history.map(old=><p key={old.version}>
+     v{old.version} · {old.form} v{old.paper} · {old.scope} · {old.decision?.reason}</p>)}</details>}
+   </details>)}
+  </details>}
   {role==='reviewer'&&reviewed.length>0&&<details className="feature-detail"><summary>Хянасан ажлаас илрүүлэлт бүртгэх</summary>{findingForm()}</details>}
   {data.findings.map(f=>{
    const c=f.correction, latest=c?.postings.at(-1);
