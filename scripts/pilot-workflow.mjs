@@ -27,6 +27,7 @@ import { currentSignature, signReport, strictRelease } from './pilot-release.mjs
 import { archiveAmendmentBasis, archiveAmendmentGap, archiveAmendmentRevision } from './pilot-archive.mjs';
 import { materialityBasis, materialityGap, materialityTargets, materialityValues, syncMateriality, updateMaterialityBasis } from './pilot-materiality.mjs';
 import { activeTermsGap } from './pilot-intake.mjs';
+import { laterFactAction, laterFactForRelease, laterFactGap, laterFactView } from './pilot-later-facts.mjs';
 
 export const accounts = { preparer: 'nomin', reviewer: 'temuulen', partner: 'bat' };
 const roleOf = person => seats.find(role => accounts[role] === person);
@@ -148,7 +149,7 @@ function pilotGaps(m,includeQuality=true) {
     ...(!m.extendedPilot && !isCurrentReview(m.work[workKey(m.engagement, workstream)]) ? ['3.1.2 · Одоогийн хувилбарын ахлахын хяналт'] : []),
     ...reportGaps(reportWorkspace(m), m.engagement),
     ...completionRegisterGaps(m),
-    ...completionGaps(m),...[materialityGap(m),archiveAmendmentGap(m),activeTermsGap(m)].filter(Boolean),
+    ...completionGaps(m),...[materialityGap(m),archiveAmendmentGap(m),activeTermsGap(m),laterFactGap(m)].filter(Boolean),
     ...(includeQuality?qualityGaps(m):[]),
     ...technicalGaps(m),
     ...nativeReviewGaps(m),
@@ -162,7 +163,8 @@ export function currentApproval(m, engagement) {
     (!m.extendedPilot || !!m.pilotReportDigest) &&
     (m.pilotCompletionAuthorization??':')===completionRef(m) &&
     (m.pilotQualityAuthorization??'')===qualityRef(m) && !qualityGaps(m).length &&
-    !completionRegisterGaps(m).length && !completionGaps(m).length && !materialityGap(m) && !activeTermsGap(m) && !technicalGaps(m).length && !nativeReviewGaps(m).length && !staffingGaps(m).length &&
+    !completionRegisterGaps(m).length && !completionGaps(m).length && !materialityGap(m) && !activeTermsGap(m) && !laterFactGap(m) &&
+    !technicalGaps(m).length && !nativeReviewGaps(m).length && !staffingGaps(m).length &&
     (!m.archiveReopen?.target || !archiveAmendmentGap(m) &&
       m.pilotAmendmentAuthorization===sha256(JSON.stringify(archiveAmendmentRevision(m)))) &&
     !fieldworkForms(m).some(form=>fieldworkGap(m,form));
@@ -187,8 +189,12 @@ export function qualityMaterial(m) {
     const {title,version,reviewedVersion,status,values,evidence,notes}=m.work[workKey(m.engagement,form)];
     return {form,title,version,reviewedVersion,status,values,evidence,notes};
   });
-  const evidence=[...new Set([...papers.flatMap(p=>p.evidence),...registerEvidence(m),...completionEvidence(m),...areaEvidence(m,fieldworkForms(m))])];
+  const fact=laterFactForRelease(m);
+  const evidence=[...new Set([...papers.flatMap(p=>p.evidence),...registerEvidence(m),...completionEvidence(m),
+    ...areaEvidence(m,fieldworkForms(m)),...(fact?[fact.source.id]:[])])];
   return {basis:qualityBasis(m),gaps:pilotGaps(m,false),artifact:renderReport(m),papers,evidence,
+    ...(fact&&{laterFact:{discovered:fact.discovered,knownAtReport:fact.knownAtReport,impactReason:fact.impactReason,
+      procedures:fact.plan.procedures,authority:fact.plan.authority,advice:fact.plan.advice}}),
     consultations:consultationView(m),client:engagement.client,reportDate:engagement.reportDate};
 }
 
@@ -278,6 +284,7 @@ export function pilotView(m, role, revision, files) {
   });
   return {
     role, revision, ...resources, fieldwork: fieldworkForms(m), statementLines: m.pilotStatementLines ?? {},
+    ...(role==='partner'&&{laterFacts:laterFactView(m)}),
     ...(m.extendedPilot && engagement.intake.active && !sealed && role !== 'preparer' && {programmeTemplates:programmeTemplates(m,files)}),
     delivery: {
       id: engagement.id, person: m.person,
@@ -358,6 +365,11 @@ export function pilotAction(m, role, action, data, files) {
   }
   const engagement = m.engagements[0];
   if (!engagement) throw new PilotError(409, 'Гэрээт ажил үүсгэнэ үү.');
+  if (action.startsWith('later-fact-')) {
+    if (managedStaffing(m)) requireSeat(m,files,role);
+    laterFactAction(m,role,action,data,files);
+    return;
+  }
   if (action === 'staffing-enable') {
     requireActor(role === 'partner');
     if (sealed) throw new PilotError(409, 'Архив түгжээтэй.');
@@ -544,6 +556,7 @@ export function pilotAction(m, role, action, data, files) {
     m.pilotCompletionAuthorization = completionRef(m);
     m.pilotQualityAuthorization = qualityRef(m);
     const archiveAmendment=archiveAmendmentRevision(m);
+    const laterFact=laterFactForRelease(m);
     if (archiveAmendment) m.pilotAmendmentAuthorization=sha256(JSON.stringify(archiveAmendment));
     const programmes = adoptedForms(m).map(form => m.work[workKey(m.engagement, form)]);
     const native = nativePapers(m);
@@ -573,6 +586,7 @@ export function pilotAction(m, role, action, data, files) {
     files.authorize({
       ...engagement.authorized, artifact, registerStamp: m.pilotAuthorization, registers: supporting, templates,
       ...(archiveAmendment&&{archiveAmendment}),
+      ...(laterFact&&{laterFact}),
       firm: m.pilotFirm, statementLines: m.pilotStatementLines, programmePapers: programmes.map(w => ({
         id: w.id, version: w.version, reviewedVersion: w.reviewedVersion, values: { ...w.values }, evidence: [...w.evidence],
       })),
@@ -598,7 +612,7 @@ export function pilotAction(m, role, action, data, files) {
       ...(m.pilotIntake && { intake: m.pilotIntake }),
       ...(managedStaffing(m) && { staffing: approvedStaffing(m).filter(s=>s.current), acceptedStaffing: m.pilotStaffingAccepted,
         staffSignoffs: m.pilotStaffSignoffs ?? {} }),
-    }, linked.map(e => {
+    }, [...linked,...(laterFact?[{id:laterFact.source.id,version:1,status:'recorded'}]:[])].map(e => {
       const file = files.get(e.id);
       if (!file) throw new PilotError(409, 'Зөвшөөрөх багцын эх файл олдсонгүй.');
       return { ...e, ...file };

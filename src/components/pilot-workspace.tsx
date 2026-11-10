@@ -10,6 +10,7 @@ import {JournalDesk,PopulationDesk,SampleDesk} from './pilot-population';
 import {MaterialityBasisFields,MaterialityBasisSummary,type MaterialityTarget} from './pilot-materiality';
 import {AreaDesk} from './pilot-area';
 import {CompletionDesk,type CompletionView} from './pilot-completion';
+import {LaterFactsDesk,type LaterFact} from './pilot-later-facts';
 import {IndependentDesk,OversightDesk,ReportRecipient,type OversightView,type ReleaseView} from './pilot-oversight';
 import {pilotScope,type PilotRole,type ProgrammeBasis} from '@/lib/pilot-registers';
 import {fieldAnswers,type LibraryView,type PaperForm} from '@/lib/pilot-forms';
@@ -46,6 +47,7 @@ type View=RegisterResources&{
  confirmationLink?:{token:string;request:string;part:string};
  population?:PopulationView;
  completion?:CompletionView;
+ laterFacts?:LaterFact[];
  oversight?:OversightView;release?:ReleaseView;deliveryLink?:{token:string;id:string;recipient:string};
  samples?:Record<string,SampleView>;journals?:Record<string,JournalRun>;areas?:Record<string,AreaRun>;fieldFindings?:Finding[];
  fieldwork?:string[];statementLines?:Record<string,number>;impacts?:Model['impacts'];
@@ -516,6 +518,9 @@ function SharedPilotWorkspace(){
          findings={(view.fieldFindings??[]).filter(f=>f.form===paper.form&&f.id.startsWith('AREA-'))} run={run}/>
        </>}/>)}
      {engagement.active&&<>
+      {view.role==='partner'&&view.selected&&(!!view.laterFacts?.length||sealed&&view.release?.strict)&&
+       <LaterFactsDesk facts={view.laterFacts??[]} packageId={sealed?view.archive.packages[0]?.id:undefined}
+        engagement={view.selected} papers={view.papers??[]} run={run} readFile={readEvidence} onError={setError}/>}
       {view.oversight&&<OversightDesk view={view.oversight} role={view.role} sealed={sealed} archive={view.archive.packages[0]?.id} run={run}/>}
       {view.impacts?.map(impact=><section className="card pad bench-card" key={impact.id}><h2>{impact.source} · Өөрчлөлтийн нөлөө</h2><p>{impact.reason} · {impact.targets.join(', ')}</p>
        {view.role==='reviewer'&&<ActionForm run={run} action="resolve-impact" extra={{id:impact.id}} button="Нөлөөллийн үнэлгээг бүртгэх"><label>Шийдвэрийн үндэслэл<input name="reason" required/></label></ActionForm>}

@@ -2400,8 +2400,56 @@ test('technical changes, posting verification, exact-package EQR and independent
       reason:'Review the original issue during the reissue',until:today},'preparer');
     assert.equal(state.registers.find(row=>row.id===originalGrant).values.package,archive.id);
     const targetForm='3.1.13', target=work(state,targetForm);
+    const laterEvidence='New signed schedules for the component, received after the original issue';
+    const intake={package:archive.id,occurred:priorDate,discovered:today,knownAtReport:'Only the original component schedules were available',
+      facts:'The component supplied a signed schedule with additional coverage',impact:'possible',
+      impactReason:'The original scope conclusion may change',...file('later-fact.csv',laterEvidence)};
+    const noChange=await rerun('partner','later-fact-record',{...intake,impact:'none',
+      facts:'A duplicate copy of the existing schedule was forwarded',impactReason:'The signed content and scope were already reviewed'});
+    const duplicate=noChange.laterFacts.at(-1);
+    const discussion=(id,audience,fields={})=>({id,audience,recipient:audience==='management'?'Finance Director':'Audit Committee',
+      state:'delivered',day:today,reference:'Signed minutes · '+audience,detail:'Discussed actual effect and next action',...fields});
+    const decision={revisedStatements:'no',procedures:'Reperform the component scope work using the revised schedule',
+      users:'Original lender recipient uses the scope conclusion',authority:'Fixture engagement methodology edition 2',
+      advice:'Reviewed advice that the changed scope affects the report',reason:'The signed additional schedule changes the scope conclusion'};
+    for (const audience of ['management','governance']) await rerun('partner','later-fact-communicate',discussion(duplicate.id,audience));
+    await rerun('partner','later-fact-decide',{...decision,id:duplicate.id,outcome:'no-change',
+      procedures:'Compared the duplicate to the original schedule',reason:'The duplicate did not change the issued content'});
+    const unchanged=await rerun('partner','later-fact-close',{id:duplicate.id,reason:'Retained the original signed and delivered version'});
+    assert.equal(unchanged.archive.issue.at,payload.issue.at);
+    assert.equal(unchanged.authorized.current,true);
+    assert.equal(unchanged.archive.packages[0].digest,archive.digest);
+    assert.equal(unchanged.laterFacts.at(-1).successor,undefined);
+
+    const wrongDate=await rerun('partner','later-fact-record',{...intake,discovered:priorDate},400);
+    const wrongRole=await rerun('reviewer','later-fact-record',intake,403);
+    state=await rerun('partner','later-fact-record',{...intake,impact:'none',impactReason:'Initial file review did not yet identify a change'});
+    const screenedId=state.laterFacts.at(-1).id;
+    state=await rerun('partner','later-fact-screen',{id:screenedId,impact:intake.impact,impactReason:intake.impactReason});
+    const fact=state.laterFacts.at(-1);
+    assert.equal(fact.screeningHistory[0].impact,'none');
+    assert.equal(fact.original.issued,payload.issue.at);
+    assert.equal(state.archive.packages[0].digest,archive.digest);
+    const factSource=scoped('/evidence/'+fact.source.id,engagement);
+    assert.equal(await (await service.fetch(factSource,reloaded.cookies.partner)).text(),laterEvidence);
+    assert.equal((await service.fetch(factSource,reloaded.cookies.reviewer)).status,403);
+    assert.equal((await service.fetch(scoped('/report',engagement),reloaded.cookies.partner)).status,409);
+    const reissuePlan={...decision,id:fact.id,outcome:'reissue',paper:targetForm,reportDate:today};
+    const earlyDecision=await rerun('partner','later-fact-decide',reissuePlan,409);
+    await rerun('partner','later-fact-communicate',discussion(fact.id,'management',{state:'failed',reference:'Unanswered initial contact'}));
+    await rerun('partner','later-fact-communicate',discussion(fact.id,'management'));
+    await rerun('partner','later-fact-communicate',discussion(fact.id,'governance'));
+    const badPaper=await rerun('partner','later-fact-decide',{...reissuePlan,paper:'3.1.99'},409);
+    state=await rerun('partner','later-fact-decide',reissuePlan);
+    const plannedFact=state.laterFacts.at(-1);
+    await rerun('partner','later-fact-screen',{id:fact.id,impact:'none',impactReason:'Attempt to overwrite the approved assessment'},409);
+    const wrongArchive=await rerun('reviewer','register',{kind:'M12-F04',operation:'save','field.package':archive.id,
+      'field.type':'administrative','field.changes':'Attempt to bypass the decision','field.basis':'Test only'});
+    const wrongArchiveId=wrongArchive.registers.findLast(row=>row.kind==='M12-F04').id;
+    const deniedAmendment=await rerun('reviewer','register',{kind:'M12-F04',id:wrongArchiveId,operation:'submit'},409);
     const amendment=await approveReissueRecord('M12-F04',{package:archive.id,type:'substantive',paper:targetForm,reportDate:today,
       changes:'Rework the component conclusion and amend the report',basis:'New component evidence arrived after issue. Approved same-day report date.'});
+    assert.equal(state.laterFacts.at(-1).amendment,amendment);
     assert.equal(state.archive.reopened.previousDigest,archive.digest);
     assert.equal(state.archive.reopened.target.version,target.version);
     assert.equal(work(state,targetForm).status,'changed');
@@ -2412,7 +2460,6 @@ test('technical changes, posting verification, exact-package EQR and independent
     await rerun('preparer','submit',{form:targetForm});
     await rerun('reviewer','review',{form:targetForm});
     assert.match((await rerun('partner','authorize',{},409)).error,/3\.1\.13 · Архивын өөрчлөлт/);
-    const laterEvidence='New signed schedules for the component, received after the original issue';
     const uploaded=await rerun('reviewer','support-upload',{...file('component-after-issue.csv',laterEvidence),source:'Component auditor'});
     const later=uploaded.evidence.find(item=>item.name==='component-after-issue.csv').id;
     await rerun('partner','support-assess',{id:later,result:'accepted',reason:'Verified the new component source'});
@@ -2476,14 +2523,74 @@ test('technical changes, posting verification, exact-package EQR and independent
     assert.equal(successorPayload.changes.reportDate,today);
     assert.equal(successorPayload.issue.reportSha256,newDigest);
     assert.equal(successorPayload.deliveries[0].state,'received');
+    assert.equal(successorPayload.authorization.laterFact.id,fact.id);
+    assert.equal(successorPayload.authorization.laterFact.original.digest,archive.digest);
+    assert.equal(Buffer.from(successorPayload.evidence.find(item=>item.id===fact.source.id).base64,'base64').toString(),laterEvidence);
     assert.deepEqual([review.form,review.version,review.by,review.values.conclusion],
       [targetForm,revisedWork.reviewedVersion,accounts.reviewer,newConclusion]);
     assert.ok(review.evidence.includes(later));
     assert.equal(Buffer.from(successorPayload.evidence.find(item=>item.id===later).base64,'base64').toString(),laterEvidence);
+    const prematureClose=await rerun('partner','later-fact-close',{id:fact.id,reason:'Attempt closure before custody'},409);
     const acknowledged=await service.fetch(scoped('/oversight/action',engagement),reissueCustodian,{action:'accept',
       package:successor.id,digest:successor.digest,reason:'Verified the actual successor bytes and linked predecessor'});
     assert.equal(acknowledged.status,200);
-    assert.deepEqual((await reloaded.view('partner',engagement)).oversight.custody.map(offer=>offer.accepted.digest),[archive.digest,successor.digest]);
+    const closed=await rerun('partner','later-fact-close',{id:fact.id,reason:'Verified the successor receipt and preserved the predecessor'});
+    assert.deepEqual(closed.oversight.custody.map(offer=>offer.accepted.digest),[archive.digest,successor.digest]);
+    const finalized=closed.laterFacts.find(row=>row.id===fact.id);
+    assert.equal(finalized.closed.successor,successor.id);
+    assert.equal(finalized.closed.by,'partner');
+
+    const reliance=await rerun('partner','later-fact-record',{...intake,package:successor.id,facts:'Another source contradicts the revised report'});
+    const relianceId=reliance.laterFacts.at(-1).id, originalRecipient=successorPayload.deliveries[0].recipient;
+    for (const audience of ['management','governance']) await rerun('partner','later-fact-communicate',discussion(relianceId,audience));
+    await rerun('partner','later-fact-decide',{...decision,id:relianceId,outcome:'prevent-reliance',
+      reason:'The disputed report should not be relied on pending action outside the pilot'});
+    const wrongRecipient=await rerun('partner','later-fact-communicate',discussion(relianceId,'users',{recipient:'unrelated@example.test'}),409);
+    await rerun('partner','later-fact-communicate',discussion(relianceId,'users',{recipient:originalRecipient,state:'failed',reference:'Initial attempt failed'}));
+    const failedNotice=await rerun('partner','later-fact-close',{id:relianceId,reason:'Attempt closure with failed notice'},409);
+    await rerun('partner','later-fact-communicate',discussion(relianceId,'users',{recipient:originalRecipient,reference:'Receipt of reliance notice'}));
+    const notified=await rerun('partner','later-fact-close',{id:relianceId,reason:'Recorded confirmed delivery to the original user'});
+    const relianceHistory=notified.laterFacts.at(-1);
+    const relianceReport=(await service.fetch(scoped('/report',engagement),reloaded.cookies.partner)).status;
+    assert.equal(relianceReport,409);
+    assert.equal(notified.archive.packages[0].digest,successor.digest);
+    const earlierIssue={package:archive.id,issued:payload.issue.at,fact:fact.id,source:fact.source.sha256};
+    recordLifecycleEvidence(t,{lifecycle:'A28',engagement,steps:[
+      proof('A28-P1-W1','partner','record later fact and retained original',[priorDate,today,intake.knownAtReport,archive.digest],
+        [fact.occurred,fact.discovered,fact.knownAtReport,fact.original.digest],earlierIssue),
+      proof('A28-P1-W2','partner','record assessed report impact',['possible',intake.impactReason],
+        [fact.impact,fact.impactReason],earlierIssue),
+      proof('A28-P1-W3','partner','record actual management and governance discussions',
+        ['management:failed','management:delivered','governance:delivered'],
+        plannedFact.communications.map(entry=>entry.audience+':'+entry.state),earlierIssue),
+      proof('A28-P2-W1','partner','decide revised statement and procedure needs',['no',decision.procedures],
+        [plannedFact.plan.revisedStatements,plannedFact.plan.procedures],earlierIssue),
+      proof('A28-P2-W2','partner','record users, authority and advice',[decision.users,decision.authority,decision.advice],
+        [plannedFact.plan.users,plannedFact.plan.authority,plannedFact.plan.advice],earlierIssue),
+      proof('A28-P2-W3','partner','authorize bounded response',['reissue',targetForm,today],
+        [plannedFact.plan.outcome,plannedFact.plan.paper,plannedFact.plan.reportDate],earlierIssue),
+      proof('A28-P3-W1','partner, preparer and reviewer','reopen the named work and review the changed exact revision',
+        [targetForm,revisedWork.reviewedVersion,newConclusion],[review.form,review.version,review.values.conclusion],
+        {...earlierIssue,work:review.version,amendment}),
+      proof('A28-P3-W2','partner and recipient','sign, deliver and acknowledge the replacement',
+        [newDigest,'received',originalRecipient],[successorPayload.issue.reportSha256,successorPayload.deliveries[0].state,successorPayload.deliveries[0].recipient],
+        {...earlierIssue,report:newDigest,successor:successor.id}),
+      proof('A28-P3-W3','partner and custodian','verify the successor and close with retained chronology',
+        ['partner',successor.id,archive.digest],[finalized.closed.by,finalized.closed.successor,previous.digest],
+        {...earlierIssue,successor:successor.id,closure:finalized.closed.at}),
+    ],branches:[
+      proof('scope-and-chronology','partner and reviewer','deny wrong chronology, unassigned role and private-source access',
+        [true,true,403],[!!wrongDate.error,!!wrongRole.error,(await service.fetch(factSource,reloaded.cookies.reviewer)).status],earlierIssue),
+      proof('discussion-before-decision','partner','reject missing discussions',true,!!earlyDecision.error,earlierIssue),
+      proof('no-change-preserves-release','partner','close duplicate with original intact',[payload.issue.at,archive.digest,true],
+        [unchanged.archive.issue.at,unchanged.archive.packages[0].digest,unchanged.authorized.current],{package:archive.id,fact:duplicate.id}),
+      proof('reissue-must-follow-approved-plan','partner and reviewer','deny unrelated work, administrative bypass and premature closure',
+        [true,true,true],[!!badPaper.error,!!deniedAmendment.error,!!prematureClose.error],{...earlierIssue,amendment}),
+      proof('reliance-notice-must-reach-original-user','partner','preserve failed notice and close only after actual receipt',
+        [true,true,'failed,delivered',409],[!!wrongRecipient.error,!!failedNotice.error,
+          relianceHistory.communications.filter(row=>row.audience==='users').map(row=>row.state).join(','),relianceReport],
+        {package:successor.id,fact:relianceId,closure:relianceHistory.closed.at}),
+    ]});
   } finally {
     if(service)await service.close();
     for(const suffix of ['', '-shm', '-wal'])await rm(database+suffix,{force:true});

@@ -27,6 +27,13 @@ const branchPlans = {
     'eqr-stale-or-open-note',
     'eqr-after-report-date',
   ],
+  A28: [
+    'scope-and-chronology',
+    'discussion-before-decision',
+    'no-change-preserves-release',
+    'reissue-must-follow-approved-plan',
+    'reliance-notice-must-reach-original-user',
+  ],
 };
 
 const text = value => typeof value === 'string' && value.trim().length > 0;

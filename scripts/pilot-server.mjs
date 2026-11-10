@@ -14,6 +14,7 @@ import { recordEvent } from '../src/lib/workspace.ts';
 import { createConfirmationStore } from './pilot-confirmations.mjs';
 import { createOversightStore, oversightRoles } from './pilot-oversight.mjs';
 import { createReleaseStore } from './pilot-release.mjs';
+import { laterFactFiles } from './pilot-later-facts.mjs';
 
 const prefix = '/api/pilot';
 const termsRemediation = new Set(['intake-terms-save','intake-terms-approve','support-upload','support-assess','schedule','access']);
@@ -381,8 +382,9 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       } else if (req.method === 'GET' && /^\/evidence\/[a-f0-9-]{36}$/.test(route)) {
         const file = transaction(() => {
           const { model, id } = store.load(role, resolveScope(role, url));
-          if (archive.isSealed(model)) throw new PilotError(403, 'Түгжсэн файлыг зөвшөөрсөн архивын багцаас авна уу.');
-          return db.prepare('SELECT name, bytes FROM evidence WHERE engagement_id = ? AND id = ?').get(id, route.split('/').at(-1));
+          const evidence=route.split('/').at(-1), factFile=laterFactFiles(model).includes(evidence);
+          if (factFile?role!=='partner':archive.isSealed(model)) throw new PilotError(403, 'Түгжсэн файлыг зөвшөөрсөн архивын багцаас авна уу.');
+          return db.prepare('SELECT name, bytes FROM evidence WHERE engagement_id = ? AND id = ?').get(id, evidence);
         }, false);
         if (!file) throw new PilotError(404, 'Эх файл олдсонгүй.');
         res.writeHead(200, { 'Content-Type': 'application/octet-stream',

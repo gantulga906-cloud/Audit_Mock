@@ -4,6 +4,7 @@ import { isCurrentReview, snapshot, workKey } from '../src/lib/workspace.ts';
 import { invalidateReport, PilotError } from './pilot-workflow.mjs';
 import { archiveGrantKinds } from './pilot-registers.mjs';
 import { signatureMatches, strictRelease } from './pilot-release.mjs';
+import { checkLaterFactArchive, laterFactForRelease } from './pilot-later-facts.mjs';
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const today = () => new Date().toISOString().slice(0, 10);
@@ -20,11 +21,14 @@ export function archiveAmendmentRevision(m) {
   const amendment=m.archiveReopen, target=amendment?.target;
   if (!target) return undefined;
   if (amendment.reportDate!==m.engagements[0].reportDate) return undefined;
+  const fact=laterFactForRelease(m);
+  if (fact?.plan.revisedStatements==='yes'&&m.engagements[0].fsVersion<=fact.original.statements) return undefined;
   const paper=m.work[target.id];
   if (!isCurrentReview(paper)||paper.version<=target.version||workBasis(paper)===target.basis) return undefined;
   const review=paper.history.find(entry=>entry.version===paper.version&&entry.action==='Хянаж батлав');
   if (!review||review.at<amendment.at||workBasis(review)!==workBasis(paper)) return undefined;
   return {id:amendment.id,package:amendment.package,previousDigest:amendment.previousDigest,target,reportDate:amendment.reportDate,
+    ...(fact&&{laterFact:fact.id}),
     review:{id:paper.id,form:paper.form,version:paper.version,reviewedVersion:paper.reviewedVersion,by:review.by,at:review.at,values:review.values,evidence:review.evidence}};
 }
 
@@ -126,6 +130,11 @@ export function createArchiveStore(db) {
     if (amendment?.target&&(!reviewed||JSON.stringify(reviewed)!==JSON.stringify(signed.authorization.archiveAmendment))) {
       fail('Яг энэ өөрчлөлтийн баталсан ажлын хувилбар шаардлагатай.');
     }
+    const fact=laterFactForRelease(m);
+    if (fact&&(signed.authorization.laterFact?.id!==fact.id||
+        !fact.original.recipients.every(recipient=>deliveries.some(row=>row.recipient===recipient&&row.state==='received')))) {
+      fail('Өмнөх тайлангийн баталгаажсан бүх хүлээн авагч шинэ тайланг хүлээн авна.');
+    }
     const evidence = signed.evidence.map(metadata => {
       const file = db.prepare('SELECT bytes FROM evidence WHERE engagement_id = ? AND id = ?').get(m.engagement, metadata.id);
       if (!file || sha(file.bytes) !== metadata.sha256) fail('Архивлах эх файл эсвэл хэш таарахгүй.');
@@ -141,23 +150,25 @@ export function createArchiveStore(db) {
     delete m.archiveReopen;
     return id;
   }
+  function validateAmendmentWork(m, archive, form, reportDate) {
+    const bundle=checkPayload(archive), paper=m.work[workKey(m.engagement,form)];
+    const { package: original, programmePapers=[], nativePapers=[], technicalPapers=[], archiveAmendment }=bundle.authorization;
+    const previousReportDate=original?.reportDate??m.engagements[0].reportDate;
+    if (!validDate(reportDate)||reportDate<previousReportDate) fail('Өмнөх тайлангаас эртгүй, батлах шинэ тайлангийн огноо шаардлагатай.');
+    const archived=[original?.paper,...(original?.reliedOn??[]),...programmePapers,...nativePapers,...technicalPapers,
+      archiveAmendment?.review].filter(Boolean).find(item=>item.id===paper?.id&&item.version===item.reviewedVersion);
+    if (!isCurrentReview(paper)||!archived||archived.version!==paper.version||workBasis(archived)!==workBasis(paper)) {
+      fail('Анхны багцын одоогийн хянасан, нөлөөлөх ажлын баримтыг сонгоно уу.');
+    }
+  }
   function checkRecord(m, row) {
     const v = row.values, archive = read(m, v.package);
     if (!archive) fail('Архивын багц олдсонгүй.');
     if (!archive.payload && !(row.kind === 'M12-F08' && v.type === 'hold')) fail('Архивын агуулга байхгүй.');
     if (row.kind === 'M12-F04') {
       if (latest(m)?.id !== archive.id) fail('Одоогийн архивын багцыг сонгоно уу.');
-      if (v.type==='substantive') {
-        const bundle=checkPayload(archive), paper=m.work[workKey(m.engagement,v.paper)];
-        const { package: original, programmePapers=[], nativePapers=[], technicalPapers=[], archiveAmendment }=bundle.authorization;
-        const previousReportDate=original?.reportDate??m.engagements[0].reportDate;
-        if (!validDate(v.reportDate)||v.reportDate<previousReportDate) fail('Өмнөх тайлангаас эртгүй, батлах шинэ тайлангийн огноо шаардлагатай.');
-        const archived=[original?.paper,...(original?.reliedOn??[]),...programmePapers,...nativePapers,...technicalPapers,
-          archiveAmendment?.review].filter(Boolean).find(item=>item.id===paper?.id&&item.version===item.reviewedVersion);
-        if (!isCurrentReview(paper)||!archived||archived.version!==paper.version||workBasis(archived)!==workBasis(paper)) {
-          fail('Анхны багцын одоогийн хянасан, нөлөөлөх ажлын баримтыг сонгоно уу.');
-        }
-      }
+      checkLaterFactArchive(m,row);
+      if (v.type==='substantive') validateAmendmentWork(m,archive,v.paper,v.reportDate);
     }
     if (row.kind === 'M12-F08') {
       if (v.type === 'policy' && (!validDate(v.anchor) || v.anchor > today() || !/^\d{1,2}$/.test(v.years) || Number(v.years) < 1)) fail('Бодлогын огноо ба бүтэн жилийн тоо шаардлагатай.');
@@ -172,6 +183,7 @@ export function createArchiveStore(db) {
       if (retention.expires > today()) fail('Холбогдох хамгийн урт хадгалалтын хугацаа дуусаагүй · ' + retention.expires);
       if (activeHolds(m).length) fail('Идэвхтэй хориг байгаа тул устгах боломжгүй.');
       if (m.archiveReopen?.package === archive.id) fail('Нээлттэй агуулгын өөрчлөлтийг дуусгана уу.');
+      if (m.pilotLaterFacts?.some(fact=>!fact.closed&&fact.original.package===archive.id)) fail('Гаргалтын дараах нээлттэй нөхцөлийг шийднэ үү.');
       row.eligibility = { policy: policy.id, effectivePolicy: retention.policy, expires: retention.expires, synthetic: !!archive.synthetic };
     }
   }
@@ -204,6 +216,8 @@ export function createArchiveStore(db) {
     const changes = { package: v.package, id: row.id, type: v.type, changes: v.changes, basis: v.basis, approvedBy: role, at: new Date().toISOString() };
     if (v.type === 'substantive') {
       const paper=m.work[workKey(m.engagement,v.paper)];
+      const fact=checkLaterFactArchive(m,row);
+      if (fact) { changes.laterFact=fact.id;fact.amendment=row.id; }
       changes.previousDigest=archive.digest;
       changes.target={id:paper.id,form:paper.form,version:paper.version,basis:workBasis(paper)};
       changes.reportDate=v.reportDate;
@@ -270,5 +284,6 @@ export function createArchiveStore(db) {
     ...(m.archiveReopen.target&&{target:{form:m.archiveReopen.target.form,version:m.archiveReopen.target.version}}),
   }:null, issue: role === 'partner' ? m.pilotIssue ?? null : null });
   const isSealed = m => !m.archiveReopen && !!db.prepare('SELECT 1 FROM pilot_archives WHERE engagement_id = ? LIMIT 1').get(m.engagement);
-  return { seal, checkRecord, approveRecord, dispose, exportPackage, inspectCustody, currentForRequest, view, isSealed };
+  return { seal, checkRecord, approveRecord, dispose, exportPackage, inspectCustody, currentForRequest, view, isSealed,
+    validateAmendmentWork:(m,id,form,reportDate)=>validateAmendmentWork(m,read(m,id),form,reportDate) };
 }

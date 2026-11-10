@@ -57,6 +57,7 @@ export function OversightDesk({view,role,sealed,archive,run}:{view:OversightView
 type IndependentView={
  role:IndependentRole;assignments:{id:string;client:string}[];selected?:string;quality?:Quality;custody?:Custody;
  material?:{basis:string;gaps:string[];artifact:{form:string;sha256:string};reportDate:string;
+  laterFact?:{discovered:string;knownAtReport:string;impactReason:string;procedures:string;authority:string;advice:string};
   consultations:Consultation[];
   papers:{form:string;title:string;version:number;status:string;values:Record<string,string>;notes?:Note[]}[];
   evidence:{id:string;name:string;sha256:string}[]};
@@ -102,6 +103,8 @@ export function IndependentDesk({role}:{role:IndependentRole}){
      <p className="micro break-all">SHA-256 {material.artifact.sha256}</p><a href={link('report')}>Хянах тайлан татах</a>
      {!!material.gaps.length&&<ul>{material.gaps.map(gap=><li key={gap}>{gap}</li>)}</ul>}
      <details className="feature-detail"><summary>Холбоотой ажлын хувилбар, дүгнэлт, нотолгоо</summary>
+      {material.laterFact&&<div><h2>Гаргалтын дараах нөхцөл</h2><p>{material.laterFact.discovered} · {material.laterFact.knownAtReport} · {material.laterFact.impactReason}</p>
+       <p>{material.laterFact.procedures} · {material.laterFact.authority} · {material.laterFact.advice}</p></div>}
       {material.papers.map(p=><details key={p.form}><summary>{p.form} · {p.title} · v{p.version}</summary>
        <p>{p.values.execution}</p><p>{p.values.conclusion}</p>
        {p.notes?.map(note=><div key={note.id}><p>{note.text} · {note.cleared?'Шийдвэрлэсэн':'Нээлттэй'}</p>
