@@ -1,6 +1,16 @@
 // Each claim is bounded to the recorded fixture. Shared scenario links do not close contracts.
 export const scenarios=[
   {
+    test:'approved materiality and its revision govern the same sample and misstatement evaluation',
+    file:'tests/pilot.test.mjs',action:'benchmark assessment through approved scoped thresholds, sampling, and reevaluation',
+    actors:['preparer','reviewer','partner'],
+    observed:'Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.',
+    cases:['P06-UC03','P06-UC05','P06-UC06','P07-UC02','P10-UC03'],features:['M06-F07'],automations:['AUTO-046'],
+    criteria:['P06-UC03-AC01','P06-UC03-AC02','P06-UC03-AC03','P06-UC03-AC04','P06-UC05-AC01','P06-UC05-AC02'],
+    dependencies:['DEP-C06','DEP-C14'],
+    e2e:['A08-P1-W1','A08-P1-W2','A08-P1-W3','A08-P2-W1','A08-P2-W2','A08-P2-W3','A08-P3-W1','A08-P3-W2','A08-P3-W3'],
+  },
+  {
     test:'provisional intake, subsequent-period confirmation and signed terms survive independent review',
     file:'tests/pilot.test.mjs',action:'intake conversion and exact signed terms',actors:['preparer','reviewer','partner'],
     observed:'Both intake origins, duplicate-period rejection, signed version binding, a separate subsequent period, and restart.',

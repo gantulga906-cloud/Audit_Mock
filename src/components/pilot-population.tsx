@@ -117,6 +117,8 @@ export function SampleDesk({population,sample,paper,role,engagement,evidence,fin
   {sample&&<>
    <p><a href={'/api/pilot/evidence/'+sample.basis.source+pilotScope(engagement)}>Эх олонлог v{sample.basis.population}</a> · {sample.basis.line}
     {' · '}1.3 v{sample.basis.materiality} · 2.6 v{sample.basis.controls} · {sample.size} нэгж · seed {sample.seed}</p>
+   <p>{sample.basis.specificMateriality&&`Тусгай босго · ${sample.basis.specificMateriality.scope} · ${sample.basis.specificMateriality.amount.toLocaleString()} · `}
+    Гүйцэтгэлийн босго {sample.basis.performance.toLocaleString()}</p>
    <p>{sample.purpose}</p>
    {!sample.current&&<p className="callout amber">Түүврийн суурь өөрчлөгдсөн. Шинэ дизайн хадгалж, дахин хянуулна уу.</p>}
    {sample.current&&!sample.approval&&reviewer&&<DataAction run={run} action="sample-approve" extra={extra} button="Дизайныг батлах">

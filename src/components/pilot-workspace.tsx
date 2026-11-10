@@ -7,6 +7,7 @@ import {IntakeProvenance,PilotIntake,TermsEditor} from './pilot-intake';
 import {EngagementStaffing,RosterOverview,WorkAssignmentEditor} from './pilot-staffing';
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
 import {JournalDesk,PopulationDesk,SampleDesk} from './pilot-population';
+import {MaterialityBasisFields,MaterialityBasisSummary,type MaterialityTarget} from './pilot-materiality';
 import {AreaDesk} from './pilot-area';
 import {CompletionDesk,type CompletionView} from './pilot-completion';
 import {IndependentDesk,OversightDesk,ReportRecipient,type OversightView,type ReleaseView} from './pilot-oversight';
@@ -18,6 +19,7 @@ import type {DecisionRecord,Evidence,Finding,Model,RequestItem,Statements,WorkIt
 import type {Period,Template} from '@/lib/workbench';
 import type {JournalRun,PopulationView,SampleView} from '@/lib/pilot-population';
 import type {AreaRun} from '@/lib/pilot-area';
+import type {MaterialityAmounts,MaterialityBasis} from '@/lib/pilot-materiality';
 
 const api='/api/pilot';
 const roles={preparer:'Бэлтгэгч',reviewer:'Ахлах хянагч',partner:'Партнер'};
@@ -28,7 +30,7 @@ const status:Record<WorkItem['status'],string>={not_started:'Эхлээгүй',i
 const partStatus={missing:'Ирээгүй',received:'Үнэлэх',accepted:'Зөвшөөрсөн',rejected:'Буцаасан'};
 type Paper=WorkItem&{editable:boolean;reviewable:boolean;template?:PaperForm;oldTemplates?:Record<string,Template>;nativeGaps?:string[];
  assignmentHistory?:WorkAssignment[];staffingSignoffs?:StaffSignoff[];pendingPlanning?:boolean;fieldGap?:string;
- materiality?:{overall:number;performance:number;trivial:number}|null;
+ materiality?:MaterialityAmounts|null;materialityBasis?:MaterialityBasis|null;materialityTargets?:MaterialityTarget[];
  planning?:{id:string;version:number;basis?:ProgrammeBasis;template:{form:string;sheet:string;digest:string;number?:number}}};
 type PortfolioItem={id:string;client:string;start:string;end:string;reportDate:string;active:boolean;
  progress?:null|{reviewed:number;applicable:number;tasks:number;deadlines:{form:string;title:string;due:string}[]}};
@@ -314,6 +316,7 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,
    <PlanningBasis basis={paper.planning.basis}/>
   </details>}
   {paper.materiality&&<p>Хадгалсан тооцоо · Нийт {paper.materiality.overall.toLocaleString()} · Гүйцэтгэл {paper.materiality.performance.toLocaleString()} · Илт бага {paper.materiality.trivial.toLocaleString()}</p>}
+  {paper.materialityBasis&&<MaterialityBasisSummary basis={paper.materialityBasis} engagement={engagementId}/>}
   {active&&!sealed&&role!=='preparer'&&form!=='4.4'&&!/^4\.1\.A[1-4]$/.test(form)&&
    <WorkAssignmentEditor paper={paper} history={paper.assignmentHistory??[]} staffing={staffing} run={run}/>}
   {paper.due&&<p className="micro">Төлөвлөсөн хугацаа {paper.start} — {paper.due} · Суурь {paper.baselineDue}</p>}
@@ -330,6 +333,8 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,
    {form==='1.3'&&<>
     <div className="field-grid">{[['benchmark','Суурь дүн'],['percentage','Материаллаг байдлын хувь'],['performance','Гүйцэтгэлийн хувь'],['trivial','Илт бага зөрүүний хувь']].map(([key,label])=><label key={key}>{label}<input type="number" step="any" name={key} defaultValue={paper.values[key]} required/></label>)}</div>
     <label>Суурь дүнгийн эх сурвалж<input name="benchmarkSource" defaultValue={paper.values.benchmarkSource}/></label>
+    <MaterialityBasisFields basis={paper.materialityBasis} existing={!!paper.values.benchmark}
+      targets={paper.materialityTargets??[]} evidence={evidence??[]}/>
    </>}
    {form==='2.6'&&<div className="field-grid">
     <label>Хяналтад найдах түвшин<select name="reliance" defaultValue={paper.values.controlsReliance??'none'}><option value="none">Найдахгүй</option><option value="partial">Хэсэгчлэн</option><option value="full">Бүрэн</option><option value="na">Хамаарахгүй</option></select></label>

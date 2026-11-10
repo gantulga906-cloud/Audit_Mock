@@ -2203,3 +2203,189 @@ test('technical changes, posting verification, exact-package EQR and independent
     await rmdir(dir);
   }
 });
+
+test('approved materiality and its revision govern the same sample and misstatement evaluation', async t => {
+  const dir=await mkdtemp(join(tmpdir(),'audit-materiality-'));
+  const database=join(dir,'pilot.sqlite');
+  let service;
+  try {
+    service=await start(database);
+    const {cookies,scoped,view,write}=await fixture(service);
+    const engagement=(await write('reviewer','firm','create',{...create,synthetic:'yes'})).selected;
+    const run=(role,action,fields,status=200)=>write(role,engagement,action,fields,status);
+    const paper=(state,form)=>state.papers.find(row=>row.form===form);
+    const file=(name,text)=>({name,base64:Buffer.from(text).toString('base64')});
+    await run('partner','activate',{assessment:'Synthetic acceptance',independence:'Reviewed',letter:'Agreed'});
+    const form='3.1.2', requestFields={form,title:'Signed benchmark and asset schedule',due:'2026-03-31'};
+    let state=await run('preparer','request',requestFields);
+    const request=state.requests[0].id, part=state.requests[0].parts[0].id;
+    const benchmark='revenue,current,prior\nRevenue,1000,900';
+    state=await run('preparer','upload',{request,part,source:'Approved finance schedule',...file('benchmark.csv',benchmark)});
+    const benchmarkFile=state.requests[0].parts[0].evidence;
+    await run('preparer','accept',{request,part});
+    state=await run('preparer','support-upload',{source:'Independent ledger control totals',...file('controls.csv','count,total\n2,100')});
+    const control=state.evidence.find(row=>row.name==='controls.csv').id;
+    await run('reviewer','support-assess',{id:control,result:'accepted',reason:'Matched independent ledger count and total'});
+    const ledger=['id,account,amount,entity,date,currency',
+      ['asset-a','1500','90',create.registration,'2025-02-01','MNT'].join(','),
+      ['asset-b','1500','10',create.registration,'2025-02-02','MNT'].join(',')].join('\n');
+    state=await run('preparer','population-import',{source:'Exact ledger export',currency:'MNT',...file('ledger.csv',ledger)});
+    state=await run('preparer','population-reconcile',{version:String(state.population.current.version),count:'2',total:'100',
+      source:'Independent ledger control',controlEvidence:control,mapping:'1500,PPE',statements:'PPE,100',use:'PPE sampling'});
+    state=await run('reviewer','population-approve',{version:String(state.population.current.version),reason:'Verified exact population and PPE bridge'});
+    const population=state.population.current.version;
+
+    const basis={
+      users:'Bank covenant team and minority owners',benchmarkMeasure:'revenue',alternatives:'Assets and normalized profit',
+      benchmarkRationale:'Revenue tracks user decisions better than volatile profit',comparison:'prior-period',priorAmount:'900',
+      priorReference:'Prior approved finance schedule',comparisonRationale:'Revenue trend verified against the approved comparative',
+      unusualResults:'One-time asset disposal explains the unusual profit change',stability:'stable',
+      stabilityRationale:'Revenue remained comparable after checking classification',evidence:benchmarkFile,
+      specificDecision:'required',specificReason:'Asset-covenant disclosure matters to lenders',
+      specific:[{form,scope:'Lender-sensitive PPE',amount:'15',performance:'9',rationale:'Covenant and disclosure sensitivity'}],
+    };
+    const materiality={form:'1.3',benchmark:'1000',percentage:'2',performance:'60',trivial:'5',
+      benchmarkSource:'Signed finance schedule',execution:'Compared benchmark alternatives',conclusion:'Documented threshold choices'};
+    const save=(amounts,basisFields,status=200)=>run('preparer','save',{...materiality,...amounts,materialityBasis:JSON.stringify(basisFields)},status);
+    const missing=await save({percentage:''},basis,400);
+    const badThreshold=await save({}, {...basis,specific:[{...basis.specific[0],performance:'15'}]},400);
+    await save({}, {...basis,specific:[{...basis.specific[0],amount:'21'}]});
+    const aboveOverall=await run('preparer','submit',{form:'1.3'},409);
+    state=await save({},basis);
+    assert.equal(paper(state,'1.3').materialityBasis.evidence.sha256,createHash('sha256').update(benchmark).digest('hex'));
+    assert.equal(await (await service.fetch(scoped('/evidence/'+benchmarkFile,engagement),cookies.reviewer)).text(),benchmark);
+    state=await run('preparer','submit',{form:'1.3'});
+    const firstSubmission=paper(state,'1.3').version;
+    const deniedSelfReview=await run('preparer','review',{form:'1.3'},403);
+    state=await run('reviewer','return',{form:'1.3',reason:'Explain why the one-off does not distort revenue'});
+    const reviewNote=paper(state,'1.3').notes[0].id;
+    const updatedBasis={...basis,stabilityRationale:'One-time proceeds are outside revenue and the comparative classification agrees'};
+    await save({conclusion:'Revenue excludes one-time disposal proceeds'},updatedBasis);
+    await run('preparer','respond',{form:'1.3',note:reviewNote,response:'Added the classification check and linked the exact approved schedule'});
+    state=await run('preparer','submit',{form:'1.3'});
+    const reviewedVersion=paper(state,'1.3').version;
+    const reviewBeforeClear=await run('reviewer','review',{form:'1.3'},409);
+    await run('reviewer','clear',{form:'1.3',note:reviewNote,version:String(reviewedVersion),responseVersion:'1',reason:'Checked both versions and approved schedule'});
+    state=await run('reviewer','review',{form:'1.3'});
+    const initialApproval=paper(state,'1.3');
+    assert.ok(initialApproval.history.some(row=>row.version===firstSubmission&&row.evidence.includes(benchmarkFile)));
+    const reopenedSource=await run('reviewer','request-reopen',{request,part,reason:'Verify a fresh copy of the relied-upon schedule'});
+    const staleBasis=paper(reopenedSource,'1.3');
+    assert.deepEqual([staleBasis.status,staleBasis.materiality],['changed',null]);
+    assert.ok(staleBasis.history.some(row=>row.version===initialApproval.version&&row.evidence.includes(benchmarkFile)));
+    state=await run('preparer','upload',{request,part,source:'Reverified finance schedule',...file('benchmark-replacement.csv',benchmark)});
+    const benchmarkReplacement=state.requests[0].parts[0].evidence;
+    await run('preparer','accept',{request,part});
+    await save({conclusion:'Reverified the replacement copy and kept the benchmark unchanged'},
+      {...updatedBasis,evidence:benchmarkReplacement,revisionReason:'Original supporting file was reopened'});
+    await run('preparer','submit',{form:'1.3'});
+    state=await run('reviewer','review',{form:'1.3'});
+    const approved=paper(state,'1.3');
+
+    await run('preparer','save',{form:'2.6',execution:'Evaluated controls',conclusion:'Substantive approach',reliance:'none'});
+    await run('preparer','submit',{form:'2.6'});
+    state=await run('reviewer','review',{form:'2.6'});
+    const controlsVersion=paper(state,'2.6').version;
+    const design={form,line:'PPE',size:'2',seed:'3',purpose:'Inspect the exact approved ledger units'};
+    state=await run('preparer','sample-design',design);
+    const sampleVersion=state.samples[form].version, sampleFields={form,version:String(sampleVersion)};
+    await run('reviewer','sample-approve',{...sampleFields,reason:'Approved the scoped performance threshold and population'});
+    state=await run('preparer','sample-select',sampleFields);
+    const selected=state.samples[form].selected;
+    assert.deepEqual(selected.map(row=>row.id).sort(),['asset-a','asset-b']);
+    await run('preparer','save',{form,execution:'Inspected both selected units',conclusion:'Retained the identified difference'});
+    await run('preparer','sample-test',{...sampleFields,unit:'asset-a',result:'exception',amount:'13',detail:'Difference in asset cost',evidence:benchmarkReplacement});
+    await run('preparer','sample-test',{...sampleFields,unit:'asset-b',result:'pass',amount:'0',detail:'Agreed to the schedule',evidence:benchmarkReplacement});
+    await run('preparer','submit',{form});
+    state=await run('reviewer','review',{form});
+    const signedSample=paper(state,form).version;
+    await run('partner','statements',{statements:'Signed synthetic statements',disclosures:'Synthetic disclosure'});
+    state=await run('reviewer','completion-evaluate',{note:'The 13 difference is below the approved specific threshold of 15'});
+    const evalVersion=state.completion.evaluation.version;
+    state=await run('partner','completion-evaluation-approve',{version:String(evalVersion),reason:'Independently checked the scoped threshold and amount'});
+    const oldEvaluation=state.completion.evaluation, sampleBasis=state.samples[form].basis;
+    assert.equal(oldEvaluation.current,true);
+
+    const reducedBasis={...updatedBasis,specific:[{...basis.specific[0],amount:'12',performance:'7'}],
+      unusualResults:'New information reduced expected revenue',stability:'adjusted',stabilityRationale:'Recalculated against updated evidence'};
+    const revisedSchedule='revenue,current,prior\nRevenue,800,900';
+    state=await run('preparer','support-upload',{source:'Corrected finance export',...file('revised-benchmark.csv',revisedSchedule)});
+    const revisedFile=state.evidence.find(row=>row.name==='revised-benchmark.csv').id;
+    await run('reviewer','support-assess',{id:revisedFile,result:'accepted',reason:'Matched the corrected finance export'});
+    const noReason=await save({benchmark:'800'},{...reducedBasis,evidence:revisedFile},400);
+    state=await save({benchmark:'800'},{...reducedBasis,evidence:revisedFile,revisionReason:'Approved corrected revenue and tighter covenant scope'});
+    const staleState=state;
+    assert.equal(paper(staleState,form).status,'changed');
+    assert.equal(paper(staleState,'2.6').reviewedVersion,controlsVersion);
+    assert.equal(staleState.samples[form].current,false);
+    assert.deepEqual(staleState.samples[form].selected,selected);
+    assert.equal(staleState.samples[form].version,sampleVersion);
+    assert.equal(staleState.completion.evaluation.current,false);
+    const staleSampleDenial=await run('preparer','sample-select',sampleFields,409);
+    await run('preparer','submit',{form:'1.3'});
+    state=await run('reviewer','review',{form:'1.3'});
+    const revised=paper(state,'1.3'), impact=state.impacts.find(row=>row.source==='1.3'&&row.targets.includes(form));
+    assert.ok(impact.targets.includes('4.4'));
+    await run('reviewer','resolve-impact',{id:impact.id,reason:'Require a new PPE sample design and reevaluate the recorded difference'});
+    state=await run('reviewer','completion-evaluate',{note:'The 13 difference now exceeds the specific threshold of 12'});
+    const newEvalVersion=state.completion.evaluation.version;
+    state=await run('partner','completion-evaluation-approve',{version:String(newEvalVersion),reason:'Approved the updated numerical comparison'});
+    const newEvaluation=state.completion.evaluation;
+    assert.deepEqual(state.completion.evaluationHistory.map(row=>row.version),[evalVersion]);
+    assert.ok(paper(state,form).history.some(row=>row.version===signedSample&&row.action==='Хянаж батлав'));
+
+    const reopened=(await run('reviewer','request-reopen',{request,part,reason:'Earlier source version needs replacement'})).requests[0];
+    assert.equal(reopened.parts[0].state,'rejected');
+    assert.equal(paper(await view('reviewer',engagement),'1.3').reviewedVersion,revised.version);
+    await service.close();
+    service=await start(database);
+    const restarted=await fixture(service,false);
+    const retained=await restarted.view('reviewer',engagement);
+    assert.equal(paper(retained,'1.3').reviewedVersion,revised.version);
+    assert.equal(retained.completion.evaluation.current,true);
+
+    const proof=(id,actor,action,expected,actual,versions)=>{
+      assert.deepEqual(actual,expected,id);
+      return {id,engagement,actor,action,expected,actual,versions};
+    };
+    const versions={work:approved.version,evidence:approved.materialityBasis.evidence.sha256};
+    recordLifecycleEvidence(t,{lifecycle:'A08',engagement,steps:[
+      proof('A08-P1-W1','preparer','save 1.3',[basis.users,'revenue',basis.alternatives],
+        [approved.materialityBasis.users,approved.materialityBasis.benchmarkMeasure,approved.materialityBasis.alternatives],versions),
+      proof('A08-P1-W2','preparer','save comparative and stability assessment',[900,basis.unusualResults,'stable',updatedBasis.stabilityRationale],
+        [approved.materialityBasis.priorAmount,approved.materialityBasis.unusualResults,approved.materialityBasis.stability,approved.materialityBasis.stabilityRationale],versions),
+      proof('A08-P1-W3','preparer','save benchmark rationale with accepted source',[basis.benchmarkRationale,benchmarkReplacement],
+        [approved.materialityBasis.benchmarkRationale,approved.materialityBasis.evidence.id],versions),
+      proof('A08-P2-W1','preparer','calculate overall and performance',[20,12],[approved.materiality.overall,approved.materiality.performance],versions),
+      proof('A08-P2-W2','preparer','set scoped PPE materiality',[form,15,9],
+        approved.materiality.specific.map(row=>[row.form,row.amount,row.performance])[0],versions),
+      proof('A08-P2-W3','preparer','set clearly trivial threshold',1,approved.materiality.trivial,versions),
+      proof('A08-P3-W1','reviewer and partner','review exact 1.3 and independently approve threshold-dependent evaluation',
+        [reviewedVersion,'cleared','partner'],[initialApproval.reviewedVersion,initialApproval.notes[0].decisions[0].result,oldEvaluation.approval.by],
+        {...versions,evaluation:evalVersion}),
+      proof('A08-P3-W2','preparer and reviewer','sample-design → sample-approve → completion-evaluate',
+        [approved.version,9,15,1300,false],[sampleBasis.materiality,sampleBasis.performance,oldEvaluation.inputs.specific[0].amount,
+          oldEvaluation.inputs.specific[0].gross,oldEvaluation.inputs.specific[0].thresholdMet],
+        {work:approved.version,population,sample:sampleVersion,evaluation:evalVersion}),
+      proof('A08-P3-W3','preparer, reviewer and partner','revise basis → assess impact → approve new evaluation',
+        [16,12,true,true],[revised.materiality.overall,newEvaluation.inputs.specific[0].amount,newEvaluation.inputs.specific[0].thresholdMet,retained.completion.evaluation.current],
+        {old:approved.version,revised:revised.version,evaluation:newEvalVersion,impact:impact.id}),
+    ],branches:[
+      proof('missing-benchmark-inputs','preparer','reject missing explicit percentage',true,missing.error.includes('percentage'),{work:approved.version}),
+      proof('invalid-scoped-threshold','preparer','reject invalid specific and overall limits',[true,true],
+        [/Тусгай гүйцэтгэлийн/.test(badThreshold.error),/Материаллаг байдлын/.test(aboveOverall.error)],{work:approved.version}),
+      proof('return-and-independent-review','preparer and reviewer','self review and review before note clearance denied',[true,true],
+        [!!deniedSelfReview.error,!!reviewBeforeClear.error],{first:firstSubmission,final:approved.version,note:reviewNote}),
+      proof('revision-reopens-dependent-work','preparer and reviewer','preserve selection and refuse stale approval',[true,false,false,true],
+        [noReason.error.includes('шалтгаан'),staleState.samples[form].current,staleState.completion.evaluation.current,!!staleSampleDenial.error],
+        {old:approved.version,revised:revised.version,sample:sampleVersion}),
+      proof('reopened-benchmark-evidence','reviewer','stale the relied-upon source and preserve a separately approved replacement',
+        ['changed',null,'rejected',true],[staleBasis.status,staleBasis.materiality,reopened.parts[0].state,retained.completion.evaluation.current],
+        {prior:benchmarkFile,replacement:revisedFile,work:revised.version}),
+    ]});
+  } finally {
+    if(service)await service.close();
+    for(const suffix of ['', '-shm', '-wal'])await rm(database+suffix,{force:true});
+    await rmdir(dir);
+  }
+});

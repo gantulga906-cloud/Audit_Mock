@@ -22,6 +22,7 @@ export type SampleTest={unit:string;row:number;result:'pass'|'exception';detail:
  evidence:string;evidenceVersion:number;by:PilotRole;at:string;finding?:string};
 export type SampleDesignVersion={version:number;form:string;size:number;seed:number;purpose:string;method:string;stamp:string;
  basis:{population:number;source:string;sha256:string;line:string;materiality:number;performance:number;controls:number;level:string;
+  specificMateriality?:{scope:string;amount:number};
   controlEvidence:[string,number][];decision?:[string,number];owner:string;reviewer:string};
  preparedBy:PilotRole;at:string;approval?:{by:PilotRole;at:string;reason:string};selected?:SampleUnit[];tests:SampleTest[]};
 export type SampleView=SampleDesignVersion&{current:boolean;history:SampleDesignVersion[]};

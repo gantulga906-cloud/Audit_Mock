@@ -2,6 +2,7 @@ import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
 import type {Evidence,Finding,WorkItem} from '@/lib/workspace';
 import {DataAction} from './pilot-population';
 import type {PilotAction} from './pilot-registers';
+import type {MaterialityAmounts} from '@/lib/pilot-materiality';
 
 type Attachment={id:string;name:string;version:number;sha256:string};
 type Approval={by:PilotRole;at:string;reason:string};
@@ -9,7 +10,8 @@ type Correction={version:number;amount:number;reference:string;account:string;si
  response?:{result:string;amount:number;file:Attachment;reason:string};
  postings:{amount:number;population:number;source:string;rows:{id:string;row:number;cents:number}[];reason:string}[]};
 type FindingFact={classification:string;reference:string;criterion:string;effect:string;evidence:Attachment;paper:number};
-type EvaluationInputs={statement:number;materiality:number;limits:{overall:number;performance:number;trivial:number};gross:number};
+type EvaluationInputs={statement:number;materiality:number;limits:MaterialityAmounts;gross:number;
+ specific?:{form:string;scope:string;amount:number;gross:number;thresholdMet:boolean;findings:string[]}[]};
 type Evaluation={version:number;inputs:EvaluationInputs;note:string;approval?:Approval};
 type Management={version:number;statement:number;file:Attachment;notes:Attachment;authorization:Attachment;
  signer:string;capacity:string;date:string;basis:string;approval?:Approval};
@@ -134,6 +136,8 @@ export function CompletionDesk({data,role,papers,evidence,engagement,run}:{
   {(data.enabled||role==='reviewer')&&<details className="feature-detail" open={data.enabled}>
    <summary>Залруулаагүй дүн ба материаллаг байдал</summary>
    {data.inputs&&<p>Залруулаагүй дүн {money(data.inputs.gross)} · 1.3 v{data.inputs.materiality} · СТ v{data.inputs.statement} · Материаллаг байдал {data.inputs.limits.overall.toLocaleString()}</p>}
+   {data.inputs?.specific?.map(row=><p key={row.form}>{row.form} · {row.scope} · Залруулаагүй {money(row.gross)} ·
+    {' '}Тусгай босго {row.amount.toLocaleString()} · {row.thresholdMet?'Босгод хүрсэн эсвэл давсан':'Босгоос бага'}</p>)}
    {role==='reviewer'&&<DataAction run={run} action="completion-evaluate" button="Одоогийн дүн ба чанарын нөлөөг хадгалах">
     <label>Тоо болон чанарын нэгтгэсэн үнэлгээ<textarea name="note" defaultValue={data.evaluation?.note} required/></label>
    </DataAction>}

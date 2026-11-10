@@ -66,7 +66,12 @@ function evaluationInputs(m) {
       accepted:revision?.response?.amount??0,posting:posting&&[posting.population,posting.amount,posting.by,posting.at]};
   });
   const gross=rows.reduce((sum,r)=>sum+r.outstanding,0);
-  return {statement:engagement.fsVersion,materiality:mat.version,limits,gross,rows};
+  const specific=limits.specific?.map(({form,scope,amount})=>{
+    const included=rows.filter(row=>row.form===form);
+    const gross=included.reduce((sum,row)=>sum+row.outstanding,0);
+    return {form,scope,amount,gross,thresholdMet:gross/100>=amount,findings:included.map(row=>row.id)};
+  });
+  return {statement:engagement.fsVersion,materiality:mat.version,limits,gross,rows,...(specific?.length&&{specific})};
 }
 
 export function currentEvaluation(m) {

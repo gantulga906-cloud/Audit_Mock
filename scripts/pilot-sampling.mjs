@@ -26,8 +26,11 @@ function inputs(m,form,line) {
       m.extendedPilot&&decision?.values.decision!=='adopt') return undefined;
   const accounts = new Set(bridge.accounts);
   const rows = population.rows.filter(r=>r.state==='accepted'&&accounts.has(r.account));
+  const specific=amounts.specific?.find(row=>row.form===form);
   const basis={population:population.version,source:population.evidence,sha256:population.sha256,line,
-    materiality:mat.version,performance:amounts.performance,controls:controls.version,level,controlEvidence,
+    materiality:mat.version,performance:specific?.performance??amounts.performance,
+    ...(specific&&{specificMateriality:{scope:specific.scope,amount:specific.amount}}),
+    controls:controls.version,level,controlEvidence,
     decision:decision&&[decision.id,decision.version],owner:paper.owner,reviewer:paper.reviewer};
   return {rows,basis,stamp:digest(basis)};
 }

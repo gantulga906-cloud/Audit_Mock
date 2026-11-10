@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { createCompany, createEngagement, validDate } from '../src/lib/feature-workflows.ts';
 import {
   activateEngagement, authorizeReport, authorizationCurrent, bindStatements, canEdit, canReviewWork,
-  changeWork, clearNote, currentPackage, currentRelease, isCurrentReview, issueReport, materiality, recordEvent, reportGaps, respondNote,
+  changeWork, clearNote, currentPackage, currentRelease, isCurrentReview, issueReport, recordEvent, reportGaps, respondNote,
   reassign, reportForm, reschedule, resolveFinding, returnWork, reviewWork, saveStatements, setEngagementDecision, snapshot, submitWork, workKey,
 } from '../src/lib/workspace.ts';
 import {
@@ -24,6 +24,7 @@ import { areaAction, areaEvidence, areaGap, areaView, areaWorkpaperRef, syncArea
 import { completionAction, completionEvidence, completionGaps, completionRef, completionView, consultationView, syncCompletion } from './pilot-completion.mjs';
 import { oversightTeamAction, oversightTeamView, qualityGaps, qualityRef } from './pilot-oversight.mjs';
 import { currentSignature, signReport, strictRelease } from './pilot-release.mjs';
+import { materialityBasis, materialityGap, materialityTargets, materialityValues, syncMateriality, updateMaterialityBasis } from './pilot-materiality.mjs';
 
 export const accounts = { preparer: 'nomin', reviewer: 'temuulen', partner: 'bat' };
 const roleOf = person => seats.find(role => accounts[role] === person);
@@ -60,6 +61,7 @@ function syncPlanningPapers(m) {
 }
 
 function syncFieldwork(m) {
+  syncMateriality(m);
   syncPlanningPapers(m);
   syncSamplePapers(m);
   syncJournalPapers(m);
@@ -84,9 +86,7 @@ const technicalGaps = m => activeItems(m,technicalForms(m).map(form=>({form}))).
 });
 
 export function validMateriality(m) {
-  const amounts = materiality(m,m.engagement);
-  return amounts && Number.isFinite(amounts.overall) && amounts.performance < amounts.overall &&
-    amounts.trivial <= amounts.performance ? amounts : null;
+  return materialityValues(m);
 }
 
 function reportWorkspace(m) {
@@ -146,7 +146,7 @@ function pilotGaps(m,includeQuality=true) {
     ...(!m.extendedPilot && !isCurrentReview(m.work[workKey(m.engagement, workstream)]) ? ['3.1.2 · Одоогийн хувилбарын ахлахын хяналт'] : []),
     ...reportGaps(reportWorkspace(m), m.engagement),
     ...completionRegisterGaps(m),
-    ...completionGaps(m),
+    ...completionGaps(m),...[materialityGap(m)].filter(Boolean),
     ...(includeQuality?qualityGaps(m):[]),
     ...technicalGaps(m),
     ...nativeReviewGaps(m),
@@ -160,7 +160,7 @@ export function currentApproval(m, engagement) {
     (!m.extendedPilot || !!m.pilotReportDigest) &&
     (m.pilotCompletionAuthorization??':')===completionRef(m) &&
     (m.pilotQualityAuthorization??'')===qualityRef(m) && !qualityGaps(m).length &&
-    !completionRegisterGaps(m).length && !completionGaps(m).length && !technicalGaps(m).length && !nativeReviewGaps(m).length && !staffingGaps(m).length &&
+    !completionRegisterGaps(m).length && !completionGaps(m).length && !materialityGap(m) && !technicalGaps(m).length && !nativeReviewGaps(m).length && !staffingGaps(m).length &&
     !fieldworkForms(m).some(form=>fieldworkGap(m,form));
 }
 
@@ -256,7 +256,8 @@ export function pilotView(m, role, revision, files) {
     return { ...w, ...(changed && {status:'changed',completedAt:undefined}),
       ...(planning && {planning}), ...(pendingPlanning && {pendingPlanning}),
       ...(fieldGap && {fieldGap}),
-      ...(form === '1.3' && {materiality:validMateriality(m)}),
+      ...(form === '1.3' && {materiality:validMateriality(m),materialityBasis:materialityBasis(w.values),
+        materialityTargets:materialityTargets(m)}),
       ...(template && { template, nativeGaps: nativeGaps(m, w, files) }),
       ...(oldDigests.size && { oldTemplates: Object.fromEntries([...oldDigests].map(hash => [hash, files.template(hash)])) }),
       ...(m.pilotWorkAssignments?.[form] && { assignmentHistory: m.pilotWorkAssignments[form] }),
@@ -540,10 +541,13 @@ export function pilotAction(m, role, action, data, files) {
     if (templates.some(t => !t.contract)) throw new PilotError(409, 'Баталсан эх загварын хувилбар олдсонгүй.');
     const population = approvedPopulation(m);
     const populationHistory = (m.pilotPopulation??[]).filter(v=>v.approval&&v!==population);
+    const thresholdPaper=m.work[workKey(m.engagement,'1.3')];
+    const thresholdBasis=thresholdPaper&&materialityBasis(thresholdPaper.values);
     const requestAudit = activeItems(m,m.requests).filter(r=>r.issuedAt);
     const confirmations = files.confirmations().filter(c=>c.state==='received'&&requestAudit.some(r=>r.id===c.request));
     const ids = new Set([...engagement.authorized.package.evidence.map(e => e.id), ...registerEvidence(m),
       ...[...programmes,...native].flatMap(w => w.evidence), ...(m.pilotTerms ? [m.pilotTerms.evidence] : []),
+      ...(thresholdBasis?[thresholdBasis.evidence.id]:[]),
       ...(population?[population.evidence,population.controls.evidence.id]:[]),...areaEvidence(m,fieldworkForms(m)),...completionEvidence(m)]);
     const historical = new Set([...populationHistory.flatMap(v=>[v.evidence,v.controls.evidence.id]),
       ...requestAudit.flatMap(r=>(r.parts??[]).flatMap(p=>p.uses?.map(use=>use.evidence)??[])),...confirmations.map(c=>c.evidence)]);
@@ -562,6 +566,7 @@ export function pilotAction(m, role, action, data, files) {
         .map(({form,version,notes})=>({form,version,notes})),
       ...(m.pilotTerms && { terms: m.pilotTerms }),
       ...(population && { population }),
+      ...(thresholdBasis&&{materiality:{version:thresholdPaper.version,basis:thresholdBasis,amounts:validMateriality(m)}}),
       ...(populationHistory.length && {populationHistory}),
       ...(requestAudit.length && {requestAudit}),
       ...(confirmations.length && {confirmations}),
@@ -672,6 +677,7 @@ export function pilotAction(m, role, action, data, files) {
         .filter(form => programmeDecision(m,form).paperVersions?.[paper.form] === version) : [];
       const typed = data?.answers !== undefined ? readTypedAnswers(m, paper, data, files) : null;
       const values = { ...(typed?.values ?? paper.values) };
+      let linkedEvidence=typed?.evidence;
       if (!paper.form.startsWith('F-')) {
         values.execution = input(data, 'execution');
         values.conclusion = input(data, 'conclusion');
@@ -679,6 +685,11 @@ export function pilotAction(m, role, action, data, files) {
       if (paper.form === '1.3') {
         for (const key of ['benchmark','percentage','performance','trivial']) values[key] = input(data, key, 32);
         if (data.benchmarkSource !== undefined) values.benchmarkSource = data.benchmarkSource === '' ? '' : input(data,'benchmarkSource');
+        const basisEvidence=updateMaterialityBasis(m,paper,data,values,files);
+        if (basisEvidence) {
+          const priorEvidence=materialityBasis(paper.values)?.evidence?.id;
+          linkedEvidence=[...new Set([...(linkedEvidence??paper.evidence.filter(id=>id!==priorEvidence)),basisEvidence])];
+        }
       }
       if (paper.form === '2.6') {
         if (!['none','partial','full','na'].includes(data.reliance)) throw new PilotError(400, 'Хяналтад найдах шийдвэр шаардлагатай.');
@@ -691,12 +702,12 @@ export function pilotAction(m, role, action, data, files) {
           values.relianceEvidence = data.relianceEvidence;
         }
       }
-      changeWork(m, paper.id, values, typed?.evidence);
+      changeWork(m, paper.id, values, linkedEvidence);
       if (planning) {
         syncPlanningPapers(m);
         if (paper.form === '1.3' && version !== paper.version) {
           const impact = m.impacts[0];
-          impact.targets = [...new Set([...impact.targets,...dependants])];
+          impact.targets = [...new Set([...impact.targets,...dependants,...Object.keys(m.pilotSamples??{}),...(m.pilotEvaluations?.length?['4.4']:[])])];
         }
         if (paper.form === '2.6' && version !== paper.version && dependants.length) {
           m.impacts.unshift({id:randomUUID(),engagement:m.engagement,source:paper.form,targets:dependants,

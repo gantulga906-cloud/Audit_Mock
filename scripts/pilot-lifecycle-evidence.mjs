@@ -2,6 +2,13 @@ import { isDeepStrictEqual } from 'node:util';
 
 const marker = 'audit-lifecycle-v1 ';
 const branchPlans = {
+  A08: [
+    'missing-benchmark-inputs',
+    'invalid-scoped-threshold',
+    'return-and-independent-review',
+    'revision-reopens-dependent-work',
+    'reopened-benchmark-evidence',
+  ],
   A25: [
     'review-return-and-resubmit',
     'unresolved-professional-difference',
