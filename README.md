@@ -2,7 +2,7 @@
 
 A Mongolian-language, browser-local frontend prototype for connected audit work. Next.js, React, TypeScript, Tailwind and Lucide. Three fictional engagements and four people demonstrate different preparation, review, partner and quality responsibilities.
 
-**Local shared pilot.** Run `npm run build` and `npm run pilot`, then open the URL printed in the terminal. Set up the three separate sign-ins with the one-time code. The extended pilot uses SQLite for one engagement from firm setup and acceptance through programme selection, evidence, review, authorization, and archive. [Pilot walkthrough](docs/research/implementation-pilot.md) · [34-feature verification ledger](docs/research/pilot-feature-coverage.md)
+**Local shared pilot.** Run `npm run build` and `npm run pilot`, then open the URL printed in the terminal. Set up the three separate sign-ins with the one-time code. SQLite stores separate engagements, from acceptance and programme selection through evidence, review, authorization and archive. Open the portfolio to switch engagements or add another. The partner controls engagement membership for the pilot reviewer and preparer. [Pilot walkthrough](docs/research/implementation-pilot.md) · [Development and migration notes](docs/research/development-progress.md)
 
 **New in v5.** In **Үйлчлүүлэгчид**, register a client and open a fresh engagement with real reporting dates and an assigned demo team. Once the partner activates it, track evidence requests and tailor the procedures in a programme workpaper. See [v5 walkthrough and scope](docs/research/implementation-v5.md).
 
@@ -30,6 +30,26 @@ npm start
 
 The build creates a static `out/` export. `npm start` serves the existing prototype locally. The opt-in `npm run pilot` starts a separate local server with SQLite storage.
 
+Record `/build-info.json` for each acceptance run. It identifies the built UI, Git revision, working-tree state, and source manifest. The local server also sends the build ID with pilot API responses.
+
+In the shared pilot portfolio, open **Маягтын сан ба бүтэц** to draft or approve a template. A partner can grant authoring on a specific form. In an engagement, use **Эх маягт ба баталсан хувилбар холбох** to pin a source or published version and work on its typed fields. A published revision takes effect in an engagement after explicit adoption. Excel import reads a question-list worksheet with a `Question` column and optional `Type`, `Choices`, `Section` and `Required` columns.
+
+In an extended engagement, review **1.3** and the relevant **2.6** reliance basis, then open **Аудитын бүртгэл ба шийдвэр → Төлөвлөлт ба эрсдэл → M07-F01**. Choose the applicable methodology rule and reviewed risk, then select the approach, template version and procedure. A partner approves the decision. The workpaper shows the approved planning basis alongside the fields for actual execution. An exclusion stays out of fieldwork, and a changed planning input reopens the dependent work.
+
+In an active pilot engagement, open **Эх олонлог ба санхүүгийн тайлангийн тулгалт** to upload a UTF-8 CSV with columns `id,account,amount,entity,date,currency`. Use the engagement registration number and ISO dates. Attach and independently accept a separate control report, then reconcile the in-scope count, signed total and account-to-statement lines. A different reviewer approves the exact revision. Optional `journal,entry_type` columns enable journal testing. Under an applicable workpaper, use the approved population for sample design and journal investigation. The request desk creates multi-part requests and one-time local confirmation links.
+
+Sales, receivables, purchases, bank, inventory and fixed-assets workpapers also run area checks. Use an optional `reference` column in the approved ledger for exact document matching and attach the area exports as accepted supporting evidence. The workpaper lists each required CSV schema. Select the mapped statement line, run the checks and document each exception before independent review.
+
+Payroll, tax, loans, leases, FX, equity and investment workpapers also ask for a named edition from accepted rule or methodology evidence. Enter basis-point rates and the supplied methods in the listed schemas, and choose separate ledger lines where the workpaper asks for them. The fixture uses synthetic rates. The server blocks missing or unsupported methods and keeps the selected edition with the reviewed result.
+
+The local setup can also create distinct **Quality** and **Custodian** credentials. The engagement team records its quality policy, sends back exact-version responses, and offers locked packages to custody. For the controlled completion route, attach independently accepted management authorization, link the signed representations, authorize the exact report, sign it locally and record the recipient's acknowledgment through the sandbox link. The custodian verifies and accepts the exact downloaded manifest.
+
+Run `npm run verify:release -- --build` to capture executed tests, source links, build identity and open release requirements in `.audit-pilot/source-verification.json`. Add `--strict` to require independently accepted source contracts and a passing connected journey for each applicable lifecycle.
+
+Open **Үйлчлүүлэгч ба аудитын хүсэлт** in the portfolio to record an enquiry, search clients or maintain contact history. The reviewer converts a forwarded enquiry after confirming the current client profile, contact and reporting period. The partner approves the signed engagement letter revision before activating a converted engagement.
+
+Open **Фирмийн мэргэжилтэн ба боломжит цаг** for roster and workload. The firm registers record the practitioner, credential and appointment. The engagement's **Багийн томилгоо ба нөөц** panel shows the approved staffing and its scope. For managed engagements, workpaper schedules and tasks use current approved appointments and retain earlier sign-off attribution.
+
 ## Explore
 
 - **Senior delivery:** start as Т. Тэмүүлэн. Inspect the review queue, rolling Gantt, stage/status matrix, dependency references, assignments and scoped workload. Open a workpaper in its inspector without leaving the list. Change its due date and see the same deadline in the calendar.
@@ -52,6 +72,7 @@ The supplied61-page brief informed this iteration. Audit products are the primar
 - [Design specification](docs/research/design-spec.md): nine flows,16 processes, role menus, metrics, dependencies, configuration costs, wireframes, priorities and scenarios.
 - [Source review](docs/research/source-review.md): originals, editions, worksheet/field evidence and review limits.
 - [Implementation/verification](docs/research/implementation.md): actual depth and remaining work.
+- [Development progress](docs/research/development-progress.md): work packages and source-linked regression evidence.
 - [Current coverage](docs/research/current-coverage.json):1,269 separate current source dispositions. The baseline ledger remains frozen to581b70c.
 
 The populations reconcile136 feature/common-scope items,75 cases,315 criteria,58 automation minimums plus58 extensions,22 area variants,476 E2E steps,70 forms,25 screen groups,29 decisions and five BPMNs. Mapping a requirement is different from completing it. Conditional services, excluded inferences and unresolved decisions retain their scope.

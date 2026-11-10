@@ -68,7 +68,7 @@ export function createEngagement(m:Model,companyId:string,period:Period,reportDa
  m.samples[id]={size:1,seed:2026,designVersion:1,selected:[]};
  m.library.adopted[id]=m.library.version;
  for(const f of forms){
-  const key=workKey(id,f.id),partnerPaper=['4.4','4.1.A1'].includes(f.id);
+  const key=workKey(id,f.id),partnerPaper=f.id==='4.4'||/^4[.]1[.]A[1-4]$/.test(f.id);
   m.work[key]={id:key,engagement:id,form:f.id,title:f.title,stage:f.stage,
    owner:partnerPaper?team.reviewer:team.preparer,reviewer:partnerPaper?team.partner:team.reviewer,
    start:'',due:'',baselineStart:'',baselineDue:'',estimate:0,actual:0,status:'not_started',version:1,

@@ -1,13 +1,13 @@
 import {useEffect,useState} from 'react';
 import {ArrowDown,ArrowUp,Copy,FileText,Plus,Trash2,Upload} from 'lucide-react';
-import {applyTemplate,bench,grant,publish,saveClient,saveDraft,sharedFields,templateFromGrid,today,type Client,type Field,type Grid,type Period,type Template,type Theme} from '@/lib/workbench';
+import {applyTemplate,bench,grant,publish,saveClient,saveDraft,sharedFields,tableColumns,templateFromGrid,today,type Client,type Field,type Grid,type Period,type Template,type Theme} from '@/lib/workbench';
 import {loadFile,readWord,readWorkbook,retainFile} from '@/lib/office-preview';
 import {issuedRequest} from '@/lib/feature-workflows';
 import {canReadWork,inScope,PERSONS,personById,type Evidence,type Model,type WorkItem} from '@/lib/workspace';
 
 type Props={model:Model;change:(fn:(m:Model)=>void)=>void};
 const kind:Record<string,string>={text:'Богино текст',textarea:'Дэлгэрэнгүй текст',yesno:'Тийм / Үгүй',select:'Нэг сонголт',multiselect:'Олон сонголт',date:'Огноо',number:'Тоо / Дүн',evidence:'Баримтын холбоос',table:'Давтагдах мөр',procedure:'Аудитын горим'};
-const binding:Record<NonNullable<Field['binding']>,string>={name:'Байгууллагын нэр',legalForm:'Хуулийн хэлбэр',registration:'Регистрийн дугаар',period:'Тайлант үе',contacts:'Удирдлага ба холбоо барих хүмүүс'};
+const binding:Record<NonNullable<Field['binding']>,string>={name:'Байгууллагын нэр',legalForm:'Хуулийн хэлбэр',registration:'Регистрийн дугаар',period:'Тайлант үе',contacts:'Удирдлага ба холбоо барих хүмүүс',framework:'Тайлагналын хүрээ',industry:'Салбар'};
 const input=(id:string):Template=>({id,title:'',stage:1,family:'questionnaire',sheet:'Арга зүйн сан',fields:[{key:'q'+crypto.randomUUID(),label:'',type:'text',source:'Захиалгат'}]});
 
 export function ClientRegister({model,change}:Props){
@@ -32,23 +32,26 @@ export function ClientRegister({model,change}:Props){
  </section></div>;
 }
 
-export function TypedInput({field,value,change,disabled,model}:{field:Field;value:string;change:(s:string)=>void;disabled?:boolean;model:Model}){
- const {type,key}=field;
- if(field.binding)return <div className="linked-value">{sharedFields(model,model.engagement)[field.binding]||'Мэдээлэл оруулаагүй'} <small>Компанийн бүртгэлээс</small></div>;
+export function TypedInput({field,value,change,disabled,model,evidence,linkedValue}:{
+ field:Field;value:string;change:(s:string)=>void;disabled?:boolean;model?:Model;
+ evidence?:Pick<Evidence,'id'|'name'|'version'>[];linkedValue?:string;
+}){
+ const {type}=field;
+ if(field.binding)return <div className="linked-value">{(linkedValue??(model&&sharedFields(model,model.engagement)[field.binding]))||'Мэдээлэл оруулаагүй'} <small>Компанийн бүртгэлээс</small></div>;
  if(type==='multiselect'){
   let chosen:string[]=[];try{chosen=JSON.parse(value||'[]')}catch{}
   return <div>{field.options?.map(o=><label className="checkbox-line" key={o}><input type="checkbox" disabled={disabled} checked={chosen.includes(o)} onChange={e=>change(JSON.stringify(e.target.checked?[...chosen,o]:chosen.filter(x=>x!==o)))}/>{o}</label>)}</div>;
  }
  if(type==='table'){
   let rows:{id:string;values:Record<string,string>}[]=[];try{const decoded=JSON.parse(value||'[]');if(Array.isArray(decoded))rows=decoded;}catch{}
-  const cols=field.columns?.length?field.columns:[{key:'description',label:'Тайлбар',type:'text'},{key:'amount',label:'Дүн',type:'number'}];
-  return <div><div className="table-scroll"><table><thead><tr>{cols.map(c=><th key={c.key}>{c.label}</th>)}<th/></tr></thead><tbody>{rows.map((row,i)=><tr key={row.id}>{cols.map(c=><td key={c.key}><input aria-label={c.label+' '+(i+1)} disabled={disabled} type={c.type} value={row.values[c.key]??''} onChange={e=>change(JSON.stringify(rows.map(r=>r.id===row.id?{...r,values:{...r.values,[c.key]:e.target.value}}:r)))}/></td>)}<td><button className="quiet" disabled={disabled} onClick={()=>change(JSON.stringify(rows.filter(r=>r.id!==row.id)))}>Хасах</button></td></tr>)}</tbody></table></div><button className="quiet" disabled={disabled} onClick={()=>change(JSON.stringify([...rows,{id:crypto.randomUUID(),values:{}}]))}>+ Мөр</button></div>;
+  const cols=field.columns?.length?field.columns:tableColumns;
+  return <div><div className="table-scroll"><table><thead><tr>{cols.map(c=><th key={c.key}>{c.label}</th>)}<th/></tr></thead><tbody>{rows.map((row,i)=><tr key={row.id}>{cols.map(c=><td key={c.key}><input aria-label={c.label+' '+(i+1)} disabled={disabled} type={c.type==='number'||c.type==='date'?c.type:'text'} step={c.type==='number'?'any':undefined} value={row.values[c.key]??''} onChange={e=>change(JSON.stringify(rows.map(r=>r.id===row.id?{...r,values:{...r.values,[c.key]:e.target.value}}:r)))}/></td>)}<td><button type="button" className="quiet" disabled={disabled} onClick={()=>change(JSON.stringify(rows.filter(r=>r.id!==row.id)))}>Хасах</button></td></tr>)}</tbody></table></div><button type="button" className="quiet" disabled={disabled} onClick={()=>change(JSON.stringify([...rows,{id:crypto.randomUUID(),values:{}}]))}>+ Мөр</button></div>;
  }
  if(['yesno','select','evidence'].includes(type)){
   const opts=type==='yesno'?['Тийм','Үгүй','Тодорхойгүй','Хамаарахгүй']:field.options??[];
-  return <select aria-label={field.label} id={key} disabled={disabled} value={value} onChange={e=>change(e.target.value)}><option value="">Сонгоогүй</option>{type==='evidence'?model.evidence.filter(e=>e.engagement===model.engagement).map(e=><option value={e.id} key={e.id}>{e.name} · v{e.version}</option>):opts.map(o=><option key={o}>{o}</option>)}</select>;
+  return <select aria-label={field.label} disabled={disabled} value={value} onChange={e=>change(e.target.value)}><option value="">Сонгоогүй</option>{type==='evidence'?(evidence??model?.evidence.filter(e=>e.engagement===model.engagement)??[]).map(e=><option value={e.id} key={e.id}>{e.name} · v{e.version}</option>):opts.map(o=><option key={o}>{o}</option>)}</select>;
  }
- return type==='textarea'||type==='procedure'?<textarea aria-label={field.label} disabled={disabled} value={value} onChange={e=>change(e.target.value)}/>:<input aria-label={field.label} type={type==='number'||type==='date'?type:'text'} disabled={disabled} value={value} onChange={e=>change(e.target.value)}/>;
+ return type==='textarea'||type==='procedure'?<textarea aria-label={field.label} disabled={disabled} value={value} onChange={e=>change(e.target.value)}/>:<input aria-label={field.label} type={type==='number'||type==='date'?type:'text'} step={type==='number'?'any':undefined} disabled={disabled} value={value} onChange={e=>change(e.target.value)}/>;
 }
 
 export function FormBuilder({model,change,sources,open}:Props&{sources:Template[];open:(form:string)=>void}){

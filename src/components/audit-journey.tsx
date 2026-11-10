@@ -58,7 +58,7 @@ export function SampleUnit({model,eng,mutate,id,selectionStamp}:Props&{id:string
  const work=model.work[workKey(eng.id,'3.1.2')];
  const saved=work.values[`sample.${selectionStamp}.${id}`];
  return <div className="journey-part">
-  <b>{id} · {model.datasets[eng.id].rows.find(r=>r.id===id)?.amount.toLocaleString()} MNT</b>
+  <b>{id} · {model.datasets[eng.id].rows.find(r=>r.id===id)?.amount?.toLocaleString()} MNT</b>
   {saved&&<p className="micro">{saved}</p>}
   {canEdit(model,work)&&<><div className="field-grid"><label>Үр дүн<select value={result} onChange={e=>setResult(e.target.value as 'pass'|'exception')}><option value="pass">Зөрүүгүй</option><option value="exception">Зөрүүтэй</option></select></label>{result==='exception'&&<label>Зөрүүний дүн<input type="number" min="0" value={amount} onChange={e=>setAmount(e.target.value)}/></label>}</div><label>Шалгалтын тайлбар<input value={detail} onChange={e=>setDetail(e.target.value)}/></label><button className="btn secondary" disabled={!detail.trim()||(result==='exception'&&!amount.trim())} onClick={()=>mutate(m=>recordSampleTest(m,id,result,detail,result==='pass'?0:Number(amount)))}>Нэгжийн үр дүн хадгалах</button></>}
  </div>;

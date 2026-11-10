@@ -24,6 +24,13 @@ test('return, response and clearance are distinct; own response does not clear',
 test('locked file blocks editing, review and note clearance',()=>{const m=fresh(),id=workKey('E1','3.1.2');m.person='nomin';submitWork(m,id);m.person='temuulen';m.engagements[0].locked=true;assert.equal(canReviewWork(m,m.work[id]),false);assert.throws(()=>returnWork(m,id,'more work'));assert.throws(()=>reviewWork(m,id));m.person='nomin';assert.throws(()=>changeWork(m,id,{conclusion:'new'}));});
 test('out of scope users cannot execute automation even if they forge current engagement',()=>{const m=fresh();m.person='nomin';m.engagement='E3';assert.throws(()=>executeRun(m,'AUTO-003'));assert.throws(()=>attemptRun(m,'AUTO-003'));});
 test('CSV import retains quarantined and duplicate rows rather than silently dropping them',()=>{const d=importCsv('id,account,amount,period\nA,101,100,2025\nA,101,200,2025\nB,102,0,2025\nC,103,9,2024');assert.equal(d.rows.length,4);assert.equal(d.rows.filter(x=>x.state==='accepted').length,2);assert.equal(d.sourceTotal,309);assert.equal(d.rows[2].amount,0);assert.equal(d.rows[1].sourceRow,3);assert.throws(()=>importCsv('foo,bar\na,b'));});
+test('CSV import preserves malformed and blank amounts separately from zero and negative amounts',()=>{
+ const dataset=importCsv('id,account,amount,period\nA,101,not a number,2025\nB,101,,2025\n\nC,101,0,2025\nD,101,-10,2025');
+ assert.deepEqual(dataset.rows.map(r=>[r.amount,r.rawAmount,r.state,r.sourceRow]),[
+  [null,'not a number','quarantined',2],[null,'','quarantined',3],[0,'0','accepted',5],[-10,'-10','accepted',6],
+ ]);
+ assert.equal(dataset.sourceTotal,-10);
+});
 test('reproducible sample has unique units and design review binds exact population',()=>{assert.deepEqual(selectSample(['C','A','B'],2,123),selectSample(['B','C','A'],2,123));assert.equal(new Set(selectSample(['A','B','C'],3,123)).size,3);const m=fresh();approveInputs(m);approveSample(m);executeRun(m,'AUTO-047');const prior=[...m.samples.E1.selected];m.datasets.E1.version++;m.datasets.E1.rows[0].id='NEW';assert.throws(()=>executeRun(m,'AUTO-047'));assert.deepEqual(m.samples.E1.selected,prior);assert.equal(m.samples.E1.selections.length,1);});
 test('invalid automation inputs retain failed attempt and never appear as clean result',()=>{const m=fresh();m.work[workKey('E1','1.3')].values.benchmark='';const r=attemptRun(m,'AUTO-046');assert.equal(r.status,'failed');assert.equal(r.rows.length,0);assert.equal(m.runs.length,1);assert.match(r.summary,/оролт/);});
 test('materiality distinguishes missing input from real zero',()=>{const m=fresh(),w=m.work[workKey('E1','1.3')];w.values.percentage='0';assert.equal(materiality(m,'E1').overall,0);w.values.performance='';assert.equal(materiality(m,'E1'),null);});

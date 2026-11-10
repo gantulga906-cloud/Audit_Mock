@@ -1,4 +1,5 @@
 import type {Model} from './workspace';
+import {issuedRequest} from './feature-workflows.ts';
 
 export type CheckId='AUTO-005'|'AUTO-006'|'AUTO-027';
 export type CheckResult={rows:{key:string;expected:number;recorded:number;difference:number}[];issues:string[]};
@@ -56,7 +57,7 @@ export function checkData(id:CheckId,input:string,statements=''):CheckResult{
 }
 
 export function evidenceCoverage(m:Model,id:string){
- return m.requests.filter(r=>r.engagement===id).map(r=>{
+ return m.requests.filter(r=>r.engagement===id&&issuedRequest(r)).map(r=>{
   const refs=new Set([...r.evidence,...m.evidence.filter(e=>e.engagement===id&&e.request===r.id).map(e=>e.id)]),files=m.evidence.filter(e=>e.engagement===id&&refs.has(e.id));
   const accepted=r.parts?r.parts.filter(p=>p.state==='accepted'&&files.some(e=>e.id===p.evidence&&e.status==='accepted')).length:files.filter(e=>e.status==='accepted').length;
   const status=accepted>=r.expected?'covered':accepted?'partial':files.length&&files.every(e=>e.status==='rejected')?'rejected':'missing';
