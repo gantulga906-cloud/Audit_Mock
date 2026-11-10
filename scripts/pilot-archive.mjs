@@ -7,7 +7,8 @@ import { signatureMatches, strictRelease } from './pilot-release.mjs';
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const today = () => new Date().toISOString().slice(0, 10);
 const fail = message => { throw new PilotError(409, message); };
-const records = (m, kind, id) => (m.pilotRecords ?? []).filter(r => r.kind === kind && r.values.package === id);
+const approvedPolicies = m => (m.pilotRecords ?? []).filter(r =>
+  r.kind === 'M12-F08' && r.status === 'approved' && r.values.type === 'policy');
 
 function expiry(anchor, years) {
   const target = new Date(anchor + 'T00:00:00Z');
@@ -40,6 +41,24 @@ export function createArchiveStore(db) {
     FROM pilot_archives WHERE engagement_id = ? ORDER BY sealed DESC, rowid DESC`).all(m.engagement)
     .map(r => ({ ...r, summary: JSON.parse(r.summary) }));
   const latest = m => list(m)[0];
+  let ancestors;
+  function effectiveRetention(m, id, policies) {
+    ancestors ??= db.prepare(`
+      WITH RECURSIVE lineage(id, previous) AS (
+        SELECT id, previous FROM pilot_archives WHERE engagement_id = ? AND id = ?
+        UNION
+        SELECT a.id, a.previous FROM pilot_archives a JOIN lineage ON a.id = lineage.previous
+        WHERE a.engagement_id = ?
+      ) SELECT id FROM lineage`);
+    const lineage = new Set(ancestors.all(m.engagement, id, m.engagement).map(row => row.id));
+    let retention;
+    for (const { id: policy, values } of policies) {
+      if (!lineage.has(values.package)) continue;
+      const expires = expiry(values.anchor, Number(values.years));
+      if (!retention || retention.expires < expires) retention = { policy, package: values.package, expires };
+    }
+    return retention;
+  }
   function checkPayload(row) {
     if (!row?.payload) fail('Сэргээх архивын агуулга байхгүй.');
     if (sha(row.payload) !== row.digest) fail('Архивын хэш таарахгүй.');
@@ -93,13 +112,14 @@ export function createArchiveStore(db) {
     }
     if (row.kind === 'M12-F10' && v.scope === 'evidence' && !JSON.parse(archive.summary).files.some(f => f.id === v.evidenceId)) fail('Багцын нотлох баримт сонгоно уу.');
     if (row.kind === 'M12-F11') {
-      const policies = records(m, 'M12-F08', archive.id).filter(r => r.status === 'approved' && r.values.type === 'policy')
-        .sort((a, b) => a.at.localeCompare(b.at));
-      const policy = policies.at(-1);
-      if (!policy || policy.id !== v.policy || expiry(policy.values.anchor, Number(policy.values.years)) > today()) fail('Сонгосон бодлогын хадгалалтын хугацаа дуусаагүй.');
+      const policies = approvedPolicies(m);
+      const policy = policies.filter(r => r.values.package === archive.id).sort((a, b) => a.at.localeCompare(b.at)).at(-1);
+      if (!policy || policy.id !== v.policy) fail('Сонгосон багцын одоогийн баталсан бодлого шаардлагатай.');
+      const retention = effectiveRetention(m, archive.id, policies);
+      if (retention.expires > today()) fail('Холбогдох хамгийн урт хадгалалтын хугацаа дуусаагүй · ' + retention.expires);
       if (activeHolds(m).length) fail('Идэвхтэй хориг байгаа тул устгах боломжгүй.');
       if (m.archiveReopen?.package === archive.id) fail('Нээлттэй агуулгын өөрчлөлтийг дуусгана уу.');
-      row.eligibility = { policy: policy.id, expires: expiry(policy.values.anchor, Number(policy.values.years)), synthetic: !!archive.synthetic };
+      row.eligibility = { policy: policy.id, effectivePolicy: retention.policy, expires: retention.expires, synthetic: !!archive.synthetic };
     }
   }
   function approveRecord(m, row, role) {
@@ -175,6 +195,7 @@ export function createArchiveStore(db) {
     return {
       ...index, summary: metadata, holds: activeHolds(m).length,
       ...(role === 'partner' && { digest, summary: { ...metadata, files: summary.files },
+        retention: effectiveRetention(m, p.id, approvedPolicies(m)),
         access: db.prepare('SELECT actor, at, reason, scope FROM pilot_archive_access WHERE package = ? ORDER BY id DESC LIMIT 25').all(p.id) }),
     };
   }), reopened: m.archiveReopen ?? null, issue: role === 'partner' ? m.pilotIssue ?? null : null });

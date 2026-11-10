@@ -14,7 +14,9 @@ export const PERSONS:Person[]=[
 export const DEMO_DAY='2026-11-06';
 export const STATUS:Record<StageStatus,string>={not_started:'Эхлээгүй',in_progress:'Бэлтгэж буй',waiting:'Хүлээгдэж буй',submitted:'Хяналтад ирсэн',returned:'Засварт буцаасан',reviewed:'Хянагдсан',changed:'Дахин хянуулах'};
 export const CAPACITY={preparer:'R1 · Бэлтгэсэн',reviewer:'R2 · Хянасан 1',partner:'R3 · Хянасан 2',quality:'R4 · Баталгаажуулсан'};
-export type Note={id:string;author:string;text:string;version:number;response:string;cleared:boolean;anchor?:string};
+export type Note={id:string;author:string;text:string;version:number;response:string;cleared:boolean;anchor?:string;
+ responses?:{version:number;workVersion:number;by:string;at:string;text:string}[];
+ decisions?:{result:'cleared'|'returned';workVersion:number;responseVersion:number;response:string;by:string;at:string;reason:string}[]};
 export type Snapshot={version:number;values:Record<string,string>;evidence:string[];at:string;by:string;action:string;template?:Template};
 export type Intake={contact:string;origin:'client'|'firm';period:string;facts:string;active:boolean};
 export type DecisionRecord={version:number;by:string;at:string;decision:Engagement['acceptance'];assessment:string;independence:string;letter:string};

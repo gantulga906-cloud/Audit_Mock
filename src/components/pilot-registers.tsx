@@ -8,6 +8,7 @@ type NamedForm={id:string;title:string};
 type ArchiveItem={
  id:string;previous?:string;issued:string;sealed:string;digest?:string;synthetic:number;disposed:number;holds:number;
  summary:{client:string;fileCount:number;files?:{id:string;name:string;version:number;sha256:string}[]};
+ retention?:{policy:string;package:string;expires:string};
  access?:{actor:PilotRole;at:string;reason:string;scope:string}[];
 };
 export type RegisterResources={
@@ -190,6 +191,7 @@ export default function PilotRegisters({role,resources,evidence,engagementId,act
    {resources.archive.reopened&&<p>Агуулгын өөрчлөлт нээлттэй · {resources.archive.reopened.basis}</p>}
    {resources.archive.packages.map(p=><details className="feature-detail" key={p.id}><summary>{p.summary.client} · {p.sealed.slice(0,16)} · {p.disposed?'Агуулга устгасан':'Түгжсэн'}</summary>
     <p>{p.id} · {p.summary.fileCount} файл · {p.holds} идэвхтэй хориг</p>{p.digest&&<p className="micro">SHA-256 {p.digest}</p>}
+    {p.retention&&<p>Хадгалалтын эцсийн өдөр {p.retention.expires}{p.retention.package!==p.id&&' · Өмнөх багцын бодлого'}</p>}
     {p.access?.map((a,i)=><p key={i}>{roleName[a.actor]} · {a.scope} · {a.reason} · {new Date(a.at).toLocaleString()}</p>)}
    </details>)}
   </div>}

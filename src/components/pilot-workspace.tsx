@@ -355,9 +355,14 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,
   {paper.notes.map(n=><div className="bench-item" key={n.id}>
    <b>v{n.version} · {names[n.author]} · {n.cleared?'Шийдвэрлэсэн':'Нээлттэй'}</b>
    <p>{n.text}</p>{n.response&&<p>{n.response}</p>}
+   {n.decisions?.map((decision,i)=><p key={i}>{decision.result==='cleared'?'Шийдвэрлэсэн':'Дахин буцаасан'} · {names[decision.by]} ·
+    {' '}{decision.at.slice(0,16)} · Ажил v{decision.workVersion} · Хариу {decision.responseVersion?('v'+decision.responseVersion):'хуучин бүртгэл'} · {decision.reason}</p>)}
    {paper.editable&&!n.cleared&&['returned','changed','in_progress'].includes(paper.status)&&<ActionForm run={run} action="respond" extra={{form,note:n.id}} button="Хариу хадгалах"><label>Хариу<input name="response" defaultValue={n.response} required/></label></ActionForm>}
    {paper.status==='submitted'&&!n.cleared&&n.author===({preparer:'nomin',reviewer:'temuulen',partner:'bat'}[role])&&n.response&&
-    <button type="button" className="btn secondary" onClick={()=>void run('clear',{form,note:n.id})}>Тэмдэглэл шийдвэрлэх</button>}
+    <ActionForm run={run} action="clear" extra={{form,note:n.id,version:String(paper.version),responseVersion:String(n.responses?.at(-1)?.version??0)}} button="Хянагчийн шийдвэр хадгалах">
+     <label>Шийдвэр<select name="result"><option value="cleared">Шийдвэрлэсэн</option><option value="returned">Дахин буцаах</option></select></label>
+     <label>Хянасан хамрах хүрээ ба үндэслэл<input name="reason" required/></label>
+    </ActionForm>}
   </div>)}
   {paper.history.length>0&&<details className="feature-detail"><summary>Хувилбарын түүх</summary>{paper.history.map((h,i)=><div className="bench-item" key={i}>
    <b>v{h.version} · {names[h.by]} · {h.action}</b><p>{h.values.execution}</p><p>{h.values.conclusion}</p>

@@ -7,6 +7,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import { createPilot } from '../scripts/pilot-server.mjs';
+import { recordLifecycleEvidence } from '../scripts/pilot-lifecycle-evidence.mjs';
 import { accounts, emptyWorkspace, pilotAction } from '../scripts/pilot-workflow.mjs';
 import { registers } from '../src/lib/pilot-registers.ts';
 
@@ -744,9 +745,10 @@ test('separate accounts hand off one persisted audit engagement and authorize ex
     const note = returned.papers[0].notes[0].id;
     await write(preparer, 'save', { ...work, conclusion: 'Matched 100 to the replacement register.' });
     await write(preparer, 'respond', { form: work.form, note, response: 'Recorded exact evidence and amount.' });
-    await write(preparer, 'submit', work);
+    const responseSubmission=await write(preparer, 'submit', work);
     await write(reviewer, 'review', work, 409);
-    await write(reviewer, 'clear', { form: work.form, note });
+    await write(reviewer, 'clear', { form: work.form, note, version:String(responseSubmission.papers[0].version),
+      responseVersion:'1',reason:'Matched the revised amount and retained supporting evidence' });
     const reviewed = await write(reviewer, 'review', work);
     assert.equal(reviewed.papers[0].reviewedVersion, submission.papers[0].version + 1);
     await write(partner, 'authorize', {}, 409);
@@ -796,7 +798,7 @@ test('separate accounts hand off one persisted audit engagement and authorize ex
 
 test('the extended engagement exercises all 34 registers and seals a scoped recoverable archive', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'audit-registers-'));
-  const database = join(dir, 'test.sqlite');
+  const database = join(dir, 'test.sqlite'), restored = join(dir, 'restored.sqlite');
   let service;
   try {
     service = await start(database);
@@ -967,6 +969,7 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
       assert.equal((await service.fetch('/report', cookies[role])).status, 404);
     }
     await write('reviewer', 'save', { form: '4.4', execution: 'Attempt change', conclusion: 'Blocked' }, 409);
+    await write('partner', 'statements', { statements: 'Attempt locked change', disclosures: 'Blocked' }, 409);
     const retrieval = await approve('M12-F07', { package: archive, accessor: 'preparer', reason: 'Verify archived work', until: '2099-01-01' });
     const exported = await (await service.fetch('/archive-export/' + retrieval, cookies.preparer, {})).json();
     assert.equal(exported.scope, 'full');
@@ -993,16 +996,41 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
     const restore = await approve('M12-F09', { package: archive, type: 'restore', basis: 'Restore into scratch SQLite table' });
     assert.equal(find(restore).verification.ok, true);
     assert.equal(find(restore).verification.files, 2);
-    const amendment = await approve('M12-F04', { package: archive, type: 'administrative', changes: 'Correct archive index label', basis: 'Content unchanged' });
-    assert.equal(current.archive.packages.find(p => p.id === find(amendment).successor).previous, archive);
     const policy = await approve('M12-F08', { package: archive, type: 'policy', reference: 'Synthetic historical policy', anchor: '2000-01-01', years: '1', basis: 'Disposable test copy' });
     const hold = await approve('M12-F08', { package: archive, type: 'hold', reference: 'Synthetic hold', basis: 'Pending inspection' });
+    const amendment = await approve('M12-F04', { package: archive, type: 'administrative', changes: 'Correct archive index label', basis: 'Content unchanged' });
+    const successor = find(amendment).successor;
+    const successorIndex = current.archive.packages.find(p => p.id === successor);
+    assert.equal(successorIndex.previous, archive);
+    assert.equal(successorIndex.holds, 1);
+    assert.deepEqual(successorIndex.retention, { policy, package: archive, expires: '2001-01-01' });
+    const successorGrant = await approve('M12-F07', { package: successor, accessor: 'preparer', reason: 'Verify the successor independently', until: '2099-01-01' });
+    const oldExport = await (await service.fetch('/archive-export/' + retrieval, cookies.preparer, {})).json();
+    const amendedExport = await (await service.fetch('/archive-export/' + successorGrant, cookies.preparer, {})).json();
+    const { changes, ...unchanged } = amendedExport.content;
+    assert.equal(oldExport.digest, exported.digest);
+    assert.deepEqual(oldExport.content, exported.content);
+    assert.deepEqual(unchanged, exported.content);
+    assert.notEqual(amendedExport.digest, oldExport.digest);
+    const { at: changedAt, ...change } = changes;
+    assert.deepEqual(change, { package: archive, id: amendment, type: 'administrative',
+      changes: 'Correct archive index label', basis: 'Content unchanged', approvedBy: 'partner' });
+    assert.ok(Number.isFinite(Date.parse(changedAt)));
+    const index = (await (await service.fetch('', cookies.partner)).json()).archive.packages;
+    for (const [id, reason] of [[archive, 'Verify archived work'], [successor, 'Verify the successor independently']]) {
+      const last = index.find(p => p.id === id).access[0];
+      assert.equal(last.actor, 'preparer');
+      assert.equal(last.scope, 'full');
+      assert.equal(last.reason, reason);
+      assert.ok(Number.isFinite(Date.parse(last.at)));
+    }
     const disposal = await save('reviewer', 'M12-F11', { package: archive, policy, basis: 'Eligible synthetic copy' });
     assert.match((await action('reviewer', 'M12-F11', disposal, 'submit', {}, 409)).error, /хориг/);
     await approve('M12-F08', { package: archive, type: 'release', reference: hold, basis: 'Inspection complete' });
     await action('reviewer', 'M12-F11', disposal, 'submit');
     await action('partner', 'M12-F11', disposal, 'approve', { reason: 'Synthetic copy and policy checked' });
-    const successor = find(amendment).successor;
+    assert.equal(find(disposal).executedAt, undefined);
+    assert.equal(current.archive.packages.find(p => p.id === archive).disposed, 0);
     const lateHold = await approve('M12-F08', { package: successor, type: 'hold', reference: 'Late hold', basis: 'New inspection' });
     await write('partner', 'archive-dispose', { id: disposal }, 409);
     await approve('M12-F08', { package: successor, type: 'release', reference: lateHold, basis: 'Inspection ended' });
@@ -1010,8 +1038,19 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
     assert.equal(current.archive.packages.find(p => p.id === archive).disposed, 1);
     assert.equal((await service.fetch('/archive-export/' + retrieval, cookies.preparer, {})).status, 409);
     assert.equal((await service.fetch('/evidence/' + evidence, cookies.reviewer)).status, 403);
-    await approve('M12-F04', { package: successor, type: 'substantive', changes: 'Correct final line', basis: 'New financial statement figures' });
-    assert.equal(current.archive.reopened.package, successor);
+    const longer = await approve('M12-F08', { package: successor, type: 'policy', reference: 'Synthetic longer authority',
+      anchor: '2024-02-29', years: '76', basis: 'Retain this report and its successors' });
+    const secondAmendment = await approve('M12-F04', { package: successor, type: 'administrative', changes: 'Add index description', basis: 'Content unchanged' });
+    const descendant = find(secondAmendment).successor;
+    const shorter = await approve('M12-F08', { package: descendant, type: 'policy', reference: 'Synthetic local schedule',
+      anchor: '2000-01-01', years: '1', basis: 'Other authority has longer retention' });
+    assert.deepEqual(current.archive.packages.find(p => p.id === descendant).retention,
+      { policy: longer, package: successor, expires: '2100-02-28' });
+    const earlyDisposal = await save('reviewer', 'M12-F11', { package: descendant, policy: shorter, basis: 'Shorter schedule elapsed' });
+    assert.match((await action('reviewer', 'M12-F11', earlyDisposal, 'submit', {}, 409)).error, /2100-02-28/);
+    await write('partner', 'archive-dispose', { id: earlyDisposal }, 409);
+    await approve('M12-F04', { package: descendant, type: 'substantive', changes: 'Correct final line', basis: 'New financial statement figures' });
+    assert.equal(current.archive.reopened.package, descendant);
     assert.equal((await service.fetch('/evidence/' + evidence, cookies.reviewer)).status, 200);
     await write('partner', 'statements', { statements: 'Synthetic statements', disclosures: 'Synthetic disclosures', lines: 'PPE,130' });
     assert.equal(current.authorized.current, false);
@@ -1093,17 +1132,30 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
     assert.ok(['3.1.2','3.1.4'].every(form=>paper(form).status==='changed'&&paper(form).pendingPlanning));
     assert.equal(find(blocked).stale,false);
     assert.ok(find(programme).history.some(h=>h.status==='approved'&&h.programmeBasis?.materiality.overall===20));
+    const { backup } = await import('node:sqlite');
+    const source = new DatabaseSync(database, { readOnly: true });
+    try { await backup(source, restored); } finally { source.close(); }
     await service.close();
     service = null;
-    service = await start(database);
+    service = await start(restored);
     const reloaded = await signIn('partner');
     assert.equal(reloaded.archive.packages.find(p => p.id === archive).disposed, 1);
+    assert.deepEqual(reloaded.archive.packages.find(p => p.id === descendant).retention,
+      { policy: longer, package: successor, expires: '2100-02-28' });
     assert.equal(reloaded.registers.find(r => r.id === opinion).values.opinion, 'qualified');
     assert.equal(reloaded.registers.find(r => r.id === restore).verification.restored, true);
     assert.ok(reloaded.papers.find(p=>p.form==='3.1.4').pendingPlanning);
+    await signIn('preparer');
+    const restoredResponse = await service.fetch('/archive-export/' + successorGrant, cookies.preparer, {});
+    assert.equal(restoredResponse.status, 200);
+    const restoredExport = await restoredResponse.json();
+    assert.equal(restoredExport.id, successor);
+    assert.equal(restoredExport.digest, amendedExport.digest);
+    assert.deepEqual(restoredExport.content, amendedExport.content);
+    assert.equal((await service.fetch('/archive-export/' + retrieval, cookies.preparer, {})).status, 409);
   } finally {
     if (service) await service.close();
-    for (const suffix of ['', '-shm', '-wal']) await rm(database + suffix, { force: true });
+    for (const file of [database, restored]) for (const suffix of ['', '-shm', '-wal']) await rm(file + suffix, { force: true });
     await rmdir(dir);
   }
 });
@@ -1700,7 +1752,7 @@ test('approved payroll, tax and financing editions calculate exact outputs and r
     await rmdir(dir);
   }
 });
-test('technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle', async () => {
+test('technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle', async t => {
   const dir=await mkdtemp(join(tmpdir(),'audit-completion-cycle-'));
   const database=join(dir,'pilot.sqlite');
   let service;
@@ -1714,6 +1766,7 @@ test('technical changes, posting verification, exact-package EQR and independent
     const engagement=(await write('reviewer','firm','create',{...create,reportDate:priorDate,synthetic:'yes'})).selected;
     const run=(role,action,fields,status=200)=>write(role,engagement,action,fields,status);
     const current=role=>view(role,engagement);
+    const work=(state,form)=>state.papers.find(p=>p.form===form);
     const auditRegister=async(kind,values,owner='reviewer',approver='partner',id)=>{
       const fields=Object.fromEntries(Object.entries(values).map(([k,v])=>['field.'+k,v]));
       const draft=await run(owner,'register',{kind,id,operation:'save',...fields});
@@ -1750,6 +1803,7 @@ test('technical changes, posting verification, exact-package EQR and independent
       return run(reviewer,'review',{form});
     };
     await paper('1.3',{benchmark:'10000',percentage:'1',performance:'50',trivial:'5',benchmarkSource:'Approved statement amount'});
+    await paper('2.6',{reliance:'none'});
     let state=await current('reviewer');
     await run('reviewer','resolve-impact',{id:state.impacts[0].id,reason:'Assessed threshold and planned work'});
     const ownerFacts={name:'Related owner',relation:'owner',share:'80',effective:'2025-01-01',source:'Registry version',basis:'Reviewed owner'};
@@ -1765,13 +1819,78 @@ test('technical changes, posting verification, exact-package EQR and independent
     const estimate={type:'estimate',paper:'3.1.2',sourceRef:'EST-1',criterion:'Auditor range under reviewed methodology',assumptions:'Reviewed lives and market support',
       recorded:'100',low:'85',high:'110',evidence:original,work:'Recalculated supported range',effect:'Verified disclosures',conclusion:'Within range',result:'resolved'};
     await auditRegister('M07-F10',estimate);
-    const request=(await run('preparer','request',{form:'3.1.2',title:'PPE estimate original',due:priorDate})).requests[0].id;
-    await run('preparer','upload',{request,source:'Asset register owner',...file('fixed-assets.csv','Asset file original')});
+    const ppe={form:'3.1.2'};
+    const request=(await run('preparer','request',{...ppe,title:'PPE estimate original',due:priorDate})).requests[0].id;
+    const initialPpe=(await run('preparer','upload',{request,source:'Asset register owner',...file('fixed-assets.csv','Asset file original')}))
+      .evidence.find(e=>e.name==='fixed-assets.csv').id;
     await run('preparer','accept',{request});
-    await paper('3.1.2');
+    await run('preparer','save',{...ppe,execution:'Compared cost and useful life',conclusion:'Estimate appears supported'});
+    const firstPpeSubmission=work(await run('preparer','submit',ppe),ppe.form);
+    assert.equal(firstPpeSubmission.status,'submitted');
+    assert.notEqual(firstPpeSubmission.reviewedVersion,firstPpeSubmission.version);
+    assert.ok(firstPpeSubmission.evidence.includes(initialPpe));
+    const returnReason='Obtain the authorized useful-life schedule and explain the estimate';
+    const returnedPpe=work(await run('reviewer','return',{...ppe,reason:returnReason}),ppe.form);
+    const note=returnedPpe.notes[0];
+    assert.deepEqual([returnedPpe.status,note.author,note.version,note.anchor,note.text],
+      ['returned',accounts.reviewer,firstPpeSubmission.version,'conclusion',returnReason]);
+    await run('reviewer','request-reopen',{request,reason:'Replace unsupported useful-life source'});
+    await run('preparer','submit',ppe,409);
+    const schedule='asset,cost,usefulLife\nPPE-A,100,5\n';
+    await run('preparer','upload',{request,source:'Authorized replacement register',...file('fixed-assets-revised.csv',schedule)});
+    const acceptedPpe=await run('preparer','accept',{request});
+    const replacement=acceptedPpe.evidence.find(e=>e.name==='fixed-assets-revised.csv');
+    assert.equal(replacement.replaces,initialPpe);
+    const retrieved=await service.fetch(scoped('/evidence/'+replacement.id,engagement),cookies.reviewer);
+    assert.equal(retrieved.status,200);
+    const reviewedBytes=await retrieved.text();
+    assert.equal(reviewedBytes,schedule);
+    const revisedConclusion='Authorized useful-life schedule supports the five-year life';
+    const response='Attached the approved replacement schedule and reconciled PPE-A to the recorded cost';
+    await run('preparer','save',{...ppe,execution:'Compared cost and the authorized useful-life schedule',conclusion:revisedConclusion});
+    await run('preparer','respond',{...ppe,note:note.id,response});
+    const resubmittedPpe=work(await run('preparer','submit',ppe),ppe.form);
+    assert.ok(resubmittedPpe.version>firstPpeSubmission.version);
+    assert.ok(resubmittedPpe.evidence.includes(replacement.id));
+    assert.ok(!resubmittedPpe.evidence.includes(initialPpe));
+    assert.equal(resubmittedPpe.notes[0].cleared,false);
+    await run('preparer','clear',{...ppe,note:note.id},403);
+    await run('reviewer','review',ppe,409);
+    const noteBasis={...ppe,note:note.id,version:String(resubmittedPpe.version)};
+    const returnedResponse=work(await run('reviewer','clear',{...noteBasis,responseVersion:'1',result:'returned',
+      reason:'Identify the basis for the revised life in the reviewer response'}),ppe.form);
+    assert.equal(returnedResponse.status,'returned');
+    assert.equal(returnedResponse.notes[0].cleared,false);
+    await run('preparer','respond',{...ppe,note:note.id,response});
+    await run('preparer','submit',ppe);
+    const reason='Verified the work revision and exact replacement schedule';
+    await run('reviewer','clear',{...noteBasis,responseVersion:'1',reason},409);
+    const clearedPpe=work(await run('reviewer','clear',{...noteBasis,responseVersion:'2',reason}),ppe.form);
+    assert.equal(clearedPpe.status,'submitted');
+    assert.deepEqual(clearedPpe.notes[0].decisions.map(({result,by,workVersion,responseVersion})=>[result,by,workVersion,responseVersion]),
+      [['returned',accounts.reviewer,resubmittedPpe.version,1],['cleared',accounts.reviewer,resubmittedPpe.version,2]]);
+    assert.equal(clearedPpe.notes[0].decisions[1].reason,reason);
+    assert.ok(Number.isFinite(Date.parse(clearedPpe.notes[0].decisions[1].at)));
+    const reviewedPpe=work(await run('reviewer','review',ppe),ppe.form);
+    assert.deepEqual([reviewedPpe.status,reviewedPpe.reviewedVersion,reviewedPpe.values.conclusion,
+      reviewedPpe.notes[0].response,reviewedPpe.notes[0].cleared],
+    ['reviewed',resubmittedPpe.version,revisedConclusion,response,true]);
+    assert.ok(reviewedPpe.history.some(entry=>entry.version===firstPpeSubmission.version&&entry.by===accounts.preparer&&
+      entry.values.conclusion===firstPpeSubmission.values.conclusion&&entry.evidence.includes(initialPpe)));
     await paper('3.1.13');
-    state=await paper('3.2.4');
+    const relatedPaper={form:'3.2.4'};
+    const assigned=work(await run('partner','work-assign',{...relatedPaper,owner:'preparer',reviewer:'partner',
+      reason:'Route the significant ownership disclosure directly to the engagement partner'}),relatedPaper.form);
+    assert.equal(assigned.assignmentHistory[0].reviewer,accounts.partner);
+    await run('preparer','save',{...relatedPaper,execution:'Traced ownership evidence',conclusion:'Identified the disclosure consequence'});
+    const routed=work(await run('preparer','submit',relatedPaper),relatedPaper.form);
+    assert.equal(work(await current('reviewer'),relatedPaper.form).reviewable,false);
+    assert.equal(work(await current('partner'),relatedPaper.form).reviewable,true);
+    await run('reviewer','review',relatedPaper,403);
+    state=await run('partner','review',relatedPaper);
     const earlier=state.papers.find(w=>w.form==='3.2.4');
+    assert.deepEqual([earlier.owner,earlier.reviewer,routed.submittedBy,earlier.reviewedVersion],
+      [accounts.preparer,accounts.partner,accounts.preparer,routed.version]);
     assert.ok(state.gaps.some(g=>g.includes('M07-F10')));
     const consultation={form:'3.2.4',title:'Ownership disclosure consultation',
       scope:'Partner must consider the approved ownership revision, relationship and applicable disclosure restriction',
@@ -1785,8 +1904,9 @@ test('technical changes, posting verification, exact-package EQR and independent
     assert.ok(state.gaps.some(g=>g.startsWith('4.4 · Зөвлөлдөх')));
     await run('reviewer','save',{form:'4.4',execution:'Reviewed aggregate completion',conclusion:'Waiting for consultation'});
     await run('reviewer','submit',{form:'4.4'},409);
-    await reviewConsultation(1,'resolved','The partner cannot override the documented prohibition',409);
-    await reviewConsultation(1,'returned','Obtain evidence that the restriction is actually addressed');
+    const deniedProhibition=await reviewConsultation(1,'resolved','The partner cannot override the documented prohibition',409);
+    assert.match(deniedProhibition.error,/хориг/);
+    const returnedConsultation=(await reviewConsultation(1,'returned','Obtain evidence that the restriction is actually addressed')).completion.consultations[0];
     await run('reviewer','completion-consultation-record',{...consultation,id:consultationId,restriction:'clear'},409);
     const recommendation={...consultation,id:consultationId,restriction:'clear',advice:further};
     await run('reviewer','completion-consultation-record',recommendation);
@@ -1794,6 +1914,7 @@ test('technical changes, posting verification, exact-package EQR and independent
     state=await reviewConsultation(2,'resolved','Revised the related-party note and checked the disclosed transaction against the advice');
     assert.equal(state.completion.consultations[0].scope,consultation.scope);
     assert.equal(state.completion.consultations[0].current,true);
+    const firstConsultationReview=state.completion.consultations[0];
     await auditRegister('M03-F04',{...ownerFacts,share:'70',basis:'Confirmed change in ownership'},'reviewer','partner',party);
     state=await current('reviewer');
     assert.equal(state.papers.find(w=>w.form==='3.2.4').status,'changed');
@@ -1802,13 +1923,16 @@ test('technical changes, posting verification, exact-package EQR and independent
     assert.ok(state.papers.find(w=>w.form==='3.2.4').history.some(h=>h.version===earlier.version&&h.values['pilot.technical']));
     assert.equal(state.completion.consultations[0].current,false);
     assert.equal(state.completion.consultations[0].decision.result,'resolved');
+    const affected=work(state,relatedPaper.form), staleConsultation=state.completion.consultations[0];
+    assert.ok(affected.history.some(entry=>entry.version===earlier.reviewedVersion&&entry.by===accounts.partner&&
+      Boolean(Date.parse(entry.at))&&entry.values.conclusion===earlier.values.conclusion));
     await run('preparer','submit',{form:'3.2.4'},409);
     await auditRegister('M07-F10',{...related,conclusion:'Revised related-party note reflects confirmed ownership'},'reviewer','partner',relatedId);
-    await paper('3.2.4');
+    const updatedRelated=work(await paper('3.2.4',{},'preparer','partner'),relatedPaper.form);
     state=await run('reviewer','completion-consultation-record',{...recommendation,scope:'Reassessed the same advice against the revised ownership and disclosure'});
     assert.ok(state.completion.consultations[0].history.some(row=>row.version===2&&row.decision.result==='resolved'));
     await reviewConsultation(2,'resolved','Attempted to clear against the old signed basis',409);
-    await reviewConsultation(3,'resolved','Checked the actual revised disclosure and evidence against the advice');
+    const updatedConsultation=(await reviewConsultation(3,'resolved','Checked the actual revised disclosure and evidence against the advice')).completion.consultations[0];
     await auditRegister('M07-F10',{...component,evidence:further,result:'resolved',effect:'Specified revenue work completed; other group areas retain their own conclusions',
       conclusion:'Received and checked requested limited scope'},'reviewer','partner',componentId);
     await paper('3.1.13');
@@ -1870,7 +1994,8 @@ test('technical changes, posting verification, exact-package EQR and independent
     await auditRegister('M10-F12',{...representation,evidence:await evidence('representation-v2','Actual new signed letter'),assessment:'New version explicitly verified'},'reviewer','partner',rep);
     await run('reviewer','completion-evaluate',{note:'Reassessed remaining 40 against the updated statement version'});
     await run('partner','completion-evaluation-approve',{version:'3',reason:'Approved the updated evaluation'});
-    await paper('4.4',{},'reviewer','partner');
+    const partnerCompletion=work(await paper('4.4',{},'reviewer','partner'),'4.4');
+    assert.ok(partnerCompletion.history.some(entry=>entry.version===partnerCompletion.version&&entry.by===accounts.partner));
     await paper('4.1.A1',{},'reviewer','partner');
 
     const independent=async role=>{
@@ -1883,18 +2008,25 @@ test('technical changes, posting verification, exact-package EQR and independent
     state=await run('partner','quality-policy',{mode:'unresolved',reference:qualityReference,basis:'Mandatory trigger still under assessment'});
     assert.equal(state.oversight.quality.current,false);
     await run('partner','authorize',{},409);
-    state=await run('partner','quality-policy',{mode:'not-required',reference:qualityReference,basis:'Initial assessment finds no mandatory trigger'});
-    assert.equal(state.oversight.quality.current,false);
-    assert.deepEqual(state.oversight.quality.approvals,[]);
-    assert.ok(!state.gaps.some(gap=>gap.startsWith('4.6')));
+    const noEqr=await run('partner','quality-policy',{mode:'not-required',reference:qualityReference,basis:'Initial assessment finds no mandatory trigger'});
+    assert.equal(noEqr.oversight.quality.current,false);
+    assert.deepEqual(noEqr.oversight.quality.approvals,[]);
+    assert.ok(!noEqr.gaps.some(gap=>gap.startsWith('4.6')));
+    const noEqrAuthorization=(await run('partner','authorize',{})).authorized;
+    assert.equal(noEqrAuthorization.current,true);
     const qualityPolicy={mode:'required',reference:qualityReference,basis:'Confirmed trigger requires formal review'};
+    let ineligibleEqr;
     for (const eligibilityStatus of ['unresolved','ineligible']) {
       state=await run('partner','quality-policy',{...qualityPolicy,reviewer:'Previously involved reviewer',eligibilityStatus,
         eligibility:eligibilityStatus==='ineligible'?'Prior engagement involvement violates the policy':'Assessment of prior involvement pending'});
       assert.equal(state.oversight.quality.policy.eligibilityStatus,eligibilityStatus);
       assert.equal(state.oversight.quality.current,false);
-      assert.equal((await service.fetch(scoped('/oversight',engagement),quality)).status,404);
-      await run('partner','authorize',{},409);
+      assert.equal(state.authorized.current,false);
+      const access=(await service.fetch(scoped('/oversight',engagement),quality)).status;
+      assert.equal(access,404);
+      const denial=await run('partner','authorize',{},409);
+      assert.match(denial.error,/4\.6/);
+      if (eligibilityStatus==='ineligible') ineligibleEqr={policy:state.oversight.quality.policy,access,denial};
     }
     state=await run('partner','quality-policy',{...qualityPolicy,reviewer:'Independent Reviewer',eligibilityStatus:'eligible',
       eligibility:'Separate credentials, authority, competence and sufficient time checked'});
@@ -1908,24 +2040,54 @@ test('technical changes, posting verification, exact-package EQR and independent
     await run('partner','authorize',{},409);
     const qualityState=async()=> (await (await service.fetch(scoped('/oversight',engagement),quality)).json());
     const qualityAction=(action,basis,reason)=>service.fetch(scoped('/oversight/action',engagement),quality,{action,basis,reason});
+    await run('partner','report-date',{date:priorDate});
+    await paper('4.1.A1',{conclusion:'Reviewed the exact earlier-date draft'},'reviewer','partner');
+    const lateMaterial=(await qualityState()).material;
+    assert.deepEqual(lateMaterial.gaps,[]);
+    assert.equal(lateMaterial.reportDate,priorDate);
+    const lateApproval=await qualityAction('approve',lateMaterial.basis,'Try to approve after the report date');
+    assert.equal(lateApproval.status,409);
+    assert.match((await lateApproval.json()).error,/тайлангийн өдөр/);
+    await run('partner','report-date',{date:today});
+    await paper('4.1.A1',{},'reviewer','partner');
     let q=await qualityState();
     assert.deepEqual(q.material.gaps,[]);
     assert.equal(q.material.consultations[0].decision.result,'resolved');
+    const prepared=q.material;
+    const planned=['1.3','2.6','3.1.2','3.1.13','3.2.4','4.4','4.1.A1'].sort();
+    assert.deepEqual(prepared.papers.map(p=>p.form).sort(),planned);
+    assert.ok(prepared.papers.every(p=>p.status==='reviewed'&&p.version===p.reviewedVersion&&p.values.conclusion));
+    const partnerPreparation=await current('partner');
+    const preparationGaps=partnerPreparation.gaps.filter(gap=>!gap.startsWith('4.6'));
+    assert.deepEqual(partnerPreparation.papers.map(p=>p.form).sort(),planned);
+    assert.deepEqual(preparationGaps,[]);
     assert.equal((await qualityAction('return',q.material.basis,'Clarify workpaper conclusion')).status,200);
     await run('partner','quality-policy',{mode:'not-required',reference:qualityReference,basis:'Attempted override of unresolved EQR concern'},409);
     q=await qualityState();
-    assert.equal((await qualityAction('approve',q.material.basis,'Without team response')).status,409);
+    const openEqrDenial=(await qualityAction('approve',q.material.basis,'Without team response')).status;
+    assert.equal(openEqrDenial,409);
+    const blockedRelease=await run('partner','authorize',{},409);
+    assert.match(blockedRelease.error,/4\.6/);
     await run('partner','quality-response',{id:q.quality.notes[0].id,reason:'Initial exact response'});
     const oldBasis=q.material.basis;
     await paper('4.1.A1',{conclusion:'Revised exact report after feedback'},'reviewer','partner');
     q=await qualityState();
     assert.notEqual(q.material.basis,oldBasis);
-    assert.equal((await qualityAction('approve',oldBasis,'Stale quality approval')).status,409);
+    const staleEqrDenial=(await qualityAction('approve',oldBasis,'Stale quality approval')).status;
+    assert.equal(staleEqrDenial,409);
     assert.equal((await qualityAction('approve',q.material.basis,'Old response for new draft')).status,409);
     await run('partner','quality-response',{id:q.quality.notes[0].id,reason:'Checked the exact revised report'});
-    assert.equal((await qualityAction('approve',q.material.basis,'Reviewed significant judgments and exact draft')).status,200);
+    const completedQuality=await qualityAction('approve',q.material.basis,'Reviewed significant judgments and exact draft');
+    assert.equal(completedQuality.status,200);
+    const qualityRecord=(await completedQuality.json()).quality;
+    const eqrApproval=qualityRecord.approvals.at(-1), clearedEqrNote=qualityRecord.notes[0];
+    assert.deepEqual([eqrApproval.by,eqrApproval.basis,eqrApproval.artifact,clearedEqrNote.cleared.basis],
+      ['quality',q.material.basis,q.material.artifact.sha256,q.material.basis]);
+    assert.ok(eqrApproval.at.slice(0,10)<=q.material.reportDate);
     state=await run('partner','authorize',{});
     assert.equal(state.authorized.current,true);
+    assert.equal(state.authorized.artifactSha256,eqrApproval.artifact);
+    const exactAuthorization=state.authorized;
     await run('partner','issue',{reference:'Before signature'},409);
     state=await run('partner','report-sign',{});
     assert.equal(state.release.signature.artifact,state.authorized.artifactSha256);
@@ -1961,7 +2123,9 @@ test('technical changes, posting verification, exact-package EQR and independent
     assert.equal(payload.deliveries[0].state,'received');
     assert.equal(payload.authorization.completion.evaluation.inputs.gross,4000);
     assert.equal(payload.authorization.completion.consultations[0].current,true);
+    assert.deepEqual(payload.authorization.reviewNotes.find(row=>row.form===ppe.form).notes[0].decisions,clearedPpe.notes[0].decisions);
     assert.equal(payload.authorization.quality.current,true);
+    assert.equal(payload.authorization.by,accounts.partner);
     assert.equal((await accept('0'.repeat(64))).status,409);
     assert.equal((await accept(archive.digest)).status,200);
     await service.close();
@@ -1970,6 +2134,69 @@ test('technical changes, posting verification, exact-package EQR and independent
     state=await reloaded.view('partner',engagement);
     assert.equal(state.oversight.custody[0].accepted.digest,archive.digest);
     assert.equal(state.authorized.current,true);
+
+    const proof=(id,actor,action,expected,actual,versions)=>({id,engagement,actor,action,expected,actual,versions});
+    const returnedWork=['returned','submitted','reviewed',true];
+    const actualReturnedWork=[returnedPpe.status,clearedPpe.status,reviewedPpe.status,reviewedPpe.notes[0].cleared];
+    const staleWork=['changed',false,'reviewed',true];
+    const actualStaleWork=[affected.status,staleConsultation.current,updatedRelated.status,updatedConsultation.current];
+    const reviewVersions={first:firstPpeSubmission.version,final:reviewedPpe.reviewedVersion,note:note.id,evidence:replacement.id};
+    const relatedVersions={first:earlier.reviewedVersion,replacement:updatedRelated.reviewedVersion,
+      previousConsultation:firstConsultationReview.version,newConsultation:updatedConsultation.version};
+    recordLifecycleEvidence(t,{lifecycle:'A25',engagement,steps:[
+      proof('A25-P1-W1','partner','GET /api/pilot',
+        [planned,0,true],[partnerPreparation.papers.map(p=>p.form).sort(),preparationGaps.length,
+          partnerPreparation.papers.every(p=>p.version===p.reviewedVersion&&p.values.conclusion)],
+        Object.fromEntries(partnerPreparation.papers.map(p=>[p.form,p.reviewedVersion]))),
+      proof('A25-P1-W2','reviewer and partner','completion-consultation-record → completion-consultation-review',
+        [consultationId,updatedRelated.version,'resolved',further],
+        [prepared.consultations[0].id,prepared.consultations[0].paper,prepared.consultations[0].decision.result,prepared.consultations[0].advice.id],
+        {consultation:updatedConsultation.version,paper:updatedRelated.reviewedVersion,advice:further}),
+      proof('A25-P1-W3','preparer and partner','work-assign → submit → review',
+        [accounts.preparer,accounts.partner,routed.version],
+        [routed.submittedBy,assigned.assignmentHistory[0].reviewer,earlier.reviewedVersion],
+        {work:earlier.id,submission:routed.version,assignment:assigned.assignmentHistory[0].at}),
+      proof('A25-P2-W1','preparer and reviewer','return → request-reopen → upload → respond → submit → clear → review',
+        [revisedConclusion,response,createHash('sha256').update(schedule).digest('hex'),true],
+        [reviewedPpe.values.conclusion,reviewedPpe.notes[0].response,createHash('sha256').update(reviewedBytes).digest('hex'),reviewedPpe.notes[0].cleared],reviewVersions),
+      proof('A25-P2-W2','reviewer and partner','completion-consultation-review',
+        [true,'returned','resolved'],[/хориг/.test(deniedProhibition.error),returnedConsultation.decision.result,firstConsultationReview.decision.result],
+        {id:consultationId,returned:returnedConsultation.version,resolved:firstConsultationReview.version,advice:further}),
+      proof('A25-P2-W3','reviewer and partner','register approval → submit → review → completion-consultation-review',
+        staleWork,actualStaleWork,relatedVersions),
+      proof('A25-P3-W1','partner','review → authorize',
+        ['reviewed',accounts.partner,eqrApproval.artifact],
+        [partnerCompletion.status,payload.authorization.by,exactAuthorization.artifactSha256],
+        {completion:partnerCompletion.reviewedVersion,authorization:exactAuthorization.at,artifact:exactAuthorization.artifactSha256}),
+      proof('A25-P3-W2','quality','POST /api/pilot/oversight/action approve',
+        ['quality',q.material.basis,q.material.artifact.sha256,true],
+        [eqrApproval.by,eqrApproval.basis,eqrApproval.artifact,eqrApproval.at.slice(0,10)<=q.material.reportDate],
+        {basis:eqrApproval.basis,approvedAt:eqrApproval.at,reportDate:q.material.reportDate,artifact:eqrApproval.artifact}),
+      proof('A25-P3-W3','quality and partner','return → authorize denied → approve → authorize',
+        [true,q.material.basis,true],[/4\.6/.test(blockedRelease.error),clearedEqrNote.cleared.basis,state.authorized.current],
+        {note:clearedEqrNote.id,clearance:clearedEqrNote.cleared.at,authorization:state.authorized.at}),
+    ],branches:[
+      proof('review-return-and-resubmit','preparer and reviewer','return → respond → submit → clear → review',
+        returnedWork,actualReturnedWork,reviewVersions),
+      proof('unresolved-professional-difference','partner','completion-consultation-review',
+        [true,'prohibited','returned'],[/хориг/.test(deniedProhibition.error),returnedConsultation.restriction,returnedConsultation.decision.result],
+        {id:consultationId,version:returnedConsultation.version}),
+      proof('material-change-stales-review','reviewer and partner','approve ownership change → reassess',
+        staleWork,actualStaleWork,relatedVersions),
+      proof('eqr-not-required','partner','quality-policy → authorize',
+        ['not-required',false,0,false,true],[noEqr.oversight.quality.policy.mode,noEqr.oversight.quality.current,
+          noEqr.oversight.quality.approvals.length,noEqr.gaps.some(gap=>gap.startsWith('4.6')),noEqrAuthorization.current],
+        {policy:noEqr.oversight.quality.policy.version,authorization:noEqrAuthorization.at}),
+      proof('eqr-ineligible','partner and quality','quality-policy → GET /api/pilot/oversight → authorize',
+        ['ineligible',404,true],[ineligibleEqr.policy.eligibilityStatus,ineligibleEqr.access,/4\.6/.test(ineligibleEqr.denial.error)],
+        {policy:ineligibleEqr.policy.version}),
+      proof('eqr-stale-or-open-note','quality and partner','approve denied → quality-response → stale approve denied',
+        [409,409,true],[openEqrDenial,staleEqrDenial,/4\.6/.test(blockedRelease.error)],
+        {note:clearedEqrNote.id,initial:oldBasis,final:eqrApproval.basis}),
+      proof('eqr-after-report-date','quality','POST /api/pilot/oversight/action approve',
+        [priorDate,0,409],[lateMaterial.reportDate,lateMaterial.gaps.length,lateApproval.status],
+        {basis:lateMaterial.basis,reportDate:lateMaterial.reportDate}),
+    ]});
   } finally {
     if(service)await service.close();
     for(const suffix of ['', '-shm', '-wal'])await rm(database+suffix,{force:true});

@@ -44,7 +44,7 @@ Payroll, tax, loans, leases, FX, equity and investment workpapers also ask for a
 
 The local setup can also create distinct **Quality** and **Custodian** credentials. The engagement team records its quality policy, sends back exact-version responses, and offers locked packages to custody. For the controlled completion route, attach independently accepted management authorization, link the signed representations, authorize the exact report, sign it locally and record the recipient's acknowledgment through the sandbox link. The custodian verifies and accepts the exact downloaded manifest.
 
-Run `npm run verify:release -- --build` to capture executed tests, source links, build identity and open release requirements in `.audit-pilot/source-verification.json`. Add `--strict` to enforce the release gate.
+Run `npm run verify:release -- --build` to capture executed tests, source links, build identity and open release requirements in `.audit-pilot/source-verification.json`. Add `--strict` to require independently accepted source contracts and a passing connected journey for each applicable lifecycle.
 
 Open **Үйлчлүүлэгч ба аудитын хүсэлт** in the portfolio to record an enquiry, search clients or maintain contact history. The reviewer converts a forwarded enquiry after confirming the current client profile, contact and reporting period. The partner approves the signed engagement letter revision before activating a converted engagement.
 

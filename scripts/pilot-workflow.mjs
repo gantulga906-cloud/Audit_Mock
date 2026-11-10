@@ -168,7 +168,8 @@ export function qualityBasis(m) {
   const e=m.engagements[0];
   const papers=shownForms(m).map(form=>{
     const paper=m.work[workKey(m.engagement,form)];
-    return [form,paper.version,paper.reviewedVersion,paper.status,paper.evidence];
+    return [form,paper.version,paper.reviewedVersion,paper.status,paper.evidence,
+      ...(paper.notes.some(note=>note.decisions?.length)?[paper.notes]:[])];
   });
   const {report:_,...pack}=currentPackage(reportWorkspace(m),e.id);
   return sha256(JSON.stringify([e.reportDate,pack,renderReport(m).sha256,registerStamp(m),completionRef(m),papers]));
@@ -177,8 +178,8 @@ export function qualityBasis(m) {
 export function qualityMaterial(m) {
   const engagement=m.engagements[0], forms=shownForms(m);
   const papers=forms.map(form=>{
-    const {title,version,reviewedVersion,status,values,evidence}=m.work[workKey(m.engagement,form)];
-    return {form,title,version,reviewedVersion,status,values,evidence};
+    const {title,version,reviewedVersion,status,values,evidence,notes}=m.work[workKey(m.engagement,form)];
+    return {form,title,version,reviewedVersion,status,values,evidence,notes};
   });
   const evidence=[...new Set([...papers.flatMap(p=>p.evidence),...registerEvidence(m),...completionEvidence(m),...areaEvidence(m,fieldworkForms(m))])];
   return {basis:qualityBasis(m),gaps:pilotGaps(m,false),artifact:renderReport(m),papers,evidence,
@@ -557,6 +558,8 @@ export function pilotAction(m, role, action, data, files) {
       ...(native.length && { nativePapers: native.map(w => ({
         id: w.id, version: w.version, reviewedVersion: w.reviewedVersion, values: { ...w.values }, evidence: [...w.evidence],
       })) }),
+      reviewNotes:shownForms(m).map(form=>m.work[workKey(m.engagement,form)]).filter(w=>w.notes.length)
+        .map(({form,version,notes})=>({form,version,notes})),
       ...(m.pilotTerms && { terms: m.pilotTerms }),
       ...(population && { population }),
       ...(populationHistory.length && {populationHistory}),
@@ -706,6 +709,9 @@ export function pilotAction(m, role, action, data, files) {
     }
     case 'submit':
       requireActor(canEdit(m, paper));
+      if (paper.notes.some(note=>!note.cleared&&note.responses?.length&&note.responses.at(-1).workVersion!==paper.version)) {
+        throw new PilotError(409,'Хяналтын тэмдэглэлийн хариуг одоогийн ажлын хувилбарт шинэчилнэ үү.');
+      }
       if (paper.form==='4.4'&&completionGaps(m).length) throw new PilotError(409,completionGaps(m).join(' · '));
       if (fieldworkGap(m,paper.form)) throw new PilotError(409,fieldworkGap(m,paper.form));
       if (technicalRef(m,paper.form)==='') throw new PilotError(409,'Тусгай горимын одоогийн бүртгэл хүлээгдэж байна.');
@@ -748,10 +754,26 @@ export function pilotAction(m, role, action, data, files) {
       if (!note) throw new PilotError(404, 'Нээлттэй тэмдэглэл олдсонгүй.');
       if (action === 'respond') {
         requireActor(canEdit(m, paper) && ['returned', 'changed', 'in_progress'].includes(paper.status));
-        respondNote(m, paper.id, note.id, input(data, 'response'));
+        const text=input(data,'response');
+        respondNote(m, paper.id, note.id, text);
+        const responses=note.responses??=[];
+        responses.push({version:responses.length+1,workVersion:paper.version,by:m.person,at:new Date().toISOString(),text});
       } else {
         requireActor(note.author === m.person && paper.status === 'submitted');
-        clearNote(m, paper.id, note.id);
+        const responseVersion=note.responses?.at(-1)?.version??0;
+        const result=data.result??'cleared';
+        if (!['cleared','returned'].includes(result)) throw new PilotError(400,'Хяналтын шийдвэрийг сонгоно уу.');
+        if (!note.response.trim()||paper.submittedVersion!==paper.version||data.version!==String(paper.version)||
+            data.responseVersion!==String(responseVersion)) throw new PilotError(409,'Илгээсэн ажил, хариуны одоогийн хувилбарыг сонгоно уу.');
+        const reason=input(data,'reason');
+        if (result==='cleared') clearNote(m,paper.id,note.id);
+        else {
+          requireActor(canReviewWork(m,paper));
+          paper.status='returned';
+          recordEvent(m,paper.form+' · Тэмдэглэлийн хариуг дахин засварт буцаав',paper.form);
+        }
+        (note.decisions??=[]).push({result,workVersion:paper.version,responseVersion,response:note.response,
+          by:m.person,at:new Date().toISOString(),reason});
       }
       break;
     }
