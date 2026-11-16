@@ -1,6 +1,41 @@
 // Each claim is bounded to the recorded fixture. Shared scenario links do not close contracts.
 export const scenarios=[
   {
+    test:'G00 shared foundations preserve scoped work, exact evidence and approval history through change and restart',
+    file:'tests/pilot-foundations.test.mjs',action:'G00 two-engagement foundation reference through exact review, changed basis, revoked access and persisted retry',
+    actors:['preparer','reviewer','partner'],
+    observed:'Two scoped engagements retain independent revisions and original-file identity. Self-review, wrong-scope originals, stale writes and conflicting retries are denied. Task completion does not approve work. Changed statements stale only the dependent authorization while preserving signed work, prior authorized bytes and the untouched second engagement. Revoked direct reads and cached-command replay remain denied after restart.',
+    operational:['OPS-BOOTSTRAP'],
+  },
+  {
+    test:'adoption preview preserves compatible table cells and pins explicit review of incompatible answers',
+    file:'tests/pilot-form-adoption.test.mjs',action:'publish actual table schemas, preview adoption losses, acknowledge the current revision and retain original signed work',actors:['reviewer','partner'],
+    observed:'Read-only comparison leaves work unchanged. Invalid schemas, unaccepted row evidence, unauthorised/revoked previews, obsolete editions, missing acknowledgement and stale loss reviews are rejected. Compatible row IDs/cells, prior answers/templates and original files survive adoption and restart.',
+    cases:['P07-UC01','P11-UC01','P11-UC02'],features:['M02-F02','M02-F03','M02-F07','M02-F09'],
+  },
+  {
+    test:'source schedules retain alphanumeric sample identifiers and narrative asset results with signed numeric differences',
+    file:'tests/pilot-form-adoption.test.mjs',action:'save source-linked additional asset procedures and sample rows with corrected column types',actors:['preparer','reviewer'],
+    observed:'Asset result narratives and alphanumeric/leading-zero sample references are retained as text; signed numeric differences validate separately. Original frozen source rows and previously pinned templates are retained.',
+    forms:['3.1.2','3.3.1'],features:['M02-F02'],
+  },
+  {
+    test:'selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history',
+    file:'tests/pilot-materiality.test.mjs',action:'choose and independently review materiality overrides, then reduce and reapprove the exact decision',actors:['preparer','reviewer','partner'],
+    observed:'Candidate amounts remain separate from selected overall, performance, specific and zero trivial thresholds. Operative source rows use the owning decisions. Self-review, missing rationale, downgrade and stale sample use are denied; review history and the original selection survive restart.',
+    cases:['P06-UC03','P06-UC05','P07-UC02','P10-UC03'],features:['M06-F07'],automations:['AUTO-046'],dependencies:['DEP-C06','DEP-C14'],
+  },
+  {
+    test:'approved report preparation connects exact issue to independently completed assembly and custody',
+    file:'tests/pilot-reporting.test.mjs',action:'approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody',
+    actors:['preparer','reviewer','partner','local report recipient','custodian'],
+    observed:'Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.',
+    cases:['P10-UC08','P12-UC02','P12-UC03','P12-UC04'],
+    features:['M10-F10','M10-F14','M12-F01','M12-F02','M12-F03','M12-F05','M12-F06','M12-F07','M12-F08','M12-F09'],automations:['AUTO-056','AUTO-057','AUTO-058'],
+    criteria:['P10-UC08-AC01','P10-UC08-AC03','P10-UC08-AC04','P12-UC02-AC01','P12-UC02-AC02','P12-UC02-AC03','P12-UC02-AC04','P12-UC03-AC01','P12-UC03-AC02','P12-UC03-AC03','P12-UC03-AC05','P12-UC04-AC01','P12-UC04-AC03'],
+    e2e:['A26-P1-W1','A26-P1-W2','A26-P1-W3','A26-P2-W1','A26-P2-W2','A26-P2-W3','A26-P3-W1','A26-P3-W2','A26-P3-W3','A27-P1-W1','A27-P1-W2','A27-P1-W3','A27-P2-W1','A27-P2-W2','A27-P2-W3','A27-P3-W1','A27-P3-W2','A27-P3-W3'],
+  },
+  {
     test:'approved materiality and its revision govern the same sample and misstatement evaluation',
     file:'tests/pilot.test.mjs',action:'benchmark assessment through approved scoped thresholds, sampling, and reevaluation',
     actors:['preparer','reviewer','partner'],
@@ -42,7 +77,7 @@ export const scenarios=[
     operational:['OPS-MIGRATION'],
   },
   {
-    test:'the extended engagement exercises all 34 registers and seals a scoped recoverable archive',
+    test:'the extended engagement preserves its original 34-register journey and scoped recoverable archive',
     file:'tests/pilot.test.mjs',action:'approved planning, qualified report, archive hold and recovery',actors:['preparer','reviewer','partner'],
     observed:'A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.',
     cases:['P06-UC02','P06-UC03','P06-UC06','P07-UC01','P10-UC06','P12-UC02','P12-UC05'],

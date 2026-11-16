@@ -23,11 +23,12 @@ import { journalAction, journalGap, journalView, syncJournalPapers } from './pil
 import { areaAction, areaEvidence, areaGap, areaView, areaWorkpaperRef, syncAreaPapers } from './pilot-area.mjs';
 import { completionAction, completionEvidence, completionGaps, completionRef, completionView, consultationView, syncCompletion } from './pilot-completion.mjs';
 import { oversightTeamAction, oversightTeamView, qualityGaps, qualityRef } from './pilot-oversight.mjs';
-import { currentSignature, signReport, strictRelease } from './pilot-release.mjs';
+import { currentSignature, signReport, strictRelease,distributionGaps } from './pilot-release.mjs';
 import { archiveAmendmentBasis, archiveAmendmentGap, archiveAmendmentRevision } from './pilot-archive.mjs';
 import { materialityBasis, materialityGap, materialityTargets, materialityValues, syncMateriality, updateMaterialityBasis } from './pilot-materiality.mjs';
 import { activeTermsGap } from './pilot-intake.mjs';
 import { laterFactAction, laterFactForRelease, laterFactGap, laterFactView } from './pilot-later-facts.mjs';
+import {assemblyStatus} from './pilot-assembly.mjs';
 
 export const accounts = { preparer: 'nomin', reviewer: 'temuulen', partner: 'bat' };
 const roleOf = person => seats.find(role => accounts[role] === person);
@@ -251,6 +252,7 @@ export function pilotView(m, role, revision, files) {
     };
     return {
       role, revision, ...resources, rules: [], registers: resources.registers.filter(r =>
+        (r.kind!=='M12-F02'||(r.assemblyPackage&&(m.pilotRecords??[]).some(grant=>grant.kind==='M12-F07'&&grant.status==='approved'&&!grant.revoked&&grant.values.package===r.assemblyPackage&&grant.values.accessor===role&&grant.values.until>=new Date().toISOString().slice(0,10))))&&
         archiveKinds.has(r.kind) && (!archiveGrantKinds.includes(r.kind) || r.owner === role || r.values.accessor === role) &&
         (!privateArchive||!r.values.package||knownPackage(r.values.package)||
           archiveGrantKinds.includes(r.kind)&&r.owner===role&&r.status!=='approved')
@@ -304,6 +306,7 @@ export function pilotView(m, role, revision, files) {
     ...(m.pilotJournals && {journals:journalView(m)}),
     ...(m.pilotAreaRuns && {areas:areaView(m)}),
     ...(engagement.intake.active&&!sealed&&{completion:completionView(m,role!=='preparer')}),
+    ...(engagement.intake.active&&{assembly:assemblyStatus(m,files.authorization(),files.read)}),
     ...(role!=='preparer'&&{oversight:oversightTeamView(m)}),
     ...(role==='partner'&&{release:{strict:strictRelease(m),signature:currentSignature(m,files),deliveries:files.deliveries()}}),
     ...((m.pilotSamples||m.pilotJournals||m.pilotAreaRuns) && {fieldFindings:m.findings.filter(f=>/^(SAMPLE|JOURNAL|AREA)-/.test(f.id))}),
@@ -444,6 +447,7 @@ export function pilotAction(m, role, action, data, files) {
       if (!currentRelease(reportWorkspace(m), engagement) || !currentApproval(m, engagement) || m.pilotIssue?.authorizationAt !== engagement.authorized.at) throw new PilotError(409, 'Одоогийн зөвшөөрсөн багцыг гаргана уу.');
       const deliveries=files.deliveries().filter(row=>row.issued===m.pilotIssue.at);
       if (strictRelease(m)&&!deliveries.some(row=>row.state==='received')) throw new PilotError(409,'Яг энэ гаргалтын бодит хүлээн авалт шаардлагатай.');
+      const distribution=distributionGaps(m,files.deliveries());if(distribution.length)throw new PilotError(409,distribution.join(' · '));
       files.archive.seal(m, files.authorization(), deliveries);
     } else files.archive.dispose(m, input(data, 'id', 40));
     recordEvent(m, action === 'archive-seal' ? 'Эцсийн архивын багцыг түгжив' : 'Туршилтын архивын устгалын шийдвэрийг хэрэгжүүлэв');
@@ -715,7 +719,6 @@ export function pilotAction(m, role, action, data, files) {
         values.conclusion = input(data, 'conclusion');
       }
       if (paper.form === '1.3') {
-        for (const key of ['benchmark','percentage','performance','trivial']) values[key] = input(data, key, 32);
         if (data.benchmarkSource !== undefined) values.benchmarkSource = data.benchmarkSource === '' ? '' : input(data,'benchmarkSource');
         const basisEvidence=updateMaterialityBasis(m,paper,data,values,files);
         if (basisEvidence) {

@@ -2,6 +2,7 @@ import type {Role} from './workflow';
 import type {Company,EngagementTeam} from './feature-workflows';
 import {accessOverride,missingFields,sharedFields,type Bench,type Template} from './workbench.ts';
 import type {PopulationExtractSpec} from './pilot-population.ts';
+import {materialityBasisKey,selectedMateriality} from './pilot-materiality.ts';
 
 export type StageStatus='not_started'|'in_progress'|'waiting'|'submitted'|'returned'|'reviewed'|'changed';
 export type ViewId='home'|'journey'|'profile'|'engagements'|'progress'|'calendar'|'tasks'|'team'|'forms'|'requests'|'evidence'|'data'|'risks'|'sampling'|'automations'|'review'|'decisions'|'reporting'|'archive'|'library'|'coverage'|'settings';
@@ -116,7 +117,7 @@ export function importCsv(text:string,period='2025'):Dataset{
 }
 export const SAMPLE_CSV='id,account,amount,period\nGL-001,1010,25000000,2025\nGL-002,1010,18000000,2025\nGL-003,1220,45000000,2025\nGL-004,1220,32000000,2025\nGL-005,1520,64000000,2025\nGL-006,1520,16000000,2025\nGL-007,3310,12000000,2025\nGL-008,3310,28000000,2025\nGL-009,4410,7000000,2024\nGL-010,4410,3000000,2025';
 export function selectSample(ids:string[],size:number,seed:number){if(!Number.isInteger(size)||size<1||size>ids.length)throw Error('Түүврийн хэмжээ эх олонлогоос их эсвэл буруу.');let s=seed>>>0;const pool=[...ids].sort();for(let i=pool.length-1;i>0;i--){s=(Math.imul(s,1664525)+1013904223)>>>0;const j=s%(i+1);[pool[i],pool[j]]=[pool[j],pool[i]]}return pool.slice(0,size);}
-export function materiality(m:Model,e:string){const v=m.work[workKey(e,'1.3')].values;const b=Number(v.benchmark),p=Number(v.percentage),perf=Number(v.performance),trivial=Number(v.trivial);if(!v.benchmark?.trim()||!v.percentage?.trim()||!v.performance?.trim()||!v.trivial?.trim()||![b,p,perf,trivial].every(Number.isFinite)||b<=0||p<0||p>100||perf<0||perf>100||trivial<0||trivial>100)return null;const overall=b*p/100;return {overall,performance:overall*perf/100,trivial:overall*trivial/100};}
+export function materiality(m:Model,e:string){const v=m.work[workKey(e,'1.3')].values;if(v[materialityBasisKey]){try{const basis=JSON.parse(v[materialityBasisKey]);if(basis.selection)return basis.selection.version===1?selectedMateriality(basis.selection):null;}catch{return null;}}const b=Number(v.benchmark),p=Number(v.percentage),perf=Number(v.performance),trivial=Number(v.trivial);if(!v.benchmark?.trim()||!v.percentage?.trim()||!v.performance?.trim()||!v.trivial?.trim()||![b,p,perf,trivial].every(Number.isFinite)||b<=0||p<0||p>100||perf<0||perf>100||trivial<0||trivial>100)return null;const overall=b*p/100;return {overall,performance:overall*perf/100,trivial:overall*trivial/100};}
 export function outstanding(m:Model,e:string){return m.findings.filter(f=>f.engagement===e&&f.status!=='posted_verified').reduce((s,f)=>s+f.amount,0);}
 export function isCurrentReview(w:WorkItem|undefined){return !!w&&w.status==='reviewed'&&w.reviewedVersion===w.version;}
 export const reportForm=(e:Engagement)=>e.reportForm??'4.1.A1';

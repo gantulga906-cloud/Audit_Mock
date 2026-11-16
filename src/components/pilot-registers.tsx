@@ -85,18 +85,18 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
   if(field.key==='evidenceId')return resources.archive.packages.find(p=>p.id===values.package)?.summary.files?.map(f=>[f.id,f.name+' · v'+f.version]);
   if(kind==='M12-F08'&&values.type==='release'&&field.key==='reference')return resources.registers.filter(r=>r.kind===kind&&r.values.package===values.package&&r.values.type==='hold').map(r=>[r.id,r.values.reference]);
  }
- return <form className="feature-form" onSubmit={save}>
+ return <form className="feature-form" data-register-kind={kind} onSubmit={save}>
   <div className="field-grid">{def.fields.filter(f=>(!f.forTypes||f.forTypes.includes(values.type))&&
    (!planning||!programmeFields.includes(f.key)||resources.extended&&values.decision==='adopt')).map(f=>{
    const choices=options(f),bound=kind==='M06-F06'&&!!values.populationLine&&['source','actual'].includes(f.key);
    const line=bound?sourceLines.find(l=>l.line===values.populationLine):undefined;
    const v=line?(f.key==='actual'?String(line.computed/100):resources.population!.current.name):(values[f.key]??'');
    return <label key={f.key}>{f.label}{f.optional&&!(planning&&programmeFields.includes(f.key))&&!(kind==='M12-F04'&&f.forTypes)?' (сонголтоор)':''}
-    {choices?<select value={v} onChange={e=>set(f.key,e.target.value)}>
+    {choices?<select name={'field.'+f.key} value={v} onChange={e=>set(f.key,e.target.value)}>
      <option value="">Сонгох</option>
      {v&&!choices.some(([id])=>id===v)&&<option value={v}>Өмнөх сонголт · {v}</option>}
      {choices.map(([id,label])=><option key={id} value={id}>{label}</option>)}
-    </select>:f.type==='long'?<textarea value={v} onChange={e=>set(f.key,e.target.value)} maxLength={4000}/>:<input value={v} readOnly={bound} onChange={e=>set(f.key,e.target.value)} type={f.type==='date'?'date':f.type==='number'?'number':'text'} step={f.type==='number'?'any':undefined} maxLength={4000}/>}
+    </select>:f.type==='long'?<textarea name={'field.'+f.key} value={v} onChange={e=>set(f.key,e.target.value)} maxLength={4000}/>:<input name={'field.'+f.key} value={v} readOnly={bound} onChange={e=>set(f.key,e.target.value)} type={f.type==='date'?'date':f.type==='number'?'number':'text'} step={f.type==='number'?'any':undefined} maxLength={4000}/>}
    </label>;
   })}</div>
   {planning&&resources.extended&&values.decision==='adopt'&&<p className="micro">Шийдвэрийг илгээхийн өмнө арга хандлага, хувилбар, горимын шинж, хугацаа, хамрах хүрээг бүрэн оруулна уу.</p>}
@@ -123,7 +123,7 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
  const declaration=row.kind==='M04-F04';
  const related=resources.registers.filter(r=>r.id!==row.id&&Object.values(r.values).includes(row.id));
  const archiveGrant=row.status==='approved'&&['M12-F07','M12-F10'].includes(row.kind);
- return <details className="feature-detail">
+ return <details className="feature-detail" data-register-kind={row.kind} data-record-id={row.id}>
   <summary>{heading(row)} <span className="pill">{state[row.status]} · v{row.version}</span>{row.stale&&<span className="pill amber">Эх хувилбар өөрчлөгдсөн</span>}</summary>
   <dl className="register-values">{def.fields.filter(f=>row.values[f.key]).map(f=>{
    const v=row.values[f.key],file=f.type==='evidence'&&evidence.find(e=>e.id===v),linked=f.type==='record'&&resources.registers.find(r=>r.id===v);
@@ -134,6 +134,7 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
   {row.template&&<p className="micro">{row.template.form} · {row.template.sheet} · {row.template.digest.slice(0,16)}</p>}
   {row.programmeBasis&&<PlanningBasis basis={row.programmeBasis}/>}
   {row.statementVersion&&<p className="micro">Санхүүгийн тайлан v{row.statementVersion}</p>}
+  {row.assemblyBasis&&<p className="micro">Яг гаргасан багц · {row.assemblyBasis.issueAt.slice(0,16)} · Бүрдүүлэлтийн эцсийн өдөр {row.assemblyBasis.deadline} · Индекс {row.assemblyBasis.inventoryDigest.slice(0,16)}</p>}
   {row.values.expected&&row.values.actual&&<p>Зөрүү {Number(row.values.actual)-Number(row.values.expected)}</p>}
   {row.declaration&&<p>{roleName[row.declaration.by]} · {new Date(row.declaration.at).toLocaleString()} · {row.declaration.text} {row.declaration.evidence}</p>}
   {declaration&&!row.declaration&&<p className="muted">Мэдүүлэг хүлээгдэж байна.</p>}
@@ -162,17 +163,19 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
  </details>;
 }
 
-export default function PilotRegisters({role,resources,evidence,engagementId,active,run,onError}:{
- role:PilotRole;resources:RegisterResources;evidence:Evidence[];engagementId:string|null;active:boolean;run:PilotAction;onError:(message:string)=>void;
+export default function PilotRegisters({role,resources,evidence,engagementId,active,run,onError,sectionsOnly}:{
+ role:PilotRole;resources:RegisterResources;evidence:Evidence[];engagementId:string|null;active:boolean;run:PilotAction;onError:(message:string)=>void;sectionsOnly?:string[];
 }){
  const [section,setSection]=useState(engagementId?'acceptance':'firm'),[kind,setKind]=useState(''),[editId,setEdit]=useState<string|null>(null),[focus,setFocus]=useState(''),[unit,setUnit]=useState('');
- const available=sections.filter(([key])=>key==='firm'||key==='acceptance'&&engagementId||active);
- const current=available.some(([key])=>key===section)?section:'firm';
+ const available=sections.filter(([key])=>(key==='firm'||key==='acceptance'&&engagementId||active)&&(!sectionsOnly||sectionsOnly.includes(key)||!!focus&&key===section));
+ if(!available.length)return <section className="card pad bench-card"><h2>Энэ хэсэг одоогоор нээгдэхгүй</h2><p className="muted">Гэрээт ажлын идэвхжил болон хандах эрхийг шалгана уу.</p></section>;
+ const current=available.some(([key])=>key===section)?section:(available[0]?.[0]??'firm');
  const group=registers.filter(r=>r.section===current),def=group.find(r=>r.id===kind)??group[0];
- const readOnly=!!engagementId&&current==='firm';
+ const sealedAssembly=def.id==='M12-F02'&&!!resources.archive.sealed&&!resources.archive.reopened;
+ const readOnly=!!engagementId&&current==='firm'||sealedAssembly;
  const data=resources.registers.filter(r=>r.kind===def.id&&(def.id!=='M01-F03'||!unit||r.values.unit===unit||r.id===focus))
   .sort((a,b)=>a.id===focus?-1:b.id===focus?1:0);
- const queue=resources.registers.filter(r=>(!engagementId||spec(r.kind)?.section!=='firm')&&
+ const queue=resources.registers.filter(r=>(!sectionsOnly||sectionsOnly.includes(spec(r.kind)?.section??''))&&(!engagementId||spec(r.kind)?.section!=='firm')&&
   (canReview(r,role)||r.kind==='M04-F04'&&r.values.assignee===role&&!r.declaration||r.owner===role&&r.status==='returned'));
  function open(id:string){
   const row=resources.registers.find(r=>r.id===id),target=row&&spec(row.kind);
@@ -204,11 +207,11 @@ export default function PilotRegisters({role,resources,evidence,engagementId,act
     {p.access?.map((a,i)=><p key={i}>{roleName[a.actor]} · {a.scope} · {a.reason} · {new Date(a.at).toLocaleString()}</p>)}
    </details>)}
   </div>}
-  <label className="space-top">Эх шаардлага<select value={def.id} onChange={e=>{setKind(e.target.value);setEdit(null);setFocus('');}}>{group.map(r=><option value={r.id} key={r.id}>{r.id} · {r.label}</option>)}</select></label>
+  <label className="space-top">Бүртгэлийн төрөл<select value={def.id} onChange={e=>{setKind(e.target.value);setEdit(null);setFocus('');}}>{group.map(r=><option value={r.id} key={r.id}>{r.label}</option>)}</select></label>
   {def.id==='M01-F03'&&<label>Нэгжээр шүүх<select value={unit} onChange={e=>setUnit(e.target.value)}><option value="">Бүх нэгж</option>{resources.registers.filter(r=>r.kind==='M01-F02'&&r.status==='approved').map(r=><option value={r.id} key={r.id}>{r.values.name}</option>)}</select></label>}
-  {readOnly&&<p className="muted">Энэ бүртгэлийг гэрээт ажлын жагсаалтаас нээж өөрчилнө.</p>}
+  {readOnly&&<p className="muted">{sealedAssembly?'Эцсийн файл түгжээтэй. Бүрдүүлэлтийн баталсан бүртгэл зөвхөн унших эрхтэй.':'Энэ бүртгэлийг гэрээт ажлын жагсаалтаас нээж өөрчилнө.'}</p>}
   {!readOnly&&def.writers.includes(role)&&editId===null&&<button type="button" className="btn secondary space-top" onClick={()=>setEdit('new')}>Шинэ бүртгэл</button>}
-  {editId!==null&&<Editor key={def.id+'/'+editId} kind={def.id} row={editing} resources={resources} evidence={evidence} run={run} onDone={()=>setEdit(null)}/>}
+  {!readOnly&&editId!==null&&<Editor key={def.id+'/'+editId} kind={def.id} row={editing} resources={resources} evidence={evidence} run={run} onDone={()=>setEdit(null)}/>}
   {data.length===0&&editId===null&&<p className="muted">Энэ шаардлагын бүртгэл алга.</p>}
   {data.map(r=><RecordCard key={r.id} row={r} role={role} resources={resources} evidence={evidence} run={run} edit={()=>setEdit(r.id)} open={open} exportArchive={exportArchive} engagementId={engagementId} readOnly={readOnly}/>)}
  </section>;

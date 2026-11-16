@@ -9,10 +9,11 @@ type IndependentRole='quality'|'custodian';
 type QualityNote={id:string;text:string;cleared?:{at:string};responses?:{text:string;at:string}[]};
 type Quality={policy:{version:number;mode:string;reference:string;basis:string;reviewer:string;eligibility:string;
  eligibilityStatus?:'eligible'|'ineligible'|'unresolved'|''};current:boolean;notes:QualityNote[]};
-type Custody={id:string;digest:string;recipient:string;offeredAt:string;downloadedAt?:string;accepted?:{at:string;reason:string}};
+type Custody={id:string;digest:string;recipient:string;offeredAt:string;downloadedAt?:string;accepted?:{at:string;reason:string};returned?:{at:string;reason:string;owner:string};resolution?:string};
 export type OversightView={quality?:Quality;custody:Custody[]};
 export type ReleaseView={strict:boolean;signature?:{method:string;at:string;artifact:string};
- deliveries:{id:string;issued:string;recipient:string;state:string;downloaded?:string;received?:string;response?:string}[]};
+ deliveries:{id:string;issued:string;recipient:string;state:string;downloaded?:string;received?:string;response?:string;
+ events?:{state:string;at:string;actor:string;reference:string;reason:string}[]}[]};
 const api='/api/pilot';
 const captions={quality:'Хараат бус чанарын хяналт',custodian:'Хараат бус архивын хадгалалт'};
 
@@ -47,9 +48,9 @@ export function OversightDesk({view,role,sealed,archive,run}:{view:OversightView
    </DataAction>}
   </div>)}
   <a href="/pilot#oversight=quality">{captions.quality}</a>
-  {sealed&&role==='partner'&&archive&&view.custody.at(-1)?.id!==archive&&<DataAction run={run} action="archive-offer-custody"
-   extra={{package:archive}} button="Яг түгжсэн багцыг хүлээлгэх"><label>Хадгалалт хүлээн авагч<input name="recipient" required/></label></DataAction>}
-  {view.custody.map(c=><p key={c.id}>{c.recipient} · {c.accepted?'Хүлээн авсан '+c.accepted.at.slice(0,16):'Хүлээн авахыг хүлээж байна'} · {c.digest.slice(0,16)}</p>)}
+  {sealed&&role==='partner'&&archive&&(view.custody.at(-1)?.id!==archive||view.custody.at(-1)?.returned)&&<DataAction run={run} action="archive-offer-custody"
+   extra={{package:archive}} button="Яг түгжсэн багцыг хүлээлгэх"><label>Хадгалалт хүлээн авагч<input name="recipient" required/></label>{view.custody.at(-1)?.returned&&<label>Зөрчлийг шийдвэрлэсэн бодит ажил ба эх ишлэл<textarea name="resolution" required/></label>}</DataAction>}
+  {view.custody.map(c=><p key={c.id+c.offeredAt}>{c.recipient} · {c.accepted?'Хүлээн авсан '+c.accepted.at.slice(0,16):c.returned?'Зөрчилтэй буцаасан · '+c.returned.reason:'Хүлээн авахыг хүлээж байна'} · {c.digest.slice(0,16)}</p>)}
   <p><a href="/pilot#oversight=custodian">{captions.custodian}</a></p>
  </details>;
 }
@@ -62,6 +63,7 @@ type IndependentView={
   papers:{form:string;title:string;version:number;status:string;values:Record<string,string>;notes?:Note[]}[];
   evidence:{id:string;name:string;sha256:string}[]};
  manifest?:{fileCount:number;files:{name:string;sha256:string;size:number}[];report:string};
+ manifestError?:string;
 };
 
 async function jsonRequest<T>(path:string,fields?:Record<string,string>):Promise<T>{
@@ -89,7 +91,7 @@ export function IndependentDesk({role}:{role:IndependentRole}){
   e.preventDefault();
   void send('/login',{role,password:String(new FormData(e.currentTarget).get('password'))});
  }
- return <main className="audit-app"><div className="app-content pilot-content"><section className="card pad bench-card">
+ return <main className="audit-app ew-independent"><div className="app-content pilot-content"><section className="card pad bench-card">
   <a href="/pilot#workspace">Аудитын багийн ажлын орчин</a><h1>{captions[role]}</h1>
   {error&&<p className="callout amber" role="alert">{error}</p>}
   <fieldset className="feature-fields" disabled={busy}>
@@ -121,13 +123,19 @@ export function IndependentDesk({role}:{role:IndependentRole}){
       <label>Хянасан нотолгоо ба шийдвэр<textarea name="reason" required/></label>
      </DataAction>}
     </>}
-    {custody&&view.manifest&&<>
+    {custody&&<>
+     {view.manifestError&&<p className="callout amber" role="alert">{view.manifestError}</p>}
+     {custody.returned&&<p>Зөрчилтэй буцаасан · {custody.returned.reason} · Хариуцах баг {custody.returned.owner}</p>}
+     {custody.resolution&&<p>Дахин хүргүүлсэн шийдвэр · {custody.resolution}</p>}
+     {view.manifest&&<>
      <p>{custody.recipient} · {view.manifest.fileCount} эх файл · {custody.accepted?'Хүлээн авсан':'Хүлээлгэн өгсөн'}</p>
      <p className="micro break-all">SHA-256 {custody.digest}</p><a href={link(custody.id)}>Яг баталгаажсан архив татах</a>
      <ul>{view.manifest.files.map((f,i)=><li key={i}>{f.name} · {f.size} B · {f.sha256.slice(0,16)}</li>)}</ul>
-     {!custody.accepted&&<DataAction run={act} action="accept" extra={{package:custody.id}} button="Бүрэн багцыг хүлээн авах">
+     {!custody.accepted&&!custody.returned&&<DataAction run={act} action="accept" extra={{package:custody.id}} button="Бүрэн багцыг хүлээн авах">
       <label>Татсан багцын хэш<input name="digest" required/></label><label>Унших боломж ба хүлээн авсан тэмдэглэл<input name="reason" required/></label>
      </DataAction>}
+     </>}
+     {!custody.accepted&&!custody.returned&&<DataAction run={act} action="return" extra={{package:custody.id,digest:custody.digest}} button="Багцыг зөрчилтэй буцаах"><label>Зөрчил ба хийх засвар<textarea name="reason" required/></label><label>Засвар хариуцах баг<select name="owner"><option value="partner">Партнер</option><option value="reviewer">Ахлах хянагч</option></select></label></DataAction>}
     </>}
    </>}
   </fieldset>
@@ -143,7 +151,7 @@ export function ReportRecipient({token}:{token:string}){
   try{await jsonRequest(path,fields);setSent(true);setError('');return true;}
   catch(e){setError((e as Error).message);return false;}
  };
- return <main className="audit-app"><div className="app-content pilot-content"><section className="card pad bench-card">
+ return <main className="audit-app ew-independent"><div className="app-content pilot-content"><section className="card pad bench-card">
   <h1>Локал гарын үсэгтэй тайлан хүлээн авах</h1>
   {error&&<p className="callout amber" role="alert">{error}</p>}
   {sent?<p>Яг энэ тайлангийн хүлээн авалтыг бүртгэлээ.</p>:data&&<>

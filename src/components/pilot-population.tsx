@@ -17,7 +17,7 @@ export function DataAction({run,action,extra,button,children}:{
   const data=new FormData(e.currentTarget);
   void run(action,{...Object.fromEntries([...data].map(([key,value])=>[key,String(value)])),...extra});
  }
- return <form className="feature-form" onSubmit={submit}>{children}<button className="btn secondary">{button}</button></form>;
+ return <form className="feature-form" data-action={action} onSubmit={submit}>{children}<button className="btn secondary">{button}</button></form>;
 }
 
 export function PopulationDesk({population,role,engagement,evidence,run,readFile,onError,requestImport}:{

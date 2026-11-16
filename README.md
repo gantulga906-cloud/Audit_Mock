@@ -1,8 +1,20 @@
 # Veritech Audit workspace
 
-A Mongolian-language, browser-local frontend prototype for connected audit work. Next.js, React, TypeScript, Tailwind and Lucide. Three fictional engagements and four people demonstrate different preparation, review, partner and quality responsibilities.
+**G00 shared foundations, 16 November 2026.** Shared commands reject malformed input before mutation. A connected two-engagement scenario verifies exact review, preserved original bytes and approvals, targeted change impact, revoked access and restart/retry. `npm run verify:foundations -- --build` checks all eight shared contracts against fresh tests, frozen source scope and a clean build. [Checkpoint scope, reproduction and continuing work](docs/research/g00-foundations-2026-11-16.md).
 
-**Local shared pilot.** Run `npm run build` and `npm run pilot`, then open the URL printed in the terminal. Set up the three separate sign-ins with the one-time code. SQLite stores separate engagements, from acceptance and programme selection through evidence, review, authorization and archive. Open the portfolio to switch engagements or add another. The partner controls engagement membership for the pilot reviewer and preparer. [Pilot walkthrough](docs/research/implementation-pilot.md) · [Development and migration notes](docs/research/development-progress.md)
+**Controlled form adoption, 16 November 2026.** Preview edition changes and incompatible answers before adoption. Compatible repeated-row cells survive; incompatible direct updates require acknowledgement of the current preview. The builder now persists actual table columns and accepted evidence inside rows. Source schedules retain narrative asset results and text sample identifiers. [Behavior, compatibility and remaining F2/R08 work](docs/research/form-adoption-2026-11-16.md).
+
+**Materiality and form fidelity, 11 November 2026.** Workpaper 1.3 now separates benchmark candidates from selected/overridden overall, performance, specific and clearly trivial thresholds. Calculations use the selected overall amount, preserve zero and retain prior signed decisions. A read-only source inventory records all 70 forms, 272 row-number formulas and 1,820 validation definitions. [Behavior, source coordinates, compatibility and remaining F2 work](docs/research/materiality-and-form-fidelity-2026-11-11.md).
+
+A Mongolian-language audit workspace built with Next.js, React, TypeScript, Tailwind and Lucide. The current interface uses the local shared SQLite service for engagement, evidence, preparation, review and completion records.
+
+**Enterprise workspace, 11 November 2026.** The redesigned interface is available at `/` and `/pilot`: persistent engagement context, personal queues, workpaper tables, full-page editing, optional source preview, review, data, planning and completion destinations. A neutral/indigo theme supports light, dark and compact modes. Save, submit, respond, clear and review remain separate actions. [Implementation, compatibility and remaining work](docs/research/redesign-2026-11-11.md).
+
+The earlier browser-local prototype is retained at `/legacy` with its existing storage keys. Its data is not automatically imported into the shared service. The v3–v5 notes and **Earlier browser-local prototype** section below describe that historical surface.
+
+**Functional continuation, 11 November 2026.** Missing/revoked engagement links recover safely, and returned-work filters survive paper navigation. Completion supports independently approved report preparation, failed/uncertain recipient attempts and reconciled retries. Final file supports policy-configured assembly, independent approval and custody return/correction/reoffer. Existing pilot paths and source scope remain. [Behavior, action locations, verification and remaining work](docs/research/functional-continuation-2026-11-11.md).
+
+**Local shared pilot.** Run `npm run build` and `npm start`, then open the URL printed in the terminal. Set up role credentials with the one-time code. SQLite stores separate engagements, from acceptance and programme selection through evidence, review, authorization and archive. Use the engagement selector or **Үйлчлүүлэгчид** to switch engagements or add another. The partner controls engagement membership for the pilot reviewer and preparer. [Pilot walkthrough](docs/research/implementation-pilot.md) · [Development and migration notes](docs/research/development-progress.md)
 
 **New in v5.** In **Үйлчлүүлэгчид**, register a client and open a fresh engagement with real reporting dates and an assigned demo team. Once the partner activates it, track evidence requests and tailor the procedures in a programme workpaper. See [v5 walkthrough and scope](docs/research/implementation-v5.md).
 
@@ -28,7 +40,9 @@ npm run build
 npm start
 ```
 
-The build creates a static `out/` export. `npm start` serves the existing prototype locally. The opt-in `npm run pilot` starts a separate local server with SQLite storage.
+The build creates a static `out/` export. `npm start` serves the shared workspace and API on port 3000. `npm run pilot` serves the same product on port 3004. Set `AUDIT_PILOT_DB` to use a separate SQLite database. `node scripts/serve.mjs --legacy` serves the earlier browser-local prototype without starting the shared API. `pnpm dev` is useful for frontend work; the standalone pilot server supplies the shared API.
+
+After building, `npm run verify:workspace` checks navigation, draft protection, the preparation/review cycle, evidence preview and controlled questionnaire saving through headless Chrome with synthetic records. It creates a fresh database and browser profile under `.audit-pilot/workspace-ui`. Set `AUDIT_CHROME_PATH` if Chrome is installed elsewhere. This complements `npm test`; it does not certify all source requirements.
 
 Record `/build-info.json` for each acceptance run. It identifies the built UI, Git revision, working-tree state, and source manifest. The local server also sends the build ID with pilot API responses.
 
@@ -50,7 +64,7 @@ Open **Үйлчлүүлэгч ба аудитын хүсэлт** in the portfoli
 
 Open **Фирмийн мэргэжилтэн ба боломжит цаг** for roster and workload. The firm registers record the practitioner, credential and appointment. The engagement's **Багийн томилгоо ба нөөц** panel shows the approved staffing and its scope. For managed engagements, workpaper schedules and tasks use current approved appointments and retain earlier sign-off attribution.
 
-## Explore
+## Earlier browser-local prototype
 
 - **Senior delivery:** start as Т. Тэмүүлэн. Inspect the review queue, rolling Gantt, stage/status matrix, dependency references, assignments and scoped workload. Open a workpaper in its inspector without leaving the list. Change its due date and see the same deadline in the calendar.
 - **Calendars/tasks:** all four personas have personal planning and task destinations, with different menus and engagement scopes. Week/month/agenda views combine authoritative work deadlines, manual tasks and planned event windows. A task checkbox cannot approve audit work.

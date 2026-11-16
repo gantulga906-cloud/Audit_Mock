@@ -2,6 +2,23 @@ import { isDeepStrictEqual } from 'node:util';
 
 const marker = 'audit-lifecycle-v1 ';
 const branchPlans = {
+  A26: [
+    'wrong-template-or-stale-package',
+    'independent-issuer-required',
+    'renewed-preparation-stales-release',
+    'signature-and-receipt-required',
+    'idempotent-issue-and-changed-payload',
+    'ambiguous-delivery-reconciled-before-retry',
+  ],
+  A27: [
+    'missing-or-corrupt-source-blocks-assembly',
+    'assembly-return-and-independent-approval',
+    'locked-edit-denied',
+    'corrupt-custody-return-and-reoffer',
+    'scoped-and-expiring-retrieval',
+    'successor-retains-original-hold-and-retention',
+    'restart-preserves-exact-archive',
+  ],
   A08: [
     'missing-benchmark-inputs',
     'invalid-scoped-threshold',

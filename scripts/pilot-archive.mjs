@@ -5,6 +5,7 @@ import { invalidateReport, PilotError } from './pilot-workflow.mjs';
 import { archiveGrantKinds } from './pilot-registers.mjs';
 import { signatureMatches, strictRelease } from './pilot-release.mjs';
 import { checkLaterFactArchive, laterFactForRelease } from './pilot-later-facts.mjs';
+import {assemblySnapshot,assemblyRecord} from './pilot-assembly.mjs';
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const today = () => new Date().toISOString().slice(0, 10);
@@ -100,6 +101,7 @@ export function createArchiveStore(db) {
       fail('Зөвшөөрсөн тайлангийн хэш таарахгүй.');
     }
     if (bundle.issue.signature&&!signatureMatches(bundle.issue.signature,artifact)) fail('Тайлангийн локал гарын үсэг таарахгүй.');
+    if(bundle.assembly?.authorizationHistory?.some(entry=>entry.authorization.artifact&&sha(entry.authorization.artifact.html)!==entry.authorization.artifact.sha256))fail('Тайлангийн хадгалсан өмнөх хувилбарын хэш зөрсөн.');
     if (bundle.evidence.some(e => {
       const bytes = Buffer.from(e.base64, 'base64');
       return !bytes.length || bytes.length !== e.size || sha(bytes) !== e.sha256;
@@ -135,13 +137,29 @@ export function createArchiveStore(db) {
         !fact.original.recipients.every(recipient=>deliveries.some(row=>row.recipient===recipient&&row.state==='received')))) {
       fail('Өмнөх тайлангийн баталгаажсан бүх хүлээн авагч шинэ тайланг хүлээн авна.');
     }
-    const evidence = signed.evidence.map(metadata => {
+    let assembly;
+    try{assembly=assemblySnapshot(m,signed,id=>db.prepare('SELECT bytes,sha256 FROM evidence WHERE engagement_id=? AND id=?').get(m.engagement,id));}
+    catch(error){fail(error.message);}
+    if(assembly)assembly.authorizationHistory=db.prepare('SELECT snapshot FROM authorizations WHERE engagement_id=? ORDER BY id').all(m.engagement).map(row=>JSON.parse(row.snapshot)).filter(row=>row.authorization.at!==signed.authorization.at);
+    const policyId=assembly?.basis.policyEvidence.id;
+    const policy=policyId&&!signed.evidence.some(e=>e.id===policyId)?m.evidence.find(e=>e.id===policyId):undefined;
+    const sources=[...signed.evidence,...(policy?[{...policy,sha256:assembly.basis.policyEvidence.sha256}]:[]),...(assembly?.authorizationHistory??[]).flatMap(row=>row.evidence)];
+    if(assembly){
+      const historicalIds=new Set(assembly.history.papers.flatMap(p=>p.history.flatMap(row=>row.evidence??[])));
+      for(const file of m.evidence.filter(e=>historicalIds.has(e.id)))if(!sources.some(e=>e.id===file.id)){
+        const stored=db.prepare('SELECT sha256 FROM evidence WHERE engagement_id=? AND id=?').get(m.engagement,file.id);
+        if(!stored)fail('Өмнөх ажлын эх файл олдсонгүй.');sources.push({...file,sha256:stored.sha256});
+      }
+    }
+    const unique=new Map();for(const source of sources){if(unique.has(source.id)&&unique.get(source.id).sha256!==source.sha256)fail('Нэг эх файлын хувилбарын хэш зөрсөн.');unique.set(source.id,source);}
+    const evidence = [...unique.values()].map(metadata => {
       const file = db.prepare('SELECT bytes FROM evidence WHERE engagement_id = ? AND id = ?').get(m.engagement, metadata.id);
       if (!file || sha(file.bytes) !== metadata.sha256) fail('Архивлах эх файл эсвэл хэш таарахгүй.');
       return { ...metadata, size: file.bytes.length, base64: Buffer.from(file.bytes).toString('base64') };
     });
-    const id = insert(m, { ...signed, client: m.engagements[0].client, issue, evidence,...(deliveries.length&&{deliveries}),
+    const id = insert(m, { ...signed, client: m.engagements[0].client, issue, evidence,...(assembly&&{assembly}),...(deliveries.length&&{deliveries}),
       ...(amendment && { changes: amendment }) }, prior?.id ?? null, issue.at, m.syntheticPilot ? 1 : 0);
+    if(assembly)assemblyRecord(m).assemblyPackage=id;
     if (amendment) {
       const row=(m.pilotRecords??[]).find(record=>record.id===amendment.id&&record.kind==='M12-F04'&&record.status==='approved');
       if (row) row.successor=id;

@@ -22,4 +22,10 @@ export type FormLibrary={
 };
 export type PublishedForm=FormVersion&{id:string;title:string};
 export type LibraryView={editable:string[];grants:FormLibrary['grants'];drafts:FormDraft[];releases:PublishedForm[]};
-export type PaperForm={digest:string;number:number;body:Template;shared:Record<NonNullable<Field['binding']>,string>;linked:Record<string,string>};
+export type PaperForm={digest:string;number:number;body:Template;shared:Record<NonNullable<Field['binding']>,string>;linked:Record<string,string>;owned?:Record<string,string>};
+export type FormAdoptionPreview={form:string;digest:string;from:{digest:string;number:number}|null;to:{digest:string;number:number;title:string};workVersion?:number;
+ sameVersion:boolean;retainedAnswers:number;requiresReview:boolean;reopensReview:boolean;
+ changes:{key:string;label:string;change:'added'|'changed'|'removed';source?:string}[];
+ losses:{key:string;label:string;value:string;displayValue?:string;reason:string;row?:string;rowLabel?:string;column?:string;columnLabel?:string}[];
+ detachedEvidence:{id:string;name:string}[];
+};

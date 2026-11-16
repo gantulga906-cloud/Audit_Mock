@@ -6,6 +6,7 @@ import { excludedForms, formContract } from './pilot-registers.mjs';
 import { sha256 } from './pilot-report.mjs';
 import { accounts, input, PilotError } from './pilot-workflow.mjs';
 import { evidenceCurrent } from './pilot-requests.mjs';
+import {materialityBasisKey,materialitySourceAnswers} from '../src/lib/pilot-materiality.ts';
 
 const formId = /^(?:\d+(?:\.\d+)+(?:\.A[1-4])?|F-[A-Z0-9]{8})$/;
 const token = /^[A-Za-z0-9][A-Za-z0-9_-]{0,79}$/;
@@ -28,7 +29,8 @@ const canEdit = (library, role, id) => (library.grants[id] ?? []).includes(role)
 
 function sourceTemplate(id) {
   const template = formContract(id);
-  if (id !== '1.1.1' || !template) return template;
+  if (!template) return template;
+  if (id !== '1.1.1') return template;
   const bound = { r11:'industry', r12:'period', r13:'contacts', r21:'framework' }, decisions = { r16:'assessment', r17:'letter', r18:'independence' };
   const fields = template.fields.flatMap(f => {
     if (f.key === 'r10') return ['name','legalForm','registration'].map(binding =>
@@ -60,6 +62,16 @@ export function libraryTemplate(library, id, files, source = false) {
 
 function smallText(v, max) { return typeof v === 'string' && v.length <= max; }
 function options(v) { return Array.isArray(v) && v.length <= 100 && v.every(o => smallText(o, 1000) && o.trim()) && new Set(v).size === v.length; }
+function tableDefinition(value,baseline){
+  const rows=value??baseline?.columns??tableColumns;
+  if(!Array.isArray(rows)||!rows.length||rows.length>30||new Set(rows.map(row=>row?.key)).size!==rows.length)fail('Хүснэгтийн багана давхардалгүй, 1–30 мөртэй байна.');
+  return rows.map(column=>{
+    if(!object(column)||!isToken(column.key)||!smallText(column.label,400)||!column.label.trim()||!['text','textarea','number','date','select','multiselect','yesno','evidence'].includes(column.type)||column.options!==undefined&&!options(column.options)||
+      ['select','multiselect'].includes(column.type)&&(!options(column.options)||!column.options.length))fail('Хүснэгтийн баганын нэр, төрөл ба сонголтыг шалгана уу.');
+    return {key:column.key,label:column.label.trim(),type:column.type,...(column.options&&{options:column.options}),
+      source:baseline?.columns?.find(c=>c.key===column.key)?.source??(smallText(column.source,200)?column.source:'Захиалгат')};
+  });
+}
 
 function validateDraft(id, value, original) {
   if (!object(value) || value.id !== id || !smallText(value.title, 200) || !Number.isInteger(value.stage) ||
@@ -80,7 +92,8 @@ function validateDraft(id, value, original) {
       ...((baseline?.binding || field.binding) && { binding: baseline?.binding ?? field.binding }),
       ...(baseline?.decision && { decision: baseline.decision }),
       ...(field.when && { when: { key: field.when.key, value: field.when.value } }),
-      ...(field.options && { options: field.options }), ...(['table','procedure'].includes(field.type) && baseline?.columns && { columns: baseline.columns }),
+      ...(field.options && { options: field.options }), ...(field.type==='table'&&{columns:tableDefinition(field.columns,baseline)}),
+      ...(field.type==='procedure'&&baseline?.columns&&{columns:baseline.columns}),
     };
   });
   const result = { id, title: value.title.trim(), stage: original?.stage ?? value.stage, fields,
@@ -157,7 +170,9 @@ export function paperFormView(m, paper, files) {
   const linked = Object.fromEntries(template.body.fields.filter(f => f.decision).map(f => [
     f.key, ['reviewed','submitted'].includes(paper.status) ? paper.values['linked.'+f.key] ?? '' : current?.[f.decision] ?? '',
   ]));
-  return { ...template, shared: sharedForWork(m, paper), linked };
+  const basis=paper.form==='1.3'&&paper.values[materialityBasisKey]?JSON.parse(paper.values[materialityBasisKey]):undefined;
+  const owned=basis?.selection&&Object.fromEntries(Object.entries(materialitySourceAnswers(basis,paper.values)).filter(([key])=>template.body.fields.some(f=>f.key===key&&f.type==='textarea')));
+  return { ...template, shared: sharedForWork(m, paper), linked,...(owned&&{owned}) };
 }
 
 function definitions(body) {
@@ -202,7 +217,11 @@ const answerKeys = (body, answers) => new Set(body.fields.filter(f => visibleFie
   [f.key, f.key+'.reason', f.key+'.outcome', f.key+'.file', ...(f.columns ?? []).map(c => f.key+'.'+c.key)]));
 
 function typedEvidence(defs, answers) {
-  return [...defs].flatMap(([k,f]) => f.type === 'evidence' && answers[k] ? [answers[k]] : []);
+  return [...defs].flatMap(([k,f]) => {
+    if(f.type==='evidence'&&answers[k])return [answers[k]];
+    if(f.type==='table'&&answers[k])return parse(answers[k],'Хүснэгтийн мөрийн бүтэц буруу байна.').flatMap(row=>(f.columns??[]).filter(c=>c.type==='evidence'&&row.values[c.key]).map(c=>row.values[c.key]));
+    return [];
+  });
 }
 
 export function readTypedAnswers(m, paper, data, files) {
@@ -252,17 +271,65 @@ export function nativeGaps(m, paper, files) {
   return gaps;
 }
 
+function adoptionTarget(m,form,fields,files,programmeTemplate){
+  if(!formId.test(form))fail('Маягтын дугаар буруу байна.');
+  const release=byId(m.pilotFormLibrary,form),source=sourceTemplate(form);
+  if(!programmeTemplate&&fields.version!=='source'&&(!release||fields.version!==String(release.number)))fail('Одоогийн батлагдсан хувилбарыг сонгоно уу.',409);
+  if(fields.version==='source'&&!source)fail('Эх маягт олдсонгүй.',404);
+  const body=programmeTemplate?files.template(programmeTemplate.digest):fields.version==='source'?source:files.template(release.digest);
+  if(!body)fail('Маягтын хувилбар олдсонгүй.',409);
+  if(!m.engagements[0]?.intake.active&&body.stage!==1)fail('Эхлээд гэрээт ажлыг идэвхжүүлнэ үү.',409);
+  return {body,number:programmeTemplate?.number??(fields.version==='source'?0:release.number),digest:sha256(JSON.stringify(body))};
+}
+
+function planAdoption(m,form,target,files){
+  const current=effectiveForm(m,form,files),paper=m.work[workKey(m.engagement,form)],prior=fieldAnswers(paper?.values??{});
+  const previous=current?definitions(current.body):new Map(),next=definitions(target.body),answers={},losses=[],changes=[];
+  const lose=(key,value,reason,row,column,details={})=>{if(value!=='')losses.push({key,label:previous.get(key)?.label??key,value,
+    displayValue:previous.get(key)?.type==='evidence'?(m.evidence.find(e=>e.id===value)?.name??value):value,
+    reason,...(row&&{row}),...(column&&{column}),...details});};
+  for(const [key,value] of Object.entries(prior)){
+    const old=previous.get(key),field=next.get(key);
+    if(!field){lose(key,value,'removed-field');continue;}
+    if(old?.type!==field.type){lose(key,value,'changed-type');continue;}
+    if(field.type==='table'&&value){
+      const oldColumns=new Map((old.columns?.length?old.columns:tableColumns).map(c=>[c.key,c])),columns=new Map((field.columns?.length?field.columns:tableColumns).map(c=>[c.key,c]));
+      const rows=parse(value,'Хуучин хүснэгтийн бүтэц буруу байна.');
+      answers[key]=JSON.stringify(rows.map(row=>({id:row.id,values:Object.fromEntries(Object.entries(row.values).filter(([column,cell])=>{
+        const def=columns.get(column),before=oldColumns.get(column);
+        const reason=!def?'removed-column':before?.type!==def.type?'changed-column-type':!validateValue(def,cell)?'invalid-cell':'';
+        if(reason){const reference=[...oldColumns].find(([key,c])=>c.type==='text'&&row.values[key]);
+          lose(key,cell,reason,row.id,column,{columnLabel:before?.label??column,rowLabel:reference?row.values[reference[0]]:row.id,...(before?.type==='evidence'&&{displayValue:m.evidence.find(e=>e.id===cell)?.name??cell})});return false;}return true;
+      }))})));
+    }else if(validateValue(field,value))answers[key]=value;
+    else lose(key,value,'invalid-value');
+  }
+  const visible=answerKeys(target.body,answers);
+  for(const key of Object.keys(answers))if(!visible.has(key)){lose(key,answers[key],'not-applicable');delete answers[key];}
+  for(const [key,field] of next){const old=previous.get(key);if(!old)changes.push({key,label:field.label,change:'added',source:field.source});else if(JSON.stringify(old)!==JSON.stringify(field))changes.push({key,label:field.label,change:'changed',source:field.source});}
+  for(const [key,field] of previous)if(!next.has(key))changes.push({key,label:field.label,change:'removed',source:field.source});
+  const oldEvidence=new Set(typedEvidence(previous,prior)),used=new Set(typedEvidence(next,answers));
+  const requested=new Set(m.requests.filter(r=>r.form===form).flatMap(r=>r.parts?.map(p=>p.evidence)??[]));
+  const evidence=(paper?.evidence??[]).filter(id=>!oldEvidence.has(id)||used.has(id)||requested.has(id));
+  const detachedEvidence=(paper?.evidence??[]).filter(id=>!evidence.includes(id)).map(id=>({id,name:m.evidence.find(e=>e.id===id)?.name??id}));
+  const sameVersion=current?.digest===target.digest;
+  const digest=sha256(JSON.stringify({engagement:m.engagement,form,from:current?.digest,workVersion:paper?.version,to:target.digest,answers,evidence,losses}));
+  const summary={form,digest,from:current?{digest:current.digest,number:current.number}:null,to:{digest:target.digest,number:target.number,title:target.body.title},workVersion:paper?.version,sameVersion,
+    changes,losses,detachedEvidence,retainedAnswers:Object.keys(answers).length,requiresReview:!sameVersion&&!!(losses.length||detachedEvidence.length),reopensReview:!sameVersion&&!!(paper?.reviewedVersion||paper?.submittedVersion)};
+  return {summary,answers,evidence};
+}
+
+export function formAdoptionPreview(m,role,form,fields,files){
+  allowed(role!=='preparer');if(files.archive.isSealed(m))fail('Архив түгжээтэй.',409);
+  return planAdoption(m,form,adoptionTarget(m,form,fields,files),files).summary;
+}
+
 export function bindForm(m, role, form, fields, files, programmeTemplate) {
   allowed(role !== 'preparer');
-  if (!formId.test(form)) fail('Маягтын дугаар буруу байна.');
-  const release = byId(m.pilotFormLibrary, form), source = sourceTemplate(form);
-  if (!programmeTemplate && fields.version !== 'source' && (!release || fields.version !== String(release.number))) fail('Одоогийн батлагдсан хувилбарыг сонгоно уу.', 409);
-  if (fields.version === 'source' && !source) fail('Эх маягт олдсонгүй.', 404);
-  const contract = programmeTemplate ? files.template(programmeTemplate.digest) : fields.version === 'source' ? source : files.template(release.digest);
-  if (!contract) fail('Маягтын хувилбар олдсонгүй.', 409);
-  if (!m.engagements[0].intake.active && contract.stage !== 1) fail('Эхлээд гэрээт ажлыг идэвхжүүлнэ үү.', 409);
-  const version = programmeTemplate ? {number:programmeTemplate.number,digest:programmeTemplate.digest}
-    : fields.version === 'source' ? { number: 0, digest: store(files, contract) } : { number: release.number, digest: release.digest };
+  const target=adoptionTarget(m,form,fields,files,programmeTemplate),contract=target.body;
+  const plan=planAdoption(m,form,target,files);
+  if(!programmeTemplate&&plan.summary.requiresReview&&(fields.adoptionReview!==plan.summary.digest||fields.adoptionAck!=='reviewed'))fail('Шилжүүлэхгүй хариулт ба холбоосыг одоогийн хувилбараар урьдчилан хянаж зөвшөөрнө үү.',409);
+  const version = {number:target.number,digest:store(files,contract)};
   const current = effectiveForm(m, form, files);
   if (current?.digest === version.digest) return false;
   const key = workKey(m.engagement, form);
@@ -273,18 +340,9 @@ export function bindForm(m, role, form, fields, files, programmeTemplate) {
     w.status = w.submittedVersion || w.reviewedVersion ? 'changed' : w.status;
     w.submittedVersion = undefined;
     w.completedAt = undefined;
-    const previous = current ? definitions(current.body) : new Map();
-    const next = definitions(contract);
-    const priorAnswers = fieldAnswers(w.values);
-    const oldEvidence = new Set(typedEvidence(previous, priorAnswers));
-    for (const [k,v] of Object.entries(priorAnswers)) {
-      if (!next.has(k) || previous.get(k)?.type !== next.get(k).type || !validateValue(next.get(k),v)) delete w.values[fieldPrefix+k];
-    }
-    const visible = answerKeys(contract, fieldAnswers(w.values));
-    for (const k of Object.keys(fieldAnswers(w.values))) if (!visible.has(k)) delete w.values[fieldPrefix+k];
-    const currentEvidence = new Set(typedEvidence(next, fieldAnswers(w.values)));
-    const requestIds = new Set(m.requests.filter(r => r.form === w.form).flatMap(r => r.parts?.map(p => p.evidence) ?? []));
-    w.evidence = w.evidence.filter(id => !oldEvidence.has(id) || currentEvidence.has(id) || requestIds.has(id));
+    for(const key of Object.keys(fieldAnswers(w.values)))delete w.values[fieldPrefix+key];
+    for(const [key,value] of Object.entries(plan.answers))w.values[fieldPrefix+key]=value;
+    w.evidence=plan.evidence;
   } else {
     w = m.work[key] = { id: key, engagement: m.engagement, form, owner: accounts.reviewer, reviewer: accounts.partner,
       start: '', due: '', baselineStart: '', baselineDue: '', estimate: 0, actual: 0, status: 'not_started', version: 1,
@@ -293,6 +351,7 @@ export function bindForm(m, role, form, fields, files, programmeTemplate) {
   w.title = contract.title;
   w.stage = contract.stage;
   w.values.templateDigest = version.digest;
+  w.values['template.adoption']=JSON.stringify({at:new Date().toISOString(),by:role,...plan.summary});
   (m.pilotForms ??= {})[form] = version;
   recordEvent(m, form+' · Маягтын хувилбар v'+version.number+' холбов', form);
   return true;

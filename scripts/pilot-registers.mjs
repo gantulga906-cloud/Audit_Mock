@@ -24,6 +24,8 @@ function stale(m, row, seen = new Set()) {
   if (seen.has(row.id)) return true;
   const path = new Set([...seen, row.id]);
   if (row.statementVersion && row.statementVersion !== m.engagements[0]?.fsVersion) return true;
+  if (row.kind==='M10-F10'&&row.values.reportDate!==m.engagements[0]?.reportDate) return true;
+  if (row.assemblyBasis&&row.assemblyBasis.issueAt!==m.pilotIssue?.at) return true;
   if (row.populationBasis && approvedPopulation(m)?.version !== row.populationBasis.version) return true;
   const reliance = row.programmeBasis?.reliance;
   if (reliance?.evidence && !m.evidence.some(e => e.id === reliance.evidence && evidenceCurrent(m,e) &&
@@ -44,7 +46,15 @@ const approved = (m, r) => r?.status === 'approved' && !stale(m, r);
 export const approvedRows = (m, kind) => rows(m, kind).filter(r => approved(m, r));
 const opinionForms = { unmodified: '4.1.A1', qualified: '4.1.A2', adverse: '4.1.A3', disclaimer: '4.1.A4' };
 export const opinionForm = opinion => opinionForms[opinion];
-export const formContract = id => contracts.find(f => f.id === id);
+export function formContract(id){
+  const contract=contracts.find(f=>f.id===id);
+  if(!contract||!['3.1.2','3.3.1'].includes(id))return contract;
+  return {...contract,fields:contract.fields.map(field=>{
+    if(id==='3.1.2'&&field.key==='r28')return {...field,columns:field.columns.map(column=>column.key==='I'?{...column,type:'textarea'}:column)};
+    if(id==='3.3.1'&&field.key==='r37')return {...field,columns:field.columns.map(column=>column.key==='B'||column.key==='F'?{...column,type:column.key==='B'?'text':'number'}:column)};
+    return field;
+  })};
+}
 export const currentOpinion = m => approvedRows(m, 'M10-F09')[0];
 export const registerView = m => registerRows(m).map(r => ({ ...r, stale: stale(m, r) }));
 const technicalTypes = new Set(['related','component','estimate']);
@@ -123,6 +133,7 @@ export function completionRegisterGaps(m) {
   }
   const opinion = currentOpinion(m);
   if (approvedRows(m, 'M10-F09').length > 1) gaps.push('M10-F09 · Нэг одоогийн санал дүгнэлт шаардлагатай');
+  if (rows(m,'M10-F10').length&&approvedRows(m,'M10-F10').length!==1) gaps.push('M10-F10 · Тайлангийн эх ба гаргалтын одоогийн хүрээг хараат бусаар батална уу');
   if (opinion && approvedRows(m, 'M10-F11').some(r => r.values.opinion !== opinion.id || r.values.template !== opinionForm(opinion.values.opinion))) {
     gaps.push('M10-F11 · Нэмэлт хэсгийг одоогийн санал дүгнэлт ба эх загварт холбоно уу');
   }
@@ -356,6 +367,15 @@ function checkBusiness(m, row, spec, files) {
     case 'M10-F09':
       if (approvedRows(m, row.kind).some(r => r.id !== row.id)) bad('Одоогийн санал дүгнэлтийн бүртгэлийг шинэчилнэ үү.');
       break;
+    case 'M10-F10': {
+      const opinion=find(m,v.opinion),contract=formContract(opinionForm(opinion.values.opinion));
+      if (!contract||v.template!==contract.id||v.reportDate!==m.engagements[0].reportDate||!m.engagements[0].statements) bad('Одоогийн санал, тайлангийн эх, өдөр ба СТ багцыг холбоно уу.');
+      if (approvedRows(m,row.kind).some(r=>r.id!==row.id)) bad('Тайлангийн одоогийн гаргалтын хүрээг шинэчилнэ үү.');
+      row.statementVersion=m.engagements[0].fsVersion;
+      row.template={form:contract.id,sheet:contract.sheet,digest:hash(contract)};
+      files.storeTemplate(row.template.digest,contract);
+      break;
+    }
     case 'M10-F11': {
       const contract = formContract(opinionForm(find(m, v.opinion).values.opinion));
       if (contract?.id !== v.template) bad('Санал дүгнэлтэд таарсан эх загвар сонгоно уу.');
@@ -410,6 +430,7 @@ export function registerAction(m, role, data, files) {
   if (data.id && (!row || row.kind !== spec.id)) throw new PilotError(404, 'Бүртгэл олдсонгүй.');
   const operation = data.operation;
   if (operation === 'save') {
+    if(spec.id==='M12-F02'&&files.archive.isSealed(m))bad('Түгжээтэй файлын бүрдүүлэлтийг өөрчлөхгүй. Зөвшөөрсөн өөрчлөлтийн замыг ашиглана уу.');
     requireRole(spec.writers.includes(role) && (!row || row.owner === role));
     if (row?.status === 'submitted') bad('Хяналтад илгээсэн хувилбарыг засварт буцаана уу.');
     if (row?.status === 'approved' && spec.section === 'archive') bad('Архивын баталсан үйлдлийг түүхээр хадгална. Шинэ бүртгэл үүсгэнэ үү.');
@@ -441,6 +462,7 @@ export function registerAction(m, role, data, files) {
     delete row.paperVersions;
     delete row.programmeBasis;
     delete row.staffingBasis;
+    delete row.assemblyBasis;
     row.populationBasis = populationBasis;
     row.version++;
     remember(row, role, 'draft', 'Ноорог хадгалав');

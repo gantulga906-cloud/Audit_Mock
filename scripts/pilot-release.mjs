@@ -7,7 +7,12 @@ const now=()=>new Date().toISOString();
 const hash=value=>createHash('sha256').update(value).digest('hex');
 const missing=()=>fail('Тайлан хүргэх холбоос байхгүй эсвэл хугацаа дууссан.',404);
 
-export const strictRelease=m=>!!(m.pilotManagement||m.pilotQuality||m.pilotSignatures);
+export const strictRelease=m=>!!(m.pilotManagement||m.pilotQuality||m.pilotSignatures||(m.pilotRecords??[]).some(r=>r.kind==='M10-F10'));
+export function distributionGaps(m,deliveries){
+ if(!(m.pilotRecords??[]).some(r=>r.kind==='M10-F10'))return [];
+ const current=deliveries.filter(row=>row.issued===m.pilotIssue?.at),groups=Map.groupBy(current,row=>row.recipient);
+ return [...groups].filter(([,attempts])=>!attempts.some(row=>row.state==='received')&&attempts[0].state!=='withdrawn').map(([recipient])=>recipient+' · Хүргэлт, тодорхойгүй үр дүн эсвэл хүлээн авалтыг шийдвэрлэнэ үү');
+}
 export function signatureMatches(signature,artifact) {
   if (!signature||!artifact||signature.artifact!==artifact.sha256||hash(artifact.html)!==artifact.sha256) return false;
   try { return verify(null,Buffer.from(artifact.html),signature.publicKey,Buffer.from(signature.value,'base64')); }
@@ -39,10 +44,13 @@ export function createReleaseStore(db,store,filesFor) {
     authorization TEXT NOT NULL, artifact TEXT NOT NULL, recipient TEXT NOT NULL, contact TEXT NOT NULL,
     created TEXT NOT NULL, expires INTEGER NOT NULL, state TEXT NOT NULL, downloaded TEXT, received TEXT, response TEXT
   ); CREATE INDEX IF NOT EXISTS pilot_report_delivery_scope ON pilot_report_delivery(engagement,issued);`);
+  const columns=new Set(db.prepare('PRAGMA table_info(pilot_report_delivery)').all().map(r=>r.name));
+  for(const name of ['outcome_at','outcome_by','outcome_reference'])if(!columns.has(name))db.exec('ALTER TABLE pilot_report_delivery ADD COLUMN '+name+' TEXT');
+  db.exec(`CREATE TABLE IF NOT EXISTS pilot_report_delivery_events (id INTEGER PRIMARY KEY,delivery TEXT NOT NULL,engagement TEXT NOT NULL,state TEXT NOT NULL,at TEXT NOT NULL,actor TEXT NOT NULL,reference TEXT NOT NULL,reason TEXT NOT NULL);`);
   const state=(row)=>row.state==='pending'&&row.expires<=Date.now()?'expired':row.state;
   function view(id) {
-    return db.prepare('SELECT id,issued,artifact,recipient,contact,created,expires,state,downloaded,received,response FROM pilot_report_delivery WHERE engagement=? ORDER BY created DESC')
-      .all(id).map(row=>({...row,state:state(row)}));
+    return db.prepare('SELECT id,issued,artifact,recipient,contact,created,expires,state,downloaded,received,response,outcome_at,outcome_by,outcome_reference FROM pilot_report_delivery WHERE engagement=? ORDER BY created DESC,rowid DESC')
+      .all(id).map(row=>({...row,state:state(row),events:db.prepare('SELECT state,at,actor,reference,reason FROM pilot_report_delivery_events WHERE engagement=? AND delivery=? ORDER BY id').all(id,row.id)}));
   }
   function start(m,role,data) {
     if (role!=='partner') fail('Хүргэлт бүртгэх партнер шаардлагатай.',403);
@@ -52,7 +60,7 @@ export function createReleaseStore(db,store,filesFor) {
     const contact=m.bench.clients[m.engagement].contacts.find(c=>c.id===data.recipient);
     if (!contact?.email||!contact.name) fail('Хянасан хүлээн авагч сонгоно уу.');
     const pending=db.prepare(`SELECT 1 FROM pilot_report_delivery WHERE engagement=? AND issued=? AND recipient=? AND
-      (state='received' OR state='pending' AND expires>?)`).get(m.engagement,issue.at,contact.email,Date.now());
+      (state IN ('received','unknown') OR state='pending' AND expires>?)`).get(m.engagement,issue.at,contact.email,Date.now());
     if (pending) fail('Энэ гаргалтын холбоос эсвэл хүлээн авалт бүртгэгдсэн.');
     const token=randomBytes(32).toString('hex'), id=randomBytes(16).toString('hex');
     db.prepare(`INSERT INTO pilot_report_delivery (token_hash,id,engagement,issued,authorization,artifact,recipient,contact,created,expires,state)
@@ -60,6 +68,16 @@ export function createReleaseStore(db,store,filesFor) {
         contact.email,contact.name,now(),Date.now()+86_400_000);
     recordEvent(m,'Локал тайлангийн хүргэлт үүсгэв · '+contact.name);
     return {token,id,recipient:contact.email};
+  }
+  function recordOutcome(m,role,data){
+    if(role!=='partner')fail('Хүргэлтийн үр дүнг эрх бүхий партнер бүртгэнэ.',403);
+    const row=db.prepare('SELECT * FROM pilot_report_delivery WHERE engagement=? AND id=?').get(m.engagement,data.id);
+    if(filesFor(m.engagement).archive.isSealed(m)||!row||row.issued!==m.pilotIssue?.at||!currentApproval(m,m.engagements[0]))fail('Нээлттэй одоогийн гаргалтын хүргэлт шаардлагатай.');
+    if(!['pending','unknown'].includes(row.state)||!['failed','unknown','withdrawn'].includes(data.state))fail('Хүлээн авсан эсвэл эцэслэсэн үр дүнг өөрчлөхгүй.');
+    const reference=input(data,'reference',200),reason=input(data,'reason'),at=now();
+    db.prepare('INSERT INTO pilot_report_delivery_events(delivery,engagement,state,at,actor,reference,reason) VALUES (?,?,?,?,?,?,?)').run(row.id,m.engagement,data.state,at,role,reference,reason);
+    db.prepare('UPDATE pilot_report_delivery SET state=?,outcome_at=?,outcome_by=?,outcome_reference=?,response=? WHERE id=?').run(data.state,at,role,reference,reason,row.id);
+    recordEvent(m,'Тайлангийн хүргэлтийн бодит үр дүн · '+row.recipient+' · '+data.state);
   }
   function available(token) {
     const row=db.prepare("SELECT * FROM pilot_report_delivery WHERE token_hash=? AND state='pending' AND expires>?").get(hash(token),Date.now());
@@ -87,5 +105,5 @@ export function createReleaseStore(db,store,filesFor) {
     db.prepare("UPDATE pilot_report_delivery SET state='received',received=?,response=? WHERE id=?").run(at,response,row.id);
     return {at,sha256:row.artifact};
   }
-  return {start,view,read,download,receive};
+  return {start,recordOutcome,view,read,download,receive};
 }

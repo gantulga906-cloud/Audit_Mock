@@ -1,0 +1,104 @@
+'use client';
+
+import {useEffect,useRef,useState,type ReactNode} from 'react';
+import {Activity,Archive,ArrowDownToLine,ArrowRight,BookOpen,BriefcaseBusiness,CalendarDays,Check,ChevronDown,ChevronRight,ClipboardCheck,Database,FileText,FolderOpen,LayoutDashboard,LogOut,Menu,Moon,PanelRightClose,PanelRightOpen,RefreshCw,Search,Settings2,ShieldCheck,Sun,Users,X} from 'lucide-react';
+import {workspacePages,paperAttention,type WorkspacePage,type WorkspaceRoute,type WorkspaceFilter} from '@/lib/workspace-navigation';
+import {pilotScope} from '@/lib/pilot-registers';
+import {readWord,readWorkbook} from '@/lib/office-preview';
+import type {Grid} from '@/lib/workbench';
+import type {Paper,View} from './pilot-workspace';
+
+const roleNames={preparer:'Бэлтгэгч',reviewer:'Ахлах хянагч',partner:'Партнер'};
+export const paperStates:Record<string,string>={not_started:'Эхлээгүй',in_progress:'Бэлтгэж буй',waiting:'Хүлээгдэж буй',submitted:'Хяналтад',returned:'Буцаасан',reviewed:'Хянагдсан',changed:'Дахин хянуулах'};
+const stageNames=['Хүлээн авах','Төлөвлөлт','Гүйцэтгэл','Тайлагнал','Архив'];
+const icons={home:LayoutDashboard,clients:BriefcaseBusiness,overview:LayoutDashboard,workpapers:FileText,evidence:FolderOpen,data:Database,planning:CalendarDays,review:ClipboardCheck,completion:ShieldCheck,archive:Archive,people:Users,library:BookOpen,admin:Settings2,history:Activity};
+export function PaperState({paper}:{paper:Pick<Paper,'status'>}) {return <span className={'ew-status ew-status-'+paper.status}><i/>{paperStates[paper.status]??paper.status}</span>;}
+export function WorkspaceEmpty({title,description,children}:{title:string;description:string;children?:ReactNode}) {
+ return <div className="ew-empty"><FolderOpen size={30}/><h2>{title}</h2><p>{description}</p>{children}</div>;
+}
+
+export function WorkspaceShell({view,route,navigate,query,setQuery,busy,dirty,refresh,logout,canLeave,children}:{
+ view:View;route:WorkspaceRoute;navigate:(next:WorkspaceRoute)=>void;query:string;setQuery:(s:string)=>void;busy:boolean;dirty:boolean;refresh:()=>void;logout:()=>void;canLeave:()=>boolean;children:ReactNode;
+}){
+ const [theme,setTheme]=useState('light'),[density,setDensity]=useState('comfortable'),[mobile,setMobile]=useState(false);
+ const search=useRef<HTMLInputElement>(null);
+ useEffect(()=>{try{setTheme(localStorage.getItem('audit-ui-theme')==='dark'?'dark':'light');setDensity(localStorage.getItem('audit-ui-density')==='compact'?'compact':'comfortable');}catch{}},[]);
+ useEffect(()=>{const key=(e:KeyboardEvent)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();search.current?.focus();}};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);},[]);
+ function preference(kind:'theme'|'density',value:string){if(kind==='theme')setTheme(value);else setDensity(value);try{localStorage.setItem('audit-ui-'+kind,value);}catch{}}
+ const go=(page:WorkspacePage)=>{navigate({...route,engagement:['clients','library','people','admin'].includes(page)?null:route.engagement,page,paper:null});setMobile(false);};
+ const nav=(pages:WorkspacePage[])=>pages.map(page=>{const Icon=icons[page];const count=page==='review'?(view.papers??[]).filter(p=>p.reviewable).length:page==='workpapers'?view.papers?.length:undefined;return <button key={page} type="button" disabled={busy} aria-current={route.page===page?'page':undefined} className={'ew-nav '+(route.page===page?'is-active':'')} onClick={()=>go(page)}><Icon size={17}/><span>{workspacePages[page].label}</span>{!!count&&<small>{count}</small>}</button>;});
+ return <div className="ew-shell" data-theme={theme} data-density={density}>
+  <a href="#workspace-main" className="ew-skip">Үндсэн хэсэгт очих</a>
+  {mobile&&<button className="ew-scrim" aria-label="Цэс хаах" onClick={()=>setMobile(false)}/>}
+  <aside className={'ew-sidebar '+(mobile?'is-open':'')}>
+   <button className="ew-brand" onClick={()=>go('home')}><span className="ew-brand-mark">v<span/></span><span>veritech<small>AUDIT WORKSPACE</small></span></button>
+   <div className="ew-firm"><span className="ew-firm-icon"><BriefcaseBusiness size={17}/></span><span><b>Аудитын ажлын орчин</b><small>Гэрээт ажил ба баг</small></span></div>
+   <nav aria-label="Ажлын орчны цэс"><p className="ew-nav-label">АЖЛЫН ОРЧИН</p>{nav(['home','clients'])}
+    {view.selected&&<><p className="ew-nav-label">ГЭРЭЭТ АЖИЛ</p>{nav(['overview','workpapers','evidence','data','planning','review','completion','archive'])}</>}
+    <p className="ew-nav-label">ФИРМИЙН АЖИЛ</p>{nav(['library',...(view.role!=='preparer'?['people' as const]:[]),'admin','history'])}
+   </nav>
+   <div className="ew-sidebar-footer"><a href="/pilot#oversight=quality" onClick={e=>{if(!canLeave())e.preventDefault();}}><ShieldCheck size={15}/>Хараат бус хяналт<ChevronRight size={14}/></a><a href="/pilot#oversight=custodian" onClick={e=>{if(!canLeave())e.preventDefault();}}><Archive size={15}/>Хадгалалтын хүлээлцэх<ChevronRight size={14}/></a>
+    <div className="ew-preferences"><button aria-label={theme==='light'?'Бараан горим':'Цайвар горим'} title="Өнгөний горим" onClick={()=>preference('theme',theme==='light'?'dark':'light')}>{theme==='light'?<Moon size={16}/>:<Sun size={16}/>}</button><button onClick={()=>preference('density',density==='compact'?'comfortable':'compact')} aria-pressed={density==='compact'}>Нягтрал: {density==='compact'?'нягт':'ердийн'}</button></div>
+    <a className="ew-legacy" href="/legacy/" onClick={e=>{if(!canLeave())e.preventDefault();}}>Өмнөх загварын хадгалсан ажил ↗</a>
+   </div>
+  </aside>
+  <div className="ew-frame">
+   <header className="ew-topbar"><button className="ew-mobile-menu" aria-label="Цэс нээх" onClick={()=>setMobile(!mobile)}><Menu size={20}/></button>
+    <div className="ew-context"><span className="ew-context-label">ГЭРЭЭТ АЖИЛ</span><label><span className="sr-only">Гэрээт ажил сонгох</span><select value={view.selected??'firm'} disabled={busy} onChange={e=>navigate({engagement:e.target.value==='firm'?null:e.target.value,page:e.target.value==='firm'?'clients':'overview',paper:null})}><option value="firm">Бүх гэрээт ажил</option>{view.portfolio.map(p=><option key={p.id} value={p.id}>{p.client} · {p.end.slice(0,4)}</option>)}</select><ChevronDown size={14}/></label></div>
+    <label className="ew-search"><Search size={16}/><input ref={search} aria-label="Одоогийн жагсаалтаас хайх" placeholder="Жагсаалтаас хайх…" value={query} onChange={e=>setQuery(e.target.value)}/><kbd>Ctrl K</kbd></label>
+    <div className="ew-account"><span className="ew-avatar">{roleNames[view.role].slice(0,1)}</span><span><b>{roleNames[view.role]}</b><small>{dirty?'Хадгалаагүй өөрчлөлт':busy?'Хадгалж байна…':'Бүртгэл холбогдсон'}</small></span><button disabled={busy} aria-label="Бүртгэл шинэчлэх" title="Бүртгэл шинэчлэх" onClick={refresh}><RefreshCw size={16} className={busy?'ew-spinning':''}/></button><button disabled={busy} aria-label="Гарах" title="Гарах" onClick={logout}><LogOut size={16}/></button></div>
+   </header>
+   <main id="workspace-main" className="ew-main" tabIndex={-1} aria-busy={busy}>
+    <div className="ew-page-heading"><div><div className="ew-breadcrumb"><span>Ажлын орчин</span><ChevronRight size={12}/><span>{view.engagement?view.engagement.period.end.slice(0,4):'Фирм'}</span>{route.paper&&<><ChevronRight size={12}/><span>{route.paper}</span></>}</div><h1>{route.paper?view.papers?.find(p=>p.form===route.paper)?.title??route.paper:workspacePages[route.page].label}</h1><p>{route.paper?`${view.engagement?.client} · ${route.paper}`:workspacePages[route.page].description}</p></div><span className="ew-scope-tag">{view.engagement?`${view.engagement.period.start} — ${view.engagement.period.end}`:view.portfolio.length+' гэрээт ажил'}</span></div>
+    {children}
+   </main>
+  </div>
+ </div>;
+}
+
+export function WorkpaperIndex({view,query,open,mode='all',routeFilter,routeStage,onFiltersChange}:{view:View;query:string;open:(form:string)=>void;mode?:string;routeFilter?:WorkspaceFilter;routeStage?:string;onFiltersChange?:(filter:WorkspaceFilter,stage:string)=>void}){
+ const preferenceKey='audit-paper-index:'+view.role+':'+view.selected+':'+mode;
+ const preference=(key:string,fallback:string)=>{try{return JSON.parse(sessionStorage.getItem(preferenceKey)??'{}')[key]??fallback;}catch{return fallback;}};
+ const [filter,setFilter]=useState<string>(()=>routeFilter??preference('filter',mode)),[stage,setStage]=useState<string>(()=>routeStage??preference('stage',''));
+ useEffect(()=>{setFilter(routeFilter??preference('filter',mode));setStage(routeStage??preference('stage',''));},[preferenceKey,routeFilter,routeStage]);
+ function changeFilter(next:string,nextStage=stage){setFilter(next);setStage(nextStage);try{sessionStorage.setItem(preferenceKey,JSON.stringify({filter:next,stage:nextStage}));}catch{}onFiltersChange?.(next as WorkspaceFilter,nextStage);}
+
+ const papers=view.papers??[];
+ const matches=(p:Paper,value:string)=>value==='all'||value==='mine'&&p.editable&&p.status!=='reviewed'||value==='review'&&p.reviewable||value==='returned'&&['returned','changed'].includes(p.status)||value==='reviewed'&&p.status==='reviewed'||value==='blocked'&&paperAttention(p)==='blocked';
+ const filtered=papers.filter(p=>matches(p,filter)&&(!stage||String(p.stage)===stage)&&[p.form,p.title,p.owner,p.reviewer].join(' ').toLowerCase().includes(query.toLowerCase()));
+ return <section className="ew-panel"><div className="ew-table-toolbar"><div className="ew-filter-tabs" aria-label="Ажлын шүүлт">{[['all','Бүгд'],['mine','Миний ажил'],['review','Хяналтад'],['returned','Буцаасан'],['blocked','Саатсан']].map(([id,label])=><button key={id} type="button" className={filter===id?'is-active':''} aria-pressed={filter===id} onClick={()=>changeFilter(id)}>{label}<small>{papers.filter(p=>matches(p,id)).length}</small></button>)}</div><label className="ew-inline-select"><span className="sr-only">Үе шатаар шүүх</span><select value={stage} onChange={e=>changeFilter(filter,e.target.value)}><option value="">Бүх үе шат</option>{stageNames.map((n,i)=><option key={n} value={i+1}>{i+1} · {n}</option>)}</select></label></div>
+  <div className="ew-table-scroll"><table className="ew-table"><thead><tr><th>Ажлын баримт</th><th>Төлөв</th><th>Хариуцлага</th><th>Хугацаа</th><th>Хяналт / саатал</th><th><span className="sr-only">Нээх</span></th></tr></thead><tbody>{filtered.map(p=><tr key={p.id}><td><button className="ew-paper-link" onClick={()=>open(p.form)}><span className="ew-file-icon"><FileText size={19}/></span><span><b>{p.title}</b><small>{p.form} · {stageNames[p.stage-1]} · v{p.version}</small></span></button></td><td><PaperState paper={p}/></td><td><span className="ew-person">{p.editable?'Танд хуваарилсан':p.reviewable?'Таны хяналтад':namesForPaper(p,view)}</span><small className="ew-cell-muted">{p.evidence.length} баримт</small></td><td><span className="ew-date">{p.due||'Төлөвлөөгүй'}</span></td><td><span className={paperAttention(p)==='blocked'?'ew-warning':'ew-cell-muted'}>{p.pendingPlanning?'Төлөвлөлтийн шийдвэр':p.fieldGap||p.requestGap||((p.nativeGaps?.length??0)>0?`${p.nativeGaps!.length} дутуу оролт`:p.notes.some(n=>!n.cleared)?`${p.notes.filter(n=>!n.cleared).length} нээлттэй тэмдэглэл`:'—')}</span></td><td><button aria-label={p.form+' нээх'} className="ew-row-open" onClick={()=>open(p.form)}><ArrowRight size={16}/></button></td></tr>)}</tbody></table></div>
+  {!filtered.length&&<WorkspaceEmpty title="Тохирох ажил алга" description="Хайлтын үг эсвэл шүүлтээ өөрчилнө үү."/>}<footer className="ew-table-footer"><span>{filtered.length} / {papers.length} ажлын баримт</span><span>Бэлтгэл ба хяналтын төлөв тусдаа</span></footer>
+ </section>;
+}
+function namesForPaper(p:Paper,view:View){const seat=view.staffing?.seats.find(s=>s.account&&({preparer:'nomin',reviewer:'temuulen',partner:'bat'}[s.account])===p.owner);return seat?.name??({nomin:'Бэлтгэгч',temuulen:'Ахлах хянагч',bat:'Партнер'}[p.owner]??p.owner);}
+
+export function WorkOverview({view,open,go}:{view:View;open:(form:string)=>void;go:(page:WorkspacePage,filter?:WorkspaceFilter)=>void}){
+ const papers=view.papers??[],mine=papers.filter(p=>p.editable&&p.status!=='reviewed'),review=papers.filter(p=>p.reviewable),returned=papers.filter(p=>['returned','changed'].includes(p.status)),reviewed=papers.filter(p=>p.status==='reviewed');
+ const priorities=[...new Set([...returned.filter(p=>p.editable),...review,...mine])].slice(0,6);
+ return <><div className="ew-overview-intro"><div><span className="ew-eyebrow">{view.engagement?.client??'ТАНЫ АЖЛЫН ОРЧИН'}</span><h2>{view.role==='partner'?'Шийдвэр бүрийн цаана нотолгоо.':view.role==='reviewer'?'Багийн ажил. Тодорхой дараагийн алхам.':'Өнөөдрийн ажлаа эндээс эхлүүлээрэй.'}</h2><p>{view.engagement?'Хариуцах ажил, хяналт болон хүлээгдэж буй шийдвэрийг нэг дороос.':'Гэрээт ажлаа сонгож, хуваарилсан ажил болон хяналтаа нээнэ үү.'}</p></div><span className="ew-intro-symbol"><ClipboardCheck size={40} strokeWidth={1}/></span></div>
+  {view.engagement&&<><div className="ew-metrics">{[[mine.length,'Бэлтгэх ажил','workpapers','mine'],[review.length,'Таны хяналтад','review','review'],[returned.length,'Буцаасан / өөрчлөгдсөн','workpapers','returned'],[`${reviewed.length} / ${papers.length}`,'Хянагдсан баримт','workpapers','reviewed']].map(([value,label,page,filter])=><button key={label} onClick={()=>go(page as WorkspacePage,filter as WorkspaceFilter)}><span>{label}</span><b>{value}</b><small>Дэлгэрэнгүй <ArrowRight size={13}/></small></button>)}</div>
+   <div className="ew-overview-columns"><section className="ew-panel"><div className="ew-panel-title"><div><h2>Таны дараагийн ажил</h2><p>Буцаасан ажил, хяналт болон бэлтгэл</p></div><button className="ew-text-button" onClick={()=>go('workpapers')}>Бүгдийг үзэх <ArrowRight size={14}/></button></div>{priorities.map(p=><button className="ew-queue-row" key={p.id} onClick={()=>open(p.form)}><span className="ew-file-icon"><FileText size={18}/></span><span><b>{p.title}</b><small>{p.form} · {p.due||'Хугацаа төлөвлөөгүй'}</small></span><PaperState paper={p}/><ChevronRight size={16}/></button>)}{!priorities.length&&<WorkspaceEmpty title="Хүлээгдэж буй ажил алга" description="Ажлын баримтын бүртгэлээс бусад ажлыг харж болно."/>}</section>
+    <section className="ew-panel"><div className="ew-panel-title"><div><h2>Анхаарах зүйлс</h2><p>Одоогийн бүртгэлийн бэлэн байдал</p></div></div><div className="ew-readiness"><span className={'ew-status '+(view.engagement.active?'ew-status-reviewed':'ew-status-waiting')}>{view.engagement.active?'Идэвхтэй гэрээт ажил':'Хүлээн авах шийдвэр хүлээгдэж байна'}</span>{[...view.engagement.acceptanceGaps,...(view.gaps??[])].slice(0,5).map((g,i)=><p key={i}><span className="ew-warning-dot"/>{g}</p>)}{!view.engagement.acceptanceGaps.length&&!view.gaps?.length&&<p><Check size={16}/>Бүртгэлд нэрлэсэн саатал алга. Шаардлагатай шийдвэрээ тусад нь хянана.</p>}<button className="ew-text-button" onClick={()=>go(view.engagement!.active?'completion':'overview')}>Шийдвэрийн хэсэг нээх <ArrowRight size={14}/></button></div></section></div>
+  </>}
+ </>;
+}
+
+export function EvidencePreview({file,engagement,onClose}:{file:NonNullable<View['evidence']>[number];engagement:string|null;onClose:()=>void}){
+ const [result,setResult]=useState<{url?:string;text?:string;sheets?:Grid[]}>({}),[loading,setLoading]=useState(true),[error,setError]=useState(''),[sheet,setSheet]=useState(0);
+ const path='/api/pilot/evidence/'+encodeURIComponent(file.id)+pilotScope(engagement),ext=file.name.split('.').at(-1)?.toLowerCase();
+ useEffect(()=>{const abort=new AbortController();let url='';setResult({});setLoading(true);setError('');setSheet(0);
+  void fetch(path,{signal:abort.signal,cache:'no-store'}).then(async res=>{if(!res.ok)throw Error('Файлыг нээх эрх эсвэл эх файл боломжгүй байна.');const blob=await res.blob();if(['pdf','png','jpg','jpeg'].includes(ext??'')){url=URL.createObjectURL(blob);return {url};}if(ext==='docx')return {text:await readWord(blob)};if(ext==='xlsx')return {sheets:await readWorkbook(blob)};if(['csv','txt'].includes(ext??''))return {text:(await blob.text()).slice(0,100000)};return {text:'Энэ төрлийн файлыг татаж, тохирох программаар нээнэ үү.'};}).then(value=>{if(!abort.signal.aborted)setResult(value);}).catch(e=>{if(!abort.signal.aborted)setError((e as Error).message);}).finally(()=>{if(!abort.signal.aborted)setLoading(false);});return()=>{abort.abort();if(url)URL.revokeObjectURL(url);};
+ },[path,ext]);
+ return <aside className="ew-evidence-preview" aria-label="Нотлох баримтын дэлгэрэнгүй"><header><span className="ew-file-icon"><FileText size={18}/></span><div><h2>{file.name}</h2><p>v{file.version} · {file.status==='accepted'?'Зөвшөөрсөн':file.status==='rejected'?'Буцаасан':'Үнэлэх'}</p></div><button aria-label="Баримтын самбар хаах" onClick={onClose}><PanelRightClose size={18}/></button></header><div className="ew-preview-meta"><span>{file.source}</span><span>{file.anchor||'Байршлын ишлэл бүртгээгүй'}</span><a href={path} target="_blank" rel="noopener noreferrer"><ArrowDownToLine size={14}/>Эх файл нээх</a></div>
+  <div className="ew-preview-content">{loading?<p role="status">Эх файлыг ачаалж байна…</p>:error?<p role="alert">{error}</p>:result.url?ext==='pdf'?<iframe title={file.name} src={result.url}/>:<img alt={file.name} src={result.url}/>:result.sheets?<><label>Хуудас<select value={sheet} onChange={e=>setSheet(Number(e.target.value))}>{result.sheets.map((s,i)=><option key={i} value={i}>{s.name}</option>)}</select></label>{result.sheets[sheet]?.notes?.map(n=><p className="micro" key={n}>{n}</p>)}<p className="micro">Эхний 100 мөрийн утгын тойм. Эх файлыг тусад нь бүрэн нээж болно.</p><div className="ew-table-scroll"><table className="ew-table"><tbody>{result.sheets[sheet]?.rows.slice(0,100).map((row,i)=><tr key={i}><th>{i+1}</th>{row.slice(0,16).map((v,j)=><td key={j}>{v}</td>)}</tr>)}</tbody></table></div></>:<pre>{result.text}</pre>}</div><footer><small>Яг энэ эх хувилбар · {file.sha256.slice(0,16)}…</small><p>{file.assessment||'Хүлээн авалт болон аудитын үнэлгээ нь тусдаа шийдвэр.'}</p></footer>
+ </aside>;
+}
+
+export function EvidenceLibraryView({view,query,preview}:{view:View;query:string;preview:(id:string)=>void}){
+ const [filter,setFilter]=useState('all');
+ const files=(view.evidence??[]).filter(e=>(filter==='all'||e.status===filter)&&[e.name,e.source].join(' ').toLowerCase().includes(query.toLowerCase()));
+ return <section className="ew-panel"><div className="ew-table-toolbar"><h2>Эх файлын сан</h2><label className="ew-inline-select"><span className="sr-only">Баримтын төлөв</span><select value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">Бүх төлөв</option><option value="received">Үнэлэх</option><option value="accepted">Зөвшөөрсөн</option><option value="rejected">Буцаасан</option></select></label></div><div className="ew-table-scroll"><table className="ew-table"><thead><tr><th>Файл</th><th>Төлөв</th><th>Эх сурвалж</th><th>Холбоотой ажил</th></tr></thead><tbody>{files.map(e=><tr key={e.id}><td><button className="ew-paper-link" onClick={()=>preview(e.id)}><span className="ew-file-icon"><FileText size={18}/></span><span><b>{e.name}</b><small>v{e.version}{e.current===false?' · Өмнөх хувилбар':''} · {e.type}</small></span></button></td><td><span className={'ew-status ew-status-'+(e.status==='accepted'?'reviewed':e.status==='rejected'?'returned':'waiting')}>{e.status==='accepted'?'Зөвшөөрсөн':e.status==='rejected'?'Буцаасан':'Үнэлэх'}</span></td><td>{e.source}</td><td>{(view.papers??[]).filter(p=>p.evidence.includes(e.id)).map(p=>p.form).join(', ')||'—'}</td></tr>)}</tbody></table></div>{!files.length&&<WorkspaceEmpty title="Нотлох баримт алга" description="Эх файл нэмэх эсвэл хүсэлтийн хүлээн авалтыг бүртгэнэ үү."/>}<footer className="ew-table-footer">{files.length} эх файл · Хүлээн авалт нь зөвшөөрөл гэсэн үг биш</footer></section>;
+}
+
+export function AuthFrame({children}:{children:ReactNode}){return <main className="ew-auth" data-theme="light"><div className="ew-auth-story"><div className="ew-brand"><span className="ew-brand-mark">v<span/></span><span>veritech<small>AUDIT WORKSPACE</small></span></div><div><span className="ew-eyebrow">АУДИТЫН БАГИЙН АЖЛЫН ОРЧИН</span><h1>Ажил бүр тодорхой.<br/>Шийдвэр бүр нотолгоотой.</h1><p>Гэрээт ажил, ажлын баримт, нотлох баримт болон хяналтыг нэг орчинд.</p><div className="ew-auth-features"><span><FileText size={19}/>Ажлын баримтууд</span><span><FolderOpen size={19}/>Нотлох баримт</span><span><ShieldCheck size={19}/>Хяналт ба шийдвэр</span></div></div><small>Veritech Audit</small></div><div className="ew-auth-content">{children}</div></main>;}

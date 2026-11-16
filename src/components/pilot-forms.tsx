@@ -1,11 +1,12 @@
 'use client';
 
-import {useState,type FormEvent} from 'react';
+import {useEffect,useId,useRef,useState,type FormEvent} from 'react';
 import {TypedInput} from './workbench-panels';
 import {readWorkbook} from '@/lib/office-preview';
-import {formKinds,procedureOutcomes,sharedBindings,type LibraryView,type PaperForm} from '@/lib/pilot-forms';
+import {formKinds,procedureOutcomes,sharedBindings,type LibraryView,type PaperForm,type FormAdoptionPreview} from '@/lib/pilot-forms';
+import {readPilotResponse} from '@/lib/pilot-client';
 import {pilotScope as scope,type PilotRole} from '@/lib/pilot-registers';
-import {templateFromGrid,visibleField,type Field,type Grid,type Template} from '@/lib/workbench';
+import {templateFromGrid,visibleField,tableColumns,type Field,type Grid,type Template} from '@/lib/workbench';
 import type {Evidence} from '@/lib/workspace';
 import type {PilotAction} from './pilot-registers';
 
@@ -13,13 +14,16 @@ type NamedForm={id:string;title:string};
 type Answers=Record<string,string>;
 const actorName={reviewer:'Ахлах хянагч',preparer:'Бэлтгэгч',partner:'Партнер'};
 const newField=():Field=>({key:'q'+crypto.randomUUID(),label:'',type:'text',source:'Захиалгат'});
+const editableColumns=(field:Field):NonNullable<Field['columns']>=>field.columns??tableColumns;
 const newId=()=> 'F-'+crypto.randomUUID().slice(0,8).toUpperCase();
 const blank=():Template=>({id:newId(),title:'',stage:1,fields:[newField()],family:'questionnaire',sheet:'Арга зүйн сан'});
 
-export function NativeFields({template,answers,set,disabled,evidence,shared,linked}:{
+export function NativeFields({template,answers,set,disabled,evidence,shared,linked,owned}:{
  template:Template;answers:Answers;set:(key:string,value:string)=>void;disabled?:boolean;
- evidence?:Evidence[];shared?:PaperForm['shared'];linked?:PaperForm['linked'];
+ evidence?:Evidence[];shared?:PaperForm['shared'];linked?:PaperForm['linked'];owned?:PaperForm['owned'];
 }){
+ const prefix=useId(),visible=template.fields.filter(f=>visibleField(f,answers));
+ const groups=[...new Set(visible.map(f=>f.section||'Ажлын агуулга'))];
  const available=evidence?.filter(e=>e.status==='accepted');
  const render=(f:Field)=><TypedInput field={f} value={answers[f.key]??''} change={v=>set(f.key,v)}
   disabled={disabled} evidence={available} linkedValue={f.binding&&shared?.[f.binding]}/>;
@@ -27,12 +31,13 @@ export function NativeFields({template,answers,set,disabled,evidence,shared,link
   {!!template.clauses?.length&&<details className="feature-detail"><summary>Эх маягтын тогтмол заалтууд</summary>
    {template.clauses.map((clause,i)=><p key={i}>{clause.text??clause.label} <small>{clause.source}</small></p>)}
   </details>}
-  {template.fields.filter(f=>visibleField(f,answers)).map(f=>{
+  {groups.length>1&&<nav className="ew-section-index" aria-label="Маягтын бүлгүүд">{groups.map(group=>{const first=visible.find(f=>(f.section||'Ажлын агуулга')===group)!;return <button key={group} title={group} type="button" onClick={()=>document.getElementById(prefix+first.key)?.scrollIntoView({block:'start',behavior:'smooth'})}>{group}</button>;})}</nav>}
+  {visible.map(f=>{
    const outcomes=procedureOutcomes(f);
-   return <section className="bench-item" key={f.key}>
+   return <section className="bench-item ew-native-field" id={prefix+f.key} key={f.key}>
     <b>{f.label}{f.required?' *':''}</b><p className="micro">{f.section&&f.section+' · '}{template.sheet}!{f.source}</p>
     {f.instruction&&<details><summary>Заавар</summary><p className="micro">{f.instruction}</p></details>}
-    {f.decision?<div className="linked-value">{linked?.[f.key]||'Шийдвэр хүлээгдэж байна'} <small>Хүлээн авах шийдвэрийн бүртгэлээс</small></div>:f.type==='procedure'?<div className="field-grid">
+    {owned&&Object.hasOwn(owned,f.key)?<div className="linked-value">{owned[f.key]} <small>Материаллаг байдлын хадгалсан сонголтоос</small></div>:f.decision?<div className="linked-value">{linked?.[f.key]||'Шийдвэр хүлээгдэж байна'} <small>Хүлээн авах шийдвэрийн бүртгэлээс</small></div>:f.type==='procedure'?<div className="field-grid">
      <div><span>Гүйцэтгэл</span>{render({...f,type:'textarea',label:'Гүйцэтгэл · '+f.source})}</div>
      {!!outcomes.length&&<div><span>Үр дүн</span>{render({...f,key:f.key+'.outcome',type:'select',label:'Үр дүн · '+f.source,options:outcomes})}</div>}
      <div><span>Үнэлсэн эх баримт</span>{render({...f,key:f.key+'.file',type:'evidence',label:'Үнэлсэн эх баримт · '+f.source})}</div>
@@ -45,24 +50,48 @@ export function NativeFields({template,answers,set,disabled,evidence,shared,link
  </>;
 }
 
-export function AdoptPilotForm({forms,library,pins,run}:{
- forms:NamedForm[];library:LibraryView;pins:Record<string,number>;run:PilotAction;
+export function AdoptPilotForm({forms,library,pins,run,engagementId}:{
+ forms:NamedForm[];library:LibraryView;pins:Record<string,number>;run:PilotAction;engagementId:string;
 }){
  const [id,setId]=useState(''),[version,setVersion]=useState('source');
+ const [preview,setPreview]=useState<FormAdoptionPreview|null>(null),[ack,setAck]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState('');
+ const request=useRef(0);
+ const reset=()=>{request.current++;setPreview(null);setAck(false);setError('');setBusy(false);};
+ useEffect(()=>{request.current++;setPreview(null);setAck(false);setError('');setBusy(false);},[engagementId]);
+ const inspect=async()=>{
+  const serial=++request.current;setBusy(true);setError('');
+  try{const result=await readPilotResponse<FormAdoptionPreview>(await fetch('/api/pilot/form-adoption-preview'+scope(engagementId)+'&form='+encodeURIComponent(id)+'&version='+encodeURIComponent(version),{cache:'no-store'}));
+   if(serial===request.current){setPreview(result);setAck(false);}
+  }catch(e){if(serial===request.current){setPreview(null);setError((e as Error).message);}}
+  finally{if(serial===request.current)setBusy(false);}
+ };
+ const reasons:Record<string,string>={'removed-field':'Талбарыг хассан','changed-type':'Хариултын төрөл өөрчлөгдсөн','invalid-value':'Шинэ сонголттой тохирохгүй','removed-column':'Баганыг хассан','changed-column-type':'Баганын төрөл өөрчлөгдсөн','invalid-cell':'Шинэ баганатай тохирохгүй','not-applicable':'Шинэ нөхцөлд хамаарахгүй'};
  const published=library.releases.find(r=>r.id===id);
  const builtIn=forms.some(f=>f.id===id);
  const catalogue=[...forms,...library.releases.filter(r=>r.id.startsWith('F-'))];
  return <details className="card pad bench-card">
   <summary>Эх маягт ба баталсан хувилбар холбох</summary>
-  <form className="feature-form" onSubmit={e=>{e.preventDefault();void run('form-use',{form:id,version});}}>
-   <label>Маягт<select value={id} required onChange={e=>{
-    setId(e.target.value);const v=library.releases.find(r=>r.id===e.target.value);setVersion(v?String(v.number):'source');
+  <form className="feature-form" data-form-adoption onSubmit={e=>{e.preventDefault();if(!preview){void inspect();return;}if(preview.sameVersion||preview.requiresReview&&!ack)return;setBusy(true);void run('form-use',{form:id,version,adoptionReview:preview.digest,adoptionAck:ack?'reviewed':''}).finally(reset);}}>
+   <label>Маягт<select name="form" value={id} required onChange={e=>{
+    reset();setId(e.target.value);const v=library.releases.find(r=>r.id===e.target.value);setVersion(v?String(v.number):'source');
    }}><option value="">Сонгох</option>{catalogue.map(f=><option key={f.id} value={f.id}>{f.id} · {f.title}</option>)}</select></label>
-   {id&&<label>Хувилбар<select value={version} onChange={e=>setVersion(e.target.value)}>
+   {id&&<label>Хувилбар<select name="version" value={version} onChange={e=>{reset();setVersion(e.target.value);}}>
     {builtIn&&<option value="source">Эх маягт</option>}{published&&<option value={published.number}>Баталсан v{published.number}</option>}
    </select></label>}
    {pins[id]!==undefined&&<p className="micro">Ажилд холбосон {pins[id]===0?'эх маягт':'v'+pins[id]}</p>}
-   <button className="btn primary" disabled={!id}>Хувилбарыг энэ ажилд холбох</button>
+   {error&&<p className="callout amber" role="alert">{error}</p>}
+   {preview&&<section className="feature-fields" data-adoption-preview>
+    <h3>{preview.sameVersion?'Яг энэ хувилбар холбогдсон':'Шинэ хувилбарын нөлөө'}</h3>
+    <p>{preview.to.title} · {preview.from?'v'+preview.from.number:'Өмнөх холболтгүй'} → v{preview.to.number} · {preview.retainedAnswers} хариултыг үргэлжлүүлэн ашиглана.</p>
+    {preview.reopensReview&&<p className="callout amber">Хянасан эсвэл илгээсэн ажил шинэ хувилбараар дахин хяналт шаардана.</p>}
+    {preview.changes.length>0&&<details><summary>Талбарын өөрчлөлт · {preview.changes.length}</summary>{preview.changes.map(c=><p key={c.key}>{c.change==='added'?'Нэмсэн':c.change==='removed'?'Хассан':'Өөрчилсөн'} · {c.label} · {c.source}</p>)}</details>}
+    {preview.losses.length>0&&<details open><summary>Одоогийн хувилбарт шилжүүлэхгүй хариулт · {preview.losses.length}</summary>{preview.losses.map((item,i)=><div className="bench-item" key={i}><b>{item.label}{item.row&&' · Мөр '+(item.rowLabel??item.row)}{item.column&&' · Багана '+(item.columnLabel??item.column)}</b><p>{reasons[item.reason]??item.reason}</p><p>{item.displayValue??item.value}</p></div>)}</details>}
+    {preview.detachedEvidence.map(file=><p key={file.id}>Одоогийн ажлаас салгах холбоос · {file.name}</p>)}
+    {preview.requiresReview&&<><p>Өмнөх хариулт, гарын үсэг ба эх файлууд түүхэнд хадгалагдана. Шинэ ажлын хариулт болон холбоосын өөрчлөлтийг хянана уу.</p><label><input name="adoptionAck" type="checkbox" checked={ack} onChange={e=>setAck(e.target.checked)}/> Шилжүүлэхгүй хариулт ба холбоосыг хянаж, шинэ хувилбарыг сонголоо</label></>}
+    <p className="micro">Хуучин {preview.from?.digest.slice(0,12)??'—'} · Шинэ {preview.to.digest.slice(0,12)}</p>
+    <button type="button" className="btn secondary" disabled={busy} onClick={()=>void inspect()}>Өөрчлөлтийг дахин шалгах</button>
+   </section>}
+   <button className="btn primary" disabled={!id||busy||!!preview&&(preview.sameVersion||preview.requiresReview&&!ack)}>{busy?'Шалгаж байна…':preview?'Хувилбарыг энэ ажилд холбох':'Хувилбарын өөрчлөлтийг шалгах'}</button>
   </form>
  </details>;
 }
@@ -76,11 +105,12 @@ function NoteAction({run,action,id,label}:{run:PilotAction;action:string;id:stri
  </form>;
 }
 
-export function PilotFormLibrary({role,forms,library,run,onError}:{
- role:PilotRole;forms:NamedForm[];library:LibraryView;run:PilotAction;onError:(message:string)=>void;
+export function PilotFormLibrary({role,forms,library,run,onError,onDraftChange}:{
+ role:PilotRole;forms:NamedForm[];library:LibraryView;run:PilotAction;onError:(message:string)=>void;onDraftChange?:(active:boolean)=>void;
 }){
  const [id,setId]=useState(''),[editor,setEditor]=useState<Template|null>(null),[preview,setPreview]=useState(false);
  const [answers,setAnswers]=useState<Answers>({}),[sheets,setSheets]=useState<Grid[]>([]);
+ useEffect(()=>{onDraftChange?.(!!editor);},[editor,onDraftChange]);
  const catalogue=[...forms,...library.releases.filter(r=>!forms.some(f=>f.id===r.id))];
  const begin=(t:Template)=>{setEditor(t);setAnswers({});setPreview(false);};
  async function load(copy:boolean){
@@ -109,7 +139,7 @@ export function PilotFormLibrary({role,forms,library,run,onError}:{
  }
  return <section className="card pad bench-card">
   <div className="section-heading"><div><h2>Маягтын сан ба бүтэц</h2><p>Ноорог · хяналт · нийтлэл · гэрээт ажилд сонгож ашиглах</p></div></div>
-  <label>Маягт<select value={id} onChange={e=>setId(e.target.value)}>
+  <label>Маягт<select name="library-form" value={id} onChange={e=>setId(e.target.value)}>
    <option value="">Сонгох</option>{catalogue.map(f=><option key={f.id} value={f.id}>{f.id} · {f.title}</option>)}
   </select></label>
   <div className="row-actions space-top">
@@ -146,7 +176,7 @@ export function PilotFormLibrary({role,forms,library,run,onError}:{
    </>}
   </details>)}
   {library.releases.map(r=><p key={r.id} className="micro">{r.title} · {r.id} · Баталсан v{r.number} · {r.at.slice(0,10)} · {r.note}</p>)}
-  {editor&&<div className="bench-item space-top">
+  {editor&&<div className="bench-item space-top" data-template-editor>
    <div className="section-heading"><h3>{editor.id} · Ноорог</h3><button type="button" className="btn secondary" onClick={()=>setPreview(!preview)}>{preview?'Бүтэц засах':'Урьдчилан харах'}</button></div>
    <label>Маягтын нэр<input value={editor.title} onChange={e=>setEditor({...editor,title:e.target.value})}/></label>
    {editor.id.startsWith('F-')&&<label>Үе шат<select value={editor.stage} onChange={e=>setEditor({...editor,stage:Number(e.target.value)})}>
@@ -165,6 +195,17 @@ export function PilotFormLibrary({role,forms,library,run,onError}:{
       <option value="">Гараар бөглөнө</option>{Object.entries(sharedBindings).map(([k,v])=><option key={k} value={k}>{v}</option>)}</select></label>}
     </div>
     {['select','multiselect'].includes(f.type)&&<label>Сонголтууд (; тусгаарлана)<input defaultValue={f.options?.join('; ')} onChange={e=>edit(f.key,{options:e.target.value.split(';').map(x=>x.trim()).filter(Boolean)})}/></label>}
+    {f.type==='table'&&<fieldset className="feature-fields" data-table-columns><legend>Давтагдах хүснэгтийн баганууд</legend>
+     {editableColumns(f).map((column,index)=>{
+      const columns=editableColumns(f),update=(patch:Partial<typeof column>)=>edit(f.key,{columns:columns.map((c,i)=>i===index?{...c,...patch}:c)});
+      return <div key={column.key} className="bench-item"><div className="field-grid">
+       <label>Баганын нэр<input value={column.label} onChange={e=>update({label:e.target.value})}/></label>
+       <label>Баганын төрөл<select value={column.type} onChange={e=>update({type:e.target.value})}>{Object.entries(formKinds).filter(([type])=>!['table','procedure'].includes(type)).map(([type,label])=><option value={type} key={type}>{label}</option>)}</select></label>
+       {['select','multiselect'].includes(column.type)&&<label>Баганын сонголтууд (; тусгаарлана)<input value={column.options?.join('; ')??''} onChange={e=>update({options:e.target.value.split(';').map(v=>v.trim()).filter(Boolean)})}/></label>}
+      </div><button type="button" className="quiet" disabled={columns.length<=1} onClick={()=>edit(f.key,{columns:columns.filter((_,i)=>i!==index)})}>Багана хасах</button></div>;
+     })}
+     <button type="button" className="btn secondary" disabled={(f.columns??tableColumns).length>=30} onClick={()=>edit(f.key,{columns:[...(f.columns??tableColumns),{key:'c'+crypto.randomUUID().replaceAll('-',''),label:'',type:'text'}]})}>Багана нэмэх</button>
+    </fieldset>}
     <label>Хамаарах эх асуулт<select value={f.when?.key??''} onChange={e=>edit(f.key,{when:e.target.value?{key:e.target.value,value:''}:undefined})}>
      <option value="">Үргэлж харуулах</option>{editor.fields.filter(x=>x.key!==f.key&&!x.when&&!x.binding&&!x.decision&&['text','textarea','select','yesno','date','number'].includes(x.type)).map(x=><option value={x.key} key={x.key}>{x.label||x.key}</option>)}</select></label>
     {f.when&&<label>Эх асуултын хариулт<input value={f.when.value} onChange={e=>edit(f.key,{when:{key:f.when!.key,value:e.target.value}})}/></label>}

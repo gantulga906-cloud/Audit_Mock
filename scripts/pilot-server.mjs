@@ -7,14 +7,15 @@ import { createArchiveStore } from './pilot-archive.mjs';
 import { archiveGrantKinds } from './pilot-registers.mjs';
 import { registers } from '../src/lib/pilot-registers.ts';
 import { createPilotStore, firmCommand } from './pilot-store.mjs';
-import { isLibraryAction, libraryAction, libraryTemplate, libraryView } from './pilot-forms.mjs';
+import { isLibraryAction, libraryAction, libraryTemplate, libraryView,formAdoptionPreview } from './pilot-forms.mjs';
 import { activeTermsGap, canDraftTerms, createIntakeStore, isIntakeAction, termsAction, termsGaps } from './pilot-intake.mjs';
-import { approvedStaffing, managedStaffing, rosterView, seatFor, staffingGaps } from './pilot-staffing.mjs';
+import { approvedStaffing, managedStaffing, rosterView, seatFor, staffingGaps,requireSeat } from './pilot-staffing.mjs';
 import { recordEvent } from '../src/lib/workspace.ts';
 import { createConfirmationStore } from './pilot-confirmations.mjs';
 import { createOversightStore, oversightRoles } from './pilot-oversight.mjs';
 import { createReleaseStore } from './pilot-release.mjs';
 import { laterFactFiles } from './pilot-later-facts.mjs';
+import {checkAssemblyRecord} from './pilot-assembly.mjs';
 
 const prefix = '/api/pilot';
 const termsRemediation = new Set(['intake-terms-save','intake-terms-approve','support-upload','support-assess','schedule','access']);
@@ -43,6 +44,16 @@ async function readJson(req) {
   } catch {
     throw new PilotError(400, 'Хүсэлтийн бүтэц буруу байна.');
   }
+}
+
+function readCommand(data) {
+  if (typeof data.action !== 'string' || !data.action.trim() || data.action.length > 80 ||
+      !Number.isSafeInteger(data.revision) || data.revision < 0 ||
+      data.fields !== undefined && (!data.fields || typeof data.fields !== 'object' || Array.isArray(data.fields))) {
+    throw new PilotError(400, 'Үйлдлийн нэр, хувилбар ба өгөгдлийн бүтцийг шалгана уу.');
+  }
+  // Domain actions retain ownership of their field types and business prerequisites.
+  return { ...data, fields: data.fields ?? {} };
 }
 
 export function createPilot({ database, setupCode = randomBytes(16).toString('hex') }) {
@@ -84,6 +95,12 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     deliveries: () => releases.view(engagementId),
     oversightConfigured: role => !!db.prepare('SELECT 1 FROM accounts WHERE role=?').get(role),
     checkArchiveRecord: (model, row) => {
+      if(row.kind==='M12-F02'){
+        if(archive.isSealed(model))throw new PilotError(409,'Архив түгжээтэй. Шинэ бүрдүүлэлтэд зөвшөөрсөн өөрчлөлт шаардлагатай.');
+        const file=filesFor(engagementId);
+        try{checkAssemblyRecord(model,row,file.authorization(),file.read);}catch(error){throw new PilotError(409,error.message);}
+        return;
+      }
       if (archiveGrantKinds.includes(row.kind) && !store.members(engagementId).includes(row.values.accessor)) {
         throw new PilotError(409, 'Энэ дүр гэрээт ажилд хандах эрхгүй.');
       }
@@ -288,7 +305,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
         db.prepare('DELETE FROM sessions WHERE token = ?').run(digest(token));
         json(res, 200, { setup: false }, { 'Set-Cookie': cookie(name, '', 0) });
       } else if (req.method === 'POST' && route === '/action') {
-        const data = await readJson(req);
+        const data = readCommand(await readJson(req));
         const result = transaction(() => {
           if (!db.prepare('SELECT 1 FROM sessions WHERE token = ? AND expires > ?').get(digest(token), Date.now())) {
             throw new PilotError(401, 'Нэвтрэх хугацаа дууссан.');
@@ -344,6 +361,10 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             } else if (data.action === 'delivery-start') {
               if (!id) throw new PilotError(409,'Гэрээт ажил сонгоно уу.');
               deliveryLink=releases.start(model,role,data.fields);
+            } else if(data.action==='delivery-result'){
+              if(!id)throw new PilotError(409,'Гэрээт ажил сонгоно уу.');
+              if(managedStaffing(model))requireSeat(model,filesFor(context.id),role);
+              releases.recordOutcome(model,role,data.fields);
             } else if (data.action === 'activate') {
               if (role !== 'partner') throw new PilotError(403, 'Партнерын томилгоо шаардлагатай.');
               const files = filesFor(id), gaps = [...intake.activationGaps(model), ...termsGaps(model, files)];
@@ -373,6 +394,12 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           return archive.exportPackage(model, route.split('/').at(-1), role);
         });
         json(res, 200, bundle);
+      } else if(req.method==='GET'&&route==='/form-adoption-preview'){
+        const preview=transaction(()=>{
+          const id=resolveScope(role,url);if(!id)throw new PilotError(409,'Гэрээт ажил сонгоно уу.');
+          const {model}=store.load(role,id);
+          return formAdoptionPreview(model,role,input({form:url.searchParams.get('form')},'form',32),{version:url.searchParams.get('version')},filesFor(id));
+        },false);json(res,200,preview,{'Cache-Control':'no-store'});
       } else if (req.method === 'GET' && /^\/template\/[A-Za-z0-9.-]{1,32}$/.test(route)) {
         const body = transaction(() => {
           const { model } = store.load(role, resolveScope(role, url));

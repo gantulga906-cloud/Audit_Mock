@@ -56,8 +56,10 @@ export function oversightTeamAction(m,role,action,data,files) {
   } else if (action==='archive-offer-custody') {
     if (!files.archive.isSealed(m)||!files.oversightConfigured('custodian')) fail('Түгжээтэй архив ба хараат бус хадгалалтын нэвтрэх эрх шаардлагатай.');
     const id=input(data,'package',36), record=files.archive.inspectCustody(m,id,true);
-    if (currentOffer(m)?.id===id) return;
-    (m.pilotCustody??=[]).push({id,digest:record.digest,recipient:input(data,'recipient',150),offeredAt:now(),by:role});
+    const prior=currentOffer(m);
+    if (prior?.id===id&&!prior.returned) return;
+    const resolution=prior?.returned?input(data,'resolution'):'';
+    (m.pilotCustody??=[]).push({id,digest:record.digest,recipient:input(data,'recipient',150),offeredAt:now(),by:role,...(resolution&&{resolution,previousOffer:prior.offeredAt})});
   } else fail('Хяналтын үйлдэл олдсонгүй.',404);
   recordEvent(m,action,action.startsWith('quality-')?'4.6':undefined);
 }
@@ -82,7 +84,9 @@ export function createOversightStore(store,filesFor) {
       const material=qualityMaterial(m), evidence=material.evidence.map(id=>({id,...files.get(id)})).filter(f=>f.sha256);
       return {role,assignments,selected:id,quality:oversightTeamView(m).quality,material:{...material,evidence}};
     }
-    const offer=currentOffer(m), record=files.archive.inspectCustody(m,offer.id);
+    const offer=currentOffer(m);
+    let record;
+    try{record=files.archive.inspectCustody(m,offer.id);}catch(error){return {role,assignments,selected:id,custody:offer,manifestError:error.message};}
     return {role,assignments,selected:id,custody:offer,manifest:{fileCount:record.bundle.evidence.length,
       files:record.bundle.evidence.map(({name,sha256,size})=>({name,sha256,size})),report:record.bundle.issue.reportSha256}};
   }
@@ -103,8 +107,14 @@ export function createOversightStore(store,filesFor) {
         state.approvals.push(review);
       } else fail('Чанарын үйлдэл олдсонгүй.',404);
     } else {
-      const offer=currentOffer(m), record=files.archive.inspectCustody(m,offer.id);
-      if (data.action!=='accept'||data.package!==offer.id||data.digest!==offer.digest||record.digest!==offer.digest||!offer.downloadedAt) {
+      const offer=currentOffer(m);
+      if(data.action==='return'){
+        if(offer.accepted||offer.returned||data.package!==offer.id||data.digest!==offer.digest||!['partner','reviewer'].includes(data.owner))fail('Одоогийн хүлээн аваагүй багц ба засвар хариуцах баг шаардлагатай.');
+        offer.returned={by:role,at:now(),reason:input(data,'reason'),owner:data.owner};
+        recordEvent(m,'Хадгалалтын багцыг зөрчилтэй буцаав · '+data.owner);store.save(context,'oversight',{});return view(role,id);
+      }
+      const record=files.archive.inspectCustody(m,offer.id);
+      if (data.action!=='accept'||offer.returned||data.package!==offer.id||data.digest!==offer.digest||record.digest!==offer.digest||!offer.downloadedAt) {
         fail('Яг энэ багцыг татаж бүрэн байдлыг баталгаажуулна уу.');
       }
       if (offer.accepted) return view(role,id);
