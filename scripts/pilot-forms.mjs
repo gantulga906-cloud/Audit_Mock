@@ -324,11 +324,15 @@ export function formAdoptionPreview(m,role,form,fields,files){
   return planAdoption(m,form,adoptionTarget(m,form,fields,files),files).summary;
 }
 
+export function programmeAdoptionPreview(m,template,files){
+ return planAdoption(m,template.form,adoptionTarget(m,template.form,{},files,template),files).summary;
+}
+
 export function bindForm(m, role, form, fields, files, programmeTemplate) {
   allowed(role !== 'preparer');
   const target=adoptionTarget(m,form,fields,files,programmeTemplate),contract=target.body;
   const plan=planAdoption(m,form,target,files);
-  if(!programmeTemplate&&plan.summary.requiresReview&&(fields.adoptionReview!==plan.summary.digest||fields.adoptionAck!=='reviewed'))fail('Шилжүүлэхгүй хариулт ба холбоосыг одоогийн хувилбараар урьдчилан хянаж зөвшөөрнө үү.',409);
+  if(plan.summary.requiresReview&&(fields.adoptionReview!==plan.summary.digest||fields.adoptionAck!=='reviewed'))fail('Шилжүүлэхгүй хариулт ба холбоосыг одоогийн хувилбараар урьдчилан хянаж зөвшөөрнө үү.',409);
   const version = {number:target.number,digest:store(files,contract)};
   const current = effectiveForm(m, form, files);
   if (current?.digest === version.digest) return false;

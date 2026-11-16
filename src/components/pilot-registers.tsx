@@ -2,6 +2,7 @@ import {useState,type FormEvent} from 'react';
 import {latestArchiveSelection,pilotScope,registers,roleChoices,sections,type PilotRecord,type PilotRole,type ProgrammeBasis,type RegisterField,type RecordStatus} from '@/lib/pilot-registers';
 import type {Evidence} from '@/lib/workspace';
 import type {PopulationView} from '@/lib/pilot-population';
+import type {PlanningView} from '@/lib/pilot-planning';
 
 export type PilotAction=(action:string,fields?:Record<string,string>)=>Promise<boolean>;
 type NamedForm={id:string;title:string};
@@ -19,6 +20,7 @@ export type RegisterResources={
  archive:{sealed?:boolean;packages:ArchiveItem[];reopened:{package?:string;basis:string;reportDate?:string;target?:{form:string;version:number}}|null;issue:{at:string;reference:string}|null};
  extended:boolean;
  acceptanceManaged?:boolean;
+ planning?:PlanningView;
 };
 const state:Record<RecordStatus,string>={draft:'Ноорог',submitted:'Хяналтад',returned:'Засварт',approved:'Баталсан'};
 const roleName=Object.fromEntries(roleChoices);
@@ -45,6 +47,22 @@ export function PlanningBasis({basis}:{basis:ProgrammeBasis}){
    <div><dt>Хугацаа</dt><dd>{procedure.timing}</dd></div>
    <div><dt>Хамрах хүрээ</dt><dd>{procedure.extent}</dd></div>
   </dl>}
+ </div>;
+}
+
+function ResponseEditor({value,onChange,resources,form,procedures,defaults}:{value:string;onChange:(value:string)=>void;resources:RegisterResources;form?:string;procedures:{key:string;label:string}[];defaults:Record<string,string>}){
+ let links:Record<string,string>[]=[];try{const parsed=JSON.parse(value||'[]');if(Array.isArray(parsed))links=parsed;}catch{/* Saved values are validated by the server before submission. */}
+ const risks=resources.registers.filter(r=>r.kind==='M06-F09'&&r.status==='approved'&&!r.stale&&r.values.type!=='overall'&&[r.values.programme,...(r.values.programmes??'').split(/\r?\n/)].includes(form??''));
+ const update=(i:number,key:string,v:string)=>onChange(JSON.stringify(links.map((r,n)=>n===i?{...r,[key]:v}:r)));
+ return <div className="feature-form" data-response-editor>
+  <p>Нэг эрсдэлд олон горим, нэг горимд олон эрсдэл холбож болно. Үндсэн эрсдэл–горимын холбоос хадгалагдана. Нийт түвшний эрсдэлийн хариуг тусдаа бүртгэнэ.</p>
+  {links.map((link,i)=><fieldset key={i} className="feature-detail"><legend>Хариу холбоос {i+1}</legend><div className="field-grid">
+   <label>Эрсдэл<select value={link.risk??''} onChange={e=>update(i,'risk',e.target.value)}><option value="">Сонгох</option>{risks.map(r=><option key={r.id} value={r.id}>{r.values.risk} · {r.values.target} · {r.values.assertion} · v{r.version}</option>)}</select></label>
+   <label>Яг горим<select value={link.procedure??''} onChange={e=>update(i,'procedure',e.target.value)}><option value="">Сонгох</option>{procedures.map(p=><option key={p.key} value={p.key}>{p.key} · {p.label}</option>)}</select></label>
+   <label>Холбогдох хяналт<select value={link.control??''} onChange={e=>update(i,'control',e.target.value)}><option value="">Хяналтад найдахгүй</option>{resources.registers.filter(r=>r.kind==='M06-F03'&&r.status==='approved'&&!r.stale&&r.values.risk===link.risk).map(r=><option key={r.id} value={r.id}>{r.values.name} · {r.values.reliance} · v{r.version}</option>)}</select></label>
+   {([['nature','Горимын шинж'],['timing','Хугацаа'],['extent','Хамрах хүрээ'],['scope','Энэ эрсдэл ба батламжийг хэрхэн хариуцах үндэслэл']] as const).map(([key,label])=><label key={key}>{label}<textarea value={link[key]??''} maxLength={4000} onChange={e=>update(i,key,e.target.value)}/></label>)}
+  </div><button type="button" className="btn secondary" onClick={()=>onChange(JSON.stringify(links.filter((_,n)=>n!==i)))}>Холбоос хасах</button></fieldset>)}
+  <button type="button" className="btn secondary" disabled={links.length>=40} onClick={()=>onChange(JSON.stringify([...links,{risk:defaults.risk??'',procedure:defaults.procedure??'',nature:defaults.nature??'',timing:defaults.timing??'',extent:defaults.extent??'',scope:defaults.basis??''}]))}>Хариу холбоос нэмэх</button>
  </div>;
 }
 
@@ -87,7 +105,7 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
   if(kind==='M12-F08'&&values.type==='release'&&field.key==='reference')return resources.registers.filter(r=>r.kind===kind&&r.values.package===values.package&&r.values.type==='hold').map(r=>[r.id,r.values.reference]);
  }
  return <form className="feature-form" data-register-kind={kind} onSubmit={save}>
-  <div className="field-grid">{def.fields.filter(f=>(!f.forTypes||f.forTypes.includes(values.type))&&
+  <div className="field-grid">{def.fields.filter(f=>f.type!=='responses'&&(!f.forTypes||f.forTypes.includes(values.type))&&
    (!planning||!programmeFields.includes(f.key)||resources.extended&&values.decision==='adopt')).map(f=>{
    const choices=options(f),bound=kind==='M06-F06'&&!!values.populationLine&&['source','actual'].includes(f.key);
    const line=bound?sourceLines.find(l=>l.line===values.populationLine):undefined;
@@ -100,6 +118,7 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
     </select>:f.type==='long'?<textarea name={'field.'+f.key} value={v} onChange={e=>set(f.key,e.target.value)} maxLength={4000}/>:<input name={'field.'+f.key} value={v} readOnly={bound} onChange={e=>set(f.key,e.target.value)} type={f.type==='date'?'date':f.type==='number'?'number':'text'} step={f.type==='number'?'any':undefined} maxLength={4000}/>}
    </label>;
   })}</div>
+  {planning&&resources.extended&&values.decision==='adopt'&&<ResponseEditor value={values.responses??''} onChange={v=>set('responses',v)} resources={resources} form={selectedForm} procedures={templates.find(t=>t.version===values.templateVersion)?.procedures??[]} defaults={values}/>}
   {planning&&resources.extended&&values.decision==='adopt'&&<p className="micro">Шийдвэрийг илгээхийн өмнө арга хандлага, хувилбар, горимын шинж, хугацаа, хамрах хүрээг бүрэн оруулна уу.</p>}
   <div className="row-actions"><button className="btn primary">Ноорог хадгалах</button><button type="button" className="btn secondary" onClick={onDone}>Болих</button></div>
  </form>;
@@ -132,7 +151,8 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
  open:(id:string)=>void;exportArchive:(id:string)=>void;engagementId:string|null;readOnly:boolean;
 }){
  const def=spec(row.kind)!;
- const command=(operation:string,reason='',source='')=>void run('register',{kind:row.kind,id:row.id,operation,reason,source});
+ const [adoptionAck,setAdoptionAck]=useState('');
+ const command=(operation:string,reason='',source='')=>void run('register',{kind:row.kind,id:row.id,operation,reason,source,...(operation==='approve'&&adoptionAck===row.adoptionPreview?.digest&&{adoptionAck:'reviewed',adoptionReview:adoptionAck})});
  const submitted=row.status==='submitted',draft=['draft','returned'].includes(row.status);
  const canEdit=!readOnly&&def.writers.includes(role)&&row.owner===role&&!submitted&&!(def.section==='archive'&&row.status==='approved');
  const declaration=row.kind==='M04-F04';
@@ -140,7 +160,7 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
  const archiveGrant=row.status==='approved'&&['M12-F07','M12-F10'].includes(row.kind);
  return <details className="feature-detail" data-register-kind={row.kind} data-record-id={row.id}>
   <summary>{heading(row)} <span className="pill">{state[row.status]} · v{row.version}</span>{row.stale&&<span className="pill amber">Эх хувилбар өөрчлөгдсөн</span>}</summary>
-  <dl className="register-values">{def.fields.filter(f=>row.values[f.key]).map(f=>{
+  <dl className="register-values">{def.fields.filter(f=>f.type!=='responses'&&row.values[f.key]).map(f=>{
    const v=row.values[f.key],file=f.type==='evidence'&&evidence.find(e=>e.id===v),linked=f.type==='record'&&resources.registers.find(r=>r.id===v);
    const fileLabel=file?file.name+' · v'+file.version:'';
    const display=f.key==='package'&&v===latestArchiveSelection?pinnedPackageLabel:f.choices?.find(([key])=>key===v)?.[1]??v;
@@ -148,6 +168,13 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
   })}</dl>
   {row.template&&<p className="micro">{row.template.form} · {row.template.sheet} · {row.template.digest.slice(0,16)}</p>}
   {row.programmeBasis&&<PlanningBasis basis={row.programmeBasis}/>}
+  {!!row.programmeBasis?.responses?.length&&<ul>{row.programmeBasis.responses.map((response,i)=><li key={i}>{response.procedure} · {response.label} · эрсдэл v{response.riskVersion} · {response.scope} · {response.nature} · {response.timing} · {response.extent}{response.control&&' · Хяналт v'+response.controlVersion}</li>)}</ul>}
+  {row.planningBasis&&<p className="micro">Төлөвлөлтийн яг суурь · {row.planningBasis.programme?.id} v{row.planningBasis.programme?.version} · {row.planningBasis.assignments?.length??0} томилгоо{row.planningBasis.openWork?.map(w=>' · '+w.form+' v'+w.version+' '+w.status).join('')}</p>}
+  {row.adoptionPreview?.requiresReview&&<div className="warning" data-programme-loss-review>
+   <p>Шинэ маягтад шилжихгүй хариулт / холбоос · өмнөх хувилбарыг түүхээр хадгална.</p>
+   <ul>{row.adoptionPreview.losses.map((loss,i)=><li key={i}>{loss.key} · {loss.reason} · {loss.displayValue??loss.value}</li>)}{row.adoptionPreview.detachedEvidence.map(file=><li key={file.id}>{file.name} · холбоос шилжихгүй</li>)}</ul>
+   {!readOnly&&canReview(row,role)&&<label><input type="checkbox" checked={adoptionAck===row.adoptionPreview.digest} onChange={e=>setAdoptionAck(e.target.checked?row.adoptionPreview!.digest:'')}/>Энэ хувилбарын шилжихгүй хариулт ба холбоосыг хянасан</label>}
+  </div>}
   {row.statementVersion&&<p className="micro">Санхүүгийн тайлан v{row.statementVersion}</p>}
   {row.assemblyBasis&&<p className="micro">Яг гаргасан багц · {row.assemblyBasis.issueAt.slice(0,16)} · Бүрдүүлэлтийн эцсийн өдөр {row.assemblyBasis.deadline} · Индекс {row.assemblyBasis.inventoryDigest.slice(0,16)}</p>}
   {row.values.expected&&row.values.actual&&<p>Зөрүү {Number(row.values.actual)-Number(row.values.expected)}</p>}

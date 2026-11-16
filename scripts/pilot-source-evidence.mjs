@@ -1,6 +1,35 @@
 // Each claim is bounded to the recorded fixture. Shared scenario links do not close contracts.
 export const scenarios=[
   {
+    test:'G02 actual effort rejects cross-engagement overlap without revealing hidden work and preserves scoped portfolio intervals',file:'tests/pilot-planning.test.mjs',
+    action:'actual named-person time and portfolio permissions across separate accepted periods',actors:['preparer','reviewer','partner'],
+    observed:'Overlapping actual hours for the same person are rejected without naming hidden work. The reviewer sees actual intervals only for permitted engagements; the partner sees both. Planned commitments and actual intervals remain distinct.',
+    cases:['P14-UC03'],features:['M05-F05'],criteria:['P14-UC03-AC01','P14-UC03-AC02','P14-UC03-AC03'],
+  },
+  {
+    test:'G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort',file:'tests/pilot-planning.test.mjs',
+    action:'standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort',actors:['preparer','reviewer','partner'],
+    observed:'An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.',
+    cases:['P03-UC01','P03-UC02','P03-UC03','P06-UC01','P06-UC02','P06-UC05','P06-UC06','P14-UC03'],
+    features:['M05-F02','M05-F04','M05-F05','M05-F08','M06-F02','M06-F03','M06-F04','M06-F06','M06-F09','M06-F11','M06-F13','M06-F14','M07-F01'],
+    criteria:['P03-UC03-AC01','P03-UC03-AC02','P03-UC03-AC04','P06-UC01-AC01','P06-UC01-AC02','P06-UC01-AC03','P06-UC01-AC04','P06-UC02-AC01','P06-UC02-AC02','P06-UC02-AC04','P06-UC05-AC02','P06-UC05-AC03','P06-UC05-AC04','P06-UC06-AC01','P06-UC06-AC02','P06-UC06-AC03','P06-UC06-AC04','P14-UC03-AC01','P14-UC03-AC03'],
+    e2e:['A04-P2-W2','A04-P2-W3','A04-P3-W1','A04-P3-W2','A05-P2-W3','A05-P3-W1','A05-P3-W2','A05-P3-W3','A06-P1-W1','A06-P1-W2','A06-P2-W1','A06-P2-W2','A06-P2-W3','A06-P3-W1','A06-P3-W2','A06-P3-W3','A07-P1-W1','A07-P1-W2','A07-P2-W1','A07-P2-W3','A07-P3-W1','A07-P3-W2','A07-P3-W3','A10-P1-W1','A10-P1-W2','A10-P1-W3','A10-P2-W1','A10-P2-W2','A10-P2-W3','A10-P3-W1','A10-P3-W2','A10-P3-W3','A12-P1-W1','A12-P1-W2','A12-P1-W3','A12-P2-W1','A12-P2-W2','A12-P2-W3','A12-P3-W1','A12-P3-W2','A12-P3-W3'],
+    forms:['1.3','2.6','3.1.2','3.1.4'],
+  },
+  {
+    test:'G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability',file:'tests/pilot-planning.test.mjs',
+    action:'separate auditor expert, management expert, internal audit function, conditional direct assistance, relevant component and opening-balance evaluations',actors:['reviewer','partner'],
+    observed:'An unsupported statutory deadline is rejected. Opening limitations require comparative/policy assessment and additional work. Direct assistance needs explicit source-backed applicability, not a universal permission. Component work requires actual group scope. Delivered work retains the auditor evaluation and never grants opinion or review-note authority. External accounts are not supplied by this profile.',
+    cases:['P03-UC01','P06-UC04'],features:['M06-F05'],criteria:['P03-UC01-AC03','P03-UC01-AC04','P06-UC04-AC03'],
+    e2e:['A09-P1-W1','A09-P2-W1','A09-P2-W3','A09-P3-W1','A09-P3-W2','A09-P3-W3'],
+  },
+  {
+    test:'G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history',file:'tests/pilot-planning.test.mjs',
+    action:'dedicated programme version adoption with actual incompatible source answers',actors:['preparer','reviewer','partner'],
+    observed:'Missing, wrong and stale loss acknowledgements fail. After independent return and renewed preview, the actual acknowledged digest is retained and the incompatible answer remains in source history.',
+    cases:['P06-UC05','P07-UC01','P11-UC02'],features:['M07-F01','M02-F02','M02-F03'],
+  },
+  {
     test:'G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart',file:'tests/pilot-acceptance.test.mjs',
     action:'current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry',actors:['preparer','reviewer','partner','named external declarant via signed original'],
     observed:'Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.',

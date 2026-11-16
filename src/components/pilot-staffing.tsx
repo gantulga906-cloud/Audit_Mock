@@ -22,6 +22,8 @@ export function RosterOverview({roster,open}:{roster:RosterAvailability[];open:(
    <summary>{r.name} · {({active:'Идэвхтэй',inactive:'Идэвхгүй',external:'Гадаад'})[r.status]} · v{r.version}</summary>
    {r.account&&<p>Нэвтрэх дүр · {captions[r.account]}</p>}
    {r.capacity!==null&&<p>{r.start} — {r.end} · Харагдах ажлын төлөвлөсөн {r.committed} цаг · Боломжит {r.capacity} цаг</p>}
+   <p>Харагдах ажлын бүртгэсэн бодит цаг · {((r.actual??[]).reduce((sum,e)=>sum+e.minutes,0)/60).toFixed(2)} цаг · тайлант интервалуудыг доор тусад нь харуулав. Ашиглалт нь аудитын чанарын үнэлгээ биш.</p>
+   {r.actual?.map((entry,i)=><p className="micro" key={i}>{entry.from} — {entry.through} · {entry.minutes} минут</p>)}
    {r.credentials.map(c=><div className="bench-item" key={c.id}><b>{c.title}</b>
     <p>{c.issuer&&c.issuer+' · '}{c.source}</p>
     <p className="micro">{c.from||'Эхлэх огноо тодорхойгүй'} — {c.validity==='no-expiry'?'Хугацаагүй':c.to||'Тодорхойгүй'}

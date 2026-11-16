@@ -30,6 +30,7 @@ import { activeTermsGap } from './pilot-intake.mjs';
 import {acceptanceEvidence} from './pilot-acceptance.mjs';
 import { laterFactAction, laterFactForRelease, laterFactGap, laterFactView } from './pilot-later-facts.mjs';
 import {assemblyStatus} from './pilot-assembly.mjs';
+import {managedPlanning,planningAction,planningGap,planningView} from './pilot-planning.mjs';
 
 export const accounts = { preparer: 'nomin', reviewer: 'temuulen', partner: 'bat' };
 const roleOf = person => seats.find(role => accounts[role] === person);
@@ -84,7 +85,7 @@ function syncFieldwork(m) {
   syncCompletion(m);
 }
 
-const fieldworkGap = (m,form) => samplingGap(m,form)||journalGap(m,form)||areaGap(m,form);
+const fieldworkGap = (m,form) => (fieldworkForms(m).includes(form)?planningGap(m,form):'')||samplingGap(m,form)||journalGap(m,form)||areaGap(m,form);
 const technicalGaps = m => activeItems(m,technicalForms(m).map(form=>({form}))).flatMap(({form})=>{
   const paper=m.work[workKey(m.engagement,form)], ref=technicalRef(m,form);
   return ref&&isCurrentReview(paper)&&paper.values['pilot.technical']===ref?[]:[form+' · Тусгай горимын одоогийн хяналт'];
@@ -287,6 +288,7 @@ export function pilotView(m, role, revision, files) {
   });
   return {
     role, revision, ...resources, fieldwork: fieldworkForms(m), statementLines: m.pilotStatementLines ?? {},
+    planning:planningView(m,role),
     ...(role==='partner'&&{laterFacts:laterFactView(m)}),
     ...(m.extendedPilot && engagement.intake.active && !sealed && role !== 'preparer' && {programmeTemplates:programmeTemplates(m,files)}),
     delivery: {
@@ -339,6 +341,9 @@ export function pilotAction(m, role, action, data, files) {
   if (typeof action!=='string') throw new PilotError(400,'Үйлдэл шаардлагатай.');
   const sealed = files.archive.isSealed(m);
   if (!sealed) syncFieldwork(m);
+  if(action==='planning-enable'||action==='effort-log'){
+    planningAction(m,role,action,data,files);invalidateReport(m,'G02 · Төлөвлөлт / бодит цаг өөрчлөгдөв');if(!sealed)syncFieldwork(m);return;
+  }
   if (action === 'register') {
     const section = registers.find(r => r.id === data?.kind)?.section;
     if (sealed && section && !['archive', 'firm'].includes(section)) throw new PilotError(409, 'Архив түгжээтэй. Агуулгын өөрчлөлт зөвшөөрнө үү.');
@@ -348,7 +353,7 @@ export function pilotAction(m, role, action, data, files) {
     if (m.extendedPilot && data.kind === 'M07-F01' && data.operation === 'approve') {
       const adopted = adoptedForms(m).map(form => programmeDecision(m,form)).find(row => row.id === data.id);
       if (adopted?.template.number !== undefined) {
-        bindForm(m,role,adopted.template.form,{},files,adopted.template);
+        bindForm(m,role,adopted.template.form,data,files,adopted.template);
       }
     }
     if (!sealed) syncFieldwork(m);
@@ -615,6 +620,7 @@ export function pilotAction(m, role, action, data, files) {
       ...(technicalForms(m).length && {technicalPapers:activeItems(m,technicalForms(m).map(form=>m.work[workKey(m.engagement,form)]))
         .map(({id,version,reviewedVersion,values,evidence})=>({id,version,reviewedVersion,values,evidence}))}),
       ...(m.pilotIntake && { intake: m.pilotIntake }),
+      ...(managedPlanning(m)&&{planningProfile:m.pilotPlanning,effort:m.pilotEffort??[],planning:planningView(m,role)}),
       ...(managedStaffing(m) && { staffing: approvedStaffing(m).filter(s=>s.current), acceptedStaffing: m.pilotStaffingAccepted,
         staffSignoffs: m.pilotStaffSignoffs ?? {} }),
     }, [...linked,...(laterFact?[{id:laterFact.source.id,version:1,status:'recorded'}]:[])].map(e => {
@@ -845,14 +851,15 @@ function checkPlanning(m, paper, files) {
   if (!m.extendedPilot || formContract(paper.form)?.family !== 'programme') return;
   const decision = programmeDecision(m, paper.form);
   if (decision?.values.decision !== 'adopt') throw new PilotError(409, 'Аудитын хөтөлбөрийн одоогийн шийдвэр шаардлагатай.');
-  const key = decision.programmeBasis?.procedure?.key;
-  if (!key) return;
+  const keys = [...new Set([decision.programmeBasis?.procedure?.key,...(decision.programmeBasis?.responses??[]).map(r=>r.procedure)].filter(Boolean))];
+  for(const key of keys){
   const template = effectiveForm(m,paper.form,files);
   const procedure = template?.body.fields.find(f => f.key === key);
   const outcome = paper.values['field.'+key+'.outcome'];
   if (template?.digest !== decision.template.digest || !procedure || !paper.values['field.'+key]?.trim() ||
       procedureOutcomes(procedure).length && (!outcome || /\((NOT_APPLICABLE|UNABLE_TO_COMPLETE)\)/.test(outcome))) {
     throw new PilotError(409, 'Төлөвлөгөөнд сонгосон горимын гүйцэтгэл ба үр дүнг оруулна уу · '+key);
+  }
   }
 }
 

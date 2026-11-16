@@ -16,7 +16,8 @@
     "verify:reporting-ui": "node scripts/verify-reporting-ui.mjs",
     "verify:materiality-ui": "node scripts/verify-materiality-ui.mjs",
     "verify:form-adoption-ui": "node scripts/verify-form-adoption-ui.mjs",
-    "verify:acceptance-ui": "node scripts/verify-acceptance-ui.mjs"
+    "verify:acceptance-ui": "node scripts/verify-acceptance-ui.mjs",
+    "verify:planning-ui": "node scripts/verify-planning-ui.mjs"
   },
   "dependencies": {
     "next": "^16.0.0",

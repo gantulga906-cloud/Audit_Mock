@@ -297,7 +297,10 @@ export function createIntakeStore(db, store) {
         model.pilotIntake = { enquiry: id, client: client.id, version: client.version, confirmation: 1, contact, by: role, at: now(), note,
           service:previous.service,intendedUsers:previous.intendedUsers??'',signatories:structuredClone(client.profile.contacts.filter(row=>row.signer)),
           ...(prior && { prior: prior.id }) };
-        if(extended==='yes')enableAcceptance(model);
+        if(extended==='yes'){
+          enableAcceptance(model);
+          model.pilotPlanning={profile:1,by:role,at:new Date().toISOString(),reason:'Шинэ гэрээт ажлын G02 төлөвлөлтийн хяналт'};
+        }
         previous.engagement = engagement.id;
         previous.clientId = client.id;
         previous.status = 'converted';

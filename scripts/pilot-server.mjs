@@ -161,6 +161,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     }
     if (!store.setMember(context.id, role, grant)) return;
     const model = context.model;
+    (model.pilotRecipientRevisions??={})[role]=(model.pilotRecipientRevisions?.[role]??0)+1;
     if (!grant) {
       const revoked = { by: actor, at: new Date().toISOString(), reason };
       for (const row of model.pilotRecords) {
