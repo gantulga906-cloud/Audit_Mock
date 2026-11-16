@@ -1,0 +1,1377 @@
+[
+  {
+    "automation": "AUTO-001",
+    "guide": "G03",
+    "source_input_contract": "Required: request identifier, evidence type, entity, reporting period, linked evidence identifier and acceptance status. Optional: alternative-evidence rationale.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "file": "tests/pilot.test.mjs",
+        "action": "approved population through source rows, confirmation and report",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "sandbox recipient"
+        ],
+        "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R14",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-002",
+    "guide": "G03",
+    "source_input_contract": "Required: source dataset, approved import profile, column mapping, engagement entity and reporting dates. Optional: currency, sign and evidence-role rules.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R13",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-003",
+    "guide": "G03",
+    "source_input_contract": "Required: imported rows, source record count, available independent control totals and declared unique key. Optional: documented exclusion reasons.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R13",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-004",
+    "guide": "G03",
+    "source_input_contract": "Required: transaction identifier, master identifier and authoritative master table. Required for historical matching: transaction date and master validity dates.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R13",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-005",
+    "guide": "G03",
+    "source_input_contract": "Required: trial-balance account, opening, debit, credit and closing fields; detailed ledger account, posting date and debit-credit amounts when ledger reconciliation is run.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R13",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-006",
+    "guide": "G03",
+    "source_input_contract": "Required: final trial balance, account-to-line mapping, presentation sign, financial-statement line values and displayed unit.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "file": "tests/pilot.test.mjs",
+        "action": "approved population through source rows, confirmation and report",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "sandbox recipient"
+        ],
+        "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R13",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-007",
+    "guide": "G03",
+    "source_input_contract": "Required: one controlled statement version containing structured nodes, amounts, periods, units, formulas and exact references. Optional: approved rounding schedule.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R13",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-008",
+    "guide": "G03",
+    "source_input_contract": "Required: prior audited closing trial balance, current opening trial balance, common account identifier or approved crosswalk, entity and currency.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R13",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-009",
+    "guide": "G04",
+    "source_input_contract": "Required: journal and line identifiers, entity, effective date, account, debit-credit or signed functional amount, reporting dates and selected rule parameters.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "file": "tests/pilot.test.mjs",
+        "action": "approved population through source rows, confirmation and report",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "sandbox recipient"
+        ],
+        "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R15",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-010",
+    "guide": "G03",
+    "source_input_contract": "Required: account or statement-line values for comparable periods, approved analytical relationships and investigation thresholds. Optional: budgets and non-financial drivers.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "file": "tests/pilot.test.mjs",
+        "action": "approved population through source rows, confirmation and report",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "sandbox recipient"
+        ],
+        "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R13",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-011",
+    "guide": "G04",
+    "source_input_contract": "Required: invoice and line identifiers, posting date, revenue account, signed amount, customer and ledger or trial-balance revenue totals.",
+    "current_wire_profile": "Candidate related area profile sales; exact minimum parity not inferred. Input kinds: cash, credits, invoices, prices. See current_area_typed_schemas.",
+    "candidate_method": "sales",
+    "candidate_input_kinds": [
+      "cash",
+      "credits",
+      "invoices",
+      "prices"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-012",
+    "guide": "G04",
+    "source_input_contract": "Required: invoice identifier, invoice date, posting date, delivery or acceptance date when relevant, amount and reporting date. Credit review also requires original-invoice reference.",
+    "current_wire_profile": "Candidate related area profile sales; exact minimum parity not inferred. Input kinds: cash, credits, invoices, prices. See current_area_typed_schemas.",
+    "candidate_method": "sales",
+    "candidate_input_kinds": [
+      "cash",
+      "credits",
+      "invoices",
+      "prices"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "file": "tests/pilot.test.mjs",
+        "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-013",
+    "guide": "G04",
+    "source_input_contract": "Required: invoice identifier, customer, invoice and due dates, open amount, reporting date, receipt date, receipt amount and invoice reference.",
+    "current_wire_profile": "Candidate related area profile sales; exact minimum parity not inferred. Input kinds: cash, credits, invoices, prices. See current_area_typed_schemas.",
+    "candidate_method": "sales",
+    "candidate_input_kinds": [
+      "cash",
+      "credits",
+      "invoices",
+      "prices"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "file": "tests/pilot.test.mjs",
+        "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-014",
+    "guide": "G04",
+    "source_input_contract": "Required: invoice and line identifiers, quantity, unit price, discount, recorded line amount and approved price or discount reference.",
+    "current_wire_profile": "Candidate related area profile sales; exact minimum parity not inferred. Input kinds: cash, credits, invoices, prices. See current_area_typed_schemas.",
+    "candidate_method": "sales",
+    "candidate_input_kinds": [
+      "cash",
+      "credits",
+      "invoices",
+      "prices"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "file": "tests/pilot.test.mjs",
+        "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-015",
+    "guide": "G04",
+    "source_input_contract": "Required: contract identifier, approved transaction amount, service start and end dates, reporting period, recorded recognized amount and selected allocation convention.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-016",
+    "guide": "G04",
+    "source_input_contract": "Required: supplier, invoice identifier and date, payment identifier and date, account, signed amount and ledger or trial-balance control totals.",
+    "current_wire_profile": "Candidate related area profile purchases; exact minimum parity not inferred. Input kinds: bills, payments, receipts. See current_area_typed_schemas.",
+    "candidate_method": "purchases",
+    "candidate_input_kinds": [
+      "bills",
+      "payments",
+      "receipts"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "file": "tests/pilot.test.mjs",
+        "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-017",
+    "guide": "G04",
+    "source_input_contract": "Required: supplier identifier, legal name and at least one reliable registration number or bank account. Optional: address, contact data and payment history.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-018",
+    "guide": "G04",
+    "source_input_contract": "Required: structured order, receipt, invoice and payment records with stable document and line identifiers, quantities, amounts and currencies.",
+    "current_wire_profile": "Candidate related area profile purchases; exact minimum parity not inferred. Input kinds: bills, payments, receipts. See current_area_typed_schemas.",
+    "candidate_method": "purchases",
+    "candidate_input_kinds": [
+      "bills",
+      "payments",
+      "receipts"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "file": "tests/pilot.test.mjs",
+        "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-019",
+    "guide": "G04",
+    "source_input_contract": "Required: supplier, receipt or service date, invoice date, posting date, payment date, document references, amounts and year-end payable or accrual records.",
+    "current_wire_profile": "Candidate related area profile purchases; exact minimum parity not inferred. Input kinds: bills, payments, receipts. See current_area_typed_schemas.",
+    "candidate_method": "purchases",
+    "candidate_input_kinds": [
+      "bills",
+      "payments",
+      "receipts"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "file": "tests/pilot.test.mjs",
+        "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-020",
+    "guide": "G04",
+    "source_input_contract": "Required: bank account, statement date, transaction date, amount, currency and reference; ledger cash entries; and the supplied reconciliation balance and items.",
+    "current_wire_profile": "Candidate related area profile bank; exact minimum parity not inferred. Input kinds: bank, reconciliation. See current_area_typed_schemas.",
+    "candidate_method": "bank",
+    "candidate_input_kinds": [
+      "bank",
+      "reconciliation"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "file": "tests/pilot.test.mjs",
+        "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-021",
+    "guide": "G04",
+    "source_input_contract": "Required: cash transaction identifier, account, date, amount, currency, reference and reporting date. Transfer matching also requires known internal bank accounts.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-022",
+    "guide": "G04",
+    "source_input_contract": "Required: item and movement identifiers, date, movement type, quantity, unit, recorded value, opening and closing quantities, location where used, and mapped ledger balance.",
+    "current_wire_profile": "Candidate related area profile inventory; exact minimum parity not inferred. Input kinds: counts, inventory, movements. See current_area_typed_schemas.",
+    "candidate_method": "inventory",
+    "candidate_input_kinds": [
+      "counts",
+      "inventory",
+      "movements"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "file": "tests/pilot.test.mjs",
+        "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-023",
+    "guide": "G04",
+    "source_input_contract": "Required: controlled count sheet, count date, item, location, counted quantity, book quantity and unit. Optional: recount and approved adjustment references.",
+    "current_wire_profile": "Candidate related area profile inventory; exact minimum parity not inferred. Input kinds: counts, inventory, movements. See current_area_typed_schemas.",
+    "candidate_method": "inventory",
+    "candidate_input_kinds": [
+      "counts",
+      "inventory",
+      "movements"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "file": "tests/pilot.test.mjs",
+        "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-024",
+    "guide": "G04",
+    "source_input_contract": "Required: movement or transfer identifier, item, location, quantity, logistics date, posting date, transaction type and reporting date.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-025",
+    "guide": "G04",
+    "source_input_contract": "Required: opening quantity and cost, purchase quantities and costs, issue and closing quantities, reporting period, recorded inventory value and recorded cost of sales.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-026",
+    "guide": "G04",
+    "source_input_contract": "Required: item, quantity, cost, last qualifying movement date and reporting date. NRV comparison additionally requires approved selling-price and completion or disposal-cost inputs.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-027",
+    "guide": "G04",
+    "source_input_contract": "Required: asset identifier and class, opening cost and accumulated charge, additions, disposals, transfers, current charge, closing values and mapped ledger balances.",
+    "current_wire_profile": "Candidate related area profile assets; exact minimum parity not inferred. Input kinds: additions, assets. See current_area_typed_schemas.",
+    "candidate_method": "assets",
+    "candidate_input_kinds": [
+      "additions",
+      "assets"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "file": "tests/pilot.test.mjs",
+        "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-028",
+    "guide": "G04",
+    "source_input_contract": "Required: asset identifier, class, cost, residual value, useful life or rate, in-service and disposal dates, recorded period charge and reporting dates.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-029",
+    "guide": "G04",
+    "source_input_contract": "Required: asset identifier, class, status, acquisition and disposal dates, cost, accumulated charge, carrying amount and approved life or rate range.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-030",
+    "guide": "G04",
+    "source_input_contract": "Required: transaction identifier, date, amount, recorded account, asset or expense category, project code where used and approved policy threshold.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-031",
+    "guide": "G04",
+    "source_input_contract": "Required: employee and payroll-period identifiers, employment status, gross pay, deductions, net pay, mapped accounts and bank payment reference and amount.",
+    "current_wire_profile": "Candidate related area profile payroll; exact minimum parity not inferred. Input kinds: payroll, payrollBank, payrollRules. See current_area_typed_schemas.",
+    "candidate_method": "payroll",
+    "candidate_input_kinds": [
+      "payroll",
+      "payrollBank",
+      "payrollRules"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "file": "tests/pilot.test.mjs",
+        "action": "statutory and finance calculations from named rule editions",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-032",
+    "guide": "G04",
+    "source_input_contract": "Required: employee, pay period, structured earnings and deductions, taxable and contribution bases, recorded outputs, and approved effective-dated statutory parameters.",
+    "current_wire_profile": "Candidate related area profile payroll; exact minimum parity not inferred. Input kinds: payroll, payrollBank, payrollRules. See current_area_typed_schemas.",
+    "candidate_method": "payroll",
+    "candidate_input_kinds": [
+      "payroll",
+      "payrollBank",
+      "payrollRules"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "file": "tests/pilot.test.mjs",
+        "action": "statutory and finance calculations from named rule editions",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-033",
+    "guide": "G04",
+    "source_input_contract": "Required: employee, payroll period, payment date, gross and net pay, selected components, employment status and approved normal payroll calendar.",
+    "current_wire_profile": "Candidate related area profile payroll; exact minimum parity not inferred. Input kinds: payroll, payrollBank, payrollRules, payrollHistory, payrollVariance. See current_area_typed_schemas.",
+    "candidate_method": "payroll",
+    "candidate_input_kinds": [
+      "payroll",
+      "payrollBank",
+      "payrollRules",
+      "payrollHistory",
+      "payrollVariance"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "file": "tests/pilot.test.mjs",
+        "action": "statutory and finance calculations from named rule editions",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-034",
+    "guide": "G04",
+    "source_input_contract": "Required: tax period, transaction or register identifier, taxable base, category, recorded tax, approved rate, mapped ledger balance and filed-return totals.",
+    "current_wire_profile": "Candidate related area profile tax; exact minimum parity not inferred. Input kinds: tax, taxPayments, taxReturns, taxRules. See current_area_typed_schemas.",
+    "candidate_method": "tax",
+    "candidate_input_kinds": [
+      "tax",
+      "taxPayments",
+      "taxReturns",
+      "taxRules"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "file": "tests/pilot.test.mjs",
+        "action": "statutory and finance calculations from named rule editions",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-035",
+    "guide": "G04",
+    "source_input_contract": "Required: accounting profit, approved tax adjustments, temporary-difference schedule, approved rates, ledger balances, filed-return amount and relevant payments.",
+    "current_wire_profile": "Candidate related area profile tax; exact minimum parity not inferred. Input kinds: tax, taxPayments, taxReturns, taxRules. See current_area_typed_schemas.",
+    "candidate_method": "tax",
+    "candidate_input_kinds": [
+      "tax",
+      "taxPayments",
+      "taxReturns",
+      "taxRules"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "file": "tests/pilot.test.mjs",
+        "action": "statutory and finance calculations from named rule editions",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-036",
+    "guide": "G04",
+    "source_input_contract": "Required: facility identifier, opening principal, drawdowns, repayments, closing balance, contractual rate and dates, ledger or lender balance, and approved covenant formula inputs.",
+    "current_wire_profile": "Candidate related area profile loans; exact minimum parity not inferred. Input kinds: loanSegments, loanTerms, loans. See current_area_typed_schemas.",
+    "candidate_method": "loans",
+    "candidate_input_kinds": [
+      "loanSegments",
+      "loanTerms",
+      "loans"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "file": "tests/pilot.test.mjs",
+        "action": "statutory and finance calculations from named rule editions",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-037",
+    "guide": "G04",
+    "source_input_contract": "Required: lease identifier, commencement and end dates, fixed payment schedule, approved discount rate, initial right-of-use adjustments and recorded ledger balances.",
+    "current_wire_profile": "Candidate related area profile leases; exact minimum parity not inferred. Input kinds: leasePayments, leases. See current_area_typed_schemas.",
+    "candidate_method": "leases",
+    "candidate_input_kinds": [
+      "leasePayments",
+      "leases"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "file": "tests/pilot.test.mjs",
+        "action": "statutory and finance calculations from named rule editions",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-038",
+    "guide": "G04",
+    "source_input_contract": "Required: transaction or balance identifier, foreign amount and currency, functional amount, transaction date, reporting date, monetary-item status and approved rate table.",
+    "current_wire_profile": "Candidate related area profile fx; exact minimum parity not inferred. Input kinds: fxPositions, fxRates. See current_area_typed_schemas.",
+    "candidate_method": "fx",
+    "candidate_input_kinds": [
+      "fxPositions",
+      "fxRates"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "file": "tests/pilot.test.mjs",
+        "action": "statutory and finance calculations from named rule editions",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-039",
+    "guide": "G04",
+    "source_input_contract": "Required: equity component, opening balance, movement type and amount, profit linkage, closing ledger balance and authorization reference for share or dividend actions.",
+    "current_wire_profile": "Candidate related area profile equity; exact minimum parity not inferred. Input kinds: equity, equityActions. See current_area_typed_schemas.",
+    "candidate_method": "equity",
+    "candidate_input_kinds": [
+      "equity",
+      "equityActions"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "file": "tests/pilot.test.mjs",
+        "action": "statutory and finance calculations from named rule editions",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-040",
+    "guide": "G04",
+    "source_input_contract": "Required: instrument identifier, opening holdings and cost, purchases, disposals, closing position, income, custodian statement and mapped ledger balances. Yield testing requires approved cash flows and rate.",
+    "current_wire_profile": "Candidate related area profile investments; exact minimum parity not inferred. Input kinds: custody, investmentCashFlows, investments. See current_area_typed_schemas.",
+    "candidate_method": "investments",
+    "candidate_input_kinds": [
+      "custody",
+      "investmentCashFlows",
+      "investments"
+    ],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "file": "tests/pilot.test.mjs",
+        "action": "statutory and finance calculations from named rule editions",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-041",
+    "guide": "G04",
+    "source_input_contract": "Required: approved related-party register, counterparty masters, registration or bank identifiers, transaction and balance populations, and structured disclosure totals.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+        "file": "tests/pilot.test.mjs",
+        "action": "technical work through exact signed release and receipt",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "quality",
+          "custodian",
+          "sandbox recipient"
+        ],
+        "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-042",
+    "guide": "G04",
+    "source_input_contract": "Required: estimate identifier, opening and movement schedule, closing ledger balance, method selection and approved assumptions. Aging profiles also require exposure buckets and rates.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+        "file": "tests/pilot.test.mjs",
+        "action": "technical work through exact signed release and receipt",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "quality",
+          "custodian",
+          "sandbox recipient"
+        ],
+        "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-043",
+    "guide": "G04",
+    "source_input_contract": "Required: approved component trial balances, consolidation inputs, entity and counterparty identifiers, mapping, intercompany balances, supplied eliminations and recorded consolidated totals.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R16",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-044",
+    "guide": "G05",
+    "source_input_contract": "Required: reporting-date cash, current assets and liabilities, debt maturities, approved facilities, covenant results and management cash-flow forecast.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R17",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-045",
+    "guide": "G05",
+    "source_input_contract": "Required: reporting date, review end date, post-period transaction identifier, type, date, amount, counterparty and year-end source reference where available.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R17",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-046",
+    "guide": "G02",
+    "source_input_contract": "Required: benchmark type and amount, overall and performance percentages, clearly-trivial basis, reporting period, rationale and required approval.",
+    "current_wire_profile": "Current MaterialitySelection v1 / MaterialityBasis in src/lib/pilot-materiality.ts: numeric normalized amounts (2 decimals), percent (4), literal modes/stage/measure, exact evidence ID/version/hash, narrative rationale; PILOT specifies fields.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "file": "tests/pilot-materiality.test.mjs",
+        "action": "choose and independently review materiality overrides, then reduce and reapprove the exact decision",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Candidate amounts remain separate from selected overall, performance, specific and zero trivial thresholds. Operative source rows use the owning decisions. Self-review, missing rationale, downgrade and stale sample use are denied; review history and the original selection survive restart.",
+        "outcome": "passed"
+      },
+      {
+        "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "file": "tests/pilot.test.mjs",
+        "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+        "outcome": "passed"
+      },
+      {
+        "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "file": "tests/pilot.test.mjs",
+        "action": "approved planning, qualified report, archive hold and recovery",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R12",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-047",
+    "guide": "G04",
+    "source_input_contract": "Required: reconciled population with stable item identifiers and amounts, eligibility rules, approved sample size, random seed and tested error for selected items.",
+    "current_wire_profile": "Current SampleDesignVersion in src/lib/pilot-population.ts: per-form/version/method/size/seed/basis/stamp, unit IDs, integer cents/test evidence. Current commands use integer/amount strings. FG-01 new wire contract remains proposed.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "file": "tests/pilot.test.mjs",
+        "action": "approved population through source rows, confirmation and report",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "sandbox recipient"
+        ],
+        "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R15",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-048",
+    "guide": "G05",
+    "source_input_contract": "Required: source case, affected account and statement line, amount, period, classification, correction status and active materiality version.",
+    "current_wire_profile": "Current correction/evaluation records use stable finding/reference IDs, nonnegative amount converted to cents, exact evidence/population/FS/materiality versions. Signed/projection extension requires HB-D02.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+        "file": "tests/pilot.test.mjs",
+        "action": "technical work through exact signed release and receipt",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "quality",
+          "custodian",
+          "sandbox recipient"
+        ],
+        "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R18",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-049",
+    "guide": "G05",
+    "source_input_contract": "Required: matter identifier, type, status, relevant dates, management assessment, linked evidence, proposed accounting or disclosure treatment and reviewer assignment.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R17",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-050",
+    "guide": "G05",
+    "source_input_contract": "Required: management assessment, identified conditions, forecast evidence, mitigating actions, auditor evaluation, disclosure decision, reporting decision and assigned approvals.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R17",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-051",
+    "guide": "G05",
+    "source_input_contract": "Required: reporting and intended report dates, applicable inquiry or source-review list, completion evidence, identified event details, treatment decision and reviewer assignment.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+        "file": "tests/pilot.test.mjs",
+        "action": "technical work through exact signed release and receipt",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "quality",
+          "custodian",
+          "sandbox recipient"
+        ],
+        "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R17",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-052",
+    "guide": "G05",
+    "source_input_contract": "Required: controlled disclosure checklist version, entity and reporting-framework context, applicability decision, exact note reference, evidence link and required review.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R18",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-053",
+    "guide": "G05",
+    "source_input_contract": "Required: area scope, applicable procedure list, procedure statuses, evidence and exception links, required roles, sign-offs and auditor conclusion.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R18",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-054",
+    "guide": "G05",
+    "source_input_contract": "Required: stable risk, response, procedure, evidence and conclusion identifiers; status and approval; and recorded change events.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "unverified",
+    "recorded_evidence": [],
+    "remaining_contract_task": "R19",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-055",
+    "guide": "G05",
+    "source_input_contract": "Required: source work item, exception or note, owner, required approver roles, status, resolution evidence and completion-gate configuration.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+        "file": "tests/pilot.test.mjs",
+        "action": "technical work through exact signed release and receipt",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "quality",
+          "custodian",
+          "sandbox recipient"
+        ],
+        "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R19",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-056",
+    "guide": "G06",
+    "source_input_contract": "Required: exact financial-statement version, approved area and engagement conclusions, structured report decisions, report draft version and required technical or partner review.",
+    "current_wire_profile": "No dedicated exact wire schema assigned by this handbook; retain source input requirements and complete owning contract under the task below.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+        "file": "tests/pilot-reporting.test.mjs",
+        "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "local report recipient",
+          "custodian"
+        ],
+        "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R20",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-057",
+    "guide": "G06",
+    "source_input_contract": "Required: final report and statement versions, authorized partner identity and approval, intended issue date, approved recipient list and engagement issuance status.",
+    "current_wire_profile": "Exact approved artifact/package ID/hash, ISO event dates and separate scope/attempt/manifest state records. G06/G07 and pinned module interfaces define current fields; external providers remain proposed.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+        "file": "tests/pilot-reporting.test.mjs",
+        "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "local report recipient",
+          "custodian"
+        ],
+        "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+        "outcome": "passed"
+      },
+      {
+        "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+        "file": "tests/pilot.test.mjs",
+        "action": "technical work through exact signed release and receipt",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "quality",
+          "custodian",
+          "sandbox recipient"
+        ],
+        "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R20",
+    "independent_acceptance": "open"
+  },
+  {
+    "automation": "AUTO-058",
+    "guide": "G07",
+    "source_input_contract": "Required: engagement file index and versions, completion-gate status, authorized locking role, retention-policy version and any amendment request and approval.",
+    "current_wire_profile": "Exact approved artifact/package ID/hash, ISO event dates and separate scope/attempt/manifest state records. G06/G07 and pinned module interfaces define current fields; external providers remain proposed.",
+    "candidate_method": null,
+    "candidate_input_kinds": [],
+    "units_policy": "No inferred unit/currency/percentage. Bind exact declared units and profile/edition; null is not zero.",
+    "status": "partial-evidence",
+    "recorded_evidence": [
+      {
+        "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+        "file": "tests/pilot-reporting.test.mjs",
+        "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "local report recipient",
+          "custodian"
+        ],
+        "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+        "outcome": "passed"
+      },
+      {
+        "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "file": "tests/pilot.test.mjs",
+        "action": "approved planning, qualified report, archive hold and recovery",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+        "outcome": "passed"
+      },
+      {
+        "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+        "file": "tests/pilot.test.mjs",
+        "action": "technical work through exact signed release and receipt",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "quality",
+          "custodian",
+          "sandbox recipient"
+        ],
+        "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+        "outcome": "passed"
+      }
+    ],
+    "remaining_contract_task": "R21",
+    "independent_acceptance": "open"
+  }
+]

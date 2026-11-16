@@ -1,0 +1,1912 @@
+[
+  {
+    "kind": "invoices",
+    "label": "Борлуулалтын нэхэмжлэл",
+    "headers": "id,entity,currency,invoice_date,delivery_date,due_date,amount,open_amount,sku,quantity,unit_price,discount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "invoice_date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "delivery_date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "due_date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "open_amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "sku",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "quantity",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "unit_price",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "discount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "credits",
+    "label": "Кредит баримт",
+    "headers": "id,entity,currency,invoice,date,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "invoice",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "cash",
+    "label": "Дараа үеийн орлого",
+    "headers": "id,entity,currency,invoice,date,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "invoice",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "prices",
+    "label": "Баталсан үнийн жагсаалт",
+    "headers": "sku,entity,currency,unit_price,max_discount,from,to",
+    "fields": [
+      {
+        "field": "sku",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "unit_price",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "max_discount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "from",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "to",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "receipts",
+    "label": "Хүлээн авалтын баримт",
+    "headers": "id,entity,currency,vendor,date,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "vendor",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "bills",
+    "label": "Нийлүүлэгчийн нэхэмжлэл",
+    "headers": "id,entity,currency,receipt,vendor,date,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "receipt",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "vendor",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "payments",
+    "label": "Нийлүүлэгчийн төлбөр",
+    "headers": "id,entity,currency,invoice,vendor,date,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "invoice",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "vendor",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "bank",
+    "label": "Банкны хуулга",
+    "headers": "id,entity,currency,reference,date,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "reference",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "reconciliation",
+    "label": "Банк ба дэвтрийн баталсан үлдэгдэл, тохируулга",
+    "headers": "id,entity,currency,kind,reference,date,amount,reason",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "kind",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "reference",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "reason",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "inventory",
+    "label": "Бараа материалын бүртгэл",
+    "headers": "id,entity,currency,item,location,unit,opening_qty,closing_qty,closing_value",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "item",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "location",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "unit",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "opening_qty",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "closing_qty",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "closing_value",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "movements",
+    "label": "Бараа материалын хөдөлгөөн",
+    "headers": "id,entity,currency,item,location,unit,date,kind,quantity",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "item",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "location",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "unit",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "kind",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "quantity",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "counts",
+    "label": "Баталсан тооллогын хуудас",
+    "headers": "id,entity,currency,item,location,unit,date,counted_qty",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "item",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "location",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "unit",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "counted_qty",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "assets",
+    "label": "Үндсэн хөрөнгийн бүртгэл",
+    "headers": "id,entity,currency,class,opening_cost,additions,disposals,transfers,closing_cost,opening_accumulated,charge,disposed_accumulated,adjustments,closing_accumulated",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "class",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "opening_cost",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "additions",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "disposals",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "transfers",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "closing_cost",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "opening_accumulated",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "charge",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "disposed_accumulated",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "adjustments",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "closing_accumulated",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "additions",
+    "label": "Үндсэн хөрөнгийн нэмэгдлийн нотолгоо",
+    "headers": "id,entity,currency,asset,date,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "asset",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "payroll",
+    "label": "Цалингийн бүртгэл",
+    "headers": "id,entity,currency,employee,category,date,status,gross,employee_contribution,withholding,employer_contribution,other_deductions,net_adjustment,net",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "employee",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "category",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "status",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "gross",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "employee_contribution",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "withholding",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "employer_contribution",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "other_deductions",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "net_adjustment",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "net",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "payrollRules",
+    "label": "Баталсан цалингийн дүрэм",
+    "headers": "id,entity,currency,edition,category,method,from,to,employee_bps,employer_bps,withholding_bps,cap,withholding_base",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "edition",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "category",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "method",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "from",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "to",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "employee_bps",
+        "wire_type": "integer string 0..10000, parsed to number",
+        "unit": "basis points"
+      },
+      {
+        "field": "employer_bps",
+        "wire_type": "integer string 0..10000, parsed to number",
+        "unit": "basis points"
+      },
+      {
+        "field": "withholding_bps",
+        "wire_type": "integer string 0..10000, parsed to number",
+        "unit": "basis points"
+      },
+      {
+        "field": "cap",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "withholding_base",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "payrollBank",
+    "label": "Цалингийн банкны хуулга",
+    "headers": "id,entity,currency,payroll,employee,date,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "payroll",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "employee",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "payrollHistory",
+    "label": "Өмнөх сарын харьцуулах цалин",
+    "headers": "id,entity,currency,employee,category,period,gross",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "employee",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "category",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "period",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "gross",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "payrollVariance",
+    "label": "Баталсан цалингийн хэлбэлзэл ба хуваарь",
+    "headers": "id,entity,currency,edition,from,to,method,amount,rate_bps,pay_day",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "edition",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "from",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "to",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "method",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "rate_bps",
+        "wire_type": "integer string 0..10000, parsed to number",
+        "unit": "basis points"
+      },
+      {
+        "field": "pay_day",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "tax",
+    "label": "Татварын тооцооны бүртгэл",
+    "headers": "id,entity,currency,period,category,date,base,adjustment,offset,tax",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "period",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "category",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "base",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "adjustment",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "offset",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "tax",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "taxRules",
+    "label": "Баталсан татварын дүрэм",
+    "headers": "id,entity,currency,edition,category,method,from,to,rate_bps",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "edition",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "category",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "method",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "from",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "to",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "rate_bps",
+        "wire_type": "integer string 0..10000, parsed to number",
+        "unit": "basis points"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "taxReturns",
+    "label": "Илгээсэн тайлан ба хойшлогдсон татварын хүснэгт",
+    "headers": "id,entity,currency,period,category,date,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "period",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "category",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "taxPayments",
+    "label": "Татварын төлөлтийн баримт",
+    "headers": "id,entity,currency,period,category,date,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "period",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "category",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "loans",
+    "label": "Зээлийн бүртгэл",
+    "headers": "id,entity,currency,opening,drawdowns,repayments,movements,closing,recorded_interest,covenant_metric",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "opening",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "drawdowns",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "repayments",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "movements",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "closing",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "recorded_interest",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "covenant_metric",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "loanTerms",
+    "label": "Хянасан зээлийн нөхцөл ба шалгуур",
+    "headers": "id,entity,currency,loan,edition,method,from,to,rate_bps,day_basis,covenant_direction,covenant_limit,definition",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "loan",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "edition",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "method",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "from",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "to",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "rate_bps",
+        "wire_type": "integer string 0..10000, parsed to number",
+        "unit": "basis points"
+      },
+      {
+        "field": "day_basis",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "covenant_direction",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "covenant_limit",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "definition",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "loanSegments",
+    "label": "Зээлийн хүүгийн үндсэн дүнгийн сегмент",
+    "headers": "id,entity,currency,loan,from,to,principal",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "loan",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "from",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "to",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "principal",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "leases",
+    "label": "Хянасан түрээсийн нөхцөл",
+    "headers": "id,entity,currency,edition,method,rate_bps,life,elapsed,initial_adjustment,recorded_liability,recorded_rou",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "edition",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "method",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "rate_bps",
+        "wire_type": "integer string 0..10000, parsed to number",
+        "unit": "basis points"
+      },
+      {
+        "field": "life",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "elapsed",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "initial_adjustment",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "recorded_liability",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "recorded_rou",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "leasePayments",
+    "label": "Түрээсийн тогтмол төлбөрийн хуваарь",
+    "headers": "id,entity,currency,lease,sequence,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "lease",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "sequence",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "fxPositions",
+    "label": "Валютын ажил гүйлгээ ба мөнгөн үлдэгдэл",
+    "headers": "id,entity,currency,foreign_currency,date,basis,foreign_amount,recorded",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "foreign_currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "basis",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "foreign_amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "recorded",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "fxRates",
+    "label": "Чиглэлтэй, баталсан валютын ханш",
+    "headers": "id,entity,currency,edition,foreign_currency,date,direction,rate_micros",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "edition",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "foreign_currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "direction",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "rate_micros",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "micro-rate scale"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "equity",
+    "label": "Өмчийн хөдөлгөөний бүртгэл",
+    "headers": "id,entity,currency,edition,method,opening,profit,contributions,distributions,transfers,movements,closing",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "edition",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "method",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "opening",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "profit",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "contributions",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "distributions",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "transfers",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "movements",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "closing",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "equityActions",
+    "label": "Өмчийн хөдөлгөөний баталсан шийдвэр",
+    "headers": "id,entity,currency,component,kind,date,amount,reference",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "component",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "kind",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "reference",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "investments",
+    "label": "Хөрөнгө оруулалтын бүртгэл",
+    "headers": "id,entity,currency,edition,method,opening_units,acquired_units,disposed_units,other_units,closing_units,opening_cost,additions,disposals,transfers,closing_cost,income,valuation",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "edition",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "method",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "opening_units",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "acquired_units",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "disposed_units",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "other_units",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "closing_units",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "opening_cost",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "additions",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "disposals",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "transfers",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "closing_cost",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "income",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "valuation",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "custody",
+    "label": "Кастодианы үлдэгдэл ба орлогын хуулга",
+    "headers": "id,entity,currency,instrument,date,closing_units,closing_cost,income",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "instrument",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "date",
+        "wire_type": "ISO YYYY-MM-DD string validated as a real date",
+        "unit": "calendar date"
+      },
+      {
+        "field": "closing_units",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "closing_cost",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      },
+      {
+        "field": "income",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  },
+  {
+    "kind": "investmentCashFlows",
+    "label": "Хянасан энгийн үнэлгээний мөнгөн урсгал",
+    "headers": "id,entity,currency,instrument,edition,method,sequence,rate_bps,amount",
+    "fields": [
+      {
+        "field": "id",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "entity",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "currency",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "instrument",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "edition",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "method",
+        "wire_type": "text string; method-specific vocabulary/reference validation applies",
+        "unit": "identifier / category / narrative; no inferred numeric conversion"
+      },
+      {
+        "field": "sequence",
+        "wire_type": "integer string; signed cases depend on field/category; normal 9 digits, rate_micros 12",
+        "unit": "declared row unit / count / life / schedule index as applicable"
+      },
+      {
+        "field": "rate_bps",
+        "wire_type": "integer string 0..10000, parsed to number",
+        "unit": "basis points"
+      },
+      {
+        "field": "amount",
+        "wire_type": "signed/unsigned decimal string, up to 2 decimals, parsed to safe integer cents; conditional sign rules in parser",
+        "unit": "row currency, cents internally"
+      }
+    ],
+    "file_contract": "Accepted current in-scope original UTF-8 CSV; exact unique header set; area file cap 750000 bytes; parse row limits also apply",
+    "basis": "src/lib/pilot-area.ts declarations and scripts/pilot-area-checks.mjs parseAreaFile at 079f9da",
+    "supported_boundary": "Exact schema/parse rules only; source suitability and method-specific applicability are separately checked"
+  }
+]

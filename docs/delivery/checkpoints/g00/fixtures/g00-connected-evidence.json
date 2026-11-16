@@ -1,0 +1,27 @@
+{
+  "guide": "G00",
+  "profile": "shared-core synthetic reference; preset identities and retained legacy report path",
+  "actors": [
+    "preparer",
+    "reviewer",
+    "partner"
+  ],
+  "engagements": [
+    "E-dd1af544-cccd-4880-bcfc-66e57486e563",
+    "E-22550899-0e39-4e4c-a59a-3f8c2217030f"
+  ],
+  "workVersion": 3,
+  "original": {
+    "id": "fa8c2878-c1a6-4d7a-b4d9-86f52a49be35",
+    "version": 1,
+    "sha256": "9735ed2e9e12ed76f1971dc7784b3d79c35d8956cc19f0af9e5815a0dbb51f5d"
+  },
+  "retainedAuthorization": "a6f9a49f54e2ab1f56d045d3fb2a0e07d54740e1567d2d4fbdf842bcaebd217d",
+  "checks": {
+    "normal": "passed",
+    "negative": "passed",
+    "change": "passed",
+    "restartAndRetry": "passed"
+  },
+  "sourceAcceptance": "open; no independent acceptance or additional A-series lifecycle claimed"
+}

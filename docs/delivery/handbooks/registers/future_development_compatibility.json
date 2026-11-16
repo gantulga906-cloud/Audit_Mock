@@ -1,0 +1,192 @@
+[
+  {
+    "proposal": "F2 form fidelity",
+    "tasks": "R07/R08",
+    "affected_scope": "70 forms; P04/P15; all native evidence/review",
+    "preserved_contracts": "Stable form/work/row IDs, exact answers/options, source coordinates and signed digests",
+    "required_adaptations": "Extend existing typed contracts/exports; do not substitute another browser-only engine",
+    "possible_conflict_or_decision": "Current Stage2 exact-baseline limit; unsupplied semantic acceptance",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Programme migration",
+    "tasks": "R08.5/R12.2",
+    "affected_scope": "M02; P07-UC01; 22 variants",
+    "preserved_contracts": "Approved programme decision, explicit adopted template and historical execution",
+    "required_adaptations": "Add dedicated current loss acknowledgement to existing shared migration",
+    "possible_conflict_or_decision": "Direct adoption acknowledgement does not yet cover programme UI; HB-D04",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Structured risk response",
+    "tasks": "R12.1-3",
+    "affected_scope": "2.6; AUTO-054; A06/A07/A10/A12",
+    "preserved_contracts": "Current one-risk/procedure decisions and selected 1.3/controls version",
+    "required_adaptations": "Add many-to-many links and walkthrough/operating effectiveness with targeted impact",
+    "possible_conflict_or_decision": "Source risk bands/code vocabulary and circular prerequisites need approval",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "FG-02 extension",
+    "tasks": "R12.4/R07",
+    "affected_scope": "AUTO-046; A08; DEP-C06/C14",
+    "preserved_contracts": "Candidate versus selected amounts, overrides/zero, native owning answers/history",
+    "required_adaptations": "Add missing contexts without recomputing from candidate rather than selected amount",
+    "possible_conflict_or_decision": "No universal percent or erasure of earlier planning/final choices",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Unbiased sampling",
+    "tasks": "R15.1",
+    "affected_scope": "AUTO-047; A13; 3.3.1",
+    "preserved_contracts": "Old deterministic method identity, selected units/tests and basis stamps",
+    "required_adaptations": "Introduce separate method/version and reproducible unbiased draws",
+    "possible_conflict_or_decision": "HB-D03 generator/eligible-unit decision; do not relabel old selections",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Projection/findings",
+    "tasks": "R15.2/4 R18.1/5",
+    "affected_scope": "AUTO-047/048; A19/A20",
+    "preserved_contracts": "Stable finding IDs, actual tests/corrections/verified posting and old evaluation",
+    "required_adaptations": "Add eligible book/sample basis, complete-test guards and linked projected component",
+    "possible_conflict_or_decision": "HB-D02 signed vs absolute exposure; avoid double count and unsupported confidence",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Named people",
+    "tasks": "R10.1/2/5 R22.1",
+    "affected_scope": "All roles/actions/scoped resources",
+    "preserved_contracts": "Historical actor/capacity, sign-offs, grants and suitability evidence",
+    "required_adaptations": "Map presets to named identities; whole-app revoke/departure/expiry",
+    "possible_conflict_or_decision": "Business suitability is separate from access and formal quality eligibility",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Fact dependencies",
+    "tasks": "R09.1-5",
+    "affected_scope": "20 DEP-C rows; all relying work",
+    "preserved_contracts": "Source owner/version/as-of fact and prior-period origin",
+    "required_adaptations": "Explicit confirmation/action-specific prerequisites/targeted change propagation",
+    "possible_conflict_or_decision": "Numeric source cross-reference alone does not establish a gate",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Data profiles",
+    "tasks": "R13.1-5",
+    "affected_scope": "AUTO-002-008/010; A11",
+    "preserved_contracts": "Exact original bytes, raw/null/zero, row lineage, independent controls and versioned bridges",
+    "required_adaptations": "Add accepted schemas and mappings alongside existing normalized single-currency CSV",
+    "possible_conflict_or_decision": "No implicit FX/fuzzy match; full GL/TB completeness not inferred from totals",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Requests/confirmations",
+    "tasks": "R14 R22.2",
+    "affected_scope": "AUTO-001; A14/A18",
+    "preserved_contracts": "Received/accepted/intended-use/actual outcome separation; retained originals",
+    "required_adaptations": "Expand case alternatives and approved provider adapters",
+    "possible_conflict_or_decision": "Unknown external effects reconcile before retry; local links not recipient identity",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Area methods",
+    "tasks": "R16.1-6",
+    "affected_scope": "22 variants; AUTO-011-045",
+    "preserved_contracts": "Exact input/method/rule edition, source rows and run/case reviews",
+    "required_adaptations": "Add missing minimum methods to owning profiles; accept each source variant",
+    "possible_conflict_or_decision": "Thirteen profiles do not close 22 variants; unsupported is not pass",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Technical judgments",
+    "tasks": "R17",
+    "affected_scope": "A15-A18; AUTO-041-045/049-051",
+    "preserved_contracts": "Owned conclusion/consultation and exact evidence relevance",
+    "required_adaptations": "Extend professional cases with actual specialists/components/evidence problems",
+    "possible_conflict_or_decision": "No automatic accounting/fraud/going-concern opinion from indicators",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Completion breadth",
+    "tasks": "R18/R19",
+    "affected_scope": "A19-A25/A30; AUTO-048/052-056",
+    "preserved_contracts": "Partial posting, qualitative concerns, response-versus-clearance, exact quality basis",
+    "required_adaptations": "Add missing representations/disclosures/communication/other-information cases",
+    "possible_conflict_or_decision": "Management agreement not verified posting; no fixed four signatures",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Report breadth",
+    "tasks": "R20",
+    "affected_scope": "A26; M10; AUTO-056/057",
+    "preserved_contracts": "Exact current preparation/FS/report/date, authorization/signature/issued bytes",
+    "required_adaptations": "Extend actual opinion/section/jurisdiction cases and real provider effects",
+    "possible_conflict_or_decision": "Local qualified scope-limitation profile not all opinions; preserve legacy profile migration",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Assembly/custody",
+    "tasks": "R21.1/2/5",
+    "affected_scope": "A27; M12; AUTO-058",
+    "preserved_contracts": "Index integrity, distinct clocks, independent return/reoffer and exact bytes",
+    "required_adaptations": "Extend policy/inspection/retrieval without replacing sealed originals",
+    "possible_conflict_or_decision": "Legal anchor/deadline remains owned; failed offer not overwritten",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Later facts/retention",
+    "tasks": "R21.3/4",
+    "affected_scope": "A28; holds/successors",
+    "preserved_contracts": "Original issued/sealed package, chronology, longer restrictions and predecessor grants",
+    "required_adaptations": "Add dated/unsealed/dual-date branches with new explicit transitions",
+    "possible_conflict_or_decision": "Substantive reissue cannot be administrative amendment; HB-D05",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Operational release",
+    "tasks": "R22/R23",
+    "affected_scope": "Five operational families; all core",
+    "preserved_contracts": "IDs/versions/scope, meaningful migration originals and fixture/source acceptance separation",
+    "required_adaptations": "Approve targets/providers; rehearse disposable cutover/rollback/restore/load",
+    "possible_conflict_or_decision": "Passing engineering fixture does not grant independent release acceptance",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Conditional wider scope",
+    "tasks": "R24",
+    "affected_scope": "Eight conditional; A29/B/C; 58 future rows; excluded M03-F07",
+    "preserved_contracts": "All original source dispositions and decision lineage",
+    "required_adaptations": "Activate only explicitly mandated streams with separate acceptance",
+    "possible_conflict_or_decision": "Do not silently promote extensions or reintroduce canonical client consolidation",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  },
+  {
+    "proposal": "Workspace integration",
+    "tasks": "R02-R06",
+    "affected_scope": "Role queues, original daily actions, legacy surface",
+    "preserved_contracts": "Context/URL/access, exact owning records, error states and keyboard usability",
+    "required_adaptations": "Expose added functional controls in established workspace with specific blockers",
+    "possible_conflict_or_decision": "Do not retire working legacy data/functions from menu-name parity or reopen redesign by default",
+    "integration_sequence": "Use task_to_guide recommended sequence; independent evidence recorded under R23",
+    "requirement_disposition": "preserved in full; no narrowing/removal/deferment authorized by guide"
+  }
+]

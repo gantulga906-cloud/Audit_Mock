@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-16",
+  "comparedWithExactRegisteredInventory": true,
+  "results": [
+    {
+      "file": "Audit_Stage_1_Repaired.xlsx",
+      "baselineDefinitions": 131,
+      "currentDefinitions": 131,
+      "baselineCoveredCells": 349,
+      "currentCoveredCells": 349,
+      "effectiveCellChanges": []
+    },
+    {
+      "file": "Audit_Stage_2_Repaired.xlsx",
+      "baselineDefinitions": 146,
+      "currentDefinitions": 146,
+      "baselineCoveredCells": 692,
+      "currentCoveredCells": 692,
+      "effectiveCellChanges": []
+    },
+    {
+      "file": "Audit_Stage_3_Repaired.xlsx",
+      "baselineDefinitions": 1148,
+      "currentDefinitions": 315,
+      "baselineCoveredCells": 1148,
+      "currentCoveredCells": 1148,
+      "effectiveCellChanges": []
+    },
+    {
+      "file": "Audit_Stage_4_Repaired.xlsx",
+      "baselineDefinitions": 362,
+      "currentDefinitions": 362,
+      "baselineCoveredCells": 362,
+      "currentCoveredCells": 362,
+      "effectiveCellChanges": []
+    },
+    {
+      "file": "Audit_Stage_5_Repaired.xlsx",
+      "baselineDefinitions": 33,
+      "currentDefinitions": 33,
+      "baselineCoveredCells": 33,
+      "currentCoveredCells": 33,
+      "effectiveCellChanges": []
+    }
+  ]
+}

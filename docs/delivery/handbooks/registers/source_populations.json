@@ -1,0 +1,62 @@
+[
+  {
+    "population": "processes",
+    "rows": 16
+  },
+  {
+    "population": "cases",
+    "rows": 75
+  },
+  {
+    "population": "criteria",
+    "rows": 315
+  },
+  {
+    "population": "features",
+    "rows": 136
+  },
+  {
+    "population": "automations",
+    "rows": 58
+  },
+  {
+    "population": "extensions",
+    "rows": 58
+  },
+  {
+    "population": "variants",
+    "rows": 22
+  },
+  {
+    "population": "e2e",
+    "rows": 476
+  },
+  {
+    "population": "gaps",
+    "rows": 29
+  },
+  {
+    "population": "screens",
+    "rows": 25
+  },
+  {
+    "population": "forms",
+    "rows": 70
+  },
+  {
+    "population": "dependencies",
+    "rows": 20
+  },
+  {
+    "population": "bpmns",
+    "rows": 5
+  },
+  {
+    "population": "sources",
+    "rows": 23
+  },
+  {
+    "population": "registered_verification_rows",
+    "rows": 2247
+  }
+]

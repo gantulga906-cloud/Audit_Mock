@@ -1,0 +1,654 @@
+{
+  "checked_on": "2026-11-16",
+  "branches": {
+    "branches": [
+      {
+        "branch": "codex/audit-workspace-v3"
+      },
+      {
+        "branch": "codex/extended-audit-pilot"
+      },
+      {
+        "branch": "codex/shared-pilot"
+      },
+      {
+        "branch": "codex/workbench-v4"
+      },
+      {
+        "branch": "codex/workflows-v5"
+      },
+      {
+        "branch": "feature/audit-workspace-v2"
+      },
+      {
+        "branch": "main"
+      },
+      {
+        "branch": "wave-0-audit-controls"
+      }
+    ],
+    "cursor": "OA"
+  },
+  "prs": {
+    "issues": [
+      {
+        "url": "https://github.com/gantulga906-cloud/Audit_Mock/pull/6",
+        "number": 6,
+        "state": "open",
+        "merged": false,
+        "mergeable": true,
+        "draft": true,
+        "body": "## Scope\n\n- Bind the approved opinion to a downloadable report, verify the same artifact hash at issue and archive, and require reviewed subsequent-events coverage through the report date.\n- Restrict sealed archive metadata and enforce scoped, expiring and revocable grants. Correct evidence request coverage and malformed amount handling.\n- Record build provenance. Persist pilot tasks, workpaper schedules, calendar and Gantt data, and deduplicate authenticated command retries.\n\n## Verification\n\n- 41 tests passed, including independent roles, date-change and qualified-report scenarios, expiry and revocation, a schedule change, and replay after restart.\n- Clean production build and TypeScript checks passed. The published tree matches the verified local tree.\n- The original source ZIP and five repaired companion workbooks matched the existing source manifest.\n\n## Remaining scope\n\nMulti-engagement authorization and persistence, typed workpaper migration, external signing and delivery, independent custody, and full source-cycle acceptance remain tracked in the development plan.\n\n## Wave 1 follow-up\n\n- Separate SQLite revisions, evidence, reports and archive packages by engagement while sharing firm registers.\n- Add a scoped portfolio and partner-managed engagement membership. Revoking membership denies direct links and closes existing archive grants for that role.\n- Migrate existing single-engagement pilot databases without changing archived bytes or hashes.\n- 43 tests passed, including two-engagement isolation, restart and migration. Clean production build and TypeScript checks passed.\n\nThe pilot uses three preset accounts. Typed workpapers, the controlled Form Builder, and independent quality and custody roles remain in the plan.\n\n## Wave 1 typed workpapers and Form Builder\n\n- All 70 source contracts load in the shared pilot. Explicit adoption pins the form version used for typed answers, exact-version review and authorization.\n- Add per-form authoring grants, draft and publish separation, structured XLSX question-list import and explicit adoption. Compatible answers roll forward on adoption and old signed versions remain available in history.\n- Verified typed intake, fixed-asset procedures, a custom form, cross-engagement evidence isolation and exact approval history. All 44 tests, the TypeScript check and clean production build passed.\n\nFormula parity and source-level acceptance of all workpapers remain open.\n\n## Wave 2 intake and terms\n\n- Add the scoped client directory, dated contact history, and separate enquiry inbox. Preserve unknown facts, return and decline history, and a confirmed prior-period reference.\n- Convert only to a pending engagement. Carry the confirmed client facts into 1.1.1 and leave prior-period evidence and approvals in their original file.\n- Require approval of the exact signed engagement letter revision and evidence hash. A changed client confirmation or unresolved independence item blocks activation.\n- All 45 tests, TypeScript and a clean production build passed. Full staffing and approved planning handoffs remain open.\n\n## Wave 2 staffing\n\n- Bind engagement seats and workpaper assignments to approved practitioners, current credentials, firm appointments, and dated hours. Check aggregate bookings across engagements.\n- Keep external specialist declarations, deliverables, and auditor supervision in the engagement staffing record.\n- Carry assignment changes into the schedule and outstanding evidence requests while preserving historical sign-offs and completed request ownership.\n- Verify overbooking, stale credentials, access scope, reassignment, and restart persistence in the pilot integration suite. Actual effort and independent EQR remain open.\n\n## Wave 2 planning (WP-09)\n\n- Link a reviewed risk and assertion to an exact procedure, approach and source or published template version. Retain nature, timing and extent alongside the approved materiality and applicable reliance basis.\n- Prevent fieldwork on excluded programmes and reopen dependent work after revised planning inputs. Preserve prior review snapshots.\n- Verified both source and published adoption, stale approval rejection, execution checks and selective reopening across two programmes. All 46 tests, production build and type check passed.\n- Multi-risk and multi-procedure tailoring, structured walkthroughs and area-specific materiality remain open.\n\n## Wave 3 reference workflow (WP-10–13)\n\n- Import and retain versioned originals, reconcile against a separate approved control artifact, and map accounts to statement lines. Approved figures populate preliminary analytics.\n- Track multi-part evidence requests, partial receipt, per-item evaluation, replacements and single-use local confirmation responses.\n- Bind deterministic sample selection, tests and findings to the exact approved population and reviewed planning inputs. Investigate and independently review journal entries selected by repeatable filters.\n- Follow the fixed-assets scenario through report authorization and a later population change. All 47 tests and the production build passed.\n- The pilot uses a normalized, single-currency CSV and local confirmation links. Extended population methods, external delivery and identity verification, and area-specific workflows remain open.\n\n## Wave 3 area workpapers (WP-14–16)\n\n- Run sales cut-off, credit-note, receivables aging, subsequent receipt and price checks on approved exports and exact ledger references.\n- Trace receipts, supplier invoices, ledger entries and payments. Investigate duplicate payments, potential unrecorded liabilities, unmatched bank items and balance residuals.\n- Reconcile inventory movements and year-end counts by item, location and unit. Roll fixed assets and accumulated depreciation forward and tie additions to the original support and net carrying value to the ledger.\n- Retain source rows for matches and exceptions. The assigned reviewer signs the area conclusion and the workpaper pins the reviewed run. A changed source reopens affected work.\n- The six-area reference scenario, all 48 tests, and the production build passed. Scope and remaining methods are recorded in development-progress.md.\n\n## Wave 3 payroll, tax and financing (WP-17–18)\n\n- Select independently accepted rule editions for payroll, VAT, withholding, current tax and supplied temporary differences. Reconcile payroll components and payments, compare optional prior-month and approved calendar evidence, and reconcile tax records to ledger, filings and payments.\n- Reperform supported borrowing, interest and covenant calculations, fixed-payment leases, exact-date FX, equity movement and authorization checks, custody and simple investment cash flows.\n- Block missing, expired and unsupported rules or rates. Retain the approved edition and source rows in the workpaper basis. The synthetic reference exercise reviews a payroll discrepancy and checks stale work after a new source.\n- All 49 tests and the production build passed. The supported methods and open variants are listed in development-progress.md.\n\n### Technical work, completion and custody\n\n- WP-19 ties related parties, estimates and component work to current approved evidence and reopens only affected papers when that evidence changes.\n- WP-20–24 connect correction acceptance and independent posting verification, final completion records, versioned partner consultation, explicit reviewer eligibility and exact-draft quality review, local signature and delivery receipt, and independent archive acceptance. Existing pilot records retain their legacy path.\n- WP-25 starts source-level release verification. A clean production build and all 50 tests passed. The verifier records fixture evidence for 31 acceptance criteria and 13 lifecycle steps. Full core source acceptance remains open.\n\n### Wave 5 connected acceptance\n\n- A25 completes all nine source steps and seven branch checks in one persisted fixture. Workpaper return and clearance retain the exact work and response versions, reviewer, reason and date. An amended archive retains the longer approved retention deadline and its digest survives an online SQLite backup and restore.\n- The verifier preserves the 51 lifecycle and 476 step inventory and distinguishes passing fixture evidence from independent acceptance. It tracks all 20 confirmed dependencies, 1,012 BPMN rows, and 58 pending extension scope decisions.\n- Clean production build and all 57 tests passed. Direct fixture evidence covers 43 criteria and 24 steps, with one connected lifecycle. The strict release gate remains open.\n\n### Wave 5 materiality lifecycle\n\n- A08 records the benchmark rationale and approved evidence, calculates overall and scoped thresholds, and feeds the same version into sampling and the outstanding misstatement evaluation. A revised threshold invalidates the dependent sample and evaluation while retaining their prior history.\n- One A08 fixture covers all nine source steps and five branch checks. The clean production build and all 58 tests passed. The source report records 49 criteria, 31 lifecycle steps, and two connected lifecycle fixtures. Independent release acceptance remains open.\n\n### Wave 5 extract intake and controlled amendments\n\n- A11 verifies the issued extract specification, exact accepted file, independent reconciliation, and handoff to reviewed analytics and sampling. Reopened source files invalidate affected approvals and retain prior evidence. The connected fixture covers nine source steps and seven branches.\n- An active signed terms amendment holds substantive work until an independent partner reassesses the scope and approves the exact version. A substantive archive amendment requires new work on the named paper, fresh authorization, signature, delivery, and custody, while the original stays retrievable under a grant. A03 and A28 remain partial.\n- The clean production build and all 58 tests passed. The report records fixture evidence for 58 acceptance criteria, 41 source steps and three connected lifecycles. Independent release acceptance remains open.\n\n### Wave 5 later-discovered facts\n\n- A28 records original report and archive identity, discovery chronology, initial and revised screening, management and governance discussions, and the approved response. Reissue is tied to the exact approved work and date, new authorization, actual replacement receipt and separate custody. The no-change and reliance-notice branches retain original release history.\n- The fixture covers nine A28 steps and five branches for an issued, sealed report. It records external communications and their outcomes. Dated but unsealed and dual-dating variants remain open.\n- All 58 tests and the clean build passed. The report records 59 criteria, 48 source steps and four connected fixtures. Independent release acceptance remains open.",
+        "title": "Audit pilot through independent custody and release verification",
+        "base": "main",
+        "base_sha": "69f0548de5f897127be671bba81cc61cfd524dfe",
+        "head": "wave-0-audit-controls",
+        "head_sha": "937e692c7e43e5338575aeddfd5b53c1c083fa50",
+        "head_repo_id": 1447920615,
+        "head_repo_full_name": "gantulga906-cloud/Audit_Mock",
+        "merge_commit_sha": null,
+        "user": {
+          "login": "gantulga906-cloud",
+          "name": null,
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/353214882?v=4",
+          "id": 353214882
+        },
+        "requested_reviewers": null,
+        "requested_team_reviewers": null,
+        "diff": null,
+        "comments": null,
+        "created_at": "2026-11-09T07:50:02Z",
+        "updated_at": "2026-11-10T07:05:41Z",
+        "closed_at": null,
+        "merged_at": null,
+        "commits": 16,
+        "changed_files": null,
+        "additions": null,
+        "deletions": null,
+        "display_url": "https://github.com/gantulga906-cloud/Audit_Mock/pull/6",
+        "display_title": "Audit pilot through independent custody and release verification"
+      }
+    ]
+  },
+  "compare": {
+    "repository_full_name": "gantulga906-cloud/Audit_Mock",
+    "base": "main",
+    "head": "wave-0-audit-controls",
+    "status": "ahead",
+    "ahead_by": 16,
+    "behind_by": 0,
+    "total_commits": 16,
+    "too_large": null,
+    "base_commit": {
+      "sha": "69f0548de5f897127be671bba81cc61cfd524dfe",
+      "url": "https://api.github.com/repos/gantulga906-cloud/Audit_Mock/commits/69f0548de5f897127be671bba81cc61cfd524dfe",
+      "html_url": "https://github.com/gantulga906-cloud/Audit_Mock/commit/69f0548de5f897127be671bba81cc61cfd524dfe"
+    },
+    "merge_base_commit": {
+      "sha": "69f0548de5f897127be671bba81cc61cfd524dfe",
+      "url": "https://api.github.com/repos/gantulga906-cloud/Audit_Mock/commits/69f0548de5f897127be671bba81cc61cfd524dfe",
+      "html_url": "https://github.com/gantulga906-cloud/Audit_Mock/commit/69f0548de5f897127be671bba81cc61cfd524dfe"
+    },
+    "files": [
+      {
+        "filename": "README.md",
+        "status": "modified",
+        "additions": 22,
+        "deletions": 1,
+        "changes": 23,
+        "previous_filename": null
+      },
+      {
+        "filename": "docs/research/development-progress.md",
+        "status": "added",
+        "additions": 105,
+        "deletions": 0,
+        "changes": 105,
+        "previous_filename": null
+      },
+      {
+        "filename": "package.json",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/build.mjs",
+        "status": "added",
+        "additions": 28,
+        "deletions": 0,
+        "changes": 28,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-archive.mjs",
+        "status": "modified",
+        "additions": 170,
+        "deletions": 42,
+        "changes": 212,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-area-checks.mjs",
+        "status": "added",
+        "additions": 336,
+        "deletions": 0,
+        "changes": 336,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-area-finance.mjs",
+        "status": "added",
+        "additions": 196,
+        "deletions": 0,
+        "changes": 196,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-area-statutory.mjs",
+        "status": "added",
+        "additions": 178,
+        "deletions": 0,
+        "changes": 178,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-area.mjs",
+        "status": "added",
+        "additions": 168,
+        "deletions": 0,
+        "changes": 168,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-completion.mjs",
+        "status": "added",
+        "additions": 290,
+        "deletions": 0,
+        "changes": 290,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-confirmations.mjs",
+        "status": "added",
+        "additions": 75,
+        "deletions": 0,
+        "changes": 75,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-contract-evidence.mjs",
+        "status": "added",
+        "additions": 49,
+        "deletions": 0,
+        "changes": 49,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-forms.mjs",
+        "status": "added",
+        "additions": 312,
+        "deletions": 0,
+        "changes": 312,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-intake.mjs",
+        "status": "added",
+        "additions": 373,
+        "deletions": 0,
+        "changes": 373,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-journals.mjs",
+        "status": "added",
+        "additions": 130,
+        "deletions": 0,
+        "changes": 130,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-later-facts.mjs",
+        "status": "added",
+        "additions": 134,
+        "deletions": 0,
+        "changes": 134,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-lifecycle-evidence.mjs",
+        "status": "added",
+        "additions": 147,
+        "deletions": 0,
+        "changes": 147,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-materiality.mjs",
+        "status": "added",
+        "additions": 109,
+        "deletions": 0,
+        "changes": 109,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-oversight.mjs",
+        "status": "added",
+        "additions": 134,
+        "deletions": 0,
+        "changes": 134,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-population.mjs",
+        "status": "added",
+        "additions": 247,
+        "deletions": 0,
+        "changes": 247,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-registers.mjs",
+        "status": "modified",
+        "additions": 223,
+        "deletions": 35,
+        "changes": 258,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-release-acceptance.json",
+        "status": "added",
+        "additions": 1,
+        "deletions": 0,
+        "changes": 1,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-release.mjs",
+        "status": "added",
+        "additions": 91,
+        "deletions": 0,
+        "changes": 91,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-report.mjs",
+        "status": "added",
+        "additions": 34,
+        "deletions": 0,
+        "changes": 34,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-requests.mjs",
+        "status": "added",
+        "additions": 105,
+        "deletions": 0,
+        "changes": 105,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-sampling.mjs",
+        "status": "added",
+        "additions": 130,
+        "deletions": 0,
+        "changes": 130,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-server.mjs",
+        "status": "modified",
+        "additions": 264,
+        "deletions": 43,
+        "changes": 307,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-source-evidence.mjs",
+        "status": "added",
+        "additions": 92,
+        "deletions": 0,
+        "changes": 92,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-staffing.mjs",
+        "status": "added",
+        "additions": 123,
+        "deletions": 0,
+        "changes": 123,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-store.mjs",
+        "status": "added",
+        "additions": 143,
+        "deletions": 0,
+        "changes": 143,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/pilot-workflow.mjs",
+        "status": "modified",
+        "additions": 614,
+        "deletions": 70,
+        "changes": 684,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/serve.mjs",
+        "status": "modified",
+        "additions": 4,
+        "deletions": 0,
+        "changes": 4,
+        "previous_filename": null
+      },
+      {
+        "filename": "scripts/verify-release.mjs",
+        "status": "added",
+        "additions": 135,
+        "deletions": 0,
+        "changes": 135,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/audit-data-checks.tsx",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/audit-journey.tsx",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/audit-workspace-v2.tsx",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/delivery-planning.tsx",
+        "status": "modified",
+        "additions": 13,
+        "deletions": 10,
+        "changes": 23,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/pilot-area.tsx",
+        "status": "added",
+        "additions": 164,
+        "deletions": 0,
+        "changes": 164,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/pilot-completion.tsx",
+        "status": "added",
+        "additions": 164,
+        "deletions": 0,
+        "changes": 164,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/pilot-forms.tsx",
+        "status": "added",
+        "additions": 180,
+        "deletions": 0,
+        "changes": 180,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/pilot-intake.tsx",
+        "status": "added",
+        "additions": 265,
+        "deletions": 0,
+        "changes": 265,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/pilot-later-facts.tsx",
+        "status": "added",
+        "additions": 124,
+        "deletions": 0,
+        "changes": 124,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/pilot-materiality.tsx",
+        "status": "added",
+        "additions": 107,
+        "deletions": 0,
+        "changes": 107,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/pilot-oversight.tsx",
+        "status": "added",
+        "additions": 157,
+        "deletions": 0,
+        "changes": 157,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/pilot-population.tsx",
+        "status": "added",
+        "additions": 242,
+        "deletions": 0,
+        "changes": 242,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/pilot-registers.tsx",
+        "status": "modified",
+        "additions": 90,
+        "deletions": 31,
+        "changes": 121,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/pilot-staffing.tsx",
+        "status": "added",
+        "additions": 81,
+        "deletions": 0,
+        "changes": 81,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/pilot-workspace.tsx",
+        "status": "modified",
+        "additions": 445,
+        "deletions": 80,
+        "changes": 525,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/components/workbench-panels.tsx",
+        "status": "modified",
+        "additions": 12,
+        "deletions": 9,
+        "changes": 21,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/data/source-bpmn-transitions.json",
+        "status": "added",
+        "additions": 1015,
+        "deletions": 0,
+        "changes": 1015,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/lib/audit-checks.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 1,
+        "changes": 3,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/lib/feature-workflows.ts",
+        "status": "modified",
+        "additions": 1,
+        "deletions": 1,
+        "changes": 2,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/lib/pilot-area.ts",
+        "status": "added",
+        "additions": 95,
+        "deletions": 0,
+        "changes": 95,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/lib/pilot-forms.ts",
+        "status": "added",
+        "additions": 25,
+        "deletions": 0,
+        "changes": 25,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/lib/pilot-intake.ts",
+        "status": "added",
+        "additions": 29,
+        "deletions": 0,
+        "changes": 29,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/lib/pilot-materiality.ts",
+        "status": "added",
+        "additions": 29,
+        "deletions": 0,
+        "changes": 29,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/lib/pilot-population.ts",
+        "status": "added",
+        "additions": 40,
+        "deletions": 0,
+        "changes": 40,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/lib/pilot-registers.ts",
+        "status": "modified",
+        "additions": 52,
+        "deletions": 13,
+        "changes": 65,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/lib/pilot-staffing.ts",
+        "status": "added",
+        "additions": 23,
+        "deletions": 0,
+        "changes": 23,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/lib/workbench.ts",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 5,
+        "changes": 16,
+        "previous_filename": null
+      },
+      {
+        "filename": "src/lib/workspace.ts",
+        "status": "modified",
+        "additions": 47,
+        "deletions": 20,
+        "changes": 67,
+        "previous_filename": null
+      },
+      {
+        "filename": "tests/pilot-contract-evidence.test.mjs",
+        "status": "added",
+        "additions": 48,
+        "deletions": 0,
+        "changes": 48,
+        "previous_filename": null
+      },
+      {
+        "filename": "tests/pilot-lifecycle-evidence.test.mjs",
+        "status": "added",
+        "additions": 99,
+        "deletions": 0,
+        "changes": 99,
+        "previous_filename": null
+      },
+      {
+        "filename": "tests/pilot.test.mjs",
+        "status": "modified",
+        "additions": 2487,
+        "deletions": 19,
+        "changes": 2506,
+        "previous_filename": null
+      },
+      {
+        "filename": "tests/workbench.test.mjs",
+        "status": "modified",
+        "additions": 11,
+        "deletions": 0,
+        "changes": 11,
+        "previous_filename": null
+      },
+      {
+        "filename": "tests/workspace.test.mjs",
+        "status": "modified",
+        "additions": 7,
+        "deletions": 0,
+        "changes": 7,
+        "previous_filename": null
+      }
+    ]
+  },
+  "chat": {
+    "title": "Assess traditional coding tradeoffs",
+    "scope": "Ten recent turns inspected through five two-turn pages; older conversation not fully reviewed.",
+    "pages": [
+      {
+        "order": "newest_first",
+        "limit": 2,
+        "nextCursor": "{\"requestedThreadId\":\"01a1ab31-e4ce-7d22-8167-a95ba6e577a0\",\"rolloutOrdinal\":12505,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+        "hasMore": true
+      },
+      {
+        "order": "newest_first",
+        "limit": 2,
+        "nextCursor": "{\"requestedThreadId\":\"01a1ab31-e4ce-7d22-8167-a95ba6e577a0\",\"rolloutOrdinal\":11469,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+        "hasMore": true
+      },
+      {
+        "order": "newest_first",
+        "limit": 2,
+        "nextCursor": "{\"requestedThreadId\":\"01a1ab31-e4ce-7d22-8167-a95ba6e577a0\",\"rolloutOrdinal\":10689,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+        "hasMore": true
+      },
+      {
+        "order": "newest_first",
+        "limit": 2,
+        "nextCursor": "{\"requestedThreadId\":\"01a1ab31-e4ce-7d22-8167-a95ba6e577a0\",\"rolloutOrdinal\":9247,\"includeAnchor\":false,\"scope\":{\"kind\":\"turns\"}}",
+        "hasMore": true
+      }
+    ]
+  }
+}

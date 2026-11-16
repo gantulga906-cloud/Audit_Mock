@@ -1,0 +1,1841 @@
+{
+  "pdfs": [
+    {
+      "file": "pdf/G00_System_foundations_and_shared_contracts.pdf",
+      "sha256": "67fc577ac4cb2b81272228dd4ff336a7f310791ddaef9629f2b0360d01b85b84",
+      "pages": 7,
+      "annotations": 28,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 119,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 80,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 451,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 399,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 388,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 503,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 453,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/G01_Client_acceptance_independence_and_terms.pdf",
+      "sha256": "f4b193a494b37ff50269be36cc6fc83c073f549413cd34246ccaebe8d61af740",
+      "pages": 10,
+      "annotations": 41,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 119,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 395,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 314,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 356,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 338,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 512,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 467,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 8,
+          "words": 481,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 9,
+          "words": 462,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 10,
+          "words": 185,
+          "font_names": [
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/G02_Staffing_planning_risk_controls_and_materiality.pdf",
+      "sha256": "d278da5d02feb74dad2ebfeb2db0d4db41b3272386be68e5fb2e495df5a952b8",
+      "pages": 12,
+      "annotations": 54,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 120,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 613,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 312,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 453,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 387,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 463,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 480,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 8,
+          "words": 457,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 9,
+          "words": 533,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 10,
+          "words": 462,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 11,
+          "words": 448,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 12,
+          "words": 326,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/G03_Data_evidence_requests_and_confirmations.pdf",
+      "sha256": "69b1b54369caaffdad37ce964eea4ea3c6227595d017910536b7881ace4e856a",
+      "pages": 10,
+      "annotations": 41,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 119,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 348,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 343,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 406,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 362,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 444,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 483,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 8,
+          "words": 494,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 9,
+          "words": 394,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 10,
+          "words": 233,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/G04_Programmes_sampling_and_fieldwork_execution.pdf",
+      "sha256": "ebc0aed329d09b15663217177a0e06a6659c9e9d5593b3d35bc767c42e2570c4",
+      "pages": 15,
+      "annotations": 55,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 119,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 635,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 359,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 429,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 446,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 456,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 486,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 8,
+          "words": 469,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 9,
+          "words": 453,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 10,
+          "words": 434,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 11,
+          "words": 465,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 12,
+          "words": 447,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 13,
+          "words": 372,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 14,
+          "words": 347,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 15,
+          "words": 316,
+          "font_names": [
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/G05_Findings_completion_consultation_and_quality.pdf",
+      "sha256": "21383704ed67638733442a501848c8c01b78184dc85007244bbe6dd7778a4a05",
+      "pages": 14,
+      "annotations": 61,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 119,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 728,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 299,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 453,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 316,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 449,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 463,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 8,
+          "words": 456,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 9,
+          "words": 498,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 10,
+          "words": 483,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 11,
+          "words": 473,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 12,
+          "words": 446,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 13,
+          "words": 414,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 14,
+          "words": 369,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/G06_Opinion_report_preparation_and_controlled_issue.pdf",
+      "sha256": "06b601e6debcebb09e8c4867494fab19959102c02dfdb9d957e8b7bece18fb9d",
+      "pages": 7,
+      "annotations": 30,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 120,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 193,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 319,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 451,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 391,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 460,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 350,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/G07_Assembly_custody_retention_and_later_facts.pdf",
+      "sha256": "c0934c6c00641b3a0a53c859f69bf9a5a684ee0db7fddcf3a12108866f667bcf",
+      "pages": 9,
+      "annotations": 37,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 120,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 281,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 301,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 450,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 383,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 463,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 489,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 8,
+          "words": 364,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 9,
+          "words": 109,
+          "font_names": [
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/G08_Source_forms_and_controlled_methodology.pdf",
+      "sha256": "ec0e5df604d95e393c9caa545290ba9276b5cd7b3f30f49da0119fe0484a177d",
+      "pages": 8,
+      "annotations": 31,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 119,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 308,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 424,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 498,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 437,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 488,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 477,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 8,
+          "words": 180,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/G09_Access_operations_and_release_acceptance.pdf",
+      "sha256": "0f63f3622c62b5428c55e0155dda872acd452d4503b00d4b8dea38c87e92f75c",
+      "pages": 7,
+      "annotations": 30,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 119,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 199,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 378,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 421,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 459,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 482,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 366,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/G10_Fieldwork_area_implementation_cards.pdf",
+      "sha256": "083a76355ef86c70ce68eb5a2940adf412f7c42a2e71bf65408934be226d2444",
+      "pages": 19,
+      "annotations": 54,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 118,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 154,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 34,
+          "font_names": [
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 429,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 387,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 431,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 368,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 8,
+          "words": 420,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 9,
+          "words": 400,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 10,
+          "words": 408,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 11,
+          "words": 407,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 12,
+          "words": 421,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 13,
+          "words": 425,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 14,
+          "words": 389,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 15,
+          "words": 449,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 16,
+          "words": 415,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 17,
+          "words": 413,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 18,
+          "words": 395,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 19,
+          "words": 385,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/G11_Automation_minimum_methods_and_expected_examples.pdf",
+      "sha256": "58a361fee7b50a29c469055f4f15e70a6e21ecbeb8264ade65dc0f9f2f7c9dcb",
+      "pages": 55,
+      "annotations": 126,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 120,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 179,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 192,
+          "font_names": [
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 122,
+          "font_names": [
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 409,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 399,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 433,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 8,
+          "words": 422,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 9,
+          "words": 417,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 10,
+          "words": 374,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 11,
+          "words": 353,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 12,
+          "words": 438,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 13,
+          "words": 386,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 14,
+          "words": 448,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 15,
+          "words": 408,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 16,
+          "words": 395,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 17,
+          "words": 387,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 18,
+          "words": 414,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 19,
+          "words": 419,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 20,
+          "words": 441,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 21,
+          "words": 381,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 22,
+          "words": 427,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 23,
+          "words": 400,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 24,
+          "words": 432,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 25,
+          "words": 440,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 26,
+          "words": 411,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 27,
+          "words": 412,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 28,
+          "words": 429,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 29,
+          "words": 426,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 30,
+          "words": 400,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 31,
+          "words": 387,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 32,
+          "words": 444,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 33,
+          "words": 372,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 34,
+          "words": 390,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 35,
+          "words": 432,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 36,
+          "words": 392,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 37,
+          "words": 379,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 38,
+          "words": 396,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 39,
+          "words": 412,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 40,
+          "words": 380,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 41,
+          "words": 377,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 42,
+          "words": 427,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 43,
+          "words": 413,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 44,
+          "words": 430,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 45,
+          "words": 434,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 46,
+          "words": 392,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 47,
+          "words": 409,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 48,
+          "words": 434,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 49,
+          "words": 408,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 50,
+          "words": 443,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 51,
+          "words": 411,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 52,
+          "words": 379,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 53,
+          "words": 441,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 54,
+          "words": 453,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 55,
+          "words": 436,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/INDEX_Start_Here.pdf",
+      "sha256": "501c58524379e35bb6276cdd6bbfe62917ede6a9d3f446383838c48e55b60475",
+      "pages": 5,
+      "annotations": 40,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 117,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 58,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 441,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 393,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 79,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    },
+    {
+      "file": "pdf/PILOT_Materiality_Sampling_Findings.pdf",
+      "sha256": "88eb608cd77b928436117a546832002d28fa29826eb420daa1ad972bbabca279",
+      "pages": 10,
+      "annotations": 33,
+      "outline_present": true,
+      "glyph_text_check": "pass",
+      "page_checks": [
+        {
+          "page": 1,
+          "words": 127,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 2,
+          "words": 285,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 3,
+          "words": 369,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 4,
+          "words": 305,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 5,
+          "words": 344,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 6,
+          "words": 485,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 7,
+          "words": 428,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 8,
+          "words": 197,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 9,
+          "words": 390,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        },
+        {
+          "page": 10,
+          "words": 285,
+          "font_names": [
+            "AAAAAA+Arial-BoldMT",
+            "AAAAAA+ArialMT"
+          ],
+          "bounds_ok": true
+        }
+      ]
+    }
+  ],
+  "layout_boundary_issues": [],
+  "code_files_unchanged": 72,
+  "git_head": "079f9da47a02eab681feeeda3de3dfb8cfc42848",
+  "git_clean": true,
+  "source_row_keys_and_original_fields_preserved": 2247,
+  "source_anchor_resolution": "all pass",
+  "original_tasks_preserved": 128,
+  "app_tests_executed_this_session": 0,
+  "external_full_legal_access": "blocked 403; limits documented",
+  "independent_source_acceptance": 0,
+  "releaseReady": false
+}

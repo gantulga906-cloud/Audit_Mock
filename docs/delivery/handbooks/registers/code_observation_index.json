@@ -1,0 +1,2413 @@
+[
+  {
+    "path": "scripts/pilot-archive.mjs",
+    "sha256": "e781613e0fba4e9fdc3c68c95ab0856b629056efa38d91b2adb7d542aaeecb4c",
+    "lines": 307,
+    "symbols": [
+      {
+        "symbol": "archiveAmendmentRevision",
+        "line": 21
+      },
+      {
+        "symbol": "archiveAmendmentGap",
+        "line": 36
+      },
+      {
+        "symbol": "expiry",
+        "line": 46
+      },
+      {
+        "symbol": "activeHolds",
+        "line": 54
+      },
+      {
+        "symbol": "createArchiveStore",
+        "line": 60
+      },
+      {
+        "symbol": "effectiveRetention",
+        "line": 78
+      },
+      {
+        "symbol": "checkPayload",
+        "line": 95
+      },
+      {
+        "symbol": "insert",
+        "line": 111
+      },
+      {
+        "symbol": "seal",
+        "line": 120
+      },
+      {
+        "symbol": "validateAmendmentWork",
+        "line": 171
+      },
+      {
+        "symbol": "checkRecord",
+        "line": 182
+      },
+      {
+        "symbol": "approveRecord",
+        "line": 208
+      },
+      {
+        "symbol": "dispose",
+        "line": 253
+      },
+      {
+        "symbol": "exportPackage",
+        "line": 263
+      },
+      {
+        "symbol": "inspectCustody",
+        "line": 277
+      },
+      {
+        "symbol": "currentForRequest",
+        "line": 282
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-area-checks.mjs",
+    "sha256": "45011285458d8f4a8e447deddf9175159ec79e28d9e82cebe582800d0f53084f",
+    "lines": 336,
+    "symbols": [
+      {
+        "symbol": "grouped",
+        "line": 23
+      },
+      {
+        "symbol": "parseAreaFile",
+        "line": 32
+      },
+      {
+        "symbol": "caseBook",
+        "line": 73
+      },
+      {
+        "symbol": "add",
+        "line": 75
+      },
+      {
+        "symbol": "qualified",
+        "line": 92
+      },
+      {
+        "symbol": "timing",
+        "line": 106
+      },
+      {
+        "symbol": "ledgerByReference",
+        "line": 108
+      },
+      {
+        "symbol": "sales",
+        "line": 113
+      },
+      {
+        "symbol": "purchases",
+        "line": 175
+      },
+      {
+        "symbol": "bank",
+        "line": 219
+      },
+      {
+        "symbol": "inventory",
+        "line": 266
+      },
+      {
+        "symbol": "assets",
+        "line": 305
+      },
+      {
+        "symbol": "runAreaChecks",
+        "line": 332
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-area-finance.mjs",
+    "sha256": "bfcf57b2e0004872ec5016564b8c45fbc67db32c8d9eaad088842e00b3d7c8f4",
+    "lines": 196,
+    "symbols": [
+      {
+        "symbol": "versioned",
+        "line": 18
+      },
+      {
+        "symbol": "ledgerGroups",
+        "line": 24
+      },
+      {
+        "symbol": "extras",
+        "line": 31
+      },
+      {
+        "symbol": "caseFor",
+        "line": 36
+      },
+      {
+        "symbol": "checkedPv",
+        "line": 42
+      },
+      {
+        "symbol": "loans",
+        "line": 53
+      },
+      {
+        "symbol": "leases",
+        "line": 92
+      },
+      {
+        "symbol": "fx",
+        "line": 119
+      },
+      {
+        "symbol": "equity",
+        "line": 144
+      },
+      {
+        "symbol": "investments",
+        "line": 165
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-area-statutory.mjs",
+    "sha256": "6db65427f6677e6582b6c783f5f59bc9a09a838c49ad97c10860c950b66ba9b1",
+    "lines": 178,
+    "symbols": [
+      {
+        "symbol": "selectEdition",
+        "line": 13
+      },
+      {
+        "symbol": "ruleAt",
+        "line": 19
+      },
+      {
+        "symbol": "referenceGroups",
+        "line": 25
+      },
+      {
+        "symbol": "flagUnmatched",
+        "line": 30
+      },
+      {
+        "symbol": "payrollAnalytics",
+        "line": 36
+      },
+      {
+        "symbol": "payroll",
+        "line": 69
+      },
+      {
+        "symbol": "periodKey",
+        "line": 125
+      },
+      {
+        "symbol": "tax",
+        "line": 132
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-area.mjs",
+    "sha256": "d3a4cdfa6625bd0fca58b085e58891eb4f80ce48a3528dae1673fd2ffa4dede1",
+    "lines": 168,
+    "symbols": [
+      {
+        "symbol": "liveEvidence",
+        "line": 22
+      },
+      {
+        "symbol": "current",
+        "line": 26
+      },
+      {
+        "symbol": "resolved",
+        "line": 33
+      },
+      {
+        "symbol": "areaGap",
+        "line": 38
+      },
+      {
+        "symbol": "syncAreaPapers",
+        "line": 45
+      },
+      {
+        "symbol": "areaView",
+        "line": 58
+      },
+      {
+        "symbol": "runChecks",
+        "line": 66
+      },
+      {
+        "symbol": "postings",
+        "line": 101
+      },
+      {
+        "symbol": "areaAction",
+        "line": 116
+      }
+    ],
+    "command_literals": [
+      "area-dispose",
+      "area-review",
+      "area-run"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-assembly.mjs",
+    "sha256": "5426deb2f76137dd4dbf3375b70fde3aa55820ce74f9625d3684ab29393ef103",
+    "lines": 89,
+    "symbols": [
+      {
+        "symbol": "assemblyInventory",
+        "line": 10
+      },
+      {
+        "symbol": "assemblyDeadline",
+        "line": 52
+      },
+      {
+        "symbol": "assemblyStatus",
+        "line": 59
+      },
+      {
+        "symbol": "checkAssemblyRecord",
+        "line": 67
+      },
+      {
+        "symbol": "assemblySnapshot",
+        "line": 83
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-completion.mjs",
+    "sha256": "15f620733df33140f08f7312dc024516d27c45b17eed2661284bdbf2d93d5f11",
+    "lines": 290,
+    "symbols": [
+      {
+        "symbol": "acceptedFile",
+        "line": 19
+      },
+      {
+        "symbol": "liveFile",
+        "line": 26
+      },
+      {
+        "symbol": "consultationBasisCurrent",
+        "line": 30
+      },
+      {
+        "symbol": "effectivePosting",
+        "line": 37
+      },
+      {
+        "symbol": "correctionAmount",
+        "line": 42
+      },
+      {
+        "symbol": "syncCorrectionStatus",
+        "line": 48
+      },
+      {
+        "symbol": "evaluationInputs",
+        "line": 58
+      },
+      {
+        "symbol": "currentEvaluation",
+        "line": 77
+      },
+      {
+        "symbol": "currentManagement",
+        "line": 82
+      },
+      {
+        "symbol": "consultationView",
+        "line": 88
+      },
+      {
+        "symbol": "completionView",
+        "line": 93
+      },
+      {
+        "symbol": "completionGaps",
+        "line": 107
+      },
+      {
+        "symbol": "completionRef",
+        "line": 122
+      },
+      {
+        "symbol": "syncCompletion",
+        "line": 129
+      },
+      {
+        "symbol": "completionEvidence",
+        "line": 142
+      },
+      {
+        "symbol": "consultationAction",
+        "line": 153
+      },
+      {
+        "symbol": "correctionAction",
+        "line": 183
+      },
+      {
+        "symbol": "completionAction",
+        "line": 230
+      }
+    ],
+    "command_literals": [
+      "completion-consultation-record",
+      "completion-evaluate",
+      "completion-evaluation-approve",
+      "completion-finding-record",
+      "completion-management-approve",
+      "completion-management-submit",
+      "correction-propose",
+      "correction-response",
+      "correction-verify"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-confirmations.mjs",
+    "sha256": "0272d47f2011725bcb1c10ea66d477588fac52efc2cac721d851e1308c4f9095",
+    "lines": 75,
+    "symbols": [
+      {
+        "symbol": "createConfirmationStore",
+        "line": 12
+      },
+      {
+        "symbol": "start",
+        "line": 19
+      },
+      {
+        "symbol": "pending",
+        "line": 37
+      },
+      {
+        "symbol": "receive",
+        "line": 49
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-contract-evidence.mjs",
+    "sha256": "39b68ea7a629006a42c9dabad1efe439ecf82cfcf954a2b70f406a2f2d3df9bd",
+    "lines": 49,
+    "symbols": [
+      {
+        "symbol": "reviewContractEvidence",
+        "line": 12
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-forms.mjs",
+    "sha256": "e079ccd1c2709205246d3dc3b10aeda7de458c24c76b92a5c4b63a3ba6f44c53",
+    "lines": 371,
+    "symbols": [
+      {
+        "symbol": "sourceTemplate",
+        "line": 30
+      },
+      {
+        "symbol": "libraryView",
+        "line": 45
+      },
+      {
+        "symbol": "libraryTemplate",
+        "line": 55
+      },
+      {
+        "symbol": "smallText",
+        "line": 63
+      },
+      {
+        "symbol": "options",
+        "line": 64
+      },
+      {
+        "symbol": "tableDefinition",
+        "line": 65
+      },
+      {
+        "symbol": "validateDraft",
+        "line": 76
+      },
+      {
+        "symbol": "libraryAction",
+        "line": 111
+      },
+      {
+        "symbol": "effectiveForm",
+        "line": 158
+      },
+      {
+        "symbol": "paperFormView",
+        "line": 166
+      },
+      {
+        "symbol": "definitions",
+        "line": 178
+      },
+      {
+        "symbol": "validateValue",
+        "line": 195
+      },
+      {
+        "symbol": "typedEvidence",
+        "line": 219
+      },
+      {
+        "symbol": "readTypedAnswers",
+        "line": 227
+      },
+      {
+        "symbol": "nativeGaps",
+        "line": 250
+      },
+      {
+        "symbol": "adoptionTarget",
+        "line": 274
+      },
+      {
+        "symbol": "planAdoption",
+        "line": 285
+      },
+      {
+        "symbol": "formAdoptionPreview",
+        "line": 322
+      },
+      {
+        "symbol": "bindForm",
+        "line": 327
+      },
+      {
+        "symbol": "pinLinkedDecisions",
+        "line": 366
+      }
+    ],
+    "command_literals": [
+      "template-grant",
+      "template-return",
+      "template-save",
+      "template-submit"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-intake.mjs",
+    "sha256": "5e5946c7fb22cab7046861ca4e74123b8fd3165d1c3a9d677203ce8d5fb1302e",
+    "lines": 373,
+    "symbols": [
+      {
+        "symbol": "currentTerms",
+        "line": 28
+      },
+      {
+        "symbol": "termsGaps",
+        "line": 37
+      },
+      {
+        "symbol": "activeTermsGap",
+        "line": 43
+      },
+      {
+        "symbol": "canDraftTerms",
+        "line": 50
+      },
+      {
+        "symbol": "termsAction",
+        "line": 57
+      },
+      {
+        "symbol": "createIntakeStore",
+        "line": 105
+      },
+      {
+        "symbol": "connectExisting",
+        "line": 115
+      },
+      {
+        "symbol": "visibleClient",
+        "line": 148
+      },
+      {
+        "symbol": "periods",
+        "line": 157
+      },
+      {
+        "symbol": "clientFor",
+        "line": 165
+      },
+      {
+        "symbol": "visibleEnquiry",
+        "line": 171
+      },
+      {
+        "symbol": "view",
+        "line": 177
+      },
+      {
+        "symbol": "updateClient",
+        "line": 185
+      },
+      {
+        "symbol": "enquiryAction",
+        "line": 243
+      },
+      {
+        "symbol": "confirmProfile",
+        "line": 303
+      },
+      {
+        "symbol": "refresh",
+        "line": 313
+      },
+      {
+        "symbol": "activationGaps",
+        "line": 329
+      },
+      {
+        "symbol": "contextView",
+        "line": 341
+      },
+      {
+        "symbol": "setStatus",
+        "line": 352
+      },
+      {
+        "symbol": "finish",
+        "line": 360
+      }
+    ],
+    "command_literals": [
+      "activate",
+      "client-save",
+      "client-status",
+      "create",
+      "intake-convert",
+      "intake-decline",
+      "intake-forward",
+      "intake-return",
+      "intake-save",
+      "intake-terms-approve"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-journals.mjs",
+    "sha256": "8f4b8a5fd279fb23222e56886f9cfdfb8e92dc779e8791fa737bcd764e91731b",
+    "lines": 130,
+    "symbols": [
+      {
+        "symbol": "basis",
+        "line": 14
+      },
+      {
+        "symbol": "journalGap",
+        "line": 33
+      },
+      {
+        "symbol": "syncJournalPapers",
+        "line": 40
+      },
+      {
+        "symbol": "selectJournals",
+        "line": 53
+      },
+      {
+        "symbol": "journalAction",
+        "line": 77
+      }
+    ],
+    "command_literals": [
+      "journal-investigate",
+      "journal-review",
+      "journal-run"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-later-facts.mjs",
+    "sha256": "829001fed6976cb1a3252d6f7c069c185e6a312d089d9f2556f8a216e036942d",
+    "lines": 134,
+    "symbols": [
+      {
+        "symbol": "laterFactGap",
+        "line": 21
+      },
+      {
+        "symbol": "checkLaterFactArchive",
+        "line": 29
+      },
+      {
+        "symbol": "laterFactView",
+        "line": 41
+      },
+      {
+        "symbol": "laterFactAction",
+        "line": 48
+      }
+    ],
+    "command_literals": [
+      "later-fact-close",
+      "later-fact-communicate",
+      "later-fact-decide",
+      "later-fact-record",
+      "later-fact-reschedule",
+      "later-fact-screen"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-lifecycle-evidence.mjs",
+    "sha256": "d58090b7871701df5e057949efc0cdf2873b38907a9b8c00c6724d1d57bbf9cd",
+    "lines": 164,
+    "symbols": [
+      {
+        "symbol": "recordLifecycleEvidence",
+        "line": 59
+      },
+      {
+        "symbol": "proofIds",
+        "line": 63
+      },
+      {
+        "symbol": "createLifecycleEvidenceCollector",
+        "line": 84
+      },
+      {
+        "symbol": "record",
+        "line": 89
+      },
+      {
+        "symbol": "report",
+        "line": 108
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-materiality.mjs",
+    "sha256": "07edce9e7d1751ba6398165bcc539ea74d6efddf9faee0196d74e97c27142f77",
+    "lines": 157,
+    "symbols": [
+      {
+        "symbol": "materialityBasis",
+        "line": 16
+      },
+      {
+        "symbol": "materialityEvidenceCurrent",
+        "line": 30
+      },
+      {
+        "symbol": "syncMateriality",
+        "line": 35
+      },
+      {
+        "symbol": "materialityValues",
+        "line": 48
+      },
+      {
+        "symbol": "materialityGap",
+        "line": 58
+      },
+      {
+        "symbol": "updateMaterialityBasis",
+        "line": 64
+      },
+      {
+        "symbol": "readDecision",
+        "line": 130
+      },
+      {
+        "symbol": "readSelection",
+        "line": 135
+      },
+      {
+        "symbol": "readSpecificSelection",
+        "line": 154
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-oversight.mjs",
+    "sha256": "ccf051844caf0c683215b22a45d7f4f47fc15d55655b6ca1267f9079496d427e",
+    "lines": 144,
+    "symbols": [
+      {
+        "symbol": "qualityRef",
+        "line": 14
+      },
+      {
+        "symbol": "qualityGaps",
+        "line": 24
+      },
+      {
+        "symbol": "oversightTeamView",
+        "line": 30
+      },
+      {
+        "symbol": "oversightTeamAction",
+        "line": 34
+      },
+      {
+        "symbol": "createOversightStore",
+        "line": 67
+      },
+      {
+        "symbol": "allowed",
+        "line": 68
+      },
+      {
+        "symbol": "contextFor",
+        "line": 71
+      },
+      {
+        "symbol": "view",
+        "line": 78
+      },
+      {
+        "symbol": "action",
+        "line": 93
+      },
+      {
+        "symbol": "download",
+        "line": 127
+      }
+    ],
+    "command_literals": [
+      "approve",
+      "archive-offer-custody",
+      "quality-policy",
+      "quality-response",
+      "return"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-population.mjs",
+    "sha256": "8bb846698d1b2ea0e6ab2efc7623cb5626e8a1b75635ca375de8defc8b5ffbbd",
+    "lines": 247,
+    "symbols": [
+      {
+        "symbol": "currentExtract",
+        "line": 15
+      },
+      {
+        "symbol": "csvRows",
+        "line": 31
+      },
+      {
+        "symbol": "cents",
+        "line": 62
+      },
+      {
+        "symbol": "parseRows",
+        "line": 70
+      },
+      {
+        "symbol": "pairs",
+        "line": 100
+      },
+      {
+        "symbol": "calculate",
+        "line": 113
+      },
+      {
+        "symbol": "extractInput",
+        "line": 167
+      },
+      {
+        "symbol": "populationAction",
+        "line": 183
+      }
+    ],
+    "command_literals": [
+      "population-approve",
+      "population-import",
+      "population-reconcile"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-registers.mjs",
+    "sha256": "737658acdf0e5a93f6800f4ff9cc686ce5abe86d9732875ed177a8bc8fe4036a",
+    "lines": 522,
+    "symbols": [
+      {
+        "symbol": "stale",
+        "line": 23
+      },
+      {
+        "symbol": "formContract",
+        "line": 49
+      },
+      {
+        "symbol": "ruleMatches",
+        "line": 72
+      },
+      {
+        "symbol": "programmeView",
+        "line": 78
+      },
+      {
+        "symbol": "programmeTemplates",
+        "line": 83
+      },
+      {
+        "symbol": "acceptanceRegisterGaps",
+        "line": 103
+      },
+      {
+        "symbol": "completionRegisterGaps",
+        "line": 122
+      },
+      {
+        "symbol": "registerPackage",
+        "line": 168
+      },
+      {
+        "symbol": "firmSnapshot",
+        "line": 189
+      },
+      {
+        "symbol": "validateInput",
+        "line": 194
+      },
+      {
+        "symbol": "checkProgramme",
+        "line": 212
+      },
+      {
+        "symbol": "checkBusiness",
+        "line": 267
+      },
+      {
+        "symbol": "remember",
+        "line": 415
+      },
+      {
+        "symbol": "registerAction",
+        "line": 424
+      },
+      {
+        "symbol": "registerEvidence",
+        "line": 516
+      }
+    ],
+    "command_literals": [
+      "M01-F03",
+      "M01-F04",
+      "M01-F06",
+      "M02-F05",
+      "M03-F04",
+      "M04-F04",
+      "M04-F06",
+      "M06-F06",
+      "M07-F01",
+      "M07-F06",
+      "M07-F08",
+      "M07-F10",
+      "M08-F07",
+      "M10-F06",
+      "M10-F09",
+      "M10-F10",
+      "M10-F11",
+      "M10-F12",
+      "M10-F13"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-release.mjs",
+    "sha256": "096f28eaf61bf55007240e5678436afb71f3bb81fb90cb32346be57dfb4703b3",
+    "lines": 109,
+    "symbols": [
+      {
+        "symbol": "distributionGaps",
+        "line": 11
+      },
+      {
+        "symbol": "signatureMatches",
+        "line": 16
+      },
+      {
+        "symbol": "currentSignature",
+        "line": 22
+      },
+      {
+        "symbol": "signReport",
+        "line": 27
+      },
+      {
+        "symbol": "createReleaseStore",
+        "line": 41
+      },
+      {
+        "symbol": "view",
+        "line": 51
+      },
+      {
+        "symbol": "start",
+        "line": 55
+      },
+      {
+        "symbol": "recordOutcome",
+        "line": 72
+      },
+      {
+        "symbol": "available",
+        "line": 82
+      },
+      {
+        "symbol": "read",
+        "line": 91
+      },
+      {
+        "symbol": "download",
+        "line": 96
+      },
+      {
+        "symbol": "receive",
+        "line": 101
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-report.mjs",
+    "sha256": "adc52619dc35c9e763985cefbd67c3a0761ed19fcd8967dc2482a092cb8fc5a7",
+    "lines": 37,
+    "symbols": [
+      {
+        "symbol": "renderReport",
+        "line": 10
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-requests.mjs",
+    "sha256": "271df366f3ca8296eae4bb7a407172d08ec7307cfe069005697d8bff35dc060d",
+    "lines": 105,
+    "symbols": [
+      {
+        "symbol": "evidenceCurrent",
+        "line": 14
+      },
+      {
+        "symbol": "extractSpec",
+        "line": 22
+      },
+      {
+        "symbol": "reopen",
+        "line": 35
+      },
+      {
+        "symbol": "requestAction",
+        "line": 57
+      }
+    ],
+    "command_literals": [
+      "reject",
+      "request",
+      "request-reopen",
+      "upload"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-sampling.mjs",
+    "sha256": "ac5433ff040d27517919898f20dd05258e14a1c67067eadb9bc1f1ed12b5d64a",
+    "lines": 130,
+    "symbols": [
+      {
+        "symbol": "inputs",
+        "line": 14
+      },
+      {
+        "symbol": "samplingView",
+        "line": 41
+      },
+      {
+        "symbol": "samplingGap",
+        "line": 48
+      },
+      {
+        "symbol": "syncSamplePapers",
+        "line": 60
+      },
+      {
+        "symbol": "samplingAction",
+        "line": 73
+      }
+    ],
+    "command_literals": [
+      "sample-approve",
+      "sample-design",
+      "sample-select",
+      "sample-test"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-server.mjs",
+    "sha256": "19ec77c46c8c3df4ac0d3bcc9ab57231f1c5856a6810864882b00f2c1c64f955",
+    "lines": 437,
+    "symbols": [
+      {
+        "symbol": "json",
+        "line": 26
+      },
+      {
+        "symbol": "readJson",
+        "line": 31
+      },
+      {
+        "symbol": "createPilot",
+        "line": 49
+      },
+      {
+        "symbol": "resolveScope",
+        "line": 107
+      },
+      {
+        "symbol": "view",
+        "line": 116
+      },
+      {
+        "symbol": "changeMembership",
+        "line": 142
+      },
+      {
+        "symbol": "limitAttempts",
+        "line": 162
+      },
+      {
+        "symbol": "handle",
+        "line": 168
+      }
+    ],
+    "command_literals": [
+      "access",
+      "activate",
+      "confirmation-start",
+      "create",
+      "delivery-result",
+      "delivery-start",
+      "intake-refresh",
+      "register"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-source-evidence.mjs",
+    "sha256": "2c234e71bd1560027ffef0c12d7ca6cc913e112d90c7ccfabb32c85b46aba316",
+    "lines": 120,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-staffing.mjs",
+    "sha256": "0dbe2e2a5960f6f12d6104df27e5010527dc9a67ef7f4506f4fbdbcc78ebf790",
+    "lines": 123,
+    "symbols": [
+      {
+        "symbol": "knownCredential",
+        "line": 14
+      },
+      {
+        "symbol": "committedRows",
+        "line": 19
+      },
+      {
+        "symbol": "checkStaffing",
+        "line": 26
+      },
+      {
+        "symbol": "approvedStaffing",
+        "line": 73
+      },
+      {
+        "symbol": "seatFor",
+        "line": 83
+      },
+      {
+        "symbol": "staffingGaps",
+        "line": 87
+      },
+      {
+        "symbol": "requireSeat",
+        "line": 92
+      },
+      {
+        "symbol": "rosterView",
+        "line": 100
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-store.mjs",
+    "sha256": "32f415ba8b70493f0dba54529a382a60b5475d59637eb6ddb9262dbcb50c0797",
+    "lines": 143,
+    "symbols": [
+      {
+        "symbol": "createPilotStore",
+        "line": 17
+      },
+      {
+        "symbol": "transaction",
+        "line": 18
+      },
+      {
+        "symbol": "insert",
+        "line": 34
+      },
+      {
+        "symbol": "portfolio",
+        "line": 78
+      },
+      {
+        "symbol": "load",
+        "line": 85
+      },
+      {
+        "symbol": "save",
+        "line": 102
+      },
+      {
+        "symbol": "touchFirm",
+        "line": 120
+      },
+      {
+        "symbol": "staffingModels",
+        "line": 124
+      },
+      {
+        "symbol": "members",
+        "line": 133
+      },
+      {
+        "symbol": "setMember",
+        "line": 137
+      }
+    ],
+    "command_literals": [
+      "create",
+      "intake-convert",
+      "register"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "scripts/pilot-workflow.mjs",
+    "sha256": "4a97ca99e80e34f23929733e1feba4e60c106ceca72277be643f8430786f8d23",
+    "lines": 879,
+    "symbols": [
+      {
+        "symbol": "planningChanged",
+        "line": 47
+      },
+      {
+        "symbol": "syncPlanningPapers",
+        "line": 56
+      },
+      {
+        "symbol": "syncFieldwork",
+        "line": 67
+      },
+      {
+        "symbol": "validMateriality",
+        "line": 92
+      },
+      {
+        "symbol": "reportWorkspace",
+        "line": 96
+      },
+      {
+        "symbol": "emptyWorkspace",
+        "line": 102
+      },
+      {
+        "symbol": "openPilotEngagement",
+        "line": 110
+      },
+      {
+        "symbol": "input",
+        "line": 127
+      },
+      {
+        "symbol": "requireActor",
+        "line": 135
+      },
+      {
+        "symbol": "evidenceGaps",
+        "line": 139
+      },
+      {
+        "symbol": "pilotGaps",
+        "line": 146
+      },
+      {
+        "symbol": "currentApproval",
+        "line": 161
+      },
+      {
+        "symbol": "qualityBasis",
+        "line": 174
+      },
+      {
+        "symbol": "qualityMaterial",
+        "line": 187
+      },
+      {
+        "symbol": "invalidateReport",
+        "line": 202
+      },
+      {
+        "symbol": "syncReportForm",
+        "line": 212
+      },
+      {
+        "symbol": "pilotReport",
+        "line": 225
+      },
+      {
+        "symbol": "pilotView",
+        "line": 235
+      },
+      {
+        "symbol": "deliverySummary",
+        "line": 322
+      },
+      {
+        "symbol": "pilotAction",
+        "line": 337
+      },
+      {
+        "symbol": "recordStaffSignoff",
+        "line": 831
+      },
+      {
+        "symbol": "checkNative",
+        "line": 837
+      },
+      {
+        "symbol": "checkPlanning",
+        "line": 843
+      },
+      {
+        "symbol": "parseStatementLines",
+        "line": 858
+      },
+      {
+        "symbol": "fileInput",
+        "line": 871
+      }
+    ],
+    "command_literals": [
+      "activate",
+      "archive-dispose",
+      "archive-seal",
+      "authorize",
+      "clear",
+      "create",
+      "fieldwork-resolve-finding",
+      "form-use",
+      "issue",
+      "register",
+      "report-date",
+      "report-sign",
+      "resolve-impact",
+      "respond",
+      "return",
+      "review",
+      "sample-resolve-finding",
+      "save",
+      "schedule",
+      "staffing-enable",
+      "statements",
+      "submit",
+      "support-assess",
+      "support-upload",
+      "task-add",
+      "task-status",
+      "work-assign"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/lib/pilot-area.ts",
+    "sha256": "9d5a46b93d3d42324a90c759a6c025467d18ffadb74340b1d22981baa02556aa",
+    "lines": 95,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/lib/pilot-assembly.ts",
+    "sha256": "6b64e695c6456994ce4ebac4386f60fa0f35539be3b5d21a17e0c4f7bb5c5ad2",
+    "lines": 5,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/lib/pilot-client.ts",
+    "sha256": "13ed959b5ac59df1e394e8925996969d5e8356b429159178ab6c53acee5fbe1b",
+    "lines": 12,
+    "symbols": [
+      {
+        "symbol": "readPilotResponse",
+        "line": 6
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/lib/pilot-forms.ts",
+    "sha256": "2d54a55f49ed8231b6d06449516b6c8c4e54c943e9fab53489bd7e04d33b79a1",
+    "lines": 31,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/lib/pilot-intake.ts",
+    "sha256": "84085bb63aa86d4cc543aea41cfb4bc6b4b6256aed8cef844dd52c3c7270988f",
+    "lines": 29,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/lib/pilot-materiality.ts",
+    "sha256": "cbd798afe07a502ee762eb133a0f1dd1db9350a1bf2a10feea327342ddb9264e",
+    "lines": 68,
+    "symbols": [
+      {
+        "symbol": "selectedMateriality",
+        "line": 41
+      },
+      {
+        "symbol": "materialitySourceAnswers",
+        "line": 54
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/lib/pilot-population.ts",
+    "sha256": "dc3bc5d1e53bdb618f06681f6c8118ea2eb3375ed3b9e2bfe1b928d5e3db6b7f",
+    "lines": 40,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/lib/pilot-registers.ts",
+    "sha256": "b7b3351e4ed180f9e27fad61193b7bf4a2d52c08ddf4e8da823e1e25c249f51d",
+    "lines": 107,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/lib/pilot-staffing.ts",
+    "sha256": "3f5491039c0402046b001b0a464d606fa967d0f7221bad584e57e11202ae1c7d",
+    "lines": 23,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/lib/workspace.ts",
+    "sha256": "8fe6226d30df441adef671c22b529a55649ec182aacce8b6ad36475d8b5e9995",
+    "lines": 325,
+    "symbols": [
+      {
+        "symbol": "inScope",
+        "line": 47
+      },
+      {
+        "symbol": "permitted",
+        "line": 48
+      },
+      {
+        "symbol": "exportWorkspace",
+        "line": 49
+      },
+      {
+        "symbol": "canReadWork",
+        "line": 64
+      },
+      {
+        "symbol": "canEdit",
+        "line": 65
+      },
+      {
+        "symbol": "canReviewWork",
+        "line": 66
+      },
+      {
+        "symbol": "stamp",
+        "line": 67
+      },
+      {
+        "symbol": "now",
+        "line": 68
+      },
+      {
+        "symbol": "recordEvent",
+        "line": 69
+      },
+      {
+        "symbol": "snapshot",
+        "line": 70
+      },
+      {
+        "symbol": "changeWork",
+        "line": 71
+      },
+      {
+        "symbol": "acceptanceGaps",
+        "line": 78
+      },
+      {
+        "symbol": "readiness",
+        "line": 79
+      },
+      {
+        "symbol": "submissionGaps",
+        "line": 80
+      },
+      {
+        "symbol": "submitWork",
+        "line": 88
+      },
+      {
+        "symbol": "reviewWork",
+        "line": 89
+      },
+      {
+        "symbol": "returnWork",
+        "line": 90
+      },
+      {
+        "symbol": "respondNote",
+        "line": 91
+      },
+      {
+        "symbol": "clearNote",
+        "line": 92
+      },
+      {
+        "symbol": "reschedule",
+        "line": 93
+      },
+      {
+        "symbol": "reassign",
+        "line": 94
+      },
+      {
+        "symbol": "metrics",
+        "line": 95
+      },
+      {
+        "symbol": "importCsv",
+        "line": 96
+      },
+      {
+        "symbol": "selectSample",
+        "line": 119
+      },
+      {
+        "symbol": "materiality",
+        "line": 120
+      },
+      {
+        "symbol": "outstanding",
+        "line": 121
+      },
+      {
+        "symbol": "isCurrentReview",
+        "line": 122
+      },
+      {
+        "symbol": "reportGaps",
+        "line": 124
+      },
+      {
+        "symbol": "runInputs",
+        "line": 140
+      },
+      {
+        "symbol": "executeRun",
+        "line": 142
+      },
+      {
+        "symbol": "initialModel",
+        "line": 158
+      },
+      {
+        "symbol": "sampleGaps",
+        "line": 164
+      },
+      {
+        "symbol": "sampleStamp",
+        "line": 174
+      },
+      {
+        "symbol": "currentSelection",
+        "line": 175
+      },
+      {
+        "symbol": "approveSample",
+        "line": 176
+      },
+      {
+        "symbol": "attemptRun",
+        "line": 177
+      },
+      {
+        "symbol": "partnerEngagement",
+        "line": 179
+      },
+      {
+        "symbol": "saveIntake",
+        "line": 180
+      },
+      {
+        "symbol": "activateEngagement",
+        "line": 186
+      },
+      {
+        "symbol": "setEngagementDecision",
+        "line": 191
+      },
+      {
+        "symbol": "content",
+        "line": 207
+      },
+      {
+        "symbol": "currentPackage",
+        "line": 208
+      },
+      {
+        "symbol": "qualityBasis",
+        "line": 218
+      },
+      {
+        "symbol": "completeEqr",
+        "line": 219
+      },
+      {
+        "symbol": "saveStatements",
+        "line": 225
+      },
+      {
+        "symbol": "bindStatements",
+        "line": 230
+      },
+      {
+        "symbol": "samePackage",
+        "line": 231
+      },
+      {
+        "symbol": "authorizationCurrent",
+        "line": 232
+      },
+      {
+        "symbol": "currentRelease",
+        "line": 233
+      },
+      {
+        "symbol": "authorizeReport",
+        "line": 234
+      },
+      {
+        "symbol": "issueReport",
+        "line": 240
+      },
+      {
+        "symbol": "recordDistribution",
+        "line": 246
+      },
+      {
+        "symbol": "advanceCustody",
+        "line": 247
+      },
+      {
+        "symbol": "prepareDemo",
+        "line": 254
+      },
+      {
+        "symbol": "recordRequestPart",
+        "line": 270
+      },
+      {
+        "symbol": "recordSampleTest",
+        "line": 297
+      },
+      {
+        "symbol": "resolveFinding",
+        "line": 311
+      },
+      {
+        "symbol": "verifyPosting",
+        "line": 316
+      },
+      {
+        "symbol": "resolveQualityConcern",
+        "line": 321
+      }
+    ],
+    "command_literals": [
+      "AUTO-003",
+      "AUTO-028",
+      "AUTO-046",
+      "AUTO-047",
+      "AUTO-048",
+      "accept",
+      "lock",
+      "offer",
+      "receive",
+      "reject"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/enterprise-workspace.tsx",
+    "sha256": "a66c4575e004789a7e3fec7f00063b8615e5323d32a79a2fb57f992600c1a6f4",
+    "lines": 104,
+    "symbols": [
+      {
+        "symbol": "PaperState",
+        "line": 15
+      },
+      {
+        "symbol": "WorkspaceEmpty",
+        "line": 16
+      },
+      {
+        "symbol": "WorkspaceShell",
+        "line": 20
+      },
+      {
+        "symbol": "preference",
+        "line": 27
+      },
+      {
+        "symbol": "WorkpaperIndex",
+        "line": 59
+      },
+      {
+        "symbol": "changeFilter",
+        "line": 64
+      },
+      {
+        "symbol": "namesForPaper",
+        "line": 74
+      },
+      {
+        "symbol": "WorkOverview",
+        "line": 76
+      },
+      {
+        "symbol": "EvidencePreview",
+        "line": 87
+      },
+      {
+        "symbol": "EvidenceLibraryView",
+        "line": 98
+      },
+      {
+        "symbol": "AuthFrame",
+        "line": 104
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-area.tsx",
+    "sha256": "9c472840b711be7936dcec6009102e73e53ced404d13f1de92eaef45db8b27fd",
+    "lines": 164,
+    "symbols": [
+      {
+        "symbol": "SourceRows",
+        "line": 50
+      },
+      {
+        "symbol": "AreaDesk",
+        "line": 62
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-assembly.tsx",
+    "sha256": "63ebfb4eb8706188dd673ba449c4605fd4cbc92bbdb368a83424a791952108a4",
+    "lines": 22,
+    "symbols": [
+      {
+        "symbol": "AssemblyDesk",
+        "line": 7
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-completion.tsx",
+    "sha256": "a225bb421f31db2680fa270ae3c220f6fac217226777d4356ea4e99033ac9eac",
+    "lines": 164,
+    "symbols": [
+      {
+        "symbol": "CompletionDesk",
+        "line": 32
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-forms.tsx",
+    "sha256": "910df0480f18b4be7f1a9f972d4d0076d5b5d0c4cab984dcabbcb74dd9b0ef67",
+    "lines": 221,
+    "symbols": [
+      {
+        "symbol": "NativeFields",
+        "line": 21
+      },
+      {
+        "symbol": "AdoptPilotForm",
+        "line": 53
+      },
+      {
+        "symbol": "NoteAction",
+        "line": 99
+      },
+      {
+        "symbol": "PilotFormLibrary",
+        "line": 108
+      },
+      {
+        "symbol": "load",
+        "line": 116
+      },
+      {
+        "symbol": "edit",
+        "line": 127
+      },
+      {
+        "symbol": "swap",
+        "line": 130
+      },
+      {
+        "symbol": "grant",
+        "line": 136
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-intake.tsx",
+    "sha256": "9a9bd7942351c4b6a9c1cc66aa3fa346b1e60ef498fe831ed810bfc1b5a9f733",
+    "lines": 265,
+    "symbols": [
+      {
+        "symbol": "Command",
+        "line": 14
+      },
+      {
+        "symbol": "ClientEditor",
+        "line": 27
+      },
+      {
+        "symbol": "ContactEditor",
+        "line": 42
+      },
+      {
+        "symbol": "ClientCard",
+        "line": 58
+      },
+      {
+        "symbol": "EnquiryEditor",
+        "line": 100
+      },
+      {
+        "symbol": "Convert",
+        "line": 120
+      },
+      {
+        "symbol": "EnquiryCard",
+        "line": 145
+      },
+      {
+        "symbol": "PilotIntake",
+        "line": 179
+      },
+      {
+        "symbol": "IntakeProvenance",
+        "line": 203
+      },
+      {
+        "symbol": "TermsEditor",
+        "line": 222
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-later-facts.tsx",
+    "sha256": "12b3b69f5e331256837bdfb5c56795eab7c7d95f813177f59daab7b28ba562d4",
+    "lines": 124,
+    "symbols": [
+      {
+        "symbol": "FactDecision",
+        "line": 22
+      },
+      {
+        "symbol": "LaterFactsDesk",
+        "line": 49
+      },
+      {
+        "symbol": "save",
+        "line": 54
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-materiality.tsx",
+    "sha256": "1e2cee10c2a985a4ffe130eb37c98416637629cc35de29e65012cdfbcbf9e468",
+    "lines": 126,
+    "symbols": [
+      {
+        "symbol": "MaterialityBasisFields",
+        "line": 20
+      },
+      {
+        "symbol": "MaterialityBasisSummary",
+        "line": 107
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-oversight.tsx",
+    "sha256": "04a85d911c0e30e42461828177dd4b7ea96425e97b47512ba95c78a713179d64",
+    "lines": 165,
+    "symbols": [
+      {
+        "symbol": "OversightDesk",
+        "line": 20
+      },
+      {
+        "symbol": "jsonRequest",
+        "line": 69
+      },
+      {
+        "symbol": "IndependentDesk",
+        "line": 76
+      },
+      {
+        "symbol": "send",
+        "line": 78
+      },
+      {
+        "symbol": "login",
+        "line": 90
+      },
+      {
+        "symbol": "ReportRecipient",
+        "line": 145
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-population.tsx",
+    "sha256": "ef944ad82b7691f34cff97a0b2e2ad835516e5311d05930419e2f84deb9f6bfd",
+    "lines": 242,
+    "symbols": [
+      {
+        "symbol": "DataAction",
+        "line": 12
+      },
+      {
+        "symbol": "submit",
+        "line": 15
+      },
+      {
+        "symbol": "PopulationDesk",
+        "line": 23
+      },
+      {
+        "symbol": "upload",
+        "line": 34
+      },
+      {
+        "symbol": "SampleDesk",
+        "line": 110
+      },
+      {
+        "symbol": "JournalDesk",
+        "line": 180
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-registers.tsx",
+    "sha256": "1eea2ca9c614bcbf6d1e735d9e287feaee508c7dac38a7b91115311df5188c41",
+    "lines": 218,
+    "symbols": [
+      {
+        "symbol": "PlanningBasis",
+        "line": 33
+      },
+      {
+        "symbol": "Editor",
+        "line": 50
+      },
+      {
+        "symbol": "save",
+        "line": 65
+      },
+      {
+        "symbol": "options",
+        "line": 70
+      },
+      {
+        "symbol": "Reason",
+        "line": 107
+      },
+      {
+        "symbol": "RecordCard",
+        "line": 115
+      },
+      {
+        "symbol": "PilotRegisters",
+        "line": 166
+      },
+      {
+        "symbol": "open",
+        "line": 180
+      },
+      {
+        "symbol": "exportArchive",
+        "line": 184
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-staffing.tsx",
+    "sha256": "b11ab0fcd31dd2d7ceef549f63ed3ac08347c9284070c13dea0801a2aab26975",
+    "lines": 81,
+    "symbols": [
+      {
+        "symbol": "RosterOverview",
+        "line": 13
+      },
+      {
+        "symbol": "Seat",
+        "line": 37
+      },
+      {
+        "symbol": "EngagementStaffing",
+        "line": 47
+      },
+      {
+        "symbol": "WorkAssignmentEditor",
+        "line": 61
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "src/components/pilot-workspace.tsx",
+    "sha256": "486ec7b077f006724285216fdc26ae71be790fb8e40b1f84f5746948c56a0422",
+    "lines": 650,
+    "symbols": [
+      {
+        "symbol": "request",
+        "line": 69
+      },
+      {
+        "symbol": "fields",
+        "line": 76
+      },
+      {
+        "symbol": "readEvidence",
+        "line": 78
+      },
+      {
+        "symbol": "ActionForm",
+        "line": 88
+      },
+      {
+        "symbol": "Access",
+        "line": 96
+      },
+      {
+        "symbol": "submit",
+        "line": 97
+      },
+      {
+        "symbol": "EngagementPicker",
+        "line": 118
+      },
+      {
+        "symbol": "EngagementAccess",
+        "line": 143
+      },
+      {
+        "symbol": "Requests",
+        "line": 159
+      },
+      {
+        "symbol": "upload",
+        "line": 164
+      },
+      {
+        "symbol": "SupportingEvidence",
+        "line": 243
+      },
+      {
+        "symbol": "upload",
+        "line": 245
+      },
+      {
+        "symbol": "Delivery",
+        "line": 267
+      },
+      {
+        "symbol": "Workpaper",
+        "line": 315
+      },
+      {
+        "symbol": "SharedPilotWorkspace",
+        "line": 416
+      },
+      {
+        "symbol": "allowLeave",
+        "line": 423
+      },
+      {
+        "symbol": "present",
+        "line": 424
+      },
+      {
+        "symbol": "show",
+        "line": 432
+      },
+      {
+        "symbol": "navigate",
+        "line": 446
+      },
+      {
+        "symbol": "send",
+        "line": 453
+      },
+      {
+        "symbol": "openEngagement",
+        "line": 493
+      },
+      {
+        "symbol": "ConfirmationRecipient",
+        "line": 596
+      },
+      {
+        "symbol": "submit",
+        "line": 609
+      },
+      {
+        "symbol": "PilotWorkspace",
+        "line": 633
+      }
+    ],
+    "command_literals": [
+      "review",
+      "template-save"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "tests/pilot-client.test.mjs",
+    "sha256": "a7721ff06b63b8cf086b8951cb5c1a5c8e7483f1300c7c12023f80d8c8cd38b4",
+    "lines": 9,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "tests/pilot-contract-evidence.test.mjs",
+    "sha256": "caac42183bd8cc4aae15994f6a2773f50d30a75e9f07ea87fb1f5a5fd0b1da88",
+    "lines": 48,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "tests/pilot-form-adoption.test.mjs",
+    "sha256": "1cb96bbb1243f7534cebf1affa0e60c1b24544ec21a4b1d37514b61685312384",
+    "lines": 83,
+    "symbols": [
+      {
+        "symbol": "start",
+        "line": 12
+      },
+      {
+        "symbol": "fixture",
+        "line": 17
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "tests/pilot-lifecycle-evidence.test.mjs",
+    "sha256": "bfdbefed59d6eef76f1aecf5a00e72167eaad49e973f23036ccee1e85e039848",
+    "lines": 99,
+    "symbols": [
+      {
+        "symbol": "collect",
+        "line": 29
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "tests/pilot-materiality.test.mjs",
+    "sha256": "dc7eda2c1829fdef41ba8b2f59342a90b8c969958253722d61aeb5df3d9da3ad",
+    "lines": 85,
+    "symbols": [
+      {
+        "symbol": "start",
+        "line": 34
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "tests/pilot-reporting.test.mjs",
+    "sha256": "d6243ca5998e18af65f222db84535b7fd539c5118ceaee4e11e44bda59881a36",
+    "lines": 231,
+    "symbols": [
+      {
+        "symbol": "start",
+        "line": 17
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "tests/pilot.test.mjs",
+    "sha256": "1fd71e545ca335575f2fafc344a706fc4871e91759a2c199ccf061aedc63c5b5",
+    "lines": 2791,
+    "symbols": [
+      {
+        "symbol": "start",
+        "line": 18
+      },
+      {
+        "symbol": "fixture",
+        "line": 42
+      },
+      {
+        "symbol": "write",
+        "line": 56
+      },
+      {
+        "symbol": "finish",
+        "line": 609
+      },
+      {
+        "symbol": "approve",
+        "line": 1735
+      },
+      {
+        "symbol": "approveReissueRecord",
+        "line": 2392
+      }
+    ],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/audit-products.md",
+    "sha256": "9058b150633f649fbb307cd2a2b8083e4abd74a30aae653f86d0ee1eed5143e0",
+    "lines": 139,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/design-spec.md",
+    "sha256": "349df57fb1e7bd17ec1b7f4534abf070f710c766c3fefa5c41264ae74f4715e0",
+    "lines": 449,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/development-progress.md",
+    "sha256": "1aa8225a5e45d1002b7e8875f8906e4568c781d2f275640ab785a8887d2bd437",
+    "lines": 129,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/external-products.md",
+    "sha256": "484781ca1d0550225aaf6aad4c51a7dae1264da35ea7bb63a4d5f26bc9c395e0",
+    "lines": 136,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/form-adoption-2026-11-16.md",
+    "sha256": "912a4616fad407c203afd2932e489ba05552d17fd8cb298437d901cf86e1238c",
+    "lines": 41,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/functional-continuation-2026-11-11.md",
+    "sha256": "7e938ada7975e9f093d977616b1b46a5b24cdb8b126aab2192f133eac56a50ae",
+    "lines": 64,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/implementation-pilot.md",
+    "sha256": "c89b874cd2e03aeed6b73b7e7cbf5b5d6dd2751ae57a4a7b164339544e8e91b0",
+    "lines": 25,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/implementation-v3.md",
+    "sha256": "3217f46a3f6bf513d884323da957df9031086175f2cba880127795786167c400",
+    "lines": 37,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/implementation-v4.md",
+    "sha256": "6d612dff4974eb0d07a860e5fa54bb0fe332241577c4d3d1498dbb779acc2629",
+    "lines": 17,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/implementation-v5.md",
+    "sha256": "4b68d094528b65c0dd9ba5be871bf3191803f243405553d8949211e3d34fb21c",
+    "lines": 14,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/implementation.md",
+    "sha256": "f460eb469f2b32f2d7e51ff3ab21eb25355c374041621db3209eabbc03ae6e85",
+    "lines": 54,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/materiality-and-form-fidelity-2026-11-11.md",
+    "sha256": "b12f5cf74a08a80f95524d23f325e00cbc1cef67928dfff1a792e523d5d354ac",
+    "lines": 52,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/pilot-feature-coverage.md",
+    "sha256": "4e99435d6197cbc547e52c3029ebdd420abc328da1575eb59be1b373567f3e2e",
+    "lines": 48,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/redesign-2026-11-11.md",
+    "sha256": "748dc6fab66f64445d50b1e5ae7a6771649d34b3e7fa34bbb9b011cc433542ad",
+    "lines": 101,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  {
+    "path": "docs/research/source-review.md",
+    "sha256": "82372dee644fa05055dc3326b148872b92668837130a35f6194242b3f14c6b78",
+    "lines": 93,
+    "symbols": [],
+    "command_literals": [],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  }
+]

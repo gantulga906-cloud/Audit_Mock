@@ -1,0 +1,114 @@
+[
+  {
+    "id": "C01",
+    "source": "F00837 Subchecks!J44 / AUTO-014-S01",
+    "issue": "Subtracts tax while parent approved method adds applicable tax under declared net/gross basis",
+    "resolution": "Use structured discount and applicable tax sign/basis; EX-014 checks the declared calculation",
+    "affected": "AUTO-014 P09-UC02"
+  },
+  {
+    "id": "C02",
+    "source": "F00837 Subchecks!J68 / AUTO-022-S01",
+    "issue": "Subtracts adjustments as though all adjustments are positive issues",
+    "resolution": "Use signed documented adjustment taxonomy; EX-022 retains negative adjustment explicitly",
+    "affected": "AUTO-022 P09-UC05"
+  },
+  {
+    "id": "C03",
+    "source": "Secondary automation/ontology AUTO-026",
+    "issue": "Generic disposal_cost can overstate NRV deductions",
+    "resolution": "Specify completion costs and costs necessary to make the sale under approved framework; age indicators separate",
+    "affected": "AUTO-026 P09-UC05"
+  },
+  {
+    "id": "C04",
+    "source": "Generated A01 connected BPMN",
+    "issue": "Decision-edge labels/targets reverse decline and continue paths",
+    "resolution": "Do not execute generated graph as authoritative routing; professional decision controls accepted/pending/declined setup",
+    "affected": "P02-UC04 P03-UC01"
+  },
+  {
+    "id": "C05",
+    "source": "Generated A25 connected BPMN",
+    "issue": "Branches converge on ready and create circular EQR readiness",
+    "resolution": "Separate completion restrictions, actual formal EQR outcome and report authorization; unresolved required concern prevents affected completion",
+    "affected": "P11-UC06 P10-UC08"
+  },
+  {
+    "id": "C06",
+    "source": "Form4.6А/E2E A25 before-date wording vs verified benchmark",
+    "issue": "Strictly before report date vs on or before report date",
+    "resolution": "Keep professional benchmark on/before; earlier firm deadline applies only if explicitly adopted",
+    "affected": "P11-UC06"
+  },
+  {
+    "id": "C07",
+    "source": "Guide retention >=5 years vs Mongolian Audit Law12.5",
+    "issue": "Guide minimum is below verified local ten-year workpaper minimum",
+    "resolution": "Use applicable local minimum and longer restrictions; anchor remains D20, no automated deletion",
+    "affected": "P12-UC05 AUTO-058"
+  },
+  {
+    "id": "C08",
+    "source": "Source risk/materiality forms",
+    "issue": "Question polarity, overlapping rating bands and5%trivial wording can be misread as universal rules",
+    "resolution": "Question-specific meaning and actual firm method/approved parameters; no automatic significance/acceptance or statutory rate",
+    "affected": "P02-UC01 P06-UC02 P06-UC03"
+  },
+  {
+    "id": "C09",
+    "source": "Source adverse report template",
+    "issue": "Copied opinion/basis wording can conflict with actual misstatement vs evidence limitation",
+    "resolution": "Select report content from actual reasoned opinion and applicable reporting provisions; validate each section",
+    "affected": "P10-UC06 P10-UC07"
+  },
+  {
+    "id": "C10",
+    "source": "Source investment programme",
+    "issue": "Percentage shortcuts/joint-arrangement wording are insufficient accounting conclusions",
+    "resolution": "Evaluate actual rights/control/influence/arrangement and applicable framework with support",
+    "affected": "P09-UC02-V03"
+  },
+  {
+    "id": "C11",
+    "source": "F00922 earlier SF-14 sampling illustration",
+    "issue": "Displays a confirmed price variance despite missing contract evidence; one source transaction is dated outside the displayed audit period",
+    "resolution": "Treat the image as a superseded illustration. Preserve the actual period and source evidence; record a supported exception or missing-evidence matter without asserting an unverified contract price.",
+    "affected": "P07-UC02 P09-UC02 P09-UC07"
+  },
+  {
+    "id": "C12",
+    "source": "F00920/F00922 SF-14 sampling illustrations",
+    "issue": "The phrase no projection from this non-statistical design can be misread as a ban on projection for every non-statistical audit sample; the example actually selects targeted high-value/risk items",
+    "resolution": "Distinguish specific-item selection from an audit sample. Apply the actual approved design, representativeness and projection method; do not infer population assurance from targeted items.",
+    "affected": "P07-UC02 P07-UC04 AUTO-047"
+  },
+  {
+    "id": "C13",
+    "source": "F00930 earlier SF-23 reporting illustration",
+    "issue": "Illustrative report adds an open-ended subject-to-basis-and-subsequent-amendments sentence to its opinion",
+    "resolution": "Use the applicable approved report template and reasoned opinion type. Do not copy generated illustration wording into the report.",
+    "affected": "P10-UC06 P10-UC07"
+  },
+  {
+    "id": "C14",
+    "source": "F00908 earlier SF-03 proposal illustration",
+    "issue": "Client-agreed proposal assumptions include reliance on internal controls",
+    "resolution": "Commercial agreement cannot determine the auditor's reliance strategy. Assess controls and design responses from the actual risks, work and evidence.",
+    "affected": "P02-UC03 P06-UC02 P06-UC03"
+  },
+  {
+    "id": "C15",
+    "source": "F01208/F01300 historical dataset catalogues",
+    "issue": "Old catalogues assign inconsistent meanings to PROCEDURE_TYPE_CODE and NATURE_CODE; physical text columns do not define approved lookup values",
+    "resolution": "Specify actual procedure purpose, nature and technique in business terms, and confirm the selected code vocabulary before implementation. Historical catalogue labels are not approved code definitions.",
+    "affected": "P04-UC01 P07-UC01 D23"
+  },
+  {
+    "id": "C16",
+    "source": "F01300 historical period-succession relation",
+    "issue": "Parent/prior and child/current endpoint wording conflicts with another old current-to-prior relation proposal",
+    "resolution": "Bind the actual current and prior engagement IDs under an explicitly approved directional relationship type. Preserve source-period origin and require current-period confirmation; do not infer endpoints from a generic label.",
+    "affected": "P01-UC03 P03-UC04"
+  }
+]

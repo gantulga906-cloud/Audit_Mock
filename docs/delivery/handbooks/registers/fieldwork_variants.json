@@ -1,0 +1,871 @@
+[
+  {
+    "id": "P09-UC02-V01",
+    "parent_case": "P09-UC02",
+    "area": "Intangible assets",
+    "scene": "A newly recorded software/license cost needs support and the year's amortization is being tested.",
+    "input_requirements": [
+      "Intangible register and movement list",
+      "license/development contracts",
+      "costs",
+      "approved useful-life/method basis"
+    ],
+    "preparer_action": "Inspect rights and selected additions/disposals, distinguish the nature of expenditure and recalculate the supported amortization.",
+    "reviewer_goal": "Challenge rights, the recognition/capitalization basis, useful life and unsupported classifications; arithmetic is only part of the work.",
+    "professional_or_method_limit": "No automatic recognition decision from a cost label or a successful amortization calculation.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.1А!C10:C22",
+        "form_id": "FORM-028",
+        "title": "Audit program — intangible assets"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v01",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V01-NORMAL",
+      "P09-UC02-V01-EXCEPTION",
+      "P09-UC02-V01-MISSING",
+      "P09-UC02-V01-UNAUTH",
+      "P09-UC02-V01-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V02",
+    "parent_case": "P09-UC02",
+    "area": "Property, plant and equipment",
+    "scene": "The asset register contains an addition, a disposal and changed depreciation for selected items.",
+    "input_requirements": [
+      "Asset register",
+      "addition/disposal records",
+      "physical inspection record",
+      "cost and depreciation assumptions"
+    ],
+    "preparer_action": "Trace selected movements to support, inspect relevant assets, recalculate supported depreciation and record impairment/lease matters needing separate evaluation.",
+    "reviewer_goal": "Challenge existence/rights, repair-versus-capital classification, timing, life/residual assumptions and the treatment of disposed assets.",
+    "professional_or_method_limit": "A disposal/fully-depreciated flag is a candidate; impairment and lease conclusions require their actual supported work.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.2А!C10:C27",
+        "form_id": "FORM-029",
+        "title": "Audit program — property, plant and equipment"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v02",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V02-NORMAL",
+      "P09-UC02-V02-EXCEPTION",
+      "P09-UC02-V02-MISSING",
+      "P09-UC02-V02-UNAUTH",
+      "P09-UC02-V02-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V03",
+    "parent_case": "P09-UC02",
+    "area": "Investments",
+    "scene": "An investment movement or changed ownership arrangement requires classification, valuation and disclosure work.",
+    "input_requirements": [
+      "Investment register",
+      "contracts and ownership/decision rights",
+      "investee/custodian information",
+      "selected valuation inputs"
+    ],
+    "preparer_action": "Inspect the actual rights/arrangement and selected transactions, reconcile holdings and evaluate the applicable measurement/consolidation treatment.",
+    "reviewer_goal": "Challenge whether evidence supports control, influence or joint control and the chosen accounting basis; request specialist/component work when needed.",
+    "professional_or_method_limit": "Do not hard-code the source form's percentage shortcuts or its joint-arrangement wording as accounting conclusions.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.3А!C10:C24",
+        "form_id": "FORM-030",
+        "title": "Audit program — investments"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v03",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V03-NORMAL",
+      "P09-UC02-V03-EXCEPTION",
+      "P09-UC02-V03-MISSING",
+      "P09-UC02-V03-UNAUTH",
+      "P09-UC02-V03-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V04",
+    "parent_case": "P09-UC02",
+    "area": "Inventory values and movements",
+    "scene": "Inventory movement/cost records disagree with the recorded value, or slow/damaged items need evaluation.",
+    "input_requirements": [
+      "Item/location movement records",
+      "count link",
+      "cost method",
+      "sales/condition evidence",
+      "period boundaries"
+    ],
+    "preparer_action": "Reconcile quantities and values, inspect selected receipts/issues and cut-off, recalculate the supported cost profile and assess lower-value/write-down indicators.",
+    "reviewer_goal": "Challenge count-to-record coverage, ownership, method, units and the evidence for estimated realizable amounts.",
+    "professional_or_method_limit": "Attendance itself is P09-UC05. Aging or a computed shortfall alone does not decide an inventory write-down.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.4А!C10:C25",
+        "form_id": "FORM-031",
+        "title": "Audit program — inventories"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v04",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V04-NORMAL",
+      "P09-UC02-V04-EXCEPTION",
+      "P09-UC02-V04-MISSING",
+      "P09-UC02-V04-UNAUTH",
+      "P09-UC02-V04-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V05",
+    "parent_case": "P09-UC02",
+    "area": "Trade receivables",
+    "scene": "Selected customer balances need evidence of existence, timing and recoverability.",
+    "input_requirements": [
+      "Receivable/sales detail",
+      "contracts, invoices and delivery records",
+      "subsequent cash",
+      "aging/allowance support"
+    ],
+    "preparer_action": "Trace selected balances/transactions, evaluate confirmations when used, inspect subsequent receipts and record relevant cut-off/allowance implications.",
+    "reviewer_goal": "Challenge whether subsequent cash relates to the selected debt and whether existence evidence also supports recovery; keep those assertions distinct.",
+    "professional_or_method_limit": "A nonresponse is not agreement. An aging calculation is not an automatic allowance conclusion.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.5А!C10:C23",
+        "form_id": "FORM-032",
+        "title": "Audit program — receivables"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v05",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V05-NORMAL",
+      "P09-UC02-V05-EXCEPTION",
+      "P09-UC02-V05-MISSING",
+      "P09-UC02-V05-UNAUTH",
+      "P09-UC02-V05-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V06",
+    "parent_case": "P09-UC02",
+    "area": "Other long-term receivables",
+    "scene": "A long-dated balance includes principal and interest that need support and appropriate classification.",
+    "input_requirements": [
+      "Receivable agreement",
+      "repayment/interest terms",
+      "balance/movement detail",
+      "support and security where relevant"
+    ],
+    "preparer_action": "Inspect selected rights and terms, reconcile movements, recalculate supported principal/interest and assess classification and recovery evidence.",
+    "reviewer_goal": "Challenge timing, contract interpretation, valuation and whether apparent repayment actually settles the selected receivable.",
+    "professional_or_method_limit": "Complex measurement remains manual/specialist work where the selected automation does not support it.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.6А!C11:C18",
+        "form_id": "FORM-033",
+        "title": "Audit program — other long-term receivables"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v06",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V06-NORMAL",
+      "P09-UC02-V06-EXCEPTION",
+      "P09-UC02-V06-MISSING",
+      "P09-UC02-V06-UNAUTH",
+      "P09-UC02-V06-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V07",
+    "parent_case": "P09-UC02",
+    "area": "Other receivables and prepayments",
+    "scene": "A prepayment remains open after goods/services should have been received.",
+    "input_requirements": [
+      "Advance/prepayment detail",
+      "contracts/invoices",
+      "payment and settlement evidence",
+      "covered service period"
+    ],
+    "preparer_action": "Inspect selected advances and their later application, recalculate period allocation under the supported basis and assess the remaining balance.",
+    "reviewer_goal": "Challenge whether receipt/use supports release to the appropriate asset/expense and whether unsupported balances need further work.",
+    "professional_or_method_limit": "A paid invoice does not alone establish that a prepayment was consumed in this period.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.7А!C11:C17",
+        "form_id": "FORM-034",
+        "title": "Audit program — other receivables and prepayments"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v07",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V07-NORMAL",
+      "P09-UC02-V07-EXCEPTION",
+      "P09-UC02-V07-MISSING",
+      "P09-UC02-V07-UNAUTH",
+      "P09-UC02-V07-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V08",
+    "parent_case": "P09-UC02",
+    "area": "Cash and cash equivalents",
+    "scene": "A bank/cash balance differs from a reconciliation or needs rights/restriction evidence.",
+    "input_requirements": [
+      "Bank/cash listing",
+      "statements",
+      "reconciliation",
+      "relevant agreements",
+      "count/confirmation work when selected"
+    ],
+    "preparer_action": "Inspect selected receipts/payments and reconciling items, tie the relevant records and evaluate count/confirmation support and classification.",
+    "reviewer_goal": "Challenge outstanding reconciling items, authority/ownership/restrictions, timing and source authenticity.",
+    "professional_or_method_limit": "The system records actual count/confirmation work; importing a bank statement does not automatically confirm every bank relationship.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.8А!C10:C23",
+        "form_id": "FORM-035",
+        "title": "Audit program — cash and cash equivalents"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v08",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V08-NORMAL",
+      "P09-UC02-V08-EXCEPTION",
+      "P09-UC02-V08-MISSING",
+      "P09-UC02-V08-UNAUTH",
+      "P09-UC02-V08-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V09",
+    "parent_case": "P09-UC02",
+    "area": "Borrowings",
+    "scene": "The recorded loan balance and interest must be tested against the actual agreement and movements.",
+    "input_requirements": [
+      "Loan agreements",
+      "drawdowns/repayments",
+      "lender records",
+      "rate/day-count terms",
+      "collateral/covenant information"
+    ],
+    "preparer_action": "Reconcile principal/interest movements, inspect selected support and recalculate the permitted interest profile; record condition and disclosure implications.",
+    "reviewer_goal": "Challenge contract terms, classification, covenants, collateral/guarantees and unsupported measurement assumptions.",
+    "professional_or_method_limit": "A simple interest calculation does not implement every effective-interest, modification or guarantee treatment.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.9А!C12:C24",
+        "form_id": "FORM-036",
+        "title": "Audit program — borrowings"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v09",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V09-NORMAL",
+      "P09-UC02-V09-EXCEPTION",
+      "P09-UC02-V09-MISSING",
+      "P09-UC02-V09-UNAUTH",
+      "P09-UC02-V09-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V10",
+    "parent_case": "P09-UC02",
+    "area": "Purchases and trade payables",
+    "scene": "An invoice, goods receipt and payment do not align, or a later payment may relate to an unrecorded liability.",
+    "input_requirements": [
+      "Supplier balances",
+      "purchase orders/invoices/receipts",
+      "payments",
+      "contracts",
+      "post-period items"
+    ],
+    "preparer_action": "Trace selected purchase/payable items in the relevant direction, inspect cut-off and subsequent settlement, investigate matching differences and confirmations when used.",
+    "reviewer_goal": "Challenge completeness, timing, returned goods and the actual supplier obligation; distinguish a match defect from an accounting error.",
+    "professional_or_method_limit": "Repeated document headers and one-to-many lines need the actual grain; no automatic exposure multiplication.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.10А!C12:C20",
+        "form_id": "FORM-037",
+        "title": "Audit program — purchases and payables"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v10",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V10-NORMAL",
+      "P09-UC02-V10-EXCEPTION",
+      "P09-UC02-V10-MISSING",
+      "P09-UC02-V10-UNAUTH",
+      "P09-UC02-V10-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V11",
+    "parent_case": "P09-UC02",
+    "area": "Other payables and accruals",
+    "scene": "A period-end liability relies on an estimate or a service not yet invoiced.",
+    "input_requirements": [
+      "Accrual/other-payable detail",
+      "agreements",
+      "service evidence",
+      "calculation basis",
+      "subsequent invoices/payments"
+    ],
+    "preparer_action": "Inspect selected obligations, completeness and timing, recalculate the supported accrual and compare later support with the period-end basis.",
+    "reviewer_goal": "Challenge obligation, period, method and omitted amounts; use the estimate case where judgment is significant.",
+    "professional_or_method_limit": "A later invoice amount is not automatically the correct earlier accrual without its service/period basis.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.11А!C11:C16",
+        "form_id": "FORM-038",
+        "title": "Audit program — other payables and accruals"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v11",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V11-NORMAL",
+      "P09-UC02-V11-EXCEPTION",
+      "P09-UC02-V11-MISSING",
+      "P09-UC02-V11-UNAUTH",
+      "P09-UC02-V11-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V12",
+    "parent_case": "P09-UC02",
+    "area": "Deferred income",
+    "scene": "Cash has been received but part of the promised goods/services may remain unperformed.",
+    "input_requirements": [
+      "Customer contracts",
+      "receipt/invoice detail",
+      "delivery/service evidence",
+      "deferred-income roll-forward"
+    ],
+    "preparer_action": "Inspect the actual obligations and performance evidence, reconcile movements and evaluate/recalculate the supported release to revenue.",
+    "reviewer_goal": "Challenge whether the conditions for recognition occurred and whether the contract liability/classification remains appropriate.",
+    "professional_or_method_limit": "Invoice/payment date alone does not determine revenue recognition; no automatic all-contract accounting engine is implied.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.12А!C12:C17",
+        "form_id": "FORM-039",
+        "title": "Audit program — deferred income"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v12",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V12-NORMAL",
+      "P09-UC02-V12-EXCEPTION",
+      "P09-UC02-V12-MISSING",
+      "P09-UC02-V12-UNAUTH",
+      "P09-UC02-V12-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V13",
+    "parent_case": "P09-UC02",
+    "area": "Intercompany transactions",
+    "scene": "Two related entities report different reciprocal balances or a material transaction needs support.",
+    "input_requirements": [
+      "Declared related parties",
+      "intercompany agreements",
+      "reciprocal balance/transaction records",
+      "settlement and relevant group data"
+    ],
+    "preparer_action": "Inspect selected terms and transactions, reconcile reciprocal amounts and evaluate related-party disclosures; route group elimination work where applicable.",
+    "reviewer_goal": "Challenge the relationship basis, unexplained differences and any asserted market/arm's-length terms.",
+    "professional_or_method_limit": "A shared identifier is a lead, not proof of control. Intercompany reconciliation does not by itself perform a group audit.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.13А!C10:C16",
+        "form_id": "FORM-040",
+        "title": "Audit program — intercompany transactions"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v13",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V13-NORMAL",
+      "P09-UC02-V13-EXCEPTION",
+      "P09-UC02-V13-MISSING",
+      "P09-UC02-V13-UNAUTH",
+      "P09-UC02-V13-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V14",
+    "parent_case": "P09-UC02",
+    "area": "Tax balances and expense",
+    "scene": "Tax return figures and the ledger differ, or a recalculation needs the correct period's rules.",
+    "input_requirements": [
+      "Returns",
+      "tax-ledger detail",
+      "taxable bases/adjustments",
+      "applicable approved rate/rule version",
+      "payments"
+    ],
+    "preparer_action": "Reconcile returns to records, inspect relevant bases and recalculate only the supported tax profile; document remaining timing/recognition issues.",
+    "reviewer_goal": "Challenge period/entity applicability, adjustments and current/deferred tax distinctions; obtain specialist advice where needed.",
+    "professional_or_method_limit": "Illustrative tax rates are not Mongolian law. A tax tie-out does not establish compliance with every tax rule.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.14А!C10:C17",
+        "form_id": "FORM-041",
+        "title": "Audit program — taxation"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v14",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V14-NORMAL",
+      "P09-UC02-V14-EXCEPTION",
+      "P09-UC02-V14-MISSING",
+      "P09-UC02-V14-UNAUTH",
+      "P09-UC02-V14-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V15",
+    "parent_case": "P09-UC02",
+    "area": "Capital, reserves and dividends",
+    "scene": "A share movement or dividend affects the equity roll-forward and disclosures.",
+    "input_requirements": [
+      "Equity register/ledger",
+      "shareholder and issue records",
+      "resolutions",
+      "dividend/tax support",
+      "applicable disclosure basis"
+    ],
+    "preparer_action": "Inspect selected authorized movements, reconcile the roll-forward, recalculate supported share/dividend figures and evaluate classification/disclosure.",
+    "reviewer_goal": "Challenge actual rights/authorization, timing and capital-versus-income treatment; assess EPS only where applicable.",
+    "professional_or_method_limit": "A resolution is evidence to evaluate, not a software permission or universal EPS requirement.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.15А!C10:C16",
+        "form_id": "FORM-042",
+        "title": "Audit program — share capital, reserves and dividends"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v15",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V15-NORMAL",
+      "P09-UC02-V15-EXCEPTION",
+      "P09-UC02-V15-MISSING",
+      "P09-UC02-V15-UNAUTH",
+      "P09-UC02-V15-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V16",
+    "parent_case": "P09-UC02",
+    "area": "Revenue",
+    "scene": "A selected sale near year-end has delivery/service facts that differ from invoice or posting dates.",
+    "input_requirements": [
+      "Sales detail",
+      "contract/pricing terms",
+      "invoices",
+      "delivery/service acceptance",
+      "returns and subsequent cash"
+    ],
+    "preparer_action": "Inspect the selected transaction and its supporting performance/terms, recalculate supported amounts and assess timing/classification.",
+    "reviewer_goal": "Challenge the recognition basis and evidence of performance, unusual terms and subsequent reversals; do not infer success from cash alone.",
+    "professional_or_method_limit": "Cut-off flags identify candidates; software does not automatically select the applicable recognition conclusion.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.16А!C10:C23",
+        "form_id": "FORM-043",
+        "title": "Audit program — revenue"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v16",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V16-NORMAL",
+      "P09-UC02-V16-EXCEPTION",
+      "P09-UC02-V16-MISSING",
+      "P09-UC02-V16-UNAUTH",
+      "P09-UC02-V16-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V17",
+    "parent_case": "P09-UC02",
+    "area": "Cost of sales",
+    "scene": "Recorded cost of sales is inconsistent with relevant inventory movements or selected source costs.",
+    "input_requirements": [
+      "Inventory/cost-of-sales records",
+      "cost-method basis",
+      "selected receipts/issues",
+      "related sales and stock support"
+    ],
+    "preparer_action": "Reconcile the selected cost/movement basis, recalculate the supported costing profile and inspect classification/cut-off.",
+    "reviewer_goal": "Challenge units, completeness, costing assumptions and whether costs relate to the relevant period's activity.",
+    "professional_or_method_limit": "The source programme repeats inventory procedures; tailor them rather than assuming the same work proves every assertion.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.17А!C10:C25",
+        "form_id": "FORM-044",
+        "title": "Audit program — cost of sales"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v17",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V17-NORMAL",
+      "P09-UC02-V17-EXCEPTION",
+      "P09-UC02-V17-MISSING",
+      "P09-UC02-V17-UNAUTH",
+      "P09-UC02-V17-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V18",
+    "parent_case": "P09-UC02",
+    "area": "Payroll and employee benefits",
+    "scene": "Selected payroll amounts differ from contracts, attendance, deductions or actual payment.",
+    "input_requirements": [
+      "Payroll register",
+      "employee/contract data",
+      "attendance",
+      "bank payment",
+      "applicable deduction/tax rule version",
+      "benefit support"
+    ],
+    "preparer_action": "Trace selected people and periods, reconcile gross-to-net/payment and recalculate supported deductions/benefits; investigate exceptions.",
+    "reviewer_goal": "Challenge the actual employment/service basis, payment allocation and applicable rules; sensitive personal data need restricted access.",
+    "professional_or_method_limit": "A repeated bank account or unusual payment is a candidate, not proof of a ghost employee or fraud.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.18А!C10:C20",
+        "form_id": "FORM-045",
+        "title": "Audit program — payroll and employee benefits"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v18",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V18-NORMAL",
+      "P09-UC02-V18-EXCEPTION",
+      "P09-UC02-V18-MISSING",
+      "P09-UC02-V18-UNAUTH",
+      "P09-UC02-V18-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V19",
+    "parent_case": "P09-UC02",
+    "area": "Selling and operating expenses",
+    "scene": "A selected expense may belong to another period or lack support for its nature.",
+    "input_requirements": [
+      "Expense ledger",
+      "contracts/invoices",
+      "payment and service/delivery evidence",
+      "period/cost-center basis"
+    ],
+    "preparer_action": "Inspect selected costs, recalculate supported amounts and allocation, and assess occurrence, classification and cut-off.",
+    "reviewer_goal": "Challenge the business purpose and service period and corroborate unusual changes; route capital items for proper assessment.",
+    "professional_or_method_limit": "A management explanation or payment alone does not establish the full audit conclusion.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.19А!C11:C16",
+        "form_id": "FORM-046",
+        "title": "Audit procedures — selling and operating expenses"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v19",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V19-NORMAL",
+      "P09-UC02-V19-EXCEPTION",
+      "P09-UC02-V19-MISSING",
+      "P09-UC02-V19-UNAUTH",
+      "P09-UC02-V19-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V20",
+    "parent_case": "P09-UC02",
+    "area": "Other income-statement or comprehensive-income items",
+    "scene": "A revaluation or foreign-exchange-related item needs support for its nature and presentation.",
+    "input_requirements": [
+      "Relevant transactions/ledger",
+      "valuation or FX support",
+      "classification/presentation basis",
+      "related asset/liability evidence"
+    ],
+    "preparer_action": "Identify the actual item, test selected underlying calculations and evaluate whether its classification/presentation follows the applicable framework.",
+    "reviewer_goal": "Challenge the item's nature and linkage rather than accepting the source form's broad account labels.",
+    "professional_or_method_limit": "Do not classify every exchange difference or revaluation automatically as OCI; framework-specific professional evaluation remains required.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.20А!C11:C15",
+        "form_id": "FORM-047",
+        "title": "Audit procedures — other income-statement items"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v20",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V20-NORMAL",
+      "P09-UC02-V20-EXCEPTION",
+      "P09-UC02-V20-MISSING",
+      "P09-UC02-V20-UNAUTH",
+      "P09-UC02-V20-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V21",
+    "parent_case": "P09-UC02",
+    "area": "Finance costs",
+    "scene": "Interest/fees or a financing-related cost needs recalculation and classification.",
+    "input_requirements": [
+      "Loan/bond/lease terms",
+      "rate/period/day-count inputs",
+      "fee schedules",
+      "payments",
+      "capitalized-cost support"
+    ],
+    "preparer_action": "Recalculate the supported profile, inspect relevant fees and timing, and evaluate expense/capitalization and disclosure treatment.",
+    "reviewer_goal": "Challenge effective-interest/lease assumptions and the actual capitalization basis; extend work where simple arithmetic is insufficient.",
+    "professional_or_method_limit": "No universal straight-line, simple-interest or capitalization rule is inferred from a successful calculation.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.21А!C11:C16",
+        "form_id": "FORM-048",
+        "title": "Audit program — finance costs"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v21",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V21-NORMAL",
+      "P09-UC02-V21-EXCEPTION",
+      "P09-UC02-V21-MISSING",
+      "P09-UC02-V21-UNAUTH",
+      "P09-UC02-V21-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  },
+  {
+    "id": "P09-UC02-V22",
+    "parent_case": "P09-UC02",
+    "area": "Other income and expenses",
+    "scene": "A one-off grant, penalty, fee or other transaction needs an appropriate accounting basis.",
+    "input_requirements": [
+      "Underlying agreement/notice",
+      "transaction detail",
+      "receipts/payments",
+      "relevant conditions and period"
+    ],
+    "preparer_action": "Inspect selected support and conditions, recalculate supported amounts and evaluate recognition, classification and cut-off.",
+    "reviewer_goal": "Challenge the actual legal/business substance and restrictions and whether unusual items are fully explained.",
+    "professional_or_method_limit": "A transaction description or recurring ledger account is not a sufficient recognition/classification conclusion.",
+    "source_locators": [
+      {
+        "source": "F00788",
+        "locator": "3.1.22А!C11:C15",
+        "form_id": "FORM-049",
+        "title": "Audit program — other income and expenses"
+      }
+    ],
+    "scope_basis": "M07-F07; M07-F11; M07-F12; related approved programme. Source form procedures are tailored, not all mandatory.",
+    "handoff": "R1 records actual work/results/evidence; R2 reviews under P09-UC11; significant judgments/limitations go to R3 under P11/P10. R4 only within an actual assigned scope.",
+    "guide": "G10",
+    "section": "variant-p09-uc02-v22",
+    "current_status": "source-specific acceptance unverified",
+    "acceptance_scenarios": [
+      "P09-UC02-V22-NORMAL",
+      "P09-UC02-V22-EXCEPTION",
+      "P09-UC02-V22-MISSING",
+      "P09-UC02-V22-UNAUTH",
+      "P09-UC02-V22-CHANGE"
+    ],
+    "tasks": [
+      "R16.1",
+      "R16.6"
+    ]
+  }
+]

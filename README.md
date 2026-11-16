@@ -1,5 +1,7 @@
 # Veritech Audit workspace
 
+**GitHub publication, 16 November 2026.** The development branch now includes the complete local application through G00. [Published plans, implementation handbooks, evidence and history](docs/delivery/README.md) accompany the code. Completed, verified batches are published to this branch as development continues; merging into main and deployment remain separate steps.
+
 **G00 shared foundations, 16 November 2026.** Shared commands reject malformed input before mutation. A connected two-engagement scenario verifies exact review, preserved original bytes and approvals, targeted change impact, revoked access and restart/retry. `npm run verify:foundations -- --build` checks all eight shared contracts against fresh tests, frozen source scope and a clean build. [Checkpoint scope, reproduction and continuing work](docs/research/g00-foundations-2026-11-16.md).
 
 **Controlled form adoption, 16 November 2026.** Preview edition changes and incompatible answers before adoption. Compatible repeated-row cells survive; incompatible direct updates require acknowledgement of the current preview. The builder now persists actual table columns and accepted evidence inside rows. Source schedules retain narrative asset results and text sample identifiers. [Behavior, compatibility and remaining F2/R08 work](docs/research/form-adoption-2026-11-16.md).

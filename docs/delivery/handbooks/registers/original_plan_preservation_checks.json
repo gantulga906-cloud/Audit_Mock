@@ -1,0 +1,12 @@
+[
+  {
+    "check": "exact original 128 task IDs/title/workAndExpectedResult/status retained",
+    "result": "pass",
+    "original": "outputs/audit-mock-remaining-plan-2026-11-11/Remaining_Work_Backlog.json",
+    "compared": "registers/original_backlog_preserved.json"
+  },
+  {
+    "check": "25 package IDs retained",
+    "result": "pass"
+  }
+]

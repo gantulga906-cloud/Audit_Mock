@@ -1,0 +1,112 @@
+{
+  "priorPlan": "outputs/audit-form-adoption-2026-11-16/Updated_Development_Backlog.json",
+  "handbookCopy": "outputs/audit-implementation-handbooks-2026-11-16/registers/original_backlog_preserved.json",
+  "entireParsedPlanEqual": true,
+  "priorFileSha256": "7d286bf03a6bd76ff168139bb871b0899e912434addda30022b478eb658e1905",
+  "handbookFileSha256": "802fc4aa5db4643bb82b221b35ff9ece46d964ca06ac04805f710e6be79c7d4e",
+  "packages": 25,
+  "tasks": 128,
+  "originalTaskIdsTitlesStatusesAndEvidenceRetained": true,
+  "independentAcceptanceDecisions": 0,
+  "scopeChecks": [
+    {
+      "kind": "registeredRows",
+      "actual": 2247,
+      "expected": 2247,
+      "passed": true
+    },
+    {
+      "kind": "coreFeatures",
+      "actual": 127,
+      "expected": 127,
+      "passed": true
+    },
+    {
+      "kind": "conditionalFeatures",
+      "actual": 8,
+      "expected": 8,
+      "passed": true
+    },
+    {
+      "kind": "excludedFeatures",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "kind": "pendingExtensions",
+      "actual": 58,
+      "expected": 58,
+      "passed": true
+    }
+  ],
+  "inventoryChecks": [
+    {
+      "kind": "cases",
+      "expected": 75,
+      "actual": 75,
+      "passed": true
+    },
+    {
+      "kind": "criteria",
+      "expected": 315,
+      "actual": 315,
+      "passed": true
+    },
+    {
+      "kind": "features",
+      "expected": 136,
+      "actual": 136,
+      "passed": true
+    },
+    {
+      "kind": "automations",
+      "expected": 58,
+      "actual": 58,
+      "passed": true
+    },
+    {
+      "kind": "e2e",
+      "expected": 476,
+      "actual": 476,
+      "passed": true
+    },
+    {
+      "kind": "forms",
+      "expected": 70,
+      "actual": 70,
+      "passed": true
+    },
+    {
+      "kind": "variants",
+      "expected": 22,
+      "actual": 22,
+      "passed": true
+    },
+    {
+      "kind": "dependencies",
+      "expected": 20,
+      "actual": 20,
+      "passed": true
+    },
+    {
+      "kind": "extensions",
+      "expected": 58,
+      "actual": 58,
+      "passed": true
+    },
+    {
+      "kind": "transitions",
+      "expected": 1012,
+      "actual": 1012,
+      "passed": true
+    },
+    {
+      "kind": "operational",
+      "expected": 5,
+      "actual": 5,
+      "passed": true
+    }
+  ],
+  "note": "This engineering checkpoint does not change the source/task acceptance or close cross-guide work."
+}

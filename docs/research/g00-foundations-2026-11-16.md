@@ -43,4 +43,4 @@ The original source registers, manifest and BPMN inventory remain byte-identical
 
 After this checkpoint, the handbook's next implementation batch remains F2: source-form fidelity, structured controls in 2.6, readable exports, import mapping/preview and programme adoption loss acknowledgement, with the early F3 identity/source-contract decisions alongside it. FG-01 stays dependent on the sampling/signed-difference decisions. G00 does not silently approve a method, rate, report wording or retention policy.
 
-This batch is local. GitHub main and draft PR 6 remain separate baselines until an explicit integration step.
+The application tree from local checkpoint `0b2118c` is published as GitHub commit `706b52a3f00cb745dd9b60988e4b05f96669d5f7` on `redesign/enterprise-workspace`. Both commits have the exact same Git tree. GitHub main and draft PR 6 remain separate baselines. Published checkpoint evidence, guides and plans are indexed in [the delivery register](../delivery/README.md).

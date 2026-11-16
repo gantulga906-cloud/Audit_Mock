@@ -1,0 +1,101 @@
+[
+  {
+    "action": "save/submit",
+    "actor": "Assigned preparer",
+    "preconditions": "Current scope and permitted editable work; exact source/template typed checks",
+    "outcome_and_independence": "Save distinct from submission; work revision retained",
+    "owning_file": "scripts/pilot-workflow.mjs",
+    "baseline": "079f9da",
+    "evidence_class": "current code observation; bounded recorded regressions"
+  },
+  {
+    "action": "return/review/clear",
+    "actor": "Independent assigned reviewer",
+    "preconditions": "Exact submitted/current revision, author separation and required open issues",
+    "outcome_and_independence": "Note response is not clearance; current review exact content",
+    "owning_file": "scripts/pilot-workflow.mjs",
+    "baseline": "079f9da",
+    "evidence_class": "current code observation; bounded recorded regressions"
+  },
+  {
+    "action": "population-approve",
+    "actor": "Independent authorized reviewer",
+    "preconditions": "Current source/independent controls/bridge; not own preparation",
+    "outcome_and_independence": "Approved exact population; old versions retained",
+    "owning_file": "scripts/pilot-population.mjs",
+    "baseline": "079f9da",
+    "evidence_class": "current code observation; bounded recorded regressions"
+  },
+  {
+    "action": "sample-approve",
+    "actor": "Assigned independent non-preparer reviewer",
+    "preconditions": "Current design/basis; preparer and reviewer distinct",
+    "outcome_and_independence": "Approve before immutable selection",
+    "owning_file": "scripts/pilot-sampling.mjs",
+    "baseline": "079f9da",
+    "evidence_class": "current code observation; bounded recorded regressions"
+  },
+  {
+    "action": "form-use loss adoption",
+    "actor": "Permitted reviewer/partner",
+    "preconditions": "Current unsealed scope/latest edition; current digest acknowledgement if losses",
+    "outcome_and_independence": "Compatible cells/IDs retained; old signed answers retained",
+    "owning_file": "scripts/pilot-forms.mjs",
+    "baseline": "079f9da",
+    "evidence_class": "current code observation; bounded recorded regressions"
+  },
+  {
+    "action": "template publication",
+    "actor": "Independent publishing authority",
+    "preconditions": "Actual per-form draft/grant; author/publisher separation",
+    "outcome_and_independence": "Pinned engagements unchanged until adoption",
+    "owning_file": "scripts/pilot-forms.mjs",
+    "baseline": "079f9da",
+    "evidence_class": "current code observation; bounded recorded regressions"
+  },
+  {
+    "action": "completion-evaluate",
+    "actor": "Reviewer prepares; partner approves",
+    "preconditions": "Current FS/reviewed materiality and finding/posting inputs",
+    "outcome_and_independence": "Exact evaluation/version approval",
+    "owning_file": "scripts/pilot-completion.mjs",
+    "baseline": "079f9da",
+    "evidence_class": "current code observation; bounded recorded regressions"
+  },
+  {
+    "action": "quality review",
+    "actor": "Separate quality account",
+    "preconditions": "Required policy; eligible; scoped exact draft/current basis",
+    "outcome_and_independence": "No report issue authority; unresolved concerns retained",
+    "owning_file": "scripts/pilot-oversight.mjs",
+    "baseline": "079f9da",
+    "evidence_class": "current code observation; bounded recorded regressions"
+  },
+  {
+    "action": "sign/issue/delivery",
+    "actor": "Authorized partner",
+    "preconditions": "Current authorization/artifact/signature/preparation and quality as applicable",
+    "outcome_and_independence": "Local exact-byte event; external legal delivery not implied",
+    "owning_file": "scripts/pilot-release.mjs",
+    "baseline": "079f9da",
+    "evidence_class": "current code observation; bounded recorded regressions"
+  },
+  {
+    "action": "custody accept/return",
+    "actor": "Separate custodian",
+    "preconditions": "Exact offered sealed package and actual digest/readability check",
+    "outcome_and_independence": "Return with owner or accept; no audit conclusion approval",
+    "owning_file": "scripts/pilot-oversight.mjs",
+    "baseline": "079f9da",
+    "evidence_class": "current code observation; bounded recorded regressions"
+  },
+  {
+    "action": "archive retrieval",
+    "actor": "Requester under actual grant",
+    "preconditions": "Purpose/scope/expiry/not revoked and appropriate resource membership",
+    "outcome_and_independence": "Report-only versus full-file bytes; direct denial after revoke",
+    "owning_file": "scripts/pilot-archive.mjs",
+    "baseline": "079f9da",
+    "evidence_class": "current code observation; bounded recorded regressions"
+  }
+]
