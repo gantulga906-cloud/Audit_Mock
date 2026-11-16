@@ -1,6 +1,6 @@
 # Veritech Audit workspace
 
-**G01 acceptance, independence and terms, 16 November 2026.** Standard intake now separates supported assessment, named declarations, independent recommendation, exact written agreement, partner decision and activation. Unknown/prohibited/refused outcomes remain explicit, and relevant changes reopen only current reliance while preserving history. [Behavior, source mapping, verification and continuing boundaries](docs/research/g01-acceptance-2026-11-16.md).
+**G01 acceptance, independence and terms, 16 November 2026.** Standard intake now separates supported assessment, named declarations, independent recommendation, exact written agreement, partner decision and activation. Unknown/prohibited/refused outcomes remain explicit, and relevant changes reopen only current reliance while preserving history. [Behavior and source mapping](docs/research/g01-acceptance-2026-11-16.md) · [Published checkpoint and verification](docs/checkpoints/G01/README.md).
 
 **GitHub publication, 16 November 2026.** The development branch now includes the complete local application through G00. [Published plans, implementation handbooks, evidence and history](docs/delivery/README.md) accompany the code. Completed, verified batches are published to this branch as development continues; merging into main and deployment remain separate steps.
 

@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-16T08:03:24.404Z",
+  "build": {
+    "build": "Pf3wwZ-4xH2Q3ZAsgUUqn",
+    "commit": "26df94b5a1af961b10490009cb7f2ab41ac038d3",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "engagement": "E-5ff7f33b-8090-4f3d-b168-7dbc24f58758",
+  "checks": [
+    "Partner records a named, attributable acceptance decision; the decision alone does not activate the engagement",
+    "The separately authorized activation control releases the pending engagement",
+    "A changed scope reopens current acceptance while preserving the earlier agreed terms and decision",
+    "Preparer submits and reviewer reviews the revised assessment through the UI; renewed agreement and partner decision remain distinct",
+    "Actual browser intake saves an unknown period/framework, retains origin/contact and shows draft reference, next owner and external storage boundary"
+  ],
+  "screenshots": 4,
+  "runtimeErrors": [],
+  "scope": "Disposable standard-intake fixture with approved named roster and manual source evidence; no live data or independent source acceptance changes"
+}

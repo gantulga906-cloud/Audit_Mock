@@ -1,0 +1,1048 @@
+[
+  {
+    "id": "P01-UC01-AC01",
+    "title": "The user can record both client-initiated and firm-initiated contact.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "e8882ff4402c43991c38945cdfbd3247b16f8c3118961cec5eec021c4a8996e5",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC01-AC01",
+    "relatedCases": [
+      "P01-UC01"
+    ],
+    "observations": [
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      },
+      {
+        "test": "provisional intake, subsequent-period confirmation and signed terms survive independent review",
+        "file": "tests/pilot.test.mjs",
+        "action": "intake conversion and exact signed terms",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Both intake origins and distinct periods retain exact signed terms. A signed scope amendment pauses substantive work and authorization until the partner independently reapproves its exact version and reassesses the acceptance scope.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC01-AC02",
+    "title": "A draft can retain an unknown framework or period without invented values.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "ba1dfc317806c5697a3639ab2de382d208c39eea45a0656d30dfa5b25e554df8",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC01-AC02",
+    "relatedCases": [
+      "P01-UC01"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+      "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC01-AC03",
+    "title": "Saving or forwarding the enquiry cannot record acceptance.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "ca30d81010e462c6b9f038d27193f8292ce74606e3947eb8ed271088b28ceab8",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC01-AC03",
+    "relatedCases": [
+      "P01-UC01"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+      "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC01-AC04",
+    "title": "The interface identifies where the draft is retained; the current Core pre-engagement storage gap is visible.",
+    "scope": "core",
+    "status": "unverified",
+    "fixturePassed": false,
+    "sourceRowSha256": "2e877e2204ac8eff43c503454abf4a4f86ed9e6db665da566a2494a6989442c7",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC01-AC04",
+    "relatedCases": [
+      "P01-UC01"
+    ],
+    "observations": [],
+    "relatedScenarios": [
+      "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+      "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+      "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+    ],
+    "guideEvidence": "Executed browser check: findable draft reference, next owner and external storage boundary; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC01-AC05",
+    "title": "Given a firm-initiated enquiry with a known contact but an unknown period, saving it retains the origin/contact and explicit unknown period, provides a findable draft reference and identifies the acceptance follow-up owner.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "1799a11addcbfc828e6ced4f0cd1f4d04f48085ce021b6d47a3f50b8c93fe5e1",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC01-AC05",
+    "relatedCases": [
+      "P01-UC01"
+    ],
+    "observations": [
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+      "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC02-AC01",
+    "title": "A contact update shows its source and date.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "b4c20cef20ec30d02deddeae06c953c997218dbea653eeb489c4a33b32ea5ef7",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC02-AC01",
+    "relatedCases": [
+      "P01-UC02"
+    ],
+    "observations": [
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC02-AC02",
+    "title": "The system does not mark a person dishonest or a relationship verified from data entry alone.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "9e3ebcd6a3d055a857544b5c76b4e18ef5bbfe5a2c5efe05d6fafc20ae79e0d5",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC02-AC02",
+    "relatedCases": [
+      "P01-UC02"
+    ],
+    "observations": [
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC02-AC03",
+    "title": "Changing a contact does not grant software access or clear an independence matter.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "f3512b53403894a8b61f7e49695e2418556ea5dbdaa527685d8ce2cba50575d4",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC02-AC03",
+    "relatedCases": [
+      "P01-UC02"
+    ],
+    "observations": [
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC02-AC04",
+    "title": "Previous correspondence still identifies the person and information used at the time.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "e99b404ec7cb01eee805c31a7c18ccae357c0066a02cb6d87bc500a2db7edc9d",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC02-AC04",
+    "relatedCases": [
+      "P01-UC02"
+    ],
+    "observations": [
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC03-AC01",
+    "title": "Prior acceptance and sign-offs are not copied as current approvals.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "79c232866b12be5587ca1fdc238b3d0d8913cab17df3ab4d21c9916047c4407c",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC03-AC01",
+    "relatedCases": [
+      "P01-UC03"
+    ],
+    "observations": [
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC03-AC02",
+    "title": "Confirmed facts identify who confirmed them and for which period.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "7e3a4b8d97f045c65d6201ced771b5fa98dcbb9b51948e9cc9b85ab9f905401f",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC03-AC02",
+    "relatedCases": [
+      "P01-UC03"
+    ],
+    "observations": [
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC03-AC03",
+    "title": "The reviewer can return a particular item with a reason.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "2112d72a36a1e5b113e475fe44a24350665554e15ad0b30241d41a0898cbfef7",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC03-AC03",
+    "relatedCases": [
+      "P01-UC03"
+    ],
+    "observations": [
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P01-UC03-AC04",
+    "title": "When the reviewer confirms selected prior facts for the new period and returns one changed fact, the current context shows the confirmed facts, the returned item/reason and its next owner; the prior record remains accessible.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "6c53a71769a0511e4aef7bc1c7a539137c128f57ea93cc8c81a219ff716b1927",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P01-UC03-AC04",
+    "relatedCases": [
+      "P01-UC03"
+    ],
+    "observations": [
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC01-AC01",
+    "title": "A yes answer follows the question’s actual meaning and is not universally favorable.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "c73d0253473b73487fd99b428c41cac2c1460fd97551d26ed2aab50e7a615b66",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC01-AC01",
+    "relatedCases": [
+      "P02-UC01"
+    ],
+    "observations": [
+      {
+        "test": "G01 retains unresolved and prohibited outcomes without releasing setup",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "retain actual source question polarity and unknown/adverse assessments; defer, decline or condition without waiving a prohibition",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Source 1.4.1 r12 keeps its actual affirmative disclosure value; it is not an automatic favorable conclusion. Unknown/adverse checks require follow-up owner/date. Missing positive prerequisites allow a retained refusal, not setup. Conditional decisions hold activation, expired decision input is rejected and applicable prohibitions cannot become acceptable through a generic safeguard. Independent return retains the original assessment and decision history.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC01-AC02",
+    "title": "An unfilled or unknown fact cannot become a clean assessment result.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "9b10bdf3932b3f6c38e14dc35b22d932c39ea68b66f84bfddfc1db1dec7c9996",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC01-AC02",
+    "relatedCases": [
+      "P02-UC01"
+    ],
+    "observations": [
+      {
+        "test": "G01 retains unresolved and prohibited outcomes without releasing setup",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "retain actual source question polarity and unknown/adverse assessments; defer, decline or condition without waiving a prohibition",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Source 1.4.1 r12 keeps its actual affirmative disclosure value; it is not an automatic favorable conclusion. Unknown/adverse checks require follow-up owner/date. Missing positive prerequisites allow a retained refusal, not setup. Conditional decisions hold activation, expired decision input is rejected and applicable prohibitions cannot become acceptable through a generic safeguard. Independent return retains the original assessment and decision history.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC01-AC03",
+    "title": "Outstanding matters have a responsible person and required follow-up.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "45717606c534a2cfe5eb77842ee2649db1ceef8fc204246d576f84761d87e528",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC01-AC03",
+    "relatedCases": [
+      "P02-UC01"
+    ],
+    "observations": [
+      {
+        "test": "G01 retains unresolved and prohibited outcomes without releasing setup",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "retain actual source question polarity and unknown/adverse assessments; defer, decline or condition without waiving a prohibition",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Source 1.4.1 r12 keeps its actual affirmative disclosure value; it is not an automatic favorable conclusion. Unknown/adverse checks require follow-up owner/date. Missing positive prerequisites allow a retained refusal, not setup. Conditional decisions hold activation, expired decision input is rejected and applicable prohibitions cannot become acceptable through a generic safeguard. Independent return retains the original assessment and decision history.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC01-AC04",
+    "title": "A positive integrity or resource conclusion requires the preparer’s basis, not merely a complete questionnaire.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "bf25e59c309f1d7080acf8717fd10394624e77bbc4064dadfc18870daa620f6e",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC01-AC04",
+    "relatedCases": [
+      "P02-UC01"
+    ],
+    "observations": [
+      {
+        "test": "G01 retains unresolved and prohibited outcomes without releasing setup",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "retain actual source question polarity and unknown/adverse assessments; defer, decline or condition without waiving a prohibition",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Source 1.4.1 r12 keeps its actual affirmative disclosure value; it is not an automatic favorable conclusion. Unknown/adverse checks require follow-up owner/date. Missing positive prerequisites allow a retained refusal, not setup. Conditional decisions hold activation, expired decision input is rejected and applicable prohibitions cannot become acceptable through a generic safeguard. Independent return retains the original assessment and decision history.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC02-AC01",
+    "title": "The coordinator cannot sign on behalf of a silent declarant.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "f2a8014ec5f833e507ac857ffd74a20f8d56a811d440fce455338ed0ef43511d",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC02-AC01",
+    "relatedCases": [
+      "P02-UC02"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC02-AC02",
+    "title": "Submission and professional clearance have different statuses.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "2d3a8d662786c503b30bf317d675c372472ab8264c33a8fe6cfab8e3c624ba39",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC02-AC02",
+    "relatedCases": [
+      "P02-UC02"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC02-AC03",
+    "title": "The retained declaration identifies exact content, person, scope and date.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "506af3be00ff22a9c06f4c205d6b0c90172f59a33799789e302a2d9191ca97ac",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC02-AC03",
+    "relatedCases": [
+      "P02-UC02"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC02-AC04",
+    "title": "The specialist sees only explicitly shared material if software access is separately provided.",
+    "scope": "core",
+    "status": "unverified",
+    "fixturePassed": false,
+    "sourceRowSha256": "053cd8dfa58375723d1311527f9e520782fdd9376e28d95f547e487f610e9f72",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC02-AC04",
+    "relatedCases": [
+      "P02-UC02"
+    ],
+    "observations": [],
+    "relatedScenarios": [
+      "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart"
+    ],
+    "guideEvidence": "Conditional external specialist sharing remains open; this profile uses manual originals and grants no specialist account"
+  },
+  {
+    "id": "P02-UC03-AC01",
+    "title": "A generic safeguard cannot waive an applicable prohibition.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "c13fe2af9ffc34f08530a740c5ed028756c3a6e9d8c62d8f2e0a308e9bf043aa",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC03-AC01",
+    "relatedCases": [
+      "P02-UC03"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      },
+      {
+        "test": "G01 retains unresolved and prohibited outcomes without releasing setup",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "retain actual source question polarity and unknown/adverse assessments; defer, decline or condition without waiving a prohibition",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Source 1.4.1 r12 keeps its actual affirmative disclosure value; it is not an automatic favorable conclusion. Unknown/adverse checks require follow-up owner/date. Missing positive prerequisites allow a retained refusal, not setup. Conditional decisions hold activation, expired decision input is rejected and applicable prohibitions cannot become acceptable through a generic safeguard. Independent return retains the original assessment and decision history.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC03-AC02",
+    "title": "An uploaded declaration is not automatically a clearance.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "e5bb98817c073357b8d1a67a13e9d4024ac9efb285ebacebdf3fbf8248b091d6",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC03-AC02",
+    "relatedCases": [
+      "P02-UC03"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 retains unresolved and prohibited outcomes without releasing setup"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC03-AC03",
+    "title": "Returning a gap retains its original disclosure and response history.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "59b42ad6d20fd8be2fc76846647df62934472f068f7d9b9890e307378cec7490",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC03-AC03",
+    "relatedCases": [
+      "P02-UC03"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 retains unresolved and prohibited outcomes without releasing setup"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC03-AC04",
+    "title": "The assessment identifies the applicable requirement/edition or an explicit applicability uncertainty.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "54229dac63482d585f33748ef044da7d560331e57739e779943676d1398a36a8",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC03-AC04",
+    "relatedCases": [
+      "P02-UC03"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 retains unresolved and prohibited outcomes without releasing setup"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC04-AC01",
+    "title": "Completing preparation/review cannot accept the audit by itself.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "15c2b11b8885982d6c5625a58c3f385b390f16645e2dde0ecc0736b030c7a999",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC04-AC01",
+    "relatedCases": [
+      "P02-UC04"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 retains unresolved and prohibited outcomes without releasing setup",
+      "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC04-AC02",
+    "title": "Rejected, prohibited, expired or materially incomplete decisions cannot release authorized setup.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "bf066e1b3cc26730d33b2df6e6d975bbdd669056032057b6f265ea03b10ad7b5",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC04-AC02",
+    "relatedCases": [
+      "P02-UC04"
+    ],
+    "observations": [
+      {
+        "test": "G01 retains unresolved and prohibited outcomes without releasing setup",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "retain actual source question polarity and unknown/adverse assessments; defer, decline or condition without waiving a prohibition",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Source 1.4.1 r12 keeps its actual affirmative disclosure value; it is not an automatic favorable conclusion. Unknown/adverse checks require follow-up owner/date. Missing positive prerequisites allow a retained refusal, not setup. Conditional decisions hold activation, expired decision input is rejected and applicable prohibitions cannot become acceptable through a generic safeguard. Independent return retains the original assessment and decision history.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+      "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC04-AC03",
+    "title": "The decision identifies the actual person, capacity, date and authority basis.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "322fdcb321ae71fcde8e96b10398df5011475db33adc68d0051c0082a9cfe984",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC04-AC03",
+    "relatedCases": [
+      "P02-UC04"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 retains unresolved and prohibited outcomes without releasing setup",
+      "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC04-AC04",
+    "title": "A later decision preserves the earlier decision and its relied-upon facts.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "9b8dd13acd5a80d1a6e9365d9a6006d979de7dd885b619cd97e8d5f57af60387",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC04-AC04",
+    "relatedCases": [
+      "P02-UC04"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      },
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 retains unresolved and prohibited outcomes without releasing setup"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC04-AC05",
+    "title": "When the authorized decision maker accepts a supported current assessment whose applicable positive prerequisites are met, the recorded decision identifies that assessment, decision maker, rationale/date and setup authorization; a declined outcome instead remains retained without releasing setup.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "90cef3e963a93bc49bca8c13684fb87dc9247321b9b21afeffc06f9f5cbde67f",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC04-AC05",
+    "relatedCases": [
+      "P02-UC04"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 retains unresolved and prohibited outcomes without releasing setup",
+      "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC05-AC01",
+    "title": "Both parties’ responsibilities and intended deliverable are identifiable.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "c69f212056327ab96c1c99b781af508c7121b98d0e5c98eeb0c2299f6d5b857e",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC05-AC01",
+    "relatedCases": [
+      "P02-UC05"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+      "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC05-AC02",
+    "title": "The agreement records the actual content and authorized parties.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "9701b27c026751bfc73c8f7e5b834f3f04593850c35c33014ea826a0ddc82563",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC05-AC02",
+    "relatedCases": [
+      "P02-UC05"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+      "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC05-AC03",
+    "title": "A changed scope does not silently retain the earlier acceptance/terms decision.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "20d09d4fb3005e4b484083af3ae29310a37b22bf34a11b40799c9fce133266f2",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC05-AC03",
+    "relatedCases": [
+      "P02-UC05"
+    ],
+    "observations": [
+      {
+        "test": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.",
+        "outcome": "passed"
+      },
+      {
+        "test": "provisional intake, subsequent-period confirmation and signed terms survive independent review",
+        "file": "tests/pilot.test.mjs",
+        "action": "intake conversion and exact signed terms",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner"
+        ],
+        "observed": "Both intake origins and distinct periods retain exact signed terms. A signed scope amendment pauses substantive work and authorization until the partner independently reapproves its exact version and reassesses the acceptance scope.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  },
+  {
+    "id": "P02-UC05-AC04",
+    "title": "No regulated electronic-signature capability is assumed.",
+    "scope": "core",
+    "status": "fixture-passed",
+    "fixturePassed": true,
+    "sourceRowSha256": "285a6762aa2feb011284e54eea6061ff184a33cb1eeef2eac7f3253bd160f1a8",
+    "source": "SRC02 / Registers/Acceptance_Criteria.csv / P02-UC05-AC04",
+    "relatedCases": [
+      "P02-UC05"
+    ],
+    "observations": [
+      {
+        "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+        "actors": [
+          "preparer",
+          "reviewer",
+          "partner",
+          "named external declarant via signed original"
+        ],
+        "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+        "outcome": "passed"
+      }
+    ],
+    "relatedScenarios": [
+      "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+      "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+    ],
+    "guideEvidence": "Executed backend reference; independent source acceptance open"
+  }
+]

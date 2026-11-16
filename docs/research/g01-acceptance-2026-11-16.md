@@ -20,7 +20,7 @@ Changed relied-upon facts, source questionnaire content, declarations, relevant 
 
 1. In the portfolio, open **Үйлчлүүлэгч ба аудитын хүсэлт**. Save the enquiry with actual known facts; use return/decline where appropriate. Confirm the client/contact and period before conversion.
 2. Maintain named people, credentials and appointments in the existing firm/staffing workspace. Standard engagements retain their existing independently approved staffing gates.
-3. In the pending engagement's **Тойм**, complete the acceptance registers and declarations. Upload actual supporting files in the existing evidence/data desk and obtain a separate acceptance of the originals.
+3. In the pending engagement's **Тойм**, complete the acceptance registers and declarations. Upload actual supporting files in **Нотлох баримт** and obtain a separate acceptance of the originals.
 4. Use **Хүлээн авах үнэлгээ ба шийдвэр** for preparation and independent recommendation. Drafting and a recommendation do not activate the audit.
 5. Prepare and independently review the terms proposal. Record actual sending separately, then use **1.4.3** to bind and approve the real written agreement and authorized client party.
 6. The partner records the actual professional outcome and authority. Only a supported, current positive decision releases the separate activation control. Current-period context changes and material amendments use the same renewed review path.
@@ -57,3 +57,7 @@ The original source/manifest/BPMN files, all 2,247 registered obligations, 25 or
 The official [Mongolian Audit Law page](https://legalinfo.mn/mn/detail?lawId=11192) again returned HTTP 403 during this task. No fresh consolidated-law verification or local-edition approval is claimed. D21/D22, approved dated firm/partner histories, jurisdiction/entity applicability, statutory-appointment responses and automatic policy engines retain accountable professional/methodology ownership. The software records manual checks and can hold/defer/refuse; it does not invent a universal tenure rule or execute legal withdrawal.
 
 Global named-user authentication/lifecycle, external master-data publication/reconciliation, regulated signing/delivery adapters, optional specialist sharing and independent professional/source acceptance remain in their owning R09/R10/R22/R23 packages. All native source-form fidelity and methodology release obligations remain G08. The conditional sharing criterion P02-UC02-AC04 and interface-specific P01-UC01-AC04 are not granted blanket source acceptance by backend scenarios; browser observations and adapter limits remain separately recorded. G02 owns the next staffing/planning/risk/materiality domain batch; it is not started as part of G01.
+
+## Published checkpoint
+
+Application commit `cdb0f11b66be53f372d8a100b5548c0a27539956` has the exact Git tree of verified local `26df94b5a1af961b10490009cb7f2ab41ac038d3`. All 74 tests, clean production build, eight shared-foundation checks and five browser checks passed. The verifier records nine connected reference cycles, 88 source steps and 96 criteria. [Checkpoint, original-byte evidence and remaining boundaries](../checkpoints/G01/README.md) are published alongside the code. Independent acceptance remains separate.

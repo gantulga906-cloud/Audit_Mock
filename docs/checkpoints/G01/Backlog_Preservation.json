@@ -1,0 +1,135 @@
+{
+  "packages": 25,
+  "tasks": 128,
+  "entireOriginalPlanEqual": true,
+  "priorPlanSha256": "7d286bf03a6bd76ff168139bb871b0899e912434addda30022b478eb658e1905",
+  "handbookCopySha256": "802fc4aa5db4643bb82b221b35ff9ece46d964ca06ac04805f710e6be79c7d4e",
+  "inventoryChecks": [
+    {
+      "kind": "cases",
+      "expected": 75,
+      "actual": 75,
+      "passed": true
+    },
+    {
+      "kind": "criteria",
+      "expected": 315,
+      "actual": 315,
+      "passed": true
+    },
+    {
+      "kind": "features",
+      "expected": 136,
+      "actual": 136,
+      "passed": true
+    },
+    {
+      "kind": "automations",
+      "expected": 58,
+      "actual": 58,
+      "passed": true
+    },
+    {
+      "kind": "e2e",
+      "expected": 476,
+      "actual": 476,
+      "passed": true
+    },
+    {
+      "kind": "forms",
+      "expected": 70,
+      "actual": 70,
+      "passed": true
+    },
+    {
+      "kind": "variants",
+      "expected": 22,
+      "actual": 22,
+      "passed": true
+    },
+    {
+      "kind": "dependencies",
+      "expected": 20,
+      "actual": 20,
+      "passed": true
+    },
+    {
+      "kind": "extensions",
+      "expected": 58,
+      "actual": 58,
+      "passed": true
+    },
+    {
+      "kind": "transitions",
+      "expected": 1012,
+      "actual": 1012,
+      "passed": true
+    },
+    {
+      "kind": "operational",
+      "expected": 5,
+      "actual": 5,
+      "passed": true
+    }
+  ],
+  "scopeChecks": [
+    {
+      "kind": "registeredRows",
+      "actual": 2247,
+      "expected": 2247,
+      "passed": true
+    },
+    {
+      "kind": "coreFeatures",
+      "actual": 127,
+      "expected": 127,
+      "passed": true
+    },
+    {
+      "kind": "conditionalFeatures",
+      "actual": 8,
+      "expected": 8,
+      "passed": true
+    },
+    {
+      "kind": "excludedFeatures",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "kind": "pendingExtensions",
+      "actual": 58,
+      "expected": 58,
+      "passed": true
+    }
+  ],
+  "sourceChecks": [
+    {
+      "path": "src/data/source-registers.json",
+      "expected": "27a7da39fda7488f62a43175df8fc97a53be42af43aec83393f80359efe7773e",
+      "actual": "27a7da39fda7488f62a43175df8fc97a53be42af43aec83393f80359efe7773e",
+      "rawSha256": "27a7da39fda7488f62a43175df8fc97a53be42af43aec83393f80359efe7773e",
+      "encoding": "UTF-8 text with CRLF normalized to LF; raw checkout hashes are recorded separately",
+      "passed": true
+    },
+    {
+      "path": "docs/research/source-manifest.json",
+      "expected": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b",
+      "actual": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b",
+      "rawSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b",
+      "encoding": "UTF-8 text with CRLF normalized to LF; raw checkout hashes are recorded separately",
+      "passed": true
+    },
+    {
+      "path": "src/data/source-bpmn-transitions.json",
+      "expected": "b99190e631d46175bd363c8b42302de7c4af57d899c07a7a5f17e472118b71f3",
+      "actual": "b99190e631d46175bd363c8b42302de7c4af57d899c07a7a5f17e472118b71f3",
+      "rawSha256": "71bc07fe04b8385c28ac2affcce6f096663f3444f7289535eda3eb20d361d475",
+      "encoding": "UTF-8 text with CRLF normalized to LF; raw checkout hashes are recorded separately",
+      "passed": true
+    }
+  ],
+  "independentAcceptanceDecisions": 0,
+  "taskStatusPolicy": "Engineering evidence is recorded separately; original source/task acceptance states are not silently closed or changed."
+}

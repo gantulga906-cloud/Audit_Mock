@@ -1,0 +1,35 @@
+{
+  "guide": "G01",
+  "branch": "redesign/enterprise-workspace",
+  "baseline": "13cec39fa36912905379621a1317570bef38feb3",
+  "verifiedLocalCode": "26df94b5a1af961b10490009cb7f2ab41ac038d3",
+  "publishedCode": "cdb0f11b66be53f372d8a100b5548c0a27539956",
+  "identicalCodeTree": "1fe55ab0d23c370abb52a83d6530a2d345906bef",
+  "publicationMethod": "Authenticated GitHub connector; exact Git tree verified. Original local code commits are preserved in the incremental bundle.",
+  "checks": {
+    "tests": {
+      "passed": 74,
+      "failed": 0,
+      "skipped": 0
+    },
+    "buildCurrent": true,
+    "g00ReferenceCheckpointReady": true,
+    "sourceCycles": {
+      "total": 51,
+      "complete": 9,
+      "applicable": 51,
+      "applicableComplete": 9
+    },
+    "sourceSteps": 88,
+    "sourceCriteria": 96,
+    "g01Criteria": 34,
+    "g01BackendCriteria": 32,
+    "g01BrowserCriteria": 1,
+    "g01ConditionalSharingOpen": 1,
+    "browserChecks": 5,
+    "screenshots": 4
+  },
+  "releaseReady": false,
+  "sourceAcceptance": "Separate accountable decision; empty acceptance register retained",
+  "livePreview": "No deployment or live database change"
+}
