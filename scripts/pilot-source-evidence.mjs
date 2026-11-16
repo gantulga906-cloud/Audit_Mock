@@ -1,6 +1,29 @@
 // Each claim is bounded to the recorded fixture. Shared scenario links do not close contracts.
 export const scenarios=[
   {
+    test:'G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart',file:'tests/pilot-acceptance.test.mjs',
+    action:'current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry',actors:['preparer','reviewer','partner','named external declarant via signed original'],
+    observed:'Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.',
+    cases:['P01-UC01','P02-UC02','P02-UC03','P02-UC04','P02-UC05'],features:['M03-F01','M03-F04','M04-F01','M04-F03','M04-F04','M04-F05','M04-F06','M04-F07','M04-F08','M04-F09','M04-F10'],
+    criteria:['P01-UC01-AC02','P01-UC01-AC03','P02-UC02-AC01','P02-UC02-AC02','P02-UC02-AC03','P02-UC03-AC01','P02-UC03-AC02','P02-UC03-AC03','P02-UC03-AC04','P02-UC04-AC01','P02-UC04-AC03','P02-UC04-AC04','P02-UC04-AC05','P02-UC05-AC01','P02-UC05-AC02','P02-UC05-AC04'],
+    e2e:['A01-P1-W1','A01-P1-W2','A01-P1-W3','A01-P2-W1','A01-P2-W2','A01-P2-W3','A01-P2-W4','A01-P2-W5','A01-P3-W1','A01-P3-W2','A01-P3-W3','A02-P1-W1','A02-P1-W2','A02-P1-W3','A02-P2-W1','A02-P2-W2','A02-P2-W3','A02-P3-W1','A02-P3-W2','A02-P3-W3'],
+    forms:['1.4.3','1.4.6','1.4.7'],operational:['OPS-BOOTSTRAP'],
+  },
+  {
+    test:'G01 retains unresolved and prohibited outcomes without releasing setup',file:'tests/pilot-acceptance.test.mjs',action:'retain actual source question polarity and unknown/adverse assessments; defer, decline or condition without waiving a prohibition',actors:['preparer','reviewer','partner'],
+    observed:'Source 1.4.1 r12 keeps its actual affirmative disclosure value; it is not an automatic favorable conclusion. Unknown/adverse checks require follow-up owner/date. Missing positive prerequisites allow a retained refusal, not setup. Conditional decisions hold activation, expired decision input is rejected and applicable prohibitions cannot become acceptable through a generic safeguard. Independent return retains the original assessment and decision history.',
+    cases:['P02-UC01','P02-UC03','P02-UC04'],features:['M04-F01','M04-F02','M04-F03','M04-F07','M04-F08','M04-F09'],forms:['1.4.1'],
+    criteria:['P02-UC01-AC01','P02-UC01-AC02','P02-UC01-AC03','P02-UC01-AC04','P02-UC03-AC01','P02-UC04-AC02'],
+  },
+  {
+    test:'G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained',file:'tests/pilot-acceptance.test.mjs',
+    action:'firm-origin enquiry return/refusal, new-period confirmed facts, exact written agreement, current-source change and signed scope amendment through independent renewed acceptance',actors:['preparer','reviewer','partner'],
+    observed:'Firm-origin unknown facts and return/decline history remain findable. A subsequent period starts without copied evidence or approvals. A returned fact retains its next owner, response and independent confirmation. Confirming changed client facts and agreeing a material scope change reopen only the current period; fresh assessment, written terms and partner decision are required. Earlier-period terms/decisions and current superseded approvals survive restart and exact approval replay.',
+    cases:['P01-UC01','P01-UC02','P01-UC03','P02-UC04','P02-UC05'],features:['M03-F02','M03-F03','M03-F05','M03-F06','M03-F08','M04-F01','M04-F08','M04-F09','M04-F10'],
+    criteria:['P01-UC01-AC01','P01-UC01-AC05','P01-UC02-AC01','P01-UC02-AC02','P01-UC02-AC03','P01-UC02-AC04','P01-UC03-AC01','P01-UC03-AC02','P01-UC03-AC03','P01-UC03-AC04','P02-UC04-AC04','P02-UC05-AC03'],
+    e2e:['A03-P1-W1','A03-P1-W2','A03-P1-W3','A03-P2-W1','A03-P2-W2','A03-P2-W3','A03-P3-W1','A03-P3-W2','A03-P3-W3'],forms:['1.4.3'],
+  },
+  {
     test:'G00 shared foundations preserve scoped work, exact evidence and approval history through change and restart',
     file:'tests/pilot-foundations.test.mjs',action:'G00 two-engagement foundation reference through exact review, changed basis, revoked access and persisted retry',
     actors:['preparer','reviewer','partner'],

@@ -8,6 +8,7 @@ import { nativePapers } from './pilot-forms.mjs';
 import { checkStaffing } from './pilot-staffing.mjs';
 import { approvedPopulation } from './pilot-population.mjs';
 import { evidenceCurrent } from './pilot-requests.mjs';
+import {acceptanceFile} from './pilot-acceptance.mjs';
 
 const contracts = JSON.parse(readFileSync(new URL('../src/data/source-registers.json', import.meta.url), 'utf8')).forms;
 const definition = id => registers.find(r => r.id === id);
@@ -32,6 +33,7 @@ function stale(m, row, seen = new Set()) {
       (reliance.evidenceVersion === undefined || e.version === reliance.evidenceVersion))) return true;
   if (row.kind!=='M08-F07' && definition(row.kind)?.fields.some(f=>f.type==='evidence'&&row.values[f.key]&&
       !evidenceCurrent(m,m.evidence.find(e=>e.id===row.values[f.key])))) return true;
+  if(row.declaration?.evidence&&row.declaration?.sha256&&!evidenceCurrent(m,m.evidence.find(e=>e.id===row.declaration.evidence)))return true;
   if (Object.entries(row.paperVersions ?? {}).some(([form, version]) => {
     const w = m.work[workKey(m.engagement, form)];
     return !isCurrentReview(w) || w.version !== version;
@@ -312,6 +314,18 @@ function checkBusiness(m, row, spec, files) {
       break;
     case 'M04-F04':
       if (!row.declaration || (v.assignee === 'external' && find(m, v.person)?.values.status !== 'external')) bad('Мэдүүлэгчийн эх мэдүүлэг шаардлагатай.');
+      if(m.pilotAcceptance){
+        if(!row.declaration.person||!row.declaration.disposition)bad('Нэртэй этгээд, агуулга, огноотой мэдүүлэг шаардлагатай.');
+        if(row.declaration.evidence&&acceptanceFile(m,files,row.declaration.evidence).sha256!==row.declaration.sha256)bad('Мэдүүлгийн эх хувилбар өөрчлөгдсөн.');
+      }
+      break;
+    case 'M04-F05':
+      if(v.treatment==='prohibition'&&v.residual==='acceptable')bad('Хамаарах хоригийг хамгаалалтаар чөлөөлөх боломжгүй.');
+      if(m.pilotAcceptance){
+        if(!v.treatment||!v.requirement||!v.edition)bad('Хэрэглэх шаардлага, хувилбар эсвэл тодорхойгүй байдлыг тэмдэглэнэ үү.');
+        if(v.treatment==='unknown'&&v.residual==='acceptable')bad('Тодорхойгүй шаардлага цэвэр дүгнэлт болохгүй.');
+        if(v.treatment==='threat'&&v.residual==='acceptable')acceptanceFile(m,files,v.resolutionEvidence);
+      }
       break;
     case 'M04-F06':
       checkStaffing(m, row, files);
@@ -477,11 +491,23 @@ export function registerAction(m, role, data, files) {
       return;
     } else if (operation === 'declare') {
       const assignee = row.values.assignee;
-      requireRole(spec.id === 'M04-F04' && (assignee === role || assignee === 'external' && role === row.owner));
-      if (!['draft','returned'].includes(row.status)) bad('Мэдүүлгийн нооргийг нээнэ үү.');
+      const manual=m.pilotAcceptance&&data.mode==='signed-copy';
+      requireRole(spec.id === 'M04-F04' && (manual?role===row.owner:(assignee === role || assignee === 'external' && role === row.owner)));
+      if (!['draft','returned',...(m.pilotAcceptance?['approved']:[])].includes(row.status)) bad('Мэдүүлгийн нооргийг нээнэ үү.');
       const text = input(data, 'reason');
+      let extra;
+      if(m.pilotAcceptance){
+        const person=find(m,row.values.person),signedOn=input(data,'signedOn',10),disposition=input(data,'disposition',16);
+        if(!approved(m,person)||person?.kind!=='M01-F03'||person.values.status!==(assignee==='external'?'external':'active')||
+           assignee!=='external'&&person.values.account!==assignee||!manual&&person.values.account!==role)bad('Мэдүүлэгчийн нэр, данс, хамрах хүрээг шалгана уу.');
+        if(!validDate(signedOn)||signedOn>date()||!manual&&signedOn!==date()||!['none','disclosure','prohibition','unknown'].includes(disposition))bad('Бодит гарын үсгийн огноо, нөхцөлийг шалгана уу.');
+        extra={person:{id:person.id,version:person.version,name:person.values.name,reference:person.values.reference},signedOn,disposition,
+          scope:row.values.scope,mode:manual?'signed-copy':'native-own-statement',
+          ...(manual&&acceptanceFile(m,files,input(data,'source',64)))};
+        if(manual){extra.evidence=extra.id;extra.evidenceVersion=extra.version;delete extra.id;delete extra.version;}
+      }
       row.version++;
-      row.declaration = { text, by: role, at: new Date().toISOString(), evidence: assignee === 'external' ? input(data, 'source') : undefined };
+      row.declaration = { text, by: role, at: new Date().toISOString(), evidence: assignee === 'external' ? input(data, 'source') : undefined,...extra };
       remember(row, role, 'draft', 'Мэдүүлгийг бүртгэв');
     } else if (operation === 'reply') {
       requireRole(spec.id === 'M08-F07');
@@ -495,7 +521,7 @@ export function registerAction(m, role, data, files) {
       remember(row, role, 'submitted', 'Хяналтад илгээв');
     } else if (operation === 'approve' || operation === 'return') {
       const independent = spec.id === 'M04-F04'
-        ? row.declaration?.by !== role
+        ? row.declaration?.by !== role&&(!m.pilotAcceptance||row.values.assignee!==role)
         : role !== row.owner;
       requireRole(spec.approvers.includes(role) && independent);
       if (row.status !== 'submitted') bad('Хяналтад илгээсэн хувилбар шаардлагатай.');
@@ -518,5 +544,6 @@ export function registerEvidence(m) {
     ...definition(r.kind).fields.filter(f => f.type === 'evidence').map(f => r.values[f.key]),
     r.programmeBasis?.reliance?.evidence,
     r.populationBasis?.evidence,
+    r.declaration?.evidence,...(r.history??[]).map(h=>h.declaration?.evidence),
   ].filter(Boolean)))];
 }

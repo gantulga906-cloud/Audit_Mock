@@ -27,6 +27,7 @@ import { currentSignature, signReport, strictRelease,distributionGaps } from './
 import { archiveAmendmentBasis, archiveAmendmentGap, archiveAmendmentRevision } from './pilot-archive.mjs';
 import { materialityBasis, materialityGap, materialityTargets, materialityValues, syncMateriality, updateMaterialityBasis } from './pilot-materiality.mjs';
 import { activeTermsGap } from './pilot-intake.mjs';
+import {acceptanceEvidence} from './pilot-acceptance.mjs';
 import { laterFactAction, laterFactForRelease, laterFactGap, laterFactView } from './pilot-later-facts.mjs';
 import {assemblyStatus} from './pilot-assembly.mjs';
 
@@ -235,7 +236,7 @@ export function pilotReport(m, files) {
 export function pilotView(m, role, revision, files) {
   const engagement = m.engagements[0];
   const resources = { registers: registerView(m), programmes: pilotProgrammes, rules: programmeView(m), forms: forms.map(({ id, title }) => ({ id, title })),
-    archive: files.archive.view(m, role), extended: !!m.extendedPilot };
+    archive: files.archive.view(m, role), extended: !!m.extendedPilot,acceptanceManaged:!!m.pilotAcceptance };
   if (!engagement) return { role, revision, engagement: null, ...resources };
   const sealed = files.archive.isSealed(m);
   if (sealed && role !== 'partner') {
@@ -576,7 +577,7 @@ export function pilotAction(m, role, action, data, files) {
     const thresholdBasis=thresholdPaper&&materialityBasis(thresholdPaper.values);
     const requestAudit = activeItems(m,m.requests).filter(r=>r.issuedAt);
     const confirmations = files.confirmations().filter(c=>c.state==='received'&&requestAudit.some(r=>r.id===c.request));
-    const ids = new Set([...engagement.authorized.package.evidence.map(e => e.id), ...registerEvidence(m),
+    const ids = new Set([...engagement.authorized.package.evidence.map(e => e.id), ...registerEvidence(m),...acceptanceEvidence(m),
       ...[...programmes,...native].flatMap(w => w.evidence), ...(m.pilotTerms ? [m.pilotTerms.evidence] : []),
       ...(thresholdBasis?[thresholdBasis.evidence.id]:[]),
       ...(population?[population.evidence,population.controls.evidence.id]:[]),...areaEvidence(m,fieldworkForms(m)),...completionEvidence(m),
@@ -599,7 +600,7 @@ export function pilotAction(m, role, action, data, files) {
       })) }),
       reviewNotes:shownForms(m).map(form=>m.work[workKey(m.engagement,form)]).filter(w=>w.notes.length)
         .map(({form,version,notes})=>({form,version,notes})),
-      ...(m.pilotTerms && { terms: m.pilotTerms }),
+      ...(m.pilotTerms && { terms: m.pilotTerms }),...(m.pilotAcceptance&&{acceptance:structuredClone(m.pilotAcceptance)}),
       ...(m.pilotTermsHistory?.length&&{termsHistory:m.pilotTermsHistory}),
       ...(population && { population }),
       ...(thresholdBasis&&{materiality:{version:thresholdPaper.version,basis:thresholdBasis,amounts:validMateriality(m)}}),

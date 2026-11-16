@@ -2,6 +2,9 @@ import { isDeepStrictEqual } from 'node:util';
 
 const marker = 'audit-lifecycle-v1 ';
 const branchPlans = {
+  A01:['unknown-intake-facts','missing-positive-prerequisites','independent-current-decision','exact-party-period-terms','changed-basis-retains-history','conversion-and-approval-retry'],
+  A02:['actual-declarant','manual-original','no-prohibition-waiver','disclosure-remains-separate','independent-response','change-and-restart'],
+  A03:['draft-and-send-not-agreement','exact-party-period-version','independent-firm-review','current-period-confirmation','new-scope-needs-reassessment','amendment-and-retry'],
   A26: [
     'wrong-template-or-stale-package',
     'independent-issuer-required',

@@ -10,6 +10,8 @@ import type {AssemblyView} from '@/lib/pilot-assembly';
 import PilotRegisters,{PlanningBasis,type RegisterResources} from './pilot-registers';
 import {AdoptPilotForm,NativeFields,PilotFormLibrary} from './pilot-forms';
 import {IntakeProvenance,PilotIntake,TermsEditor} from './pilot-intake';
+import {AcceptanceDesk} from './pilot-acceptance';
+import type {AcceptanceView} from '@/lib/pilot-acceptance';
 import {EngagementStaffing,RosterOverview,WorkAssignmentEditor} from './pilot-staffing';
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
 import {JournalDesk,PopulationDesk,SampleDesk} from './pilot-population';
@@ -46,6 +48,7 @@ export type View=RegisterResources&{
  role:PilotRole;revision:number;selected:string|null;portfolio:PortfolioItem[];members?:PilotRole[];formLibrary:LibraryView;
  intake?:{clients:IntakeClient[];enquiries:Enquiry[]};intakeContext?:IntakeContext;
  intakeTerms?:IntakeTerms;intakeTermsHistory?:IntakeTerms[];intakeTermsAmendable?:boolean;intakeTermsCanDraft?:boolean;
+ acceptance?:AcceptanceView;
  roster?:RosterAvailability[];staffing?:StaffingView;
  engagement:null|{client:string;period:Period;active:boolean;reportDate:string;statements?:Statements;decisions:DecisionRecord[];acceptanceGaps:string[];firm:{id:string;kind:string;version:number;values:Record<string,string>}[]};
  papers?:Paper[];requests?:RequestItem[];evidence?:(Evidence&{sha256:string;current?:boolean})[];gaps?:string[];
@@ -522,9 +525,10 @@ function SharedPilotWorkspace(){
       {view.staffing&&<EngagementStaffing staffing={view.staffing} role={view.role} sealed={sealed} run={run}/>}
       {view.intakeContext&&<IntakeProvenance context={view.intakeContext} active={engagement.active} role={view.role}
        priorVisible={view.portfolio.some(p=>p.id===view.intakeContext?.prior)} run={run} open={id=>void openEngagement(id)}/>}
+      {view.intakeContext&&!sealed&&<AcceptanceDesk state={view.acceptance} role={view.role} evidence={view.evidence??[]} run={run}/>}
       {view.selected&&view.intakeContext&&!sealed&&<TermsEditor id={view.selected} role={view.role} active={engagement.active}
        amendable={view.intakeTermsAmendable} canDraft={view.intakeTermsCanDraft}
-       terms={view.intakeTerms} history={view.intakeTermsHistory??[]} evidence={view.evidence??[]} run={run}/>}
+       terms={view.intakeTerms} history={view.intakeTermsHistory??[]} evidence={view.evidence??[]} run={run} acceptance={view.acceptance} context={view.intakeContext}/>}
       {!!engagement.acceptanceGaps.length&&<ul>{engagement.acceptanceGaps.map(gap=><li key={gap}>{gap}</li>)}</ul>}
       {engagement.firm.find(r=>r.kind==='M01-F01')&&<p className="micro">Хүлээн авахад ашигласан фирмийн бүртгэл · {engagement.firm.find(r=>r.kind==='M01-F01')?.values.reporting}</p>}
       {!engagement.active&&(view.role==='partner'?<ActionForm run={run} action="activate" button="Шийдвэр бүртгэж идэвхжүүлэх">

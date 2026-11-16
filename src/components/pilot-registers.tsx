@@ -18,6 +18,7 @@ export type RegisterResources={
  population?:PopulationView;
  archive:{sealed?:boolean;packages:ArchiveItem[];reopened:{package?:string;basis:string;reportDate?:string;target?:{form:string;version:number}}|null;issue:{at:string;reference:string}|null};
  extended:boolean;
+ acceptanceManaged?:boolean;
 };
 const state:Record<RecordStatus,string>={draft:'Ноорог',submitted:'Хяналтад',returned:'Засварт',approved:'Баталсан'};
 const roleName=Object.fromEntries(roleChoices);
@@ -27,7 +28,7 @@ const pinnedPackageLabel='Хүсэлтээр сонгосон түгжээтэй
 const spec=(kind:string)=>registers.find(r=>r.id===kind);
 const heading=(r:PilotRecord)=>Object.values(r.values).find((v,i)=>v&&spec(r.kind)?.fields[i]?.type!=='record')||r.kind;
 const canReview=(r:PilotRecord,role:PilotRole)=>spec(r.kind)?.approvers.includes(role)&&r.status==='submitted'&&
- (r.kind==='M04-F04'?r.declaration?.by!==role:r.owner!==role);
+ (r.kind==='M04-F04'?r.declaration?.by!==role&&(!r.declaration?.person||r.values.assignee!==role):r.owner!==role);
 
 const programmeFields=['approach','templateVersion','procedure','nature','timing','extent'];
 export function PlanningBasis({basis}:{basis:ProgrammeBasis}){
@@ -112,6 +113,20 @@ function Reason({action,label,source=false}:{action:(reason:string,source:string
  </form>;
 }
 
+function DeclarationForm({row,role,evidence,run}:{row:PilotRecord;role:PilotRole;evidence:Evidence[];run:PilotAction}){
+ const native=row.values.assignee===role,manual=row.owner===role;
+ const [mode,setMode]=useState(native?'native':'signed-copy');
+ return <form className="feature-form" onSubmit={event=>{event.preventDefault();const fields=Object.fromEntries([...new FormData(event.currentTarget)].map(([key,value])=>[key,String(value)]));void run('register',{...fields,kind:row.kind,id:row.id,operation:'declare',mode});}}>
+  <p>Мэдүүлэгчийг дээрх нэртэй мэргэжилтний бүртгэлтэй холбоно. Бусдын өмнөөс системд мэдүүлэхгүй; бодит гарын үсэгтэй эхийг тусад нь бүртгэж болно.</p>
+  <label>Мэдүүлэг авах хэлбэр<select value={mode} onChange={event=>setMode(event.target.value)}>{native&&<option value="native">Өөрийн мэдүүлэг</option>}{manual&&<option value="signed-copy">Бодит гарын үсэгтэй эх бүртгэх</option>}</select></label>
+  <label>Яг мэдүүлгийн агуулга<textarea name="reason" required/></label>
+  <label>Мэдүүлгийн огноо<input type="date" name="signedOn" defaultValue={new Date().toISOString().slice(0,10)} required/></label>
+  <label>Мэдүүлэгчийн ил болгосон нөхцөл<select name="disposition" defaultValue="unknown"><option value="unknown">Тодорхойгүй</option><option value="none">Ил болгох нөхцөлгүй гэж мэдүүлсэн</option><option value="disclosure">Харилцаа / нөхцөл ил болгосон — тусдаа үнэлнэ</option><option value="prohibition">Хамаарах хоригтой гэж мэдүүлсэн</option></select></label>
+  {mode==='signed-copy'&&<label>Үнэлж зөвшөөрсөн яг эх файл<select name="source" required><option value="">Сонгох</option>{evidence.filter(file=>file.status==='accepted').map(file=><option key={file.id} value={file.id}>{file.name} · v{file.version}</option>)}</select></label>}
+  <button className="btn secondary">Мэдүүлэг бүртгэх — хүлээн авах шийдвэр биш</button>
+ </form>;
+}
+
 function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,engagementId,readOnly}:{
  row:PilotRecord;role:PilotRole;resources:RegisterResources;evidence:Evidence[];run:PilotAction;edit:()=>void;
  open:(id:string)=>void;exportArchive:(id:string)=>void;engagementId:string|null;readOnly:boolean;
@@ -136,9 +151,11 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
   {row.statementVersion&&<p className="micro">Санхүүгийн тайлан v{row.statementVersion}</p>}
   {row.assemblyBasis&&<p className="micro">Яг гаргасан багц · {row.assemblyBasis.issueAt.slice(0,16)} · Бүрдүүлэлтийн эцсийн өдөр {row.assemblyBasis.deadline} · Индекс {row.assemblyBasis.inventoryDigest.slice(0,16)}</p>}
   {row.values.expected&&row.values.actual&&<p>Зөрүү {Number(row.values.actual)-Number(row.values.expected)}</p>}
-  {row.declaration&&<p>{roleName[row.declaration.by]} · {new Date(row.declaration.at).toLocaleString()} · {row.declaration.text} {row.declaration.evidence}</p>}
+  {row.declaration&&<><p>{row.declaration.person?.name??roleName[row.declaration.by]} · {row.declaration.signedOn??row.declaration.at} · {row.declaration.text}</p>{row.declaration.person&&<p className="micro">Мэдүүлэгч {row.declaration.person.reference} · {row.declaration.scope} · {row.declaration.disposition} · Бүртгэсэн {roleName[row.declaration.by]} · {row.declaration.mode}</p>}</>}
+  {row.declaration?.evidence&&<p className="micro">{row.declaration.person?<a href={'/api/pilot/evidence/'+row.declaration.evidence+pilotScope(engagementId)}>Яг мэдүүлгийн эх файл · {row.declaration.sha256?.slice(0,16)}</a>:row.declaration.evidence}</p>}
   {declaration&&!row.declaration&&<p className="muted">Мэдүүлэг хүлээгдэж байна.</p>}
-  {declaration&&draft&&(row.values.assignee===role||row.values.assignee==='external'&&row.owner===role)&&<Reason label="Мэдүүлэг" source={row.values.assignee==='external'} action={(text,source)=>command('declare',text,source)}/>}
+  {declaration&&!resources.acceptanceManaged&&draft&&(row.values.assignee===role||row.values.assignee==='external'&&row.owner===role)&&<Reason label="Мэдүүлэг" source={row.values.assignee==='external'} action={(text,source)=>command('declare',text,source)}/>}
+  {declaration&&resources.acceptanceManaged&&!readOnly&&!submitted&&(row.values.assignee===role||row.owner===role)&&<DeclarationForm row={row} role={role} evidence={evidence} run={run}/>}
   {row.kind==='M08-F07'&&<><Reason label="Баримтын хэлэлцүүлэг" action={text=>command('reply',text)}/>{row.discussion?.map((r,i)=><p key={i}>{roleName[r.by]} · {r.text} · {new Date(r.at).toLocaleString()}</p>)}</>}
   {row.verification&&<p>{row.verification.restored?'Сэргээх шалгалт':'Бүрэн байдлын шалгалт'} · {row.verification.ok?row.verification.files+' файл · '+row.verification.digest?.slice(0,16):row.verification.error}</p>}
   {row.eligibility&&<p>Хугацаа дууссан өдөр {row.eligibility.expires} · {row.executedAt?'Агуулгын хуулбарыг устгасан':'Шийдвэрийн бүртгэл'}</p>}
@@ -158,6 +175,7 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
   {related.length>0&&<div className="row-actions space-top">{related.map(r=><button type="button" className="quiet" key={r.id} onClick={()=>open(r.id)}>{r.kind} · {heading(r)}</button>)}</div>}
   <details className="feature-detail"><summary>Хувилбарын түүх ({row.history.length})</summary>{row.history.map((h,i)=><details key={i}><summary>v{h.version} · {state[h.status]} · {roleName[h.by]} · {h.reason}</summary><p>{new Date(h.at).toLocaleString()}</p><dl className="register-values">{def.fields.filter(f=>h.values[f.key]).map(f=><div key={f.key}><dt>{f.label}</dt><dd>{f.choices?.find(([key])=>key===h.values[f.key])?.[1]??h.values[f.key]}</dd></div>)}</dl>
    {h.template&&<p className="micro">{h.template.form} · {h.template.sheet} · {h.template.digest.slice(0,16)}</p>}
+   {h.declaration&&<p>{h.declaration.person?.name??roleName[h.declaration.by]} · {h.declaration.signedOn??h.declaration.at} · {h.declaration.text} · {h.declaration.disposition}</p>}
    {h.programmeBasis&&<PlanningBasis basis={h.programmeBasis}/>}
   </details>)}</details>
  </details>;

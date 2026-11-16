@@ -50,6 +50,7 @@ export function WorkspaceShell({view,route,navigate,query,setQuery,busy,dirty,re
    </header>
    <main id="workspace-main" className="ew-main" tabIndex={-1} aria-busy={busy}>
     <div className="ew-page-heading"><div><div className="ew-breadcrumb"><span>Ажлын орчин</span><ChevronRight size={12}/><span>{view.engagement?view.engagement.period.end.slice(0,4):'Фирм'}</span>{route.paper&&<><ChevronRight size={12}/><span>{route.paper}</span></>}</div><h1>{route.paper?view.papers?.find(p=>p.form===route.paper)?.title??route.paper:workspacePages[route.page].label}</h1><p>{route.paper?`${view.engagement?.client} · ${route.paper}`:workspacePages[route.page].description}</p></div><span className="ew-scope-tag">{view.engagement?`${view.engagement.period.start} — ${view.engagement.period.end}`:view.portfolio.length+' гэрээт ажил'}</span></div>
+    {view.engagement?.active&&view.acceptance&&!view.acceptance.current&&<section className="callout amber" role="status"><p>Хүлээн авах шийдвэрийг шинэчлэх шаардлагатай. Дахин батлах хүртэл гүйцэтгэлийн ажил түр зогссон.</p>{route.page!=='overview'&&<button type="button" className="quiet" onClick={()=>navigate({...route,page:'overview',paper:null})}>Тойм дахь үнэлгээ, шийдвэрийг нээх</button>}</section>}
     {children}
    </main>
   </div>

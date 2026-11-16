@@ -7,6 +7,7 @@ import { input, invalidateReport, openPilotEngagement, PilotError } from './pilo
 import { evidenceCurrent } from './pilot-requests.mjs';
 import { acceptanceRegisterGaps } from './pilot-registers.mjs';
 import { requireSeat } from './pilot-staffing.mjs';
+import {activeAcceptanceGap,enableAcceptance,agreedTermsFields,acceptanceActor} from './pilot-acceptance.mjs';
 
 const firmActions = new Set(['client-save','client-contact','client-status','intake-save','intake-forward','intake-return','intake-decline','intake-convert']);
 export const isIntakeAction = action => firmActions.has(action);
@@ -41,6 +42,7 @@ export function termsGaps(model, files) {
 }
 
 export function activeTermsGap(model) {
+  const acceptance=activeAcceptanceGap(model);if(acceptance)return acceptance;
   const terms=model.pilotTerms;
   if (!model.engagements[0]?.intake.active||!terms?.amendment) return '';
   if (terms.status==='approved'&&model.evidence.some(file=>file.id===terms.evidence&&evidenceCurrent(model,file))) return '';
@@ -49,6 +51,7 @@ export function activeTermsGap(model) {
 
 export function canDraftTerms(model,role) {
   if (role==='reviewer') return true;
+  if(role==='preparer'&&model.pilotAcceptance&&!model.engagements[0]?.intake.active)return true;
   if (role!=='preparer'||!model.engagements[0]?.intake.active) return false;
   const paper=model.work[workKey(model.engagement,'1.4.3')];
   return !!paper&&paper.owner===model.person&&canEdit(model,paper);
@@ -69,10 +72,13 @@ export function termsAction(model, role, action, data, files) {
     const acceptance=active?acceptanceRegisterGaps(model):[];
     if (acceptance.length) fail(409,acceptance.join(' · '));
     model.pilotTerms = { ...terms, status: 'approved', approvedBy: role, approvedAt: now(), approvalBasis: input(data, 'reason'),
+      ...(model.pilotAcceptance&&{approvedPerson:acceptanceActor(model,role)}),
       ...(active&&{amendment:{...terms.amendment,scopeAssessment:input(data,'scopeAssessment')}}) };
   } else {
     allowed(canDraftTerms(model,role));
     if (active) requireSeat(model,files,role);
+    const agreed=agreedTermsFields(model,data,files);
+    data={...data,...agreed};
     const evidence = input(data, 'evidence', 64), signedOn = input(data, 'signedOn', 10);
     const file = files.get(evidence);
     if (!file || !model.evidence.some(item => item.id === evidence && evidenceCurrent(model,item)) ||
@@ -89,12 +95,11 @@ export function termsAction(model, role, action, data, files) {
       }
       amendment={priorVersion:prior.version,reason:input(data,'amendmentReason')};
     }
-    const draft = { status: 'draft', evidence, sha256: file.sha256, signedOn,
+    const draft = { ...agreed, status: 'draft', evidence, sha256: file.sha256, signedOn,
       reference: input(data, 'reference', 200), signatory: input(data, 'signatory', 150),
       scope, clientVersion: model.pilotIntake.version, confirmation: model.pilotIntake.confirmation, start, end,
       ...(amendment&&{amendment}) };
-    if (terms&&Object.entries(draft).every(([key,value])=>key==='status'||(key==='amendment'?
-      JSON.stringify(terms.amendment)===JSON.stringify(value):terms[key]===value))) return;
+    if (terms&&Object.entries(draft).every(([key,value])=>key==='status'||JSON.stringify(terms[key])===JSON.stringify(value))) return;
     if (terms) (model.pilotTermsHistory ??= []).unshift(terms);
     model.pilotTerms = { ...draft, version: (terms?.version ?? 0) + 1, by: role, at: now() };
     if (active) invalidateReport(model,'Тохиролцсон хамрах хүрээ өөрчлөгдөв · 1.4.3 v'+model.pilotTerms.version);
@@ -254,8 +259,9 @@ export function createIntakeStore(db, store) {
       const row = { id: id || randomUUID(), owner: role, status: 'draft', clientId,
         company: input(data, 'company', 200), contact: text(data, 'contact', 150), email,
         origin, service: input(data, 'service', 150), start, end, framework: text(data, 'framework', 150),
-        facts: text(data, 'facts'), history: previous?.history ?? [],
+        facts: text(data, 'facts'), intendedUsers:text(data,'intendedUsers'),nextOwner: text(data,'nextOwner',16)||'reviewer', history: previous?.history ?? [],
       };
+      if(!['preparer','reviewer','partner'].includes(row.nextOwner))fail(400,'Дараагийн хариуцагчийг сонгоно уу.');
       const prior = previous && Object.fromEntries(Object.entries(previous).filter(([key]) => key !== 'history'));
       row.history.unshift({ by: role, at: now(), status: 'draft', note: 'Мэдээлэл хадгалав', ...(prior && { before: prior }) });
       putEnquiry(row);
@@ -266,11 +272,11 @@ export function createIntakeStore(db, store) {
     if (action === 'intake-forward') {
       allowed(previous.owner === role);
       if (!['draft','returned'].includes(previous.status)) fail(409, 'Ноорог хүсэлтийг шилжүүлнэ үү.');
-      previous.status = 'forwarded';
+      previous.status = 'forwarded';previous.nextOwner='reviewer';
     } else {
       allowed(managers.includes(role));
       if (previous.status !== 'forwarded') fail(409, 'Хүлээн авахаар шилжүүлсэн хүсэлт шаардлагатай.');
-      if (action === 'intake-return') previous.status = 'returned';
+      if (action === 'intake-return') {previous.status = 'returned';previous.nextOwner=previous.owner;}
       else if (action === 'intake-decline') previous.status = 'declined';
       else {
         const client = clientFor(input(data, 'clientId', 64), role);
@@ -289,7 +295,9 @@ export function createIntakeStore(db, store) {
         if (earlier.length) engagement.kind = 'Үргэлжилсэн аудит';
         if (prior) engagement.carriedFrom = prior.id;
         model.pilotIntake = { enquiry: id, client: client.id, version: client.version, confirmation: 1, contact, by: role, at: now(), note,
+          service:previous.service,intendedUsers:previous.intendedUsers??'',signatories:structuredClone(client.profile.contacts.filter(row=>row.signer)),
           ...(prior && { prior: prior.id }) };
+        if(extended==='yes')enableAcceptance(model);
         previous.engagement = engagement.id;
         previous.clientId = client.id;
         previous.status = 'converted';
@@ -310,19 +318,20 @@ export function createIntakeStore(db, store) {
     return { ...client.profile, contacts: [selected, ...active.filter(c => c.id !== contact)] };
   }
 
-  function refresh(model, role, data) {
+  function refresh(model, role, data, files) {
     allowed(managers.includes(role));
     const e = model.engagements[0], current = model.pilotIntake;
-    if (!current || e.intake.active) fail(409, 'Хүлээн авах шатны ажлыг сонгоно уу.');
+    if (!current || e.intake.active&&(!model.pilotAcceptance||model.pilotIssue||e.issued||files.archive.isSealed(model))) fail(409, 'Шинэчлэл зөвшөөрсөн, гаргаагүй ажлыг сонгоно уу.');
     const client = clientFor(current.client, role), contact = input(data, 'contactId', 64), note = input(data, 'note');
     const profile = confirmProfile(client, contact);
     saveClient(model, e.id, profile, model.bench.periods[e.id]);
     e.intake.contact = profile.contacts[0].name;
     const recipient = profile.contacts.find(c => c.signer) ?? profile.contacts[0];
     e.recipients = [{ name: recipient.name, status: 'pending' }];
-    const changed = contact !== current.contact || client.version !== current.version;
+    const intendedUsers=data.intendedUsers===undefined?current.intendedUsers: text(data,'intendedUsers');
+    const changed = contact !== current.contact || client.version !== current.version||intendedUsers!==current.intendedUsers;
     if (changed) (model.pilotIntakeHistory ??= []).unshift(current);
-    model.pilotIntake = { ...current, contact, version: client.version, confirmation: current.confirmation + Number(changed), by: role, at: now(), note };
+    model.pilotIntake = { ...current, contact,intendedUsers,signatories:structuredClone(client.profile.contacts.filter(row=>row.signer)),version: client.version, confirmation: current.confirmation + Number(changed), by: role, at: now(), note };
     recordEvent(model, 'Үйлчлүүлэгчийн баталсан мэдээлэл шинэчлэв · v' + client.version, '1.1.1');
   }
 
@@ -342,10 +351,10 @@ export function createIntakeStore(db, store) {
     const current = model.pilotIntake;
     if (!current) return undefined;
     const history = model.pilotIntakeHistory ?? [];
-    if (model.engagements[0].intake.active) return { ...current, contacts: [], history };
     const client = findClient(current.client);
     const day = now().slice(0,10);
-    return { ...current, history, currentVersion: client?.version, contacts: client?.profile.contacts.filter(c => c.email &&
+    return { ...current, history, items:model.pilotContextItems??[],canRefresh:!model.engagements[0].intake.active||!!model.pilotAcceptance&&!model.pilotIssue&&!model.engagements[0].issued,
+      period:{...model.bench.periods[model.engagement]},currentVersion: client?.version, contacts: client?.profile.contacts.filter(c => c.email &&
       currentClientContact(c, day)) ?? [] };
   }
 
@@ -369,5 +378,18 @@ export function createIntakeStore(db, store) {
     }
   }
 
-  return { view, updateClient, enquiryAction, refresh, activationGaps, contextView, finish };
+  function contextItem(model,role,data){
+    if(!model.pilotIntake||model.pilotIssue||model.engagements[0].issued)fail(409,'Баталгаажуулах мэдээллийн хүрээг шалгана уу.');
+    const items=model.pilotContextItems??=[],item=input(data,'item',200),existing=items.find(row=>row.item===item);
+    const status=input(data,'status',16),note=input(data,'note'),owner=input(data,'owner',16),due=input(data,'due',10);
+    if(!['confirmed','returned','responded'].includes(status)||!['preparer','reviewer','partner'].includes(owner)||!validDate(due))fail(400,'Мэдээллийн төлөв, хариуцагч, огноог шалгана уу.');
+    if(status==='responded')allowed(existing?.status==='returned'&&existing.owner===role);
+    else allowed(managers.includes(role)&&!(existing?.status==='responded'&&existing.by===role));
+    const history=existing?[...(existing.history??[]),structuredClone({...existing,history:undefined})]:[];
+    const row={item,status,note,owner,due,by:role,at:now(),clientVersion:model.pilotIntake.version,confirmation:model.pilotIntake.confirmation,
+      period:{...model.bench.periods[model.engagement]},history};
+    model.pilotContextItems=existing?items.map(old=>old===existing?row:old):[...items,row];
+    recordEvent(model,'G01 · Мэдээлэл '+status+' · '+item);
+  }
+  return { view, updateClient, enquiryAction, refresh, contextItem, activationGaps, contextView, finish };
 }

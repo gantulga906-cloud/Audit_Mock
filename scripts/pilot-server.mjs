@@ -16,6 +16,7 @@ import { createOversightStore, oversightRoles } from './pilot-oversight.mjs';
 import { createReleaseStore } from './pilot-release.mjs';
 import { laterFactFiles } from './pilot-later-facts.mjs';
 import {checkAssemblyRecord} from './pilot-assembly.mjs';
+import {isAcceptanceAction,acceptanceAction,acceptanceActivationGaps,acceptanceView} from './pilot-acceptance.mjs';
 
 const prefix = '/api/pilot';
 const termsRemediation = new Set(['intake-terms-save','intake-terms-approve','support-upload','support-assess','schedule','access']);
@@ -131,7 +132,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     const files = filesFor(id);
     const payload = pilotView(model, role, revision, files);
     if (payload.engagement && !payload.engagement.active) {
-      payload.engagement.acceptanceGaps.push(...intake.activationGaps(model), ...termsGaps(model, files), ...staffingGaps(model));
+      payload.engagement.acceptanceGaps.push(...intake.activationGaps(model), ...termsGaps(model, files), ...staffingGaps(model),...acceptanceActivationGaps(model));
     }
     return { ...payload, selected: id, portfolio,
       formLibrary: libraryView(model.pilotFormLibrary, role, files, !id),
@@ -147,6 +148,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
         intakeTermsCanDraft: canDraftTerms(model,role),
       }),
       ...(id && !archive.isSealed(model) && {confirmations:confirmations.view(id)}),
+      ...(id && !archive.isSealed(model) && {acceptance:acceptanceView(model,files)}),
       ...(id && role === 'partner' && { members: store.members(id) }) };
   }
   function changeMembership(context, actor, fields) {
@@ -339,17 +341,21 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           if (isIntakeAction(data.action) && id) throw new PilotError(409, 'Үйлчлүүлэгч ба хүсэлтийн хэсгээс өөрчилнө үү.');
           const termsHold=activeTermsGap(model);
           const acceptanceRegister=data.action==='register'&&registers.some(row=>row.id===data.fields?.kind&&row.section==='acceptance');
-          if (termsHold&&!termsRemediation.has(data.action)&&!acceptanceRegister) throw new PilotError(409,termsHold);
+          const acceptancePaper=['form-use','save','submit','review','return','respond','clear'].includes(data.action)&&['1.4.1','1.4.2','1.4.5'].includes(data.fields.form);
+          if (termsHold&&!termsRemediation.has(data.action)&&!acceptanceRegister&&!isAcceptanceAction(data.action)&&
+              !['intake-refresh','intake-context-item'].includes(data.action)&&!acceptancePaper) throw new PilotError(409,termsHold);
           let enquiry, confirmationLink, deliveryLink;
           try {
-            if (data.action === 'access') changeMembership(context, role, data.fields);
+            if(isAcceptanceAction(data.action))acceptanceAction(model,role,data.action,data.fields,filesFor(id));
+            else if(data.action==='intake-context-item')intake.contextItem(model,role,data.fields);
+            else if (data.action === 'access') changeMembership(context, role, data.fields);
             else if (isLibraryAction(data.action)) libraryAction(model.pilotFormLibrary, role, data.action, data.fields, filesFor(null));
             else if (isIntakeAction(data.action)) {
               if (data.action.startsWith('client-')) intake.updateClient(role, data.action, data.fields);
               else enquiry = intake.enquiryAction(model, role, data.action, data.fields);
             } else if (data.action === 'intake-refresh') {
               if (!id) throw new PilotError(409, 'Хүлээн авах шатны ажлыг сонгоно уу.');
-              intake.refresh(model, role, data.fields);
+              intake.refresh(model, role, data.fields,filesFor(id));
             } else if (['intake-terms-save','intake-terms-approve'].includes(data.action)) {
               if (!id) throw new PilotError(409, 'Хүлээн авах шатны ажлыг сонгоно уу.');
               const gaps = model.engagements[0]?.intake.active ? [] : intake.activationGaps(model);
@@ -367,7 +373,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
               releases.recordOutcome(model,role,data.fields);
             } else if (data.action === 'activate') {
               if (role !== 'partner') throw new PilotError(403, 'Партнерын томилгоо шаардлагатай.');
-              const files = filesFor(id), gaps = [...intake.activationGaps(model), ...termsGaps(model, files)];
+              const files = filesFor(id), gaps = [...intake.activationGaps(model), ...termsGaps(model, files),...acceptanceActivationGaps(model)];
               if (gaps.length) throw new PilotError(409, gaps.join(' · '));
               const terms = model.pilotTerms;
               const fields = terms ? { ...data.fields, letter: `1.4.3 v${terms.version} · ${terms.reference}` } : data.fields;
