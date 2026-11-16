@@ -1,0 +1,487 @@
+{
+  "engagement": "E-38799c66-ed3b-4279-af85-b7ec22b1aa0a",
+  "proof": [
+    {
+      "id": "standard-conversion-enables-current-planning",
+      "expected": true,
+      "actual": true,
+      "versions": {}
+    },
+    {
+      "id": "control-has-separate-design-implementation-and-operating-evidence",
+      "expected": "effective",
+      "actual": "effective",
+      "versions": {
+        "control": 2
+      }
+    },
+    {
+      "id": "one-procedure-addresses-multiple-risks",
+      "expected": 2,
+      "actual": 2,
+      "versions": {}
+    },
+    {
+      "id": "one-risk-addressed-by-multiple-procedures",
+      "expected": 2,
+      "actual": 2,
+      "versions": {}
+    },
+    {
+      "id": "one-risk-addressed-in-multiple-programmes",
+      "expected": true,
+      "actual": true,
+      "versions": {}
+    },
+    {
+      "id": "programme-has-current-materiality",
+      "expected": 20,
+      "actual": 20,
+      "versions": {}
+    },
+    {
+      "id": "restricted-handoff-remains-open",
+      "expected": true,
+      "actual": true,
+      "versions": {}
+    },
+    {
+      "id": "ready-handoff-pins-actual-programme-version",
+      "expected": "",
+      "actual": "",
+      "versions": {
+        "programme": 1,
+        "strategy": 1
+      }
+    },
+    {
+      "id": "revoked-next-owner-reopens-handoff",
+      "expected": true,
+      "actual": true,
+      "versions": {}
+    },
+    {
+      "id": "restored-access-does-not-resurrect-old-handoff",
+      "expected": true,
+      "actual": true,
+      "versions": {}
+    },
+    {
+      "id": "changed-control-stales-only-linked-programme",
+      "expected": true,
+      "actual": true,
+      "versions": {}
+    },
+    {
+      "id": "unrelated-inventory-programme-remains-current",
+      "expected": false,
+      "actual": false,
+      "versions": {}
+    },
+    {
+      "id": "unrelated-strategy-retains-supported-work",
+      "expected": false,
+      "actual": false,
+      "versions": {}
+    },
+    {
+      "id": "historical-programme-retained",
+      "expected": 1,
+      "actual": 1,
+      "versions": {}
+    },
+    {
+      "id": "actual-effort-may-exceed-budget",
+      "expected": 120,
+      "actual": 120,
+      "versions": {}
+    },
+    {
+      "id": "budget-change-preserves-actual-effort",
+      "expected": [
+        120,
+        150
+      ],
+      "actual": [
+        120,
+        150
+      ],
+      "versions": {}
+    },
+    {
+      "id": "correction-retains-original-history",
+      "expected": [
+        false,
+        true
+      ],
+      "actual": [
+        false,
+        true
+      ],
+      "versions": {}
+    },
+    {
+      "id": "restart-preserves-history-and-exact-bases",
+      "expected": {
+        "managed": true,
+        "effort": [
+          {
+            "id": "2b2db1fe-5a5f-433e-bbb3-e94a91b35f84",
+            "person": "18b25b1b-9917-468c-81d2-496d9b936218",
+            "by": "preparer",
+            "assignment": {
+              "id": "031a1832-d212-4be7-af58-c95b55277816",
+              "version": 1
+            },
+            "from": "2026-01-05T09:00:00.000Z",
+            "through": "2026-01-05T11:00:00.000Z",
+            "minutes": 120,
+            "work": "1.3",
+            "purpose": "Actual benchmark investigation",
+            "at": "2026-11-16T09:02:37.028Z",
+            "current": false
+          },
+          {
+            "id": "2aced487-3e59-4e62-969b-baf71429c63f",
+            "person": "18b25b1b-9917-468c-81d2-496d9b936218",
+            "by": "preparer",
+            "assignment": {
+              "id": "031a1832-d212-4be7-af58-c95b55277816",
+              "version": 1
+            },
+            "from": "2026-01-05T09:00:00Z",
+            "through": "2026-01-05T11:30:00Z",
+            "minutes": 150,
+            "work": "1.3",
+            "purpose": "Correct actual elapsed work",
+            "supersedes": "2b2db1fe-5a5f-433e-bbb3-e94a91b35f84",
+            "correction": "Missed documented half hour",
+            "at": "2026-11-16T09:02:37.218Z",
+            "current": true
+          }
+        ],
+        "programmes": [
+          {
+            "form": "3.1.2",
+            "gap": "",
+            "risks": [
+              {
+                "id": "9c12f4f8-fe05-4a85-8e08-9ee469988fb6",
+                "name": "Asset existence",
+                "version": 2,
+                "status": "approved",
+                "type": "account"
+              },
+              {
+                "id": "0dcfbe97-ad74-4b1b-978a-8307480dd2d8",
+                "name": "Cross-area completeness",
+                "version": 1,
+                "status": "approved",
+                "type": "account"
+              },
+              {
+                "id": "921af501-260e-4aeb-9bda-499c37c179da",
+                "name": "Management override and staffing",
+                "version": 1,
+                "status": "approved",
+                "type": "overall"
+              },
+              {
+                "id": "497b5479-b92a-43b0-ab6d-08a945074128",
+                "name": "Returned unknown assertion corrected",
+                "version": 2,
+                "status": "approved",
+                "type": "account"
+              }
+            ],
+            "responses": [
+              {
+                "risk": "9c12f4f8-fe05-4a85-8e08-9ee469988fb6",
+                "procedure": "r10",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 2,
+                "label": "Байгууллагын үндсэн хөрөнгийн хүлээн зөвшөөрөлт, хэмжилт (өртгийн эсвэл дахин үнэлгээний загвар) болон элэгдлийн бодлого нь НББОУС 16-тай нийцэж байгааг баталгаажуулах",
+                "target": "PPE",
+                "assertion": "Existence"
+              },
+              {
+                "risk": "0dcfbe97-ad74-4b1b-978a-8307480dd2d8",
+                "procedure": "r10",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 1,
+                "label": "Байгууллагын үндсэн хөрөнгийн хүлээн зөвшөөрөлт, хэмжилт (өртгийн эсвэл дахин үнэлгээний загвар) болон элэгдлийн бодлого нь НББОУС 16-тай нийцэж байгааг баталгаажуулах",
+                "target": "PPE",
+                "assertion": "Completeness"
+              },
+              {
+                "risk": "0dcfbe97-ad74-4b1b-978a-8307480dd2d8",
+                "procedure": "r11",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 1,
+                "label": "Өмнөх жилийн аудитын дүгнэлт болон үндсэн хөрөнгийн үлдэгдлийг тайлант жилийн эхний үлдэгдэлтэй тулган шалгах",
+                "target": "PPE",
+                "assertion": "Completeness"
+              },
+              {
+                "risk": "497b5479-b92a-43b0-ab6d-08a945074128",
+                "procedure": "r12",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 2,
+                "label": "Удирдлагаас лавлагаа авах: Тайлант хугацааны томоохон хөрөнгийн нэмэгдэл, хасалт, эсвэл үнэ цэнийн бууралтын талаар ярилцах",
+                "target": "PPE",
+                "assertion": "Existence"
+              }
+            ]
+          },
+          {
+            "form": "3.1.4",
+            "gap": "G02 · Эрсдэлийн бүрэн хариу ба стратегийн одоогийн баталсан суурь шаардлагатай.",
+            "risks": [
+              {
+                "id": "0dcfbe97-ad74-4b1b-978a-8307480dd2d8",
+                "name": "Cross-area completeness",
+                "version": 1,
+                "status": "approved",
+                "type": "account"
+              },
+              {
+                "id": "2c0aca8b-f86c-4083-878d-824ed5824be9",
+                "name": "Inventory existence",
+                "version": 1,
+                "status": "approved",
+                "type": "account"
+              },
+              {
+                "id": "921af501-260e-4aeb-9bda-499c37c179da",
+                "name": "Management override and staffing",
+                "version": 1,
+                "status": "approved",
+                "type": "overall"
+              }
+            ],
+            "responses": [
+              {
+                "risk": "2c0aca8b-f86c-4083-878d-824ed5824be9",
+                "procedure": "r10",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 1,
+                "label": "Бараа материалын бүртгэл, хадгалалт, борлуулалт, хуваарилалтын үйл явцын талаарх ойлголт цуглуулж дотоод хяналтын тогтолцооны үр нөлөө, найдвартай байдлыг үнэлэх",
+                "target": "Inventory",
+                "assertion": "Existence"
+              },
+              {
+                "risk": "0dcfbe97-ad74-4b1b-978a-8307480dd2d8",
+                "procedure": "r11",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 1,
+                "label": "Өмнөх жилийн аудитын дүгнэлт болон бараа материалын үлдэгдлийг тайлант жилийн эхний үлдэгдэлтэй тулган шалгах",
+                "target": "PPE",
+                "assertion": "Completeness"
+              }
+            ]
+          }
+        ]
+      },
+      "actual": {
+        "managed": true,
+        "effort": [
+          {
+            "id": "2b2db1fe-5a5f-433e-bbb3-e94a91b35f84",
+            "person": "18b25b1b-9917-468c-81d2-496d9b936218",
+            "by": "preparer",
+            "assignment": {
+              "id": "031a1832-d212-4be7-af58-c95b55277816",
+              "version": 1
+            },
+            "from": "2026-01-05T09:00:00.000Z",
+            "through": "2026-01-05T11:00:00.000Z",
+            "minutes": 120,
+            "work": "1.3",
+            "purpose": "Actual benchmark investigation",
+            "at": "2026-11-16T09:02:37.028Z",
+            "current": false
+          },
+          {
+            "id": "2aced487-3e59-4e62-969b-baf71429c63f",
+            "person": "18b25b1b-9917-468c-81d2-496d9b936218",
+            "by": "preparer",
+            "assignment": {
+              "id": "031a1832-d212-4be7-af58-c95b55277816",
+              "version": 1
+            },
+            "from": "2026-01-05T09:00:00Z",
+            "through": "2026-01-05T11:30:00Z",
+            "minutes": 150,
+            "work": "1.3",
+            "purpose": "Correct actual elapsed work",
+            "supersedes": "2b2db1fe-5a5f-433e-bbb3-e94a91b35f84",
+            "correction": "Missed documented half hour",
+            "at": "2026-11-16T09:02:37.218Z",
+            "current": true
+          }
+        ],
+        "programmes": [
+          {
+            "form": "3.1.2",
+            "gap": "",
+            "risks": [
+              {
+                "id": "9c12f4f8-fe05-4a85-8e08-9ee469988fb6",
+                "name": "Asset existence",
+                "version": 2,
+                "status": "approved",
+                "type": "account"
+              },
+              {
+                "id": "0dcfbe97-ad74-4b1b-978a-8307480dd2d8",
+                "name": "Cross-area completeness",
+                "version": 1,
+                "status": "approved",
+                "type": "account"
+              },
+              {
+                "id": "921af501-260e-4aeb-9bda-499c37c179da",
+                "name": "Management override and staffing",
+                "version": 1,
+                "status": "approved",
+                "type": "overall"
+              },
+              {
+                "id": "497b5479-b92a-43b0-ab6d-08a945074128",
+                "name": "Returned unknown assertion corrected",
+                "version": 2,
+                "status": "approved",
+                "type": "account"
+              }
+            ],
+            "responses": [
+              {
+                "risk": "9c12f4f8-fe05-4a85-8e08-9ee469988fb6",
+                "procedure": "r10",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 2,
+                "label": "Байгууллагын үндсэн хөрөнгийн хүлээн зөвшөөрөлт, хэмжилт (өртгийн эсвэл дахин үнэлгээний загвар) болон элэгдлийн бодлого нь НББОУС 16-тай нийцэж байгааг баталгаажуулах",
+                "target": "PPE",
+                "assertion": "Existence"
+              },
+              {
+                "risk": "0dcfbe97-ad74-4b1b-978a-8307480dd2d8",
+                "procedure": "r10",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 1,
+                "label": "Байгууллагын үндсэн хөрөнгийн хүлээн зөвшөөрөлт, хэмжилт (өртгийн эсвэл дахин үнэлгээний загвар) болон элэгдлийн бодлого нь НББОУС 16-тай нийцэж байгааг баталгаажуулах",
+                "target": "PPE",
+                "assertion": "Completeness"
+              },
+              {
+                "risk": "0dcfbe97-ad74-4b1b-978a-8307480dd2d8",
+                "procedure": "r11",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 1,
+                "label": "Өмнөх жилийн аудитын дүгнэлт болон үндсэн хөрөнгийн үлдэгдлийг тайлант жилийн эхний үлдэгдэлтэй тулган шалгах",
+                "target": "PPE",
+                "assertion": "Completeness"
+              },
+              {
+                "risk": "497b5479-b92a-43b0-ab6d-08a945074128",
+                "procedure": "r12",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 2,
+                "label": "Удирдлагаас лавлагаа авах: Тайлант хугацааны томоохон хөрөнгийн нэмэгдэл, хасалт, эсвэл үнэ цэнийн бууралтын талаар ярилцах",
+                "target": "PPE",
+                "assertion": "Existence"
+              }
+            ]
+          },
+          {
+            "form": "3.1.4",
+            "gap": "G02 · Эрсдэлийн бүрэн хариу ба стратегийн одоогийн баталсан суурь шаардлагатай.",
+            "risks": [
+              {
+                "id": "0dcfbe97-ad74-4b1b-978a-8307480dd2d8",
+                "name": "Cross-area completeness",
+                "version": 1,
+                "status": "approved",
+                "type": "account"
+              },
+              {
+                "id": "2c0aca8b-f86c-4083-878d-824ed5824be9",
+                "name": "Inventory existence",
+                "version": 1,
+                "status": "approved",
+                "type": "account"
+              },
+              {
+                "id": "921af501-260e-4aeb-9bda-499c37c179da",
+                "name": "Management override and staffing",
+                "version": 1,
+                "status": "approved",
+                "type": "overall"
+              }
+            ],
+            "responses": [
+              {
+                "risk": "2c0aca8b-f86c-4083-878d-824ed5824be9",
+                "procedure": "r10",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 1,
+                "label": "Бараа материалын бүртгэл, хадгалалт, борлуулалт, хуваарилалтын үйл явцын талаарх ойлголт цуглуулж дотоод хяналтын тогтолцооны үр нөлөө, найдвартай байдлыг үнэлэх",
+                "target": "Inventory",
+                "assertion": "Existence"
+              },
+              {
+                "risk": "0dcfbe97-ad74-4b1b-978a-8307480dd2d8",
+                "procedure": "r11",
+                "nature": "Inspect and reperform",
+                "timing": "Year end",
+                "extent": "Explicit documented stratum",
+                "scope": "Actual target and assertion covered by tested records",
+                "riskVersion": 1,
+                "label": "Өмнөх жилийн аудитын дүгнэлт болон бараа материалын үлдэгдлийг тайлант жилийн эхний үлдэгдэлтэй тулган шалгах",
+                "target": "PPE",
+                "assertion": "Completeness"
+              }
+            ]
+          }
+        ]
+      },
+      "versions": {
+        "revision": 147
+      }
+    }
+  ],
+  "scope": "Synthetic source-grounded engineering fixture; independent source acceptance not recorded"
+}

@@ -1,0 +1,111 @@
+{
+  "guide": "G02",
+  "algorithm": "SHA-256 of original artifact bytes",
+  "files": [
+    {
+      "path": "Backlog_Preservation.json",
+      "bytes": 1964,
+      "sha256": "cb81802d63eb657ef77f35b8def7164e8bc7cd102651a6ff900c71d1ae655cee"
+    },
+    {
+      "path": "Browser.log",
+      "bytes": 1008,
+      "sha256": "f72723640ddfc53fdcbf471bd5bf8ec2846823b58dcf8d8b95ab2c3c370465e3"
+    },
+    {
+      "path": "Browser_Verification.json",
+      "bytes": 2899,
+      "sha256": "1bbe26d405d1464e37f004a2016ef0efb748bd6d57bad998c95da7effad922d2"
+    },
+    {
+      "path": "External_Research.json",
+      "bytes": 941,
+      "sha256": "264a124105c9a0c7f0e1defc03501f0f56e1ef7e5cd2f56a3b84f69e6e4399e9"
+    },
+    {
+      "path": "Foundation_Verification.json",
+      "bytes": 17863,
+      "sha256": "d19cc05baa3eddfa8418fefce9813f0832646f07ce8c9af15d6828651c637503"
+    },
+    {
+      "path": "G02_Connected_Proof.json",
+      "bytes": 19163,
+      "sha256": "56da94e2af5a3f3109ba8a0b39a499caa062d321095841f04748aefbf432e8ea"
+    },
+    {
+      "path": "G02_Criteria.json",
+      "bytes": 78009,
+      "sha256": "dff1eae5564b04075d27e5ac1a61fe6b96a9f2ad2c367226c8333b4b42470e8a"
+    },
+    {
+      "path": "G02_Workflow_Evidence.json",
+      "bytes": 117057,
+      "sha256": "67e5dc09933dc4ed27f50b04a9fa79634c5a496c8e716a69d985f2c4187dfe03"
+    },
+    {
+      "path": "G02_local_history.bundle",
+      "bytes": 37340,
+      "sha256": "06395f7403562a5f2e3515cd03e4cd7da456312e4b9fb9506730c064cbedbc75"
+    },
+    {
+      "path": "Migration_Browser.log",
+      "bytes": 750,
+      "sha256": "6b1f3ff9255a212520456a1992a04b48392e87589f12183c1f579c3363169057"
+    },
+    {
+      "path": "Publication_Provenance.json",
+      "bytes": 4307,
+      "sha256": "dcc32a534142e08640b6f9af1aeda5204148b287403892285ca6eab30974b484"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3800,
+      "sha256": "6b26ebddef9bb2c90820695b233ceea7bd89e7ff88f03d022da163e13c662194"
+    },
+    {
+      "path": "Source_Verification.json",
+      "bytes": 2110608,
+      "sha256": "72c70ced53ceb8701f5a00dc9068e4bad94dc35c60bf279dc0d94357585590a1"
+    },
+    {
+      "path": "Verification.log",
+      "bytes": 4609,
+      "sha256": "9450d5b932f68e7b92e353cda188f1adc751cb3ebb4add119407a3469baf1e44"
+    },
+    {
+      "path": "Verified_Build.json",
+      "bytes": 207,
+      "sha256": "f2f95b9c3c5a98fee5012098b116c625c510eab96b5f346d6de2f60479992a4d"
+    },
+    {
+      "path": "screenshots/migration-01-explicit-loss-review.png",
+      "bytes": 93693,
+      "sha256": "71a5c8a77a98daa33b62b944d621565d76a60377db469e5bd8bb9c4a5bc35ecd"
+    },
+    {
+      "path": "screenshots/migration-02-acknowledged-migration.png",
+      "bytes": 113654,
+      "sha256": "067c419b3a2110d388eb7bf40f65fe9afdce3da6fb3f5593dd2519d9a4dc44f3"
+    },
+    {
+      "path": "screenshots/planning-01-planning-baseline.png",
+      "bytes": 92460,
+      "sha256": "00a405fda5c70516d570154253a5e989b3a11dd343753cc425c91e6d3a8a2bde"
+    },
+    {
+      "path": "screenshots/planning-02-actual-effort.png",
+      "bytes": 84295,
+      "sha256": "8461462b3d40a4af8efe4c4f42fc8b06719ab4630e7e27b740bd36c32cb765ba"
+    },
+    {
+      "path": "screenshots/planning-03-multiple-risk-responses.png",
+      "bytes": 99206,
+      "sha256": "6b220ae7ed451db1a1f765ddc2f1b1ed7bd4fe43bef4e8175f82c15f19a3d209"
+    },
+    {
+      "path": "screenshots/planning-04-distinct-controls.png",
+      "bytes": 92618,
+      "sha256": "f802c8e253a3e79bb976ee82d3291fe5fccb7adb614bd8b804fa25782acd422e"
+    }
+  ]
+}

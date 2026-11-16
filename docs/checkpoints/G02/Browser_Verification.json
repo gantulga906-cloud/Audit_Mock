@@ -1,0 +1,55 @@
+{
+  "guide": "G02",
+  "build": {
+    "build": "SkIrp2z3gOguKj8lLzdn8",
+    "commit": "69ce4179b65fa54d505757f46deb01916ece13a9",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "checks": [
+    "Current strategy and risk coverage are visible; planned budget and 2.5 actual hours retain separate labels and intervals",
+    "Actual hours and correction save through the UI, retain the original entry and exceed the reduced budget",
+    "Many-to-many response editor saves a new draft; the prior approved plan remains in history and current strategy cannot silently pass",
+    "Control editor presents distinct design, implementation and operating-effectiveness decisions",
+    "Programme migration shows the actual incompatible answer and rejects approval without acknowledgement",
+    "Explicit current acknowledgement approves migration and preserves the incompatible answer in historical work"
+  ],
+  "sessions": [
+    {
+      "date": "2026-11-16T09:04:17.971Z",
+      "build": {
+        "build": "SkIrp2z3gOguKj8lLzdn8",
+        "commit": "69ce4179b65fa54d505757f46deb01916ece13a9",
+        "dirty": false,
+        "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+      },
+      "engagement": "E-38799c66-ed3b-4279-af85-b7ec22b1aa0a",
+      "checks": [
+        "Current strategy and risk coverage are visible; planned budget and 2.5 actual hours retain separate labels and intervals",
+        "Actual hours and correction save through the UI, retain the original entry and exceed the reduced budget",
+        "Many-to-many response editor saves a new draft; the prior approved plan remains in history and current strategy cannot silently pass",
+        "Control editor presents distinct design, implementation and operating-effectiveness decisions"
+      ],
+      "runtimeErrors": [],
+      "scope": "Disposable G02 source-grounded test profile; no live database, production deployment or independent source acceptance changes"
+    },
+    {
+      "date": "2026-11-16T09:04:18.109Z",
+      "build": {
+        "build": "SkIrp2z3gOguKj8lLzdn8",
+        "commit": "69ce4179b65fa54d505757f46deb01916ece13a9",
+        "dirty": false,
+        "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+      },
+      "engagement": "E-13c59514-9e78-4ee9-b0a3-30c550a81d07",
+      "checks": [
+        "Programme migration shows the actual incompatible answer and rejects approval without acknowledgement",
+        "Explicit current acknowledgement approves migration and preserves the incompatible answer in historical work"
+      ],
+      "runtimeErrors": [],
+      "scope": "Disposable G02 source-grounded test profile; no live database, production deployment or independent source acceptance changes"
+    }
+  ],
+  "screenshots": 6,
+  "runtimeErrors": []
+}
