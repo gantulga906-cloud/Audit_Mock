@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-17",
+  "sources": [
+    {
+      "title": "IAASB 2025 Handbook, Volume 1",
+      "url": "https://ifacweb.blob.core.windows.net/publicfiles/2025-09/IAASB-2025-Handbook-Volume-1.pdf",
+      "sections": [
+        "ISA 700",
+        "ISA 701",
+        "ISA 705",
+        "ISA 706"
+      ],
+      "application": "Separate human opinion judgment, approved actual sections and dating. The responsible auditor selects the edition, appropriate wording and actual local adoption."
+    }
+  ],
+  "boundaries": [
+    "Structural consistency does not provide semantic/legal wording approval.",
+    "No universal report prose, regulated signing, external dispatch or professional acceptance is claimed."
+  ]
+}

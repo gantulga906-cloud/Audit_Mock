@@ -1,0 +1,818 @@
+{
+  "guide": "G06",
+  "sourceSteps": [
+    {
+      "id": "A26-P1-W1",
+      "title": "Evaluate sufficiency and appropriateness of evidence",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "3e20b069ef41e20dd286bafb10447bb87e3ddf83557debd34a2ed5e2a43c9848",
+      "source": "A26!C15:H15",
+      "relatedCases": [
+        "P10-UC03",
+        "P10-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "accepted planned persisted engagement through all eight current G05 assessments, explicit opinion/section decisions, reviewed wording, separate authorization/signature/issue and original-package receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "One actual issue binds the report and original full statements/notes. Unknown dispatch must be reconciled before retry. Receipt requires all three actual downloads, exact report/package hashes and actual acknowledgment; exact retry has one effect and changed payload fails. New content after issue requires the existing controlled successor route. Restart preserves one issue and its recipient history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 consistency checks reject contradictory human decisions without choosing an opinion or hiding an unattempted recipient",
+        "G06 qualified adverse and disclaimer paths retain actual separate opinion and section decisions with no copied source-wording adoption",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority",
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A26-P1-W2",
+      "title": "Determine effect of uncorrected misstatements and scope limits",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "2a2fadf821e04aae92fed4c5e4f9bc31532bb5ed21ddae7d7f6ffa1bfc390d54",
+      "source": "A26!C16:H16",
+      "relatedCases": [
+        "P10-UC03",
+        "P10-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "accepted planned persisted engagement through all eight current G05 assessments, explicit opinion/section decisions, reviewed wording, separate authorization/signature/issue and original-package receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "One actual issue binds the report and original full statements/notes. Unknown dispatch must be reconciled before retry. Receipt requires all three actual downloads, exact report/package hashes and actual acknowledgment; exact retry has one effect and changed payload fails. New content after issue requires the existing controlled successor route. Restart preserves one issue and its recipient history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 consistency checks reject contradictory human decisions without choosing an opinion or hiding an unattempted recipient",
+        "G06 qualified adverse and disclaimer paths retain actual separate opinion and section decisions with no copied source-wording adoption",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority",
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A26-P1-W3",
+      "title": "Select opinion and required report sections",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "9634c3cb1f5421af4fa2f7e4fa678bac33cbbab0506211220242cd5a39939647",
+      "source": "A26!C17:H17",
+      "relatedCases": [
+        "P10-UC03",
+        "P10-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "accepted planned persisted engagement through all eight current G05 assessments, explicit opinion/section decisions, reviewed wording, separate authorization/signature/issue and original-package receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "One actual issue binds the report and original full statements/notes. Unknown dispatch must be reconciled before retry. Receipt requires all three actual downloads, exact report/package hashes and actual acknowledgment; exact retry has one effect and changed payload fails. New content after issue requires the existing controlled successor route. Restart preserves one issue and its recipient history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 consistency checks reject contradictory human decisions without choosing an opinion or hiding an unattempted recipient",
+        "G06 qualified adverse and disclaimer paths retain actual separate opinion and section decisions with no copied source-wording adoption",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority",
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A26-P2-W1",
+      "title": "Draft report against applicable standard and local law",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "aa8ed324d9772340d90531aed619419b5e49496bfbf168d9a0bc47e379c7f8a8",
+      "source": "A26!C18:H18",
+      "relatedCases": [
+        "P10-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "accepted planned persisted engagement through all eight current G05 assessments, explicit opinion/section decisions, reviewed wording, separate authorization/signature/issue and original-package receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "One actual issue binds the report and original full statements/notes. Unknown dispatch must be reconciled before retry. Receipt requires all three actual downloads, exact report/package hashes and actual acknowledgment; exact retry has one effect and changed payload fails. New content after issue requires the existing controlled successor route. Restart preserves one issue and its recipient history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 qualified adverse and disclaimer paths retain actual separate opinion and section decisions with no copied source-wording adoption",
+        "G06 returned wording retains prior content and exact review history while changed preparation invalidates old signatures and approval",
+        "G06 changed originals and recipient capacity block current release while retaining prior authorized bytes",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A26-P2-W2",
+      "title": "Check entity, statements, dates, signatures and addressees",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "70bb87d2af8ce74db7ee4550616fc562e081f2cf76890b3e1b230393680c6fc9",
+      "source": "A26!C19:H19",
+      "relatedCases": [
+        "P10-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "accepted planned persisted engagement through all eight current G05 assessments, explicit opinion/section decisions, reviewed wording, separate authorization/signature/issue and original-package receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "One actual issue binds the report and original full statements/notes. Unknown dispatch must be reconciled before retry. Receipt requires all three actual downloads, exact report/package hashes and actual acknowledgment; exact retry has one effect and changed payload fails. New content after issue requires the existing controlled successor route. Restart preserves one issue and its recipient history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 qualified adverse and disclaimer paths retain actual separate opinion and section decisions with no copied source-wording adoption",
+        "G06 returned wording retains prior content and exact review history while changed preparation invalidates old signatures and approval",
+        "G06 changed originals and recipient capacity block current release while retaining prior authorized bytes",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A26-P2-W3",
+      "title": "Resolve legal or regulatory reporting duties",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "64882db2b8e567fa60616f3cb435a70d4fc7cdf5a3f869e941abafba4789c883",
+      "source": "A26!C20:H20",
+      "relatedCases": [
+        "P10-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "accepted planned persisted engagement through all eight current G05 assessments, explicit opinion/section decisions, reviewed wording, separate authorization/signature/issue and original-package receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "One actual issue binds the report and original full statements/notes. Unknown dispatch must be reconciled before retry. Receipt requires all three actual downloads, exact report/package hashes and actual acknowledgment; exact retry has one effect and changed payload fails. New content after issue requires the existing controlled successor route. Restart preserves one issue and its recipient history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 qualified adverse and disclaimer paths retain actual separate opinion and section decisions with no copied source-wording adoption",
+        "G06 returned wording retains prior content and exact review history while changed preparation invalidates old signatures and approval",
+        "G06 changed originals and recipient capacity block current release while retaining prior authorized bytes",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A26-P3-W1",
+      "title": "Confirm final statements and release approvals",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "6476984c41de73ac12a9e9a1748d0e543b7a6af17455214b92f5db361c0471a3",
+      "source": "A26!C21:H21",
+      "relatedCases": [
+        "P10-UC08"
+      ],
+      "observations": [
+        {
+          "test": "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "accepted planned persisted engagement through all eight current G05 assessments, explicit opinion/section decisions, reviewed wording, separate authorization/signature/issue and original-package receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "One actual issue binds the report and original full statements/notes. Unknown dispatch must be reconciled before retry. Receipt requires all three actual downloads, exact report/package hashes and actual acknowledgment; exact retry has one effect and changed payload fails. New content after issue requires the existing controlled successor route. Restart preserves one issue and its recipient history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 consistency checks reject contradictory human decisions without choosing an opinion or hiding an unattempted recipient",
+        "G06 returned wording retains prior content and exact review history while changed preparation invalidates old signatures and approval",
+        "G06 changed originals and recipient capacity block current release while retaining prior authorized bytes",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority"
+      ]
+    },
+    {
+      "id": "A26-P3-W2",
+      "title": "Date and sign only after required evidence and reviews",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "e20ba18e7dafbecbb2eab6494bfb107239d220fe70637644bee2369efb5f906c",
+      "source": "A26!C22:H22",
+      "relatedCases": [
+        "P10-UC08"
+      ],
+      "observations": [
+        {
+          "test": "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "accepted planned persisted engagement through all eight current G05 assessments, explicit opinion/section decisions, reviewed wording, separate authorization/signature/issue and original-package receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "One actual issue binds the report and original full statements/notes. Unknown dispatch must be reconciled before retry. Receipt requires all three actual downloads, exact report/package hashes and actual acknowledgment; exact retry has one effect and changed payload fails. New content after issue requires the existing controlled successor route. Restart preserves one issue and its recipient history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 consistency checks reject contradictory human decisions without choosing an opinion or hiding an unattempted recipient",
+        "G06 returned wording retains prior content and exact review history while changed preparation invalidates old signatures and approval",
+        "G06 changed originals and recipient capacity block current release while retaining prior authorized bytes",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority"
+      ]
+    },
+    {
+      "id": "A26-P3-W3",
+      "title": "Deliver controlled report and record recipient/version",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "26566a3da70fdcc0882bb01ea3c9c2f928c28c0c609cc43b1a74d0b45cdc414c",
+      "source": "A26!C23:H23",
+      "relatedCases": [
+        "P10-UC08"
+      ],
+      "observations": [
+        {
+          "test": "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "accepted planned persisted engagement through all eight current G05 assessments, explicit opinion/section decisions, reviewed wording, separate authorization/signature/issue and original-package receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "One actual issue binds the report and original full statements/notes. Unknown dispatch must be reconciled before retry. Receipt requires all three actual downloads, exact report/package hashes and actual acknowledgment; exact retry has one effect and changed payload fails. New content after issue requires the existing controlled successor route. Restart preserves one issue and its recipient history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 consistency checks reject contradictory human decisions without choosing an opinion or hiding an unattempted recipient",
+        "G06 returned wording retains prior content and exact review history while changed preparation invalidates old signatures and approval",
+        "G06 changed originals and recipient capacity block current release while retaining prior authorized bytes",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority"
+      ]
+    }
+  ],
+  "connectedCycles": [
+    {
+      "id": "A26",
+      "title": "Form the opinion and issue the auditor’s report",
+      "steps": 9,
+      "observedSteps": 9,
+      "applicableSteps": 9,
+      "complete": true,
+      "applicableComplete": true,
+      "branchIds": [
+        "wrong-template-or-stale-package",
+        "independent-issuer-required",
+        "renewed-preparation-stales-release",
+        "signature-and-receipt-required",
+        "idempotent-issue-and-changed-payload",
+        "ambiguous-delivery-reconciled-before-retry"
+      ],
+      "journeys": [
+        {
+          "lifecycle": "A26",
+          "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+          "scope": "Qualified report with a supported nonpervasive scope limitation; local signature/delivery profile; no independent source acceptance.",
+          "steps": [
+            {
+              "id": "A26-P1-W1",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "reviewer/partner",
+              "action": "Review supported evidence, final analytics and retained limitations",
+              "expected": {
+                "analytics": "35d3c236-6564-416d-92b8-b54eb3774dc5",
+                "result": "limited"
+              },
+              "actual": {
+                "analytics": "35d3c236-6564-416d-92b8-b54eb3774dc5",
+                "result": "limited"
+              },
+              "versions": {
+                "sufficiency": 1
+              }
+            },
+            {
+              "id": "A26-P1-W2",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "reviewer/partner",
+              "action": "Evaluate uncorrected 25 and the separate scope limitation",
+              "expected": {
+                "gross": 2500,
+                "overall": 100,
+                "by": "partner"
+              },
+              "actual": {
+                "gross": 2500,
+                "overall": 100,
+                "by": "partner"
+              },
+              "versions": {
+                "evaluation": 1,
+                "materiality": 2
+              }
+            },
+            {
+              "id": "A26-P1-W3",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "partner",
+              "action": "Approve the chosen opinion and matching source template",
+              "expected": {
+                "opinion": "qualified",
+                "basis": "evidence",
+                "template": "4.1.A2"
+              },
+              "actual": {
+                "opinion": "qualified",
+                "basis": "evidence",
+                "template": "4.1.A2"
+              },
+              "versions": {
+                "opinion": 1,
+                "preparation": 3
+              }
+            },
+            {
+              "id": "A26-P2-W1",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "preparer/partner",
+              "action": "Prepare and approve a versioned report against the selected edition",
+              "expected": {
+                "edition": "Synthetic report edition 1",
+                "status": "approved",
+                "form": "4.1.A2"
+              },
+              "actual": {
+                "edition": "Synthetic report edition 1",
+                "status": "approved",
+                "form": "4.1.A2"
+              },
+              "versions": {
+                "preparation": 3,
+                "statements": 2,
+                "report": 2,
+                "digest": "fb728b3d6199fbf1b909fbe6f9a82f1f0c4cba48f4a2a23a79f48f0168a7e62a"
+              }
+            },
+            {
+              "id": "A26-P2-W2",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "preparer/partner",
+              "action": "Check exact statements, date, addressee and signature authority",
+              "expected": {
+                "date": "2026-11-17",
+                "addressee": "Updated reviewed shareholders",
+                "signatory": "Authorized partner under synthetic appointment"
+              },
+              "actual": {
+                "date": "2026-11-17",
+                "addressee": "Updated reviewed shareholders",
+                "signatory": "Authorized partner under synthetic appointment"
+              },
+              "versions": {
+                "preparation": 3,
+                "statements": 2,
+                "report": 2,
+                "digest": "fb728b3d6199fbf1b909fbe6f9a82f1f0c4cba48f4a2a23a79f48f0168a7e62a"
+              }
+            },
+            {
+              "id": "A26-P2-W3",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "preparer/partner",
+              "action": "Record reporting-duty applicability, supporting edition and human assessment",
+              "expected": {
+                "duties": "none",
+                "evidence": "41e86fab-1dc2-4b37-ae37-c3967e00532b",
+                "by": "partner"
+              },
+              "actual": {
+                "duties": "none",
+                "evidence": "41e86fab-1dc2-4b37-ae37-c3967e00532b",
+                "by": "partner"
+              },
+              "versions": {
+                "preparation": 3,
+                "authority": 1
+              }
+            },
+            {
+              "id": "A26-P3-W1",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "partner",
+              "action": "Authorize the final management-approved package",
+              "expected": {
+                "current": true,
+                "management": "partner",
+                "representations": "received"
+              },
+              "actual": {
+                "current": true,
+                "management": "partner",
+                "representations": "received"
+              },
+              "versions": {
+                "preparation": 3,
+                "statements": 2,
+                "report": 2,
+                "digest": "fb728b3d6199fbf1b909fbe6f9a82f1f0c4cba48f4a2a23a79f48f0168a7e62a"
+              }
+            },
+            {
+              "id": "A26-P3-W2",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "partner",
+              "action": "Sign only the current exact authorized bytes",
+              "expected": {
+                "method": "pilot-ed25519",
+                "digest": "fb728b3d6199fbf1b909fbe6f9a82f1f0c4cba48f4a2a23a79f48f0168a7e62a"
+              },
+              "actual": {
+                "method": "pilot-ed25519",
+                "digest": "fb728b3d6199fbf1b909fbe6f9a82f1f0c4cba48f4a2a23a79f48f0168a7e62a"
+              },
+              "versions": {
+                "authorization": "2026-11-17T08:05:02.369Z",
+                "signature": "2026-11-17T08:05:02.388Z"
+              }
+            },
+            {
+              "id": "A26-P3-W3",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "partner/local recipient",
+              "action": "Issue the controlled report and retain actual download and receipt",
+              "expected": {
+                "digest": "fb728b3d6199fbf1b909fbe6f9a82f1f0c4cba48f4a2a23a79f48f0168a7e62a",
+                "state": "received"
+              },
+              "actual": {
+                "digest": "fb728b3d6199fbf1b909fbe6f9a82f1f0c4cba48f4a2a23a79f48f0168a7e62a",
+                "state": "received"
+              },
+              "versions": {
+                "issue": "2026-11-17T08:05:02.413Z",
+                "receipt": "2026-11-17T08:05:02.582Z"
+              }
+            }
+          ],
+          "branches": [
+            {
+              "id": "wrong-template-or-stale-package",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "preparer",
+              "action": "Reject mismatched report form",
+              "expected": 409,
+              "actual": 409,
+              "versions": {
+                "preparation": 3,
+                "statements": 2,
+                "report": 2,
+                "digest": "fb728b3d6199fbf1b909fbe6f9a82f1f0c4cba48f4a2a23a79f48f0168a7e62a"
+              }
+            },
+            {
+              "id": "independent-issuer-required",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "reviewer",
+              "action": "Reject unauthorized report authorization",
+              "expected": 403,
+              "actual": 403,
+              "versions": {
+                "preparation": 3,
+                "statements": 2,
+                "report": 2,
+                "digest": "fb728b3d6199fbf1b909fbe6f9a82f1f0c4cba48f4a2a23a79f48f0168a7e62a"
+              }
+            },
+            {
+              "id": "renewed-preparation-stales-release",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "partner",
+              "action": "Reject old authorization after preparation changes",
+              "expected": 409,
+              "actual": 409,
+              "versions": {
+                "oldDigest": "6584b1ab5b75b620f391482dcf122377af45f71f0dd1ec7f09a1d0c54c6a3dd4",
+                "newDigest": "fb728b3d6199fbf1b909fbe6f9a82f1f0c4cba48f4a2a23a79f48f0168a7e62a"
+              }
+            },
+            {
+              "id": "signature-and-receipt-required",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "partner",
+              "action": "Reject unsigned issue and premature archive",
+              "expected": {
+                "issue": 409,
+                "lock": 409
+              },
+              "actual": {
+                "issue": 409,
+                "lock": 409
+              },
+              "versions": {
+                "preparation": 3,
+                "statements": 2,
+                "report": 2,
+                "digest": "fb728b3d6199fbf1b909fbe6f9a82f1f0c4cba48f4a2a23a79f48f0168a7e62a"
+              }
+            },
+            {
+              "id": "idempotent-issue-and-changed-payload",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "partner",
+              "action": "Reject reuse of an issue retry identity with changed content",
+              "expected": 409,
+              "actual": 409,
+              "versions": {
+                "issue": "2026-11-17T08:05:02.413Z",
+                "key": "7ac2f93e-41d1-423e-ad8c-3c64c581cc40"
+              }
+            },
+            {
+              "id": "ambiguous-delivery-reconciled-before-retry",
+              "engagement": "E-d4191828-f2d7-401e-b996-df19c3110272",
+              "actor": "partner",
+              "action": "Reconcile unknown outcome before issuing another recipient link",
+              "expected": {
+                "retry": 409,
+                "events": [
+                  "unknown",
+                  "failed"
+                ]
+              },
+              "actual": {
+                "retry": 409,
+                "events": [
+                  "unknown",
+                  "failed"
+                ]
+              },
+              "versions": {
+                "first": "1d090eb1cda54e71b0c00bd5579535be",
+                "retry": "cc5d502d406e5d4563e44e61175dacbe"
+              }
+            }
+          ],
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "line": 42,
+          "missingSteps": [],
+          "missingApplicableSteps": [],
+          "missingBranches": [],
+          "complete": true,
+          "applicableComplete": true
+        }
+      ]
+    }
+  ],
+  "wholeApplicationCycles": {
+    "total": 51,
+    "complete": 9,
+    "applicable": 51,
+    "applicableComplete": 9
+  },
+  "newConnectedReference": "One accepted/planned engagement with all eight current G05 assessments and actual report/section decisions reaches exact authorization, signature, one issue, original full-statement receipt, independently reviewed assembly, seal and restart. Expected/actual observations are retained separately in G06_Connected_Proof.json.",
+  "note": "Existing qualified A26 lifecycle evidence remains its own scoped reference. Separate modified-opinion, wording, change and negative observations do not create additional complete lifecycles or independent source acceptance."
+}
