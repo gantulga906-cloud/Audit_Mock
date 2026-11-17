@@ -21,10 +21,14 @@ export type RegisterResources={
  extended:boolean;
  acceptanceManaged?:boolean;
  planning?:PlanningView;
+ reporting?:{enabled:boolean};
+ completion?:{findings:{id:string;title:string}[]};
+ requestContacts?:{id:string;name:string;email:string}[];
  requests?:RequestItem[];
 };
 const state:Record<RecordStatus,string>={draft:'Ноорог',submitted:'Хяналтад',returned:'Засварт',approved:'Баталсан'};
 const roleName=Object.fromEntries(roleChoices);
+const contactLabels=(value:string,resources:RegisterResources,basis?:PilotRecord['reportingBasis'])=>value.split('\n').filter(Boolean).map(id=>{const contact=basis?.recipients?.find(c=>c.id===id)??resources.requestContacts?.find(c=>c.id===id);return contact?contact.name+' · '+contact.email:'Өмнөх хүлээн авагч · бодит хүрээг түүхээс шалгах';}).join('; ');
 const rulesText:Record<string,string>={required:'Заавал',optional:'Сонголтоор',excluded:'Хамаарахгүй'};
 const latestPackageLabel='Одоогийн түгжсэн багц';
 const pinnedPackageLabel='Хүсэлтээр сонгосон түгжээтэй багц';
@@ -90,6 +94,7 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
  function options(field:RegisterField):readonly (readonly [string,string])[]|undefined{
   if(kind==='M08-F08'&&field.key==='request')return (resources.requests??[]).filter(r=>r.dispatch==='issued'&&r.parts?.some(p=>p.evidence===values.evidence)).map(r=>[r.id,r.id+' · '+r.title]);
   if(kind==='M08-F08'&&field.key==='part')return (resources.requests??[]).find(r=>r.id===values.request)?.parts?.filter(p=>p.evidence===values.evidence).map(p=>[p.id,p.title]);
+  if(kind==='M10-F09'&&field.key==='decisionFinding')return resources.completion?.findings.map(f=>[f.id,f.title]);
   if(field.type==='choice')return field.choices;
   if(planning&&field.key==='templateVersion')return templates.map(t=>[t.version,t.version==='source'?'Эх маягт':'Баталсан v'+t.version]);
   if(planning&&field.key==='procedure')return (templates.find(t=>t.version===values.templateVersion)?.procedures??[]).map(p=>[p.key,p.key+' · '+p.label]);
@@ -108,12 +113,13 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
   if(kind==='M12-F08'&&values.type==='release'&&field.key==='reference')return resources.registers.filter(r=>r.kind===kind&&r.values.package===values.package&&r.values.type==='hold').map(r=>[r.id,r.values.reference]);
  }
  return <form className="feature-form" data-register-kind={kind} onSubmit={save}>
-  <div className="field-grid">{def.fields.filter(f=>f.type!=='responses'&&(!f.forTypes||f.forTypes.includes(values.type))&&
+  <div className="field-grid">{def.fields.filter(f=>(!f.reporting||resources.reporting?.enabled)&&f.type!=='responses'&&(!f.forTypes||f.forTypes.includes(values.type))&&
    (!planning||!programmeFields.includes(f.key)||resources.extended&&values.decision==='adopt')).map(f=>{
    const choices=options(f),bound=kind==='M06-F06'&&!!values.populationLine&&['source','actual'].includes(f.key);
    const line=bound?sourceLines.find(l=>l.line===values.populationLine):undefined;
    const v=line?(f.key==='actual'?String(line.computed/100):resources.population!.current.name):(values[f.key]??'');
-   return <label key={f.key}>{f.label}{f.optional&&!(planning&&programmeFields.includes(f.key))&&!(kind==='M12-F04'&&f.forTypes)?' (сонголтоор)':''}
+   if(f.type==='contacts')return <fieldset key={f.key}><legend>{f.label}</legend>{resources.requestContacts?.map(c=><label key={c.id}><span><input type="checkbox" name={"recipient."+c.id} value={c.id} checked={v.split('\n').includes(c.id)} onChange={e=>set(f.key,e.target.checked?[...v.split('\n').filter(Boolean),c.id].join('\n'):v.split('\n').filter(id=>id!==c.id).join('\n'))}/>{c.name} · {c.email}</span></label>)}</fieldset>;
+   return <label key={f.key}>{f.label}{f.optional&&!f.reporting&&!(planning&&programmeFields.includes(f.key))&&!(kind==='M12-F04'&&f.forTypes)?' (сонголтоор)':''}
     {choices?<select name={'field.'+f.key} value={v} onChange={e=>set(f.key,e.target.value)}>
      <option value="">Сонгох</option>
      {v&&!choices.some(([id])=>id===v)&&<option value={v}>Өмнөх сонголт · {v}</option>}
@@ -166,7 +172,7 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
   <dl className="register-values">{def.fields.filter(f=>f.type!=='responses'&&row.values[f.key]).map(f=>{
    const v=row.values[f.key],file=f.type==='evidence'&&evidence.find(e=>e.id===v),linked=f.type==='record'&&resources.registers.find(r=>r.id===v);
    const fileLabel=file?file.name+' · v'+file.version:'';
-   const display=f.key==='package'&&v===latestArchiveSelection?pinnedPackageLabel:f.choices?.find(([key])=>key===v)?.[1]??v;
+   const display=f.type==='contacts'?contactLabels(v,resources,row.reportingBasis):f.key==='package'&&v===latestArchiveSelection?pinnedPackageLabel:f.choices?.find(([key])=>key===v)?.[1]??v;
    return <div key={f.key}><dt>{f.label}</dt><dd>{file?(resources.archive.packages.length&&!resources.archive.reopened?fileLabel:<a href={'/api/pilot/evidence/'+file.id+pilotScope(engagementId)}>{fileLabel}</a>):linked?<button type="button" className="quiet" onClick={()=>open(linked.id)}>{heading(linked)} · {linked.kind}</button>:display}</dd></div>;
   })}</dl>
   {row.template&&<p className="micro">{row.template.form} · {row.template.sheet} · {row.template.digest.slice(0,16)}</p>}
@@ -203,7 +209,7 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
    <Reason label="Буцаах шалтгаан" action={reason=>command('return',reason)}/>
   </div>}
   {related.length>0&&<div className="row-actions space-top">{related.map(r=><button type="button" className="quiet" key={r.id} onClick={()=>open(r.id)}>{r.kind} · {heading(r)}</button>)}</div>}
-  <details className="feature-detail"><summary>Хувилбарын түүх ({row.history.length})</summary>{row.history.map((h,i)=><details key={i}><summary>v{h.version} · {state[h.status]} · {roleName[h.by]} · {h.reason}</summary><p>{new Date(h.at).toLocaleString()}</p><dl className="register-values">{def.fields.filter(f=>h.values[f.key]).map(f=><div key={f.key}><dt>{f.label}</dt><dd>{f.choices?.find(([key])=>key===h.values[f.key])?.[1]??h.values[f.key]}</dd></div>)}</dl>
+  <details className="feature-detail"><summary>Хувилбарын түүх ({row.history.length})</summary>{row.history.map((h,i)=><details key={i}><summary>v{h.version} · {state[h.status]} · {roleName[h.by]} · {h.reason}</summary><p>{new Date(h.at).toLocaleString()}</p><dl className="register-values">{def.fields.filter(f=>h.values[f.key]).map(f=><div key={f.key}><dt>{f.label}</dt><dd>{f.type==='contacts'?contactLabels(h.values[f.key],resources,h.reportingBasis):f.choices?.find(([key])=>key===h.values[f.key])?.[1]??h.values[f.key]}</dd></div>)}</dl>
    {h.template&&<p className="micro">{h.template.form} · {h.template.sheet} · {h.template.digest.slice(0,16)}</p>}
    {h.declaration&&<p>{h.declaration.person?.name??roleName[h.declaration.by]} · {h.declaration.signedOn??h.declaration.at} · {h.declaration.text} · {h.declaration.disposition}</p>}
    {h.programmeBasis&&<PlanningBasis basis={h.programmeBasis}/>}

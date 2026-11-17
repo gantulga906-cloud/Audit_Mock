@@ -13,6 +13,7 @@ import { evidenceCurrent } from './pilot-requests.mjs';
 import {acceptanceFile} from './pilot-acceptance.mjs';
 import {executionPosition} from './pilot-execution.mjs';
 import {managedCompletion,finalisationStamp} from './pilot-finalisation.mjs';
+import {managedReporting,checkReportingRecord,reportingRecordStale} from './pilot-reporting.mjs';
 
 const contracts = JSON.parse(readFileSync(new URL('../src/data/source-registers.json', import.meta.url), 'utf8')).forms;
 const definition = id => registers.find(r => r.id === id);
@@ -28,6 +29,7 @@ const rows = (m, kind) => registerRows(m).filter(r => r.kind === kind);
 function stale(m, row, seen = new Set()) {
   if (seen.has(row.id)) return true;
   const path = new Set([...seen, row.id]);
+  if(reportingRecordStale(m,row))return true;
   if(planningRecordStale(m,row))return true;
   if(row.executionBasis&&row.executionBasis!==executionPosition(m))return true;
   if(row.finalisationBasis&&row.finalisationBasis!==finalisationStamp(m))return true;
@@ -420,6 +422,7 @@ function checkBusiness(m, row, spec, files) {
       break;
     }
     case 'M10-F11': {
+      if(!managedReporting(m)&&!v.wording)bad('Хэсгийн үг хэллэг шаардлагатай.');
       const contract = formContract(opinionForm(find(m, v.opinion).values.opinion));
       if (contract?.id !== v.template) bad('Санал дүгнэлтэд таарсан эх загвар сонгоно уу.');
       if (!contract) bad('Тайлангийн эх загвар сонгоно уу.');
@@ -452,6 +455,7 @@ function checkBusiness(m, row, spec, files) {
       break;
   }
   if (spec.fields.some(f => f.target === 'M07-F01') && find(m, v.programme)?.values.decision !== 'adopt') bad('Хэрэгжүүлсэн хөтөлбөр сонгоно уу.');
+  checkReportingRecord(m,row,files);
   checkPlanningRecord(m,row,refs,files);
   checkEvidenceRecord(m,row,files);
   if(row.kind==='M08-F08'){
@@ -486,6 +490,7 @@ export function registerAction(m, role, data, files) {
     if (row?.status === 'approved' && spec.section === 'archive') bad('Архивын баталсан үйлдлийг түүхээр хадгална. Шинэ бүртгэл үүсгэнэ үү.');
     if (!row && spec.id === 'M01-F01' && rows(m, spec.id).length) bad('Фирмийн одоогийн бүртгэлийг засна уу.');
     const values = validateInput(m, spec, data);
+    if(managedReporting(m)&&m.pilotIssue&&!m.archiveReopen?.target&&['M10-F09','M10-F10','M10-F11'].includes(spec.id)&&JSON.stringify(values)!==JSON.stringify(row?.values))bad('Гаргасан тайлангийн агуулгыг G07 зөвшөөрсөн дараагийн хувилбарын замаар өөрчилнө.');
     if (spec.id==='M12-F07'&&values.package===latestArchiveSelection) {
       values.package=row?.values.package??files.archive.currentForRequest(m);
     }
@@ -517,6 +522,7 @@ export function registerAction(m, role, data, files) {
     delete row.adoptionAcknowledgement;
     delete row.evidenceBasis;
     delete row.assemblyBasis;
+    delete row.reportingBasis;
     row.populationBasis = populationBasis;
     row.version++;
     remember(row, role, 'draft', 'Ноорог хадгалав');

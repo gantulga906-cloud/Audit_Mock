@@ -24,6 +24,8 @@ import {SamplingV2Desk} from './pilot-sampling-v2';
 import {JournalDesk,PopulationDesk,SampleDesk} from './pilot-population';
 import {MaterialityBasisFields,MaterialityBasisSummary,type MaterialityTarget} from './pilot-materiality';
 import {AreaDesk} from './pilot-area';
+import {ReportingDesk} from './pilot-reporting';
+import type {ReportingView} from '@/lib/pilot-reporting';
 import {CompletionDesk,type CompletionView} from './pilot-completion';
 import {LaterFactsDesk,type LaterFact} from './pilot-later-facts';
 import {IndependentDesk,OversightDesk,ReportRecipient,type OversightView,type ReleaseView} from './pilot-oversight';
@@ -71,6 +73,7 @@ export type View=RegisterResources&{
  samples?:Record<string,SampleView>;journals?:Record<string,JournalRun>;areas?:Record<string,AreaRun>;fieldFindings?:Finding[];
  fieldwork?:string[];statementLines?:Record<string,number>;impacts?:Model['impacts'];
  delivery?:Pick<Model,'person'|'tasks'|'events'>&{id:string};
+ reporting?:ReportingView;
  activity?:Model['activity'];authorized?:{current:boolean;at:string;report:number;fs:number;count:number;artifactSha256?:string};
  assembly?:AssemblyView;
 };
@@ -572,12 +575,12 @@ function SharedPilotWorkspace(){
        {view.role==='reviewer'&&<ActionForm run={run} action="resolve-impact" extra={{id:impact.id}} button="Нөлөөллийн үнэлгээг бүртгэх"><label>Шийдвэрийн үндэслэл<input name="reason" required/></label></ActionForm>}
       </section>)}
 {view.oversight&&<OversightDesk managed={view.completion?.finalisation?.enabled??false} papers={view.papers??[]} evidence={view.evidence??[]} view={view.oversight} role={view.role} sealed={sealed} archive={view.archive.packages[0]?.id} run={run}/>}</>}
-    {route.page==='completion'&&<>{engagement.active&&!sealed&&view.completion&&<CompletionDesk registers={view.registers??[]} data={view.completion} role={view.role} papers={view.papers??[]} evidence={view.evidence??[]} engagement={view.selected!} run={run}/ >}{registers(['fieldwork','completion'])}      <section className="card pad bench-card">
+    {route.page==='completion'&&<>{!sealed&&<ReportingDesk data={view.reporting} role={view.role} run={run} completionEnabled={view.completion?.finalisation?.enabled??false}/>}{engagement.active&&!sealed&&view.completion&&<CompletionDesk registers={view.registers??[]} data={view.completion} role={view.role} papers={view.papers??[]} evidence={view.evidence??[]} engagement={view.selected!} run={run}/ >}{registers(['fieldwork','completion'])}      <section className="card pad bench-card">
        <h2>Партнерын багцын зөвшөөрөл</h2>
-       {(view.extended||view.completion?.management||view.archive.reopened?.target)&&view.role==='partner'&&!sealed&&<ActionForm key={engagement.reportDate} run={run} action="report-date" button="Зорилтот тайлангийн өдрийг шинэчлэх">
+       {(view.extended||view.completion?.management||view.archive.reopened?.target)&&view.role==='partner'&&!sealed&&(!view.reporting?.enabled||!view.archive.issue||!!view.archive.reopened?.target)&&<ActionForm key={engagement.reportDate} run={run} action="report-date" button="Зорилтот тайлангийн өдрийг шинэчлэх">
         <label>Зорилтот тайлангийн өдөр<input type="date" name="date" min={engagement.period.end} defaultValue={engagement.reportDate} required/></label>
        </ActionForm>}
-       {view.role==='partner'&&(!view.archive.packages.length||view.archive.reopened)&&<ActionForm key={engagement.statements?.version} run={run} action="statements" button="СТ ба тодруулгыг тайланд холбох">
+       {view.role==='partner'&&(!view.archive.packages.length||view.archive.reopened)&&(!view.reporting?.enabled||!view.archive.issue||!!view.archive.reopened?.target)&&<ActionForm key={engagement.statements?.version} run={run} action="statements" button="СТ ба тодруулгыг тайланд холбох">
         <label>Санхүүгийн тайлангийн агуулга<textarea name="statements" defaultValue={engagement.statements?.statements} required/></label>
         <label>Тодруулгын агуулга<textarea name="disclosures" defaultValue={engagement.statements?.notes} required/></label>
         {view.extended&&<label>СТ мөрүүд · мөр бүрд КОД,ДҮН<textarea name="lines" placeholder="PPE,120" defaultValue={Object.entries(view.statementLines??{}).map(([code,amount])=>code+','+amount).join('\n')} required/></label>}
@@ -596,7 +599,7 @@ function SharedPilotWorkspace(){
         <ActionForm run={run} action="issue" button="Гаргалтыг бүртгэх"><label>Бодит гаргалтын бүртгэлийн ишлэл<input name="reference" required/></label></ActionForm>
         {view.archive.issue&&view.release?.signature&&<ActionForm run={run} action="delivery-start" button="Локал хүргэлтийн холбоос үүсгэх">
          <label>Хянасан хүлээн авагч<select name="recipient" required><option value="">Сонгох</option>
-          {view.requestContacts?.map(contact=><option key={contact.id} value={contact.id}>{contact.name} · {contact.email}</option>)}
+          {view.requestContacts?.filter(contact=>!view.reporting?.enabled||view.reporting.recipients?.some(r=>r.id===contact.id)).map(contact=><option key={contact.id} value={contact.id}>{contact.name} · {contact.email}</option>)}
          </select></label>
         </ActionForm>}
         {view.deliveryLink&&<p><a href={'/pilot#delivery='+view.deliveryLink.token} target="_blank" rel="noopener noreferrer">Хүлээн авагчийн холбоос</a> · {view.deliveryLink.recipient}</p>}
@@ -604,8 +607,9 @@ function SharedPilotWorkspace(){
          {d.events?.map((event,i)=><p className="micro" key={i}>{event.at.slice(0,16)} · {event.reference} · {event.reason}</p>)}
          {!sealed&&d.issued===view.archive.issue?.at&&['pending','unknown'].includes(d.state)&&<details><summary>Хүргэлтийн бодит үр дүн бүртгэх</summary><ActionForm run={run} action="delivery-result" extra={{id:d.id}} button="Үр дүн хадгалах"><label>Үр дүн<select name="state"><option value="failed">Амжилтгүйг баталгаажуулсан</option><option value="unknown">Өмнөх оролдлогын үр дүн тодорхойгүй</option><option value="withdrawn">Энэ хүлээн авагчийн хүргэлтийн шаардлагыг цуцалсан</option></select></label><label>Бодит эх баримт эсвэл эрхийн ишлэл<input name="reference" required/></label><label>Тодруулсан үр дүн, дараагийн эзэн ба үндэслэл<textarea name="reason" required/></label></ActionForm></details>}
         </div>)}
+        {view.reporting?.enabled&&view.release?.distributionGaps?.map(g=><p className="callout amber" key={g}>{g}</p>)}
         {view.archive.issue&&<button type="button" className="btn secondary space-top"
-         disabled={view.release?.strict&&!view.release.deliveries.some(d=>d.issued===view.archive.issue?.at&&d.state==='received')}
+         disabled={view.reporting?.enabled?!!view.release?.distributionGaps?.length:view.release?.strict&&!view.release.deliveries.some(d=>d.issued===view.archive.issue?.at&&d.state==='received')}
          onClick={()=>void run('archive-seal')}>Гаргасан багцыг архивт түгжих</button>}
        </>}
       </section>

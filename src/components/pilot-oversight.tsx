@@ -18,7 +18,7 @@ function FinalQualityDesk({q,papers,evidence,role,run}:{q?:Quality;papers:WorkIt
  return <details className="feature-detail" data-final-quality><summary>Томилсон R4 эцсийн баталгаа · формал EQR-ээс тусдаа</summary>{role==='partner'&&<form className="feature-form" onSubmit={submit}><div className="field-grid"><label>Томилсон шаардлага<select name="mode" defaultValue={q?.policy.mode??'unresolved'}><option value="unresolved">Тодорхойгүй</option><option value="required">Томилсон хүрээнд шаардлагатай</option><option value="not-required">Энэ хүрээнд томилоогүй</option></select></label><label>Бодлого, хэвлэл ба эрхийн ишлэл<input name="reference" required/></label><label>Томилсон / томилоогүй бодит үндэс<textarea name="basis" required/></label><label>Хянагчийн бодит нэр<input name="reviewer"/></label><label>Шалгуурын шийдвэр<select name="eligibilityStatus"><option value="unresolved">Тодорхойгүй</option><option value="ineligible">Хангаагүй</option><option value="eligible">Бодит эхээр хангадаг</option></select></label><label>Бодит мэргэшил, эрх, өмнөх оролцоо ба цаг<textarea name="eligibility"/></label><EligibilityFields evidence={evidence}/></div><fieldset><legend>Яг томилсон ажлууд</legend>{papers.map(p=><label key={p.form}><span><input type="checkbox" name="scope" value={p.form} defaultChecked={q?.policy.forms?.includes(p.form)}/>{p.form} · {p.title}</span></label>)}</fieldset><button className="btn secondary">Тусдаа эцсийн хяналтын шийдвэр хадгалах</button></form>}
  {q&&<p>v{q.policy.version} · {q.policy.mode} · {q.policy.forms?.join(', ')} · {q.current?'Одоогийн хүрээнд баталсан':'Шийдвэр / бодит хяналт хүлээж байна'}</p>}{q?.notes.map(note=><div key={note.id}><p>{note.text} · {note.cleared?'Тусдаа хаасан':'Нээлттэй'}</p>{!note.cleared&&role!=='preparer'&&<DataAction action="quality-final-response" extra={{id:note.id}} run={run} button="Яг томилсон хүрээнд хариу өгөх"><label>Бодит хариу ба засвар<textarea name="reason" required/></label></DataAction>}</div>)}</details>;
 }
-export type ReleaseView={strict:boolean;signature?:{method:string;at:string;artifact:string};
+export type ReleaseView={strict:boolean;distributionGaps?:string[];signature?:{method:string;at:string;artifact:string};
  deliveries:{id:string;issued:string;recipient:string;state:string;downloaded?:string;received?:string;response?:string;
  events?:{state:string;at:string;actor:string;reference:string;reason:string}[]}[]};
 const api='/api/pilot';
@@ -156,9 +156,10 @@ export function IndependentDesk({role}:{role:IndependentRole}){
 
 export function ReportRecipient({token}:{token:string}){
  const path='/delivery/'+token;
- const [data,setData]=useState<{contact:string;recipient:string;form:string;sha256:string}|null>(null);
+ type Recipient={contact:string;recipient:string;form:string;sha256:string;packageSha256?:string;statements?:{sha256:string};notes?:{sha256:string}};
+ const [data,setData]=useState<Recipient|null>(null);
  const [error,setError]=useState(''),[sent,setSent]=useState(false);
- useEffect(()=>{jsonRequest<{contact:string;recipient:string;form:string;sha256:string}>(path).then(setData).catch(e=>setError(e.message));},[path]);
+ useEffect(()=>{jsonRequest<Recipient>(path).then(setData).catch(e=>setError(e.message));},[path]);
  const receive:PilotAction=async(_,fields={})=>{
   try{await jsonRequest(path,fields);setSent(true);setError('');return true;}
   catch(e){setError((e as Error).message);return false;}
@@ -169,7 +170,8 @@ export function ReportRecipient({token}:{token:string}){
   {sent?<p>Яг энэ тайлангийн хүлээн авалтыг бүртгэлээ.</p>:data&&<>
    <p>{data.contact} · {data.recipient} · {data.form}</p><p className="micro break-all">SHA-256 {data.sha256}</p>
    <a className="btn secondary" href={api+path+'/artifact'}>Тайлан татах</a>
-   <DataAction run={receive} action="receive" extra={{sha256:data.sha256}} button="Хүлээн авснаа бүртгэх">
+   {data.packageSha256&&<><p className="micro break-all">Яг багц SHA-256 {data.packageSha256}</p><p>Хүлээн авалтаас өмнө тайлан, бүтэн СТ ба тодруулгыг тус бүр татаж шалгана.</p><a className="btn secondary" href={api+path+'/statements'}>Бүтэн санхүүгийн тайлан татах</a><p className="micro break-all">SHA-256 {data.statements?.sha256}</p><a className="btn secondary" href={api+path+'/notes'}>Тодруулга татах</a><p className="micro break-all">SHA-256 {data.notes?.sha256}</p></>}
+   <DataAction run={receive} action="receive" extra={{sha256:data.sha256,...(data.packageSha256&&{packageSha256:data.packageSha256})}} button="Хүлээн авснаа бүртгэх">
     <label>Хүлээн авсан тэмдэглэл<input name="response" required/></label>
    </DataAction>
   </>}

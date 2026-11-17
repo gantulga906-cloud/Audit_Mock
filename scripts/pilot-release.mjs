@@ -1,6 +1,7 @@
 import { createHash, generateKeyPairSync, randomBytes, sign, verify } from 'node:crypto';
 import { recordEvent } from '../src/lib/workspace.ts';
 import { currentApproval, input, PilotError } from './pilot-workflow.mjs';
+import {managedReporting,reportRecipient,reportingIOGaps} from './pilot-reporting.mjs';
 
 const fail=(message,status=409)=>{throw new PilotError(status,message);};
 const now=()=>new Date().toISOString();
@@ -11,7 +12,8 @@ export const strictRelease=m=>!!(m.pilotManagement||m.pilotQuality||m.pilotSigna
 export function distributionGaps(m,deliveries){
  if(!(m.pilotRecords??[]).some(r=>r.kind==='M10-F10'))return [];
  const current=deliveries.filter(row=>row.issued===m.pilotIssue?.at),groups=Map.groupBy(current,row=>row.recipient);
- return [...groups].filter(([,attempts])=>!attempts.some(row=>row.state==='received')&&attempts[0].state!=='withdrawn').map(([recipient])=>recipient+' · Хүргэлт, тодорхойгүй үр дүн эсвэл хүлээн авалтыг шийдвэрлэнэ үү');
+ if(managedReporting(m))for(const recipient of m.pilotIssue?.recipients??[])if(!groups.has(recipient.email))groups.set(recipient.email,[]);
+ return [...groups].filter(([,attempts])=>!attempts.some(row=>row.state==='received')&&attempts[0]?.state!=='withdrawn').map(([recipient])=>recipient+' · Хүргэлт, тодорхойгүй үр дүн эсвэл хүлээн авалтыг шийдвэрлэнэ үү');
 }
 export function signatureMatches(signature,artifact) {
   if (!signature||!artifact||signature.artifact!==artifact.sha256||hash(artifact.html)!==artifact.sha256) return false;
@@ -26,7 +28,7 @@ export function currentSignature(m,files) {
 
 export function signReport(m,role,files) {
   if (role!=='partner') fail('Тайлангийн эрх бүхий партнер шаардлагатай.',403);
-  if (!currentApproval(m,m.engagements[0])) fail('Одоогийн яг тайлангийн зөвшөөрөл шаардлагатай.');
+  if (!currentApproval(m,m.engagements[0],files)) fail('Одоогийн яг тайлангийн зөвшөөрөл шаардлагатай.');
   if (currentSignature(m,files)) return;
   if (m.pilotIssue?.authorizationAt===m.engagements[0].authorized.at) fail('Өмнө гаргасан тайланд шинэ гарын үсэг оруулахын тулд дахин зөвшөөрнө үү.');
   const signed=files.authorization()?.authorization, artifact=signed?.artifact;
@@ -45,11 +47,11 @@ export function createReleaseStore(db,store,filesFor) {
     created TEXT NOT NULL, expires INTEGER NOT NULL, state TEXT NOT NULL, downloaded TEXT, received TEXT, response TEXT
   ); CREATE INDEX IF NOT EXISTS pilot_report_delivery_scope ON pilot_report_delivery(engagement,issued);`);
   const columns=new Set(db.prepare('PRAGMA table_info(pilot_report_delivery)').all().map(r=>r.name));
-  for(const name of ['outcome_at','outcome_by','outcome_reference'])if(!columns.has(name))db.exec('ALTER TABLE pilot_report_delivery ADD COLUMN '+name+' TEXT');
+  for(const name of ['outcome_at','outcome_by','outcome_reference','statements_downloaded','notes_downloaded'])if(!columns.has(name))db.exec('ALTER TABLE pilot_report_delivery ADD COLUMN '+name+' TEXT');
   db.exec(`CREATE TABLE IF NOT EXISTS pilot_report_delivery_events (id INTEGER PRIMARY KEY,delivery TEXT NOT NULL,engagement TEXT NOT NULL,state TEXT NOT NULL,at TEXT NOT NULL,actor TEXT NOT NULL,reference TEXT NOT NULL,reason TEXT NOT NULL);`);
   const state=(row)=>row.state==='pending'&&row.expires<=Date.now()?'expired':row.state;
   function view(id) {
-    return db.prepare('SELECT id,issued,artifact,recipient,contact,created,expires,state,downloaded,received,response,outcome_at,outcome_by,outcome_reference FROM pilot_report_delivery WHERE engagement=? ORDER BY created DESC,rowid DESC')
+    return db.prepare('SELECT id,issued,artifact,recipient,contact,created,expires,state,downloaded,received,response,outcome_at,outcome_by,outcome_reference,statements_downloaded,notes_downloaded FROM pilot_report_delivery WHERE engagement=? ORDER BY created DESC,rowid DESC')
       .all(id).map(row=>({...row,state:state(row),events:db.prepare('SELECT state,at,actor,reference,reason FROM pilot_report_delivery_events WHERE engagement=? AND delivery=? ORDER BY id').all(id,row.id)}));
   }
   function start(m,role,data) {
@@ -57,7 +59,9 @@ export function createReleaseStore(db,store,filesFor) {
     const files=filesFor(m.engagement), issue=m.pilotIssue;
     if (files.archive.isSealed(m)||!issue||!currentApproval(m,m.engagements[0])||!issue.signature||
         issue.authorizationAt!==m.engagements[0].authorized?.at||!currentSignature(m,files)) fail('Одоогийн гарын үсэгтэй гаргалт шаардлагатай.');
-    const contact=m.bench.clients[m.engagement].contacts.find(c=>c.id===data.recipient);
+    const contact=managedReporting(m)?reportRecipient(m,files,data.recipient):m.bench.clients[m.engagement].contacts.find(c=>c.id===data.recipient);
+    if(reportingIOGaps(m,files).length)fail('Яг зөвшөөрсөн тайлан / СТ ба эхийн хэш шаардлагатай.');
+    if(managedReporting(m)&&db.prepare("SELECT 1 FROM pilot_report_delivery WHERE engagement=? AND issued=? AND recipient=? AND state='withdrawn'").get(m.engagement,issue.at,contact.email))fail('Цуцалсан хүргэлтийг чимээгүй сэргээхгүй. Зөвшөөрсөн өөрчлөлтийн зам шаардлагатай.');
     if (!contact?.email||!contact.name) fail('Хянасан хүлээн авагч сонгоно уу.');
     const pending=db.prepare(`SELECT 1 FROM pilot_report_delivery WHERE engagement=? AND issued=? AND recipient=? AND
       (state IN ('received','unknown') OR state='pending' AND expires>?)`).get(m.engagement,issue.at,contact.email,Date.now());
@@ -66,13 +70,14 @@ export function createReleaseStore(db,store,filesFor) {
     db.prepare(`INSERT INTO pilot_report_delivery (token_hash,id,engagement,issued,authorization,artifact,recipient,contact,created,expires,state)
       VALUES (?,?,?,?,?,?,?,?,?,?,'pending')`).run(hash(token),id,m.engagement,issue.at,issue.authorizationAt,issue.reportSha256,
         contact.email,contact.name,now(),Date.now()+86_400_000);
+    if(managedReporting(m))db.prepare('INSERT INTO pilot_report_delivery_events(delivery,engagement,state,at,actor,reference,reason) VALUES (?,?,?,?,?,?,?)').run(id,m.engagement,'pending',now(),role,issue.reportSha256,'Локал холбоос үүсгэсэн; бодит гадаад илгээлт эсвэл хүлээн авалт биш');
     recordEvent(m,'Локал тайлангийн хүргэлт үүсгэв · '+contact.name);
     return {token,id,recipient:contact.email};
   }
   function recordOutcome(m,role,data){
     if(role!=='partner')fail('Хүргэлтийн үр дүнг эрх бүхий партнер бүртгэнэ.',403);
     const row=db.prepare('SELECT * FROM pilot_report_delivery WHERE engagement=? AND id=?').get(m.engagement,data.id);
-    if(filesFor(m.engagement).archive.isSealed(m)||!row||row.issued!==m.pilotIssue?.at||!currentApproval(m,m.engagements[0]))fail('Нээлттэй одоогийн гаргалтын хүргэлт шаардлагатай.');
+    if(filesFor(m.engagement).archive.isSealed(m)||!row||row.issued!==m.pilotIssue?.at||!currentApproval(m,m.engagements[0],filesFor(m.engagement)))fail('Нээлттэй одоогийн гаргалтын хүргэлт шаардлагатай.');
     if(!['pending','unknown'].includes(row.state)||!['failed','unknown','withdrawn'].includes(data.state))fail('Хүлээн авсан эсвэл эцэслэсэн үр дүнг өөрчлөхгүй.');
     const reference=input(data,'reference',200),reason=input(data,'reason'),at=now();
     db.prepare('INSERT INTO pilot_report_delivery_events(delivery,engagement,state,at,actor,reference,reason) VALUES (?,?,?,?,?,?,?)').run(row.id,m.engagement,data.state,at,role,reference,reason);
@@ -85,25 +90,36 @@ export function createReleaseStore(db,store,filesFor) {
     const {model:m}=store.load('partner',row.engagement), files=filesFor(row.engagement), issue=m.pilotIssue;
     const artifact=files.authorization()?.authorization.artifact;
     if (issue?.at!==row.issued||issue.authorizationAt!==row.authorization||artifact?.sha256!==row.artifact||
-        !currentApproval(m,m.engagements[0])||!signatureMatches(issue.signature,artifact)) missing();
-    return {row,issue,artifact};
+        !currentApproval(m,m.engagements[0],files)||!signatureMatches(issue.signature,artifact)) missing();
+    return {row,issue,artifact,model:m,files};
   }
   function read(token) {
     const {row,issue,artifact}=available(token);
     return {recipient:row.recipient,contact:row.contact,form:artifact.form,sha256:artifact.sha256,
-      signedAt:issue.signature.at,downloaded:row.downloaded};
+      signedAt:issue.signature.at,downloaded:row.downloaded,...(artifact.statementPackage&&{packageSha256:artifact.packageSha256,statements:artifact.statementPackage.file,notes:artifact.statementPackage.notes,statementsDownloaded:row.statements_downloaded,notesDownloaded:row.notes_downloaded})};
   }
   function download(token) {
     const {row,artifact}=available(token);
     db.prepare('UPDATE pilot_report_delivery SET downloaded=COALESCE(downloaded,?) WHERE id=?').run(now(),row.id);
     return artifact;
   }
+  function attachment(token,kind){
+    if(!['statements','notes'].includes(kind))missing();
+    const {row,artifact,files,model:m}=available(token),ref=artifact.statementPackage?.[kind==='statements'?'file':'notes'],file=ref&&files.read(ref.id);
+    if(!managedReporting(m)||!file||file.sha256!==ref.sha256||hash(file.bytes)!==ref.sha256)missing();
+    const column=kind==='statements'?'statements_downloaded':'notes_downloaded';db.prepare('UPDATE pilot_report_delivery SET '+column+'=COALESCE('+column+',?) WHERE id=?').run(now(),row.id);
+    return {...file,name:files.get(ref.id).name};
+  }
   function receive(token,data) {
-    const {row}=available(token);
+    const prior=db.prepare("SELECT * FROM pilot_report_delivery WHERE token_hash=? AND state='received'").get(hash(token));
+    if(prior){const {model:m}=store.load('partner',prior.engagement);if(managedReporting(m)){const priorArtifact=db.prepare('SELECT snapshot FROM authorizations WHERE engagement_id=? ORDER BY id').all(prior.engagement).map(r=>JSON.parse(r.snapshot).authorization).find(a=>a.at===prior.authorization)?.artifact;if(data.sha256!==prior.artifact||data.packageSha256!==priorArtifact?.packageSha256||data.response!==prior.response)fail('Хүлээн авсан яг үр дүнтэй өөр агуулгаар дахин илгээхгүй.');return {at:prior.received,sha256:prior.artifact};}}
+    const {row,artifact,model:m}=available(token);
+    if(managedReporting(m)&&(!row.statements_downloaded||!row.notes_downloaded||data.packageSha256!==artifact.packageSha256))fail('Яг тайлан, бүтэн СТ ба тодруулгыг татаж багцын хэшийг баталгаажуулна.');
     if (!row.downloaded||data.sha256!==row.artifact) fail('Яг энэ тайланг татаж хүлээн авна уу.');
     const at=now(), response=input(data,'response',1000);
     db.prepare("UPDATE pilot_report_delivery SET state='received',received=?,response=? WHERE id=?").run(at,response,row.id);
+    if(managedReporting(m))db.prepare('INSERT INTO pilot_report_delivery_events(delivery,engagement,state,at,actor,reference,reason) VALUES (?,?,?,?,?,?,?)').run(row.id,row.engagement,'received',at,row.recipient,artifact.packageSha256,response);
     return {at,sha256:row.artifact};
   }
-  return {start,recordOutcome,view,read,download,receive};
+  return {start,recordOutcome,view,read,download,attachment,receive};
 }

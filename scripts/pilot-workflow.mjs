@@ -28,6 +28,7 @@ import { completionAction, completionEvidence, completionGaps, completionRef, co
 import {completionAffectsAudit} from './pilot-finalisation.mjs';
 import { oversightTeamAction, oversightTeamView, qualityGaps, qualityRef } from './pilot-oversight.mjs';
 import { currentSignature, signReport, strictRelease,distributionGaps } from './pilot-release.mjs';
+import {managedReporting,reportingEnable,reportingGaps,reportingIOGaps,reportingIssueGuard,reportingView} from './pilot-reporting.mjs';
 import { archiveAmendmentBasis, archiveAmendmentGap, archiveAmendmentRevision } from './pilot-archive.mjs';
 import { materialityBasis, materialityGap, materialityTargets, materialityValues, syncMateriality, updateMaterialityBasis } from './pilot-materiality.mjs';
 import { activeTermsGap } from './pilot-intake.mjs';
@@ -158,7 +159,7 @@ function pilotGaps(m,includeQuality=true) {
     ...fieldworkForms(m).map(form=>fieldworkGap(m,form)).filter(Boolean),
     ...(!m.extendedPilot && !isCurrentReview(m.work[workKey(m.engagement, workstream)]) ? ['3.1.2 · Одоогийн хувилбарын ахлахын хяналт'] : []),
     ...reportGaps(reportWorkspace(m), m.engagement),
-    ...completionRegisterGaps(m),
+    ...completionRegisterGaps(m),...reportingGaps(m),
     ...completionGaps(m),...[materialityGap(m),archiveAmendmentGap(m),activeTermsGap(m),laterFactGap(m)].filter(Boolean),
     ...(includeQuality?qualityGaps(m):[]),
     ...technicalGaps(m),
@@ -167,8 +168,8 @@ function pilotGaps(m,includeQuality=true) {
   ];
 }
 
-export function currentApproval(m, engagement) {
-  return authorizationCurrent(reportWorkspace(m), engagement) &&
+export function currentApproval(m, engagement, files) {
+  return !reportingGaps(m).length&&!reportingIOGaps(m,files).length&&authorizationCurrent(reportWorkspace(m), engagement) &&
     (m.pilotAuthorization ? m.pilotAuthorization === registerStamp(m) : !registerPackage(m).length) &&
     (!m.extendedPilot || !!m.pilotReportDigest) &&
     (m.pilotCompletionAuthorization??':')===completionRef(m) &&
@@ -233,11 +234,11 @@ export function syncReportForm(m) {
 
 export function pilotReport(m, files) {
   if (!m.engagements[0]?.intake.active) throw new PilotError(409, 'Идэвхтэй гэрээт ажил шаардлагатай.');
-  if (currentApproval(m, m.engagements[0])) {
+  if (currentApproval(m, m.engagements[0],files)) {
     const artifact = files.authorization()?.authorization.artifact;
     if (artifact) return artifact;
   }
-  if (files.archive.isSealed(m) || pilotGaps(m).length) throw new PilotError(409, 'Тайлангийн одоогийн хяналт шаардлагатай.');
+  if (files.archive.isSealed(m) || pilotGaps(m).length || reportingIOGaps(m,files).length) throw new PilotError(409, 'Тайлангийн одоогийн хяналт шаардлагатай.');
   return renderReport(m);
 }
 
@@ -295,7 +296,7 @@ export function pilotView(m, role, revision, files) {
   });
   return {
     role, revision, ...resources, fieldwork: fieldworkForms(m), statementLines: m.pilotStatementLines ?? {},
-    planning:planningView(m,role),
+    planning:planningView(m,role),reporting:reportingView(m,files),
     dataMethods:dataView(m),
     requestCoverage:requestCoverage(m),
     ...(role==='partner'&&{laterFacts:laterFactView(m)}),
@@ -321,12 +322,12 @@ export function pilotView(m, role, revision, files) {
     ...(engagement.intake.active&&!sealed&&{completion:completionView(m,role!=='preparer')}),
     ...(engagement.intake.active&&{assembly:assemblyStatus(m,files.authorization(),files.read)}),
     ...(role!=='preparer'&&{oversight:oversightTeamView(m)}),
-    ...(role==='partner'&&{release:{strict:strictRelease(m),signature:currentSignature(m,files),deliveries:files.deliveries()}}),
+    ...(role==='partner'&&{release:{strict:strictRelease(m),signature:currentSignature(m,files),deliveries:files.deliveries(),distributionGaps:distributionGaps(m,files.deliveries())}}),
     ...((m.pilotSamples||m.pilotJournals||m.pilotAreaRuns||m.pilotExecution) && {fieldFindings:m.findings.filter(f=>/^(SAMPLE|PROJECTION|JOURNAL|AREA|MANUAL)-/.test(f.id))}),
-    gaps: pilotGaps(m), activity: m.activity.slice(0, 30),
+    gaps: [...pilotGaps(m),...reportingIOGaps(m,files)], activity: m.activity.slice(0, 30),
     authorized: engagement.authorized && {
       at: engagement.authorized.at, report: engagement.authorized.report, fs: engagement.authorized.fs,
-      current: currentApproval(m, engagement), count: engagement.authorizationHistory.length,
+      current: currentApproval(m, engagement, files), count: engagement.authorizationHistory.length,
       artifactSha256: m.pilotReportDigest,
     },
   };
@@ -387,6 +388,8 @@ export function pilotAction(m, role, action, data, files) {
   }
   const engagement = m.engagements[0];
   if (!engagement) throw new PilotError(409, 'Гэрээт ажил үүсгэнэ үү.');
+  if(action==='reporting-enable'){if(sealed)throw new PilotError(409,'Архив түгжээтэй.');if(managedStaffing(m))requireSeat(m,files,role);reportingEnable(m,role,data);invalidateReport(m,'G06 · Яг тайлангийн горим сонгосон');return;}
+  if(managedReporting(m)&&m.pilotIssue&&!m.archiveReopen?.target&&['report-date','statements'].includes(action))throw new PilotError(409,'Гаргасан тайлангийн өөрчлөлтөд G07 зөвшөөрсөн дараагийн хувилбар шаардлагатай.');
   if (action.startsWith('later-fact-')) {
     if (managedStaffing(m)) requireSeat(m,files,role);
     laterFactAction(m,role,action,data,files);
@@ -543,7 +546,8 @@ export function pilotAction(m, role, action, data, files) {
   }
   if (action === 'issue') {
     requireActor(role === 'partner');
-    if (!currentApproval(m, engagement) || pilotGaps(m).length) throw new PilotError(409, 'Одоогийн багцын зөвшөөрөл шаардлагатай.');
+    reportingIssueGuard(m,files);
+    if (!currentApproval(m, engagement, files) || pilotGaps(m).length) throw new PilotError(409, 'Одоогийн багцын зөвшөөрөл шаардлагатай.');
     if (m.pilotIssue?.authorizationAt === engagement.authorized.at) return;
     const signature=currentSignature(m,files);
     if (strictRelease(m)&&!signature) throw new PilotError(409,'Яг энэ зөвшөөрсөн тайланд локал гарын үсэг шаардлагатай.');
@@ -554,7 +558,8 @@ export function pilotAction(m, role, action, data, files) {
       throw new PilotError(409, 'Зөвшөөрсөн тайлангийн хэш таарахгүй.');
     }
     m.pilotIssue = { at: new Date().toISOString(), by: role, reference, authorizationAt: engagement.authorized.at, reportSha256: artifact?.sha256,
-      ...(signature&&{signature}) };
+      ...(signature&&{signature}),...(managedReporting(m)&&{packageSha256:artifact.packageSha256,statements:artifact.statementPackage,recipients:reportingView(m,files).recipients,preparation:reportingView(m,files).preparation.id}) };
+    if(managedReporting(m))(m.pilotIssues??=[]).push(structuredClone(m.pilotIssue));
     return;
   }
   if (isRequestAction(action)) {
@@ -582,7 +587,7 @@ export function pilotAction(m, role, action, data, files) {
   }
   if (action === 'authorize') {
     requireActor(role === 'partner');
-    const gaps = pilotGaps(m);
+    const gaps = [...pilotGaps(m),...reportingIOGaps(m,files)];
     if (gaps.length) throw new PilotError(409, gaps.join(' · '));
     if (currentApproval(m, engagement)) return;
     const reporting = reportWorkspace(m);
@@ -598,7 +603,7 @@ export function pilotAction(m, role, action, data, files) {
     const native = nativePapers(m);
     const supporting = registerPackage(m);
     const artifact = renderReport(m);
-    files.storeTemplate(artifact.templateSha256, formContract(artifact.form));
+    files.storeTemplate(artifact.templateSha256, artifact.template??formContract(artifact.form));
     const templateIds = [artifact.templateSha256, ...supporting.flatMap(r => r.template ? [r.template.digest] : []), ...native.map(w => w.values.templateDigest)];
     const templates = [...new Set(templateIds)].map(hash => ({ hash, contract: files.template(hash) }));
     if (templates.some(t => !t.contract)) throw new PilotError(409, 'Баталсан эх загварын хувилбар олдсонгүй.');

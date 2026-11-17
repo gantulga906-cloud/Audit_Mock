@@ -94,6 +94,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     template: hash => JSON.parse(db.prepare('SELECT body FROM pilot_templates WHERE digest = ?').get(hash)?.body ?? 'null'),
     confirmations: () => confirmations.view(engagementId),
     deliveries: () => releases.view(engagementId),
+    reportingContacts: model => model.pilotIntake?intake.contextView(model).contacts:model.bench.clients[model.engagement].contacts,
     oversightConfigured: role => !!db.prepare('SELECT 1 FROM accounts WHERE role=?').get(role),
     checkArchiveRecord: (model, row) => {
       if(row.kind==='M12-F02'){
@@ -187,10 +188,11 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       const host = req.headers.host;
       if (host !== '127.0.0.1:' + port && host !== 'localhost:' + port) throw new PilotError(403, 'Зөвхөн локал хаягаар нээнэ үү.');
       const route = url.pathname.slice(prefix.length);
-      const delivery=/^\/delivery\/([a-f0-9]{64})(\/artifact)?$/.exec(route);
+      const delivery=/^\/delivery\/([a-f0-9]{64})(\/(?:artifact|statements|notes))?$/.exec(route);
       if (delivery&&['GET','POST'].includes(req.method)) {
         const token=delivery[1];
-        if (req.method==='GET'&&delivery[2]) {
+        if(req.method==='GET'&&delivery[2]&&delivery[2]!=='/artifact'){const file=transaction(()=>releases.attachment(token,delivery[2].slice(1)));res.writeHead(200,{'Content-Type':'application/octet-stream','X-Audit-Source-SHA256':file.sha256,'Content-Disposition':'attachment; filename="'+delivery[2].slice(1)+'-'+encodeURIComponent(file.name)+'"'});res.end(file.bytes);}
+        else if (req.method==='GET'&&delivery[2]) {
           const artifact=transaction(()=>releases.download(token));
           res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; sandbox",
             'X-Audit-Report-SHA256':artifact.sha256,'Content-Disposition':`attachment; filename="audit-report-${artifact.form}.html"`});
