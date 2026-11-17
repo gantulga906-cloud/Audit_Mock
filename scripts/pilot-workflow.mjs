@@ -19,6 +19,7 @@ import { approvedStaffing, managedStaffing, requireSeat, seatFor, seats, staffin
 import { approvedPopulation, populationAction, populationView } from './pilot-population.mjs';
 import { samplingAction, samplingGap, samplingView, syncSamplePapers } from './pilot-sampling.mjs';
 import { evidenceCurrent, isRequestAction, requestAction } from './pilot-requests.mjs';
+import {requestCoverage,receiptMetadata,checkUploadSignature,syncRequestCoverage} from './pilot-evidence.mjs';
 import { journalAction, journalGap, journalView, syncJournalPapers } from './pilot-journals.mjs';
 import { areaAction, areaEvidence, areaGap, areaView, areaWorkpaperRef, syncAreaPapers } from './pilot-area.mjs';
 import { completionAction, completionEvidence, completionGaps, completionRef, completionView, consultationView, syncCompletion } from './pilot-completion.mjs';
@@ -31,6 +32,7 @@ import {acceptanceEvidence} from './pilot-acceptance.mjs';
 import { laterFactAction, laterFactForRelease, laterFactGap, laterFactView } from './pilot-later-facts.mjs';
 import {assemblyStatus} from './pilot-assembly.mjs';
 import {managedPlanning,planningAction,planningGap,planningView} from './pilot-planning.mjs';
+import {dataAction,dataView} from './pilot-data-methods.mjs';
 
 export const accounts = { preparer: 'nomin', reviewer: 'temuulen', partner: 'bat' };
 const roleOf = person => seats.find(role => accounts[role] === person);
@@ -67,6 +69,7 @@ function syncPlanningPapers(m) {
 }
 
 function syncFieldwork(m) {
+  for(const request of m.requests)syncRequestCoverage(m,request);
   syncMateriality(m);
   syncPlanningPapers(m);
   syncSamplePapers(m);
@@ -289,6 +292,8 @@ export function pilotView(m, role, revision, files) {
   return {
     role, revision, ...resources, fieldwork: fieldworkForms(m), statementLines: m.pilotStatementLines ?? {},
     planning:planningView(m,role),
+    dataMethods:dataView(m),
+    requestCoverage:requestCoverage(m),
     ...(role==='partner'&&{laterFacts:laterFactView(m)}),
     ...(m.extendedPilot && engagement.intake.active && !sealed && role !== 'preparer' && {programmeTemplates:programmeTemplates(m,files)}),
     delivery: {
@@ -341,6 +346,9 @@ export function pilotAction(m, role, action, data, files) {
   if (typeof action!=='string') throw new PilotError(400,'Үйлдэл шаардлагатай.');
   const sealed = files.archive.isSealed(m);
   if (!sealed) syncFieldwork(m);
+  if(action==='evidence-enable'||action.startsWith('data-profile-')||action.startsWith('data-check-')){
+    dataAction(m,role,action,data,files);syncFieldwork(m);invalidateReport(m,'G03 · Өгөгдлийн эх / аргын хувилбар өөрчлөгдөв');return;
+  }
   if(action==='planning-enable'||action==='effort-log'){
     planningAction(m,role,action,data,files);invalidateReport(m,'G02 · Төлөвлөлт / бодит цаг өөрчлөгдөв');if(!sealed)syncFieldwork(m);return;
   }
@@ -410,23 +418,33 @@ export function pilotAction(m, role, action, data, files) {
     m.pilotFirm = firmSnapshot(m);
     return;
   }
-  if (action === 'support-upload' || action === 'support-assess') {
+  if (action === 'support-upload' || action === 'support-assess'||action==='support-scope') {
     if (sealed) throw new PilotError(409, 'Архив түгжээтэй.');
     if (engagement.intake.active && managedStaffing(m)) requireSeat(m,files,role);
     if (action === 'support-upload') {
       const { name, bytes } = fileInput(data), id = randomUUID();
+      const metadata=data.entity?receiptMetadata(data):{};if(m.pilotEvidenceEnabled)checkUploadSignature(name,bytes);
       m.evidence.push({ id, name, engagement: engagement.id, version: 1, type: 'FILE',
         obtained: new Date().toISOString().slice(0, 10), source: input(data, 'source', 200),
-        status: 'received', specimen: false, anchor: '', text: '', original: true, uploadedBy: role });
+        status: 'received', specimen: false, anchor: '', text: '', original: true, uploadedBy: role,...metadata });
       files.add(id, name, bytes);
       recordEvent(m, 'Үнэлэх эх файл бүртгэв · ' + name);
+    }else if(action==='support-scope'){
+      const item=m.evidence.find(e=>e.id===data?.id&&e.engagement===m.engagement);requireActor(item&&(!item.request||role!=='preparer'||m.requests.find(r=>r.id===item.request)?.owner===m.person));
+      (item.scopeHistory??=[]).push({version:item.version,scope:item.scope,status:item.status,at:new Date().toISOString(),by:role,reason:input(data,'reason')});
+      item.version++;Object.assign(item,receiptMetadata(data));item.status='received';item.uploadedBy=role;delete item.standaloneAssessment;syncFieldwork(m);invalidateReport(m,'G03 · Баримтын хэрэглээний хүрээ өөрчлөгдөв');
+      for(const request of m.requests)for(const part of request.parts??[])if(part.evidence===item.id){(part.uses??=[]).push({evidence:item.id,state:'reopened',at:new Date().toISOString(),by:m.person,reason:data.reason});part.state='received';}
+      for(const paper of Object.values(m.work))if(paper.evidence.includes(item.id)&&['submitted','reviewed'].includes(paper.status)){snapshot(paper,m.person,'Баримтын өмнөх хүрээ ба хэрэглээг хадгалав');paper.version++;paper.status='changed';paper.submittedVersion=undefined;paper.completedAt=undefined;}
+      syncFieldwork(m);
     } else {
-      const item = m.evidence.find(e => e.id === data?.id && e.engagement === m.engagement && !e.request && !e.population);
+      const item = m.evidence.find(e => e.id === data?.id && e.engagement === m.engagement && !e.request && (!e.population||m.pilotEvidenceEnabled));
       requireActor(item && role !== 'preparer' && item.uploadedBy !== role);
       if (item.status !== 'received' || !['accepted','rejected'].includes(data.result)) throw new PilotError(409, 'Үнэлэх шинэ эх файл шаардлагатай.');
       item.status = data.result;
       item.assessment = input(data, 'reason');
+      item.standaloneAssessment={result:data.result,by:role,at:new Date().toISOString(),reason:item.assessment};
       recordEvent(m, 'Эх файлын үнэлгээ · ' + item.name);
+      syncFieldwork(m);
     }
     return;
   }
@@ -588,6 +606,7 @@ export function pilotAction(m, role, action, data, files) {
       ...(population?[population.evidence,population.controls.evidence.id]:[]),...areaEvidence(m,fieldworkForms(m)),...completionEvidence(m),
       ...(archiveAmendment?.review.evidence??[])]);
     const historical = new Set([...populationHistory.flatMap(v=>[v.evidence,v.controls.evidence.id]),
+      ...(m.pilotData?.checks??[]).flatMap(group=>group.versions.flatMap(v=>(v.inputs??[]).map(ref=>ref.id))),
       ...(m.pilotTermsHistory??[]).map(terms=>terms.evidence),
       ...requestAudit.flatMap(r=>(r.parts??[]).flatMap(p=>p.uses?.map(use=>use.evidence)??[])),...confirmations.map(c=>c.evidence)]);
     const linked = [...m.evidence.filter(e=>ids.has(e.id)),...m.evidence.filter(e=>!ids.has(e.id)&&historical.has(e.id))]
@@ -621,6 +640,7 @@ export function pilotAction(m, role, action, data, files) {
         .map(({id,version,reviewedVersion,values,evidence})=>({id,version,reviewedVersion,values,evidence}))}),
       ...(m.pilotIntake && { intake: m.pilotIntake }),
       ...(managedPlanning(m)&&{planningProfile:m.pilotPlanning,effort:m.pilotEffort??[],planning:planningView(m,role)}),
+      ...(m.pilotData&&{dataMethods:m.pilotData}),
       ...(managedStaffing(m) && { staffing: approvedStaffing(m).filter(s=>s.current), acceptedStaffing: m.pilotStaffingAccepted,
         staffSignoffs: m.pilotStaffSignoffs ?? {} }),
     }, [...linked,...(laterFact?[{id:laterFact.source.id,version:1,status:'recorded'}]:[])].map(e => {

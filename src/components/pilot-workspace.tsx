@@ -12,6 +12,9 @@ import {AdoptPilotForm,NativeFields,PilotFormLibrary} from './pilot-forms';
 import {IntakeProvenance,PilotIntake,TermsEditor} from './pilot-intake';
 import {AcceptanceDesk} from './pilot-acceptance';
 import {PlanningDesk} from './pilot-planning';
+import {DataMethodsDesk} from './pilot-data-methods';
+import {EvidenceCoverageDesk,EvidencePartActions,ReceiptFields,RequestScopeEditor} from './pilot-evidence';
+import type {DataMethodsView,RequestCoverage} from '@/lib/pilot-data-methods';
 import type {AcceptanceView} from '@/lib/pilot-acceptance';
 import {EngagementStaffing,RosterOverview,WorkAssignmentEditor} from './pilot-staffing';
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
@@ -57,6 +60,7 @@ export type View=RegisterResources&{
  confirmations?:{request:string;part:string;recipient:string;sent:string;state:string;response?:string;received?:string;evidence?:string}[];
  confirmationLink?:{token:string;request:string;part:string};
  population?:PopulationView;
+ dataMethods?:DataMethodsView;requestCoverage?:RequestCoverage;
  completion?:CompletionView;
  laterFacts?:LaterFact[];
  oversight?:OversightView;release?:ReleaseView;deliveryLink?:{token:string;id:string;recipient:string};
@@ -169,13 +173,14 @@ function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string
   e.preventDefault();
   const form=e.currentTarget,data=new FormData(form),parts=data.getAll('parts').map(String);
   if(!parts.length){onError('Хүсэлтийн хэсэг сонгоно уу.');return;}
-  void readEvidence(data.get('file')).then(file=>run('upload',{request:id,parts:parts.join(','),source:String(data.get('source')),...file}))
+  void readEvidence(data.get('file')).then(file=>run('upload',{...Object.fromEntries([...data].filter(([key])=>key!=='file').map(([key,value])=>[key,String(value)])),request:id,parts:parts.join(','),source:String(data.get('source')),...file}))
    .then(ok=>{if(ok)form.reset();}).catch(e=>onError(e.message));
  }
  return <section className="card pad bench-card feature-desk">
   <h2>Хөтөлбөрийн баримтын хүсэлт</h2>
+  <EvidenceCoverageDesk data={view.dataMethods} coverage={view.requestCoverage} role={view.role} forms={view.fieldwork??[]} contacts={view.requestContacts} records={view.registers} run={run}/>
   <p>{accepted}/{expected} гаргасан хүсэлтийн хэсэг хүлээн авсан</p>
-  {!!view.fieldwork?.length&&<details className="feature-detail"><summary>Шинэ хүсэлт</summary>
+  {!view.dataMethods?.managed&&!!view.fieldwork?.length&&<details className="feature-detail"><summary>Шинэ хүсэлт</summary>
    <ActionForm run={run} action="request-draft" button="Хүсэлтийн ноорог хадгалах"><div className="field-grid">
     <label>Хэрэгжүүлсэн хөтөлбөр<select name="form">{view.fieldwork.map(f=><option key={f} value={f}>{f} · {view.forms.find(p=>p.id===f)?.title}</option>)}</select></label>
     <label>Хүсэлтийн нэр<input name="title" required/></label><label>Хугацаа<input name="due" type="date" required/></label>
@@ -191,12 +196,13 @@ function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string
   {view.requests?.map(r=>{
    const owner=r.owner===accountByRole[view.role],manage=owner||view.role!=='preparer';
    const current=r.dispatch==='issued',open=(r.parts??[]).filter(p=>p.state==='missing'||p.state==='rejected');
-   const groupFiles=files.filter(e=>e.request===r.id);
-   return <details key={r.id} className="feature-detail" open={current&&r.status!=='complete'}>
+   const groupFiles=files.filter(e=>e.request===r.id||r.parts?.some(p=>p.evidence===e.id));
+   return <details key={r.id} data-request-id={r.id} className="feature-detail" open={current&&r.status!=='complete'}>
     <summary>{r.title} <span className="pill">{r.dispatch==='draft'?'Ноорог':r.dispatch==='cancelled'?'Цуцалсан':(r.parts??[]).filter(p=>p.state==='accepted').length+'/'+r.expected+' зөвшөөрсөн'}</span></summary>
     <p>{r.form} · {r.contact} · {r.due} · {r.id} · {names[r.owner]??r.owner}</p>
     {r.extract&&<p>Эх систем {r.extract.system} · {r.extract.start} — {r.extract.end} · {r.extract.fields.join(', ')}</p>}
     {r.message&&<p>{r.message}</p>}
+    {view.dataMethods?.managed&&owner&&current&&<RequestScopeEditor request={r} context={view.dataMethods.context} run={run}/>}
     {manage&&r.dispatch==='draft'&&<button type="button" className="btn secondary" onClick={()=>void run('request-issue',{request:r.id})}>Гаргасан гэж бүртгэх</button>}
     {manage&&r.dispatch!=='cancelled'&&r.status!=='complete'&&<details className="feature-detail"><summary>Дагаж тодруулах эсвэл цуцлах</summary>
      {current&&<ActionForm run={run} action="request-followup" extra={{request:r.id}} button="Дагаж тодруулсан тэмдэглэл хадгалах">
@@ -205,19 +211,23 @@ function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string
     </details>}
     {r.parts?.map(part=>{
      const file=groupFiles.find(e=>e.id===part.evidence),extra={request:r.id,part:part.id};
-     return <div className="bench-item" key={part.id}>
+     return <div className="bench-item" data-request-part={part.id} key={part.id}>
       <p><b>{part.title}</b> · {partStatus[part.state]}{part.reason?' · '+part.reason:''}</p>
+      {view.dataMethods?.managed&&<EvidencePartActions request={r} part={part} evidence={files} role={view.role} owner={owner} run={run}/>}
       {file&&<a href={api+'/evidence/'+file.id+pilotScope(view.selected)}>{file.name} · v{file.version}</a>}
+      {view.dataMethods?.managed&&file&&manage&&current&&<details className="feature-detail"><summary>Ирсэн эхийн бодит хүрээг тодруулах</summary><ActionForm action="support-scope" extra={{id:file.id}} run={run} button="Эхийн хүрээний шинэ хувилбар хадгалах"><div className="field-grid"><ReceiptFields context={view.dataMethods.context} evidence={file}/><label>Бодит засвар ба нөлөөллийн үндэслэл<textarea name="reason" required/></label></div></ActionForm></details>}
       {r.extract&&file&&current&&part.state==='accepted'&&view.role!=='partner'&&<ActionForm run={run} action="population-import"
        extra={{requestEvidence:file.id,evidenceVersion:String(file.version)}} button="Зөвшөөрсөн CSV-ийг эх олонлогоор бүртгэх">
        <label>Валют<input name="currency" maxLength={3} placeholder="MNT" required/></label>
+       <label>Баталсан импортын профайл<select name="profile"><option value="">Стандарт CSV</option>{view.dataMethods?.profiles.filter(p=>p.current.status==='approved').map(p=><option key={p.id} value={p.id}>{p.current.name} · v{p.current.version}</option>)}</select></label>
       </ActionForm>}
       {owner&&current&&part.state==='received'&&<>
        <button type="button" className="btn secondary space-top" onClick={()=>void run('accept',extra)}>Энэ хэсэгт зөвшөөрөх</button>
        <ActionForm run={run} action="reject" extra={extra} button="Энэ хэсгийг буцаах"><label>Буцаах шалтгаан<input name="reason" required/></label></ActionForm>
       </>}
-      {view.role!=='preparer'&&current&&['missing','rejected'].includes(part.state)&&<button type="button" className="btn secondary"
+      {!view.dataMethods?.managed&&view.role!=='preparer'&&current&&['missing','rejected'].includes(part.state)&&<button type="button" className="btn secondary"
        onClick={()=>void run('confirmation-start',extra)}>Локал баталгаажуулалтын холбоос үүсгэх</button>}
+      {view.dataMethods?.managed&&view.role!=='preparer'&&current&&['missing','rejected'].includes(part.state)&&<ActionForm run={run} action="confirmation-start" extra={extra} button="Баталсан хүрээний локал хариуны холбоос үүсгэх"><label>Яг баталгаажуулалтын бэлтгэл<select name="caseId" required><option value="">Сонгох</option>{view.registers.filter(record=>record.kind==='M07-F08'&&record.status==='approved'&&!record.stale&&record.values.dispatch==='prepared').map(record=><option key={record.id} value={record.id}>{record.values.recipient} · {record.values.address} · v{record.version}</option>)}</select></label></ActionForm>}
       {view.confirmationLink?.request===r.id&&view.confirmationLink?.part===part.id&&
        <p><a href={'/pilot#confirmation='+view.confirmationLink.token} target="_blank" rel="noopener noreferrer">Хүлээн авагчийн нэг удаагийн локал холбоос</a> · 24 цаг хүчинтэй</p>}
       {view.confirmations?.filter(c=>c.request===r.id&&c.part===part.id).map((c,i)=><p className="micro" key={i}>
@@ -233,10 +243,11 @@ function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string
       })}</details>}
      </div>;
     })}
-    {owner&&current&&open.length>0&&<form className="feature-form" onSubmit={e=>upload(e,r.id)}>
+    {owner&&current&&open.length>0&&<form className="feature-form" data-request-upload={r.id} onSubmit={e=>upload(e,r.id)}>
      <p>Нэг файлыг хамрах хэд хэдэн хэсэгт холбож болно.</p>
      {open.map(p=><label key={p.id}><input name="parts" type="checkbox" value={p.id} defaultChecked={open.length===1}/> {p.title}</label>)}
      <label>Эх файл<input name="file" type="file" accept={r.extract?'.csv':'.pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv'} required/></label>
+     {view.dataMethods?.managed&&<div className="field-grid"><ReceiptFields context={view.dataMethods.context}/></div>}
      <label>Файл нийлүүлсэн эх сурвалж<input name="source" required/></label><button className="btn primary">Эх файл бүртгэх</button>
     </form>}
    </details>;
@@ -249,17 +260,20 @@ function SupportingEvidence({view,run,onError}:{view:View;run:Action;onError:(me
  function upload(e:FormEvent<HTMLFormElement>){
   e.preventDefault();
   const form=e.currentTarget,data=new FormData(form);
-  void readEvidence(data.get('file')).then(file=>run('support-upload',{source:String(data.get('source')),...file})).then(ok=>{if(ok)form.reset();}).catch(e=>onError(e.message));
+  void readEvidence(data.get('file')).then(file=>run('support-upload',{...Object.fromEntries([...data].filter(([key])=>key!=='file').map(([key,value])=>[key,String(value)])),source:String(data.get('source')),...file})).then(ok=>{if(ok)form.reset();}).catch(e=>onError(e.message));
  }
  return <details className="card pad bench-card">
   <summary>Үнэлгээний эх баримт · хүсэлтээс тусдаа</summary>
   <form className="feature-form" onSubmit={upload}>
    <label>Үнэлгээний файл<input name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv" required/></label>
+   {view.dataMethods?.managed&&<div className="field-grid"><ReceiptFields context={view.dataMethods.context}/></div>}
    <label>Файлын эх сурвалж<input name="source" required/></label><button className="btn secondary">Үнэлгээний эх файл нэмэх</button>
   </form>
   {evidence.filter(e=>!e.request).map(e=><div className="bench-item" key={e.id}>
    <a href={api+'/evidence/'+e.id+pilotScope(view.selected)}>{e.name} · v{e.version}</a>
    <p>{e.source} · {partStatus[e.status]} · {e.assessment}</p>
+   {e.scope&&<p>{e.scope.entity} · {e.scope.start}–{e.scope.end} · {e.scope.evidenceType} · {e.supplier} · {e.receivedOn}</p>}
+   {view.dataMethods?.managed&&<details className="feature-detail"><summary>Эхийн хэрэглээний хүрээг шинэ хувилбараар тодруулах</summary><ActionForm run={run} action="support-scope" extra={{id:e.id}} button="Хүрээний шинэ хувилбар хадгалах"><div className="field-grid"><ReceiptFields context={view.dataMethods.context} evidence={e}/><label>Өөрчилсөн үндэслэл<textarea name="reason" required/></label></div></ActionForm></details>}
    {view.role!=='preparer'&&e.uploadedBy!==view.role&&e.status==='received'&&<ActionForm action="support-assess" extra={{id:e.id}} run={run} button="Эх файлыг үнэлэх">
     <label>Үнэлгээ<select name="result"><option value="accepted">Зөвшөөрөх</option><option value="rejected">Буцаах</option></select></label>
     <label>Үнэлгээний үндэслэл<input name="reason" required/></label>
@@ -546,7 +560,7 @@ function SharedPilotWorkspace(){
      {paper&&<div className="ew-next-paper"><span>Дараагийн баримтыг нээх нь энэ ажлыг илгээхгүй.</span><button className="btn secondary" disabled={availablePapers.indexOf(paper)>=availablePapers.length-1} onClick={()=>openPaper(availablePapers[availablePapers.indexOf(paper)+1].form)}>Дараагийн баримт<ArrowRight size={15}/></button></div>}
     </>:<>{!sealed&&view.role!=='preparer'&&<div className="ew-list-actions"><span>Холбогдсон эх болон баталсан маягтууд</span><button className="btn secondary" onClick={()=>go('library')}>Маягт холбох</button></div>}<WorkpaperIndex view={{...view,papers:availablePapers}} query={query} open={openPaper} routeFilter={route.filter} routeStage={route.stage} onFiltersChange={listFilters}/></>)}
     {route.page==='evidence'&&<><div className={'ew-paper-layout '+(contextOpen&&selectedEvidence?'with-context':'')}><EvidenceLibraryView view={view} query={query} preview={showContext}/>{contextOpen&&selectedEvidence&&<EvidencePreview file={selectedEvidence} engagement={view.selected} onClose={()=>{setEvidenceId('');setContextOpen(false);}}/>}</div>{!sealed&&<><SupportingEvidence view={view} run={run} onError={setError}/><Requests view={view} run={run} onError={setError}/></>}</>}
-    {route.page==='data'&&(engagement.active&&!sealed?<><PopulationDesk key={view.population?.current.version} population={view.population} role={view.role} engagement={view.selected!} evidence={view.evidence??[]} run={run} readFile={readEvidence} onError={setError} requestImport={(view.requests??[]).some(r=>r.extract&&r.dispatch==='issued')}/><section className="ew-panel ew-panel-pad"><h2>Ажилтай холбогдсон шинжилгээ</h2><p>Түүвэр, журнал болон салбарын шинжилгээг тухайн ажлын баримтаас нээнэ.</p><div className="ew-analysis-links">{availablePapers.filter(p=>view.fieldwork?.includes(p.form)||view.samples?.[p.form]||view.areas?.[p.form]).map(p=><button key={p.id} onClick={()=>openPaper(p.form)}><FileText size={17}/><span>{p.form} · {p.title}</span><ArrowRight size={16}/></button>)}</div></section></>:<WorkspaceEmpty title={sealed?'Архивын эх хувилбарыг ашиглана':'Идэвхжүүлэх шийдвэр шаардлагатай'} description="Өгөгдөл боловсруулах эрх нь гэрээт ажлын одоогийн төлөвөөс хамаарна."/>)}
+    {route.page==='data'&&(engagement.active&&!sealed?<><DataMethodsDesk data={view.dataMethods} role={view.role} evidence={view.evidence??[]} run={run}/><PopulationDesk dataMethods={view.dataMethods} key={view.population?.current.version} population={view.population} role={view.role} engagement={view.selected!} evidence={view.evidence??[]} run={run} readFile={readEvidence} onError={setError} requestImport={(view.requests??[]).some(r=>r.extract&&r.dispatch==='issued')}/><section className="ew-panel ew-panel-pad"><h2>Ажилтай холбогдсон шинжилгээ</h2><p>Түүвэр, журнал болон салбарын шинжилгээг тухайн ажлын баримтаас нээнэ.</p><div className="ew-analysis-links">{availablePapers.filter(p=>view.fieldwork?.includes(p.form)||view.samples?.[p.form]||view.areas?.[p.form]).map(p=><button key={p.id} onClick={()=>openPaper(p.form)}><FileText size={17}/><span>{p.form} · {p.title}</span><ArrowRight size={16}/></button>)}</div></section></>:<WorkspaceEmpty title={sealed?'Архивын эх хувилбарыг ашиглана':'Идэвхжүүлэх шийдвэр шаардлагатай'} description="Өгөгдөл боловсруулах эрх нь гэрээт ажлын одоогийн төлөвөөс хамаарна."/>)}
     {route.page==='planning'&&<><PlanningDesk resources={view} role={view.role} sealed={sealed} run={run}/>{registers(['planning'])}{!sealed&&<Delivery view={view} run={run} openPaper={id=>{const p=view.papers?.find(p=>p.id===id||p.form===id);if(p)openPaper(p.form);}}/>}{view.staffing&&<EngagementStaffing staffing={view.staffing} role={view.role} sealed={sealed} run={run}/>}</>}
     {route.page==='review'&&<><WorkpaperIndex key="review" view={view} query={query} open={openPaper} mode="review" routeFilter={route.filter} routeStage={route.stage} onFiltersChange={listFilters}/>      {view.impacts?.map(impact=><section className="card pad bench-card" key={impact.id}><h2>{impact.source} · Өөрчлөлтийн нөлөө</h2><p>{impact.reason} · {impact.targets.join(', ')}</p>
        {view.role==='reviewer'&&<ActionForm run={run} action="resolve-impact" extra={{id:impact.id}} button="Нөлөөллийн үнэлгээг бүртгэх"><label>Шийдвэрийн үндэслэл<input name="reason" required/></label></ActionForm>}
@@ -599,7 +613,7 @@ function SharedPilotWorkspace(){
 }
 
 function ConfirmationRecipient({token}:{token:string}){
- const [details,setDetails]=useState<{request:string;part:string;recipient:string;contact:string}|null>(null);
+ const [details,setDetails]=useState<{request:string;part:string;recipient:string;contact:string;requiresScopeConfirmation?:boolean;scope?:{entity:string;start:string;end:string;evidenceType:string}}|null>(null);
  const [error,setError]=useState(''),[sent,setSent]=useState(false),[busy,setBusy]=useState(false);
  const path=api+'/confirmation/'+token;
  useEffect(()=>{
@@ -616,7 +630,7 @@ function ConfirmationRecipient({token}:{token:string}){
   try{
    const data=new FormData(e.currentTarget),file=await readEvidence(data.get('file'));
    const res=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({...file,response:String(data.get('response'))})});
+    body:JSON.stringify({...file,response:String(data.get('response')),scopeConfirmed:data.get('scopeConfirmed')==='on'?'yes':''})});
    if(!res.ok)throw Error((await res.json()).error);
    setSent(true);
   }catch(e){setError((e as Error).message);}finally{setBusy(false);}
@@ -627,6 +641,7 @@ function ConfirmationRecipient({token}:{token:string}){
   {sent?<p>Хариу болон эх файлыг аудитын багт бүртгэлээ.</p>:details&&<>
    <p>{details.request} · {details.part}</p><p>{details.contact} · {details.recipient}</p>
    <form className="feature-form" onSubmit={submit}>
+    {details.requiresScopeConfirmation&&<label><input name="scopeConfirmed" type="checkbox" required/>Миний бодит хариу {details.scope?.entity} · {details.scope?.start}–{details.scope?.end} · {details.scope?.evidenceType} хүрээнд хамаарна. Энэ локал холбоос банк / этгээдийн таних баталгаа биш.</label>}
     <label>Хариу<textarea name="response" maxLength={4000} required/></label>
     <label>Баталгаажуулах эх файл<input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv" required/></label>
     <button className="btn primary" disabled={busy}>Хариу өгөх</button>

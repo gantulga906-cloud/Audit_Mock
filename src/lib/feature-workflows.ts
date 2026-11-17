@@ -87,13 +87,13 @@ function requestContext(m:Model,form:string){
  return w;
 }
 
-export function createRequest(m:Model,input:{title:string;form:string;contactId:string;owner:string;due:string;message:string;parts:string[]}){
+export function createRequest(m:Model,input:{title:string;form:string;contactId:string;owner:string;due:string;message:string;parts:string[];unagreedDue?:boolean}){
  const w=requestContext(m,input.form),contact=bench(m).clients[m.engagement]?.contacts.find(x=>x.id===input.contactId);
  if(!manager(m)&&!canEdit(m,w))throw Error('Хүсэлт үүсгэх томилгоо шаардлагатай.');
  if(!inScope(m,input.owner,m.engagement)||personById(input.owner).role==='quality'||(!manager(m)&&input.owner!==m.person))throw Error('Багийн хүчинтэй хариуцагч сонгоно уу.');
  if(!contact?.name.trim()||!contact.email.trim())throw Error('Нэр, имэйлтэй холбоо барих хүн сонгоно уу.');
  const titles=input.parts.map(x=>x.trim()).filter(Boolean);
- if(!input.title.trim()||!validDate(input.due)||!titles.length||new Set(titles).size!==titles.length)throw Error('Нэр, хугацаа болон давхардалгүй баримтын жагсаалт шаардлагатай.');
+ if(!input.title.trim()||!(input.unagreedDue&&input.due===''||validDate(input.due))||!titles.length||new Set(titles).size!==titles.length)throw Error('Нэр, хугацаа болон давхардалгүй баримтын жагсаалт шаардлагатай.');
  const id='REQ-'+crypto.randomUUID().slice(0,8).toUpperCase(),parts=titles.map(title=>({id:crypto.randomUUID(),title,state:'missing' as const}));
  m.requests.unshift({id,dispatch:'draft',engagement:m.engagement,title:input.title.trim(),form:w.form,
   contactId:contact.id,contact:contact.name,contactEmail:contact.email,owner:input.owner,due:input.due,message:input.message.trim(),

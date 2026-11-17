@@ -10,11 +10,13 @@ export type PopulationRow={
  issues:string[];state:'accepted'|'quarantined'|'excluded';reason?:string;
 };
 export type PopulationControls={count:number;cents:number;source:string;mapping:string;statements:string;exclusions:string;use:string;investigation?:string;
+ certifiedCount?:number;sourceTotals?:Record<string,number>;methods?:{id:string;version:number}[];
  evidence:{id:string;version:number;sha256:string}};
 export type PopulationBridge={line:string;accounts:string[];computed:number;reported:number|null;difference:number|null};
 export type PopulationRevision={
- version:number;name:string;source:string;evidence:string;sha256:string;currency:string;
+ version:number;name:string;source:string;evidence:string;evidenceVersion?:number;sha256:string;currency:string;
  extract?:PopulationExtract;
+ profile?:{id:string;version:number;definition:Record<string,unknown>};
  importedBy:PilotRole;at:string;rows:PopulationRow[];issues:string[];
  counts:{read:number;accepted:number;quarantined:number;excluded:number;invalidAmounts:number};
  readCents:number;readTotals:Record<string,number>;acceptedCents:number;controls?:PopulationControls;bridge:PopulationBridge[];gaps:string[];

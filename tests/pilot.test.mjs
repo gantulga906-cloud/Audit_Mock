@@ -1122,7 +1122,7 @@ test('the extended engagement preserves its original 34-register journey and sco
     assert.equal(current.authorized.current, false);
     assert.ok([finalAnalytics, sufficiency, opinion].every(id => find(id).stale));
     await write('partner', 'authorize', {}, 409);
-    const laterRegisters=['M10-F10','M12-F02','M05-F02','M05-F04','M05-F05','M05-F08','M06-F03','M06-F11','M06-F13','M06-F14'];
+    const laterRegisters=['M10-F10','M12-F02','M05-F02','M05-F04','M05-F05','M05-F08','M06-F03','M06-F11','M06-F13','M06-F14','M08-F08'];
     const originalRegisters=registers.filter(r=>!laterRegisters.includes(r.id));
     assert.equal(originalRegisters.length,34);
     assert.deepEqual([...new Set(current.registers.map(r => r.kind))].sort(), originalRegisters.map(r => r.id).sort());

@@ -19,7 +19,7 @@ import {checkAssemblyRecord} from './pilot-assembly.mjs';
 import {isAcceptanceAction,acceptanceAction,acceptanceActivationGaps,acceptanceView} from './pilot-acceptance.mjs';
 
 const prefix = '/api/pilot';
-const termsRemediation = new Set(['intake-terms-save','intake-terms-approve','support-upload','support-assess','schedule','access']);
+const termsRemediation = new Set(['intake-terms-save','intake-terms-approve','support-upload','support-assess','support-scope','schedule','access']);
 const digest = value => createHash('sha256').update(value).digest('hex');
 const sessionMs = 8 * 60 * 60 * 1000;
 const roles = Object.keys(accounts);
@@ -418,10 +418,12 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           const { model, id } = store.load(role, resolveScope(role, url));
           const evidence=route.split('/').at(-1), factFile=laterFactFiles(model).includes(evidence);
           if (factFile?role!=='partner':archive.isSealed(model)) throw new PilotError(403, 'Түгжсэн файлыг зөвшөөрсөн архивын багцаас авна уу.');
-          return db.prepare('SELECT name, bytes FROM evidence WHERE engagement_id = ? AND id = ?').get(id, evidence);
+          return db.prepare('SELECT name, bytes, sha256 FROM evidence WHERE engagement_id = ? AND id = ?').get(id, evidence);
         }, false);
         if (!file) throw new PilotError(404, 'Эх файл олдсонгүй.');
+        if(digest(file.bytes)!==file.sha256)throw new PilotError(409,'Эх файлын бүрэн бүтэн байдал зөрчигдсөн.');
         res.writeHead(200, { 'Content-Type': 'application/octet-stream',
+          'X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; sandbox",
           'Content-Disposition': "attachment; filename*=UTF-8''" + encodeURIComponent(file.name).replace(/['()*]/g, c => '%' + c.charCodeAt(0).toString(16)),
           'Content-Length': file.bytes.length });
         res.end(file.bytes);

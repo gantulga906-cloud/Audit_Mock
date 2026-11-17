@@ -4,6 +4,7 @@ import { populationRequiredFields } from '../src/lib/pilot-population.ts';
 import { recordEvent } from '../src/lib/workspace.ts';
 import { fileInput, input, PilotError } from './pilot-workflow.mjs';
 import { evidenceCurrent } from './pilot-requests.mjs';
+import {managedEvidence,currentImportProfile,normalizePopulation,approvedDataChecks,dataSource} from './pilot-data-methods.mjs';
 
 const fail = (message,status=409) => { throw new PilotError(status,message); };
 const now = () => new Date().toISOString();
@@ -21,7 +22,12 @@ function currentExtract(m, revision) {
 }
 export const approvedPopulation = m => {
   const revision=current(m);
-  return revision?.approval&&currentExtract(m,revision)&&currentControl(m,revision.controls?.evidence)?revision:undefined;
+  const profile=revision?.profile,methods=revision?.controls?.methods??[];
+  const basisCurrent=(!profile||currentImportProfile(m,profile.id)?.version===profile.version)&&
+    methods.every(ref=>approvedDataChecks(m).some(r=>r.id===ref.id&&r.version===ref.version&&r.disposition==='usable'))&&
+    (revision?.evidenceVersion===undefined||m.evidence.some(e=>e.id===revision.evidence&&e.version===revision.evidenceVersion))&&
+    (!managedEvidence(m)||revision?.evidenceVersion!==undefined&&revision.controls?.certifiedCount!==undefined&&m.evidence.some(e=>e.id===revision?.evidence&&evidenceCurrent(m,e)));
+  return revision?.approval&&basisCurrent&&currentExtract(m,revision)&&currentControl(m,revision.controls?.evidence)?revision:undefined;
 };
 export const populationView = m => current(m) && {
   current:current(m), usable:!!approvedPopulation(m), extractCurrent:currentExtract(m,current(m)),
@@ -30,11 +36,11 @@ export const populationView = m => current(m) && {
 
 export function csvRows(text) {
   const rows = [];
-  let row = [], cell = '', line = 1, start = 1, quoted = false, closed = false;
+  let row = [], cell = '', line = 1, start = 1, quoted = false, closed = false,rawStart=0;
   const pushCell = () => { row.push(cell.trim()); cell = ''; closed = false; };
-  const pushRow = () => {
+  const pushRow = end => {
     pushCell();
-    if (row.some(Boolean)) rows.push({line:start,cells:row});
+    if (row.some(Boolean)) rows.push({line:start,cells:row,raw:text.slice(rawStart,end)});
     if (rows.length > 3001) fail('CSV файл 3,000 өгөгдлийн мөр хүртэл байна.',400);
     row = [];
   };
@@ -46,8 +52,9 @@ export function csvRows(text) {
       else { cell+=c; if (c==='\n') line++; }
     } else if (c===',') pushCell();
     else if (c==='\n' || c==='\r' && text[i+1]==='\n') {
+      const end=i;
       if (c==='\r') i++;
-      pushRow(); start=++line;
+      pushRow(end);rawStart=i+1; start=++line;
     } else if (c==='"' && cell==='' && !closed) quoted=true;
     else {
       if (closed || c==='"' || c==='\r') fail('CSV бүтэц буруу · мөр '+line,400);
@@ -55,7 +62,7 @@ export function csvRows(text) {
     }
   }
   if (quoted) fail('CSV хаалтын хашилт дутуу · мөр '+start,400);
-  if (row.length || cell || closed) pushRow();
+  if (row.length || cell || closed) pushRow(text.length);
   return rows;
 }
 
@@ -81,7 +88,7 @@ function parseRows(m, text, currency, extract) {
   const {start,end} = extract??m.bench.periods[engagement.id];
   const entity = m.bench.clients[engagement.id].registration;
   if (!entity) fail('Гэрээт ажлын бүртгэлийн дугаар шаардлагатай.');
-  const rows = records.map(({line,cells})=>{
+  const rows = records.map(({line,cells,raw})=>{
     const [id,account,rawAmount,rowEntity,date,rowCurrency] = indexes.map(i=>cells[i]??'');
     const amount = cents(rawAmount), rowIssues = [];
     if (issues.length || cells.length!==columns.length) rowIssues.push('columns');
@@ -91,7 +98,7 @@ function parseRows(m, text, currency, extract) {
     if (!validDate(date)) rowIssues.push('date');
     else if (date<start || date>end) rowIssues.push('period');
     if (rowCurrency.toUpperCase()!==currency) rowIssues.push('currency');
-    return {row:line,id,account,entity:rowEntity,date,currency:rowCurrency.toUpperCase(),rawAmount,cents:amount,issues:rowIssues,
+    return {row:line,id,account,entity:rowEntity,date,currency:rowCurrency.toUpperCase(),rawAmount,cents:amount,issues:rowIssues,sourceCells:[...cells],sourceColumns:columns,sourcePayload:raw,
       journal:cells[journalIndex]||undefined,entryType:cells[typeIndex]?.toLowerCase()||undefined,reference:cells[referenceIndex]||undefined};
   });
   return {rows,issues};
@@ -143,6 +150,11 @@ function calculate(base, controls) {
   if (!accepted.length) gaps.push('Хамрах хүрээнд зөвшөөрөх мөр алга.');
   if (!controls) gaps.push('Хараат бус хяналтын тоо, дүн ба тайлангийн тулгалтыг оруулна уу.');
   else {
+    if(controls.certifiedCount!==undefined){
+      if(controls.certifiedCount!==rows.length)gaps.push('Баталгаажуулсан эхийн нийт мөрийн тоо зөрүүтэй.');
+      if(counts.invalidAmounts)gaps.push('Эхийн тодорхойгүй мөнгөн дүнг эх / профайлын шинэ хувилбараар шийдвэрлэнэ үү.');
+      for(const key of new Set([...readTotals.keys(),...Object.keys(controls.sourceTotals)]))if(readTotals.get(key)!==controls.sourceTotals[key])gaps.push('Эхийн нийт дүнгийн гүүр · '+key);
+    }
     if (controls.count!==accepted.length || controls.cents!==acceptedCents) gaps.push('Хүлээн авах мөрийн тоо эсвэл дүн хараат бус хяналттай тохирохгүй.');
     const mapping = pairs(controls.mapping,()=>true), statements = pairs(controls.statements,v=>cents(v)!==null);
     const groups = new Map(), accounts = new Map();
@@ -198,7 +210,12 @@ export function populationAction(m, role, action, data, files) {
     try { text = new TextDecoder('utf-8',{fatal:true}).decode(bytes); } catch { /* Keep malformed original and display its defect. */ }
     let parsed={rows:[],issues:['UTF-8 CSV файл шаардлагатай.']};
     try {
-      if (text!==undefined) parsed=parseRows(m,text,currency,sourceExtract?.extract);
+      if (text!==undefined){
+        const profile=data.profile&&currentImportProfile(m,data.profile);
+        if(data.profile&&!profile)fail('Хараат бусаар баталсан импортын профайл шаардлагатай.');
+        parsed=profile?normalizePopulation(m,text,profile,currency):parseRows(m,text,currency,sourceExtract?.extract);
+        if(profile&&sourceExtract&&sourceExtract.extract.fields.some(field=>!profile.definition.mapping[field]&&!(field==='amount'&&profile.definition.amount==='debit-credit')))fail('Хүсэлтийн шаардсан талбар бүрийг баталсан профайлд холбоно уу.');
+      }
     } catch (error) {
       if (!(error instanceof PilotError)||error.status!==400) throw error;
       parsed={rows:[],issues:[error.message]};
@@ -209,11 +226,12 @@ export function populationAction(m, role, action, data, files) {
       m.evidence.push({id:evidence,engagement:m.engagement,name,source,version,status:'received',
         type:'FILE',obtained:at.slice(0,10),original:true,specimen:false,anchor:'',text:'',uploadedBy:role,population:true});
     }
-    history.push(calculate({...parsed,version,name,source,evidence,sha256:sourceExtract?.sha256??files.get(evidence).sha256,
+    history.push(calculate({...parsed,version,name,source,evidence,evidenceVersion:m.evidence.find(e=>e.id===evidence).version,sha256:sourceExtract?.sha256??files.get(evidence).sha256,
       currency,importedBy:role,preparedBy:role,at,...(sourceExtract&&{extract:sourceExtract.extract})},undefined));
   } else {
     if (!prior || data.version!==String(prior.version)) fail('Өгөгдлийн одоогийн хувилбарыг сонгоно уу.');
     if (!currentExtract(m,prior)) fail('Хүсэлтийн эх файл өөрчлөгдсөн. Одоогийн файлыг дахин бүртгэнэ үү.');
+    if(prior.evidenceVersion!==undefined&&!m.evidence.some(e=>e.id===prior.evidence&&e.version===prior.evidenceVersion))fail('Эхийн яг хувилбар өөрчлөгдсөн. Дахин импортлоно уу.');
     if (action==='population-reconcile') {
       if (role==='partner' || prior.preparedBy!==role) fail('Өгөгдлийн томилсон бэлтгэгч шаардлагатай.',403);
       const count=input(data,'count',8), amount=cents(input(data,'total',24));
@@ -224,6 +242,12 @@ export function populationAction(m, role, action, data, files) {
       const controls={count:Number(count),cents:amount,source:input(data,'source',300),mapping:input(data,'mapping',100_000),
         statements:input(data,'statements',100_000),exclusions:data.exclusions ? input(data,'exclusions',100_000) : '',use:input(data,'use',300),
         evidence:{id:file.id,version:file.version,sha256:original.sha256}};
+      if(managedEvidence(m)){
+        const certifiedCount=input(data,'certifiedCount',8);if(!/^\d+$/.test(certifiedCount))fail('Эхийн нийт мөрийн баталгаатай тоог оруулна уу.',400);
+        const totals=pairs(input(data,'sourceTotals',5000),v=>cents(v)!==null);if([...totals].some(([key,values])=>!/^[A-Z]{3}$/.test(key)||values.length!==1))fail('Валют бүрийн эхийн хяналтын дүнг нэг удаа оруулна уу.',400);
+        controls.certifiedCount=Number(certifiedCount);controls.sourceTotals=Object.fromEntries([...totals].map(([key,values])=>[key,cents(values[0])]));
+        if(data.methods){let selected;try{selected=JSON.parse(input(data,'methods',10000));}catch{fail('Аргын холбоосыг шалгана уу.',400);}if(!Array.isArray(selected)||selected.length>20||selected.some(ref=>!approvedDataChecks(m).some(r=>r.id===ref.id&&r.version===ref.version&&r.disposition==='usable'&&r.inputs.some(source=>source.id===prior.evidence))))fail('Яг энэ эхийн одоогийн баталсан аргыг холбоно уу.');controls.methods=selected;}
+      }
       if (data.investigation || prior.extract&&(controls.exclusions||prior.controls&&prior.gaps.length)) {
         controls.investigation=input(data,'investigation');
       }
@@ -234,6 +258,9 @@ export function populationAction(m, role, action, data, files) {
       if (prior.approval) return;
       if (prior.gaps.length) fail(prior.gaps.slice(0,8).join(' · '));
       if (!currentControl(m,prior.controls?.evidence)) fail('Хяналтын эх файлын одоогийн зөвшөөрөл шаардлагатай.');
+      if(prior.profile&&currentImportProfile(m,prior.profile.id)?.version!==prior.profile.version)fail('Импортын профайл өөрчлөгдсөн. Дахин импортлоно уу.');
+      if((prior.controls.methods??[]).some(ref=>!approvedDataChecks(m).some(r=>r.id===ref.id&&r.version===ref.version&&r.disposition==='usable')))fail('Холбосон аргын эх / хяналт өөрчлөгдсөн.');
+      if(managedEvidence(m))dataSource(m,files,prior.evidence);
       const reason=input(data,'reason');
       prior.approval={by:role,at:now(),reason};
       if (!prior.extract) {

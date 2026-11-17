@@ -3,6 +3,7 @@ import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
 import type {JournalRun,PopulationView,SampleView} from '@/lib/pilot-population';
 import type {Evidence,Finding,WorkItem} from '@/lib/workspace';
 import type {PilotAction} from './pilot-registers';
+import type {DataMethodsView} from '@/lib/pilot-data-methods';
 
 const money=(value:number)=>new Intl.NumberFormat(undefined,{maximumFractionDigits:2}).format(value/100);
 const issues:Record<string,string>={columns:'Багана зөрсөн',key:'Түлхүүр дутуу',amount:'Дүн буруу',entity:'Байгууллага зөрсөн',
@@ -15,15 +16,18 @@ export function DataAction({run,action,extra,button,children}:{
  function submit(e:FormEvent<HTMLFormElement>){
   e.preventDefault();
   const data=new FormData(e.currentTarget);
-  void run(action,{...Object.fromEntries([...data].map(([key,value])=>[key,String(value)])),...extra});
+  const fields=Object.fromEntries([...data].map(([key,value])=>[key,String(value)]));
+  if(action==='population-reconcile')fields.methods=JSON.stringify(data.getAll('methodRef').map(value=>{const [id,version]=String(value).split('@');return {id,version:Number(version)};}));
+  void run(action,{...fields,...extra});
  }
- return <form className="feature-form" data-action={action} onSubmit={submit}>{children}<button className="btn secondary">{button}</button></form>;
+ return <form className="feature-form" data-action={action} data-case={extra?.case} onSubmit={submit}>{children}<button className="btn secondary">{button}</button></form>;
 }
 
-export function PopulationDesk({population,role,engagement,evidence,run,readFile,onError,requestImport}:{
+export function PopulationDesk({population,role,engagement,evidence,run,readFile,onError,requestImport,dataMethods}:{
  population?:PopulationView;role:PilotRole;engagement:string;run:PilotAction;
  evidence:(Evidence&{current?:boolean})[];
  requestImport?:boolean;
+ dataMethods?:DataMethodsView;
  readFile:(file:FormDataEntryValue|null)=>Promise<{name:string;base64:string}>;onError:(error:string)=>void;
 }){
  const [page,setPage]=useState(0),[filter,setFilter]=useState('');
@@ -35,7 +39,7 @@ export function PopulationDesk({population,role,engagement,evidence,run,readFile
   e.preventDefault();
   const form=e.currentTarget, data=new FormData(form);
   void readFile(data.get('file')).then(file=>run('population-import',{...file,currency:String(data.get('currency')),
-   source:String(data.get('source'))})).then(ok=>{if(ok){form.reset();setPage(0);}}).catch(e=>onError(e.message));
+   source:String(data.get('source')),profile:String(data.get('profile')??'')})).then(ok=>{if(ok){form.reset();setPage(0);}}).catch(e=>onError(e.message));
  }
  const original=(id:string)=>'/api/pilot/evidence/'+id+pilotScope(engagement);
  return <section className="card pad bench-card">
@@ -47,6 +51,7 @@ export function PopulationDesk({population,role,engagement,evidence,run,readFile
    <form className="feature-form" onSubmit={upload}>
     <div className="field-grid"><label>Эх файл<input name="file" type="file" accept=".csv" required/></label>
      <label>Нийлүүлсэн эх сурвалж<input name="source" required/></label>
+     <label>Баталсан импортын профайл<select name="profile"><option value="">Стандарт CSV · ISO огноо, үндсэн нэгж</option>{dataMethods?.profiles.filter(p=>p.current.status==='approved').map(p=><option key={p.id} value={p.id}>{p.current.name} · v{p.current.version}</option>)}</select></label>
      <label>Валют<input name="currency" maxLength={3} placeholder="MNT" required/></label></div>
     <button className="btn primary">Эх файл бүртгэх</button>
    </form>
@@ -55,6 +60,8 @@ export function PopulationDesk({population,role,engagement,evidence,run,readFile
    <p><a href={original(current.evidence)}>{current.name}</a> · v{current.version} · {current.currency} · {current.source} · <b>{population?.usable?'Хэрэглэхийг зөвшөөрсөн':!extractCurrent?'Хүсэлтийн эх файл өөрчлөгдсөн':current.approval?'Эх хяналт өөрчлөгдсөн':'Хяналт хүлээж байна'}</b></p>
    {current.extract&&<p>{current.extract.request} · файл v{current.extract.fileVersion} · {current.extract.system} · {current.extract.start} — {current.extract.end} · {current.extract.contact}</p>}
    <p className="micro" style={{overflowWrap:'anywhere'}}>SHA-256 {current.sha256}</p>
+   {current.profile&&<p>Импортын профайл · v{current.profile.version}</p>}
+   {dataMethods?.managed&&role!=='preparer'&&role!==current.importedBy&&evidence.find(e=>e.id===current.evidence)?.status==='received'&&<DataAction action="support-assess" run={run} extra={{id:current.evidence,result:'accepted'}} button="Яг эх файлын бодит хэрэглээг хүлээн зөвшөөрөх"><label>Эх, хүрээ ба зориулалтыг үнэлсэн үндэс<textarea name="reason" required/></label></DataAction>}
    <p>Уншсан {current.counts.read} · Хүлээн авах {current.counts.accepted} · Тусгаарласан {current.counts.quarantined} · Хассан {current.counts.excluded}</p>
    <p>Уншигдсан дүн {Object.entries(current.readTotals??{}).map(([code,amount])=>code+' '+money(amount)).join(' · ')||'—'}
     {' · '}Хамрах хүрээний дүн {money(current.acceptedCents)} {current.currency} · Тоон дүнгүй мөр {current.counts.invalidAmounts}</p>
@@ -83,6 +90,8 @@ export function PopulationDesk({population,role,engagement,evidence,run,readFile
       <label>Хараат бус мөрийн тоо<input name="count" type="number" min={1} defaultValue={controls?.count} required/></label>
       <label>Хараат бус дүн<input name="total" type="number" step=".01" defaultValue={controls?controls.cents/100:undefined} required/></label>
       <label>Хяналтын эх сурвалж<input name="source" defaultValue={controls?.source} required/></label>
+      {dataMethods?.managed&&<><label>Баталгаатай эхийн нийт мөр · бүх төлөв орно<input name="certifiedCount" type="number" min={0} defaultValue={controls?.certifiedCount} required/></label><label>Валют,эхийн баталгаатай нийт дүн<textarea name="sourceTotals" placeholder="MNT,15000" defaultValue={Object.entries(controls?.sourceTotals??{}).map(([code,amount])=>code+','+amount/100).join('\n')} required/></label></>}
+      {dataMethods?.checks.filter(item=>item.current.usable&&item.current.inputs?.some(source=>source.id===current.evidence)).map(item=><label key={item.id}><input type="checkbox" name="methodRef" value={item.id+'@'+item.current.version} defaultChecked={controls?.methods?.some(ref=>ref.id===item.id&&ref.version===item.current.version)}/>Энэ эхийн баталсан тооцооллыг хэрэглээнд холбох · {item.current.use} · v{item.current.version}</label>)}
       <label>Хяналтын эх файл<select name="controlEvidence" defaultValue={controls?.evidence.id} required>
        <option value="">Сонгох</option>{evidence.filter(e=>e.status==='accepted'&&e.current!==false&&!e.population)
         .map(e=><option key={e.id} value={e.id}>{e.name} · v{e.version}</option>)}

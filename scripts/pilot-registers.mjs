@@ -4,7 +4,8 @@ import { latestArchiveSelection, registers } from '../src/lib/pilot-registers.ts
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { isCurrentReview, recordEvent, workKey } from '../src/lib/workspace.ts';
 import { PilotError, input, validMateriality } from './pilot-workflow.mjs';
-import { nativePapers,programmeAdoptionPreview } from './pilot-forms.mjs';
+import { nativePapers,programmeAdoptionPreview,effectiveForm } from './pilot-forms.mjs';
+import {checkEvidenceRecord,evidenceRecordStale} from './pilot-evidence.mjs';
 import {checkPlanningRecord,planningRecordStale,responseLinks} from './pilot-planning.mjs';
 import { checkStaffing } from './pilot-staffing.mjs';
 import { approvedPopulation } from './pilot-population.mjs';
@@ -26,6 +27,7 @@ function stale(m, row, seen = new Set()) {
   if (seen.has(row.id)) return true;
   const path = new Set([...seen, row.id]);
   if(planningRecordStale(m,row))return true;
+  if(evidenceRecordStale(m,row))return true;
   if (row.statementVersion && row.statementVersion !== m.engagements[0]?.fsVersion) return true;
   if (row.kind==='M10-F10'&&row.values.reportDate!==m.engagements[0]?.reportDate) return true;
   if (row.assemblyBasis&&row.assemblyBasis.issueAt!==m.pilotIssue?.at) return true;
@@ -33,7 +35,7 @@ function stale(m, row, seen = new Set()) {
   const reliance = row.programmeBasis?.reliance;
   if (reliance?.evidence && !m.evidence.some(e => e.id === reliance.evidence && evidenceCurrent(m,e) &&
       (reliance.evidenceVersion === undefined || e.version === reliance.evidenceVersion))) return true;
-  if (row.kind!=='M08-F07' && definition(row.kind)?.fields.some(f=>f.type==='evidence'&&row.values[f.key]&&
+  if (!['M08-F07','M08-F08'].includes(row.kind) && definition(row.kind)?.fields.some(f=>f.type==='evidence'&&row.values[f.key]&&
       !evidenceCurrent(m,m.evidence.find(e=>e.id===row.values[f.key])))) return true;
   if(row.declaration?.evidence&&row.declaration?.sha256&&!evidenceCurrent(m,m.evidence.find(e=>e.id===row.declaration.evidence)))return true;
   if (Object.entries(row.paperVersions ?? {}).some(([form, version]) => {
@@ -129,6 +131,11 @@ export function completionRegisterGaps(m) {
     if(rows(m,'M06-F05').some(r=>!approved(m,r)||r.values.result==='inadequate'))gaps.push('G02 · Бусдын ажил / эхний үлдэгдлийн нээлттэй үнэлгээ');
     if(approvedRows(m,'M06-F05').some(r=>r.values.result==='limited')&&!approvedRows(m,'M10-F08').some(r=>r.values.result==='limited'))gaps.push('G02 · Эхний үлдэгдэл / бусдын ажлын хязгаарлалтыг нотолгооны дүгнэлтэд үнэлнэ үү');
   }
+  if(m.pilotEvidenceEnabled){
+    if(rows(m,'M08-F08').some(r=>!approved(m,r)||['contradictory','more-work'].includes(r.values.result)))gaps.push('G03 · Нотолгооны бодит хэрэглээ / зөрчлийн үнэлгээ үлдсэн');
+    if([...approvedRows(m,'M08-F08'),...approvedRows(m,'M07-F08')].some(r=>r.values.result==='limited'||r.values.conclusion==='limited')&&!approvedRows(m,'M10-F08').some(r=>r.values.result==='limited'))gaps.push('G03 · Нотолгоо / баталгаажуулалтын хязгаарлалтыг эцсийн дүгнэлтэд үнэлнэ үү');
+    if(rows(m,'M07-F08').some(r=>!approved(m,r)||r.values.conclusion==='pending'))gaps.push('G03 · Баталгаажуулалтын бие даасан одоогийн дүгнэлт үлдсэн');
+  }
   for (const kind of completionKinds) if (rows(m, kind).some(r => !approved(m, r))) gaps.push(kind + ' · Одоогийн хувилбарын хяналт');
   if (unresolved(m, 'M07-F10', 'result', ['resolved', 'limited', 'na'])) gaps.push('M07-F10 · Дуусгаагүй тусгай горим');
   if (technicalRows(m).some(row=>approved(m,row)&&row.values.result==='limited')&&
@@ -145,7 +152,7 @@ export function completionRegisterGaps(m) {
   if (opinion && approvedRows(m, 'M10-F11').some(r => r.values.opinion !== opinion.id || r.values.template !== opinionForm(opinion.values.opinion))) {
     gaps.push('M10-F11 · Нэмэлт хэсгийг одоогийн санал дүгнэлт ба эх загварт холбоно уу');
   }
-  if (unresolved(m, 'M07-F08', 'result', ['received', 'difference', 'none'])) gaps.push('M07-F08 · Шийдэгдээгүй баталгаажуулалт');
+  if (unresolved(m, 'M07-F08', 'result', ['received', 'difference', 'none','refusal'])) gaps.push('M07-F08 · Шийдэгдээгүй баталгаажуулалт');
   if (unresolved(m, 'M10-F08', 'result', ['sufficient', 'limited'])) gaps.push('M10-F08 · Нотолгооны дүгнэлт дутуу');
   if (unresolved(m, 'M10-F12', 'result', ['received', 'qualified', 'missing'])) gaps.push('M10-F12 · Бичгээрх мэдэгдлийг үнэлнэ үү');
   if (m.pilotManagement) {
@@ -182,6 +189,7 @@ export function registerPackage(m) {
     ...(r.staffingBasis && { staffingBasis: r.staffingBasis }),
     ...(r.planningBasis && { planningBasis:r.planningBasis }),
     ...(r.adoptionAcknowledgement && {adoptionAcknowledgement:r.adoptionAcknowledgement}),
+    ...(r.evidenceBasis && {evidenceBasis:r.evidenceBasis}),
   }));
 }
 export const registerStamp = m => hash({
@@ -196,6 +204,8 @@ export const registerStamp = m => hash({
   ...(m.pilotForms && { native: nativePapers(m).map(w => [w.form,w.version,w.reviewedVersion,w.status,w.values.templateDigest]) }),
   ...(m.pilotTerms && { terms: m.pilotTerms }),
   ...(m.pilotPlanning&&{planning:m.pilotPlanning,effort:m.pilotEffort??[]}),
+  ...(m.pilotData&&{dataMethods:m.pilotData}),
+  ...(m.pilotData&&{dataSources:m.evidence.filter(e=>(m.pilotData.checks??[]).some(group=>group.versions.some(v=>v.inputs?.some(ref=>ref.id===e.id)))).map(e=>[e.id,e.version,e.status,e.scope])}),
 });
 export function firmSnapshot(m) {
   return registerRows(m).filter(r => ['M01-F01','M01-F02','M01-F03','M01-F04','M01-F06'].includes(r.kind) && approved(m, r))
@@ -292,7 +302,7 @@ function checkBusiness(m, row, spec, files) {
     if (!approved(m, target) || target.id === row.id || stale(m, target, new Set([row.id]))) bad(f.label + ' · Одоогийн баталсан хувилбар шаардлагатай');
     refs[target.id] = target.version;
   }
-  if (row.kind !== 'M08-F07' && spec.fields.some(f => f.type === 'evidence' && v[f.key] &&
+  if (!['M08-F07','M08-F08'].includes(row.kind) && spec.fields.some(f => f.type === 'evidence' && v[f.key] &&
       !m.evidence.some(e => e.id === v[f.key] && evidenceCurrent(m,e)))) bad('Үнэлж зөвшөөрсөн эх файл шаардлагатай.');
   if (spec.section === 'archive') files.checkArchiveRecord(m, row);
   switch (row.kind) {
@@ -435,6 +445,12 @@ function checkBusiness(m, row, spec, files) {
   }
   if (spec.fields.some(f => f.target === 'M07-F01') && find(m, v.programme)?.values.decision !== 'adopt') bad('Хэрэгжүүлсэн хөтөлбөр сонгоно уу.');
   checkPlanningRecord(m,row,refs,files);
+  checkEvidenceRecord(m,row,files);
+  if(row.kind==='M08-F08'){
+    const effective=effectiveForm(m,v.paper,files),template=effective?.body??formContract(v.paper);
+    if(!['execution','conclusion'].includes(v.target)&&!template?.fields.some(f=>f.key===v.target))bad('Яг сонгосон ажлын бодит талбар / горимд холбоно уу.');
+    row.evidenceBasis.target={form:v.paper,key:v.target,digest:effective?.digest??null};
+  }
   return refs;
 }
 
@@ -491,6 +507,7 @@ export function registerAction(m, role, data, files) {
     delete row.planningBasis;
     delete row.adoptionPreview;
     delete row.adoptionAcknowledgement;
+    delete row.evidenceBasis;
     delete row.assemblyBasis;
     row.populationBasis = populationBasis;
     row.version++;

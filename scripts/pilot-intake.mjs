@@ -300,6 +300,7 @@ export function createIntakeStore(db, store) {
         if(extended==='yes'){
           enableAcceptance(model);
           model.pilotPlanning={profile:1,by:role,at:new Date().toISOString(),reason:'Шинэ гэрээт ажлын G02 төлөвлөлтийн хяналт'};
+          model.pilotEvidenceEnabled=true;
         }
         previous.engagement = engagement.id;
         previous.clientId = client.id;

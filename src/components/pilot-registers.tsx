@@ -1,6 +1,6 @@
 import {useState,type FormEvent} from 'react';
 import {latestArchiveSelection,pilotScope,registers,roleChoices,sections,type PilotRecord,type PilotRole,type ProgrammeBasis,type RegisterField,type RecordStatus} from '@/lib/pilot-registers';
-import type {Evidence} from '@/lib/workspace';
+import type {Evidence,RequestItem} from '@/lib/workspace';
 import type {PopulationView} from '@/lib/pilot-population';
 import type {PlanningView} from '@/lib/pilot-planning';
 
@@ -21,6 +21,7 @@ export type RegisterResources={
  extended:boolean;
  acceptanceManaged?:boolean;
  planning?:PlanningView;
+ requests?:RequestItem[];
 };
 const state:Record<RecordStatus,string>={draft:'Ноорог',submitted:'Хяналтад',returned:'Засварт',approved:'Баталсан'};
 const roleName=Object.fromEntries(roleChoices);
@@ -87,6 +88,8 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
   void run('register',{kind,id:row?.id??'',operation:'save',...fields}).then(ok=>{if(ok)onDone();});
  }
  function options(field:RegisterField):readonly (readonly [string,string])[]|undefined{
+  if(kind==='M08-F08'&&field.key==='request')return (resources.requests??[]).filter(r=>r.dispatch==='issued'&&r.parts?.some(p=>p.evidence===values.evidence)).map(r=>[r.id,r.id+' · '+r.title]);
+  if(kind==='M08-F08'&&field.key==='part')return (resources.requests??[]).find(r=>r.id===values.request)?.parts?.filter(p=>p.evidence===values.evidence).map(p=>[p.id,p.title]);
   if(field.type==='choice')return field.choices;
   if(planning&&field.key==='templateVersion')return templates.map(t=>[t.version,t.version==='source'?'Эх маягт':'Баталсан v'+t.version]);
   if(planning&&field.key==='procedure')return (templates.find(t=>t.version===values.templateVersion)?.procedures??[]).map(p=>[p.key,p.key+' · '+p.label]);

@@ -1,6 +1,44 @@
 // Each claim is bounded to the recorded fixture. Shared scenario links do not close contracts.
 export const scenarios=[
   {
+    test:'G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry',file:'tests/pilot-data-evidence.test.mjs',
+    action:'accepted standard intake and reviewed G02 plan through approved source profile, explicit import, independent full-source controls, profile change and restart',actors:['preparer','reviewer','partner'],
+    observed:'The chosen DMY format, sign and currency scale retain raw source cells and bytes. Zero arithmetic sum cannot conceal a missing certified source row. Import and approval are distinct; self-review is denied. A revised profile reopens use while earlier interpreted rows, source originals and exact replay survive restart.',
+    cases:['P05-UC01','P05-UC02','P05-UC03'],features:['M08-F02','M08-F03','M08-F06','M08-F09'],automations:['AUTO-002','AUTO-003'],
+    criteria:['P05-UC01-AC01','P05-UC01-AC03','P05-UC01-AC04','P05-UC02-AC02','P05-UC03-AC01','P05-UC03-AC02','P05-UC03-AC04'],
+    e2e:['A11-P1-W1','A11-P1-W2','A11-P2-W1','A11-P2-W2','A11-P2-W3','A11-P3-W1','A11-P3-W2','A11-P3-W3'],
+  },
+  {
+    test:'G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions',file:'tests/pilot-data-evidence.test.mjs',
+    action:'exact original CSV versions through controlled master matching, TB/ledger, statement, opening and analytical checks with independent dispositions',actors:['preparer','reviewer','partner'],
+    observed:'Historical inactive master rows match only in their actual validity interval; ambiguous and unmatched IDs remain exceptions. Complete-ledger imbalance and duplicate statement destinations remain explicit. Signed/unit-aware casts and approved opening adjustments produce independently asserted residuals. Empty checks and missing thresholds cannot become clean output. Zero denominator remains undefined; refreshed analytics require new explanations. Changed statement input invalidates only its dependent check.',
+    cases:['P05-UC01','P05-UC02','P05-UC03','P06-UC05'],features:['M08-F09','M06-F05','M06-F06'],automations:['AUTO-004','AUTO-005','AUTO-006','AUTO-007','AUTO-008','AUTO-010'],
+    criteria:['P05-UC02-AC03','P05-UC03-AC01','P05-UC03-AC03','P05-UC03-AC04'],
+    e2e:['A11-P2-W2','A11-P2-W3','A11-P3-W1','A11-P3-W2','A11-P3-W3'],
+  },
+  {
+    test:'G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart',file:'tests/pilot-data-evidence.test.mjs',
+    action:'explicit requested purpose and actual received-file scope through separate acceptance, alternative review, replacement, use assessment, source correction and restart',actors:['preparer','reviewer','partner'],
+    observed:'The independent AUTO-001 example returns one covered, one missing and one rejected-only item. A received/accepted wrong-period original does not fulfil the intended request. An alternative needs separate independent approval. One original can support two individually accepted purposes; reopening one preserves the other and the unrelated materiality review. Replacements retain earlier originals and use history. Unreadable content cannot be positively supported; incorrect file signatures fail atomically. A corrected alternative scope renews coverage and cancellation preserves prior uses after restart.',
+    cases:['P08-UC01','P08-UC02','P08-UC04'],features:['M08-F02','M08-F04','M08-F05','M08-F06','M08-F08'],automations:['AUTO-001'],
+    criteria:['P08-UC01-AC01','P08-UC01-AC02','P08-UC01-AC03','P08-UC01-AC05','P08-UC02-AC01','P08-UC02-AC02','P08-UC02-AC04','P08-UC04-AC02','P08-UC04-AC04'],
+    e2e:['A18-P1-W1','A18-P1-W2','A18-P2-W2','A18-P2-W3','A18-P3-W1'],
+  },
+  {
+    test:'G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations',file:'tests/pilot-data-evidence.test.mjs',
+    action:'independently checked recipient and reply route through bounded local response, manual dispatch evidence, actual exception evaluation and independent conclusion',actors:['preparer','reviewer','partner','declared fictional local respondent'],
+    observed:'Repeating local link generation revokes its predecessor without increasing confirmed subjects. The respondent confirms the exact declared scope; receipt alone is not acceptance and replay fails. Actual manual dispatch and direct response are separate. Mismatched amounts and unsupported management-forwarded replies fail. A necessary positive response cannot be replaced by an unsupported favorable conclusion. Management refusal retains actual reasons, implications and the next owner. Unsupported negative-only conditions and a revoked issuer deny further eligibility. No external mail or bank identity verification is claimed.',
+    cases:['P08-UC01','P08-UC03','P08-UC04'],features:['M07-F08','M08-F05','M08-F08'],
+    criteria:['P08-UC01-AC04','P08-UC03-AC01','P08-UC03-AC02','P08-UC03-AC03','P08-UC03-AC04','P08-UC04-AC01','P08-UC04-AC04'],
+    e2e:['A14-P1-W1','A14-P1-W2','A14-P1-W3','A14-P1-W4','A14-P2-W2','A14-P2-W3','A14-P3-W1','A14-P3-W2','A14-P3-W3'],
+  },
+  {
+    test:'G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls',file:'tests/pilot-data-evidence.test.mjs',
+    action:'independently specified one-valid/two-defect example, source correction and cross-engagement original denial',actors:['preparer','reviewer','partner'],
+    observed:'Exactly one row is accepted and two stay quarantined with their own keys and defect reasons. Blank amount remains null, genuine zero remains zero and the negative amount survives an ambiguous date. A separate copy of the same original cannot be an independent control. Corrected files preserve earlier raw inputs. A foreign original cannot be downloaded or used through another engagement.',
+    cases:['P05-UC01','P05-UC02'],features:['M08-F02','M08-F06','M08-F09'],automations:['AUTO-002','AUTO-003'],criteria:['P05-UC01-AC01','P05-UC01-AC02','P05-UC01-AC03','P05-UC01-AC04','P05-UC01-AC05','P05-UC02-AC02'],
+  },
+  {
     test:'G02 actual effort rejects cross-engagement overlap without revealing hidden work and preserves scoped portfolio intervals',file:'tests/pilot-planning.test.mjs',
     action:'actual named-person time and portfolio permissions across separate accepted periods',actors:['preparer','reviewer','partner'],
     observed:'Overlapping actual hours for the same person are rejected without naming hidden work. The reviewer sees actual intervals only for permitted engagements; the partner sees both. Planned commitments and actual intervals remain distinct.',
