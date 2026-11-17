@@ -2,11 +2,14 @@ import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
 import type {Evidence,Finding,WorkItem} from '@/lib/workspace';
 import {DataAction} from './pilot-population';
 import type {PilotAction} from './pilot-registers';
+import type {FinalisationView} from '@/lib/pilot-finalisation';
+import type {PilotRecord} from '@/lib/pilot-registers';
+import {FinalisationDesk,EffectCorrectionDesk} from './pilot-finalisation';
 import type {MaterialityAmounts} from '@/lib/pilot-materiality';
 
 type Attachment={id:string;name:string;version:number;sha256:string};
 type Approval={by:PilotRole;at:string;reason:string};
-type Correction={version:number;amount:number;reference:string;account:string;sign:string;reason:string;support:Attachment;
+type Correction={mode?:string;description?:string;anchor?:string;version:number;amount:number;reference:string;account:string;sign:string;reason:string;support:Attachment;
  response?:{result:string;amount:number;file:Attachment;reason:string};
  postings:{amount:number;population:number;source:string;rows:{id:string;row:number;cents:number}[];reason:string}[]};
 type FindingFact={classification:string;reference:string;criterion:string;effect:string;evidence:Attachment;paper:number};
@@ -19,7 +22,7 @@ type ConsultationRevision={id:string;version:number;form:string;paper:number;tit
  restriction:'open'|'prohibited'|'clear';advice?:Attachment;decision?:Approval&{result:'returned'|'resolved'}};
 export type Consultation=ConsultationRevision&{current:boolean;basisCurrent:boolean;history:ConsultationRevision[]};
 export type CompletionView={
- enabled:boolean;inputs?:EvaluationInputs;
+ enabled:boolean;finalisation?:FinalisationView;inputs?:EvaluationInputs;
  findings:(Finding&{outstanding:number;correction?:Correction;postingCurrent:boolean;fact?:FindingFact;history:Correction[]})[];
  evaluation?:Evaluation&{current:boolean};evaluationHistory:Evaluation[];
  management?:Management&{current:boolean};managementHistory:Management[];
@@ -29,9 +32,9 @@ const money=(minor:number)=>new Intl.NumberFormat(undefined,{maximumFractionDigi
 const status:Record<string,string>={identified:'Бүртгэсэн',agreed:'Зөвшөөрсөн',posted_verified:'Бичилт баталгаажсан',
  accepted:'Зөвшөөрсөн',partial:'Хэсэгчлэн зөвшөөрсөн',declined:'Татгалзсан'};
 
-export function CompletionDesk({data,role,papers,evidence,engagement,run}:{
+export function CompletionDesk({data,role,papers,evidence,engagement,registers=[],run}:{
  data:CompletionView;role:PilotRole;papers:WorkItem[];evidence:(Evidence&{current?:boolean})[];
- engagement:string;run:PilotAction;
+ engagement:string;registers?:PilotRecord[];run:PilotAction;
 }){
  const available=evidence.filter(e=>e.status==='accepted'&&e.current!==false);
  const href=(id:string)=>'/api/pilot/evidence/'+id+pilotScope(engagement);
@@ -50,7 +53,7 @@ export function CompletionDesk({data,role,papers,evidence,engagement,run}:{
   <label>Мэргэжлийн нөхцөл<select name="restriction" defaultValue={row?.restriction??'open'}>
    <option value="open">Шийдэгдээгүй</option><option value="prohibited">Хоригтой</option><option value="clear">Зөвлөгөө буюу зөрүүг шийдсэн эхтэй</option>
   </select></label>
-  {fileChoice('advice','Зөвлөгөө эсвэл шийдлийн эх файл',row?.advice?.id,false)}
+  {fileChoice('advice','Зөвлөгөө эсвэл шийдлийн эх файл',row?.advice?.id,false)}{data.finalisation?.enabled&&<><label>Чухал бодит фактууд ба асуудал<textarea name="facts"/></label><label>Зөвлөгөөг бодитоор хэрэгжүүлсэн ажил<textarea name="application"/></label>{fileChoice('applicationEvidence','Бодит хэрэгжүүлсэн ажлын эх',undefined,false)}{fileChoice('resolutionAuthority','Эрх бүхий шийдвэр / хориг шийдсэн эх',undefined,false)}</>}
  </DataAction>;
  const findingForm=(finding?:CompletionView['findings'][number])=><DataAction run={run} action="completion-finding-record"
   extra={finding?{id:finding.id}:undefined} button={finding?'Эх ажлын шинэ хувилбарыг үнэлэх':'Илрүүлэлт бүртгэх'}>
@@ -69,7 +72,7 @@ export function CompletionDesk({data,role,papers,evidence,engagement,run}:{
    <label>Үр нөлөө ба дараагийн ажил<textarea name="effect" defaultValue={finding?.fact?.effect} required/></label>
   </div>
  </DataAction>;
- return <section className="card pad bench-card">
+ return <><FinalisationDesk data={data.finalisation} role={role} papers={papers} evidence={evidence} registers={registers} findings={data.findings} run={run}/><EffectCorrectionDesk data={data} role={role} evidence={evidence} run={run}/><section className="card pad bench-card">
   <h2>Илрүүлэлт, залруулга ба дуусгалтын эх баримт</h2>
   {role!=='preparer'&&(data.consultations.length>0||role==='reviewer'&&judgmentPapers.length>0)&&<details className="feature-detail">
    <summary>Чухал дүгнэлт, зөвлөлдөх асуудал</summary>
@@ -98,7 +101,7 @@ export function CompletionDesk({data,role,papers,evidence,engagement,run}:{
     <p>{f.form} · {f.qualitative} {f.resolution?' · '+f.resolution:''}</p>
     {f.fact&&<p>{f.fact.reference} · {f.fact.criterion} · <a href={href(f.fact.evidence.id)}>{f.fact.evidence.name}</a></p>}
     {f.fact&&role==='reviewer'&&reviewed.some(p=>p.form===f.form&&p.version!==f.fact?.paper)&&findingForm(f)}
-    {c&&<>
+    {c&&!c.mode&&<>
      <p>Санал v{c.version} · {c.account} / {c.reference} · {money(c.amount)} · <a href={href(c.support.id)}>{c.support.name}</a></p>
      {c.response&&<p>{status[c.response.result]} · {money(c.response.amount)} · <a href={href(c.response.file.id)}>{c.response.file.name}</a></p>}
      {latest&&<p><a href={href(latest.source)}>Бичилтийн эх олонлог v{latest.population}</a> · {money(latest.amount)}
@@ -114,7 +117,7 @@ export function CompletionDesk({data,role,papers,evidence,engagement,run}:{
       <label>Бие даасан шалгалтын үндэслэл<input name="reason" required/></label>
      </DataAction>}
     </>}
-    {role==='reviewer'&&f.outstanding>0&&reviewed.some(p=>p.form===f.form)&&<details className="feature-detail"><summary>Залруулгын санал бэлтгэх</summary>
+    {role==='reviewer'&&!c?.mode&&f.outstanding>0&&reviewed.some(p=>p.form===f.form)&&<details className="feature-detail"><summary>Залруулгын санал бэлтгэх</summary>
      <DataAction run={run} action="correction-propose" extra={{id:f.id}} button="Санал хадгалах">
       <div className="field-grid">
        <label>Саналын дүн<input name="amount" type="number" step=".01" min=".01" defaultValue={f.outstanding/100} required/></label>
@@ -139,7 +142,7 @@ export function CompletionDesk({data,role,papers,evidence,engagement,run}:{
    {data.inputs?.specific?.map(row=><p key={row.form}>{row.form} · {row.scope} · Залруулаагүй {money(row.gross)} ·
     {' '}Тусгай босго {row.amount.toLocaleString()} · {row.thresholdMet?'Босгод хүрсэн эсвэл давсан':'Босгоос бага'}</p>)}
    {role==='reviewer'&&<DataAction run={run} action="completion-evaluate" button="Одоогийн дүн ба чанарын нөлөөг хадгалах">
-    <label>Тоо болон чанарын нэгтгэсэн үнэлгээ<textarea name="note" defaultValue={data.evaluation?.note} required/></label>
+    {data.finalisation?.enabled&&<div className="field-grid"><label>Баталсан яг эцсийн шинжилгээ<select name="analytics" required>{registers.filter(r=>r.kind==='M10-F06'&&r.status==='approved'&&!r.stale).map(r=><option key={r.id} value={r.id}>{r.values.line} · v{r.version}</option>)}</select></label><label>Нэг валютын код<input name="currency" defaultValue={data.finalisation.context?.currency} required/></label>{[['individual','Тус бүрийн нөлөө'],['qualitative','Чанарын ач холбогдол'],['priorPeriods','Өмнөх үеийн үр дагавар'],['reassessment','Бодит үр дүнд материаллаг байдлыг дахин үнэлсэн нь']].map(([key,label])=><label key={key}>{label}<textarea name={key} required/></label>)}</div>}<label>Тоо болон чанарын нэгтгэсэн үнэлгээ<textarea name="note" defaultValue={data.evaluation?.note} required/></label>
    </DataAction>}
    {data.evaluation&&<p>Үнэлгээ v{data.evaluation.version} · {data.evaluation.current?'Одоогийн хяналт':'Шинэ хяналт шаардлагатай'} · {data.evaluation.note}</p>}
    {role==='partner'&&data.evaluation&&!data.evaluation.approval&&<DataAction run={run} action="completion-evaluation-approve" extra={{version:String(data.evaluation.version)}} button="Үнэлгээг батлах">
@@ -160,5 +163,5 @@ export function CompletionDesk({data,role,papers,evidence,engagement,run}:{
    {role==='partner'&&data.management&&!data.management.approval&&<DataAction run={run} action="completion-management-approve"
     extra={{version:String(data.management.version)}} button="Яг энэ эх хувилбарыг батлах"><label>Хяналтын үндэслэл<input name="reason" required/></label></DataAction>}
   </details>
- </section>;
+ </section></>;
 }

@@ -15,6 +15,7 @@ export type ProgrammeBasis={
 export type IndependenceDeclaration={text:string;by:PilotRole;at:string;evidence?:string;person?:{id:string;version:number;name:string;reference:string};
  disposition?:string;signedOn?:string;scope?:string;mode?:string;sha256?:string};
 export type RegisterRevision={version:number;status:RecordStatus;values:Record<string,string>;references:Record<string,number>;by:PilotRole;at:string;reason:string;
+ finalisationBasis?:string;
  programmeBasis?:ProgrammeBasis;template?:{form:string;sheet:string;digest:string;number?:number};
  populationBasis?:{version:number;evidence:string;line:string;sha256:string};declaration?:IndependenceDeclaration};
 export type PilotRecord=RegisterRevision&{

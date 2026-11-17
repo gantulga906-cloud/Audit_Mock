@@ -25,6 +25,7 @@ import {requestCoverage,receiptMetadata,checkUploadSignature,syncRequestCoverage
 import { journalAction, journalGap, journalView, syncJournalPapers } from './pilot-journals.mjs';
 import { areaAction, areaEvidence, areaGap, areaView, areaWorkpaperRef, syncAreaPapers } from './pilot-area.mjs';
 import { completionAction, completionEvidence, completionGaps, completionRef, completionView, consultationView, syncCompletion } from './pilot-completion.mjs';
+import {completionAffectsAudit} from './pilot-finalisation.mjs';
 import { oversightTeamAction, oversightTeamView, qualityGaps, qualityRef } from './pilot-oversight.mjs';
 import { currentSignature, signReport, strictRelease,distributionGaps } from './pilot-release.mjs';
 import { archiveAmendmentBasis, archiveAmendmentGap, archiveAmendmentRevision } from './pilot-archive.mjs';
@@ -204,7 +205,7 @@ export function qualityMaterial(m) {
   return {basis:qualityBasis(m),gaps:pilotGaps(m,false),artifact:renderReport(m),papers,evidence,
     ...(fact&&{laterFact:{discovered:fact.discovered,knownAtReport:fact.knownAtReport,impactReason:fact.impactReason,
       procedures:fact.plan.procedures,authority:fact.plan.authority,advice:fact.plan.advice}}),
-    consultations:consultationView(m),client:engagement.client,reportDate:engagement.reportDate};
+    completion:completionView(m,true,true),consultations:consultationView(m),client:engagement.client,reportDate:engagement.reportDate};
 }
 
 export function invalidateReport(m, reason) {
@@ -401,7 +402,7 @@ export function pilotAction(m, role, action, data, files) {
     recordEvent(m, 'Одоогийн баталсан багийн томилгоог холбов');
     return;
   }
-  if (['quality-policy','quality-response','archive-offer-custody'].includes(action)) {
+  if (['quality-policy','quality-response','quality-final-policy','quality-final-response','archive-offer-custody'].includes(action)) {
     if (managedStaffing(m)) requireSeat(m,files,role);
     oversightTeamAction(m,role,action,data,files);
     return;
@@ -490,7 +491,7 @@ export function pilotAction(m, role, action, data, files) {
     if (managedStaffing(m)) requireSeat(m,files,role);
     if (completionAction(m,role,action,data,files)) {
       syncFieldwork(m);
-      invalidateReport(m,'Дуусгалтын хянасан суурь өөрчлөгдөв');
+      if(completionAffectsAudit(m,action,data))invalidateReport(m,'Дуусгалтын хянасан суурь өөрчлөгдөв');
     }
     return;
   }
@@ -642,7 +643,7 @@ export function pilotAction(m, role, action, data, files) {
       ...(m.pilotSamples && { samples:Object.fromEntries(Object.entries(samplingView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
       ...(m.pilotJournals && { journals:Object.fromEntries(Object.entries(journalView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
       ...(m.pilotAreaRuns && { areas:Object.fromEntries(Object.entries(areaView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
-      ...((m.pilotCorrections||m.pilotEvaluations||m.pilotManagement||m.pilotConsultations) && {completion:completionView(m)}),
+      ...((m.pilotCorrections||m.pilotEvaluations||m.pilotManagement||m.pilotConsultations) && {completion:completionView(m,true,true)}),
       ...(m.pilotQuality && {quality:oversightTeamView(m).quality}),
       ...(technicalForms(m).length && {technicalPapers:activeItems(m,technicalForms(m).map(form=>m.work[workKey(m.engagement,form)]))
         .map(({id,version,reviewedVersion,values,evidence})=>({id,version,reviewedVersion,values,evidence}))}),
@@ -819,7 +820,8 @@ export function pilotAction(m, role, action, data, files) {
       break;
     case 'return':
       requireActor(canReviewWork(m, paper));
-      returnWork(m, paper.id, input(data, 'reason'), 'conclusion');
+      if(data.anchor&&!['execution','conclusion',...(effectiveForm(m,paper.form,files)?.body.fields.map(f=>f.key)??[])].includes(data.anchor))throw new PilotError(400,'Бодит ажлын талбарын байршил шаардлагатай.');
+      returnWork(m, paper.id, input(data, 'reason'), data.anchor??'conclusion');
       break;
     case 'review':
       requireActor(canReviewWork(m, paper));

@@ -11,14 +11,14 @@ const passwords={preparer:'G01-fixture-preparer',reviewer:'G01-fixture-reviewer'
 const today=()=>new Date().toISOString().slice(0,10);
 const dates={start:'2025-01-01',end:'2025-12-31',reportDate:'2026-12-31'};
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
-async function start(database,setup=false){
+async function start(database,setup=false,oversight={}){
  const pilot=createPilot({database,setupCode:'G01-fixture-only'}),server=createServer((req,res)=>void pilot.handle(req,res,new URL(req.url,'http://127.0.0.1')));
  await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
  const origin='http://127.0.0.1:'+server.address().port;
  const request=(path,cookie,data)=>fetch(origin+'/api/pilot'+path,{method:data===undefined?'GET':'POST',headers:{...(cookie&&{Cookie:cookie}),...(data!==undefined&&{'Content-Type':'application/json',Origin:origin})},body:data===undefined?undefined:JSON.stringify(data)});
  const cookies={};
  try{
-  if(setup)assert.equal((await request('/setup','',{code:'G01-fixture-only',...passwords})).status,201);
+  if(setup)assert.equal((await request('/setup','',{code:'G01-fixture-only',...passwords,...oversight})).status,201);
   for(const role of Object.keys(passwords)){const r=await request('/login','',{role,password:passwords[role]});assert.equal(r.status,200);cookies[role]=r.headers.get('set-cookie').split(';')[0];}
   const path=(route,id)=>route+'?engagement='+id;
   const view=async(role,id,status=200)=>{const r=await request(path('',id),cookies[role]);assert.equal(r.status,status);return r.json();};

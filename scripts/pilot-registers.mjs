@@ -12,6 +12,7 @@ import { approvedPopulation } from './pilot-population.mjs';
 import { evidenceCurrent } from './pilot-requests.mjs';
 import {acceptanceFile} from './pilot-acceptance.mjs';
 import {executionPosition} from './pilot-execution.mjs';
+import {managedCompletion,finalisationStamp} from './pilot-finalisation.mjs';
 
 const contracts = JSON.parse(readFileSync(new URL('../src/data/source-registers.json', import.meta.url), 'utf8')).forms;
 const definition = id => registers.find(r => r.id === id);
@@ -29,6 +30,7 @@ function stale(m, row, seen = new Set()) {
   const path = new Set([...seen, row.id]);
   if(planningRecordStale(m,row))return true;
   if(row.executionBasis&&row.executionBasis!==executionPosition(m))return true;
+  if(row.finalisationBasis&&row.finalisationBasis!==finalisationStamp(m))return true;
   if(evidenceRecordStale(m,row))return true;
   if (row.statementVersion && row.statementVersion !== m.engagements[0]?.fsVersion) return true;
   if (row.kind==='M10-F10'&&row.values.reportDate!==m.engagements[0]?.reportDate) return true;
@@ -359,6 +361,7 @@ function checkBusiness(m, row, spec, files) {
     }
     case 'M10-F08':
       if(m.pilotExecution||Object.values(m.pilotSamples??{}).some(entries=>entries.at(-1).resultReview))row.executionBasis=executionPosition(m);
+      if(managedCompletion(m))row.finalisationBasis=finalisationStamp(m);
       break;
     case 'M06-F06':
     case 'M07-F06':

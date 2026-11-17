@@ -397,7 +397,7 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,
   </div><div hidden={tab!=='review'} className="ew-paper-body">
   {paper.reviewable&&<div className="space-top">
    <button type="button" className="btn primary" disabled={paper.notes.some(n=>!n.cleared)} onClick={()=>void run('review',reference)}>v{paper.version} хувилбарыг хянаж батлах</button>
-   <ActionForm run={run} action="return" extra={reference} button="Засварт буцаах"><label>Хяналтын тэмдэглэл<input name="reason" required/></label></ActionForm>
+   <ActionForm run={run} action="return" extra={reference} button="Засварт буцаах"><label>Яг шалгасан талбар<select name="anchor"><option value="conclusion">Дүгнэлт</option><option value="execution">Бодит гүйцэтгэл</option>{paper.template?.body.fields.map(field=><option key={field.key} value={field.key}>{field.label}</option>)}</select></label><label>Хяналтын тэмдэглэл<input name="reason" required/></label></ActionForm>
   </div>}
   {paper.notes.map(n=><div className="bench-item" key={n.id}>
    <b>v{n.version} · {names[n.author]} · {n.cleared?'Шийдвэрлэсэн':'Нээлттэй'}</b>
@@ -571,8 +571,8 @@ function SharedPilotWorkspace(){
     {route.page==='review'&&<><WorkpaperIndex key="review" view={view} query={query} open={openPaper} mode="review" routeFilter={route.filter} routeStage={route.stage} onFiltersChange={listFilters}/>      {view.impacts?.map(impact=><section className="card pad bench-card" key={impact.id}><h2>{impact.source} · Өөрчлөлтийн нөлөө</h2><p>{impact.reason} · {impact.targets.join(', ')}</p>
        {view.role==='reviewer'&&<ActionForm run={run} action="resolve-impact" extra={{id:impact.id}} button="Нөлөөллийн үнэлгээг бүртгэх"><label>Шийдвэрийн үндэслэл<input name="reason" required/></label></ActionForm>}
       </section>)}
-{view.oversight&&<OversightDesk view={view.oversight} role={view.role} sealed={sealed} archive={view.archive.packages[0]?.id} run={run}/>}</>}
-    {route.page==='completion'&&<>{engagement.active&&!sealed&&view.completion&&<CompletionDesk data={view.completion} role={view.role} papers={view.papers??[]} evidence={view.evidence??[]} engagement={view.selected!} run={run}/ >}{registers(['fieldwork','completion'])}      <section className="card pad bench-card">
+{view.oversight&&<OversightDesk managed={view.completion?.finalisation?.enabled??false} papers={view.papers??[]} evidence={view.evidence??[]} view={view.oversight} role={view.role} sealed={sealed} archive={view.archive.packages[0]?.id} run={run}/>}</>}
+    {route.page==='completion'&&<>{engagement.active&&!sealed&&view.completion&&<CompletionDesk registers={view.registers??[]} data={view.completion} role={view.role} papers={view.papers??[]} evidence={view.evidence??[]} engagement={view.selected!} run={run}/ >}{registers(['fieldwork','completion'])}      <section className="card pad bench-card">
        <h2>Партнерын багцын зөвшөөрөл</h2>
        {(view.extended||view.completion?.management||view.archive.reopened?.target)&&view.role==='partner'&&!sealed&&<ActionForm key={engagement.reportDate} run={run} action="report-date" button="Зорилтот тайлангийн өдрийг шинэчлэх">
         <label>Зорилтот тайлангийн өдөр<input type="date" name="date" min={engagement.period.end} defaultValue={engagement.reportDate} required/></label>
@@ -610,7 +610,7 @@ function SharedPilotWorkspace(){
        </>}
       </section>
 </>}
-    {route.page==='archive'&&<><AssemblyDesk data={view.assembly} sealed={sealed}/>{registers(['archive'])}{view.role==='partner'&&(!!view.laterFacts?.length||sealed&&view.release?.strict)&&<LaterFactsDesk facts={view.laterFacts??[]} packageId={sealed?view.archive.packages[0]?.id:undefined} engagement={view.selected!} papers={view.papers??[]} run={run} readFile={readEvidence} onError={setError}/ >}{view.oversight&&<OversightDesk view={view.oversight} role={view.role} sealed={sealed} archive={view.archive.packages[0]?.id} run={run}/>}</>}
+    {route.page==='archive'&&<><AssemblyDesk data={view.assembly} sealed={sealed}/>{registers(['archive'])}{view.role==='partner'&&(!!view.laterFacts?.length||sealed&&view.release?.strict)&&<LaterFactsDesk facts={view.laterFacts??[]} packageId={sealed?view.archive.packages[0]?.id:undefined} engagement={view.selected!} papers={view.papers??[]} run={run} readFile={readEvidence} onError={setError}/ >}{view.oversight&&<OversightDesk managed={view.completion?.finalisation?.enabled??false} papers={view.papers??[]} evidence={view.evidence??[]} view={view.oversight} role={view.role} sealed={sealed} archive={view.archive.packages[0]?.id} run={run}/>}</>}
    </>}
    {!engagement&&!['home','clients','library','people','admin','history'].includes(route.page)&&<WorkspaceEmpty title="Гэрээт ажлаа сонгоно уу" description="Дээд хэсгийн жагсаалтаас ажиллах гэрээт ажлаа сонгоно."/>}
    {route.page==='history'&&<section className="ew-panel ew-panel-pad"><h2>Үйлдлийн түүх</h2>{view.activity?.map(a=><article className="ew-activity" key={a.id}><span className="ew-activity-dot"/><div><b>{names[a.by]??a.by}</b><p>{a.text}</p><small>{new Date(a.at).toLocaleString('mn-MN')}</small></div></article>)}{!view.activity?.length&&<WorkspaceEmpty title="Үйлдлийн түүх алга" description="Хадгалсан үйлдлүүд хариуцсан хүн, огноотойгоор энд харагдана."/>}</section>}

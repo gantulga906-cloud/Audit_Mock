@@ -6,6 +6,7 @@ import { evidenceCurrent } from './pilot-requests.mjs';
 import { input, PilotError, validMateriality } from './pilot-workflow.mjs';
 import {approvedRows} from './pilot-registers.mjs';
 import {executionPosition} from './pilot-execution.mjs';
+import {managedCompletion,finalisationAction,finalisationView,finalisationGaps,finalisationStamp,finalisationEvidence,effectPostingCurrent,effectCorrectionAction} from './pilot-finalisation.mjs';
 
 const fail=(message,status=409)=>{throw new PilotError(status,message);};
 const now=()=>new Date().toISOString();
@@ -31,12 +32,13 @@ function liveFile(m,file) {
 
 function consultationBasisCurrent(m,row) {
   const paper=m.work[workKey(m.engagement,row.form)];
-  return isCurrentReview(paper)&&paper.version===row.paper&&(!row.advice||liveFile(m,row.advice));
+  return isCurrentReview(paper)&&paper.version===row.paper&&(!row.advice||liveFile(m,row.advice))&&(!row.application||[row.application.evidence,row.application.authority].every(ref=>liveFile(m,ref)));
 }
 
 const consultationCurrent=(m,row)=>row.decision?.result==='resolved'&&consultationBasisCurrent(m,row);
 
 function effectivePosting(m,revision) {
+  if(['disclosure','reclassification'].includes(revision?.mode))return effectPostingCurrent(m,revision);
   const post=revision?.postings?.at(-1), current=approvedPopulation(m);
   return post&&current?.version===post.population&&liveFile(m,revision.response?.file)?post:undefined;
 }
@@ -73,11 +75,12 @@ function evaluationInputs(m) {
     const gross=included.reduce((sum,row)=>sum+row.outstanding,0);
     return {form,scope,amount,gross,thresholdMet:gross/100>=amount,findings:included.map(row=>row.id)};
   });
-  return {statement:engagement.fsVersion,materiality:mat.version,limits,gross,rows,...(specific?.length&&{specific})};
+  return {statement:engagement.fsVersion,materiality:mat.version,limits,gross,rows,...(specific?.length&&{specific}),...(managedCompletion(m)&&{finalisation:finalisationStamp(m),effects:m.findings.map(f=>({id:f.id,currency:findingFact(m,f.id)?.currency??null,period:findingFact(m,f.id)?.period??null,signedDifference:f.signedDifference??null,projection:f.projection??null}))})};
 }
 
 export function currentEvaluation(m) {
   const row=evaluation(m), inputs=row?.approval&&evaluationInputs(m);
+  if(managedCompletion(m)&&(!row?.judgments||!approvedRows(m,'M10-F06').some(r=>r.id===row.judgments.analytics&&r.version===row.judgments.analyticsVersion)))return;
   return row?.approval&&inputs&&row.stamp===digest(inputs)?row:undefined;
 }
 
@@ -92,10 +95,11 @@ export function consultationView(m) {
     basisCurrent:consultationBasisCurrent(m,row),history:m.pilotConsultations[row.id].slice(0,-1).reverse()}));
 }
 
-export function completionView(m,includeConsultations=true) {
+export function completionView(m,includeConsultations=true,auditOnly=false) {
   const row=evaluation(m), attachment=management(m);
   return {
     enabled:activeEvaluation(m),inputs:activeEvaluation(m)?evaluationInputs(m):undefined,
+    finalisation:finalisationView(m,includeConsultations?'reviewer':'preparer',auditOnly),
     findings:m.findings.map(f=>({...f,outstanding:correctionAmount(m,f),correction:latestCorrection(m,f.id),
       postingCurrent:!!effectivePosting(m,latestCorrection(m,f.id)),fact:findingFact(m,f.id),history:(m.pilotCorrections?.[f.id]??[]).slice(0,-1).reverse()})),
     evaluation:row&&{...row,current:!!currentEvaluation(m)},
@@ -107,10 +111,10 @@ export function completionView(m,includeConsultations=true) {
 }
 
 export function completionGaps(m) {
-  const gaps=[];
+  const gaps=finalisationGaps(m);
   if((Object.values(m.pilotSamples??{}).some(versions=>versions.at(-1).resultReview?.disposition==='limited')||Object.values(m.pilotExecution??{}).some(versions=>versions.at(-1).conclusion?.disposition!=='usable'&&versions.at(-1).conclusion))&&!approvedRows(m,'M10-F08').some(r=>r.executionBasis===executionPosition(m)&&r.values.result!=='pending'))gaps.push('G04 · Хязгаарлалт / нэмэлт ажлыг одоогийн M10-F08 нотолгооны үнэлгээнд тусгана уу');
-  if (activeEvaluation(m)&&!currentEvaluation(m)) gaps.push('4.4 · Материаллаг байдал ба залруулаагүй нөлөөний одоогийн хяналт');
-  if (m.pilotManagement&&!currentManagement(m)) gaps.push('4.4 · СТ, тодруулга, удирдлагын баталсан яг хувилбар шаардлагатай');
+  if ((activeEvaluation(m)||managedCompletion(m))&&!currentEvaluation(m)) gaps.push('4.4 · Материаллаг байдал ба залруулаагүй нөлөөний одоогийн хяналт');
+  if ((m.pilotManagement||managedCompletion(m))&&!currentManagement(m)) gaps.push('4.4 · СТ, тодруулга, удирдлагын баталсан яг хувилбар шаардлагатай');
   if (m.pilotCorrections&&Object.values(m.pilotCorrections).some(rows=>!rows.at(-1).response||!liveFile(m,rows.at(-1).response.file))) {
     gaps.push('Залруулгын саналд удирдлагын баримтжуулсан хариу шаардлагатай');
   }
@@ -126,13 +130,14 @@ export function completionRef(m) {
   const reference=[currentEvaluation(m)?.stamp,currentManagement(m)?.stamp].map(x=>x??'');
   const reviews=consultations(m);
   if (reviews.length) reference.push(digest(reviews.map(row=>[row.id,row.version,row.decision,consultationCurrent(m,row)])));
+  if(managedCompletion(m))reference.push(finalisationStamp(m));
   return reference.join(':');
 }
 
 export function syncCompletion(m) {
   syncCorrectionStatus(m);
   const w=m.work[workKey(m.engagement,'4.4')];
-  if (!w||!['reviewed','submitted'].includes(w.status)||!(activeEvaluation(m)||m.pilotManagement||m.pilotConsultations)||
+  if (!w||!['reviewed','submitted'].includes(w.status)||!(activeEvaluation(m)||m.pilotManagement||m.pilotConsultations||managedCompletion(m))||
       w.values['pilot.completion']===completionRef(m)&&!completionGaps(m).length) return;
   snapshot(w,m.person,'Дуусгалтын өмнөх хяналтыг хадгалав');
   w.version++;
@@ -143,13 +148,14 @@ export function syncCompletion(m) {
 }
 
 export function completionEvidence(m) {
-  const files=[];
+  const files=finalisationEvidence(m);
   for (const versions of Object.values(m.pilotCorrections??{})) for (const row of versions) {
-    files.push(row.support.id,...(row.response?[row.response.file.id]:[]),...row.postings.map(p=>p.source));
+    files.push(row.support.id,...(row.response?[row.response.file.id]:[]),...row.postings.flatMap(p=>[p.source,p.evidence?.id,p.notes?.id].filter(Boolean)));
   }
   for (const row of m.pilotManagement??[]) files.push(row.file.id,row.notes.id,row.authorization.id);
   for (const versions of Object.values(m.pilotFindingFacts??{})) for (const row of versions) files.push(row.evidence.id);
   for (const versions of Object.values(m.pilotConsultations??{})) for (const row of versions) if (row.advice) files.push(row.advice.id);
+  for(const versions of Object.values(m.pilotConsultations??{}))for(const row of versions)if(row.application)files.push(row.application.evidence.id,row.application.authority.id);
   return files;
 }
 
@@ -168,7 +174,9 @@ function consultationAction(m,role,action,data,files) {
     const prohibition=versions?.findLast(row=>row.restriction==='prohibited');
     if (restriction==='clear'&&prohibition?.advice&&prohibition.advice.id===advice?.id) fail('Хоригийг шийдсэн шинэ эх нотолгоо шаардлагатай.');
     const title=input(data,'title',200), scope=input(data,'scope'), id=prior?.id??randomUUID();
-    const row={id,version:(prior?.version??0)+1,form,paper:paper.version,title,scope,restriction,advice,by:role,at:now()};
+    let application;
+    if(managedCompletion(m)&&restriction==='clear'){application={facts:input(data,'facts'),work:input(data,'application'),evidence:acceptedFile(m,files,data.applicationEvidence),authority:acceptedFile(m,files,data.resolutionAuthority)};if(prohibition?.advice?.sha256===advice.sha256)fail('Өмнөх хоригийн эхийн хуулбар нь шинэ шийдвэр биш.');}
+    const row={id,version:(prior?.version??0)+1,form,paper:paper.version,title,scope,restriction,advice,application,by:role,at:now()};
     (((m.pilotConsultations??={})[id])??=[]).push(row);
   } else {
     if (role!=='partner') fail('Партнер зөвлөлдөх асуудлыг хараат бусаар хянана.',403);
@@ -177,6 +185,7 @@ function consultationAction(m,role,action,data,files) {
     const {result}=data;
     if (!['returned','resolved'].includes(result)) fail('Хяналтын шийдвэрийг сонгоно уу.',400);
     if (result==='resolved'&&(prior.restriction!=='clear'||!prior.advice)) fail('Шийдэгдээгүй зөрүү эсвэл хоригтой асуудлыг хаах боломжгүй.');
+    if(managedCompletion(m)&&result==='resolved'&&(!prior.application||!liveFile(m,prior.application.evidence)||!liveFile(m,prior.application.authority)))fail('Зөвлөгөөг бодитоор хэрэгжүүлсэн ажил ба эрх бүхий шийдвэрийн эх шаардлагатай.');
     prior.decision={result,by:role,at:now(),reason:input(data,'reason')};
   }
   recordEvent(m,action,'4.4');
@@ -231,6 +240,8 @@ function correctionAction(m,role,action,data,files) {
 }
 
 export function completionAction(m,role,action,data,files) {
+  if(action==='completion-enable'||action.startsWith('completion-case-'))return finalisationAction(m,role,action,data,files);
+  if(action.startsWith('correction-effect-'))return effectCorrectionAction(m,role,action,data,files);
   if (action.startsWith('correction-')) return correctionAction(m,role,action,data,files);
   if (['completion-consultation-record','completion-consultation-review'].includes(action)) return consultationAction(m,role,action,data,files);
   if (action==='completion-finding-record') {
@@ -260,8 +271,14 @@ export function completionAction(m,role,action,data,files) {
     const inputs=evaluationInputs(m), note=input(data,'note');
     if (!inputs) fail('Хянасан 1.3 ба одоогийн тайлан шаардлагатай.');
     const prior=evaluation(m), stamp=digest(inputs);
-    if (prior?.stamp===stamp&&prior.note===note) return false;
-    (m.pilotEvaluations??=[]).push({version:(prior?.version??0)+1,inputs,stamp,note,by:role,at:now()});
+    if (prior?.stamp===stamp&&prior.note===note&&!managedCompletion(m)) return false;
+    let judgments;
+    if(managedCompletion(m)){
+      const analytics=approvedRows(m,'M10-F06').find(r=>r.id===data.analytics);if(!analytics)fail('Яг одоогийн баталсан эцсийн шинжилгээ шаардлагатай.');
+      const currency=input(data,'currency',3);if(!/^[A-Z]{3}$/.test(currency)||inputs.effects.some(row=>row.currency&&row.currency!==currency))fail('Харьцуулж болох нэг валют шаардлагатай; валют хөрвүүлж / далд нэгтгэхгүй.');
+      judgments={analytics:analytics.id,analyticsVersion:analytics.version,currency,individual:input(data,'individual'),qualitative:input(data,'qualitative'),priorPeriods:input(data,'priorPeriods'),reassessment:input(data,'reassessment')};
+    }
+    (m.pilotEvaluations??=[]).push({version:(prior?.version??0)+1,inputs,stamp,note,judgments,by:role,at:now()});
   } else if (action==='completion-evaluation-approve') {
     if (role!=='partner') fail('Хараат бус партнерын үнэлгээ шаардлагатай.',403);
     const row=evaluation(m), inputs=evaluationInputs(m);

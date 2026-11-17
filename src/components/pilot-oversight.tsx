@@ -4,20 +4,27 @@ import {DataAction} from './pilot-population';
 import type {Consultation} from './pilot-completion';
 import type {PilotAction} from './pilot-registers';
 import type {Note} from '@/lib/workspace';
+import type {Evidence,WorkItem} from '@/lib/workspace';
 
 type IndependentRole='quality'|'custodian';
 type QualityNote={id:string;text:string;cleared?:{at:string};responses?:{text:string;at:string}[]};
 type Quality={policy:{version:number;mode:string;reference:string;basis:string;reviewer:string;eligibility:string;
- eligibilityStatus?:'eligible'|'ineligible'|'unresolved'|''};current:boolean;notes:QualityNote[]};
+ eligibilityStatus?:'eligible'|'ineligible'|'unresolved'|'';forms?:string[]};current:boolean;notes:QualityNote[]};
 type Custody={id:string;digest:string;recipient:string;offeredAt:string;downloadedAt?:string;accepted?:{at:string;reason:string};returned?:{at:string;reason:string;owner:string};resolution?:string};
-export type OversightView={quality?:Quality;custody:Custody[]};
+export type OversightView={quality?:Quality;finalQuality?:Quality;custody:Custody[]};
+function EligibilityFields({evidence}:{evidence:Evidence[]}){return <><p>Шалгуур бүрийн бодит эх, өмнөх оролцоо ба хэрэглэгдэх дүрмийг тусдаа үнэлнэ.</p>{[['competence','Мэргэшил'],['capability','Чадвар ба бодит цаг'],['authority','Томилох / гүйцэтгэх эрх'],['objectivity','Объектив байдал ба хараат бус нөхцөл']].map(([key,label])=><label key={key}>{label}<select name={key}><option value="unresolved">Тодорхойгүй / хангаагүй</option><option value="supported">Бодит эхээр дэмжсэн</option></select></label>)}<label>Өмнөх оролцоо / cooling-off<select name="coolingOff"><option value="unresolved">Тодорхойгүй</option><option value="satisfied">Хэрэглэх шалгуур хангасан</option><option value="not-applicable">Үндэслэлтэй хамаарахгүй</option></select></label><label>Бодит эрх ба шалгуурын эх<select name="eligibilityEvidence"><option value="">Сонгох / хараахан ирээгүй</option>{evidence.filter(e=>e.status==='accepted').map(e=><option key={e.id} value={e.id}>{e.name}</option>)}</select></label></>;}
+function FinalQualityDesk({q,papers,evidence,role,run}:{q?:Quality;papers:WorkItem[];evidence:Evidence[];role:PilotRole;run:PilotAction}){
+ function submit(event:FormEvent<HTMLFormElement>){event.preventDefault();const f=new FormData(event.currentTarget),values=Object.fromEntries([...f].filter(([k])=>k!=='scope').map(([k,v])=>[k,String(v)]));void run('quality-final-policy',{...values,forms:JSON.stringify(f.getAll('scope'))});}
+ return <details className="feature-detail" data-final-quality><summary>Томилсон R4 эцсийн баталгаа · формал EQR-ээс тусдаа</summary>{role==='partner'&&<form className="feature-form" onSubmit={submit}><div className="field-grid"><label>Томилсон шаардлага<select name="mode" defaultValue={q?.policy.mode??'unresolved'}><option value="unresolved">Тодорхойгүй</option><option value="required">Томилсон хүрээнд шаардлагатай</option><option value="not-required">Энэ хүрээнд томилоогүй</option></select></label><label>Бодлого, хэвлэл ба эрхийн ишлэл<input name="reference" required/></label><label>Томилсон / томилоогүй бодит үндэс<textarea name="basis" required/></label><label>Хянагчийн бодит нэр<input name="reviewer"/></label><label>Шалгуурын шийдвэр<select name="eligibilityStatus"><option value="unresolved">Тодорхойгүй</option><option value="ineligible">Хангаагүй</option><option value="eligible">Бодит эхээр хангадаг</option></select></label><label>Бодит мэргэшил, эрх, өмнөх оролцоо ба цаг<textarea name="eligibility"/></label><EligibilityFields evidence={evidence}/></div><fieldset><legend>Яг томилсон ажлууд</legend>{papers.map(p=><label key={p.form}><span><input type="checkbox" name="scope" value={p.form} defaultChecked={q?.policy.forms?.includes(p.form)}/>{p.form} · {p.title}</span></label>)}</fieldset><button className="btn secondary">Тусдаа эцсийн хяналтын шийдвэр хадгалах</button></form>}
+ {q&&<p>v{q.policy.version} · {q.policy.mode} · {q.policy.forms?.join(', ')} · {q.current?'Одоогийн хүрээнд баталсан':'Шийдвэр / бодит хяналт хүлээж байна'}</p>}{q?.notes.map(note=><div key={note.id}><p>{note.text} · {note.cleared?'Тусдаа хаасан':'Нээлттэй'}</p>{!note.cleared&&role!=='preparer'&&<DataAction action="quality-final-response" extra={{id:note.id}} run={run} button="Яг томилсон хүрээнд хариу өгөх"><label>Бодит хариу ба засвар<textarea name="reason" required/></label></DataAction>}</div>)}</details>;
+}
 export type ReleaseView={strict:boolean;signature?:{method:string;at:string;artifact:string};
  deliveries:{id:string;issued:string;recipient:string;state:string;downloaded?:string;received?:string;response?:string;
  events?:{state:string;at:string;actor:string;reference:string;reason:string}[]}[]};
 const api='/api/pilot';
 const captions={quality:'Хараат бус чанарын хяналт',custodian:'Хараат бус архивын хадгалалт'};
 
-export function OversightDesk({view,role,sealed,archive,run}:{view:OversightView;role:PilotRole;sealed:boolean;archive?:string;run:PilotAction}){
+export function OversightDesk({view,role,sealed,archive,run,managed=false,papers=[],evidence=[]}:{view:OversightView;role:PilotRole;sealed:boolean;archive?:string;run:PilotAction;managed?:boolean;papers?:WorkItem[];evidence?:Evidence[]}){
  const q=view.quality;
  const status=q?.policy.mode==='not-required'?'Шийдвэрээр шаардлагагүй':
   q?.policy.mode==='unresolved'?'Хэрэглэх шаардлагыг тогтоогоогүй':
@@ -27,6 +34,7 @@ export function OversightDesk({view,role,sealed,archive,run}:{view:OversightView
  return <details className="card pad bench-card"><summary>Чанарын хяналт ба хадгалалтын хүлээлцэх</summary>
   {!sealed&&role==='partner'&&<DataAction run={run} action="quality-policy" button="Чанарын шийдвэр хадгалах">
    <div className="field-grid">
+    {managed&&<h3>Формал EQR хэрэглэх эсэх ба тусдаа шалгуур</h3>}
     <label>Шаардлага<select name="mode" defaultValue={q?.policy.mode??'unresolved'}>
      <option value="unresolved">Тодорхойгүй</option><option value="required">Заавал</option><option value="not-required">Шаардлагагүй</option>
     </select></label>
@@ -37,9 +45,11 @@ export function OversightDesk({view,role,sealed,archive,run}:{view:OversightView
      <option value="unresolved">Тодорхойгүй</option><option value="eligible">Шалгуур хангасан</option><option value="ineligible">Шалгуур хангаагүй</option>
     </select></label>
     <label>Мэргэшил, эрх, хараат бус байдал, өмнөх оролцоо ба цаг<input name="eligibility" defaultValue={q?.policy.eligibility}/></label>
+    {managed&&<EligibilityFields evidence={evidence}/>}
    </div>
   </DataAction>}
   {q&&<p>4.6 · v{q.policy.version} · {q.policy.reference} · {status}</p>}
+  {managed&&!sealed&&<FinalQualityDesk q={view.finalQuality} papers={papers} evidence={evidence} role={role} run={run}/>}
   {q?.notes.map(note=><div className="bench-item" key={note.id}>
    <p>{note.text} · {note.cleared?'Шийдвэрлэсэн':'Нээлттэй'}</p>
    {note.responses?.map((response,i)=><p key={i}>{response.text}</p>)}
@@ -56,7 +66,7 @@ export function OversightDesk({view,role,sealed,archive,run}:{view:OversightView
 }
 
 type IndependentView={
- role:IndependentRole;assignments:{id:string;client:string}[];selected?:string;quality?:Quality;custody?:Custody;
+ role:IndependentRole;managed?:boolean;formalAvailable?:boolean;finalQuality?:Quality;finalMaterial?:IndependentView['material'];assignments:{id:string;client:string}[];selected?:string;quality?:Quality;custody?:Custody;
  material?:{basis:string;gaps:string[];artifact:{form:string;sha256:string};reportDate:string;
   laterFact?:{discovered:string;knownAtReport:string;impactReason:string;procedures:string;authority:string;advice:string};
   consultations:Consultation[];
@@ -84,9 +94,11 @@ export function IndependentDesk({role}:{role:IndependentRole}){
   }catch(e){setError((e as Error).message);return false;}finally{setBusy(false);}
  }
  useEffect(()=>{jsonRequest<IndependentView>('/oversight').then(next=>{if(next.role===role)setView(next);}).catch(()=>{});},[role]);
- const material=view?.material,custody=view?.custody;
+ const [reviewKind,setReviewKind]=useState('formal');
+ const confirmation=reviewKind==='confirmation'||!view?.formalAvailable&&!!view?.finalMaterial,selectedQuality=confirmation?view?.finalQuality:view?.quality;
+ const material=confirmation?(view?.finalMaterial??view?.material):view?.material,custody=view?.custody;
  const link=(item:string)=>api+'/oversight/download/'+item+pilotScope(view?.selected??null);
- const act:PilotAction=(action,values={})=>send('/action'+pilotScope(view?.selected??null),{...values,action});
+ const act:PilotAction=(action,values={})=>send('/action'+pilotScope(view?.selected??null),{...values,...(role==='quality'&&{reviewKind:confirmation?'confirmation':'formal'}),action});
  function login(e:FormEvent<HTMLFormElement>){
   e.preventDefault();
   void send('/login',{role,password:String(new FormData(e.currentTarget).get('password'))});
@@ -100,8 +112,8 @@ export function IndependentDesk({role}:{role:IndependentRole}){
     <button type="button" className="btn secondary" onClick={()=>void send('/logout',{})}>Гарах</button>
     {view.assignments.map(item=><button type="button" key={item.id} className="btn secondary" onClick={()=>void send(pilotScope(item.id))}>{item.client}</button>)}
     {!view.assignments.length&&<p>Томилсон ажил алга.</p>}
-    {material&&<>
-     <p>{material.artifact.form} · {material.reportDate} · {view.quality?.current?'Одоогийн баталсан хяналт':'Хяналт шаардлагатай'}</p>
+    {material&&<>{view.finalMaterial&&view.formalAvailable&&<label>Хянах тусдаа үүрэг<select value={reviewKind} onChange={e=>setReviewKind(e.target.value)}><option value="formal">Формал EQR</option><option value="confirmation">Томилсон эцсийн баталгаа</option></select></label>}<h2>{confirmation?'Томилсон ажлын эцсийн баталгаа':'Формал EQR'}</h2>
+     <p>{material.artifact.form} · {material.reportDate} · {selectedQuality?.current?'Одоогийн баталсан хяналт':'Хяналт шаардлагатай'}</p>
      <p className="micro break-all">SHA-256 {material.artifact.sha256}</p><a href={link('report')}>Хянах тайлан татах</a>
      {!!material.gaps.length&&<ul>{material.gaps.map(gap=><li key={gap}>{gap}</li>)}</ul>}
      <details className="feature-detail"><summary>Холбоотой ажлын хувилбар, дүгнэлт, нотолгоо</summary>
@@ -117,10 +129,10 @@ export function IndependentDesk({role}:{role:IndependentRole}){
        <p>{row.scope}</p><p>{row.decision?.reason}</p></details>)}
       {material.evidence.map(file=><p key={file.id}><a href={link(file.id)}>{file.name}</a> · {file.sha256.slice(0,16)}</p>)}
      </details>
-     {view.quality?.notes.map(n=><div key={n.id}><p>{n.text}</p>{n.responses?.map((r,i)=><p key={i}>{r.text}</p>)}</div>)}
+     {selectedQuality?.notes.map(n=><div key={n.id}><p>{n.text} · {n.cleared?'Тусдаа хаасан':'Нээлттэй'}</p>{n.responses?.map((r,i)=><p key={i}>{r.text}</p>)}{!n.cleared&&!!n.responses?.length&&<DataAction action="clear" extra={{basis:material.basis,id:n.id,responseVersion:String(n.responses.length)}} run={act} button="Яг энэ хариуг хараат бусаар хаах"><label>Хариу, бодит засвар ба үлдсэн асуудлыг хянасан нь<textarea name="reason" required/></label></DataAction>}</div>)}
      <DataAction run={act} action="return" extra={{basis:material.basis}} button="Тодорхой засварт буцаах"><label>Тэмдэглэл<textarea name="reason" required/></label></DataAction>
      {!material.gaps.length&&<DataAction run={act} action="approve" extra={{basis:material.basis}} button="Яг энэ багцыг чанарын хувьд батлах">
-      <label>Хянасан нотолгоо ба шийдвэр<textarea name="reason" required/></label>
+      {view.managed&&<>{[['workPerformed','Бодитоор гүйцэтгэсэн хяналт'],['judgments','Яг чухал шийдвэр, баримт ба хэлэлцүүлэг'],['conclusion','Бодит дүгнэлт ба үлдсэн хязгаар'],['notice','Бодит дуусгасан мэдэгдэл ба эрх бүхий этгээд']].map(([key,label])=><label key={key}>{label}<textarea name={key} required/></label>)}</>}<label>Хянасан нотолгоо ба шийдвэр<textarea name="reason" required/></label>
      </DataAction>}
     </>}
     {custody&&<>
