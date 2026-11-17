@@ -1,0 +1,21 @@
+
+> veritech-audit-mock@0.1.0 verify:archive-controls-ui
+> node scripts/verify-archive-controls-ui.mjs .audit-pilot/g07-fixture/dated-ready-fixture.json .audit-pilot/g07-later-ui
+
+{
+  "date": "2026-11-17T10:14:45.588Z",
+  "build": {
+    "build": "UX2hycFronDUEAF0nDZGo",
+    "commit": "d032cfd9d3feca700dcaf0dbbd867eab30348d2a",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "engagement": "E-851ef724-a7e2-4e76-8e74-daff4f215737",
+  "checks": [
+    "Partner records a real source and discovery instant against the exact dated-unissued original; no fake issue or archive is created",
+    "Actual management/governance discussions are required before approving a response; unsupported dual dating stays visibly unavailable",
+    "Approved pre-issue response reopens the exact original work and requires fresh work/review/authorization while retaining the old authorized hash"
+  ],
+  "runtimeErrors": [],
+  "scope": "Actual G07 browser interactions in private disposable synthetic database copies. Fictional UTF-8/JSON readability does not establish PDF/Office or production-media readability. No live-preview mutation or independent professional source acceptance."
+}
