@@ -1,6 +1,6 @@
-import {firm,client,enquiry,setupEngagement,assess,terms,decision,activation,today} from './pilot-acceptance-fixture.mjs';
-export async function planningFixture(app){
- const people=await firm(app),clientProfile=await client(app),setup=await setupEngagement(app,people,clientProfile.id,clientProfile.contact,await enquiry(app)),{id,evidence}=setup;
+import {firm,client,enquiry,setupEngagement,assess,terms,decision,activation,today,dates} from './pilot-acceptance-fixture.mjs';
+export async function planningFixture(app,options={}){
+ const people=await firm(app),clientProfile=await client(app),setup=await setupEngagement(app,people,clientProfile.id,clientProfile.contact,await enquiry(app),options.synthetic?{...dates,synthetic:'yes'}:undefined),{id,evidence}=setup;
  const assessment=await assess(app,id,evidence);await terms(app,id,assessment.intakeContext,evidence,clientProfile.contact);await app.write('partner',id,'acceptance-decide',decision(evidence));await app.write('partner',id,'activate',activation);
  const profile=await app.register(id,'M05-F02',{authority:'Exact accepted G01 authority and current agreement',edition:'G03 fictional test methodology 1',evidence,assertions:'Existence\nCompleteness\nValuation',group:'no',scope:'Current-period PPE and separately stated data/evidence purposes'});
  const understanding=await app.register(id,'M06-F02',{business:'Fictional manufacturer',objectives:'Deliver orders',governance:'Actual fictional board',environment:'Known test industry and retained open applicability',framework:'Test framework 1',source:'Actual fictional ledger and interview',systems:'Ledger, interfaces and service organizations inspected',transactions:'Purchases and disposals with policy changes',openFacts:'Reviewer owns outstanding source clarification; supported work scope remains explicit'});

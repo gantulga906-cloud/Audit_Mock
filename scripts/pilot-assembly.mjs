@@ -2,6 +2,7 @@ import {createHash} from 'node:crypto';
 import {validDate} from '../src/lib/feature-workflows.ts';
 import {isCurrentReview} from '../src/lib/workspace.ts';
 import {evidenceCurrent} from './pilot-requests.mjs';
+import {controlledArchive,archiveAuthority} from './pilot-archive-controls.mjs';
 
 const hash=value=>createHash('sha256').update(value).digest('hex');
 export const assemblyRows=m=>(m.pilotRecords??[]).filter(r=>r.kind==='M12-F02');
@@ -9,7 +10,7 @@ export const assemblyRecord=m=>assemblyRows(m).at(-1);
 
 export function assemblyInventory(m,signed,readEvidence){
  const issue=m.pilotIssue,authorization=signed?.authorization,pack=authorization?.package,artifact=authorization?.artifact;
- const gaps=[],items=[],references=[],history={papers:[],records:[]},seen=new Map(),historicPapers=new Set();
+ const diagnostics=[],gaps=[],items=[],references=[],history={papers:[],records:[]},seen=new Map(),historicPapers=new Set();
  const add=item=>{const key=item.kind+':'+item.id;const previous=seen.get(key);if(previous&&JSON.stringify(previous)!==JSON.stringify(item))gaps.push(item.label+' · Индексийн хувилбар зөрүүтэй');if(!previous){seen.set(key,item);items.push(item);}};
  if(!issue||!pack||!artifact)return {items,references,history,gaps:['Тайлангийн яг зөвшөөрсөн багцыг эхлээд гаргана уу.']};
  if(issue.authorizationAt!==authorization.at||issue.reportSha256!==artifact.sha256||hash(artifact.html)!==artifact.sha256)gaps.push('Гаргалт, зөвшөөрөл ба тайлангийн эх зөрүүтэй');
@@ -29,6 +30,7 @@ export function assemblyInventory(m,signed,readEvidence){
  while(pending.length){
   const record=pending.shift();if(visited.has(record.id))continue;visited.add(record.id);
   const live=(m.pilotRecords??[]).find(r=>r.id===record.id);
+  if(controlledArchive(m)&&(!live||live.version!==record.version||live.status!=='approved')){gaps.push(record.kind+' · Яг эцсийн бүртгэлийн хувилбар зөрсөн');diagnostics.push({id:record.id,category:'stale-record',label:record.kind,expected:record.version,actual:live?.version??null});}
   history.records.push({id:record.id,history:structuredClone(live?.history??[])});
   add({kind:'record',id:record.id,label:record.kind,version:record.version});
   for(const [id,version] of Object.entries(record.references??{})){
@@ -39,14 +41,15 @@ export function assemblyInventory(m,signed,readEvidence){
  }
  for(const file of signed.evidence){
   add({kind:'evidence',id:file.id,label:file.name,version:file.version,sha256:file.sha256});
-  const stored=readEvidence(file.id);
-  if(!stored?.bytes?.length||hash(stored.bytes)!==file.sha256)gaps.push(file.name+' · Эх файл байхгүй эсвэл бүрэн байдал зөрсөн');
+  let stored;try{stored=readEvidence(file.id);}catch(error){gaps.push(file.name+' · Эх файлд одоогоор хандах боломжгүй');diagnostics.push({id:file.id,category:'unavailable',label:file.name,detail:'Эх уншигч ашиглах боломжгүй; байхгүй гэж дүгнээгүй'});continue;}
+  if(!stored){gaps.push(file.name+' · Эх файл байхгүй');diagnostics.push({id:file.id,category:'missing',label:file.name});}
+  else if(!stored.bytes?.length||hash(stored.bytes)!==file.sha256){gaps.push(file.name+' · Эх файлын бүрэн байдал зөрсөн');diagnostics.push({id:file.id,category:'corrupt',label:file.name});}
  }
  items.sort((a,b)=>(a.kind+':'+a.id).localeCompare(b.kind+':'+b.id));
  references.sort((a,b)=>a.id.localeCompare(b.id));
  history.papers.sort((a,b)=>a.id.localeCompare(b.id));history.records.sort((a,b)=>a.id.localeCompare(b.id));
  return {issueAt:issue.at,authorizationAt:authorization.at,reportSha256:artifact.sha256,items,references,history,gaps:[...new Set(gaps)],
-  inventoryDigest:hash(JSON.stringify({issueAt:issue.at,authorizationAt:authorization.at,items,references,history}))};
+  diagnostics,inventoryDigest:hash(JSON.stringify({issueAt:issue.at,authorizationAt:authorization.at,items,references,history}))};
 }
 
 export function assemblyDeadline(m,values){
@@ -67,12 +70,13 @@ export function assemblyStatus(m,signed,readEvidence,includeHistory=false){
 export function checkAssemblyRecord(m,row,signed,readEvidence){
  const inventory=assemblyInventory(m,signed,readEvidence);
  if(inventory.gaps.length)throw Error(inventory.gaps.join(' · '));
- const stored=readEvidence(row.values.policyEvidence),metadata=m.evidence.find(e=>e.id===row.values.policyEvidence&&evidenceCurrent(m,e));
+ const stored=readEvidence(row.values.policyEvidence),metadata=m.evidence.find(e=>e.id===row.values.policyEvidence&&(e.archiveOnly?e.status==='accepted':evidenceCurrent(m,e)));
+ const authority=archiveAuthority(m,row,readEvidence);
  if(!stored?.bytes||!metadata||hash(stored.bytes)!==stored.sha256)throw Error('Бүрдүүлэлт ба хадгалалтын зөвшөөрсөн бодлогын эх шаардлагатай.');
  const deadline=assemblyDeadline(m,row.values);
  const completionDay=row.status==='approved'?row.at.slice(0,10):new Date().toISOString().slice(0,10);
  if(completionDay>deadline&&!row.values.lateReason)throw Error('Бүрдүүлэлтийн хугацаа хэтэрсэн тайлбар ба шийдвэр шаардлагатай.');
- const basis={issueAt:inventory.issueAt,authorizationAt:inventory.authorizationAt,reportSha256:inventory.reportSha256,inventoryDigest:inventory.inventoryDigest,deadline,
+ const basis={...(authority&&{authority}),issueAt:inventory.issueAt,authorizationAt:inventory.authorizationAt,reportSha256:inventory.reportSha256,inventoryDigest:inventory.inventoryDigest,deadline,
   policyEvidence:{id:metadata.id,version:metadata.version,sha256:stored.sha256}};
  if(['submitted','approved'].includes(row.status)&&JSON.stringify(row.assemblyBasis)!==JSON.stringify(basis))throw Error('Хянах индекс эсвэл бодлогын эх өөрчлөгдсөн. Засварт буцааж шинэчилнэ үү.');
  row.assemblyBasis=basis;

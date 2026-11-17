@@ -10,8 +10,8 @@ export async function completionCase(app,id,kind,values,evidence,options={}){
  const saved=await app.write(owner,id,'completion-case-save',{kind,title:options.title??'Actual G05 '+kind,values:JSON.stringify(values),evidence,nextOwner:'reviewer',followup:'Actual named work; reviewer assesses remaining evidence and reporting consequences',...(options.id&&{id:options.id})}),row=options.id?saved.completion.finalisation.records.find(r=>r.id===options.id):saved.completion.finalisation.records.find(r=>!before.has(r.id));
  await app.write(owner,id,'completion-case-submit',{id:row.id,version:String(row.version)});await app.write(options.approver??(['mandate','followup'].includes(kind)||owner==='reviewer'?'partner':'reviewer'),id,'completion-case-approve',{id:row.id,version:String(row.version),disposition:options.disposition??'supported',reason:'Independent actual source, scope, work and conclusion review'});return row.id;
 }
-export async function finalisationFixture(app){
- const setup=await planningFixture(app),{id,scope}=setup;
+export async function finalisationFixture(app,options={}){
+ const setup=await planningFixture(app,options),{id,scope}=setup;
  const support=await finalSource(app,id,scope,'Actual source work, criterion, signed authority, management responses and received evidence; fictional G05 engagement');
  const originalCsv='id,account,amount,entity,date,currency,reference\nBASE,100,100,G01-CLIENT,2025-12-31,MNT,BASE\nPARTIAL,100,60,G01-CLIENT,2025-12-31,MNT,COR-60\nOUT,200,-10,G01-CLIENT,2025-12-31,MNT,RECLASS\nIN,300,10,G01-CLIENT,2025-12-31,MNT,RECLASS';
  let state=await app.write('preparer',id,'population-import',{name:'G05-actual-ledger.csv',source:'Actual independently certified ledger',currency:'MNT',base64:Buffer.from(originalCsv).toString('base64')}),population=state.population.current.evidence;

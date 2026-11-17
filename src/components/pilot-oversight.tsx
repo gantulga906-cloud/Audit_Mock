@@ -1,5 +1,6 @@
 import {useEffect,useState,type FormEvent} from 'react';
 import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
+import {CustodyInspectionForm,type CustodyInspection,type CustodyInspectionItem} from './pilot-archive-controls';
 import {DataAction} from './pilot-population';
 import type {Consultation} from './pilot-completion';
 import type {PilotAction} from './pilot-registers';
@@ -10,7 +11,7 @@ type IndependentRole='quality'|'custodian';
 type QualityNote={id:string;text:string;cleared?:{at:string};responses?:{text:string;at:string}[]};
 type Quality={policy:{version:number;mode:string;reference:string;basis:string;reviewer:string;eligibility:string;
  eligibilityStatus?:'eligible'|'ineligible'|'unresolved'|'';forms?:string[]};current:boolean;notes:QualityNote[]};
-type Custody={id:string;digest:string;recipient:string;offeredAt:string;downloadedAt?:string;accepted?:{at:string;reason:string};returned?:{at:string;reason:string;owner:string};resolution?:string};
+type Custody={id:string;digest:string;recipient:string;offeredAt:string;downloadedAt?:string;accepted?:{at:string;reason:string};returned?:{at:string;reason:string;owner:string};resolution?:string;inspections?:CustodyInspection[];assignment?:{custodian:string;independence:string;location:string;medium:string;confidentiality:string;authority:{id:string;sha256:string}}};
 export type OversightView={quality?:Quality;finalQuality?:Quality;custody:Custody[]};
 function EligibilityFields({evidence}:{evidence:Evidence[]}){return <><p>Шалгуур бүрийн бодит эх, өмнөх оролцоо ба хэрэглэгдэх дүрмийг тусдаа үнэлнэ.</p>{[['competence','Мэргэшил'],['capability','Чадвар ба бодит цаг'],['authority','Томилох / гүйцэтгэх эрх'],['objectivity','Объектив байдал ба хараат бус нөхцөл']].map(([key,label])=><label key={key}>{label}<select name={key}><option value="unresolved">Тодорхойгүй / хангаагүй</option><option value="supported">Бодит эхээр дэмжсэн</option></select></label>)}<label>Өмнөх оролцоо / cooling-off<select name="coolingOff"><option value="unresolved">Тодорхойгүй</option><option value="satisfied">Хэрэглэх шалгуур хангасан</option><option value="not-applicable">Үндэслэлтэй хамаарахгүй</option></select></label><label>Бодит эрх ба шалгуурын эх<select name="eligibilityEvidence"><option value="">Сонгох / хараахан ирээгүй</option>{evidence.filter(e=>e.status==='accepted').map(e=><option key={e.id} value={e.id}>{e.name}</option>)}</select></label></>;}
 function FinalQualityDesk({q,papers,evidence,role,run}:{q?:Quality;papers:WorkItem[];evidence:Evidence[];role:PilotRole;run:PilotAction}){
@@ -24,7 +25,7 @@ export type ReleaseView={strict:boolean;distributionGaps?:string[];signature?:{m
 const api='/api/pilot';
 const captions={quality:'Хараат бус чанарын хяналт',custodian:'Хараат бус архивын хадгалалт'};
 
-export function OversightDesk({view,role,sealed,archive,run,managed=false,papers=[],evidence=[]}:{view:OversightView;role:PilotRole;sealed:boolean;archive?:string;run:PilotAction;managed?:boolean;papers?:WorkItem[];evidence?:Evidence[]}){
+export function OversightDesk({view,role,sealed,archive,run,managed=false,archiveManaged=false,papers=[],evidence=[]}:{view:OversightView;role:PilotRole;sealed:boolean;archive?:string;run:PilotAction;managed?:boolean;archiveManaged?:boolean;papers?:WorkItem[];evidence?:Evidence[]}){
  const q=view.quality;
  const status=q?.policy.mode==='not-required'?'Шийдвэрээр шаардлагагүй':
   q?.policy.mode==='unresolved'?'Хэрэглэх шаардлагыг тогтоогоогүй':
@@ -59,14 +60,14 @@ export function OversightDesk({view,role,sealed,archive,run,managed=false,papers
   </div>)}
   <a href="/pilot#oversight=quality">{captions.quality}</a>
   {sealed&&role==='partner'&&archive&&(view.custody.at(-1)?.id!==archive||view.custody.at(-1)?.returned)&&<DataAction run={run} action="archive-offer-custody"
-   extra={{package:archive}} button="Яг түгжсэн багцыг хүлээлгэх"><label>Хадгалалт хүлээн авагч<input name="recipient" required/></label>{view.custody.at(-1)?.returned&&<label>Зөрчлийг шийдвэрлэсэн бодит ажил ба эх ишлэл<textarea name="resolution" required/></label>}</DataAction>}
+   extra={{package:archive}} button="Яг түгжсэн багцыг хүлээлгэх">{archiveManaged&&<><label>Бодит хараат бус хадгалагч<input name="custodianName" required/></label><label>Томилох эрхийн хянасан эх<select name="custodianAuthority" required><option value="">Сонгох</option>{evidence.filter(e=>e.status==='accepted').map(e=><option key={e.id} value={e.id}>{e.name}</option>)}</select></label>{[['independence','Оролцоо, эрх ба бие даасан үүргийн бодит үндэс'],['location','Бодит очих байршил'],['medium','Зөөгч / орчин'],['confidentiality','Нууцлал ба хамгаалалтын нөхцөл']].map(([key,label])=><label key={key}>{label}<textarea name={key} required/></label>)}</>}<label>Хадгалалт хүлээн авагч<input name="recipient" required/></label>{view.custody.at(-1)?.returned&&<label>Зөрчлийг шийдвэрлэсэн бодит ажил ба эх ишлэл<textarea name="resolution" required/></label>}</DataAction>}
   {view.custody.map(c=><p key={c.id+c.offeredAt}>{c.recipient} · {c.accepted?'Хүлээн авсан '+c.accepted.at.slice(0,16):c.returned?'Зөрчилтэй буцаасан · '+c.returned.reason:'Хүлээн авахыг хүлээж байна'} · {c.digest.slice(0,16)}</p>)}
   <p><a href="/pilot#oversight=custodian">{captions.custodian}</a></p>
  </details>;
 }
 
 type IndependentView={
- role:IndependentRole;managed?:boolean;formalAvailable?:boolean;finalQuality?:Quality;finalMaterial?:IndependentView['material'];assignments:{id:string;client:string}[];selected?:string;quality?:Quality;custody?:Custody;
+ role:IndependentRole;managedArchive?:boolean;archiveRestrictions?:{holds:number;retention?:{status?:string;expires?:string}};inspectionItems?:CustodyInspectionItem[];custodyReadable?:boolean;managed?:boolean;formalAvailable?:boolean;finalQuality?:Quality;finalMaterial?:IndependentView['material'];assignments:{id:string;client:string}[];selected?:string;quality?:Quality;custody?:Custody;
  material?:{basis:string;gaps:string[];artifact:{form:string;sha256:string};reportDate:string;
   laterFact?:{discovered:string;knownAtReport:string;impactReason:string;procedures:string;authority:string;advice:string};
   consultations:Consultation[];
@@ -143,6 +144,10 @@ export function IndependentDesk({role}:{role:IndependentRole}){
      <p>{custody.recipient} · {view.manifest.fileCount} эх файл · {custody.accepted?'Хүлээн авсан':'Хүлээлгэн өгсөн'}</p>
      <p className="micro break-all">SHA-256 {custody.digest}</p><a href={link(custody.id)}>Яг баталгаажсан архив татах</a>
      <ul>{view.manifest.files.map((f,i)=><li key={i}>{f.name} · {f.size} B · {f.sha256.slice(0,16)}</li>)}</ul>
+     {view.archiveRestrictions&&<p>Үргэлжилсэн хориг · {view.archiveRestrictions.holds} · Хадгалалт · {view.archiveRestrictions.retention?.status==='confirmed'?view.archiveRestrictions.retention.expires:'Хэрэглэх шаардлага шийдээгүй · хэвээр хадгална'}</p>}
+     {view.managedArchive&&custody.assignment&&<><p>{custody.assignment.custodian} · {custody.assignment.location} · {custody.assignment.medium}</p><p>{custody.assignment.independence} · {custody.assignment.confidentiality}</p><a href={link(custody.assignment.authority.id)}>Томилох эрхийн бодит эх</a></>}
+     {view.managedArchive&&!custody.returned&&view.inspectionItems&&<CustodyInspectionForm key={custody.id+'/'+custody.offeredAt+'/'+(custody.inspections?.at(-1)?.version??0)} items={view.inspectionItems} packageId={custody.id} digest={custody.digest} run={act} latest={custody.inspections?.at(-1)}/>}
+     {view.managedArchive&&custody.accepted&&!view.custodyReadable&&<p className="callout amber">Өмнөх хүлээн авалтын түүх хадгалагдсан. Одоогийн шалгалтад уншигдахгүй / боломжгүй бүрдэл үлдсэн.</p>}
      {!custody.accepted&&!custody.returned&&<DataAction run={act} action="accept" extra={{package:custody.id}} button="Бүрэн багцыг хүлээн авах">
       <label>Татсан багцын хэш<input name="digest" required/></label><label>Унших боломж ба хүлээн авсан тэмдэглэл<input name="reason" required/></label>
      </DataAction>}

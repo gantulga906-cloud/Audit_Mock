@@ -7,9 +7,9 @@ import type {PlanningView} from '@/lib/pilot-planning';
 export type PilotAction=(action:string,fields?:Record<string,string>)=>Promise<boolean>;
 type NamedForm={id:string;title:string};
 type ArchiveItem={
- id:string;previous?:string;issued:string;sealed:string;digest?:string;synthetic:number;disposed:number;holds:number;
+ id:string;previous?:string;issued:string;sealed:string;digest?:string;synthetic:number;disposed:number;holds?:number;
  summary:{client:string;fileCount:number;files?:{id:string;name:string;version:number;sha256:string}[]};
- retention?:{policy:string;package:string;expires:string};
+ retention?:{policy?:string;package?:string;expires?:string;status?:string};
  access?:{actor:PilotRole;at:string;reason:string;scope:string}[];
 };
 export type RegisterResources={
@@ -22,6 +22,7 @@ export type RegisterResources={
  acceptanceManaged?:boolean;
  planning?:PlanningView;
  reporting?:{enabled:boolean};
+ archiveControls?:{enabled:boolean};
  completion?:{findings:{id:string;title:string}[]};
  requestContacts?:{id:string;name:string;email:string}[];
  requests?:RequestItem[];
@@ -95,6 +96,7 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
   if(kind==='M08-F08'&&field.key==='request')return (resources.requests??[]).filter(r=>r.dispatch==='issued'&&r.parts?.some(p=>p.evidence===values.evidence)).map(r=>[r.id,r.id+' · '+r.title]);
   if(kind==='M08-F08'&&field.key==='part')return (resources.requests??[]).find(r=>r.id===values.request)?.parts?.filter(p=>p.evidence===values.evidence).map(p=>[p.id,p.title]);
   if(kind==='M10-F09'&&field.key==='decisionFinding')return resources.completion?.findings.map(f=>[f.id,f.title]);
+  if(kind==='M12-F08'&&field.key==='supersedes')return resources.registers.filter(r=>r.kind===kind&&r.status==='approved'&&r.values.type==='policy'&&r.values.package===values.package).map(r=>[r.id,r.values.reference+' · '+(r.values.determination==='confirmed'?'Баталсан':'Шийдээгүй')]);
   if(field.type==='choice')return field.choices;
   if(planning&&field.key==='templateVersion')return templates.map(t=>[t.version,t.version==='source'?'Эх маягт':'Баталсан v'+t.version]);
   if(planning&&field.key==='procedure')return (templates.find(t=>t.version===values.templateVersion)?.procedures??[]).map(p=>[p.key,p.key+' · '+p.label]);
@@ -113,13 +115,13 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
   if(kind==='M12-F08'&&values.type==='release'&&field.key==='reference')return resources.registers.filter(r=>r.kind===kind&&r.values.package===values.package&&r.values.type==='hold').map(r=>[r.id,r.values.reference]);
  }
  return <form className="feature-form" data-register-kind={kind} onSubmit={save}>
-  <div className="field-grid">{def.fields.filter(f=>(!f.reporting||resources.reporting?.enabled)&&f.type!=='responses'&&(!f.forTypes||f.forTypes.includes(values.type))&&
+  <div className="field-grid">{def.fields.filter(f=>(!f.archive||resources.archiveControls?.enabled)&&(!f.reporting||resources.reporting?.enabled)&&f.type!=='responses'&&(!f.forTypes||f.forTypes.includes(values.type))&&
    (!planning||!programmeFields.includes(f.key)||resources.extended&&values.decision==='adopt')).map(f=>{
    const choices=options(f),bound=kind==='M06-F06'&&!!values.populationLine&&['source','actual'].includes(f.key);
    const line=bound?sourceLines.find(l=>l.line===values.populationLine):undefined;
    const v=line?(f.key==='actual'?String(line.computed/100):resources.population!.current.name):(values[f.key]??'');
    if(f.type==='contacts')return <fieldset key={f.key}><legend>{f.label}</legend>{resources.requestContacts?.map(c=><label key={c.id}><span><input type="checkbox" name={"recipient."+c.id} value={c.id} checked={v.split('\n').includes(c.id)} onChange={e=>set(f.key,e.target.checked?[...v.split('\n').filter(Boolean),c.id].join('\n'):v.split('\n').filter(id=>id!==c.id).join('\n'))}/>{c.name} · {c.email}</span></label>)}</fieldset>;
-   return <label key={f.key}>{f.label}{f.optional&&!f.reporting&&!(planning&&programmeFields.includes(f.key))&&!(kind==='M12-F04'&&f.forTypes)?' (сонголтоор)':''}
+   return <label key={f.key}>{f.label}{f.optional&&!f.archive&&!f.reporting&&!(planning&&programmeFields.includes(f.key))&&!(kind==='M12-F04'&&f.forTypes)?' (сонголтоор)':''}
     {choices?<select name={'field.'+f.key} value={v} onChange={e=>set(f.key,e.target.value)}>
      <option value="">Сонгох</option>
      {v&&!choices.some(([id])=>id===v)&&<option value={v}>Өмнөх сонголт · {v}</option>}
@@ -201,7 +203,8 @@ function RecordCard({row,role,resources,evidence,run,edit,open,exportArchive,eng
    {canEdit&&<button type="button" className="btn secondary" onClick={edit}>Бүртгэл засах</button>}
    {!readOnly&&row.owner===role&&draft&&<button type="button" className="btn primary" disabled={declaration&&!row.declaration} onClick={()=>command('submit')}>v{row.version} хувилбар илгээх</button>}
    {archiveGrant&&!row.revoked&&row.values.accessor===role&&<button type="button" className="btn secondary" onClick={()=>exportArchive(row.id)}>Зөвшөөрсөн багцыг татах</button>}
-   {row.kind==='M12-F11'&&role==='partner'&&row.status==='approved'&&!row.executedAt&&row.eligibility?.synthetic&&<button type="button" className="btn secondary" onClick={()=>void run('archive-dispose',{id:row.id})}>Зохиомол архивын устгалыг хэрэгжүүлэх</button>}
+   {row.kind==='M12-F11'&&resources.archiveControls?.enabled&&role==='partner'&&row.status==='approved'&&!row.executedAt&&row.eligibility?.synthetic&&<form className="feature-form" data-action="archive-dispose" onSubmit={event=>{event.preventDefault();void run('archive-dispose',{id:row.id,method:'synthetic-local-payload',reason:String(new FormData(event.currentTarget).get('reason'))});}}><p>Зөвхөн зохиомол жишээний локал архивын агуулгыг салгана. Ажлын эх, бусад хуулбар, нөөц хэвээр; аюулгүй устгал гэж батлахгүй.</p><label>Үлдэх хуулбар ба бодит хязгаарын тэмдэглэл<textarea name="reason" required/></label><button className="btn secondary">Зохиомол локал хуулбарын үйлдэл бүртгэх</button></form>}
+   {row.kind==='M12-F11'&&!resources.archiveControls?.enabled&&role==='partner'&&row.status==='approved'&&!row.executedAt&&row.eligibility?.synthetic&&<button type="button" className="btn secondary" onClick={()=>void run('archive-dispose',{id:row.id})}>Зохиомол архивын устгалыг хэрэгжүүлэх</button>}
   </div>
   {archiveGrant&&!row.revoked&&role==='partner'&&<Reason label="Хандалт цуцлах шалтгаан" action={reason=>command('revoke',reason)}/>}
   {!readOnly&&canReview(row,role)&&<div className="field-grid">
@@ -256,8 +259,8 @@ export default function PilotRegisters({role,resources,evidence,engagementId,act
     {resources.archive.reopened.target&&' · Дахин хянах ажил '+resources.archive.reopened.target.form+' · Өмнөх v'+resources.archive.reopened.target.version}
     {resources.archive.reopened.reportDate&&' · Баталсан тайлангийн өдөр '+resources.archive.reopened.reportDate}</p>}
    {resources.archive.packages.map(p=><details className="feature-detail" key={p.id}><summary>{p.summary.client} · {p.sealed.slice(0,16)} · {p.disposed?'Агуулга устгасан':'Түгжсэн'}</summary>
-    <p>{p.id} · {p.summary.fileCount} файл · {p.holds} идэвхтэй хориг</p>{p.digest&&<p className="micro">SHA-256 {p.digest}</p>}
-    {p.retention&&<p>Хадгалалтын эцсийн өдөр {p.retention.expires}{p.retention.package!==p.id&&' · Өмнөх багцын бодлого'}</p>}
+    <p>{p.id} · {p.summary.fileCount} зөвшөөрсөн бүрдэл{p.holds!==undefined?' · '+p.holds+' идэвхтэй хориг':''}</p>{p.digest&&<p className="micro">SHA-256 {p.digest}</p>}
+    {p.retention&&<p>Хадгалалтын шийдвэр {p.retention.status==='unresolved'?'Шийдээгүй · хэвээр хадгална':p.retention.expires}{p.retention.package!==p.id&&' · Өмнөх багцын бодлого'}</p>}
     {p.access?.map((a,i)=><p key={i}>{roleName[a.actor]} · {a.scope} · {a.reason} · {new Date(a.at).toLocaleString()}</p>)}
    </details>)}
   </div>}

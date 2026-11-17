@@ -16,7 +16,7 @@ const extended=['request-scope','request-link','request-alternative','request-al
 export const isRequestAction = action => [...creation,...transitions,...extended,'request-reopen','upload','accept','reject'].includes(action);
 
 export function evidenceCurrent(m, evidence) {
-  if (evidence?.status!=='accepted') return false;
+  if (evidence?.archiveOnly||evidence?.status!=='accepted') return false;
   if (!evidence.request) return true;
   const request=m.requests.find(r=>r.id===evidence.request);
   return !!request && request.dispatch!=='cancelled' &&

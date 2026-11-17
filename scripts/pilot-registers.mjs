@@ -14,6 +14,7 @@ import {acceptanceFile} from './pilot-acceptance.mjs';
 import {executionPosition} from './pilot-execution.mjs';
 import {managedCompletion,finalisationStamp} from './pilot-finalisation.mjs';
 import {managedReporting,checkReportingRecord,reportingRecordStale} from './pilot-reporting.mjs';
+import {checkArchiveControls,archiveControlStale,controlledArchive} from './pilot-archive-controls.mjs';
 
 const contracts = JSON.parse(readFileSync(new URL('../src/data/source-registers.json', import.meta.url), 'utf8')).forms;
 const definition = id => registers.find(r => r.id === id);
@@ -29,6 +30,7 @@ const rows = (m, kind) => registerRows(m).filter(r => r.kind === kind);
 function stale(m, row, seen = new Set()) {
   if (seen.has(row.id)) return true;
   const path = new Set([...seen, row.id]);
+  if(archiveControlStale(m,row))return true;
   if(reportingRecordStale(m,row))return true;
   if(planningRecordStale(m,row))return true;
   if(row.executionBasis&&row.executionBasis!==executionPosition(m))return true;
@@ -42,7 +44,7 @@ function stale(m, row, seen = new Set()) {
   if (reliance?.evidence && !m.evidence.some(e => e.id === reliance.evidence && evidenceCurrent(m,e) &&
       (reliance.evidenceVersion === undefined || e.version === reliance.evidenceVersion))) return true;
   if (!['M08-F07','M08-F08'].includes(row.kind) && definition(row.kind)?.fields.some(f=>f.type==='evidence'&&row.values[f.key]&&
-      !evidenceCurrent(m,m.evidence.find(e=>e.id===row.values[f.key])))) return true;
+      !((definition(row.kind)?.section==='archive'&&m.evidence.find(e=>e.id===row.values[f.key])?.archiveOnly&&m.evidence.find(e=>e.id===row.values[f.key])?.status==='accepted')||evidenceCurrent(m,m.evidence.find(e=>e.id===row.values[f.key]))))) return true;
   if(row.declaration?.evidence&&row.declaration?.sha256&&!evidenceCurrent(m,m.evidence.find(e=>e.id===row.declaration.evidence)))return true;
   if (Object.entries(row.paperVersions ?? {}).some(([form, version]) => {
     const w = m.work[workKey(m.engagement, form)];
@@ -309,8 +311,8 @@ function checkBusiness(m, row, spec, files) {
     refs[target.id] = target.version;
   }
   if (!['M08-F07','M08-F08'].includes(row.kind) && spec.fields.some(f => f.type === 'evidence' && v[f.key] &&
-      !m.evidence.some(e => e.id === v[f.key] && evidenceCurrent(m,e)))) bad('Үнэлж зөвшөөрсөн эх файл шаардлагатай.');
-  if (spec.section === 'archive') files.checkArchiveRecord(m, row);
+      !m.evidence.some(e => e.id === v[f.key] && (spec.section==='archive'&&e.archiveOnly?e.status==='accepted':evidenceCurrent(m,e))))) bad('Үнэлж зөвшөөрсөн эх файл шаардлагатай.');
+  if (spec.section === 'archive') {checkArchiveControls(m,row,files);files.checkArchiveRecord(m, row);}
   switch (row.kind) {
     case 'M01-F03': {
       if (rows(m, row.kind).some(r => r.id !== row.id && r.values.reference.toLowerCase() === v.reference.toLowerCase())) bad('Ажилтны дугаар давхардсан.');
@@ -523,6 +525,7 @@ export function registerAction(m, role, data, files) {
     delete row.evidenceBasis;
     delete row.assemblyBasis;
     delete row.reportingBasis;
+    delete row.archiveControlBasis;
     row.populationBasis = populationBasis;
     row.version++;
     remember(row, role, 'draft', 'Ноорог хадгалав');

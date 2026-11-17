@@ -33,8 +33,9 @@ import { archiveAmendmentBasis, archiveAmendmentGap, archiveAmendmentRevision } 
 import { materialityBasis, materialityGap, materialityTargets, materialityValues, syncMateriality, updateMaterialityBasis } from './pilot-materiality.mjs';
 import { activeTermsGap } from './pilot-intake.mjs';
 import {acceptanceEvidence} from './pilot-acceptance.mjs';
-import { laterFactAction, laterFactForRelease, laterFactGap, laterFactView } from './pilot-later-facts.mjs';
+import { laterFactAction, laterFactForRelease, laterFactGap, laterFactView,laterFactAuthorityRef } from './pilot-later-facts.mjs';
 import {assemblyStatus} from './pilot-assembly.mjs';
+import {controlledArchive,enableArchive,archiveSupportAction} from './pilot-archive-controls.mjs';
 import {managedPlanning,planningAction,planningGap,planningView} from './pilot-planning.mjs';
 import {dataAction,dataView} from './pilot-data-methods.mjs';
 
@@ -169,7 +170,7 @@ function pilotGaps(m,includeQuality=true) {
 }
 
 export function currentApproval(m, engagement, files) {
-  return !reportingGaps(m).length&&!reportingIOGaps(m,files).length&&authorizationCurrent(reportWorkspace(m), engagement) &&
+  return (m.pilotLaterFactsAuthorization??'')===laterFactAuthorityRef(m)&&!reportingGaps(m).length&&!reportingIOGaps(m,files).length&&authorizationCurrent(reportWorkspace(m), engagement) &&
     (m.pilotAuthorization ? m.pilotAuthorization === registerStamp(m) : !registerPackage(m).length) &&
     (!m.extendedPilot || !!m.pilotReportDigest) &&
     (m.pilotCompletionAuthorization??':')===completionRef(m) &&
@@ -244,7 +245,7 @@ export function pilotReport(m, files) {
 
 export function pilotView(m, role, revision, files) {
   const engagement = m.engagements[0];
-  const resources = { registers: registerView(m), programmes: pilotProgrammes, rules: programmeView(m), forms: forms.map(({ id, title }) => ({ id, title })),
+  const resources = { archiveControls:{enabled:controlledArchive(m)},registers: registerView(m), programmes: pilotProgrammes, rules: programmeView(m), forms: forms.map(({ id, title }) => ({ id, title })),
     archive: files.archive.view(m, role), extended: !!m.extendedPilot,acceptanceManaged:!!m.pilotAcceptance };
   if (!engagement) return { role, revision, engagement: null, ...resources };
   const sealed = files.archive.isSealed(m);
@@ -263,13 +264,13 @@ export function pilotView(m, role, revision, files) {
     return {
       role, revision, ...resources, rules: [], registers: resources.registers.filter(r =>
         (r.kind!=='M12-F02'||(r.assemblyPackage&&(m.pilotRecords??[]).some(grant=>grant.kind==='M12-F07'&&grant.status==='approved'&&!grant.revoked&&grant.values.package===r.assemblyPackage&&grant.values.accessor===role&&grant.values.until>=new Date().toISOString().slice(0,10))))&&
-        archiveKinds.has(r.kind) && (!archiveGrantKinds.includes(r.kind) || r.owner === role || r.values.accessor === role) &&
+        archiveKinds.has(r.kind) && (!controlledArchive(m)||files.archive.allowedRecord(m,r,role)) && (!archiveGrantKinds.includes(r.kind) || r.owner === role || r.values.accessor === role) &&
         (!privateArchive||!r.values.package||knownPackage(r.values.package)||
           archiveGrantKinds.includes(r.kind)&&r.owner===role&&r.status!=='approved')
       ).map(r => ({ ...scopeArchiveRecord(r), history: r.history.map(scopeArchiveRecord) })),
       engagement: { client: engagement.client, active: engagement.intake.active, period: m.bench.periods[engagement.id],
         reportDate: engagement.reportDate, decisions: [], acceptanceGaps: [], firm: [] },
-      papers: [], requests: [], evidence: [],
+      papers: [], requests: [], evidence: controlledArchive(m)?m.evidence.filter(e=>e.archiveOnly):[],
     };
   }
   const papers = shownForms(m).map(form => {
@@ -388,6 +389,8 @@ export function pilotAction(m, role, action, data, files) {
   }
   const engagement = m.engagements[0];
   if (!engagement) throw new PilotError(409, 'Гэрээт ажил үүсгэнэ үү.');
+  if(action==='archive-enable'){enableArchive(m,role,data);return;}
+  if(action==='archive-support-upload'||action==='archive-support-assess'){if(managedStaffing(m))requireSeat(m,files,role);archiveSupportAction(m,role,action,data,files);return;}
   if(action==='reporting-enable'){if(sealed)throw new PilotError(409,'Архив түгжээтэй.');if(managedStaffing(m))requireSeat(m,files,role);reportingEnable(m,role,data);invalidateReport(m,'G06 · Яг тайлангийн горим сонгосон');return;}
   if(managedReporting(m)&&m.pilotIssue&&!m.archiveReopen?.target&&['report-date','statements'].includes(action))throw new PilotError(409,'Гаргасан тайлангийн өөрчлөлтөд G07 зөвшөөрсөн дараагийн хувилбар шаардлагатай.');
   if (action.startsWith('later-fact-')) {
@@ -481,7 +484,7 @@ export function pilotAction(m, role, action, data, files) {
       if (strictRelease(m)&&!deliveries.some(row=>row.state==='received')) throw new PilotError(409,'Яг энэ гаргалтын бодит хүлээн авалт шаардлагатай.');
       const distribution=distributionGaps(m,files.deliveries());if(distribution.length)throw new PilotError(409,distribution.join(' · '));
       files.archive.seal(m, files.authorization(), deliveries);
-    } else files.archive.dispose(m, input(data, 'id', 40));
+    } else files.archive.dispose(m, input(data, 'id', 40),data);
     recordEvent(m, action === 'archive-seal' ? 'Эцсийн архивын багцыг түгжив' : 'Туршилтын архивын устгалын шийдвэрийг хэрэгжүүлэв');
     return;
   }
@@ -595,6 +598,7 @@ export function pilotAction(m, role, action, data, files) {
     authorizeReport(reporting);
     m.pilotAuthorization = registerStamp(m);
     m.pilotCompletionAuthorization = completionRef(m);
+    m.pilotLaterFactsAuthorization=laterFactAuthorityRef(m);
     m.pilotQualityAuthorization = qualityRef(m);
     const archiveAmendment=archiveAmendmentRevision(m);
     const laterFact=laterFactForRelease(m);

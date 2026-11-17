@@ -5,6 +5,7 @@ import {evidenceCurrent} from './pilot-requests.mjs';
 import {managedCompletion,scopedFinalisationRecords} from './pilot-finalisation.mjs';
 import {consultationView} from './pilot-completion.mjs';
 import { input, PilotError, qualityBasis, qualityMaterial } from './pilot-workflow.mjs';
+import {controlledArchive,archiveOriginal,inspectionItems,custodyInspection,custodyReady} from './pilot-archive-controls.mjs';
 
 export const oversightRoles=['quality','custodian'];
 const fail=(message,status=409)=>{throw new PilotError(status,message);};
@@ -87,14 +88,15 @@ export function oversightTeamAction(m,role,action,data,files) {
     const prior=currentOffer(m);
     if (prior?.id===id&&!prior.returned) return;
     const resolution=prior?.returned?input(data,'resolution'):'';
-    (m.pilotCustody??=[]).push({id,digest:record.digest,recipient:input(data,'recipient',150),offeredAt:now(),by:role,...(resolution&&{resolution,previousOffer:prior.offeredAt})});
+    const assignment=controlledArchive(m)?{custodian:input(data,'custodianName',150),authority:archiveOriginal(m,input(data,'custodianAuthority',80),files.read),independence:input(data,'independence'),location:input(data,'location',300),medium:input(data,'medium',200),confidentiality:input(data,'confidentiality')}:undefined;
+    (m.pilotCustody??=[]).push({id,digest:record.digest,recipient:input(data,'recipient',150),offeredAt:now(),by:role,...(assignment&&{assignment}),...(resolution&&{resolution,previousOffer:prior.offeredAt})});
   } else fail('Хяналтын үйлдэл олдсонгүй.',404);
   recordEvent(m,action,action.startsWith('quality-')?'4.6':undefined);
 }
 
 export function createOversightStore(store,filesFor) {
   function allowed(role,m) {
-    return role==='quality'?((eligible(policy(m))&&policyCurrent(m,policy(m)))||(eligible(finalPolicy(m))&&policyCurrent(m,finalPolicy(m))))&&!filesFor(m.engagement).archive.isSealed(m):!!currentOffer(m);
+    return role==='quality'?((eligible(policy(m))&&policyCurrent(m,policy(m)))||(eligible(finalPolicy(m))&&policyCurrent(m,finalPolicy(m))))&&!filesFor(m.engagement).archive.isSealed(m):(()=>{const offer=currentOffer(m);if(!offer)return false;if(!controlledArchive(m))return true;try{const actual=archiveOriginal(m,offer.assignment?.authority?.id,filesFor(m.engagement).read);return actual.version===offer.assignment.authority.version&&actual.sha256===offer.assignment.authority.sha256;}catch{return false;}})();
   }
   function contextFor(role,id) {
     if (!/^E-[a-f0-9-]{36}$/.test(id??'')) fail('Томилсон ажил олдсонгүй.',404);
@@ -115,7 +117,7 @@ export function createOversightStore(store,filesFor) {
     const offer=currentOffer(m);
     let record;
     try{record=files.archive.inspectCustody(m,offer.id);}catch(error){return {role,assignments,selected:id,custody:offer,manifestError:error.message};}
-    return {role,assignments,selected:id,custody:offer,manifest:{fileCount:record.bundle.evidence.length,
+    return {role,assignments,selected:id,custody:offer,managedArchive:controlledArchive(m),...(controlledArchive(m)&&{inspectionItems:inspectionItems(record.bundle),custodyReadable:custodyReady(offer),archiveRestrictions:files.archive.custodyRestrictions(m,offer.id)}),manifest:{fileCount:record.bundle.evidence.length,
       files:record.bundle.evidence.map(({name,sha256,size})=>({name,sha256,size})),report:record.bundle.issue.reportSha256}};
   }
   function action(role,id,data) {
@@ -142,6 +144,9 @@ export function createOversightStore(store,filesFor) {
       } else fail('Чанарын үйлдэл олдсонгүй.',404);
     } else {
       const offer=currentOffer(m);
+      if(data.action==='inspect'&&controlledArchive(m)){
+        if(data.package!==offer.id||data.digest!==offer.digest||!offer.downloadedAt||offer.returned)fail('Яг татсан одоогийн багцыг шалгана.');const inspected=files.archive.inspectCustody(m,offer.id);if(inspected.digest!==offer.digest)fail('Яг одоогийн хэш зөрсөн.');const before=offer.inspections?.length??0;custodyInspection(m,offer,inspected.bundle,data,role);if((offer.inspections?.length??0)===before)return view(role,id);recordEvent(m,'Хадгалалтын бодит уншигдах байдал / үргэлжилсэн шалгалт');store.save(context,'oversight',{});return view(role,id);
+      }
       if(data.action==='return'){
         if(offer.accepted||offer.returned||data.package!==offer.id||data.digest!==offer.digest||!['partner','reviewer'].includes(data.owner))fail('Одоогийн хүлээн аваагүй багц ба засвар хариуцах баг шаардлагатай.');
         offer.returned={by:role,at:now(),reason:input(data,'reason'),owner:data.owner};
@@ -151,8 +156,9 @@ export function createOversightStore(store,filesFor) {
       if (data.action!=='accept'||offer.returned||data.package!==offer.id||data.digest!==offer.digest||record.digest!==offer.digest||!offer.downloadedAt) {
         fail('Яг энэ багцыг татаж бүрэн байдлыг баталгаажуулна уу.');
       }
+      if(controlledArchive(m)&&!custodyReady(offer))fail('Татсан хэш нь уншигдах байдлын бодит шалгалт биш. Бүрдэл бүрийн бодит үр дүн шаардлагатай.');
       if (offer.accepted) return view(role,id);
-      offer.accepted={by:role,at:now(),reason:input(data,'reason'),digest:record.digest};
+      offer.accepted={by:role,at:now(),reason:input(data,'reason'),digest:record.digest,...(controlledArchive(m)&&{restrictions:files.archive.custodyRestrictions(m,offer.id)})};
     }
     recordEvent(m,role+' · '+data.action);
     store.save(context,'oversight',{});
@@ -168,7 +174,7 @@ export function createOversightStore(store,filesFor) {
       if (!file) fail('Хяналтын эх файл олдсонгүй.',404);
       return {name:files.get(item).name,bytes:file.bytes};
     }
-    const offer=currentOffer(m), record=files.archive.inspectCustody(m,offer.id);
+    const offer=currentOffer(m);if(controlledArchive(m)&&item===offer.assignment?.authority?.id){archiveOriginal(m,item,files.read);return {name:files.get(item).name,bytes:files.read(item).bytes};}const record=files.archive.inspectCustody(m,offer.id);
     if (item!==offer.id||record.digest!==offer.digest) fail('Томилсон архив олдсонгүй.',404);
     offer.downloadedAt??=now();
     store.save(context,'oversight',{});

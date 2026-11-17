@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {finalisationFixture,completionCase,matterValues} from './pilot-finalisation-fixture.mjs';
 import {today} from './pilot-acceptance-fixture.mjs';
 export async function reportingFixture(app,options={}){
- const setup=await finalisationFixture(app),{id,scope,support,notes,people}=setup;
+ const setup=await finalisationFixture(app,options),{id,scope,support,notes,people}=setup;
  const intakeForm=await app.write('reviewer',id,'form-use',{form:'1.1.1',version:'source'}),intakeDigest=intakeForm.papers.find(p=>p.form==='1.1.1').template.digest;
  for(const form of ['1.1.1','2.6']){await app.write('preparer',id,'save',{form,execution:'Actually inspected the current accepted intake, planned controls and supporting source decisions',conclusion:'Actual independent final review of retained scope; this fixture does not rely on operating controls',...(form==='2.6'?{reliance:'none'}:{templateDigest:intakeDigest,answers:JSON.stringify({r26:'Actual current accepted client scope, signed terms and independent approvals confirmed from the G01 records'})})});await app.write('preparer',id,'submit',{form});await app.write('reviewer',id,'review',{form});}
  const work=(await app.view('preparer',id)).papers.find(p=>p.form==='3.1.2');if(work.status!=='reviewed'){await app.write('preparer',id,'submit',{form:'3.1.2'});await app.write('reviewer',id,'review',{form:'3.1.2'});}

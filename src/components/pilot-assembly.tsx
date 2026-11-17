@@ -9,6 +9,7 @@ export function AssemblyDesk({data,sealed}:{data?:AssemblyView;sealed:boolean}){
  return <section className="card pad bench-card" aria-label="Эцсийн файлын бүрдүүлэлт">
   <div className="section-heading"><h2>Эцсийн файл бүрдүүлэлт</h2><span className="pill">{sealed?'Түгжээтэй':data.current?'Бүрдүүлэлтийг баталсан':data.latest?states[data.latest.status]:'Бүрдүүлэлт хүлээгдэж байна'}</span></div>
   <p>{data.issueAt?'Гаргасан яг багцын индекс, гарын үсэг, эх файл ба холбоосыг шалгана. Бүрдүүлэлтийн зөвшөөрөл, түгжих үйлдэл ба хадгалалтын бодлого тусдаа бүртгэлтэй.':'Тайлангийн гаргалтын дараа эцсийн индекс, эх файлын бүрэн байдал ба холбоосууд энд гарна.'}</p>
+  {!!data.diagnostics?.length&&<div className="callout amber"><b>Яг бүрдлийн оношилгоо</b>{data.diagnostics.map((d,i)=><p key={d.id+'/'+i}>{d.label} · {({missing:'Бодит эх байхгүй',unavailable:'Эх уншигч одоогоор боломжгүй',corrupt:'Байт / хэш зөрсөн','stale-record':'Эцсийн хувилбар зөрсөн'} as Record<string,string>)[d.category]??d.category}{d.detail?' · '+d.detail:''}</p>)}</div>}
   {!!data.gaps.length&&<ul className="text-amber">{data.gaps.map(gap=><li key={gap}>{gap}</li>)}</ul>}
   {data.latest&&<div className="bench-item"><b>Бүрдүүлэлт v{data.latest.version} · {states[data.latest.status]}</b>
    <p>{data.latest.values.classification} · {data.latest.values.policy}</p>

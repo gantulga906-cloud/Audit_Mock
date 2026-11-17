@@ -21,7 +21,8 @@
     "verify:data-evidence-ui": "node scripts/verify-data-evidence-ui.mjs",
     "verify:execution-ui": "node scripts/verify-execution-ui.mjs",
     "verify:finalisation-ui": "node scripts/verify-finalisation-ui.mjs",
-    "verify:controlled-reporting-ui": "node scripts/verify-controlled-reporting-ui.mjs"
+    "verify:controlled-reporting-ui": "node scripts/verify-controlled-reporting-ui.mjs",
+    "verify:archive-controls-ui": "node scripts/verify-archive-controls-ui.mjs"
   },
   "dependencies": {
     "next": "^16.0.0",

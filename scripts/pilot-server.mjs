@@ -16,6 +16,7 @@ import { createOversightStore, oversightRoles } from './pilot-oversight.mjs';
 import { createReleaseStore } from './pilot-release.mjs';
 import { laterFactFiles } from './pilot-later-facts.mjs';
 import {checkAssemblyRecord} from './pilot-assembly.mjs';
+import {controlledArchive} from './pilot-archive-controls.mjs';
 import {isAcceptanceAction,acceptanceAction,acceptanceActivationGaps,acceptanceView} from './pilot-acceptance.mjs';
 
 const prefix = '/api/pilot';
@@ -90,6 +91,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       const saved = db.prepare('SELECT snapshot FROM authorizations WHERE engagement_id = ? ORDER BY id DESC LIMIT 1').get(engagementId);
       return saved && JSON.parse(saved.snapshot);
     },
+    authorizationAt: at => {const rows=db.prepare('SELECT snapshot FROM authorizations WHERE engagement_id=? ORDER BY id').all(engagementId);return rows.map(r=>JSON.parse(r.snapshot)).find(r=>r.authorization.at===at);},
     storeTemplate: (hash, contract) => db.prepare('INSERT OR IGNORE INTO pilot_templates VALUES (?, ?)').run(hash, JSON.stringify(contract)),
     template: hash => JSON.parse(db.prepare('SELECT body FROM pilot_templates WHERE digest = ?').get(hash)?.body ?? 'null'),
     confirmations: () => confirmations.view(engagementId),
@@ -418,8 +420,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       } else if (req.method === 'GET' && /^\/evidence\/[a-f0-9-]{36}$/.test(route)) {
         const file = transaction(() => {
           const { model, id } = store.load(role, resolveScope(role, url));
-          const evidence=route.split('/').at(-1), factFile=laterFactFiles(model).includes(evidence);
-          if (factFile?role!=='partner':archive.isSealed(model)) throw new PilotError(403, 'Түгжсэн файлыг зөвшөөрсөн архивын багцаас авна уу.');
+          const evidence=route.split('/').at(-1), factFile=laterFactFiles(model).includes(evidence),archiveFile=controlledArchive(model)&&model.evidence.some(e=>e.id===evidence&&e.archiveOnly);
+          if (!archiveFile&&(factFile?role!=='partner':archive.isSealed(model))) throw new PilotError(403, 'Түгжсэн файлыг зөвшөөрсөн архивын багцаас авна уу.');
           return db.prepare('SELECT name, bytes, sha256 FROM evidence WHERE engagement_id = ? AND id = ?').get(id, evidence);
         }, false);
         if (!file) throw new PilotError(404, 'Эх файл олдсонгүй.');
