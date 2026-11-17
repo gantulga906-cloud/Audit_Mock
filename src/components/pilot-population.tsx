@@ -122,7 +122,7 @@ export function SampleDesk({population,sample,paper,role,engagement,evidence,fin
 }){
  const [unit,setUnit]=useState('');
  const approved=population?.usable ? population.current : undefined;
- if(!approved&&!sample)return null;
+ if(sample?.method==='hmac-sha256-rejection-fy-v1'||!approved&&!sample)return null;
  const reviewer=paper.reviewer===({preparer:'nomin',reviewer:'temuulen',partner:'bat'}[role]);
  const extra={form:paper.form,version:String(sample?.version??'')};
  const selected=sample?.selected?.find(r=>r.id===unit);
@@ -198,7 +198,7 @@ export function JournalDesk({journal,population,paper,role,engagement,evidence,f
  const result=caseRow?.investigations.at(-1);
  const review=paper.reviewer===({preparer:'nomin',reviewer:'temuulen',partner:'bat'}[role]);
  const extra={form:paper.form,version:String(journal?.version??'')};
- const reasons:Record<string,string>={manual:'Гар бичилт',amount:'Босго давсан бичилт',cutoff:'Тайлант үеийн төгсгөл'};
+ const reasons:Record<string,string>={'duplicate-multiset':'Ижил бүтэн бичилтийн олонлог','round-unit':'Дугуй нэгж',manual:'Гар бичилт',amount:'Босго давсан бичилт',cutoff:'Тайлант үеийн төгсгөл'};
  const original=(id:string)=>'/api/pilot/evidence/'+id+pilotScope(engagement);
  return <details className="feature-detail space-top" open={!!journal}>
   <summary>Журналын бичилтийн шинжилгээ {journal&&'· v'+journal.version}</summary>
@@ -215,7 +215,7 @@ export function JournalDesk({journal,population,paper,role,engagement,evidence,f
    {!!journal.cases.length&&<label>Сонгосон журнал<select value={selected} onChange={e=>setSelected(e.target.value)}>
     <option value="">Сонгох</option>{journal.cases.map(c=><option key={c.id} value={c.id}>{c.id} · {c.criteria.map(r=>reasons[r]).join(', ')}</option>)}
    </select></label>}
-   {caseRow&&<>
+   {caseRow&&<><p>Нийт дебит {money(caseRow.grossDebit??0)} · нийт кредит {money(caseRow.grossCredit??0)} · ижил бүтэн журнал {caseRow.duplicates?.join(', ')??'—'}</p>
     {caseRow.postings.map(r=><p key={r.row}>Эх мөр {r.row} · {r.id} · {r.account} · {r.date} · {money(r.cents)}</p>)}
     {result&&<p>{result.accounting} · <a href={original(result.evidence)}>Холбосон эх файл v{result.evidenceVersion}</a></p>}
     {journal.current&&paper.editable&&paper.status!=='submitted'&&<DataAction key={journal.version+'/'+selected} run={run} action="journal-investigate"

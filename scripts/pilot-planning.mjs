@@ -5,6 +5,7 @@ import {requireSeat,seatFor} from './pilot-staffing.mjs';
 import {recordEvent,workKey,isCurrentReview} from '../src/lib/workspace.ts';
 import {evidenceCurrent} from './pilot-requests.mjs';
 import {validDate} from '../src/lib/feature-workflows.ts';
+import {executionControlFailed} from './pilot-execution.mjs';
 
 const bad=message=>{throw new PilotError(409,message);};
 const hash=value=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -19,6 +20,7 @@ const coverage=(m,form)=>hash(planningRisks(m,form).map(r=>[r.id,r.version,r.sta
   ...rows(m,'M06-F11').filter(x=>x.values.risk===r.id).map(x=>[x.id,x.version,x.status])]).sort((a,b)=>String(a[0]).localeCompare(String(b[0]))));
 
 export function planningRecordStale(m,row){
+ if(row.kind==='M06-F03'&&row.values.reliance==='supported'&&executionControlFailed(m,row.id))return true;
  if(row.kind==='M05-F08'&&row.planningBasis?.recipient){
   const recipient=row.planningBasis.recipient;
   if(recipient.revision!==(m.pilotRecipientRevisions?.[recipient.role]??0))return true;

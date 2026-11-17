@@ -18,7 +18,8 @@
     "verify:form-adoption-ui": "node scripts/verify-form-adoption-ui.mjs",
     "verify:acceptance-ui": "node scripts/verify-acceptance-ui.mjs",
     "verify:planning-ui": "node scripts/verify-planning-ui.mjs",
-    "verify:data-evidence-ui": "node scripts/verify-data-evidence-ui.mjs"
+    "verify:data-evidence-ui": "node scripts/verify-data-evidence-ui.mjs",
+    "verify:execution-ui": "node scripts/verify-execution-ui.mjs"
   },
   "dependencies": {
     "next": "^16.0.0",

@@ -4,6 +4,8 @@ import { isCurrentReview, recordEvent, snapshot, workKey } from '../src/lib/work
 import { approvedPopulation, cents } from './pilot-population.mjs';
 import { evidenceCurrent } from './pilot-requests.mjs';
 import { input, PilotError, validMateriality } from './pilot-workflow.mjs';
+import {approvedRows} from './pilot-registers.mjs';
+import {executionPosition} from './pilot-execution.mjs';
 
 const fail=(message,status=409)=>{throw new PilotError(status,message);};
 const now=()=>new Date().toISOString();
@@ -106,6 +108,7 @@ export function completionView(m,includeConsultations=true) {
 
 export function completionGaps(m) {
   const gaps=[];
+  if((Object.values(m.pilotSamples??{}).some(versions=>versions.at(-1).resultReview?.disposition==='limited')||Object.values(m.pilotExecution??{}).some(versions=>versions.at(-1).conclusion?.disposition!=='usable'&&versions.at(-1).conclusion))&&!approvedRows(m,'M10-F08').some(r=>r.executionBasis===executionPosition(m)&&r.values.result!=='pending'))gaps.push('G04 · Хязгаарлалт / нэмэлт ажлыг одоогийн M10-F08 нотолгооны үнэлгээнд тусгана уу');
   if (activeEvaluation(m)&&!currentEvaluation(m)) gaps.push('4.4 · Материаллаг байдал ба залруулаагүй нөлөөний одоогийн хяналт');
   if (m.pilotManagement&&!currentManagement(m)) gaps.push('4.4 · СТ, тодруулга, удирдлагын баталсан яг хувилбар шаардлагатай');
   if (m.pilotCorrections&&Object.values(m.pilotCorrections).some(rows=>!rows.at(-1).response||!liveFile(m,rows.at(-1).response.file))) {

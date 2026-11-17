@@ -18,6 +18,9 @@ import type {DataMethodsView,RequestCoverage} from '@/lib/pilot-data-methods';
 import type {AcceptanceView} from '@/lib/pilot-acceptance';
 import {EngagementStaffing,RosterOverview,WorkAssignmentEditor} from './pilot-staffing';
 import {DeliveryTimeline,PlanningCalendar} from './delivery-planning';
+import {ExecutionDesk} from './pilot-execution';
+import type {ExecutionView} from '@/lib/pilot-execution';
+import {SamplingV2Desk} from './pilot-sampling-v2';
 import {JournalDesk,PopulationDesk,SampleDesk} from './pilot-population';
 import {MaterialityBasisFields,MaterialityBasisSummary,type MaterialityTarget} from './pilot-materiality';
 import {AreaDesk} from './pilot-area';
@@ -64,6 +67,7 @@ export type View=RegisterResources&{
  completion?:CompletionView;
  laterFacts?:LaterFact[];
  oversight?:OversightView;release?:ReleaseView;deliveryLink?:{token:string;id:string;recipient:string};
+ execution?:ExecutionView;
  samples?:Record<string,SampleView>;journals?:Record<string,JournalRun>;areas?:Record<string,AreaRun>;fieldFindings?:Finding[];
  fieldwork?:string[];statementLines?:Record<string,number>;impacts?:Model['impacts'];
  delivery?:Pick<Model,'person'|'tasks'|'events'>&{id:string};
@@ -519,7 +523,9 @@ function SharedPilotWorkspace(){
  const registers=(parts:string[])=><PilotRegisters key={(view.selected??'firm')+'/'+parts.join('-')} sectionsOnly={parts} role={view.role} resources={view} evidence={view.evidence??[]} engagementId={view.selected} active={!!engagement?.active} run={run} onError={setError}/>;
  const showContext=(id:string)=>{setEvidenceId(id);setContextOpen(true);};
  const analysis=(p:Paper)=>!sealed&&view.selected&&(view.fieldwork?.includes(p.form)||!!view.samples?.[p.form]||!!view.journals?.[p.form])?<>
-   <SampleDesk population={view.population} sample={view.samples?.[p.form]} paper={p} role={view.role} engagement={view.selected} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===p.form&&f.id.startsWith('SAMPLE-'))} run={run}/>
+   <ExecutionDesk execution={view.execution} paper={p} role={view.role} evidence={view.evidence??[]} run={run}/>
+   <SamplingV2Desk findings={(view.fieldFindings??[]).filter(f=>f.form===p.form&&/^(SAMPLE|PROJECTION)-/.test(f.id))} population={view.population} sample={view.samples?.[p.form]} paper={p} role={view.role} evidence={view.evidence??[]} run={run}/>
+   <SampleDesk population={view.population} sample={view.samples?.[p.form]} paper={p} role={view.role} engagement={view.selected} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===p.form&&/^(SAMPLE|PROJECTION)-/.test(f.id))} run={run}/>
    <JournalDesk population={view.population} journal={view.journals?.[p.form]} paper={p} role={view.role} engagement={view.selected} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===p.form&&f.id.startsWith('JOURNAL-'))} run={run}/>
    <AreaDesk population={view.population} area={view.areas?.[p.form]} paper={p} role={view.role} engagement={view.selected} through={engagement?.reportDate??''} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===p.form&&f.id.startsWith('AREA-'))} run={run}/>
  </>:undefined;

@@ -17,6 +17,8 @@ import { renderReport, sha256 } from './pilot-report.mjs';
 import { bindForm, effectiveForm, nativeGaps, nativePapers, nativeReviewGaps, paperFormView, pinLinkedDecisions, readTypedAnswers } from './pilot-forms.mjs';
 import { approvedStaffing, managedStaffing, requireSeat, seatFor, seats, staffingGaps } from './pilot-staffing.mjs';
 import { approvedPopulation, populationAction, populationView } from './pilot-population.mjs';
+import {executionAction,executionView,executionGap,syncExecution,executionEvidence} from './pilot-execution.mjs';
+import {sampleEvidence} from './pilot-sampling-v2.mjs';
 import { samplingAction, samplingGap, samplingView, syncSamplePapers } from './pilot-sampling.mjs';
 import { evidenceCurrent, isRequestAction, requestAction } from './pilot-requests.mjs';
 import {requestCoverage,receiptMetadata,checkUploadSignature,syncRequestCoverage} from './pilot-evidence.mjs';
@@ -73,6 +75,7 @@ function syncFieldwork(m) {
   syncMateriality(m);
   syncPlanningPapers(m);
   syncSamplePapers(m);
+  syncExecution(m);
   syncJournalPapers(m);
   syncAreaPapers(m);
   for (const form of technicalForms(m)) {
@@ -88,7 +91,7 @@ function syncFieldwork(m) {
   syncCompletion(m);
 }
 
-const fieldworkGap = (m,form) => (fieldworkForms(m).includes(form)?planningGap(m,form):'')||samplingGap(m,form)||journalGap(m,form)||areaGap(m,form);
+const fieldworkGap = (m,form) => (fieldworkForms(m).includes(form)?planningGap(m,form):'')||samplingGap(m,form)||journalGap(m,form)||areaGap(m,form)||executionGap(m,form);
 const technicalGaps = m => activeItems(m,technicalForms(m).map(form=>({form}))).flatMap(({form})=>{
   const paper=m.work[workKey(m.engagement,form)], ref=technicalRef(m,form);
   return ref&&isCurrentReview(paper)&&paper.values['pilot.technical']===ref?[]:[form+' · Тусгай горимын одоогийн хяналт'];
@@ -196,7 +199,7 @@ export function qualityMaterial(m) {
     return {form,title,version,reviewedVersion,status,values,evidence,notes};
   });
   const fact=laterFactForRelease(m);
-  const evidence=[...new Set([...papers.flatMap(p=>p.evidence),...registerEvidence(m),...completionEvidence(m),
+  const evidence=[...new Set([...papers.flatMap(p=>p.evidence),...registerEvidence(m),...completionEvidence(m),...executionEvidence(m),...sampleEvidence(m),
     ...areaEvidence(m,fieldworkForms(m)),...(fact?[fact.source.id]:[])])];
   return {basis:qualityBasis(m),gaps:pilotGaps(m,false),artifact:renderReport(m),papers,evidence,
     ...(fact&&{laterFact:{discovered:fact.discovered,knownAtReport:fact.knownAtReport,impactReason:fact.impactReason,
@@ -310,6 +313,7 @@ export function pilotView(m, role, revision, files) {
     papers, requests: activeItems(m,m.requests), requestContacts:m.bench.clients[m.engagement].contacts.map(({id,name,email})=>({id,name,email})),
     evidence: m.evidence.map(e => ({ ...e, current:evidenceCurrent(m,e),sha256: files.get(e.id)?.sha256 })),
     ...(populationView(m) && {population:populationView(m)}),
+    execution:executionView(m,files),
     ...(m.pilotSamples && {samples:samplingView(m)}),
     ...(m.pilotJournals && {journals:journalView(m)}),
     ...(m.pilotAreaRuns && {areas:areaView(m)}),
@@ -317,7 +321,7 @@ export function pilotView(m, role, revision, files) {
     ...(engagement.intake.active&&{assembly:assemblyStatus(m,files.authorization(),files.read)}),
     ...(role!=='preparer'&&{oversight:oversightTeamView(m)}),
     ...(role==='partner'&&{release:{strict:strictRelease(m),signature:currentSignature(m,files),deliveries:files.deliveries()}}),
-    ...((m.pilotSamples||m.pilotJournals||m.pilotAreaRuns) && {fieldFindings:m.findings.filter(f=>/^(SAMPLE|JOURNAL|AREA)-/.test(f.id))}),
+    ...((m.pilotSamples||m.pilotJournals||m.pilotAreaRuns||m.pilotExecution) && {fieldFindings:m.findings.filter(f=>/^(SAMPLE|PROJECTION|JOURNAL|AREA|MANUAL)-/.test(f.id))}),
     gaps: pilotGaps(m), activity: m.activity.slice(0, 30),
     authorized: engagement.authorized && {
       at: engagement.authorized.at, report: engagement.authorized.report, fs: engagement.authorized.fs,
@@ -500,6 +504,9 @@ export function pilotAction(m, role, action, data, files) {
     }
     return;
   }
+  if(action.startsWith('fieldwork-')&&action!=='fieldwork-resolve-finding'){
+    if(managedStaffing(m))requireSeat(m,files,role);executionAction(m,role,action,data,files);syncFieldwork(m);invalidateReport(m,'G04 · Горимын гүйцэтгэл / дүгнэлт өөрчлөгдөв');return;
+  }
   if (action.startsWith('sample-') || action.startsWith('journal-') || action.startsWith('area-') || action==='fieldwork-resolve-finding') {
     if (managedStaffing(m)) requireSeat(m,files,role);
     let changed;
@@ -514,7 +521,7 @@ export function pilotAction(m, role, action, data, files) {
     else if (action.startsWith('area-')) changed=areaAction(m,role,action,data,files,fieldworkForms(m));
     else changed=samplingAction(m,role,action,data,fieldworkForms(m));
     syncFieldwork(m);
-    if (changed&&['sample-resolve-finding','fieldwork-resolve-finding','sample-design','sample-test','journal-run','journal-investigate','area-run','area-dispose'].includes(action)) {
+    if (changed&&['sample-resolve-finding','fieldwork-resolve-finding','sample-design','sample-expand','sample-test','sample-convention','sample-evaluate','sample-results-review','journal-run','journal-investigate','area-run','area-dispose'].includes(action)) {
       invalidateReport(m,'Тайланд ашиглах гүйцэтгэлийн ажил өөрчлөгдөв');
     }
     return;
@@ -603,7 +610,7 @@ export function pilotAction(m, role, action, data, files) {
     const ids = new Set([...engagement.authorized.package.evidence.map(e => e.id), ...registerEvidence(m),...acceptanceEvidence(m),
       ...[...programmes,...native].flatMap(w => w.evidence), ...(m.pilotTerms ? [m.pilotTerms.evidence] : []),
       ...(thresholdBasis?[thresholdBasis.evidence.id]:[]),
-      ...(population?[population.evidence,population.controls.evidence.id]:[]),...areaEvidence(m,fieldworkForms(m)),...completionEvidence(m),
+      ...(population?[population.evidence,population.controls.evidence.id]:[]),...areaEvidence(m,fieldworkForms(m)),...completionEvidence(m),...executionEvidence(m),...sampleEvidence(m),
       ...(archiveAmendment?.review.evidence??[])]);
     const historical = new Set([...populationHistory.flatMap(v=>[v.evidence,v.controls.evidence.id]),
       ...(m.pilotData?.checks??[]).flatMap(group=>group.versions.flatMap(v=>(v.inputs??[]).map(ref=>ref.id))),
@@ -631,6 +638,7 @@ export function pilotAction(m, role, action, data, files) {
       ...(populationHistory.length && {populationHistory}),
       ...(requestAudit.length && {requestAudit}),
       ...(confirmations.length && {confirmations}),
+      ...((m.pilotExecution||m.pilotFieldworkEnabled)&&{execution:executionView(m,files)}),
       ...(m.pilotSamples && { samples:Object.fromEntries(Object.entries(samplingView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
       ...(m.pilotJournals && { journals:Object.fromEntries(Object.entries(journalView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
       ...(m.pilotAreaRuns && { areas:Object.fromEntries(Object.entries(areaView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
