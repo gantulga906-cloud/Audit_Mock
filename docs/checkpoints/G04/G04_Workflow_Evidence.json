@@ -1,0 +1,744 @@
+{
+  "guide": "G04",
+  "sourceSteps": [
+    {
+      "id": "A13-P1-W1",
+      "title": "Choose relevant accounts, disclosures and assertions",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d27c3df5342da914eb30c939e685c558d6573deaae816070e22a6d4a1cbcc6a6",
+      "source": "A13!C16:H16",
+      "relatedCases": [
+        "P07-UC01",
+        "P07-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "typed workpapers and one-form grants preserve published and reviewed versions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A13-P1-W2",
+      "title": "Tailor master procedures to risks and circumstances",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "9ec0ab45ea6c7a573d49419d7fc0226215f502fdbb54e8bf9bdd17163f2ed4bb",
+      "source": "A13!C17:H17",
+      "relatedCases": [
+        "P07-UC01",
+        "P07-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "typed workpapers and one-form grants preserve published and reviewed versions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A13-P1-W3",
+      "title": "Set data sources, sample and timing",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d5f6675d5ac5c63218052de490373c8122868af85fe9793a52fd5ebcc17aef45",
+      "source": "A13!C18:H18",
+      "relatedCases": [
+        "P07-UC01",
+        "P07-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "typed workpapers and one-form grants preserve published and reviewed versions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A13-P2-W1",
+      "title": "Perform details, analytics and required physical work",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "6b6ff5bd4120e264c6397ef8ef8c91af066e58ede9649f06404b564700d6e574",
+      "source": "A13!C19:H19",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC03",
+        "P09-UC04",
+        "P09-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "A13-P2-W2",
+      "title": "Test journal entries and other adjustments for management override irrespective of assessed risk",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "51a1c8f9da7a9bd8065eac0dd2793caa634440657e96acc97cd753de83df38ac",
+      "source": "A13!C20:H20",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC03",
+        "P09-UC04",
+        "P09-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "approved source population and actual nonordinary-scope certificate through multiple journal triggers, separate investigations, independent review and renewed source revision",
+          "actors": [
+            "preparer",
+            "reviewer"
+          ],
+          "observed": "Eleven actual journals each retain one case despite duplicate/manual/amount/cutoff/round triggers; gross debit remains 1100 once. Uninvestigated and self-reviewed cases cannot pass. Each case records actual purpose, authority, accounting and source evidence. A scoped source revision makes the earlier run noncurrent and permits a new version while preserving the old independently approved run.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "A13-P2-W3",
+      "title": "Trace selected items to reliable supporting evidence",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4ee54d2527263ad781dac698ebd9e673cc6bc44dc11a2ffe5c8c23c53de1178c",
+      "source": "A13!C21:H21",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC03",
+        "P09-UC04",
+        "P09-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "A13-P2-W4",
+      "title": "Record deviations, calculations and exceptions",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "56eaf36a8ede811f5d8d77e8e4684a7940a059a5255c9889858de27224b7d71a",
+      "source": "A13!C22:H22",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC03",
+        "P09-UC04",
+        "P09-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "A13-P3-W1",
+      "title": "Investigate unexpected relationships and exceptions",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "195fe81fad3034bb0b7f2f47ac9a9fc43ae7af6a1d2f605b5cfd1667727f0372",
+      "source": "A13!C23:H23",
+      "relatedCases": [
+        "P09-UC11",
+        "P07-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "approved source population and actual nonordinary-scope certificate through multiple journal triggers, separate investigations, independent review and renewed source revision",
+          "actors": [
+            "preparer",
+            "reviewer"
+          ],
+          "observed": "Eleven actual journals each retain one case despite duplicate/manual/amount/cutoff/round triggers; gross debit remains 1100 once. Uninvestigated and self-reviewed cases cannot pass. Each case records actual purpose, authority, accounting and source evidence. A scoped source revision makes the earlier run noncurrent and permits a new version while preserving the old independently approved run.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "A13-P3-W2",
+      "title": "Project sampling errors where appropriate",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "45ac757d3abf5bec606de8df88954cc5cc875c19c01de97562544e5e433dea1c",
+      "source": "A13!C24:H24",
+      "relatedCases": [
+        "P09-UC11",
+        "P07-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "A13-P3-W3",
+      "title": "Decide whether further or different work is needed",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d6a434fa933bb4ec583e9cbd76d1df1c87522e6502a44a2bd47b9e587d18b776",
+      "source": "A13!C25:H25",
+      "relatedCases": [
+        "P09-UC11",
+        "P07-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "A13-P4-W1",
+      "title": "Link evidence to the assertion-level conclusion",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "fef0729f7baa0ad44518a9a798d7e40ff9ac456e130a49a33f3234e28b2c3e2b",
+      "source": "A13!C26:H26",
+      "relatedCases": [
+        "P09-UC11",
+        "P10-UC01",
+        "P11-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A13-P4-W2",
+      "title": "Transfer misstatements and findings to resolution",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "1fee236c409326b6bc917a0725c7c239c3e0ddbba88638ce869a70afdcec26f0",
+      "source": "A13!C27:H27",
+      "relatedCases": [
+        "P09-UC11",
+        "P10-UC01",
+        "P11-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A13-P4-W3",
+      "title": "Submit workpapers for review and resolve notes",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "b6e25fe1793634e2b7d924c7dfa9fd73c4ec13067a576f8b76349fe478c1afc4",
+      "source": "A13!C28:H28",
+      "relatedCases": [
+        "P09-UC11",
+        "P10-UC01",
+        "P11-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    }
+  ],
+  "connectedCycles": [
+    {
+      "id": "A13",
+      "title": "Perform substantive audit work by cycle and assertion",
+      "steps": 13,
+      "observedSteps": 13,
+      "applicableSteps": 13,
+      "complete": false,
+      "applicableComplete": false,
+      "branchIds": null,
+      "journeys": []
+    }
+  ],
+  "wholeApplicationCycles": {
+    "total": 51,
+    "complete": 9,
+    "applicable": 51,
+    "applicableComplete": 9
+  },
+  "note": "The separate method/procedure/journal fixtures are not combined into a complete A13 lifecycle. Source-case acceptance and all 22 G10 variant-specific decisions remain open."
+}

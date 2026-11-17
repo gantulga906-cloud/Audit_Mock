@@ -1,0 +1,136 @@
+{
+  "guide": "G04",
+  "proofs": [
+    {
+      "name": "exact-whole-journal-example",
+      "expected": {
+        "cases": 2,
+        "ids": [
+          "J1",
+          "J2"
+        ],
+        "grossDebit": 2000,
+        "grossCredit": 2000
+      },
+      "actual": {
+        "cases": 2,
+        "ids": [
+          "J1",
+          "J2"
+        ],
+        "grossDebit": 2000,
+        "grossCredit": 2000
+      }
+    },
+    {
+      "name": "negative-direction-ratio",
+      "expected": {
+        "total": -5000,
+        "incremental": -4000
+      },
+      "actual": {
+        "total": -5000,
+        "incremental": -4000
+      }
+    },
+    {
+      "name": "ratio-with-specific-no-double-count",
+      "expected": {
+        "factual": 1000,
+        "total": 5000,
+        "incremental": 4000,
+        "specific": 1000,
+        "gross": 60
+      },
+      "actual": {
+        "factual": 1000,
+        "total": 5000,
+        "incremental": 4000,
+        "specific": 1000,
+        "gross": 60
+      }
+    },
+    {
+      "name": "expanded-selection-retains-original",
+      "expected": {
+        "old": 3,
+        "new": 4,
+        "tests": 4,
+        "findings": 3
+      },
+      "actual": {
+        "old": 3,
+        "new": 4,
+        "tests": 4,
+        "findings": 3
+      }
+    },
+    {
+      "name": "actual-procedure-exception-retained",
+      "expected": {
+        "findings": 1,
+        "source": "59eb226c-9d07-449e-b0f4-382ce71c50f2",
+        "conclusionCurrent": false,
+        "materiality": "reviewed"
+      },
+      "actual": {
+        "findings": 1,
+        "source": "59eb226c-9d07-449e-b0f4-382ce71c50f2",
+        "conclusionCurrent": false,
+        "materiality": "reviewed"
+      }
+    },
+    {
+      "name": "separate-control-analytics-event-conclusions",
+      "expected": {
+        "controlStale": true,
+        "design": "adequate",
+        "expectation": "100",
+        "delta": "20",
+        "coverageCurrent": false
+      },
+      "actual": {
+        "controlStale": true,
+        "design": "adequate",
+        "expectation": "100",
+        "delta": "20",
+        "coverageCurrent": false
+      }
+    },
+    {
+      "name": "journal-trigger-exposure-once",
+      "expected": {
+        "journals": 11,
+        "grossDebit": 110000,
+        "findings": 0,
+        "oldApproved": true
+      },
+      "actual": {
+        "journals": 11,
+        "grossDebit": 110000,
+        "findings": 0,
+        "oldApproved": true
+      }
+    },
+    {
+      "name": "single-engagement-review-to-correction-handoff",
+      "expected": {
+        "work": "reviewed",
+        "noteCleared": true,
+        "findings": 2,
+        "gross": 50,
+        "proposed": 1000,
+        "posted": false
+      },
+      "actual": {
+        "work": "reviewed",
+        "noteCleared": true,
+        "findings": 2,
+        "gross": 50,
+        "proposed": 1000,
+        "posted": false
+      }
+    }
+  ],
+  "scope": "Engineering reference fixtures; no independent source acceptance or whole-variant closure"
+}
