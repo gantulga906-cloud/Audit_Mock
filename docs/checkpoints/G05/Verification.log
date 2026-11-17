@@ -1,0 +1,188 @@
+
+> veritech-audit-mock@0.1.0 verify:foundations
+> node scripts/verify-foundations.mjs --build
+
+▲ Next.js 16.4.5 (webpack)
+✓ Running next.config.ts took 44ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.2s
+  Running TypeScript ...
+  Finished TypeScript in 3.0s ...
+  Collecting page data using 6 workers ...
+  Generating static pages using 6 workers (0/5) ...
+  Generating static pages using 6 workers (1/5) 
+  Generating static pages using 6 workers (2/5) 
+  Generating static pages using 6 workers (3/5) 
+✓ Generating static pages using 6 workers (5/5) in 1442ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /legacy
+└ ○ /pilot
+
+
+○  (Static)  prerendered as static content
+
+{
+  "commit": "6df7da211d75d6d19867b38466fcd8b3fbd64a0d",
+  "clean": true,
+  "buildCurrent": true,
+  "sourceEdition": "Audit_All_Materials_2026-10-26.zip + five repaired companion workbooks",
+  "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b",
+  "normalizedSourceSha256": "27a7da39fda7488f62a43175df8fc97a53be42af43aec83393f80359efe7773e",
+  "bpmn": {
+    "archive": "Audit_Mock_Development_Plan_Package.zip",
+    "member": "bpmn-transition-plan.csv",
+    "sha256": "791ea7ff061701d23e462c26aa2463ef5c405cf9dd2d514f21c8b16cd543ea8e",
+    "disposition": "Resolve exact transition, case and scope with the stage owner",
+    "total": 1012,
+    "gateways": 185,
+    "flows": 827,
+    "normalizedSha256": "71bc07fe04b8385c28ac2affcce6f096663f3444f7289535eda3eb20d361d475"
+  },
+  "testFilesCurrent": true,
+  "tests": {
+    "passed": 97,
+    "failed": 0,
+    "skipped": 0
+  },
+  "counts": {
+    "cases": {
+      "total": 75,
+      "fixturePassed": 0,
+      "accepted": 0,
+      "partial": 64,
+      "open": 75,
+      "pendingScope": 0,
+      "conditional": 0,
+      "excluded": 0
+    },
+    "criteria": {
+      "total": 315,
+      "fixturePassed": 185,
+      "accepted": 0,
+      "partial": 0,
+      "open": 315,
+      "pendingScope": 0,
+      "conditional": 0,
+      "excluded": 0
+    },
+    "features": {
+      "total": 136,
+      "fixturePassed": 0,
+      "accepted": 0,
+      "partial": 72,
+      "open": 127,
+      "pendingScope": 0,
+      "conditional": 8,
+      "excluded": 1
+    },
+    "automations": {
+      "total": 58,
+      "fixturePassed": 0,
+      "accepted": 0,
+      "partial": 40,
+      "open": 58,
+      "pendingScope": 0,
+      "conditional": 0,
+      "excluded": 0
+    },
+    "e2e": {
+      "total": 476,
+      "fixturePassed": 157,
+      "accepted": 0,
+      "partial": 0,
+      "open": 476,
+      "pendingScope": 0,
+      "conditional": 0,
+      "excluded": 0
+    },
+    "forms": {
+      "total": 70,
+      "fixturePassed": 0,
+      "accepted": 0,
+      "partial": 9,
+      "open": 70,
+      "pendingScope": 0,
+      "conditional": 0,
+      "excluded": 0
+    },
+    "variants": {
+      "total": 22,
+      "fixturePassed": 0,
+      "accepted": 0,
+      "partial": 0,
+      "open": 22,
+      "pendingScope": 0,
+      "conditional": 0,
+      "excluded": 0
+    },
+    "dependencies": {
+      "total": 20,
+      "fixturePassed": 0,
+      "accepted": 0,
+      "partial": 2,
+      "open": 20,
+      "pendingScope": 0,
+      "conditional": 0,
+      "excluded": 0
+    },
+    "extensions": {
+      "total": 58,
+      "fixturePassed": 0,
+      "accepted": 0,
+      "partial": 0,
+      "open": 58,
+      "pendingScope": 58,
+      "conditional": 0,
+      "excluded": 0
+    },
+    "transitions": {
+      "total": 1012,
+      "fixturePassed": 0,
+      "accepted": 0,
+      "partial": 0,
+      "open": 1012,
+      "pendingScope": 0,
+      "conditional": 0,
+      "excluded": 0
+    },
+    "operational": {
+      "total": 5,
+      "fixturePassed": 0,
+      "accepted": 0,
+      "partial": 3,
+      "open": 5,
+      "pendingScope": 0,
+      "conditional": 0,
+      "excluded": 0
+    }
+  },
+  "cycles": {
+    "total": 51,
+    "complete": 9,
+    "applicable": 51,
+    "applicableComplete": 9
+  },
+  "lifecycleErrors": 0,
+  "releaseReady": false,
+  "report": "source-verification.json"
+}
+{
+  "guide": "G00",
+  "commit": "6df7da211d75d6d19867b38466fcd8b3fbd64a0d",
+  "referenceCheckpointReady": true,
+  "contracts": 8,
+  "registeredRows": 2247,
+  "tests": {
+    "passed": 97,
+    "failed": 0,
+    "skipped": 0
+  },
+  "releaseReady": false,
+  "report": ".audit-pilot/foundation-verification.json"
+}

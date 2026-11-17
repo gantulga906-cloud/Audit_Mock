@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-17",
+  "sources": [
+    {
+      "title": "IAASB 2025 Handbook, Volume 1",
+      "url": "https://ifacweb.blob.core.windows.net/publicfiles/2025-09/IAASB-2025-Handbook-Volume-1.pdf",
+      "sections": [
+        "ISA 450",
+        "ISA 580",
+        "ISA 260",
+        "ISA 720"
+      ],
+      "application": "Keep actual evaluation, representations, communications and other-information work distinct; retain the responsible auditor decision and actual selected edition/local adoption."
+    },
+    {
+      "title": "ISQM 2",
+      "url": "https://www.iaasb.org/publications/international-standard-quality-management-isqm-2-engaging-quality-reviews",
+      "application": "Separate actual reviewer eligibility, performance and completion. Ordinary assigned R4 confirmation is not a performed formal EQR."
+    }
+  ],
+  "boundaries": [
+    "No automated professional opinion, legal conclusion or local standard adoption.",
+    "No universal jurisdictional disclosure checklist or independent source acceptance is claimed."
+  ]
+}

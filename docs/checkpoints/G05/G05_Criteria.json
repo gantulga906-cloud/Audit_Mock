@@ -1,0 +1,2318 @@
+{
+  "guide": "G05",
+  "scope": "All 68 original criteria across 16 handbook cases retained with exact source hashes and current evidence class",
+  "summary": {
+    "total": 68,
+    "backendDirect": 53,
+    "supporting": 15,
+    "independentlyAccepted": 0
+  },
+  "criteria": [
+    {
+      "id": "P10-UC01-AC01",
+      "title": "An automated exception cannot become a confirmed misstatement without evaluation.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "0d977d79bfabf442a1c2fbb0342702db8dc6a0058266d83fdcc5cbbec4148114",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC01-AC01",
+      "relatedCases": [
+        "P10-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "incomplete and restricted matters through explicit independent limited decision and exact replay",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Blank financial exposure may be drafted but cannot be submitted as invented zero. Restricted fraud/noncompliance circumstances are limited to the actual authorized scope. Self-clearance is denied; independent limitation retains the next work and one exact approval effect on retry.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC01-AC02",
+      "title": "Matching amounts alone do not prove two findings are the same issue.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "49d549a4020aa79bb8a3ecace64af33021fe8fb1c84acc0e6ebdbf4ca31e710b",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC01-AC02",
+      "relatedCases": [
+        "P10-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual financial matter through actual management agreement, independently verified partial posting, current final evaluation and persisted source change",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "One actual financial matter of 100 is not duplicated by a second reference. Agreement of 100 leaves actual verified posting of 60 and residual 40. Independent final evaluation retains its exact final-analytics version and professional judgments. A changed final source invalidates reliance while preserving history and materiality.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC01-AC03",
+      "title": "The underlying issue is not aggregated twice across tests.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "2262aea3f0c29c1fbc0106b70dca392416e6fb39976fb429e7197fe749a4f138",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC01-AC03",
+      "relatedCases": [
+        "P10-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual financial matter through actual management agreement, independently verified partial posting, current final evaluation and persisted source change",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "One actual financial matter of 100 is not duplicated by a second reference. Agreement of 100 leaves actual verified posting of 60 and residual 40. Independent final evaluation retains its exact final-analytics version and professional judgments. A changed final source invalidates reliance while preserving history and materiality.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC01-AC04",
+      "title": "The record identifies open action, communication or escalation work.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "933741ee56af32cbd009f5b20f524a5ceb5b6cc805a9169c1f01d516d383bc6f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC01-AC04",
+      "relatedCases": [
+        "P10-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual financial matter through actual management agreement, independently verified partial posting, current final evaluation and persisted source change",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "One actual financial matter of 100 is not duplicated by a second reference. Agreement of 100 leaves actual verified posting of 60 and residual 40. Independent final evaluation retains its exact final-analytics version and professional judgments. A changed final source invalidates reliance while preserving history and materiality.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "incomplete and restricted matters through explicit independent limited decision and exact replay",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Blank financial exposure may be drafted but cannot be submitted as invented zero. Restricted fraud/noncompliance circumstances are limited to the actual authorized scope. Self-clearance is denied; independent limitation retains the next work and one exact approval effect on retry.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC02-AC01",
+      "title": "Agreement does not remove an amount from uncorrected evaluation.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a2adcd56124ec5e7960a26b678df17ebd604bfba2d05a027a437fe452d465c0d",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC02-AC01",
+      "relatedCases": [
+        "P10-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual financial matter through actual management agreement, independently verified partial posting, current final evaluation and persisted source change",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "One actual financial matter of 100 is not duplicated by a second reference. Agreement of 100 leaves actual verified posting of 60 and residual 40. Independent final evaluation retains its exact final-analytics version and professional judgments. A changed final source invalidates reliance while preserving history and materiality.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC02-AC02",
+      "title": "Balanced entries use their actual compatible currency/entry boundary.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "242947c92d0122eb5a54895177f55f630443f53b0ff35993f866922a7eac18ef",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC02-AC02",
+      "relatedCases": [
+        "P10-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual zero-net reclassification and qualitative disclosure correction through independent source-effect verification",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Two compatible signed lines are checked against the actual final population; a second correction cannot reuse the same actual rows. A zero monetary qualitative disclosure cannot be verified against the old statement/notes version. New actual notes and independent management-package review precede verification.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC02-AC03",
+      "title": "Partial correction leaves the residual visible.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "2cfb8005fdbdb22ad9ed1db063debae5d024670c7d23f40318bfb16da7a4a836",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC02-AC03",
+      "relatedCases": [
+        "P10-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual financial matter through actual management agreement, independently verified partial posting, current final evaluation and persisted source change",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "One actual financial matter of 100 is not duplicated by a second reference. Agreement of 100 leaves actual verified posting of 60 and residual 40. Independent final evaluation retains its exact final-analytics version and professional judgments. A changed final source invalidates reliance while preserving history and materiality.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC02-AC04",
+      "title": "Verification identifies the final records actually inspected.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "eefafd492eb76703ef5d2d6a7b8c2cf5812b400480c69ce21f1d8b1138648d12",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC02-AC04",
+      "relatedCases": [
+        "P10-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual financial matter through actual management agreement, independently verified partial posting, current final evaluation and persisted source change",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "One actual financial matter of 100 is not duplicated by a second reference. Agreement of 100 leaves actual verified posting of 60 and residual 40. Independent final evaluation retains its exact final-analytics version and professional judgments. A changed final source invalidates reliance while preserving history and materiality.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual zero-net reclassification and qualitative disclosure correction through independent source-effect verification",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Two compatible signed lines are checked against the actual final population; a second correction cannot reuse the same actual rows. A zero monetary qualitative disclosure cannot be verified against the old statement/notes version. New actual notes and independent management-package review precede verification.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC02-AC05",
+      "title": "When management agrees a 100-unit correction but only 60 units are verified in the final relevant records, the correction history shows the agreement, inspected records, 60 verified corrected and 40 still uncorrected under the same scope/currency.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "9c46dcdeffd7db5f604a9793eb7b05ab97dd804f313c236f650724bdde35290d",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC02-AC05",
+      "relatedCases": [
+        "P10-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual financial matter through actual management agreement, independently verified partial posting, current final evaluation and persisted source change",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "One actual financial matter of 100 is not duplicated by a second reference. Agreement of 100 leaves actual verified posting of 60 and residual 40. Independent final evaluation retains its exact final-analytics version and professional judgments. A changed final source invalidates reliance while preserving history and materiality.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC03-AC01",
+      "title": "Known and projected effects have explicit inclusion boundaries.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "b3d8e36ba30375a38dd78b4a55439743c4f02ccd530e2194419bac6b1011bfda",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC03-AC01",
+      "relatedCases": [
+        "P10-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual financial matter through actual management agreement, independently verified partial posting, current final evaluation and persisted source change",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "One actual financial matter of 100 is not duplicated by a second reference. Agreement of 100 leaves actual verified posting of 60 and residual 40. Independent final evaluation retains its exact final-analytics version and professional judgments. A changed final source invalidates reliance while preserving history and materiality.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC03-AC02",
+      "title": "Incompatible currencies and prohibited netting are not silently combined.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "daa27481987afba0854063e9daa310d3146daa7f164d144288dd024467cdfd0a",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC03-AC02",
+      "relatedCases": [
+        "P10-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P10-UC03-AC03",
+      "title": "Qualitatively significant matters remain visible despite a small amount.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "fb9f41a0bc65861a576dc8ff7625ef5c6053799496243dace6262b3e09e5323f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC03-AC03",
+      "relatedCases": [
+        "P10-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual zero-net reclassification and qualitative disclosure correction through independent source-effect verification",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Two compatible signed lines are checked against the actual final population; a second correction cannot reuse the same actual rows. A zero monetary qualitative disclosure cannot be verified against the old statement/notes version. New actual notes and independent management-package review precede verification.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "incomplete and restricted matters through explicit independent limited decision and exact replay",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Blank financial exposure may be drafted but cannot be submitted as invented zero. Restricted fraud/noncompliance circumstances are limited to the actual authorized scope. Self-clearance is denied; independent limitation retains the next work and one exact approval effect on retry.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC03-AC04",
+      "title": "Changed final data identifies affected evaluation and review.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "62478549d0b3a34d0475085a5e61ba383f3d3003db6812508167d2257cf97ddf",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC03-AC04",
+      "relatedCases": [
+        "P10-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual financial matter through actual management agreement, independently verified partial posting, current final evaluation and persisted source change",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "One actual financial matter of 100 is not duplicated by a second reference. Agreement of 100 leaves actual verified posting of 60 and residual 40. Independent final evaluation retains its exact final-analytics version and professional judgments. A changed final source invalidates reliance while preserving history and materiality.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC04-AC01",
+      "title": "The assessment identifies the exact statements and covered periods.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "682f875a9c1ec45130d41b43f9d2931eba48acc8a192ff188e02daac10f6072a",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC04-AC01",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eight separate actual completion assessments with original versions, supported N/A and expected-later information",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Current independently reviewed statements, selected disclosures, representations, communication, other information, legal, going-concern and subsequent-event assessments retain distinct actual conclusions. Expected-later information is not received/read; unknown legal consequences stay explicit. A new statement version invalidates all affected old assessments without erasing their old originals.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC04-AC02",
+      "title": "N/A has a supported reason and cannot conceal a missing note.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "efc0ac6ead6d48ea5546658c2b33bc7020e6212f5c166071ea18036ce563c90a",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC04-AC02",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eight separate actual completion assessments with original versions, supported N/A and expected-later information",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Current independently reviewed statements, selected disclosures, representations, communication, other information, legal, going-concern and subsequent-event assessments retain distinct actual conclusions. Expected-later information is not received/read; unknown legal consequences stay explicit. A new statement version invalidates all affected old assessments without erasing their old originals.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC04-AC03",
+      "title": "Expected later information is not falsely recorded as received/read.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "42e9c2f7c6684ac93c60f4f6a8b3a9bfca54b0c3d206316b5ce6fa9db8e413e8",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC04-AC03",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eight separate actual completion assessments with original versions, supported N/A and expected-later information",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Current independently reviewed statements, selected disclosures, representations, communication, other information, legal, going-concern and subsequent-event assessments retain distinct actual conclusions. Expected-later information is not received/read; unknown legal consequences stay explicit. A new statement version invalidates all affected old assessments without erasing their old originals.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC04-AC04",
+      "title": "The auditor does not claim to audit or assure other information merely by reading it.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "96981b5f694708258bb9675f11b740fb1c4c424ab21b193ea5629d2b75060752",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC04-AC04",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P10-UC04-AC05",
+      "title": "When an applicable disclosure is absent, the assessment retains a named missing disclosure and its reason/owner without requiring the preparer to invent a monetary statement element or a nonexistent note reference.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "b7af67ab33510558aba4a5d736bde141f972c42f44455ce812e4332c7b62e773",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC04-AC05",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P10-UC05-AC01",
+      "title": "The retained content and attachments are identifiable.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "58ba35f085f7415da5af6c41355b0fb89669ab9117310df9967a778b716eeea6",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC05-AC01",
+      "relatedCases": [
+        "P10-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eight separate actual completion assessments with original versions, supported N/A and expected-later information",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Current independently reviewed statements, selected disclosures, representations, communication, other information, legal, going-concern and subsequent-event assessments retain distinct actual conclusions. Expected-later information is not received/read; unknown legal consequences stay explicit. A new statement version invalidates all affected old assessments without erasing their old originals.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC05-AC02",
+      "title": "Actual responsible/knowledgeable signers are recorded rather than assumed from a contact title.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "218f53832ba73a12aa571bf92b89c9f9d73f7bc4d4c117189804d2044281454b",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC05-AC02",
+      "relatedCases": [
+        "P10-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eight separate actual completion assessments with original versions, supported N/A and expected-later information",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Current independently reviewed statements, selected disclosures, representations, communication, other information, legal, going-concern and subsequent-event assessments retain distinct actual conclusions. Expected-later information is not received/read; unknown legal consequences stay explicit. A new statement version invalidates all affected old assessments without erasing their old originals.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC05-AC03",
+      "title": "Fundamental representations and other failures retain their different reporting consequences.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "34dea981dd69853e8522e10b8b6c66eb50b58db2186f15d2065c6738c22f978c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC05-AC03",
+      "relatedCases": [
+        "P10-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P10-UC05-AC04",
+      "title": "The report-date readiness check uses the evaluated current package.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "98f6fbb2055a7b58e6082944ed9b86653539122e99007ea7c3047c1738d4bbfb",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC05-AC04",
+      "relatedCases": [
+        "P10-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P10-UC09-AC01",
+      "title": "No automatic reissue or silent overwrite occurs.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "6d0cad7cf5e4b074e3ed07f5ac763aec58148e4e8460d5131799673904962769",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC09-AC01",
+      "relatedCases": [
+        "P10-UC09"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC09-AC02",
+      "title": "New work, reviewed conclusions and revised package are attributable.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "98b00d39f809ba730b5e34692d3e13fcadaec6c8484087297d0849ab4eb2e565",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC09-AC02",
+      "relatedCases": [
+        "P10-UC09"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC09-AC03",
+      "title": "Necessary communication/reliance-prevention actions remain visible.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "15b9ce58bd8bbe9cbe6dab08e2f2868082b4935b07b291e4d07d7351bdfcbf12",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC09-AC03",
+      "relatedCases": [
+        "P10-UC09"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P10-UC09-AC04",
+      "title": "The earlier report/date/signature is not automatically reused.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "7ed506cbe7cf8c7607ada9b26e881f5a214937ea8e105953dc60b77689dce784",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC09-AC04",
+      "relatedCases": [
+        "P10-UC09"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC01-AC01",
+      "title": "Submission is not review or confirmation.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ac2f5e8eb1910e846a81ecbff2314abb390fd0ae31ce41af988cd92cc27715ad",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC01-AC01",
+      "relatedCases": [
+        "P11-UC01"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC01-AC02",
+      "title": "The response identifies changed work and support.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ad950a567faaba1fd372a65ae1dfc61623df4e5b6a84fcd5853ee9c8339c0722",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC01-AC02",
+      "relatedCases": [
+        "P11-UC01"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC01-AC03",
+      "title": "The preparer cannot mark the reviewer’s concern cleared.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "e01f58c12cdad3772b8d3fd9c31a95f2ffdebd4b69ad54c73b40176fbe78437d",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC01-AC03",
+      "relatedCases": [
+        "P11-UC01"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC01-AC04",
+      "title": "Earlier submissions and authorship remain recoverable.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "f5fd7e54f2019adee632432c1a9bc08b83f407eab918eeebe0a535b30840badd",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC01-AC04",
+      "relatedCases": [
+        "P11-UC01"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC02-AC01",
+      "title": "Review targets the exact content/version and extent.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ed524de33dc06ca17e1f02511304554153c6683d3f381a921f40651ff2947eba",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC02-AC01",
+      "relatedCases": [
+        "P11-UC02"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC02-AC02",
+      "title": "A response is not automatic clearance.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "240c00812ff02260e258007bfafd2df2348b734780cbe7a0344e04ab6fd93bbf",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC02-AC02",
+      "relatedCases": [
+        "P11-UC02"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC02-AC03",
+      "title": "Return/rejection retains reasons and submitted history.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "6d842d20ca1dc9b2e145959d8af516fd7a5ed03a3440820f707a9dc0a1b7d729",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC02-AC03",
+      "relatedCases": [
+        "P11-UC02"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC02-AC04",
+      "title": "Review eligibility and technical permission are checked for the actual work.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "631df08a928f34702586e7a37f90e775beb3308268adef1a494bca593506ea29",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC02-AC04",
+      "relatedCases": [
+        "P11-UC02"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC02-AC05",
+      "title": "When the preparer responds to an anchored review note, the note remains awaiting the actual reviewer’s decision; a clear or return decision records the reviewed response/work version, reviewer, date and reason/extent.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "b87eb2f48cead2cf18deb4e7e33066535cb8c13937cf9e7dc5b6f82e7df1d3da",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC02-AC05",
+      "relatedCases": [
+        "P11-UC02"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC03-AC01",
+      "title": "The review records its actual significant scope.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "c5aa9ff815ac7fe94e98fa2c6a80f0af28914b0a5189d2ce77b5b068c7b1a7f5",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC03-AC01",
+      "relatedCases": [
+        "P11-UC03"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC03-AC02",
+      "title": "Unresolved required differences restrict the affected sign-off/report condition.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "7085f5919ccd8cc925c3b1777714fcae842579e33412b342ea202566e2c81e6a",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC03-AC02",
+      "relatedCases": [
+        "P11-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual consultation facts, permitted advice, performed application and authority through independent review, change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Advice alone and a copied prohibition cannot resolve the issue. Actual application, supporting originals and resolution authority are reviewed independently. Changed actual advice makes only dependent consultation reliance noncurrent; earlier history and unrelated materiality persist.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC03-AC03",
+      "title": "Changed relied-upon work prompts targeted renewed review while retaining history.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "2d8fe202ad6efc368a05adb23b40608a903a4f5cbac13a30989890bc7bf2e987",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC03-AC03",
+      "relatedCases": [
+        "P11-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual consultation facts, permitted advice, performed application and authority through independent review, change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Advice alone and a copied prohibition cannot resolve the issue. Actual application, supporting originals and resolution authority are reviewed independently. Changed actual advice makes only dependent consultation reliance noncurrent; earlier history and unrelated materiality persist.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC03-AC04",
+      "title": "R3 authority does not override a professional prohibition or an unresolved formal EQR concern.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "0dc76de968d262cf0081d2f5f43efb8e78f43ad1d96b6a5f1085a82617665bf1",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC03-AC04",
+      "relatedCases": [
+        "P11-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual consultation facts, permitted advice, performed application and authority through independent review, change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Advice alone and a copied prohibition cannot resolve the issue. Actual application, supporting originals and resolution authority are reviewed independently. Changed actual advice makes only dependent consultation reliance noncurrent; earlier history and unrelated materiality persist.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC04-AC01",
+      "title": "The confirmation identifies the exact content and scope.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "488d4a9a5cdbdcaa2850f16a695b5603932420d77e4107c898a71aa6caa8ce18",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC04-AC01",
+      "relatedCases": [
+        "P11-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eligible independently assigned R4 confirmation with actual note response and separate exact-response clearance",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality"
+          ],
+          "observed": "Actual eligibility and selected scope are separate from formal EQR applicability. A response alone does not clear a concern. Independent clearance precedes performed stand-back and an actual completion notice. Unrelated statement changes retain selected confirmation; changed relied-upon work/eligibility evidence invalidates it with history retained. No formal approval is manufactured by ordinary R4 confirmation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC04-AC02",
+      "title": "A generic R4 sign-off cannot be displayed as a performed formal EQR.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "51ad17b46dd7e70f78aca7dee26bb979311bb0263242a3c43d515226fa6f96c5",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC04-AC02",
+      "relatedCases": [
+        "P11-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eligible independently assigned R4 confirmation with actual note response and separate exact-response clearance",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality"
+          ],
+          "observed": "Actual eligibility and selected scope are separate from formal EQR applicability. A response alone does not clear a concern. Independent clearance precedes performed stand-back and an actual completion notice. Unrelated statement changes retain selected confirmation; changed relied-upon work/eligibility evidence invalidates it with history retained. No formal approval is manufactured by ordinary R4 confirmation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC04-AC03",
+      "title": "R4 does not become the report issuer or an unrestricted administrator.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "4ea1ce674b965b8a31bfc54685d07436a993470bdec3d93d826d7df0f0f4acf4",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC04-AC03",
+      "relatedCases": [
+        "P11-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P11-UC04-AC04",
+      "title": "Outstanding applicable quality concerns cannot be hidden by marking a task complete.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "1a742ddb75b4f5bb8e7b35bca60e9bac707acbf96ec6a5ee0491d287c80a4b92",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC04-AC04",
+      "relatedCases": [
+        "P11-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eligible independently assigned R4 confirmation with actual note response and separate exact-response clearance",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality"
+          ],
+          "observed": "Actual eligibility and selected scope are separate from formal EQR applicability. A response alone does not clear a concern. Independent clearance precedes performed stand-back and an actual completion notice. Unrelated statement changes retain selected confirmation; changed relied-upon work/eligibility evidence invalidates it with history retained. No formal approval is manufactured by ordinary R4 confirmation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC05-AC01",
+      "title": "A not-required decision does not fabricate a completed review.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "f4c0a506df7cb169faa34297cb4c8a87f3bdbc6d37455ce9ebe8fc154f4ab10d",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC05-AC01",
+      "relatedCases": [
+        "P11-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eligible independently assigned R4 confirmation with actual note response and separate exact-response clearance",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality"
+          ],
+          "observed": "Actual eligibility and selected scope are separate from formal EQR applicability. A response alone does not clear a concern. Independent clearance precedes performed stand-back and an actual completion notice. Unrelated statement changes retain selected confirmation; changed relied-upon work/eligibility evidence invalidates it with history retained. No formal approval is manufactured by ordinary R4 confirmation.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC05-AC02",
+      "title": "Assignment alone does not prove eligibility or completion.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "66ceebbddd4aecce5943e0c45f963e5199045f37ae8779b18f90cd1afea1a1a3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC05-AC02",
+      "relatedCases": [
+        "P11-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eligible independently assigned R4 confirmation with actual note response and separate exact-response clearance",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality"
+          ],
+          "observed": "Actual eligibility and selected scope are separate from formal EQR applicability. A response alone does not clear a concern. Independent clearance precedes performed stand-back and an actual completion notice. Unrelated statement changes retain selected confirmation; changed relied-upon work/eligibility evidence invalidates it with history retained. No formal approval is manufactured by ordinary R4 confirmation.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC05-AC03",
+      "title": "The authority and actual trigger are recorded.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "cb4eed1d6aa4745d068f8417c850a533490870752b33f8361d16109490511e7c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC05-AC03",
+      "relatedCases": [
+        "P11-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eligible independently assigned R4 confirmation with actual note response and separate exact-response clearance",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality"
+          ],
+          "observed": "Actual eligibility and selected scope are separate from formal EQR applicability. A response alone does not clear a concern. Independent clearance precedes performed stand-back and an actual completion notice. Unrelated statement changes retain selected confirmation; changed relied-upon work/eligibility evidence invalidates it with history retained. No formal approval is manufactured by ordinary R4 confirmation.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC05-AC04",
+      "title": "An eligibility failure results in a different eligible arrangement or unresolved restriction.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "635324914fb40f54e9d821e6b1d181d868d6c3026b213e239973cc12f6122c80",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC05-AC04",
+      "relatedCases": [
+        "P11-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eligible independently assigned R4 confirmation with actual note response and separate exact-response clearance",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality"
+          ],
+          "observed": "Actual eligibility and selected scope are separate from formal EQR applicability. A response alone does not clear a concern. Independent clearance precedes performed stand-back and an actual completion notice. Unrelated statement changes retain selected confirmation; changed relied-upon work/eligibility evidence invalidates it with history retained. No formal approval is manufactured by ordinary R4 confirmation.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC06-AC01",
+      "title": "Only the eligible reviewer records their completion.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "b92c6e2bc1fc90343cb641aaa5d5c5eaef48089058ffbe9c79adc4196b402994",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC06-AC01",
+      "relatedCases": [
+        "P11-UC06"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC06-AC02",
+      "title": "The partner cannot mark the reviewer complete or overrule unresolved concerns.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "c50ac9d19b23f3d8835f1cc1b37b2c0f620a52b0f04c504e519ec4f3654d0493",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC06-AC02",
+      "relatedCases": [
+        "P11-UC06"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC06-AC03",
+      "title": "Completion identifies the performed scope and actual timing/notice.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "103266b2e23ea40cb449d9e30df53aecc9a75af74e9aa3ac99728cbcc7699a57",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC06-AC03",
+      "relatedCases": [
+        "P11-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P11-UC06-AC04",
+      "title": "EQR retains the partner’s responsibility for the audit opinion and does not itself authorize report issue.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "6b59bd152e8140ce70b8e84081c22b0a543783b9bdacfe993e882f29e76a10e7",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC06-AC04",
+      "relatedCases": [
+        "P11-UC06"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC07-AC01",
+      "title": "New content does not inherit the old sign-off.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "3d6cf939862c822419735a017a95a9260933bcc2d71aaa837f6546c0e93c8048",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC07-AC01",
+      "relatedCases": [
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eligible independently assigned R4 confirmation with actual note response and separate exact-response clearance",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality"
+          ],
+          "observed": "Actual eligibility and selected scope are separate from formal EQR applicability. A response alone does not clear a concern. Independent clearance precedes performed stand-back and an actual completion notice. Unrelated statement changes retain selected confirmation; changed relied-upon work/eligibility evidence invalidates it with history retained. No formal approval is manufactured by ordinary R4 confirmation.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual consultation facts, permitted advice, performed application and authority through independent review, change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Advice alone and a copied prohibition cannot resolve the issue. Actual application, supporting originals and resolution authority are reviewed independently. Changed actual advice makes only dependent consultation reliance noncurrent; earlier history and unrelated materiality persist.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC07-AC02",
+      "title": "Unrelated work is not automatically reopened without an impact basis.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ae99af89264bbb8ea7931d71fa8c32991f7a2acb7e026c1718d500500dec36a3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC07-AC02",
+      "relatedCases": [
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eligible independently assigned R4 confirmation with actual note response and separate exact-response clearance",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality"
+          ],
+          "observed": "Actual eligibility and selected scope are separate from formal EQR applicability. A response alone does not clear a concern. Independent clearance precedes performed stand-back and an actual completion notice. Unrelated statement changes retain selected confirmation; changed relied-upon work/eligibility evidence invalidates it with history retained. No formal approval is manufactured by ordinary R4 confirmation.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual consultation facts, permitted advice, performed application and authority through independent review, change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Advice alone and a copied prohibition cannot resolve the issue. Actual application, supporting originals and resolution authority are reviewed independently. Changed actual advice makes only dependent consultation reliance noncurrent; earlier history and unrelated materiality persist.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC07-AC03",
+      "title": "The old reviewer/date/content remain discoverable.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "9a0f2fe2077ae6a9c591961073ab875414e98a9885c3d1b6166e9b66df52c0ec",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC07-AC03",
+      "relatedCases": [
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "eligible independently assigned R4 confirmation with actual note response and separate exact-response clearance",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality"
+          ],
+          "observed": "Actual eligibility and selected scope are separate from formal EQR applicability. A response alone does not clear a concern. Independent clearance precedes performed stand-back and an actual completion notice. Unrelated statement changes retain selected confirmation; changed relied-upon work/eligibility evidence invalidates it with history retained. No formal approval is manufactured by ordinary R4 confirmation.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual consultation facts, permitted advice, performed application and authority through independent review, change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Advice alone and a copied prohibition cannot resolve the issue. Actual application, supporting originals and resolution authority are reviewed independently. Changed actual advice makes only dependent consultation reliance noncurrent; earlier history and unrelated materiality persist.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P11-UC07-AC04",
+      "title": "Unknown impact remains unresolved rather than silently current.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "cb6ed967a4ed7d767d32651fb63068a58f7f8f7f1e4eb05308bbae4ee96715ea",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P11-UC07-AC04",
+      "relatedCases": [
+        "P11-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P13-UC01-AC01",
+      "title": "Management progress and auditor verification have different states.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "6b3e9d0713d7ed6cf90795b99788f338bfc609b5bb246a795523403feab3aa01",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC01-AC01",
+      "relatedCases": [
+        "P13-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual conditional mandate through management completion claim and independently performed follow-up",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "No recommendation activates service without a current real mandate. Management completion remains a claim; a different authorized partner records inspected work and supported verification. Conditional work does not create a statutory financial finding. Postarchive service authority and full failed-retest/extension branches remain separate work.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P13-UC01-AC02",
+      "title": "A revised date preserves the old commitment and reason.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "e890d8cead0a5cef014bfec73ea773e52a0ad74fa446d683a36437002f9c6189",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC01-AC02",
+      "relatedCases": [
+        "P13-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P13-UC01-AC03",
+      "title": "The action retains its source finding and scope.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "c8656d76a7b09f5479dc00949b97b406e23a6d0506d8495b9b2d974b80d202a1",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC01-AC03",
+      "relatedCases": [
+        "P13-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P13-UC01-AC04",
+      "title": "A recommendation alone cannot activate additional services.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "95778e582e222dbe4e4f6690e99b4b24f14fcb049e6013b775b70acd75294106",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC01-AC04",
+      "relatedCases": [
+        "P13-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual conditional mandate through management completion claim and independently performed follow-up",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "No recommendation activates service without a current real mandate. Management completion remains a claim; a different authorized partner records inspected work and supported verification. Conditional work does not create a statutory financial finding. Postarchive service authority and full failed-retest/extension branches remain separate work.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P13-UC02-AC01",
+      "title": "Management’s completion claim cannot automatically close the action.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "66568e0eacae70e4a03a0141fa8a462061571dd87574710a52f7b735c4adc488",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC02-AC01",
+      "relatedCases": [
+        "P13-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual conditional mandate through management completion claim and independently performed follow-up",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "No recommendation activates service without a current real mandate. Management completion remains a claim; a different authorized partner records inspected work and supported verification. Conditional work does not create a statutory financial finding. Postarchive service authority and full failed-retest/extension branches remain separate work.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P13-UC02-AC02",
+      "title": "Verification identifies its actual evidence, scope, performer and date.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "3da1cf700e1b2d82d0f756d2d85b4fa95c8e53a14ba087619e59b04f16766660",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC02-AC02",
+      "relatedCases": [
+        "P13-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual conditional mandate through management completion claim and independently performed follow-up",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "No recommendation activates service without a current real mandate. Management completion remains a claim; a different authorized partner records inspected work and supported verification. Conditional work does not create a statutory financial finding. Postarchive service authority and full failed-retest/extension branches remain separate work.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P13-UC02-AC03",
+      "title": "Failed retest and outstanding evidence remain visible.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "7cb2c9dad28b2a1bb91d34bc571fc0e87966568cb7a6ff1c45132c0389089366",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC02-AC03",
+      "relatedCases": [
+        "P13-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P13-UC02-AC04",
+      "title": "Closure/reopening history is preserved.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "250fc73f2be8dca5b7540c6237a3b9714361554f07e7a9db097e6fc3aee3c85f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC02-AC04",
+      "relatedCases": [
+        "P13-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P13-UC02-AC05",
+      "title": "When management reports implementation but the agreed effectiveness retest fails, the record distinguishes the reported completion, observed implementation and failed effectiveness result, and routes the supported further-work/escalation outcome.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "d7e1f98805d1130d1b59d4197e3e9c62d2eed7531586cd066b3232cbdea34b16",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC02-AC05",
+      "relatedCases": [
+        "P13-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P13-UC03-AC01",
+      "title": "The decision does not rewrite the original audit finding/opinion.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "0d89335fa28b0949492d9a4452c708483cacf4a72d4fce0f16cb6e56332dc7e6",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC03-AC01",
+      "relatedCases": [
+        "P13-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual conditional mandate through management completion claim and independently performed follow-up",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "No recommendation activates service without a current real mandate. Management completion remains a claim; a different authorized partner records inspected work and supported verification. Conditional work does not create a statutory financial finding. Postarchive service authority and full failed-retest/extension branches remain separate work.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P13-UC03-AC02",
+      "title": "Extensions retain the actual owner, dates and reason.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "7157891f53fd96aa9c5e99f1f0466001328567292d86b55c55f16f013a9d5c62",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC03-AC02",
+      "relatedCases": [
+        "P13-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    },
+    {
+      "id": "P13-UC03-AC03",
+      "title": "Unverified actions cannot appear verified closed.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "1ab2f39fa5289cac9cc1bf2af74134711ebc9bf637da5bbc60f19905cc5f874e",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC03-AC03",
+      "relatedCases": [
+        "P13-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance",
+          "file": "tests/pilot-finalisation.test.mjs",
+          "action": "actual conditional mandate through management completion claim and independently performed follow-up",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "No recommendation activates service without a current real mandate. Management completion remains a claim; a different authorized partner records inspected work and supported verification. Conditional work does not create a statutory financial finding. Postarchive service authority and full failed-retest/extension branches remain separate work.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P13-UC03-AC04",
+      "title": "Status summaries reconcile to the actual action records.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "b182c8cc51c89ae7c5234883edeaec04f0c5d06df22b984f782481ed35a80cab",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P13-UC03-AC04",
+      "relatedCases": [
+        "P13-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-finalisation.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-oversight.mjs",
+        "docs/delivery/handbooks/masters/G05_Findings_completion_consultation_and_quality.md"
+      ],
+      "boundary": "A generic narrative record does not close a complete source branch, professional decision, conditional postarchive service or independent source acceptance."
+    }
+  ]
+}
