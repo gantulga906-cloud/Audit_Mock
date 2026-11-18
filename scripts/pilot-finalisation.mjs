@@ -42,6 +42,7 @@ function validate(m,row){
  required(v,finalisationFields[kind].map(([key])=>key).filter(key=>!optional[kind]?.includes(key)));
  for(const [key,,type] of finalisationFields[kind])if(finalisationChoices[type]&&v[key]&&!finalisationChoices[type].some(([value])=>value===v[key]))fail('G05 · Дэмжигдээгүй сонголт · '+key);
  if(v.paper&&(!paper||paper.stage!==3||!isCurrentReview(paper)))fail('G05 · Бодит хянасан гүйцэтгэлийн яг хувилбар шаардлагатай.');
+ if(['legal','going'].includes(kind)&&!row.evidence)fail('G11 · Legal and going-concern work requires its actual accepted source; numerical indicators cannot replace this evidence.');
  const ref=registerRef(m,row);if(['representations','communication'].includes(kind)&&!ref)fail('G05 · Яг одоогийн баталсан эх бүртгэл шаардлагатай.');
  if(kind==='matter'){
   if(!row.evidence)fail('Бодит нөхцөл ба эх нотолгоо шаардлагатай.');

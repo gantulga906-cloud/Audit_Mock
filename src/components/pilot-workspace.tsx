@@ -18,7 +18,7 @@ import {AdoptPilotForm,NativeFields,PilotFormLibrary} from './pilot-forms';
 import {IntakeProvenance,PilotIntake,TermsEditor} from './pilot-intake';
 import {AcceptanceDesk} from './pilot-acceptance';
 import {PlanningDesk} from './pilot-planning';
-import {DataMethodsDesk} from './pilot-data-methods';
+import {AutomationWorkbench} from './pilot-automation-workbench';
 import {EvidenceCoverageDesk,EvidencePartActions,ReceiptFields,RequestScopeEditor} from './pilot-evidence';
 import type {DataMethodsView,RequestCoverage} from '@/lib/pilot-data-methods';
 import type {AcceptanceView} from '@/lib/pilot-acceptance';
@@ -263,7 +263,7 @@ function Requests({view,run,onError}:{view:View;run:Action;onError:(error:string
     {owner&&current&&open.length>0&&<form className="feature-form" data-request-upload={r.id} onSubmit={e=>upload(e,r.id)}>
      <p>Нэг файлыг хамрах хэд хэдэн хэсэгт холбож болно.</p>
      {open.map(p=><label key={p.id}><input name="parts" type="checkbox" value={p.id} defaultChecked={open.length===1}/> {p.title}</label>)}
-     <label>Эх файл<input name="file" type="file" accept={r.extract?'.csv':'.pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv'} required/></label>
+     <label>Эх файл<input name="file" type="file" accept={r.extract?'.csv':'.pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv,.json'} required/></label>
      {view.dataMethods?.managed&&<div className="field-grid"><ReceiptFields context={view.dataMethods.context}/></div>}
      <label>Файл нийлүүлсэн эх сурвалж<input name="source" required/></label><button className="btn primary">Эх файл бүртгэх</button>
     </form>}
@@ -282,7 +282,7 @@ function SupportingEvidence({view,run,onError}:{view:View;run:Action;onError:(me
  return <details className="card pad bench-card">
   <summary>Үнэлгээний эх баримт · хүсэлтээс тусдаа</summary>
   <form className="feature-form" onSubmit={upload}>
-   <label>Үнэлгээний файл<input name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv" required/></label>
+   <label>Үнэлгээний файл<input name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv,.json" required/></label>
    {view.dataMethods?.managed&&<div className="field-grid"><ReceiptFields context={view.dataMethods.context}/></div>}
    <label>Файлын эх сурвалж<input name="source" required/></label><button className="btn secondary">Үнэлгээний эх файл нэмэх</button>
   </form>
@@ -589,7 +589,7 @@ function SharedPilotWorkspace(){
      {paper&&<div className="ew-next-paper"><span>Дараагийн баримтыг нээх нь энэ ажлыг илгээхгүй.</span><button className="btn secondary" disabled={availablePapers.indexOf(paper)>=availablePapers.length-1} onClick={()=>openPaper(availablePapers[availablePapers.indexOf(paper)+1].form)}>Дараагийн баримт<ArrowRight size={15}/></button></div>}
     </>:<>{!sealed&&view.role!=='preparer'&&<div className="ew-list-actions"><span>Холбогдсон эх болон баталсан маягтууд</span><button className="btn secondary" onClick={()=>go('library')}>Маягт холбох</button></div>}{!sealed&&view.selected&&<WorkpaperExportDesk papers={availablePapers} engagement={view.selected}/>}<WorkpaperIndex view={{...view,papers:availablePapers}} query={query} open={openPaper} routeFilter={route.filter} routeStage={route.stage} onFiltersChange={listFilters}/></>)}
     {route.page==='evidence'&&<><div className={'ew-paper-layout '+(contextOpen&&selectedEvidence?'with-context':'')}><EvidenceLibraryView view={view} query={query} preview={showContext}/>{contextOpen&&selectedEvidence&&<EvidencePreview file={selectedEvidence} engagement={view.selected} onClose={()=>{setEvidenceId('');setContextOpen(false);}}/>}</div>{!sealed&&<><SupportingEvidence view={view} run={run} onError={setError}/><Requests view={view} run={run} onError={setError}/></>}</>}
-    {route.page==='data'&&(engagement.active&&!sealed?<><DataMethodsDesk data={view.dataMethods} role={view.role} evidence={view.evidence??[]} run={run}/><PopulationDesk dataMethods={view.dataMethods} key={view.population?.current.version} population={view.population} role={view.role} engagement={view.selected!} evidence={view.evidence??[]} run={run} readFile={readEvidence} onError={setError} requestImport={(view.requests??[]).some(r=>r.extract&&r.dispatch==='issued')}/><section className="ew-panel ew-panel-pad"><h2>Ажилтай холбогдсон шинжилгээ</h2><p>Түүвэр, журнал болон салбарын шинжилгээг тухайн ажлын баримтаас нээнэ.</p><div className="ew-analysis-links">{availablePapers.filter(p=>view.fieldwork?.includes(p.form)||view.samples?.[p.form]||view.areas?.[p.form]).map(p=><button key={p.id} onClick={()=>openPaper(p.form)}><FileText size={17}/><span>{p.form} · {p.title}</span><ArrowRight size={16}/></button>)}</div></section></>:<WorkspaceEmpty title={sealed?'Архивын эх хувилбарыг ашиглана':'Идэвхжүүлэх шийдвэр шаардлагатай'} description="Өгөгдөл боловсруулах эрх нь гэрээт ажлын одоогийн төлөвөөс хамаарна."/>)}
+    {route.page==='data'&&(engagement.active&&!sealed?<><AutomationWorkbench view={view} run={run} open={(page,form)=>{if(form)openPaper(form);else void navigate({...route,page,paper:null});}}/><PopulationDesk dataMethods={view.dataMethods} key={view.population?.current.version} population={view.population} role={view.role} engagement={view.selected!} evidence={view.evidence??[]} run={run} readFile={readEvidence} onError={setError} requestImport={(view.requests??[]).some(r=>r.extract&&r.dispatch==='issued')}/><section className="ew-panel ew-panel-pad"><h2>Ажилтай холбогдсон шинжилгээ</h2><p>Түүвэр, журнал болон салбарын шинжилгээг тухайн ажлын баримтаас нээнэ.</p><div className="ew-analysis-links">{availablePapers.filter(p=>view.fieldwork?.includes(p.form)||view.samples?.[p.form]||view.areas?.[p.form]).map(p=><button key={p.id} onClick={()=>openPaper(p.form)}><FileText size={17}/><span>{p.form} · {p.title}</span><ArrowRight size={16}/></button>)}</div></section></>:<WorkspaceEmpty title={sealed?'Архивын эх хувилбарыг ашиглана':'Идэвхжүүлэх шийдвэр шаардлагатай'} description="Өгөгдөл боловсруулах эрх нь гэрээт ажлын одоогийн төлөвөөс хамаарна."/>)}
     {route.page==='planning'&&<><PlanningDesk resources={view} role={view.role} sealed={sealed} run={run}/>{registers(['planning'])}{!sealed&&<Delivery view={view} run={run} openPaper={id=>{const p=view.papers?.find(p=>p.id===id||p.form===id);if(p)openPaper(p.form);}}/>}{view.staffing&&<EngagementStaffing staffing={view.staffing} role={view.role} sealed={sealed} run={run}/>}</>}
     {route.page==='review'&&<><WorkpaperIndex key="review" view={view} query={query} open={openPaper} mode="review" routeFilter={route.filter} routeStage={route.stage} onFiltersChange={listFilters}/>      {view.impacts?.map(impact=><section className="card pad bench-card" key={impact.id}><h2>{impact.source} · Өөрчлөлтийн нөлөө</h2><p>{impact.reason} · {impact.targets.join(', ')}</p>
        {view.role==='reviewer'&&<ActionForm run={run} action="resolve-impact" extra={{id:impact.id}} button="Нөлөөллийн үнэлгээг бүртгэх"><label>Шийдвэрийн үндэслэл<input name="reason" required/></label></ActionForm>}
@@ -673,7 +673,7 @@ function ConfirmationRecipient({token}:{token:string}){
    <form className="feature-form" onSubmit={submit}>
     {details.requiresScopeConfirmation&&<label><input name="scopeConfirmed" type="checkbox" required/>Миний бодит хариу {details.scope?.entity} · {details.scope?.start}–{details.scope?.end} · {details.scope?.evidenceType} хүрээнд хамаарна. Энэ локал холбоос банк / этгээдийн таних баталгаа биш.</label>}
     <label>Хариу<textarea name="response" maxLength={4000} required/></label>
-    <label>Баталгаажуулах эх файл<input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv" required/></label>
+    <label>Баталгаажуулах эх файл<input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.csv,.json" required/></label>
     <button className="btn primary" disabled={busy}>Хариу өгөх</button>
    </form>
   </>}

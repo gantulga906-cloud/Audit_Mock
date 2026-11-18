@@ -303,7 +303,7 @@ export function pilotView(m, role, revision, files) {
   return {
     role, revision, ...resources, fieldwork: fieldworkForms(m), statementLines: m.pilotStatementLines ?? {},
     planning:planningView(m,role),reporting:reportingView(m,files),
-    dataMethods:dataView(m),
+    dataMethods:dataView(m,files),
     requestCoverage:requestCoverage(m),
     ...(role==='partner'&&{laterFacts:laterFactView(m)}),
     ...(m.extendedPilot && engagement.intake.active && !sealed && role !== 'preparer' && {programmeTemplates:programmeTemplates(m,files)}),
@@ -361,7 +361,7 @@ export function pilotAction(m, role, action, data, files) {
   const sealed = files.archive.isSealed(m);
   if (!sealed) syncFieldwork(m);
   if(action==='evidence-enable'||action.startsWith('data-profile-')||action.startsWith('data-check-')){
-    dataAction(m,role,action,data,files);syncFieldwork(m);invalidateReport(m,'G03 · Өгөгдлийн эх / аргын хувилбар өөрчлөгдөв');return;
+    if(dataAction(m,role,action,data,files)===false)return;syncFieldwork(m);invalidateReport(m,'G03 · Өгөгдлийн эх / аргын хувилбар өөрчлөгдөв');return;
   }
   if(action==='planning-enable'||action==='effort-log'){
     planningAction(m,role,action,data,files);invalidateReport(m,'G02 · Төлөвлөлт / бодит цаг өөрчлөгдөв');if(!sealed)syncFieldwork(m);return;
@@ -929,10 +929,14 @@ function parseStatementLines(text) {
 
 export function fileInput(data) {
   const name = input(data, 'name', 180), encoded = input(data, 'base64', 7_000_000);
-  if (!/^[^\\/\x00-\x1f\x7f]+\.(pdf|png|jpe?g|docx|xlsx|csv)$/i.test(name) || !/^[A-Za-z0-9+/]+={0,2}$/.test(encoded)) {
-    throw new PilotError(400, 'PDF, зураг, DOCX, XLSX эсвэл CSV файл сонгоно уу.');
+  if (!/^[^\\/\x00-\x1f\x7f]+\.(pdf|png|jpe?g|docx|xlsx|csv|json)$/i.test(name) || !/^[A-Za-z0-9+/]+={0,2}$/.test(encoded)) {
+    throw new PilotError(400, 'PDF, зураг, DOCX, XLSX, CSV эсвэл аргын JSON эх сонгоно уу.');
   }
   const bytes = Buffer.from(encoded, 'base64');
   if (!bytes.length || bytes.length > 5_000_000 || bytes.toString('base64') !== encoded) throw new PilotError(400, 'Файлын хэмжээ 5 MB хүртэл байна.');
+  if(/\.json$/i.test(name)){
+    try{const policy=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));if(bytes.length>80000||!policy||Array.isArray(policy)||policy.kind!=='audit-automation-policy')throw Error();}
+    catch{throw new PilotError(400,'80 KB хүртэл хүчинтэй UTF-8 аргын бодлогын JSON эх шаардлагатай.');}
+  }
   return { name, bytes };
 }
