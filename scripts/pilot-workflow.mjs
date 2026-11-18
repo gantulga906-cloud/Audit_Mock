@@ -14,6 +14,7 @@ import {
 import { latestArchiveSelection, registers } from '../src/lib/pilot-registers.ts';
 import { procedureOutcomes } from '../src/lib/pilot-forms.ts';
 import { renderReport, sha256 } from './pilot-report.mjs';
+import {methodologyNotices,methodologyDecision,managedMethodology} from './pilot-methodology.mjs';
 import { bindForm, effectiveForm, nativeGaps, nativePapers, nativeReviewGaps, paperFormView, pinLinkedDecisions, readTypedAnswers } from './pilot-forms.mjs';
 import { approvedStaffing, managedStaffing, requireSeat, seatFor, seats, staffingGaps } from './pilot-staffing.mjs';
 import { approvedPopulation, populationAction, populationView } from './pilot-population.mjs';
@@ -245,7 +246,7 @@ export function pilotReport(m, files) {
 
 export function pilotView(m, role, revision, files) {
   const engagement = m.engagements[0];
-  const resources = { archiveControls:{enabled:controlledArchive(m)},registers: registerView(m), programmes: pilotProgrammes, rules: programmeView(m), forms: forms.map(({ id, title }) => ({ id, title })),
+  const resources = { methodologyNotices:methodologyNotices(m),archiveControls:{enabled:controlledArchive(m)},registers: registerView(m), programmes: pilotProgrammes, rules: programmeView(m), forms: forms.map(({ id, title }) => ({ id, title })),
     archive: files.archive.view(m, role), extended: !!m.extendedPilot,acceptanceManaged:!!m.pilotAcceptance };
   if (!engagement) return { role, revision, engagement: null, ...resources };
   const sealed = files.archive.isSealed(m);
@@ -350,6 +351,7 @@ export function deliverySummary(m, role, archive) {
 }
 
 export function pilotAction(m, role, action, data, files) {
+  if(action==='form-update-decision'){if(files.archive.isSealed(m))throw new PilotError(409,'Архив түгжээтэй.');methodologyDecision(m,role,data);return;}
   if (typeof action!=='string') throw new PilotError(400,'Үйлдэл шаардлагатай.');
   const sealed = files.archive.isSealed(m);
   if (!sealed) syncFieldwork(m);
@@ -758,6 +760,7 @@ export function pilotAction(m, role, action, data, files) {
         .filter(form => programmeDecision(m,form).paperVersions?.[paper.form] === version) : [];
       const typed = data?.answers !== undefined ? readTypedAnswers(m, paper, data, files) : null;
       const values = { ...(typed?.values ?? paper.values) };
+      if(data.conflictFromVersion!==undefined){if(!/^\d+$/.test(data.conflictFromVersion)||Number(data.conflictFromVersion)>paper.version||Number(data.conflictAgainstVersion)!==paper.version)throw new PilotError(409,'Зөрчлийн яг одоогийн хувилбарыг дахин харьцуулна.');values['work.conflictResolution']=JSON.stringify({from:Number(data.conflictFromVersion),against:paper.version,by:m.person,at:new Date().toISOString(),reason:input(data,'conflictReason')});}
       let linkedEvidence=typed?.evidence;
       if (!paper.form.startsWith('F-')) {
         values.execution = input(data, 'execution');
@@ -783,6 +786,7 @@ export function pilotAction(m, role, action, data, files) {
         }
       }
       changeWork(m, paper.id, values, linkedEvidence);
+      if(managedMethodology(m.pilotFormLibrary)&&version!==paper.version)paper.values['work.preparation']=JSON.stringify({by:m.person,at:new Date().toISOString(),version:paper.version});
       if (planning) {
         syncPlanningPapers(m);
         if (paper.form === '1.3' && version !== paper.version) {
@@ -838,6 +842,7 @@ export function pilotAction(m, role, action, data, files) {
       checkNative(m, paper, files);
       checkPlanning(m,paper,files);
       reviewWork(m, paper.id);
+      if(managedMethodology(m.pilotFormLibrary))paper.values['work.review']=JSON.stringify({by:m.person,at:new Date().toISOString(),version:paper.version});
       if (actorSeat) recordStaffSignoff(m,paper,'review',actorSeat);
       break;
     case 'respond':

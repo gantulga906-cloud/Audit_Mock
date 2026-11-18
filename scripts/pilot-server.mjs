@@ -7,7 +7,7 @@ import { createArchiveStore } from './pilot-archive.mjs';
 import { archiveGrantKinds } from './pilot-registers.mjs';
 import { registers } from '../src/lib/pilot-registers.ts';
 import { createPilotStore, firmCommand } from './pilot-store.mjs';
-import { isLibraryAction, libraryAction, libraryTemplate, libraryView,formAdoptionPreview } from './pilot-forms.mjs';
+import { isLibraryAction, libraryAction, libraryTemplate, libraryView,formAdoptionPreview,sourceTemplate,validateDraft } from './pilot-forms.mjs';
 import { activeTermsGap, canDraftTerms, createIntakeStore, isIntakeAction, termsAction, termsGaps } from './pilot-intake.mjs';
 import { approvedStaffing, managedStaffing, rosterView, seatFor, staffingGaps,requireSeat } from './pilot-staffing.mjs';
 import { recordEvent } from '../src/lib/workspace.ts';
@@ -17,6 +17,9 @@ import { createReleaseStore } from './pilot-release.mjs';
 import { laterFactFiles } from './pilot-later-facts.mjs';
 import {checkAssemblyRecord} from './pilot-assembly.mjs';
 import {controlledArchive} from './pilot-archive-controls.mjs';
+import {importPreview,releaseReview,managedMethodology} from './pilot-methodology.mjs';
+import {inspectWorkbook} from './pilot-workbook.mjs';
+import {workpaperExportPreview,renderWorkpaperExport,searchWorkpapers} from './pilot-workpaper-export.mjs';
 import {isAcceptanceAction,acceptanceAction,acceptanceActivationGaps,acceptanceView} from './pilot-acceptance.mjs';
 
 const prefix = '/api/pilot';
@@ -82,8 +85,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
   const { transaction } = store;
   const configured = () => db.prepare('SELECT COUNT(*) AS total FROM accounts').get().total !== 0;
   const filesFor = engagementId => ({
-    get: id => db.prepare('SELECT name, sha256 FROM evidence WHERE engagement_id = ? AND id = ?').get(engagementId, id),
-    read: id => db.prepare('SELECT bytes, sha256 FROM evidence WHERE engagement_id = ? AND id = ?').get(engagementId,id),
+    get: id => db.prepare('SELECT name, sha256 FROM evidence WHERE engagement_id IS ? AND id = ?').get(engagementId, id),
+    read: id => db.prepare('SELECT bytes, sha256 FROM evidence WHERE engagement_id IS ? AND id = ?').get(engagementId,id),
     add: (id, name, bytes) => db.prepare(`INSERT INTO evidence (id, name, sha256, bytes, engagement_id)
       VALUES (?, ?, ?, ?, ?)`).run(id, name, digest(bytes), bytes, engagementId),
     authorize: (authorization, evidence) => db.prepare('INSERT INTO authorizations (snapshot, engagement_id) VALUES (?, ?)').run(JSON.stringify({ authorization, evidence }), engagementId),
@@ -138,7 +141,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       payload.engagement.acceptanceGaps.push(...intake.activationGaps(model), ...termsGaps(model, files), ...staffingGaps(model),...acceptanceActivationGaps(model));
     }
     return { ...payload, selected: id, portfolio,
-      formLibrary: libraryView(model.pilotFormLibrary, role, files, !id),
+      formLibrary: libraryView(model.pilotFormLibrary, role, filesFor(null), !id,model),
       ...(!id && { intake: intake.view(role), roster: rosterView(model, files, role, new Set(portfolio.map(item=>item.id))) }),
       ...(id && (role === 'partner' || !archive.isSealed(model)) && {
         staffing: { managed: managedStaffing(model), members: store.members(id), seats: approvedStaffing(model),
@@ -354,7 +357,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             if(isAcceptanceAction(data.action))acceptanceAction(model,role,data.action,data.fields,filesFor(id));
             else if(data.action==='intake-context-item')intake.contextItem(model,role,data.fields);
             else if (data.action === 'access') changeMembership(context, role, data.fields);
-            else if (isLibraryAction(data.action)) libraryAction(model.pilotFormLibrary, role, data.action, data.fields, filesFor(null));
+            else if (isLibraryAction(data.action)) libraryAction(model.pilotFormLibrary, role, data.action, data.fields, filesFor(null),model);
             else if (isIntakeAction(data.action)) {
               if (data.action.startsWith('client-')) intake.updateClient(role, data.action, data.fields);
               else enquiry = intake.enquiryAction(model, role, data.action, data.fields);
@@ -405,6 +408,19 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           return archive.exportPackage(model, route.split('/').at(-1), role);
         });
         json(res, 200, bundle);
+      } else if(req.method==='GET'&&route==='/workpaper-search'){
+        const result=transaction(()=>{const id=resolveScope(role,url),{model}=store.load(role,id);return searchWorkpapers(model,role,url.searchParams.get('q')??'',filesFor(id));},false);json(res,200,result,{'Cache-Control':'no-store'});
+      } else if(req.method==='POST'&&(route==='/workpaper-export-preview'||route==='/workpaper-export')){
+        const fields=await readJson(req),result=transaction(()=>{const id=resolveScope(role,url),{model}=store.load(role,id),preview=workpaperExportPreview(model,role,fields,filesFor(id));if(route==='/workpaper-export-preview'){const {_papers,...safe}=preview;return safe;}if(fields.previewDigest!==preview.digest)throw new PilotError(409,'Сонгосон ажил / эх өөрчлөгдсөн. Экспортын хүрээг дахин хянана.');return renderWorkpaperExport(preview);},false);
+        if(route==='/workpaper-export-preview')json(res,200,result,{'Cache-Control':'no-store'});else{res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Content-Disposition':'attachment; filename="audit-workpapers.html"','X-Audit-Export-SHA256':result.sha256,'Cache-Control':'no-store'});res.end(result.html);}
+      } else if(req.method==='POST'&&route==='/methodology/import-preview'){
+        const data=await readJson(req);const preview=transaction(()=>{if(resolveScope(role,url))throw new PilotError(409,'Фирмийн арга зүйн сангаас нээнэ.');const {model}=store.load(role,null);return importPreview(model.pilotFormLibrary,role,data,filesFor(null),sourceTemplate,validateDraft);},false);json(res,200,preview,{'Cache-Control':'no-store'});
+      } else if(req.method==='GET'&&route==='/methodology/workbook'){
+        const value=transaction(()=>{if(resolveScope(role,url)||!['reviewer','partner'].includes(role))throw new PilotError(403,'Арга зүйн эхийн хүрээнд хандана.');const {model}=store.load(role,null),source=model.pilotFormLibrary.sources?.find(s=>s.id===url.searchParams.get('source'));if(!source)throw new PilotError(404,'Эх олдсонгүй.');const raw=filesFor(null).read(source.id);if(!raw||digest(raw.bytes)!==source.sha256)throw new PilotError(409,'Эхийн байт зөрсөн.');const book=inspectWorkbook(raw.bytes);return {...book,sheets:book.sheets.map(s=>({...s,cells:undefined,sample:Object.entries(s.cells).slice(0,40).map(([cell,value])=>({cell,...value})),cellCount:Object.keys(s.cells).length}))};},false);json(res,200,value,{'Cache-Control':'no-store'});
+      } else if(req.method==='GET'&&route==='/methodology/review'){
+        const value=transaction(()=>{if(resolveScope(role,url)||!['reviewer','partner'].includes(role))throw new PilotError(403,'Нийтлэлийн хяналтын эрх шаардлагатай.');const {model}=store.load(role,null);const d=model.pilotFormLibrary.drafts[url.searchParams.get('form')];if(!d||d.by!==role&&!d.submitted)throw new PilotError(404,'Ноорог олдсонгүй.');return releaseReview(model.pilotFormLibrary,url.searchParams.get('form'),filesFor(null));},false);json(res,200,value,{'Cache-Control':'no-store'});
+      } else if(req.method==='GET'&&/^\/methodology\/source\/[a-f0-9-]{36}$/.test(route)){
+        const file=transaction(()=>{if(resolveScope(role,url)||!['reviewer','partner'].includes(role))throw new PilotError(403,'Арга зүйн эхийн хүрээнд хандана.');const {model}=store.load(role,null),source=model.pilotFormLibrary.sources?.find(s=>s.id===route.split('/').at(-1));const raw=source&&filesFor(null).read(source.id);if(!raw||digest(raw.bytes)!==source.sha256)throw new PilotError(409,'Бодит эх олдсонгүй / хэш зөрсөн.');return {...source,...raw};},false);res.writeHead(200,{'Content-Type':'application/octet-stream','Content-Disposition':'attachment; filename="'+encodeURIComponent(file.name)+'"','X-Audit-Source-SHA256':file.sha256});res.end(file.bytes);
       } else if(req.method==='GET'&&route==='/form-adoption-preview'){
         const preview=transaction(()=>{
           const id=resolveScope(role,url);if(!id)throw new PilotError(409,'Гэрээт ажил сонгоно уу.');

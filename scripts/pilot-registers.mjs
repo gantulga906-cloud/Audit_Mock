@@ -4,6 +4,7 @@ import { latestArchiveSelection, registers } from '../src/lib/pilot-registers.ts
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { isCurrentReview, recordEvent, workKey } from '../src/lib/workspace.ts';
 import { PilotError, input, validMateriality } from './pilot-workflow.mjs';
+import {releaseDisposition,managedMethodology} from './pilot-methodology.mjs';
 import { nativePapers,programmeAdoptionPreview,effectiveForm } from './pilot-forms.mjs';
 import {checkEvidenceRecord,evidenceRecordStale} from './pilot-evidence.mjs';
 import {checkPlanningRecord,planningRecordStale,responseLinks} from './pilot-planning.mjs';
@@ -61,14 +62,16 @@ export const approvedRows = (m, kind) => rows(m, kind).filter(r => approved(m, r
 const opinionForms = { unmodified: '4.1.A1', qualified: '4.1.A2', adverse: '4.1.A3', disclaimer: '4.1.A4' };
 export const opinionForm = opinion => opinionForms[opinion];
 export function formContract(id){
-  const contract=contracts.find(f=>f.id===id);
-  if(!contract||!['3.1.2','3.3.1'].includes(id))return contract;
+  const contract=contracts.find(f=>f.id===id);if(!contract)return contract;
   return {...contract,fields:contract.fields.map(field=>{
-    if(id==='3.1.2'&&field.key==='r28')return {...field,columns:field.columns.map(column=>column.key==='I'?{...column,type:'textarea'}:column)};
-    if(id==='3.3.1'&&field.key==='r37')return {...field,columns:field.columns.map(column=>column.key==='B'||column.key==='F'?{...column,type:column.key==='B'?'text':'number'}:column)};
-    return field;
+    let next=field;
+    if(id==='3.1.2'&&field.key==='r28')next={...next,columns:next.columns.map(c=>c.key==='I'?{...c,type:'textarea'}:c)};
+    if(id==='3.3.1'&&field.key==='r37')next={...next,columns:next.columns.map(c=>c.key==='B'||c.key==='F'?{...c,type:c.key==='B'?'text':'number'}:c)};
+    if(next.type==='table'&&next.options?.length&&!next.columns?.some(c=>c.key==='sourceResult'))next={...next,columns:[...(next.columns??[]),{key:'sourceResult',label:'Эх мөрийн үр дүн / сонголт',type:'select',options:[...next.options],source:next.source}]};
+    return next;
   })};
 }
+
 export const currentOpinion = m => approvedRows(m, 'M10-F09')[0];
 export const registerView = m => registerRows(m).map(r => ({ ...r, stale: stale(m, r) }));
 const technicalTypes = new Set(['related','component','estimate']);
@@ -100,6 +103,7 @@ export function programmeTemplates(m, files) {
     .filter(f => f.type === 'procedure' && !f.when).map(f => ({key:f.key,label:f.label}))});
   return Object.fromEntries([...forms].map(form => [form, [option('source',formContract(form)),
     ...(m.pilotFormLibrary?.releases[form] ?? []).flatMap(r => {
+      if(managedMethodology(m.pilotFormLibrary)&&!releaseDisposition(m.pilotFormLibrary,form,r,m).available)return [];
       const body = files.template(r.digest);
       return body ? [option(String(r.number),body)] : [];
     })]]));

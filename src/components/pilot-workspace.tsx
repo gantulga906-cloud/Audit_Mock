@@ -1,5 +1,7 @@
 'use client';
 
+import {SaveConflictPanel,type SaveConflict} from './pilot-save-conflict';
+import {WorkpaperExportDesk,MethodologyNotices,type MethodologyNotice} from './pilot-workpaper-export';
 import {useCallback,useEffect,useRef,useState,type FormEvent,type ReactNode} from 'react';
 import {ArrowLeft,ArrowRight,FileText,PanelRightOpen,X} from 'lucide-react';
 import {WorkspaceShell,WorkpaperIndex,WorkOverview,EvidenceLibraryView,EvidencePreview,WorkspaceEmpty,AuthFrame} from './enterprise-workspace';
@@ -61,7 +63,7 @@ export type View=RegisterResources&{
  acceptance?:AcceptanceView;
  roster?:RosterAvailability[];staffing?:StaffingView;
  engagement:null|{client:string;period:Period;active:boolean;reportDate:string;statements?:Statements;decisions:DecisionRecord[];acceptanceGaps:string[];firm:{id:string;kind:string;version:number;values:Record<string,string>}[]};
- papers?:Paper[];requests?:RequestItem[];evidence?:(Evidence&{sha256:string;current?:boolean})[];gaps?:string[];
+ methodologyNotices?:MethodologyNotice[];papers?:Paper[];requests?:RequestItem[];evidence?:(Evidence&{sha256:string;current?:boolean})[];gaps?:string[];
  requestContacts?:{id:string;name:string;email:string}[];
  confirmations?:{request:string;part:string;recipient:string;sent:string;state:string;response?:string;received?:string;evidence?:string}[];
  confirmationLink?:{token:string;request:string;part:string};
@@ -338,14 +340,15 @@ function Delivery({view,run,openPaper:selectPaper}:{view:View;run:Action;openPap
  </section>;
 }
 
-function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,sampling,unsaved=false}:{paper:Paper;run:Action;role:View['role'];evidence:View['evidence'];sealed:boolean;active:boolean;engagementId:string|null;staffing?:StaffingView;sampling?:ReactNode;unsaved?:boolean}){
+function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,sampling,restored,unsaved=false}:{paper:Paper;run:Action;role:View['role'];evidence:View['evidence'];sealed:boolean;active:boolean;engagementId:string|null;staffing?:StaffingView;sampling?:ReactNode;restored?:Record<string,string>;unsaved?:boolean}){
  const form=paper.form,reference={form};
  const [tab,setTab]=useState('work');
- const [answers,setAnswers]=useState(()=>fieldAnswers(paper.values));
+ const [answers,setAnswers]=useState<Record<string,string>>(()=>restored?.answers?JSON.parse(restored.answers):fieldAnswers(paper.values));
  const native=paper.template;
  const people=staffNames(staffing);
  const summaryNeeded=!form.startsWith('F-');
- const payload=native?{...reference,answers:JSON.stringify(answers),templateDigest:native.digest}:reference;
+ const resolutionFields=Object.fromEntries(Object.entries(restored??{}).filter(([key])=>key.startsWith('conflict')));
+ const payload=native?{...resolutionFields,...reference,answers:JSON.stringify(answers),templateDigest:native.digest}:{...resolutionFields,...reference};
  return <section id={'pilot-paper-'+paper.id} tabIndex={-1} className="card pad bench-card feature-desk">
   <div className="section-heading"><h2>Ажлын баримт · {form}</h2><span className="pill">v{paper.version} · {status[paper.status]}</span></div>
   <p className="micro">{people[paper.owner]??names[paper.owner]} → {people[paper.reviewer]??names[paper.reviewer]} · {paper.evidence.length} холбоотой баримт · {paper.due||'Хугацаа төлөвлөөгүй'}</p>
@@ -388,8 +391,8 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,
    </div>}
    {native&&<NativeFields template={native.body} answers={answers} set={(k,v)=>setAnswers(p=>({...p,[k]:v}))} evidence={evidence} shared={native.shared} linked={native.linked} owned={native.owned}/>}
    {summaryNeeded&&<>
-    <label>Хийсэн ажил<textarea name="execution" defaultValue={paper.values.execution} required/></label>
-    <label>Дүгнэлт<textarea name="conclusion" defaultValue={paper.values.conclusion} required/></label>
+    <label>Хийсэн ажил<textarea name="execution" defaultValue={restored?.execution??paper.values.execution} required/></label>
+    <label>Дүгнэлт<textarea name="conclusion" defaultValue={restored?.conclusion??paper.values.conclusion} required/></label>
    </>}
   </ActionForm>:<>
    {native&&<NativeFields template={native.body} answers={fieldAnswers(paper.values)} set={()=>{}} disabled evidence={evidence} shared={native.shared} linked={native.linked} owned={native.owned}/>}
@@ -440,11 +443,13 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,
 }
 
 function SharedPilotWorkspace(){
+ const [saveConflict,setSaveConflict]=useState<{conflict:SaveConflict;fresh:View}|null>(null),[restoredDraft,setRestoredDraft]=useState<{form:string;values:Record<string,string>;token:string}|null>(null);
  const [data,setData]=useState<Result|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false);
  const [route,setRoute]=useState<WorkspaceRoute>({engagement:null,page:'home',paper:null}),[query,setQuery]=useState(''),[dirty,setDirty]=useState(false),[contextOpen,setContextOpen]=useState(false),[evidenceId,setEvidenceId]=useState('');
  const positions=useRef(new Map<string,number>());
  const routeRef=useRef(route),dirtyRef=useRef(false),dirtyForm=useRef<HTMLElement|null>(null),submittingForm=useRef<HTMLElement|null>(null);
  const clearDraft=()=>{dirtyRef.current=false;dirtyForm.current=null;setDirty(false);};
+ useEffect(()=>{if(restoredDraft){dirtyRef.current=true;dirtyForm.current=document.querySelector('form[data-action=save]');setDirty(true);}},[restoredDraft]);
  const templateDraft=useCallback((active:boolean)=>{dirtyRef.current=active;dirtyForm.current=active?document.querySelector('[data-template-editor]'):null;setDirty(active);},[]);
  function allowLeave(){if(!dirtyRef.current)return true;if(!window.confirm('Хадгалаагүй өөрчлөлт байна. Өөрчлөлтийг орхиод үргэлжлүүлэх үү?'))return false;clearDraft();return true;}
  function present(next:WorkspaceRoute,history:'push'|'replace'='push'){routeRef.current=next;setRoute(next);setContextOpen(false);setEvidenceId('');window.history[history==='push'?'pushState':'replaceState'](null,'',workspaceUrl(next,window.location.pathname));}
@@ -489,11 +494,15 @@ function SharedPilotWorkspace(){
     routeRef.current={engagement:null,page:'home',paper:null};setRoute(routeRef.current);setContextOpen(false);setEvidenceId('');
     window.history.replaceState(null,'',window.location.pathname);
    }
-   clearDraft();show(result);
+   clearDraft();setRestoredDraft(null);show(result);
    if('role' in result&&routeRef.current.engagement!==result.selected)present({...routeRef.current,engagement:result.selected,paper:null,...(!result.selected?{page:'clients' as const,filter:undefined,stage:undefined}:{})},'replace');
    return true;
   }
   catch(e){
+   const attempted=body as {action?:string;fields?:Record<string,string>};
+   if(e instanceof PilotRequestError&&e.status===409&&attempted?.action==='save'&&attempted.fields){
+    try{const fresh=await request(pilotScope(view?.selected??null));if('role' in fresh){const opened=view?.papers?.find(p=>p.form===attempted.fields?.form),current=fresh.papers?.find(p=>p.form===attempted.fields?.form);if(opened&&current)setSaveConflict({conflict:{attempt:{...attempted.fields},opened,current},fresh});}}catch{}
+   }
    if(e instanceof PilotRequestError&&[403,404].includes(e.status)&&scopedPath.startsWith('?engagement=')&&scopedPath!==pilotScope(null)){
     try{
      const recovered=await request(pilotScope(null));clearDraft();show(recovered);
@@ -534,12 +543,13 @@ function SharedPilotWorkspace(){
    <AreaDesk population={view.population} area={view.areas?.[p.form]} paper={p} role={view.role} engagement={view.selected} through={engagement?.reportDate??''} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===p.form&&f.id.startsWith('AREA-'))} run={run}/>
  </>:undefined;
  return <WorkspaceShell view={view} route={route} navigate={next=>void navigate(next)} query={query} setQuery={setQuery} busy={busy} dirty={dirty} refresh={()=>{if(allowLeave())void send(pilotScope(view.selected));}} logout={()=>{if(allowLeave())void send('/logout',{});}} canLeave={allowLeave}>
+  {saveConflict&&<SaveConflictPanel conflict={saveConflict.conflict} resolve={values=>{clearDraft();show(saveConflict.fresh);setSaveConflict(null);setError('');pending.current=null;setRestoredDraft(values?{form:values.form,values,token:crypto.randomUUID()}:null);}}/>}
   {error&&<div className="ew-error" role="alert"><b>Үйлдэл дуусаагүй</b><p>{error}</p><small>Оруулсан мэдээллээ шалгана уу. Шинэчлэхээс өмнө хадгалаагүй хариултаа хуулж авах боломжтой.</small><button type="button" aria-label="Мэдэгдэл хаах" onClick={()=>setError('')}><X size={16}/></button></div>}
   <fieldset disabled={busy} className="feature-fields" onChangeCapture={event=>{const form=(event.target as HTMLElement).closest('form');if(form){dirtyForm.current=form;setDirty(true);dirtyRef.current=true;}}} onSubmitCapture={event=>{submittingForm.current=event.target as HTMLFormElement;}}>
    {(route.page==='home'||route.page==='overview')&&<WorkOverview view={view} open={openPaper} go={go}/>}
    {(route.page==='clients'||!engagement&&route.page==='home')&&<EngagementPicker view={view} open={(id,form)=>void openEngagement(id,form)}/>}
    {!engagement&&route.page==='clients'&&view.intake&&<PilotIntake data={view.intake} role={view.role} run={run} open={id=>void openEngagement(id)}/>}
-   {route.page==='library'&&<>{!engagement?<PilotFormLibrary role={view.role} forms={view.forms} library={view.formLibrary} run={run} onError={setError} onDraftChange={templateDraft}/>:<section className="ew-panel ew-panel-pad"><h2>Гэрээт ажилд маягт холбох</h2><p>Баталсан хувилбарыг энэ ажлын хүрээнд сонгоно. Шинээр зохиох болон нийтлэх ажил фирмийн санд хийгдэнэ.</p><button className="btn secondary space-top" onClick={()=>void navigate({engagement:null,page:'library',paper:null})}>Фирмийн маягтын сан нээх</button></section>}{engagement&&!sealed&&view.role!=='preparer'&&<AdoptPilotForm forms={view.forms.filter(f=>!view.extended||!view.programmes.some(p=>p.id===f.id)||view.papers?.some(p=>p.form===f.id&&p.planning?.template.number===undefined)&&view.fieldwork?.includes(f.id))} library={view.formLibrary} pins={Object.fromEntries((view.papers??[]).flatMap(p=>p.template?[[p.form,p.template.number]]:[]))} run={run} engagementId={view.selected!}/>}</>}
+   {route.page==='library'&&<>{engagement&&<MethodologyNotices notices={view.methodologyNotices??[]} run={run}/>}{!engagement?<PilotFormLibrary role={view.role} forms={view.forms} library={view.formLibrary} run={run} onError={setError} onDraftChange={templateDraft}/>:<section className="ew-panel ew-panel-pad"><h2>Гэрээт ажилд маягт холбох</h2><p>Баталсан хувилбарыг энэ ажлын хүрээнд сонгоно. Шинээр зохиох болон нийтлэх ажил фирмийн санд хийгдэнэ.</p><button className="btn secondary space-top" onClick={()=>void navigate({engagement:null,page:'library',paper:null})}>Фирмийн маягтын сан нээх</button></section>}{engagement&&!sealed&&view.role!=='preparer'&&<AdoptPilotForm forms={view.forms.filter(f=>!view.extended||!view.programmes.some(p=>p.id===f.id)||view.papers?.some(p=>p.form===f.id&&p.planning?.template.number===undefined)&&view.fieldwork?.includes(f.id))} library={view.formLibrary} pins={Object.fromEntries((view.papers??[]).flatMap(p=>p.template?[[p.form,p.template.number]]:[]))} run={run} engagementId={view.selected!}/>}</>}
    {route.page==='people'&&<>{view.roster&&<RosterOverview roster={view.roster} open={id=>void openEngagement(id)}/ >}{view.staffing&&<EngagementStaffing staffing={view.staffing} role={view.role} sealed={sealed} run={run}/>}</>}
    {route.page==='admin'&&registers(['firm'])}
    {engagement&&<>
@@ -566,9 +576,9 @@ function SharedPilotWorkspace(){
 {registers(['acceptance'])}</>}
     {route.page==='workpapers'&&(route.paper?<>
      <div className="ew-paper-toolbar"><button className="btn secondary" onClick={()=>void navigate({...route,page:'workpapers',paper:null})}><ArrowLeft size={15}/>Ажлын жагсаалт</button><span>{paper?'Хадгалсан v'+paper.version:''}{dirty?' · Хадгалаагүй өөрчлөлт':''}</span><button className="btn secondary" aria-expanded={contextOpen} onClick={()=>setContextOpen(v=>!v)}><PanelRightOpen size={16}/>Нотлох баримт</button></div>
-     {paper?<div className={'ew-paper-layout '+(contextOpen?'with-context':'')}><Workpaper key={paper.id+'/'+paper.version} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed} active={engagement.active} engagementId={view.selected} staffing={view.staffing} sampling={analysis(paper)} unsaved={dirty}/>{contextOpen&&(selectedEvidence?<EvidencePreview file={selectedEvidence} engagement={view.selected} onClose={()=>{setEvidenceId('');setContextOpen(false);}}/>:<aside className="ew-paper-context"><h2>Холбоотой эх баримт</h2><p>Баримтын хувилбарыг сонгож, агуулгыг нь ажлын хажууд үзнэ.</p>{(view.evidence??[]).filter(e=>!query||e.name.toLowerCase().includes(query.toLowerCase())).map(e=><button className="ew-context-file" key={e.id} onClick={()=>showContext(e.id)}><FileText size={16}/><span>{e.name}<small>v{e.version} · {paper.evidence.includes(e.id)?'Энэ ажилд холбогдсон':e.source}</small></span></button>)}</aside>)}</div>:<WorkspaceEmpty title="Энэ ажлын баримт боломжгүй" description="Хандах эрх, хэрэглэх нөхцөл эсвэл баримтын дугаарыг шалгана уу."/>}
+     {paper?<div className={'ew-paper-layout '+(contextOpen?'with-context':'')}><Workpaper key={paper.id+'/'+paper.version+'/'+(restoredDraft?.token??'')} restored={restoredDraft?.form===paper.form?restoredDraft.values:undefined} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed} active={engagement.active} engagementId={view.selected} staffing={view.staffing} sampling={analysis(paper)} unsaved={dirty}/>{contextOpen&&(selectedEvidence?<EvidencePreview file={selectedEvidence} engagement={view.selected} onClose={()=>{setEvidenceId('');setContextOpen(false);}}/>:<aside className="ew-paper-context"><h2>Холбоотой эх баримт</h2><p>Баримтын хувилбарыг сонгож, агуулгыг нь ажлын хажууд үзнэ.</p>{(view.evidence??[]).filter(e=>!query||e.name.toLowerCase().includes(query.toLowerCase())).map(e=><button className="ew-context-file" key={e.id} onClick={()=>showContext(e.id)}><FileText size={16}/><span>{e.name}<small>v{e.version} · {paper.evidence.includes(e.id)?'Энэ ажилд холбогдсон':e.source}</small></span></button>)}</aside>)}</div>:<WorkspaceEmpty title="Энэ ажлын баримт боломжгүй" description="Хандах эрх, хэрэглэх нөхцөл эсвэл баримтын дугаарыг шалгана уу."/>}
      {paper&&<div className="ew-next-paper"><span>Дараагийн баримтыг нээх нь энэ ажлыг илгээхгүй.</span><button className="btn secondary" disabled={availablePapers.indexOf(paper)>=availablePapers.length-1} onClick={()=>openPaper(availablePapers[availablePapers.indexOf(paper)+1].form)}>Дараагийн баримт<ArrowRight size={15}/></button></div>}
-    </>:<>{!sealed&&view.role!=='preparer'&&<div className="ew-list-actions"><span>Холбогдсон эх болон баталсан маягтууд</span><button className="btn secondary" onClick={()=>go('library')}>Маягт холбох</button></div>}<WorkpaperIndex view={{...view,papers:availablePapers}} query={query} open={openPaper} routeFilter={route.filter} routeStage={route.stage} onFiltersChange={listFilters}/></>)}
+    </>:<>{!sealed&&view.role!=='preparer'&&<div className="ew-list-actions"><span>Холбогдсон эх болон баталсан маягтууд</span><button className="btn secondary" onClick={()=>go('library')}>Маягт холбох</button></div>}{!sealed&&view.selected&&<WorkpaperExportDesk papers={availablePapers} engagement={view.selected}/>}<WorkpaperIndex view={{...view,papers:availablePapers}} query={query} open={openPaper} routeFilter={route.filter} routeStage={route.stage} onFiltersChange={listFilters}/></>)}
     {route.page==='evidence'&&<><div className={'ew-paper-layout '+(contextOpen&&selectedEvidence?'with-context':'')}><EvidenceLibraryView view={view} query={query} preview={showContext}/>{contextOpen&&selectedEvidence&&<EvidencePreview file={selectedEvidence} engagement={view.selected} onClose={()=>{setEvidenceId('');setContextOpen(false);}}/>}</div>{!sealed&&<><SupportingEvidence view={view} run={run} onError={setError}/><Requests view={view} run={run} onError={setError}/></>}</>}
     {route.page==='data'&&(engagement.active&&!sealed?<><DataMethodsDesk data={view.dataMethods} role={view.role} evidence={view.evidence??[]} run={run}/><PopulationDesk dataMethods={view.dataMethods} key={view.population?.current.version} population={view.population} role={view.role} engagement={view.selected!} evidence={view.evidence??[]} run={run} readFile={readEvidence} onError={setError} requestImport={(view.requests??[]).some(r=>r.extract&&r.dispatch==='issued')}/><section className="ew-panel ew-panel-pad"><h2>Ажилтай холбогдсон шинжилгээ</h2><p>Түүвэр, журнал болон салбарын шинжилгээг тухайн ажлын баримтаас нээнэ.</p><div className="ew-analysis-links">{availablePapers.filter(p=>view.fieldwork?.includes(p.form)||view.samples?.[p.form]||view.areas?.[p.form]).map(p=><button key={p.id} onClick={()=>openPaper(p.form)}><FileText size={17}/><span>{p.form} · {p.title}</span><ArrowRight size={16}/></button>)}</div></section></>:<WorkspaceEmpty title={sealed?'Архивын эх хувилбарыг ашиглана':'Идэвхжүүлэх шийдвэр шаардлагатай'} description="Өгөгдөл боловсруулах эрх нь гэрээт ажлын одоогийн төлөвөөс хамаарна."/>)}
     {route.page==='planning'&&<><PlanningDesk resources={view} role={view.role} sealed={sealed} run={run}/>{registers(['planning'])}{!sealed&&<Delivery view={view} run={run} openPaper={id=>{const p=view.papers?.find(p=>p.id===id||p.form===id);if(p)openPaper(p.form);}}/>}{view.staffing&&<EngagementStaffing staffing={view.staffing} role={view.role} sealed={sealed} run={run}/>}</>}

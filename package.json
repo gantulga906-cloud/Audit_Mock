@@ -22,20 +22,24 @@
     "verify:execution-ui": "node scripts/verify-execution-ui.mjs",
     "verify:finalisation-ui": "node scripts/verify-finalisation-ui.mjs",
     "verify:controlled-reporting-ui": "node scripts/verify-controlled-reporting-ui.mjs",
-    "verify:archive-controls-ui": "node scripts/verify-archive-controls-ui.mjs"
+    "verify:archive-controls-ui": "node scripts/verify-archive-controls-ui.mjs",
+    "verify:methodology-ui": "node scripts/verify-methodology-ui.mjs",
+    "verify:methodology-sources": "node scripts/verify-methodology-sources.mjs"
   },
   "dependencies": {
+    "fast-xml-parser": "5.12.1",
+    "fflate": "0.8.3",
+    "lucide-react": "^0.468.0",
     "next": "^16.0.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "lucide-react": "^0.468.0"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "typescript": "^5.7.0",
+    "@tailwindcss/postcss": "^4.1.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "tailwindcss": "^4.1.0",
-    "@tailwindcss/postcss": "^4.1.0"
+    "typescript": "^5.7.0"
   }
 }
