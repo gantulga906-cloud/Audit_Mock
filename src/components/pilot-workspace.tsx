@@ -1,4 +1,7 @@
 'use client';
+import {AreaCardDesk} from './pilot-area-cards';
+import type {AreaCardPacket} from '@/lib/pilot-area-cards';
+
 
 import {LocalAccountsDesk,LocalActivation,LocalConnectionsDesk,OperationsDesk,type LocalEffect,type LocalIdentity,type Operations} from './pilot-operations';
 import {SaveConflictPanel,type SaveConflict} from './pilot-save-conflict';
@@ -74,7 +77,7 @@ export type View=RegisterResources&{
  laterFacts?:LaterFact[];
  oversight?:OversightView;release?:ReleaseView;deliveryLink?:{token:string;id:string;recipient:string};
  execution?:ExecutionView;
- samples?:Record<string,SampleView>;journals?:Record<string,JournalRun>;areas?:Record<string,AreaRun>;fieldFindings?:Finding[];
+ samples?:Record<string,SampleView>;journals?:Record<string,JournalRun>;areaCards?:Record<string,AreaCardPacket>;areas?:Record<string,AreaRun>;fieldFindings?:Finding[];
  fieldwork?:string[];statementLines?:Record<string,number>;impacts?:Model['impacts'];
  delivery?:Pick<Model,'person'|'tasks'|'events'>&{id:string};
  reporting?:ReportingView;
@@ -544,7 +547,8 @@ function SharedPilotWorkspace(){
    <SamplingV2Desk findings={(view.fieldFindings??[]).filter(f=>f.form===p.form&&/^(SAMPLE|PROJECTION)-/.test(f.id))} population={view.population} sample={view.samples?.[p.form]} paper={p} role={view.role} evidence={view.evidence??[]} run={run}/>
    <SampleDesk population={view.population} sample={view.samples?.[p.form]} paper={p} role={view.role} engagement={view.selected} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===p.form&&/^(SAMPLE|PROJECTION)-/.test(f.id))} run={run}/>
    <JournalDesk population={view.population} journal={view.journals?.[p.form]} paper={p} role={view.role} engagement={view.selected} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===p.form&&f.id.startsWith('JOURNAL-'))} run={run}/>
-   <AreaDesk population={view.population} area={view.areas?.[p.form]} paper={p} role={view.role} engagement={view.selected} through={engagement?.reportDate??''} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===p.form&&f.id.startsWith('AREA-'))} run={run}/>
+   <AreaDesk population={view.population} area={view.areas?.[p.form]} actor={view.identity?.id} paper={p} role={view.role} engagement={view.selected} through={engagement?.reportDate??''} evidence={view.evidence??[]} findings={(view.fieldFindings??[]).filter(f=>f.form===p.form&&f.id.startsWith('AREA-'))} run={run}/>
+   <AreaCardDesk key={p.id+'/g10/'+(view.areaCards?.[p.form]?.version??0)+'/'+view.areaCards?.[p.form]?.status} paper={p} packet={view.areaCards?.[p.form]} evidence={view.evidence??[]} actor={view.identity?.id??({preparer:'nomin',reviewer:'temuulen',partner:'bat'}[view.role])} run={run}/>
  </>:undefined;
  return <WorkspaceShell view={view} route={route} navigate={next=>void navigate(next)} query={query} setQuery={setQuery} busy={busy} dirty={dirty} refresh={()=>{if(allowLeave())void send(pilotScope(view.selected));}} logout={()=>{if(allowLeave())void send('/logout',{});}} canLeave={allowLeave}>
   {saveConflict&&<SaveConflictPanel conflict={saveConflict.conflict} resolve={values=>{clearDraft();show(saveConflict.fresh);setSaveConflict(null);setError('');pending.current=null;setRestoredDraft(values?{form:values.form,values,token:crypto.randomUUID()}:null);}}/>}

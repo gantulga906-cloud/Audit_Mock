@@ -6,6 +6,16 @@ import {PilotError,input} from './pilot-workflow.mjs';
 const hash=v=>createHash('sha256').update(typeof v==='string'||v instanceof Uint8Array?v:JSON.stringify(v)).digest('hex');
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 const fail=(s,status=409)=>{throw new PilotError(status,s);};
+function renderAreaWork(value){
+ if(!value)return '';let p;try{p=JSON.parse(value);}catch{return '<p class="missing">G10 work record could not be read. Preserve the original and investigate.</p>';}
+ const paragraph=s=>'<p>'+escape(s)+'</p>';
+ return '<section><h3>G10 · '+escape(p.definition.id+' · '+p.definition.title)+'</h3>'+paragraph('v'+p.version+' · '+p.status+' · preparer '+p.by)+paragraph(p.method+' · '+p.edition+' · '+p.mode)+paragraph(p.methodWork)+paragraph('Selected source procedures: '+p.procedures.join(', '))+
+  p.definition.source.map(s=>paragraph(s.source+' · '+s.locator)).join('')+paragraph(p.definition.limit)+
+  p.inputs.map(i=>'<h4>'+escape(p.definition.inputs.find(d=>d.key===i.key)?.label??i.key)+'</h4>'+paragraph(i.locator+' · '+i.work)+'<small>'+escape(i.evidence)+'</small>').join('')+
+  p.judgments.map(j=>'<h4>'+escape(j.key+' · '+j.result)+'</h4>'+paragraph(j.work)+paragraph(j.reason)).join('')+
+  p.matters.map(m=>'<h4>'+escape(m.title)+'</h4>'+paragraph(m.kind+' · '+m.difference+' · next owner '+m.owner)+paragraph(m.reason)).join('')+
+  (p.review?paragraph('Independent reviewer '+p.review.by+' · '+p.review.at+' · '+p.review.result+' · '+p.review.reason):paragraph('Independent review remains open.'))+'</section>';
+}
 function scope(m,files){if(!m.engagements[0])fail('Гэрээт ажил сонгоно.');if(files.archive.isSealed(m))fail('Түгжсэн ажлыг зөвшөөрсөн архивын багц ба хүрээгээр экспортлоно.',403);}
 export function searchWorkpapers(m,role,query,files){
  scope(m,files);if(typeof query!=='string'||query.length>200)fail('Хайлтын утгыг шалгана.',400);const q=query.trim().toLowerCase();
@@ -53,6 +63,7 @@ export function renderWorkpaperExport(preview){
   '<nav><ol>'+papers.map((p,i)=>'<li><a href="#paper-'+i+'">'+escape(p.form+' · '+p.title+' · v'+p.version)+'</a></li>').join('')+'</ol></nav>',
   ...papers.map((p,i)=>'<section class="paper" id="paper-'+i+'"><h2>'+escape(p.form+' · '+p.title)+'</h2><p>'+escape('v'+p.version+' · '+p.status+' · '+p.actor+' · Хянагч '+p.reviewer+(p.historyAt?' · '+p.historyAt:''))+'</p><p>'+escape('Яг маягт '+(p.sourceDigest??'Native template not selected')+' · '+(p.source?.edition??'External/summary representation'))+'</p>'+p.warnings.map(w=>'<p class="missing">'+escape(w)+'</p>').join('')+
    (p.template?(p.template.clauses??[]).map(c=>'<p>'+escape(c.text??c.label)+' <small>'+escape(c.source)+'</small></p>').join('')+p.template.fields.filter(f=>visibleField(f,p.answers)).map(f=>'<article><h3>'+escape(f.label)+'</h3><small>'+escape(p.template.sheet+'!'+f.source)+'</small>'+(f.instruction?'<p>'+escape(f.instruction)+'</p>':'')+'<p>'+valueText(f,f.binding?p.shared[f.binding]:f.decision?p.values['linked.'+f.key]:p.answers[f.key],p.evidence)+'</p>'+(f.type==='procedure'?Object.entries(p.answers).filter(([k])=>k.startsWith(f.key+'.')).map(([k,v])=>'<p>'+escape(k)+' · '+escape(v)+'</p>').join(''):'')+(p.answers[f.key+'.reason']?'<p>'+escape(p.answers[f.key+'.reason'])+'</p>':'')+'</article>').join(''):'')+
+   renderAreaWork(p.values['g10.card'])+
    '<h3>Бодит гүйцэтгэл</h3><p>'+escape(p.values.execution??'')+'</p><h3>Дүгнэлт</h3><p>'+escape(p.values.conclusion??'')+'</p><h3>Бодит эхийн ишлэл</h3><ul>'+p.evidence.map(r=>'<li>'+escape(r.name+' · '+r.id+' · v'+r.version+' · '+r.state+' · '+(r.sha256??'')+' · '+(r.status??''))+'</li>').join('')+'</ul></section>'),'</html>'].join('\n');
  return {html,sha256:hash(html),manifest:(({_papers,...p})=>p)(preview)};
 }

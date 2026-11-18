@@ -28,6 +28,7 @@ export type CompletionView={
  management?:Management&{current:boolean};managementHistory:Management[];
  consultations:Consultation[];
 };
+const quantified=(finding:Finding)=>finding.g10Origin?.quantification!=='unknown';
 const money=(minor:number)=>new Intl.NumberFormat(undefined,{maximumFractionDigits:2}).format(minor/100);
 const status:Record<string,string>={identified:'Бүртгэсэн',agreed:'Зөвшөөрсөн',posted_verified:'Бичилт баталгаажсан',
  accepted:'Зөвшөөрсөн',partial:'Хэсэгчлэн зөвшөөрсөн',declined:'Татгалзсан'};
@@ -72,7 +73,7 @@ export function CompletionDesk({data,role,papers,evidence,engagement,registers=[
    <label>Үр нөлөө ба дараагийн ажил<textarea name="effect" defaultValue={finding?.fact?.effect} required/></label>
   </div>
  </DataAction>;
- return <><FinalisationDesk data={data.finalisation} role={role} papers={papers} evidence={evidence} registers={registers} findings={data.findings} run={run}/><EffectCorrectionDesk data={data} role={role} evidence={evidence} run={run}/><section className="card pad bench-card">
+ return <>{data.findings.some(f=>!quantified(f))&&<p className="ew-notice">Хэмжээгүй асуудлууд байна. Тоон нийлбэр нь зөвхөн хэмжсэн дүнг хамарна; чанарын асуудал болон нотолгооны хязгаарлалтад тусдаа бодит дүгнэлт шаардлагатай.</p>}<FinalisationDesk data={data.finalisation} role={role} papers={papers} evidence={evidence} registers={registers} findings={data.findings} run={run}/><EffectCorrectionDesk data={data} role={role} evidence={evidence} run={run}/><section className="card pad bench-card">
   <h2>Илрүүлэлт, залруулга ба дуусгалтын эх баримт</h2>
   {role!=='preparer'&&(data.consultations.length>0||role==='reviewer'&&judgmentPapers.length>0)&&<details className="feature-detail">
    <summary>Чухал дүгнэлт, зөвлөлдөх асуудал</summary>
@@ -97,7 +98,7 @@ export function CompletionDesk({data,role,papers,evidence,engagement,registers=[
   {role==='reviewer'&&reviewed.length>0&&<details className="feature-detail"><summary>Хянасан ажлаас илрүүлэлт бүртгэх</summary>{findingForm()}</details>}
   {data.findings.map(f=>{
    const c=f.correction, latest=c?.postings.at(-1);
-   return <details className="feature-detail" key={f.id}><summary>{f.title} · {status[f.status]} · Үлдэгдэл {money(f.outstanding)}</summary>
+   return <details className="feature-detail" key={f.id}><summary>{f.title} · {status[f.status]} · Үлдэгдэл {quantified(f)?money(f.outstanding):'Хэмжээгүй'}</summary>
     <p>{f.form} · {f.qualitative} {f.resolution?' · '+f.resolution:''}</p>
     {f.fact&&<p>{f.fact.reference} · {f.fact.criterion} · <a href={href(f.fact.evidence.id)}>{f.fact.evidence.name}</a></p>}
     {f.fact&&role==='reviewer'&&reviewed.some(p=>p.form===f.form&&p.version!==f.fact?.paper)&&findingForm(f)}
@@ -141,7 +142,7 @@ export function CompletionDesk({data,role,papers,evidence,engagement,registers=[
    {data.inputs&&<p>Залруулаагүй дүн {money(data.inputs.gross)} · 1.3 v{data.inputs.materiality} · СТ v{data.inputs.statement} · Материаллаг байдал {data.inputs.limits.overall.toLocaleString()}</p>}
    {data.inputs?.specific?.map(row=><p key={row.form}>{row.form} · {row.scope} · Залруулаагүй {money(row.gross)} ·
     {' '}Тусгай босго {row.amount.toLocaleString()} · {row.thresholdMet?'Босгод хүрсэн эсвэл давсан':'Босгоос бага'}</p>)}
-   {role==='reviewer'&&<DataAction run={run} action="completion-evaluate" button="Одоогийн дүн ба чанарын нөлөөг хадгалах">
+   {role==='reviewer'&&<DataAction run={run} action="completion-evaluate" button="Одоогийн дүн ба чанарын нөлөөг хадгалах">{data.findings.some(f=>!quantified(f))&&<label>Хэмжээгүй асуудал ба нотолгооны хязгаарлалтын тусдаа үнэлгээ<textarea name="qualitative" required/></label>}
     {data.finalisation?.enabled&&<div className="field-grid"><label>Баталсан яг эцсийн шинжилгээ<select name="analytics" required>{registers.filter(r=>r.kind==='M10-F06'&&r.status==='approved'&&!r.stale).map(r=><option key={r.id} value={r.id}>{r.values.line} · v{r.version}</option>)}</select></label><label>Нэг валютын код<input name="currency" defaultValue={data.finalisation.context?.currency} required/></label>{[['individual','Тус бүрийн нөлөө'],['qualitative','Чанарын ач холбогдол'],['priorPeriods','Өмнөх үеийн үр дагавар'],['reassessment','Бодит үр дүнд материаллаг байдлыг дахин үнэлсэн нь']].map(([key,label])=><label key={key}>{label}<textarea name={key} required/></label>)}</div>}<label>Тоо болон чанарын нэгтгэсэн үнэлгээ<textarea name="note" defaultValue={data.evaluation?.note} required/></label>
    </DataAction>}
    {data.evaluation&&<p>Үнэлгээ v{data.evaluation.version} · {data.evaluation.current?'Одоогийн хяналт':'Шинэ хяналт шаардлагатай'} · {data.evaluation.note}</p>}

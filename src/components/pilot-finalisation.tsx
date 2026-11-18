@@ -15,7 +15,7 @@ export function FinalisationDesk({data,role,papers,evidence,registers,findings,r
  function field(key:string,label:string,type?:string){const value=editing?.values[key]??(key==='period'?data?.context?.period:key==='currency'?data?.context?.currency:'')??'';if(type==='requirements')return null;let options:[string,string][]=[];
   if(type==='paper')options=papers.filter(p=>p.stage===3).map(p=>[p.form,p.form+' · '+p.title]);
   if(type?.startsWith('M'))options=registers.filter(r=>r.kind===type&&r.status==='approved'&&!r.stale).map(r=>[r.id,(r.values.signer??r.values.recipient??r.values.conclusion??r.id)+' · v'+r.version]);
-  if(type==='finding')options=findings.map(f=>[f.id,f.title+' · '+f.amount.toLocaleString()]);
+  if(type==='finding')options=findings.map(f=>[f.id,f.title+' · '+(f.g10Origin?.quantification==='unknown'?'Хэмжээгүй':f.amount.toLocaleString())]);
   if(type==='mandate'||type==='recommendation')options=(data?.records??[]).filter(r=>r.kind===type&&r.current).map(r=>[r.id,r.title+' · v'+r.version]);
   if(type&&finalisationChoices[type])options=finalisationChoices[type].map(([value,label])=>[value,label]);
   return <label key={key}>{label}{type==='evidence'?file('value.'+key,value):type?<select name={'value.'+key} defaultValue={value}><option value="">Сонгох</option>{options.map(([id,label])=><option key={id} value={id}>{label}</option>)}</select>:<textarea name={'value.'+key} defaultValue={value}/>}</label>;

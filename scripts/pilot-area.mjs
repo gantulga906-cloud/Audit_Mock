@@ -2,7 +2,7 @@ import {actorKey} from './pilot-identity-context.mjs';
 import { createHash } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { canEdit, changeWork, recordEvent, snapshot, workKey } from '../src/lib/workspace.ts';
-import { areaMethods, areaProfiles } from '../src/lib/pilot-area.ts';
+import { areaMethods, areaProfiles, selectedAreaProfile } from '../src/lib/pilot-area.ts';
 import { parseAreaFile, runAreaChecks } from './pilot-area-checks.mjs';
 import { approvedPopulation, cents } from './pilot-population.mjs';
 import { programmeDecision } from './pilot-registers.mjs';
@@ -67,7 +67,7 @@ export function areaView(m) {
 function runChecks(m,role,form,data,files,prior) {
   const population=approvedPopulation(m), bridge=population?.bridge.find(line=>line.line===data.line);
   if (!bridge?.accounts.length) fail('Баталсан олонлогийн тайлангийн мөрийг сонгоно уу.');
-  const profile=areaProfiles[form], period=m.bench.periods[m.engagement], through=input(data,'through',10);
+  const profile=selectedAreaProfile(form,data.method);if(!profile)fail('Select an explicitly supported method for this area.');const period=m.bench.periods[m.engagement], through=input(data,'through',10);
   const method=areaMethods[profile.method];
   const edition=method?.edition ? input(data,'edition',100) : undefined;
   const sign=profile.method==='bank'?'debit':data.sign;
@@ -79,7 +79,7 @@ function runChecks(m,role,form,data,files,prior) {
   const kinds=analytics?[...profile.inputs,...optional]:profile.inputs;
   for (const kind of kinds) {
     const file=liveEvidence(m,data[kind]), original=file&&files.read(file.id);
-    if (!file||!original||! /\.csv$/i.test(file.name)||original.bytes.length>750_000) fail(kind+' · Хүлээн зөвшөөрсөн UTF-8 CSV шаардлагатай.');
+    if (!file||!original||createHash('sha256').update(original.bytes).digest('hex')!==original.sha256||! /\.csv$/i.test(file.name)||original.bytes.length>750_000) fail(kind+' · Хүлээн зөвшөөрсөн UTF-8 CSV шаардлагатай.');
     sources[kind]={id:file.id,name:file.name,version:file.version,sha256:original.sha256};
     records[kind]=original.bytes;
   }
@@ -92,7 +92,7 @@ function runChecks(m,role,form,data,files,prior) {
   if (new Set([bridge.line,...Object.values(extraBridges).map(b=>b.line)]).size!==1+Object.keys(extraBridges).length) {
     fail('Дэвтрийн зураглалын мөрүүд тусдаа байна.');
   }
-  const params={line:bridge.line,through,sign,...(edition&&{edition}),
+  const params={line:bridge.line,through,sign,...(edition&&{edition}),...(data.method&&profile.method!==areaProfiles[form].method&&{method:profile.method}),
     ...(method?.lines&&{lines:Object.fromEntries(Object.entries(extraBridges).map(([kind,b])=>[kind,b.line]))})};
   const identity=stamp(m,form,population,params,sources);
   if (identity===prior?.stamp) return false;

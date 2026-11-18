@@ -1,3 +1,4 @@
+import {areaCardAction,areaCardReleaseGaps,areaCardGap,areaCardView,areaCardEvidence,syncAreaCards} from './pilot-area-cards.mjs';
 import {actorKey} from './pilot-identity-context.mjs';
 import { randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -84,6 +85,7 @@ function syncFieldwork(m) {
   syncExecution(m);
   syncJournalPapers(m);
   syncAreaPapers(m);
+  syncAreaCards(m);
   for (const form of technicalForms(m)) {
     const paper=m.work[workKey(m.engagement,form)], ref=technicalRef(m,form);
     if (!paper||!['submitted','reviewed'].includes(paper.status)||ref===paper.values['pilot.technical']) continue;
@@ -97,7 +99,7 @@ function syncFieldwork(m) {
   syncCompletion(m);
 }
 
-const fieldworkGap = (m,form) => (fieldworkForms(m).includes(form)?planningGap(m,form):'')||samplingGap(m,form)||journalGap(m,form)||areaGap(m,form)||executionGap(m,form);
+const fieldworkGap = (m,form,files) => (fieldworkForms(m).includes(form)?planningGap(m,form):'')||samplingGap(m,form)||journalGap(m,form)||areaGap(m,form)||areaCardGap(m,form,files)||executionGap(m,form);
 const technicalGaps = m => activeItems(m,technicalForms(m).map(form=>({form}))).flatMap(({form})=>{
   const paper=m.work[workKey(m.engagement,form)], ref=technicalRef(m,form);
   return ref&&isCurrentReview(paper)&&paper.values['pilot.technical']===ref?[]:[form+' · Тусгай горимын одоогийн хяналт'];
@@ -157,14 +159,14 @@ function evidenceGaps(m, form) {
   return completed && linked ? [] : [form + ' · Хүсэлтийн хүлээн зөвшөөрсөн эх баримт шаардлагатай.'];
 }
 
-function pilotGaps(m,includeQuality=true) {
+function pilotGaps(m,includeQuality=true,files) {
   return [
     ...fieldworkForms(m).flatMap(form => evidenceGaps(m, form)),
-    ...fieldworkForms(m).map(form=>fieldworkGap(m,form)).filter(Boolean),
+    ...fieldworkForms(m).map(form=>fieldworkGap(m,form,files)).filter(Boolean),
     ...(!m.extendedPilot && !isCurrentReview(m.work[workKey(m.engagement, workstream)]) ? ['3.1.2 · Одоогийн хувилбарын ахлахын хяналт'] : []),
     ...reportGaps(reportWorkspace(m), m.engagement),
     ...completionRegisterGaps(m),...reportingGaps(m),
-    ...completionGaps(m),...[materialityGap(m),archiveAmendmentGap(m),activeTermsGap(m),laterFactGap(m)].filter(Boolean),
+    ...completionGaps(m),...areaCardReleaseGaps(m),...[materialityGap(m),archiveAmendmentGap(m),activeTermsGap(m),laterFactGap(m)].filter(Boolean),
     ...(includeQuality?qualityGaps(m):[]),
     ...technicalGaps(m),
     ...nativeReviewGaps(m),
@@ -206,7 +208,7 @@ export function qualityMaterial(m) {
   });
   const fact=laterFactForRelease(m);
   const evidence=[...new Set([...papers.flatMap(p=>p.evidence),...registerEvidence(m),...completionEvidence(m),...executionEvidence(m),...sampleEvidence(m),
-    ...areaEvidence(m,fieldworkForms(m)),...(fact?[fact.source.id]:[])])];
+    ...areaEvidence(m,fieldworkForms(m)),...areaCardEvidence(m),...(fact?[fact.source.id]:[])])];
   return {basis:qualityBasis(m),gaps:pilotGaps(m,false),artifact:renderReport(m),papers,evidence,
     ...(fact&&{laterFact:{discovered:fact.discovered,knownAtReport:fact.knownAtReport,impactReason:fact.impactReason,
       procedures:fact.plan.procedures,authority:fact.plan.authority,advice:fact.plan.advice}}),
@@ -242,7 +244,7 @@ export function pilotReport(m, files) {
     const artifact = files.authorization()?.authorization.artifact;
     if (artifact) return artifact;
   }
-  if (files.archive.isSealed(m) || pilotGaps(m).length || reportingIOGaps(m,files).length) throw new PilotError(409, 'Тайлангийн одоогийн хяналт шаардлагатай.');
+  if (files.archive.isSealed(m) || pilotGaps(m,true,files).length || reportingIOGaps(m,files).length) throw new PilotError(409, 'Тайлангийн одоогийн хяналт шаардлагатай.');
   return renderReport(m);
 }
 
@@ -279,7 +281,7 @@ export function pilotView(m, role, revision, files) {
   const papers = shownForms(m).filter(form=>canReadWork(m,m.work[workKey(engagement.id,form)])).map(form => {
     const w = m.work[workKey(engagement.id, form)];
     const decision = programmeDecision(m, form);
-    const fieldGap = fieldworkGap(m,form);
+    const fieldGap = fieldworkGap(m,form,files);
     const changed = planningChanged(m,w) || !!fieldGap && ['submitted','reviewed'].includes(w.status);
     const planning = decision?.values.decision === 'adopt' ? {id:decision.id,version:decision.version,
       basis:decision.programmeBasis,template:decision.template} : undefined;
@@ -323,12 +325,13 @@ export function pilotView(m, role, revision, files) {
     ...(m.pilotSamples && {samples:samplingView(m)}),
     ...(m.pilotJournals && {journals:journalView(m)}),
     ...(m.pilotAreaRuns && {areas:areaView(m)}),
+    ...(m.pilotAreaCards&&{areaCards:areaCardView(m,files)}),
     ...(engagement.intake.active&&!sealed&&{completion:completionView(m,role!=='preparer')}),
     ...(engagement.intake.active&&{assembly:assemblyStatus(m,files.authorization(),files.read)}),
     ...(role!=='preparer'&&{oversight:oversightTeamView(m)}),
     ...(role==='partner'&&{release:{strict:strictRelease(m),signature:currentSignature(m,files),deliveries:files.deliveries(),distributionGaps:distributionGaps(m,files.deliveries())}}),
-    ...((m.pilotSamples||m.pilotJournals||m.pilotAreaRuns||m.pilotExecution) && {fieldFindings:m.findings.filter(f=>/^(SAMPLE|PROJECTION|JOURNAL|AREA|MANUAL)-/.test(f.id))}),
-    gaps: [...pilotGaps(m),...reportingIOGaps(m,files)], activity: m.activity.slice(0, 30),
+    ...((m.pilotSamples||m.pilotJournals||m.pilotAreaRuns||m.pilotAreaCards||m.pilotExecution) && {fieldFindings:m.findings.filter(f=>/^(SAMPLE|PROJECTION|JOURNAL|AREA|G10|MANUAL)-/.test(f.id))}),
+    gaps: [...pilotGaps(m,true,files),...reportingIOGaps(m,files)], activity: m.activity.slice(0, 30),
     authorized: engagement.authorized && {
       at: engagement.authorized.at, report: engagement.authorized.report, fs: engagement.authorized.fs,
       current: currentApproval(m, engagement, files), count: engagement.authorizationHistory.length,
@@ -522,17 +525,18 @@ export function pilotAction(m, role, action, data, files) {
     if (managedStaffing(m)) requireSeat(m,files,role);
     let changed;
     if (action==='sample-resolve-finding'||action==='fieldwork-resolve-finding') {
-      const finding=m.findings.find(f=>f.id===data.id&&/^(SAMPLE|JOURNAL|AREA|MANUAL)-/.test(f.id));
+      const finding=m.findings.find(f=>f.id===data.id&&/^(SAMPLE|JOURNAL|AREA|G10|MANUAL)-/.test(f.id));
       requireActor(role==='partner'&&finding);
       const reason=input(data,'reason');
       if (finding.resolution===reason) return;
       resolveFinding(m,data.id,reason);
       changed=true;
     } else if (action.startsWith('journal-')) changed=journalAction(m,role,action,data,fieldworkForms(m));
+    else if(action.startsWith('area-card-')) changed=areaCardAction(m,role,action,data,files,fieldworkForms(m));
     else if (action.startsWith('area-')) changed=areaAction(m,role,action,data,files,fieldworkForms(m));
     else changed=samplingAction(m,role,action,data,fieldworkForms(m));
     syncFieldwork(m);
-    if (changed&&['sample-resolve-finding','fieldwork-resolve-finding','sample-design','sample-expand','sample-test','sample-convention','sample-evaluate','sample-results-review','journal-run','journal-investigate','area-run','area-dispose'].includes(action)) {
+    if (changed&&(action.startsWith('area-card-')||['sample-resolve-finding','fieldwork-resolve-finding','sample-design','sample-expand','sample-test','sample-convention','sample-evaluate','sample-results-review','journal-run','journal-investigate','area-run','area-dispose'].includes(action))) {
       invalidateReport(m,'Тайланд ашиглах гүйцэтгэлийн ажил өөрчлөгдөв');
     }
     return;
@@ -655,6 +659,7 @@ export function pilotAction(m, role, action, data, files) {
       ...((m.pilotExecution||m.pilotFieldworkEnabled)&&{execution:executionView(m,files)}),
       ...(m.pilotSamples && { samples:Object.fromEntries(Object.entries(samplingView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
       ...(m.pilotJournals && { journals:Object.fromEntries(Object.entries(journalView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
+      ...(m.pilotAreaCards&&{areaCards:areaCardView(m,files)}),
       ...(m.pilotAreaRuns && { areas:Object.fromEntries(Object.entries(areaView(m)).filter(([form])=>fieldworkForms(m).includes(form))) }),
       ...((m.pilotCorrections||m.pilotEvaluations||m.pilotManagement||m.pilotConsultations) && {completion:completionView(m,true,true)}),
       ...(m.pilotQuality && {quality:oversightTeamView(m).quality}),
@@ -810,7 +815,7 @@ export function pilotAction(m, role, action, data, files) {
         throw new PilotError(409,'Хяналтын тэмдэглэлийн хариуг одоогийн ажлын хувилбарт шинэчилнэ үү.');
       }
       if (paper.form==='4.4'&&completionGaps(m).length) throw new PilotError(409,completionGaps(m).join(' · '));
-      if (fieldworkGap(m,paper.form)) throw new PilotError(409,fieldworkGap(m,paper.form));
+      if (fieldworkGap(m,paper.form,files)) throw new PilotError(409,fieldworkGap(m,paper.form));
       if (technicalRef(m,paper.form)==='') throw new PilotError(409,'Тусгай горимын одоогийн бүртгэл хүлээгдэж байна.');
       if (!paper.form.startsWith('F-') && (!paper.values.execution || !paper.values.conclusion)) throw new PilotError(409, 'Хийсэн ажил ба дүгнэлтийг хадгална уу.');
       checkNative(m, paper, files);

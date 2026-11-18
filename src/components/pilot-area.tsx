@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {areaFlags,areaMethods,areaProfiles,areaSources,type AreaLink,type AreaRun} from '@/lib/pilot-area';
+import {areaFlags,areaMethods,areaProfiles,areaAlternatives,selectedAreaProfile,areaSources,type AreaSourceKey,type AreaLink,type AreaRun} from '@/lib/pilot-area';
 import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
 import type {PopulationView} from '@/lib/pilot-population';
 import type {Evidence,Finding,WorkItem} from '@/lib/workspace';
@@ -7,6 +7,8 @@ import {DataAction} from './pilot-population';
 import type {PilotAction} from './pilot-registers';
 
 const labels:Record<string,string>={
+ annualCharge:'Жилийн элэгдэл / хорогдуулалт',recordedCharge:'Бүртгэсэн жилийн дүн',difference:'Тэмдэгтэй зөрүү',
+ availableQuantity:'Нийт боломжит тоо',issuedQuantity:'Зарлагын тоо',availableCost:'Нийт өртөг',expectedCostOfSales:'Тооцоолсон борлуулалтын өртөг',expectedClosing:'Тооцоолсон эцсийн өртөг',costOfSales:'Борлуулалтын өртөг',closingInventory:'Эцсийн бараа материал',ledgerInventory:'Дэвтрийн бараа материал',professionalJudgment:'Мэргэжлийн тусдаа үнэлгээ',method:'Сонгосон арга',released:'Тайлант үед хуваарилсан',months:'Нийт сар',elapsed:'Гүйцэтгэсэн хугацаа',own:'Өөрийн талын дүн',reciprocal:'Нөгөө талын дүн',gain:'Тооцоолсон ашиг / алдагдал',proceeds:'Борлуулсан орлого',
  invoices:'Нэхэмжилсэн',ledger:'Дэвтрийн дүн',creditAtClose:'Хаалтын өмнөх кредит',open:'Хаалтын авлага',
  subsequentCash:'Тулгасан дараа үеийн төлөлт',remaining:'Үлдсэн авлага',notDue:'Хугацаа болоогүй',
  days1to30:'1–30 хоног',days31to60:'31–60 хоног',days61to90:'61–90 хоног',over90:'90-ээс дээш',
@@ -42,8 +44,8 @@ const labels:Record<string,string>={
  priorGross:'Өмнөх сарын нийт цалин',deltaGross:'Цалингийн өөрчлөлт',
 };
 const amount=(value:number)=>new Intl.NumberFormat(undefined,{maximumFractionDigits:2}).format(value/100);
-const countKeys=['matched','countedItems','unresolvedCounts','expectedQuantity','closingQuantity','countedQuantity','valuedInstruments',
- 'expectedUnits','closingUnits','payChanges','offCycle','missingComparator'];
+const countKeys=['availableQuantity','issuedQuantity','months','elapsed','matched','countedItems','unresolvedCounts','expectedQuantity','closingQuantity','countedQuantity','valuedInstruments',
+ 'availableQuantity','issuedQuantity','months','elapsed','expectedUnits','closingUnits','payChanges','offCycle','missingComparator'];
 const display=(key:string,value:number|string)=>typeof value==='string'||countKeys.includes(key)?value:amount(value);
 const roleId={preparer:'nomin',reviewer:'temuulen',partner:'bat'};
 
@@ -59,12 +61,14 @@ function SourceRows({item,area,href}:{item:AreaLink;area:AreaRun;href:(id:string
  </>;
 }
 
-export function AreaDesk({paper,area,population,evidence,role,engagement,through,findings,run}:{
+export function AreaDesk({paper,area,population,evidence,role,engagement,through,findings,run,actor}:{
  paper:WorkItem&{editable:boolean};area?:AreaRun;population?:PopulationView;evidence:(Evidence&{current?:boolean})[];
- role:PilotRole;engagement:string;through:string;findings:Finding[];run:PilotAction;
+ role:PilotRole;actor?:string;engagement:string;through:string;findings:Finding[];run:PilotAction;
 }){
  const [selected,setSelected]=useState(''),[linked,setLinked]=useState('');
- const profile=areaProfiles[paper.form as keyof typeof areaProfiles];
+ const baseProfile=areaProfiles[paper.form as keyof typeof areaProfiles];
+ const [methodName,setMethodName]=useState<string>(area?.params.method??baseProfile?.method??'');
+ const profile=selectedAreaProfile(paper.form,methodName);
  if(!profile)return null;
  const method=Object.hasOwn(areaMethods,profile.method)?areaMethods[profile.method as keyof typeof areaMethods]:undefined;
  const item=area?.cases.find(c=>c.id===selected), disposition=item?.reviews?.at(-1);
@@ -73,9 +77,9 @@ export function AreaDesk({paper,area,population,evidence,role,engagement,through
  const eligible=evidence.filter(e=>e.status==='accepted'&&e.current!==false&&!e.population);
  const csv=eligible.filter(e=>/\.csv$/i.test(e.name));
  const preparer=paper.editable&&paper.status!=='submitted';
- const reviewer=paper.reviewer===roleId[role]&&paper.owner!==roleId[role];
+ const reviewer=paper.reviewer===(actor??roleId[role])&&paper.owner!==(actor??roleId[role]);
  const href=(id:string)=>'/api/pilot/evidence/'+id+pilotScope(engagement);
- return <details className="feature-detail space-top" open={!!area}>
+ return <details className="feature-detail space-top" data-area-engine={paper.form} open={!!area}>
   <summary>{profile.title}{area?' · v'+area.version:''}</summary>
   {!population?.usable&&<p className="muted">Дэвтрийн баталсан эх олонлог шаардлагатай.</p>}
   {preparer&&population?.usable&&<details className="feature-detail">
@@ -83,6 +87,7 @@ export function AreaDesk({paper,area,population,evidence,role,engagement,through
    <p className="micro">Туслах нотлох баримтад CSV файлуудаа хавсаргаж, тусад нь үнэлнэ. Дэвтрийн reference баганад яг таарах эх дугаарыг ашиглана.</p>
    <DataAction run={run} action="area-run" extra={{form:paper.form}} button="Горим ажиллуулах">
     <div className="field-grid">
+     <label>Сонгосон арга<select name="method" value={methodName} onChange={e=>setMethodName(e.target.value)}>{[baseProfile,...(areaAlternatives[paper.form]??[])].map(p=><option key={p.method} value={p.method}>{p.title}</option>)}</select></label>
      <label>{method?.primary??'Дэвтрийн баталсан мөр'}<select name="line" defaultValue={area?.line} required>
       <option value="">Сонгох</option>{population.current.bridge.filter(b=>b.accounts.length).map(b=><option key={b.line} value={b.line}>{b.line}</option>)}
      </select></label>
@@ -94,10 +99,10 @@ export function AreaDesk({paper,area,population,evidence,role,engagement,through
      {method?.lines.map(([name,label,polarity])=><label key={name}>{label}<select name={name} defaultValue={area?.params.lines?.[name]} required>
       <option value="">Сонгох</option>{population.current.bridge.filter(b=>b.accounts.length).map(b=><option key={b.line} value={b.line}>{b.line}</option>)}
      </select><small>{polarity==='debit'?'Дебет эерэг дүн.':'Кредит эерэг болгон хөрвүүлнэ.'}</small></label>)}
-     {profile.inputs.map(key=><label key={key}>{areaSources[key].label}
+     {profile.inputs.map(key=><label key={key}>{areaSources[key as AreaSourceKey].label}
       <select name={key} defaultValue={area?.files[key]?.id} required><option value="">Сонгох</option>
        {csv.map(file=><option key={file.id} value={file.id}>{file.name} · v{file.version}</option>)}
-      </select><small>{areaSources[key].columns}</small>
+      </select><small>{areaSources[key as AreaSourceKey].columns}</small>
      </label>)}
      {profile.method==='payroll'&&(['payrollHistory','payrollVariance'] as const).map(key=><label key={key}>
       {areaSources[key].label} (хоёуланг сонговол харьцуулна)

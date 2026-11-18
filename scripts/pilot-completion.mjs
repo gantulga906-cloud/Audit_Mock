@@ -66,7 +66,7 @@ function evaluationInputs(m) {
   const rows=m.findings.map(f=>{
     const revision=latestCorrection(m,f.id), posting=effectivePosting(m,revision), fact=findingFact(m,f.id);
     return {id:f.id,form:f.form,title:f.title,original:actualAmount(f),outstanding:correctionAmount(m,f),
-      qualitative:f.qualitative,resolution:f.resolution??'',classification:fact?.classification,origin:fact?.version,
+      qualitative:f.qualitative,...(f.g10Origin&&{quantification:f.g10Origin.quantification,g10Version:f.g10Origin.versions.at(-1)?.digest}),resolution:f.resolution??'',classification:fact?.classification,origin:fact?.version,
       version:revision?.version,management:revision?.response?.result,
       accepted:revision?.response?.amount??0,posting:posting&&[posting.population,posting.amount,posting.by,posting.at]};
   });
@@ -273,7 +273,7 @@ export function completionAction(m,role,action,data,files) {
     if (!inputs) fail('Хянасан 1.3 ба одоогийн тайлан шаардлагатай.');
     const prior=evaluation(m), stamp=digest(inputs);
     if (prior?.stamp===stamp&&prior.note===note&&!managedCompletion(m)) return false;
-    let judgments;
+    let judgments;if(inputs.rows.some(r=>r.quantification==='unknown'))judgments={unquantifiedAssessment:input(data,'qualitative')};
     if(managedCompletion(m)){
       const analytics=approvedRows(m,'M10-F06').find(r=>r.id===data.analytics);if(!analytics)fail('Яг одоогийн баталсан эцсийн шинжилгээ шаардлагатай.');
       const currency=input(data,'currency',3);if(!/^[A-Z]{3}$/.test(currency)||inputs.effects.some(row=>row.currency&&row.currency!==currency))fail('Харьцуулж болох нэг валют шаардлагатай; валют хөрвүүлж / далд нэгтгэхгүй.');
