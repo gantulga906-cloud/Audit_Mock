@@ -1,0 +1,321 @@
+{
+  "kind": "audit-g09-operations-rehearsal-v1",
+  "at": "2026-11-18T03:55:50.617Z",
+  "sourcePathHash": "ffc2df3e1f536e80c113fe3c556e4e1805d9afa5aed36a4fbc200b7d0726f12f",
+  "originalInventory": {
+    "authorizations": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_archive_access": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_archives": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_client_engagements": {
+      "count": 2,
+      "sha256": "cc61f084c6322276a211dd18bab577e691b3be0b627bb8f28acfe0878bd5ebee"
+    },
+    "pilot_clients": {
+      "count": 2,
+      "sha256": "9aa30081680120021a8fd4c26b506690228ebe38991d2389c28dbdd86d4ec3c0"
+    },
+    "pilot_commands": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_confirmation": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_engagement_members": {
+      "count": 6,
+      "sha256": "4bd051dd81eb94126a97b42bbf08efcaffb8d24c5391cf6d79963a32b54d6486"
+    },
+    "pilot_engagements": {
+      "count": 2,
+      "sha256": "96582628783c51c248ec4a7b62b78c817874cc59f17737ebc0b74d4505212124"
+    },
+    "pilot_enquiries": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_external_effects": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_firm": {
+      "count": 1,
+      "sha256": "41f0bdde6067a6899c7612087da7e4f3a65b915778bd3c032ffd6d81d71359df"
+    },
+    "pilot_form_library": {
+      "count": 1,
+      "sha256": "bb8f822b1ad73b2a4fafabf100aab69a407befbab9794cf01b37e2f76f50b99b"
+    },
+    "pilot_identities": {
+      "count": 3,
+      "sha256": "ac2b5694e15a478654f2c98ff3da728a47dd961f4c6289b4a90245d5a5ee59c4"
+    },
+    "pilot_identity_events": {
+      "count": 14,
+      "sha256": "d293544360f82992f0f178d46097f2bc0c7bf20e8dee31b6009f870a2f815051"
+    },
+    "pilot_identity_grants": {
+      "count": 3,
+      "sha256": "8351e30f40ea611b91a5b53754becdbcaafeb50a97351858972af0ec96793a2b"
+    },
+    "pilot_identity_settings": {
+      "count": 1,
+      "sha256": "3f60bba172aa50694399307e62a42e7bd00d207fe5749b4ae16f85b87f64dfb8"
+    },
+    "pilot_report_delivery": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_report_delivery_events": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_templates": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "workspace": {
+      "count": 1,
+      "sha256": "b8d4d720d62ff9cf446aaab36961b9815e2e2421a49f0429e4b022974ad50f59"
+    }
+  },
+  "migratedInventory": {
+    "authorizations": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_archive_access": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_archives": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_client_engagements": {
+      "count": 2,
+      "sha256": "cc61f084c6322276a211dd18bab577e691b3be0b627bb8f28acfe0878bd5ebee"
+    },
+    "pilot_clients": {
+      "count": 2,
+      "sha256": "9aa30081680120021a8fd4c26b506690228ebe38991d2389c28dbdd86d4ec3c0"
+    },
+    "pilot_commands": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_confirmation": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_engagement_members": {
+      "count": 6,
+      "sha256": "4bd051dd81eb94126a97b42bbf08efcaffb8d24c5391cf6d79963a32b54d6486"
+    },
+    "pilot_engagements": {
+      "count": 2,
+      "sha256": "96582628783c51c248ec4a7b62b78c817874cc59f17737ebc0b74d4505212124"
+    },
+    "pilot_enquiries": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_external_effects": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_firm": {
+      "count": 1,
+      "sha256": "41f0bdde6067a6899c7612087da7e4f3a65b915778bd3c032ffd6d81d71359df"
+    },
+    "pilot_form_library": {
+      "count": 1,
+      "sha256": "bb8f822b1ad73b2a4fafabf100aab69a407befbab9794cf01b37e2f76f50b99b"
+    },
+    "pilot_identities": {
+      "count": 3,
+      "sha256": "ac2b5694e15a478654f2c98ff3da728a47dd961f4c6289b4a90245d5a5ee59c4"
+    },
+    "pilot_identity_events": {
+      "count": 14,
+      "sha256": "d293544360f82992f0f178d46097f2bc0c7bf20e8dee31b6009f870a2f815051"
+    },
+    "pilot_identity_grants": {
+      "count": 3,
+      "sha256": "8351e30f40ea611b91a5b53754becdbcaafeb50a97351858972af0ec96793a2b"
+    },
+    "pilot_identity_settings": {
+      "count": 1,
+      "sha256": "3f60bba172aa50694399307e62a42e7bd00d207fe5749b4ae16f85b87f64dfb8"
+    },
+    "pilot_report_delivery": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_report_delivery_events": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pilot_templates": {
+      "count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "workspace": {
+      "count": 1,
+      "sha256": "b8d4d720d62ff9cf446aaab36961b9815e2e2421a49f0429e4b022974ad50f59"
+    }
+  },
+  "preservedTables": [
+    "authorizations",
+    "evidence",
+    "pilot_archive_access",
+    "pilot_archives",
+    "pilot_client_engagements",
+    "pilot_clients",
+    "pilot_commands",
+    "pilot_confirmation",
+    "pilot_engagement_members",
+    "pilot_engagements",
+    "pilot_enquiries",
+    "pilot_external_effects",
+    "pilot_firm",
+    "pilot_form_library",
+    "pilot_identities",
+    "pilot_identity_events",
+    "pilot_identity_grants",
+    "pilot_identity_settings",
+    "pilot_report_delivery",
+    "pilot_report_delivery_events",
+    "pilot_templates",
+    "workspace"
+  ],
+  "migrationPreserved": true,
+  "rollbackCopyPreserved": true,
+  "recoveryVerified": true,
+  "cleanBootstrap": true,
+  "workload": {
+    "profile": "bounded-engineering-fixture",
+    "requests": 12,
+    "concurrency": 2,
+    "engagements": 1,
+    "p95Ms": 15.090899999999237,
+    "failures": 0,
+    "failureRate": 0,
+    "scope": "Authenticated scoped reads on the disposable migrated copy; writes, large originals, provider latency and representative firm-scale loads require their own approved profiles.",
+    "samples": [
+      {
+        "index": 0,
+        "ms": 14.612700000001496,
+        "ok": true,
+        "revision": 13
+      },
+      {
+        "index": 1,
+        "ms": 15.090899999999237,
+        "ok": true,
+        "revision": 13
+      },
+      {
+        "index": 2,
+        "ms": 5.878699999999299,
+        "ok": true,
+        "revision": 13
+      },
+      {
+        "index": 3,
+        "ms": 9.893000000000029,
+        "ok": true,
+        "revision": 13
+      },
+      {
+        "index": 4,
+        "ms": 11.388800000000629,
+        "ok": true,
+        "revision": 13
+      },
+      {
+        "index": 5,
+        "ms": 12.591599999999744,
+        "ok": true,
+        "revision": 13
+      },
+      {
+        "index": 6,
+        "ms": 11.703100000000632,
+        "ok": true,
+        "revision": 13
+      },
+      {
+        "index": 7,
+        "ms": 11.970499999999447,
+        "ok": true,
+        "revision": 13
+      },
+      {
+        "index": 8,
+        "ms": 11.672899999999572,
+        "ok": true,
+        "revision": 13
+      },
+      {
+        "index": 9,
+        "ms": 12.714500000000044,
+        "ok": true,
+        "revision": 13
+      },
+      {
+        "index": 10,
+        "ms": 13.495999999999185,
+        "ok": true,
+        "revision": 13
+      },
+      {
+        "index": 11,
+        "ms": 11.244800000000396,
+        "ok": true,
+        "revision": 13
+      }
+    ]
+  },
+  "operational": [
+    {
+      "id": "OPS-BOOTSTRAP",
+      "status": "fixture-passed"
+    },
+    {
+      "id": "OPS-MIGRATION",
+      "status": "copy-rehearsal-passed"
+    },
+    {
+      "id": "OPS-RECOVERY",
+      "status": "copy-rehearsal-passed"
+    },
+    {
+      "id": "OPS-WORKLOAD",
+      "status": "engineering-observation-only"
+    },
+    {
+      "id": "OPS-DEPLOYMENT",
+      "status": "not-deployed-or-accepted"
+    }
+  ],
+  "releaseReady": false,
+  "boundary": "No live cutover, production RPO/RTO, representative workload approval, storage provider acceptance, security certification or independent release acceptance is inferred."
+}

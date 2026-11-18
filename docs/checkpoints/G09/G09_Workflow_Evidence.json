@@ -1,0 +1,206 @@
+{
+  "guide": "G09",
+  "scenarios": [
+    {
+      "test": "G09 named local activation and explicit grants preserve legacy actors and prevent role-title access",
+      "cases": [
+        "P16-UC03"
+      ],
+      "criteria": [
+        "P16-UC03-AC01"
+      ],
+      "observed": "A real local named account activates once, receives an explicit dated grant, is independently assigned future work, records its actual subject ID and cannot enter another engagement or act as an account administrator through a role title.",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "actors": [
+        "named preparer",
+        "named reviewer",
+        "named partner",
+        "explicit local administrator"
+      ],
+      "action": "named local activation and explicit grants preserve legacy actors and prevent role-title access",
+      "outcome": "passed"
+    },
+    {
+      "test": "G09 grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+      "cases": [
+        "P16-UC03",
+        "P16-UC02"
+      ],
+      "criteria": [
+        "P16-UC03-AC02",
+        "P16-UC03-AC03",
+        "P16-UC03-AC04",
+        "P16-UC02-AC02"
+      ],
+      "observed": "Actual revocation denies nine protected read/search/template/original/report/authorization/action/export surfaces; other engagements stay out of the portfolio and totals. Suspension and departure block future use. Exact stored paper answers, history and conclusions remain unchanged after display relabeling and revocation.",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "actors": [
+        "named preparer",
+        "named reviewer",
+        "named partner",
+        "explicit local administrator"
+      ],
+      "action": "grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+      "outcome": "passed"
+    },
+    {
+      "test": "G09 queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+      "cases": [
+        "P16-UC01",
+        "P16-UC02"
+      ],
+      "criteria": [
+        "P16-UC01-AC01",
+        "P16-UC01-AC02",
+        "P16-UC01-AC04",
+        "P16-UC02-AC01",
+        "P16-UC02-AC03",
+        "P16-UC02-AC05"
+      ],
+      "observed": "Exact task links identify record and form. Metric IDs reconcile to the returned queue under the stated UTC date, next-owner and open-status definition. Unknown dates stay separate; task closure leaves the paper untouched; completion is explicitly not risk or quality and no external notification is sent.",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "actors": [
+        "named preparer",
+        "named reviewer",
+        "named partner",
+        "explicit local administrator"
+      ],
+      "action": "queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+      "outcome": "passed"
+    },
+    {
+      "test": "G09 actual named preparation independent return response clearance and review retain exact actor identities",
+      "cases": [
+        "P16-UC01",
+        "P16-UC02"
+      ],
+      "criteria": [
+        "P16-UC01-AC02",
+        "P16-UC01-AC03",
+        "P16-UC02-AC04"
+      ],
+      "observed": "A real named author prepares and submits a fictional typed work contract. The different named reviewer returns it; the actual reason and next owner appear in the queue. Closing its manual follow-up cannot clear its note. Self review is denied. Exact corrected work, response version and note-author clearance precede independent review.",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "actors": [
+        "named preparer",
+        "named reviewer",
+        "named partner",
+        "explicit local administrator"
+      ],
+      "action": "actual named preparation independent return response clearance and review retain exact actor identities",
+      "outcome": "passed"
+    },
+    {
+      "test": "G09 supported backup restores named users grants history and exact records while credentials remain private",
+      "operational": [
+        "OPS-RECOVERY"
+      ],
+      "observed": "Supported SQLite backup and restore compare named identities, exact scope, history, originals and work records, and the restored named account actually signs in to its original engagement. Runtime database and credentials remain private.",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "actors": [
+        "named preparer",
+        "named reviewer",
+        "named partner",
+        "explicit local administrator"
+      ],
+      "action": "supported backup restores named users grants history and exact records while credentials remain private",
+      "criteria": [],
+      "outcome": "passed"
+    },
+    {
+      "test": "G09 copy migration rollback restore and bounded workload preserve meaningful data without approving production targets",
+      "operational": [
+        "OPS-BOOTSTRAP",
+        "OPS-MIGRATION",
+        "OPS-RECOVERY",
+        "OPS-WORKLOAD"
+      ],
+      "observed": "A meaningful disposable database containing actual prior named work is migrated on a supported backup copy and compared table by table. The source and rollback copy remain unchanged, recovery verifies logical records and exact original bytes, and twelve scoped reads at concurrency two produce engineering timings without claiming an approved representative target or deployment.",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "actors": [
+        "named preparer",
+        "named reviewer",
+        "named partner",
+        "explicit local administrator"
+      ],
+      "action": "copy migration rollback restore and bounded workload preserve meaningful data without approving production targets",
+      "criteria": [],
+      "outcome": "passed"
+    }
+  ],
+  "allNineTests": [
+    {
+      "name": "G09 named local activation and explicit grants preserve legacy actors and prevent role-title access",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "line": 38,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 1174.1735
+    },
+    {
+      "name": "G09 grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "line": 53,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 1164.6593
+    },
+    {
+      "name": "G09 queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "line": 70,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 1023.7009
+    },
+    {
+      "name": "G09 supported backup restores named users grants history and exact records while credentials remain private",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "line": 82,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 1268.8737
+    },
+    {
+      "name": "G09 actual named preparation independent return response clearance and review retain exact actor identities",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "line": 92,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 1272.8579
+    },
+    {
+      "name": "G09 independent named capacity requires explicit person appointment and remains outside team and unrelated files",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "line": 108,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 1335.9589
+    },
+    {
+      "name": "G09 unknown local adapter outcomes require exact reconciliation before retry and never imply external effects",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "line": 125,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 1121.4919
+    },
+    {
+      "name": "G09 copy migration rollback restore and bounded workload preserve meaningful data without approving production targets",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "line": 138,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 1237.0595
+    },
+    {
+      "name": "G09 explicit shared-team closure expires old sessions while named local accounts retain only their dated grants",
+      "file": "tests/pilot-local-identity.test.mjs",
+      "line": 147,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 1027.3148
+    }
+  ],
+  "independentAcceptance": []
+}

@@ -1,0 +1,224 @@
+{
+  "guide": "G09",
+  "operational": [
+    {
+      "id": "OPS-BOOTSTRAP",
+      "title": "Start a clean shared app with scoped accounts and a fresh engagement",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "9c9b24c261c44a03e94bcf2e98b0d6adf536afac96d8348451bd22ba06d81bce",
+      "source": "Development plan / WP-25 and cutover gates",
+      "relatedCases": [],
+      "observations": [
+        {
+          "test": "G09 copy migration rollback restore and bounded workload preserve meaningful data without approving production targets",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "copy migration rollback restore and bounded workload preserve meaningful data without approving production targets",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "A meaningful disposable database containing actual prior named work is migrated on a supported backup copy and compared table by table. The source and rollback copy remain unchanged, recovery verifies logical records and exact original bytes, and twelve scoped reads at concurrency two produce engineering timings without claiming an approved representative target or deployment.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G01 connected acceptance binds named declarations, exact terms and independent decisions through revision and restart",
+          "file": "tests/pilot-acceptance.test.mjs",
+          "action": "current standard intake through named declarations, manual rule assessment, exact written terms, independent acceptance, changed independence position and persisted retry",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "named external declarant via signed original"
+          ],
+          "observed": "Unknown enquiry facts survive. Named team members declare for themselves; an external signed original retains person/content/scope/date/hash. A generic safeguard cannot waive a prohibition. Reviewed assessment, firm-reviewed proposal, sending, written agreement, acceptance and activation are distinct. A later disclosure causes deferral and renewed review while retaining earlier decisions, original bytes and revoked-access denials after restart. Firm/partner tenure and service restrictions are manually assessed against explicitly supplied test policy evidence, not an automatically verified legal rule.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G00 shared foundations preserve scoped work, exact evidence and approval history through change and restart",
+          "file": "tests/pilot-foundations.test.mjs",
+          "action": "G00 two-engagement foundation reference through exact review, changed basis, revoked access and persisted retry",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Two scoped engagements retain independent revisions and original-file identity. Self-review, wrong-scope originals, stale writes and conflicting retries are denied. Task completion does not approve work. Changed statements stale only the dependent authorization while preserving signed work, prior authorized bytes and the untouched second engagement. Revoked direct reads and cached-command replay remain denied after restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "two engagements isolate revisions, work, reports, grants and archive access",
+          "file": "tests/pilot.test.mjs",
+          "action": "scope and archive access",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Wrong engagement rejected, removed membership revokes access, request retry is scope-bound, independent archive packages persist.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "OPS-MIGRATION",
+      "title": "Rehearse cutover and rollback against a copy of an attributable earlier database",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "15ec52d3ed80e54a83ab97e47b76b20622d1c39b6195973bc24c47102585e935",
+      "source": "Development plan / WP-25 and cutover gates",
+      "relatedCases": [],
+      "observations": [
+        {
+          "test": "G09 copy migration rollback restore and bounded workload preserve meaningful data without approving production targets",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "copy migration rollback restore and bounded workload preserve meaningful data without approving production targets",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "A meaningful disposable database containing actual prior named work is migrated on a supported backup copy and compared table by table. The source and rollback copy remain unchanged, recovery verifies logical records and exact original bytes, and twelve scoped reads at concurrency two produce engineering timings without claiming an approved representative target or deployment.",
+          "outcome": "passed"
+        },
+        {
+          "test": "a single-workspace database migrates with its original IDs, versions and archive bytes",
+          "file": "tests/pilot.test.mjs",
+          "action": "forward rehearsal from a local legacy database",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The migrated engagement kept its stable ID, exact archived bytes, accepted evidence and revisions after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "OPS-RECOVERY",
+      "title": "Restore a backup and verify stored records, permissions and exact artifact bytes",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "6744b968986b2230dbe43dca88537cc662fa1bc51231da9ffcacd82806002ea2",
+      "source": "Development plan / WP-25 and cutover gates",
+      "relatedCases": [],
+      "observations": [
+        {
+          "test": "G09 supported backup restores named users grants history and exact records while credentials remain private",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "supported backup restores named users grants history and exact records while credentials remain private",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "Supported SQLite backup and restore compare named identities, exact scope, history, originals and work records, and the restored named account actually signs in to its original engagement. Runtime database and credentials remain private.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G09 copy migration rollback restore and bounded workload preserve meaningful data without approving production targets",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "copy migration rollback restore and bounded workload preserve meaningful data without approving production targets",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "A meaningful disposable database containing actual prior named work is migrated on a supported backup copy and compared table by table. The source and rollback copy remain unchanged, recovery verifies logical records and exact original bytes, and twelve scoped reads at concurrency two produce engineering timings without claiming an approved representative target or deployment.",
+          "outcome": "passed"
+        },
+        {
+          "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved planning, qualified report, archive hold and recovery",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "OPS-WORKLOAD",
+      "title": "Exercise the approved representative workload and compare with its expected limits",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "a8af04ff7cf1227280c3e3305cf60267d923bd1b183a5874244482d8834b21e8",
+      "source": "Development plan / WP-25 and cutover gates",
+      "relatedCases": [],
+      "observations": [
+        {
+          "test": "G09 copy migration rollback restore and bounded workload preserve meaningful data without approving production targets",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "copy migration rollback restore and bounded workload preserve meaningful data without approving production targets",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "A meaningful disposable database containing actual prior named work is migrated on a supported backup copy and compared table by table. The source and rollback copy remain unchanged, recovery verifies logical records and exact original bytes, and twelve scoped reads at concurrency two produce engineering timings without claiming an approved representative target or deployment.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "OPS-DEPLOYMENT",
+      "title": "Verify deployment identity, configuration, isolation and release sign-offs",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "0c514e2a6d4008295bde4727388d3d898174c42f3856750169e9053b576bfdfd",
+      "source": "Development plan / WP-25 and cutover gates",
+      "relatedCases": [],
+      "observations": [],
+      "relatedScenarios": []
+    }
+  ],
+  "priorEditionCopy": {
+    "from": "Saved G08 methodology fixture",
+    "priorVerifiedCode": "cf49477ed05e796925b4a9f5cde1cdf056c5d7b4",
+    "migrationPreserved": true,
+    "recoveryVerified": true,
+    "tables": [
+      "authorizations",
+      "evidence",
+      "pilot_archive_access",
+      "pilot_archives",
+      "pilot_client_engagements",
+      "pilot_clients",
+      "pilot_commands",
+      "pilot_confirmation",
+      "pilot_engagement_members",
+      "pilot_engagements",
+      "pilot_enquiries",
+      "pilot_firm",
+      "pilot_form_library",
+      "pilot_report_delivery",
+      "pilot_report_delivery_events",
+      "pilot_templates",
+      "workspace"
+    ],
+    "requests": 12,
+    "failures": 0,
+    "approvedRepresentativeTarget": false
+  },
+  "releaseReady": false
+}
