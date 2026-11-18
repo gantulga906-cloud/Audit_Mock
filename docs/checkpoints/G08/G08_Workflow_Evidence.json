@@ -1,0 +1,236 @@
+{
+  "guide": "G08",
+  "sourceSteps": [
+    {
+      "id": "B05-P1-W1",
+      "title": "Monitor standards, laws and regulator publications",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "82788a2f6990b71bbc246eb8f4651cb0cb3ff528490db90b9fc2e4539c288721",
+      "source": "B05!C15:H15",
+      "relatedCases": [
+        "P04-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G08 actual workbook mapping retains stable typed rows clauses source coordinates and explicit unsupported decisions",
+        "G08 source families retain exact typed values repeated identities and readable coordinates for all seventy contracts",
+        "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct"
+      ]
+    },
+    {
+      "id": "B05-P1-W2",
+      "title": "Identify affected service, workflow, form and effective date",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "54320792b093cde1def2d88cea354a272e83430f3affc3f36479d3b992758b39",
+      "source": "B05!C16:H16",
+      "relatedCases": [
+        "P04-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G08 actual workbook mapping retains stable typed rows clauses source coordinates and explicit unsupported decisions",
+        "G08 source families retain exact typed values repeated identities and readable coordinates for all seventy contracts",
+        "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct"
+      ]
+    },
+    {
+      "id": "B05-P1-W3",
+      "title": "Prioritize change and assign owner",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "e1fe87614bf1c022c94f194ef2f24662967c40eb7d252ab33a2d09df3afbcd4a",
+      "source": "B05!C17:H17",
+      "relatedCases": [
+        "P04-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G08 actual workbook mapping retains stable typed rows clauses source coordinates and explicit unsupported decisions",
+        "G08 source families retain exact typed values repeated identities and readable coordinates for all seventy contracts",
+        "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct"
+      ]
+    },
+    {
+      "id": "B05-P2-W1",
+      "title": "Revise guidance, templates, criteria and controls",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "37c908e26c662b373a005e45b91a68bbffe44364f1f7c26b0f4ad53cdb367d3c",
+      "source": "B05!C18:H18",
+      "relatedCases": [
+        "P04-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 self publication revoked authority stale drafts and changed exact review are denied without fabricating approval"
+      ]
+    },
+    {
+      "id": "B05-P2-W2",
+      "title": "Test with representative engagements and resolve ambiguity",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d20447cd3d8ff144cdf3c9ea0a0dbbbe2159cbe754cb69871bb3e8e92a3e128f",
+      "source": "B05!C19:H19",
+      "relatedCases": [
+        "P04-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 self publication revoked authority stale drafts and changed exact review are denied without fabricating approval"
+      ]
+    },
+    {
+      "id": "B05-P2-W3",
+      "title": "Obtain technical and quality approval",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "83f65290999b0e724739c5b4dbd43a4cce46c827539de475c89625e7c46c6119",
+      "source": "B05!C20:H20",
+      "relatedCases": [
+        "P04-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+        "G08 self publication revoked authority stale drafts and changed exact review are denied without fabricating approval"
+      ]
+    },
+    {
+      "id": "B05-P3-W1",
+      "title": "Version and publish effective methodology",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "9a6d7a1fd1dd0432b086f3364d274dee85627478660caebffdd21c6d5081feef",
+      "source": "B05!C21:H21",
+      "relatedCases": [
+        "P04-UC02",
+        "P04-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 self publication revoked authority stale drafts and changed exact review are denied without fabricating approval",
+        "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence"
+      ]
+    },
+    {
+      "id": "B05-P3-W2",
+      "title": "Train teams and migrate active work where needed",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "b433b641461cbac61d441c7d162975632d661de1008b316c0c4d88a2c0362153",
+      "source": "B05!C22:H22",
+      "relatedCases": [
+        "P04-UC02",
+        "P04-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+        "G08 self publication revoked authority stale drafts and changed exact review are denied without fabricating approval",
+        "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence"
+      ]
+    },
+    {
+      "id": "B05-P3-W3",
+      "title": "Archive superseded versions and monitor adoption",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ed5d29a93b81a43689afbec4c59a81b4c92a9c44730c2d55b57ef170a503747b",
+      "source": "B05!C23:H23",
+      "relatedCases": [
+        "P04-UC02",
+        "P04-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 self publication revoked authority stale drafts and changed exact review are denied without fabricating approval",
+        "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence"
+      ]
+    }
+  ],
+  "connectedCycles": [
+    {
+      "id": "B05",
+      "title": "Standards and methodology change control",
+      "steps": 9,
+      "observedSteps": 4,
+      "applicableSteps": 9,
+      "complete": false,
+      "applicableComplete": false,
+      "branchIds": null,
+      "journeys": []
+    }
+  ],
+  "wholeApplicationCycles": {
+    "total": 51,
+    "complete": 9,
+    "applicable": 51,
+    "applicableComplete": 9
+  },
+  "connectedReference": "Actual source upload and independent assessment, mapped draft, named separate publishing authority, exact effective release, pinned adoption, return/response/clear/review, deliberate conflict resolution and actual readable export.",
+  "note": "Representative fixtures and 70 typed-contract roundtrips do not create additional complete source lifecycles. Broader monitoring/training and independent semantic/methodology acceptance remain open."
+}

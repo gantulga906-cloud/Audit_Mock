@@ -1,0 +1,848 @@
+{
+  "guide": "G08",
+  "scope": "All 25 original P04/P15 criteria retained with source hashes and actual engineering observations",
+  "summary": {
+    "total": 25,
+    "backendDirect": 25,
+    "supporting": 0,
+    "independentlyAccepted": 0
+  },
+  "criteria": [
+    {
+      "id": "P04-UC01-AC01",
+      "title": "Headings and fixed clauses do not become mandatory yes/no answers.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "40fc90682e1d976c982bdd102a26a750b0999fc8a90c9008cbb4a91de8ce6cc3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC01-AC01",
+      "relatedCases": [
+        "P04-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G08 actual workbook mapping retains stable typed rows clauses source coordinates and explicit unsupported decisions",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "actual workbook mapping retains stable typed rows clauses source coordinates and explicit unsupported decisions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An actual accepted workbook is parsed on the server, mapped to stable typed fields and separate fixed clauses, and compared without mutation. Exact acknowledged import creates a draft only. Unsupported formulas stay source text pending an explicit scoped decision; no formula executes from cached values.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 source families retain exact typed values repeated identities and readable coordinates for all seventy contracts",
+        "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC01-AC02",
+      "title": "A repeated business row has its own identity and typed cells.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "018e9ce48f3b58fe81cce3ffdb391d1a03e82a42dc6e87ca8a25377162a74976",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC01-AC02",
+      "relatedCases": [
+        "P04-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G08 actual workbook mapping retains stable typed rows clauses source coordinates and explicit unsupported decisions",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "actual workbook mapping retains stable typed rows clauses source coordinates and explicit unsupported decisions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An actual accepted workbook is parsed on the server, mapped to stable typed fields and separate fixed clauses, and compared without mutation. Exact acknowledged import creates a draft only. Unsupported formulas stay source text pending an explicit scoped decision; no formula executes from cached values.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G08 source families retain exact typed values repeated identities and readable coordinates for all seventy contracts",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "source families retain exact typed values repeated identities and readable coordinates for all seventy contracts",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "All seventy runtime source contracts pass exact typed-answer roundtrips, including repeated row identity and signed/zero/identifier strings. Structural engineering proof does not certify full semantic or independent whole-form acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC01-AC03",
+      "title": "Missing/unknown/N/A/false/zero are not interchangeable.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "949aae7ad0818db7f6458aa4c23552edb11b97fb8d7a05c1578a4781d41f0dac",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC01-AC03",
+      "relatedCases": [
+        "P04-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G08 source families retain exact typed values repeated identities and readable coordinates for all seventy contracts",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "source families retain exact typed values repeated identities and readable coordinates for all seventy contracts",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "All seventy runtime source contracts pass exact typed-answer roundtrips, including repeated row identity and signed/zero/identifier strings. Structural engineering proof does not certify full semantic or independent whole-form acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "False is rejected as a numeric answer while exact zero is retained. N/A requires its own rationale; unknown stays distinct. Unsafe XML and duplicate stable identities are denied. Foreign originals cannot become evidence; corrupt publisher authority remains unresolved.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 actual workbook mapping retains stable typed rows clauses source coordinates and explicit unsupported decisions"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC01-AC04",
+      "title": "The draft does not overwrite the published version or existing engagement work.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "f42634a982e25e82385517e45e2c6aac115057e564b5e9b79f17f3a42f903478",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC01-AC04",
+      "relatedCases": [
+        "P04-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G08 actual workbook mapping retains stable typed rows clauses source coordinates and explicit unsupported decisions",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "actual workbook mapping retains stable typed rows clauses source coordinates and explicit unsupported decisions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An actual accepted workbook is parsed on the server, mapped to stable typed fields and separate fixed clauses, and compared without mutation. Exact acknowledged import creates a draft only. Unsupported formulas stay source text pending an explicit scoped decision; no formula executes from cached values.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 source families retain exact typed values repeated identities and readable coordinates for all seventy contracts",
+        "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC02-AC01",
+      "title": "Only an approved release is offered as approved for new work.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "aa6539830880229a88c799d30f6c843ab15e044010aca329e635e596039c79f6",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC02-AC01",
+      "relatedCases": [
+        "P04-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G08 self publication revoked authority stale drafts and changed exact review are denied without fabricating approval",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "self publication revoked authority stale drafts and changed exact review are denied without fabricating approval",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Self publication, revoked authority, stale authoring identity and a changed exact-review digest cannot produce a release. Publication remains distinct from professional work review.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC02-AC02",
+      "title": "The reviewer can identify the actual content reviewed.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "953e5286c5b4f29576378079d47165892daf8d38eec0d8bd49db792382b6485f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC02-AC02",
+      "relatedCases": [
+        "P04-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G08 self publication revoked authority stale drafts and changed exact review are denied without fabricating approval",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "self publication revoked authority stale drafts and changed exact review are denied without fabricating approval",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Self publication, revoked authority, stale authoring identity and a changed exact-review digest cannot produce a release. Publication remains distinct from professional work review.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC02-AC03",
+      "title": "Release notes identify material changes and affected content.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "434ca30e404de53111e07ac819b6229e048dc9050dccaf47cc688a1662d05b11",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC02-AC03",
+      "relatedCases": [
+        "P04-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 self publication revoked authority stale drafts and changed exact review are denied without fabricating approval"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC02-AC04",
+      "title": "Publishing does not migrate active engagements or approve their answers.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "aae7663b1cb3fd858c525748b3c93f09cf0ebdf686a2a256ed832989614d250a",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC02-AC04",
+      "relatedCases": [
+        "P04-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G08 self publication revoked authority stale drafts and changed exact review are denied without fabricating approval",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "self publication revoked authority stale drafts and changed exact review are denied without fabricating approval",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Self publication, revoked authority, stale authoring identity and a changed exact-review digest cannot produce a release. Publication remains distinct from professional work review.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC02-AC05",
+      "title": "When the publishing authority approves the exact draft revision for a defined effective scope/date, users selecting new work can identify that release as approved and inspect its change note and predecessor; an existing engagement continues to identify its selected version.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "b8bb0bb7cdbb480d67f0328dfdb069f8188224f35ded7000287f51f6f90d1a7a",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC02-AC05",
+      "relatedCases": [
+        "P04-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 self publication revoked authority stale drafts and changed exact review are denied without fabricating approval"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC03-AC01",
+      "title": "The working copy identifies its exact template version.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "81fe8c5dbd86fe9f0e76abb4caa8c6936007fad971626d020901fdbba39f01b3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC03-AC01",
+      "relatedCases": [
+        "P04-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC03-AC02",
+      "title": "Adoption cannot discard completed answers or retarget existing evidence silently.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "f6d4b1e221052767dd5ea5722f279df66698b84e725d5a9d08feaa88ca5e61fc",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC03-AC02",
+      "relatedCases": [
+        "P04-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Actual return, correction, versioned response, separate clearance and review precede a later edition. Changed scalar types and removed table/evidence columns require current acknowledgement, preserve old signed answers and original bytes, and renew current review.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC03-AC03",
+      "title": "A new or changed question cannot appear already prepared/reviewed.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a03f787b663b680a67049473400596b0cbb7e57af95eeacb43aa10fe88fcb9bb",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC03-AC03",
+      "relatedCases": [
+        "P04-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Actual return, correction, versioned response, separate clearance and review precede a later edition. Changed scalar types and removed table/evidence columns require current acknowledgement, preserve old signed answers and original bytes, and renew current review.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P04-UC03-AC04",
+      "title": "The team receives a meaningful change notice where supported, without assuming external email.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ff90ccffe647beb303f4efc45fec5bd95ff0a547f929b76b5c0af7f0ef9047dd",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P04-UC03-AC04",
+      "relatedCases": [
+        "P04-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC01-AC01",
+      "title": "Template origin and local work are distinguishable.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a63c2703b74445cae75d87d00a626e9f4ff4f549d008efc636b8f8f8bbda2aa8",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC01-AC01",
+      "relatedCases": [
+        "P15-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named person with current appointment and separate actual-source publishing grant independently approves the exact candidate hash, scope, date anchor, examples and change notes. New publication leaves the engagement pinned. Retired, future and outside-scope editions are denied for new adoption and old answers survive restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+        "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence",
+        "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC01-AC02",
+      "title": "Repeated row identity survives reordering.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "dba875797287f1f0b9d73f08c1b1bb9c82019fc6451f743a867fa59086882ed0",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC01-AC02",
+      "relatedCases": [
+        "P15-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Actual return, correction, versioned response, separate clearance and review precede a later edition. Changed scalar types and removed table/evidence columns require current acknowledgement, preserve old signed answers and original bytes, and renew current review.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+        "G08 selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+        "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC01-AC03",
+      "title": "Cross-reference presence does not itself establish relevance/reliability.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "16e37224dbc16d945cacb3eec5adcfa6a94a40da7e66694169fa7b696ab76492",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC01-AC03",
+      "relatedCases": [
+        "P15-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "False is rejected as a numeric answer while exact zero is retained. N/A requires its own rationale; unknown stays distinct. Unsafe XML and duplicate stable identities are denied. Foreign originals cannot become evidence; corrupt publisher authority remains unresolved.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+        "G08 selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+        "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC01-AC04",
+      "title": "No workpaper is falsely shown successfully previewed or complete when its content is unavailable.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "873031eabde6e362140645dd1abe43b4b4d3928a18caf3876783571caaf123a5",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC01-AC04",
+      "relatedCases": [
+        "P15-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G08 selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The selected current/historical work versions export readable clauses, typed rows, actor/review and original reference hashes. Changed selections invalidate the preview. Corrupt actual originals remain explicit. Removed membership denies search and no unrelated work is exported.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "False is rejected as a numeric answer while exact zero is retained. N/A requires its own rationale; unknown stays distinct. Unsafe XML and duplicate stable identities are denied. Foreign originals cannot become evidence; corrupt publisher authority remains unresolved.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 exact independently published scope dates retirement and authority remain separate from pinned engagement answers",
+        "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC02-AC01",
+      "title": "A stale save cannot silently overwrite the newer content.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "5a8cd07c63fab89238b9b868076c2a5731961d6feae2782c7fe44dd18b007374",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC02-AC01",
+      "relatedCases": [
+        "P15-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G08 concurrent save rejection and deliberate current-version resolution retain both actual contributors and renewed review",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "concurrent save rejection and deliberate current-version resolution retain both actual contributors and renewed review",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A stale revision cannot overwrite the current contribution. A deliberate subsequent current-version save preserves both contributors, the prior values, actual preparation attribution and a recorded reconciliation reason.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC02-AC02",
+      "title": "Both contributors remain correctly attributed.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "6041a184b0f330d4f3c3f00b6522fa021a57c7af40352677acd36c0ca448dc2b",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC02-AC02",
+      "relatedCases": [
+        "P15-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G08 concurrent save rejection and deliberate current-version resolution retain both actual contributors and renewed review",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "concurrent save rejection and deliberate current-version resolution retain both actual contributors and renewed review",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A stale revision cannot overwrite the current contribution. A deliberate subsequent current-version save preserves both contributors, the prior values, actual preparation attribution and a recorded reconciliation reason.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC02-AC03",
+      "title": "A prior sign-off cannot approve changed content.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "84cc544706f66e5918c620faf89accbc2e5c396f3503b3cfe458af6313a79958",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC02-AC03",
+      "relatedCases": [
+        "P15-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Actual return, correction, versioned response, separate clearance and review precede a later edition. Changed scalar types and removed table/evidence columns require current acknowledgement, preserve old signed answers and original bytes, and renew current review.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 concurrent save rejection and deliberate current-version resolution retain both actual contributors and renewed review"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC02-AC04",
+      "title": "An unaffected-change decision has its actual reason.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a8e0ab6944bdff6b924fc817b77c1c56ca9f1e1cb6da35e6e87703dd288a4726",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC02-AC04",
+      "relatedCases": [
+        "P15-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G08 concurrent save rejection and deliberate current-version resolution retain both actual contributors and renewed review",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "concurrent save rejection and deliberate current-version resolution retain both actual contributors and renewed review",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A stale revision cannot overwrite the current contribution. A deliberate subsequent current-version save preserves both contributors, the prior values, actual preparation attribution and a recorded reconciliation reason.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 real return response clearance changed publication and acknowledged adoption preserve signed answers and original evidence"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC03-AC01",
+      "title": "Search respects content and metadata permissions.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "455e0965705c31e420b59f91d8f4fbe7e1d7ab108674f226c1de8523f77b64a6",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC03-AC01",
+      "relatedCases": [
+        "P15-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G08 selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The selected current/historical work versions export readable clauses, typed rows, actor/review and original reference hashes. Changed selections invalidate the preview. Corrupt actual originals remain explicit. Removed membership denies search and no unrelated work is exported.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC03-AC02",
+      "title": "Broken/missing/unavailable states are distinguishable.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "1f18c11b05f091870dafcb233f01c05e17021e204e7cfa4936e679e2f649ac08",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC03-AC02",
+      "relatedCases": [
+        "P15-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G08 selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The selected current/historical work versions export readable clauses, typed rows, actor/review and original reference hashes. Changed selections invalidate the preview. Corrupt actual originals remain explicit. Removed membership denies search and no unrelated work is exported.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "False is rejected as a numeric answer while exact zero is retained. N/A requires its own rationale; unknown stays distinct. Unsafe XML and duplicate stable identities are denied. Foreign originals cannot become evidence; corrupt publisher authority remains unresolved.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC03-AC03",
+      "title": "The package identifies its actual included versions and deliberate scope.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "48f9f22b59adf1b24edf376f7e10686800454cd997cef49afa3c17869b2c3ecd",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC03-AC03",
+      "relatedCases": [
+        "P15-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G08 selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The selected current/historical work versions export readable clauses, typed rows, actor/review and original reference hashes. Changed selections invalidate the preview. Corrupt actual originals remain explicit. Removed membership denies search and no unrelated work is exported.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    },
+    {
+      "id": "P15-UC03-AC04",
+      "title": "Operational completeness does not automatically sign off the audit.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d256940a487826154334de7145e8062deabf833e326b87ba41c0dbf14a32047b",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P15-UC03-AC04",
+      "relatedCases": [
+        "P15-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G08 selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+          "file": "tests/pilot-methodology.test.mjs",
+          "action": "selected readable exports preserve current and historical answers exact originals scopes and unresolved diagnostics",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The selected current/historical work versions export readable clauses, typed rows, actor/review and original reference hashes. Changed selections invalidate the preview. Corrupt actual originals remain explicit. Removed membership denies search and no unrelated work is exported.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G08 unsafe workbooks corrupt authority cross-scope originals false zero unknown and N/A remain distinct"
+      ],
+      "checkpointDisposition": "direct executed bounded engineering fixture; independent source acceptance remains open"
+    }
+  ],
+  "boundary": "Direct reference evidence is not complete B05 operational or independent whole-form/methodology acceptance."
+}
