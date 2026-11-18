@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { createHash, randomUUID } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { populationRequiredFields } from '../src/lib/pilot-population.ts';
@@ -224,7 +225,7 @@ export function populationAction(m, role, action, data, files) {
     if (!sourceExtract) {
       files.add(evidence,name,bytes);
       m.evidence.push({id:evidence,engagement:m.engagement,name,source,version,status:'received',
-        type:'FILE',obtained:at.slice(0,10),original:true,specimen:false,anchor:'',text:'',uploadedBy:role,population:true});
+        type:'FILE',obtained:at.slice(0,10),original:true,specimen:false,anchor:'',text:'',uploadedBy:actorKey(role),population:true});
     }
     history.push(calculate({...parsed,version,name,source,evidence,evidenceVersion:m.evidence.find(e=>e.id===evidence).version,sha256:sourceExtract?.sha256??files.get(evidence).sha256,
       currency,importedBy:role,preparedBy:role,at,...(sourceExtract&&{extract:sourceExtract.extract})},undefined));
@@ -262,7 +263,7 @@ export function populationAction(m, role, action, data, files) {
       if((prior.controls.methods??[]).some(ref=>!approvedDataChecks(m).some(r=>r.id===ref.id&&r.version===ref.version&&r.disposition==='usable')))fail('Холбосон аргын эх / хяналт өөрчлөгдсөн.');
       if(managedEvidence(m))dataSource(m,files,prior.evidence);
       const reason=input(data,'reason');
-      prior.approval={by:role,at:now(),reason};
+      prior.approval={by:actorKey(role),at:now(),reason};
       if (!prior.extract) {
         const original=m.evidence.find(e=>e.id===prior.evidence);
         original.status='accepted';

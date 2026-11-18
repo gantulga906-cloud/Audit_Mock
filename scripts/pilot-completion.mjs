@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { createHash, randomUUID } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { isCurrentReview, recordEvent, snapshot, workKey } from '../src/lib/workspace.ts';
@@ -176,7 +177,7 @@ function consultationAction(m,role,action,data,files) {
     const title=input(data,'title',200), scope=input(data,'scope'), id=prior?.id??randomUUID();
     let application;
     if(managedCompletion(m)&&restriction==='clear'){application={facts:input(data,'facts'),work:input(data,'application'),evidence:acceptedFile(m,files,data.applicationEvidence),authority:acceptedFile(m,files,data.resolutionAuthority)};if(prohibition?.advice?.sha256===advice.sha256)fail('Өмнөх хоригийн эхийн хуулбар нь шинэ шийдвэр биш.');}
-    const row={id,version:(prior?.version??0)+1,form,paper:paper.version,title,scope,restriction,advice,application,by:role,at:now()};
+    const row={id,version:(prior?.version??0)+1,form,paper:paper.version,title,scope,restriction,advice,application,by:actorKey(role),at:now()};
     (((m.pilotConsultations??={})[id])??=[]).push(row);
   } else {
     if (role!=='partner') fail('Партнер зөвлөлдөх асуудлыг хараат бусаар хянана.',403);
@@ -186,7 +187,7 @@ function consultationAction(m,role,action,data,files) {
     if (!['returned','resolved'].includes(result)) fail('Хяналтын шийдвэрийг сонгоно уу.',400);
     if (result==='resolved'&&(prior.restriction!=='clear'||!prior.advice)) fail('Шийдэгдээгүй зөрүү эсвэл хоригтой асуудлыг хаах боломжгүй.');
     if(managedCompletion(m)&&result==='resolved'&&(!prior.application||!liveFile(m,prior.application.evidence)||!liveFile(m,prior.application.authority)))fail('Зөвлөгөөг бодитоор хэрэгжүүлсэн ажил ба эрх бүхий шийдвэрийн эх шаардлагатай.');
-    prior.decision={result,by:role,at:now(),reason:input(data,'reason')};
+    prior.decision={result,by:actorKey(role),at:now(),reason:input(data,'reason')};
   }
   recordEvent(m,action,'4.4');
   return true;
@@ -208,7 +209,7 @@ function correctionAction(m,role,action,data,files) {
     const support=acceptedFile(m,files,data.evidence), reason=input(data,'reason');
     if (prior&&!prior.response&&prior.amount===amount&&prior.reference===reference&&prior.account===account&&prior.sign===sign&&
         prior.support.id===support.id&&prior.reason===reason) return false;
-    (((m.pilotCorrections??={})[finding.id])??=[]).push({version:(prior?.version??0)+1,amount,reference,account,sign,support,reason,by:role,at:now(),postings:[]});
+    (((m.pilotCorrections??={})[finding.id])??=[]).push({version:(prior?.version??0)+1,amount,reference,account,sign,support,reason,by:actorKey(role),at:now(),postings:[]});
   } else {
     if (!prior||String(prior.version)!==data.version||!liveFile(m,prior.support)) fail('Одоогийн залруулгын санал шаардлагатай.');
     if (action==='correction-response') {
@@ -219,9 +220,9 @@ function correctionAction(m,role,action,data,files) {
         fail('Хариуны төлөв ба зөвшөөрсөн дүнг шалгана уу.',400);
       }
       const file=acceptedFile(m,files,data.evidence), reason=input(data,'reason');
-      prior.response={amount,result,file,reason,by:role,at:now()};
+      prior.response={amount,result,file,reason,by:actorKey(role),at:now()};
     } else if (action==='correction-verify') {
-      if (role!=='partner'||prior.by===role) fail('Бичилтийн хараат бус баталгаажуулалт шаардлагатай.',403);
+      if (role!=='partner'||prior.by===actorKey(role)) fail('Бичилтийн хараат бус баталгаажуулалт шаардлагатай.',403);
       const population=approvedPopulation(m);
       if (!population||!prior.response?.amount||!liveFile(m,prior.response.file)) fail('Баталсан эх олонлог ба удирдлагын зөвшөөрөл шаардлагатай.');
       const rows=population.rows.filter(r=>r.state==='accepted'&&r.account===prior.account&&r.reference===prior.reference);
@@ -231,7 +232,7 @@ function correctionAction(m,role,action,data,files) {
       const reason=input(data,'reason');
       if (prior.postings.at(-1)?.population===population.version&&prior.postings.at(-1)?.amount===amount) return false;
       prior.postings.push({amount,population:population.version,source:population.evidence,sha256:population.sha256,
-        rows:rows.map(r=>({id:r.id,row:r.row,cents:r.cents})),by:role,at:now(),reason});
+        rows:rows.map(r=>({id:r.id,row:r.row,cents:r.cents})),by:actorKey(role),at:now(),reason});
     } else fail('Залруулгын үйлдэл олдсонгүй.',404);
   }
   syncCorrectionStatus(m);
@@ -262,7 +263,7 @@ export function completionAction(m,role,action,data,files) {
     }
     const id=existing?.id??'MANUAL-'+randomUUID(), criterion=input(data,'criterion'), effect=input(data,'effect');
     (((m.pilotFindingFacts??={})[id])??=[]).push({version:(prior?.version??0)+1,form,paper:paper.version,
-      reference,classification,evidence,criterion,effect,by:role,at:now()});
+      reference,classification,evidence,criterion,effect,by:actorKey(role),at:now()});
     const next={id,form,engagement:m.engagement,title,amount:amount/100,evidence:evidence.id,qualitative:effect,status:'identified'};
     if (existing) { Object.assign(existing,next); delete existing.resolution; }
     else m.findings.push(next);
@@ -278,13 +279,13 @@ export function completionAction(m,role,action,data,files) {
       const currency=input(data,'currency',3);if(!/^[A-Z]{3}$/.test(currency)||inputs.effects.some(row=>row.currency&&row.currency!==currency))fail('Харьцуулж болох нэг валют шаардлагатай; валют хөрвүүлж / далд нэгтгэхгүй.');
       judgments={analytics:analytics.id,analyticsVersion:analytics.version,currency,individual:input(data,'individual'),qualitative:input(data,'qualitative'),priorPeriods:input(data,'priorPeriods'),reassessment:input(data,'reassessment')};
     }
-    (m.pilotEvaluations??=[]).push({version:(prior?.version??0)+1,inputs,stamp,note,judgments,by:role,at:now()});
+    (m.pilotEvaluations??=[]).push({version:(prior?.version??0)+1,inputs,stamp,note,judgments,by:actorKey(role),at:now()});
   } else if (action==='completion-evaluation-approve') {
     if (role!=='partner') fail('Хараат бус партнерын үнэлгээ шаардлагатай.',403);
     const row=evaluation(m), inputs=evaluationInputs(m);
     if (!row||String(row.version)!==data.version||!inputs||row.stamp!==digest(inputs)) fail('Одоогийн материаллаг байдал ба засваруудыг дахин үнэлнэ үү.');
     if (row.approval) return false;
-    row.approval={by:role,at:now(),reason:input(data,'reason')};
+    row.approval={by:actorKey(role),at:now(),reason:input(data,'reason')};
   } else if (action==='completion-management-submit') {
     if (role!=='reviewer') fail('Эх баримт бэлтгэх ахлах хянагч шаардлагатай.',403);
     const e=m.engagements[0], prior=management(m), date=input(data,'date',10);
@@ -296,14 +297,14 @@ export function completionAction(m,role,action,data,files) {
     const stamp=digest([e.fsVersion,file,notes,authorization,signer,capacity,date,basis]);
     if (prior?.stamp===stamp) return false;
     (m.pilotManagement??=[]).push({version:(prior?.version??0)+1,statement:e.fsVersion,file,notes,authorization,
-      signer,capacity,date,basis,stamp,by:role,at:now()});
+      signer,capacity,date,basis,stamp,by:actorKey(role),at:now()});
   } else if (action==='completion-management-approve') {
     if (role!=='partner') fail('Тайлангийн эхийг хараат бус партнер хянана.',403);
     const row=management(m), e=m.engagements[0];
     if (!row||String(row.version)!==data.version||row.statement!==e.fsVersion||row.date>e.reportDate||
         ![row.file,row.notes,row.authorization].every(file=>liveFile(m,file))) fail('Одоогийн тайлангийн баталсан эхийг дахин холбоно уу.');
     if (row.approval) return false;
-    row.approval={by:role,at:now(),reason:input(data,'reason')};
+    row.approval={by:actorKey(role),at:now(),reason:input(data,'reason')};
   } else fail('Дуусгалтын үйлдэл олдсонгүй.',404);
   recordEvent(m,action,'4.4');
   return true;

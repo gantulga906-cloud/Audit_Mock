@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import {createHash,randomUUID} from 'node:crypto';
 import {isCurrentReview,workKey,recordEvent,canEdit} from '../src/lib/workspace.ts';
 import {finalisationKinds,finalisationFields,finalisationChoices} from '../src/lib/pilot-finalisation.ts';
@@ -102,7 +103,7 @@ function confirmMatter(m,row){
  if(!finding)m.findings.push({id,form:v.paper,engagement:m.engagement,title:row.title,amount:amount/100,evidence:row.evidence.id,qualitative:v.effect,status:'identified'});
 }
 export function finalisationAction(m,role,action,data,files){
- if(action==='completion-enable'){if(role!=='partner')fail('G05 · Партнерын ажлын хүрээний шийдвэр шаардлагатай.',403);m.pilotFinalisation??={profile:1,records:{}};m.pilotFinalisation.enabled={by:role,at:now(),reason:input(data,'reason')};recordEvent(m,'G05 · Дуусгалтын хяналт идэвхжүүлэв');return true;}
+ if(action==='completion-enable'){if(role!=='partner')fail('G05 · Партнерын ажлын хүрээний шийдвэр шаардлагатай.',403);m.pilotFinalisation??={profile:1,records:{}};m.pilotFinalisation.enabled={by:actorKey(role),at:now(),reason:input(data,'reason')};recordEvent(m,'G05 · Дуусгалтын хяналт идэвхжүүлэв');return true;}
  if(!managedCompletion(m))fail('G05 · Энэ ажлын дуусгалтын хяналтыг ил тод идэвхжүүлнэ үү.');
  const prior=data.id?versions(m,data.id)?.at(-1):undefined;if(data.id&&!prior)fail('Дуусгалтын бодит бүртгэл олдсонгүй.',404);
  if(action==='completion-case-save'){
@@ -110,25 +111,25 @@ export function finalisationAction(m,role,action,data,files){
   const kind=prior?.kind??data.kind;if(!Object.hasOwn(finalisationKinds,kind))fail('Дуусгалтын төрөл буруу.',400);
   let values=parse(data.values,'Бодит үнэлгээ');if(!values||typeof values!=='object'||Array.isArray(values)||Object.keys(values).length>35||Object.values(values).some(v=>typeof v!=='string'||v.length>64000))fail('Дуусгалтын утгууд буруу.',400);
   if(Object.keys(values).some(key=>!finalisationFields[kind].some(([allowed])=>allowed===key)))fail('Тодорхойлоогүй дуусгалтын талбар.',400);
-  if(prior&&prior.by!==role)fail('Өөр бэлтгэгчийн бүртгэлийг өөрчлөхгүй.',403);
+  if(prior&&prior.by!==actorKey(role))fail('Өөр бэлтгэгчийн бүртгэлийг өөрчлөхгүй.',403);
   if(values.paper){const paper=m.work[workKey(m.engagement,values.paper)];if(!paper||paper.stage!==3||role==='preparer'&&!canEdit(m,paper))fail('Эх ажлын бодит хамрах томилгоо шаардлагатай.',403);}
   const evidence=data.evidence?attachment(m,files,data.evidence):undefined,attachments=[];
   for(const [key,,type] of finalisationFields[kind])if(type==='evidence'&&values[key])attachments.push(attachment(m,files,values[key]));
   if(kind==='disclosures'&&values.requirements){const rows=requirements({values});for(const r of rows)if(r.evidence)attachments.push(attachment(m,files,r.evidence));}
   const linked=registerRef(m,{kind,values});if(linked)for(const key of ['evidence','delivery','response'])if(linked.values[key])attachments.push(attachment(m,files,linked.values[key]));
   const title=input(data,'title',200),nextOwner=input(data,'nextOwner',20),followup=input(data,'followup');if(!['preparer','reviewer','partner'].includes(nextOwner))fail('Бодит дараагийн хариуцагч шаардлагатай.');
-  const id=prior?.id??randomUUID(),row={id,kind,version:(prior?.version??0)+1,title,values,evidence,attachments,by:role,at:now(),status:'draft',nextOwner,followup,events:[{action,by:role,at:now()}],...(prior?.finding&&{finding:prior.finding})};row.stamp=hash(basis(m,row));((m.pilotFinalisation.records)[id]??=[]).push(row);
+  const id=prior?.id??randomUUID(),row={id,kind,version:(prior?.version??0)+1,title,values,evidence,attachments,by:actorKey(role),at:now(),status:'draft',nextOwner,followup,events:[{action,by:actorKey(role),at:now()}],...(prior?.finding&&{finding:prior.finding})};row.stamp=hash(basis(m,row));((m.pilotFinalisation.records)[id]??=[]).push(row);
  }else{
   const row=prior;if(!row||String(row.version)!==data.version||row.stamp!==hash(basis(m,row)))fail('G05 · Яг одоогийн эх ба дуусгалтын хувилбарыг шинэчилнэ үү.');
-  if(action==='completion-case-submit'){if(row.by!==role||!['draft','returned'].includes(row.status))fail('Бэлтгэсэн бодит хувилбар шаардлагатай.',403);validate(m,row);row.status='submitted';}
+  if(action==='completion-case-submit'){if(row.by!==actorKey(role)||!['draft','returned'].includes(row.status))fail('Бэлтгэсэн бодит хувилбар шаардлагатай.',403);validate(m,row);row.status='submitted';}
   else if(action==='completion-case-approve'||action==='completion-case-return'){
-   if(role==='preparer'||role===row.by||row.status!=='submitted')fail('Хараат бус ахлах / партнерын бодит шийдвэр шаардлагатай.',403);
+   if(role==='preparer'||actorKey(role)===row.by||row.status!=='submitted')fail('Хараат бус ахлах / партнерын бодит шийдвэр шаардлагатай.',403);
    if(['mandate','followup'].includes(row.kind)&&role!=='partner')fail('Тусдаа үйлчилгээний эрх / хаалтын партнерын шийдвэр шаардлагатай.',403);
    const disposition=data.disposition??'limited';if(!['supported','limited'].includes(disposition))fail('Бодит шийдвэрийн төлөв шаардлагатай.');
    if(action.endsWith('approve')){validate(m,row);if(disposition==='supported'&&!supported(m,row))fail('Дутуу, зөрүүтэй эсвэл бодитоор хийгээгүй ажлыг цэвэр болгож батлахгүй.');row.status='approved';}else row.status='returned';
-   row.review={by:role,at:now(),reason:input(data,'reason'),disposition};if(row.status==='approved'&&disposition==='supported'&&row.kind==='matter')confirmMatter(m,row);
+   row.review={by:actorKey(role),at:now(),reason:input(data,'reason'),disposition};if(row.status==='approved'&&disposition==='supported'&&row.kind==='matter')confirmMatter(m,row);
   }else fail('G05 · Дуусгалтын үйлдэл олдсонгүй.',404);
-  row.events.push({action,by:role,at:now(),status:row.status,review:structuredClone(row.review)});
+  row.events.push({action,by:actorKey(role),at:now(),status:row.status,review:structuredClone(row.review)});
  }
  recordEvent(m,'G05 · '+action,'4.4');return true;
 }
@@ -140,7 +141,7 @@ export function finalisationGaps(m){
  if(!m.pilotQuality?.policy)gaps.push('G05 · Формал EQR хэрэглэх эсэхийн бодит шийдвэр');
  return [...new Set(gaps)];
 }
-export const scopedFinalisationRecords=(m,role,auditOnly=false)=>records(m).filter(r=>(!auditOnly||!service(r))&&(!restricted(r)||role!=='preparer'||r.by===role)).map(r=>({...r,current:current(m,r),history:(versions(m,r.id)??[]).slice(0,-1).reverse()}));
+export const scopedFinalisationRecords=(m,role,auditOnly=false)=>records(m).filter(r=>(!auditOnly||!service(r))&&(!restricted(r)||role!=='preparer'||r.by===actorKey(role))).map(r=>({...r,current:current(m,r),history:(versions(m,r.id)??[]).slice(0,-1).reverse()}));
 export function finalisationView(m,role,auditOnly=false){
  const all=records(m).filter(r=>!auditOnly||!service(r)),shown=scopedFinalisationRecords(m,role,auditOnly),queue=shown.filter(r=>!r.current||r.review?.disposition==='limited').map(r=>({id:r.id,title:r.title,owner:r.nextOwner,reason:r.followup}));
  for(const paper of Object.values(m.work).filter(p=>p.engagement===m.engagement))for(const note of paper.notes.filter(n=>!n.cleared))queue.push({id:note.id,title:paper.form+' · '+(note.anchor??'')+' · '+note.text,owner:note.response?paper.reviewer:paper.owner,reason:note.response?'Хариуг хараат бусаар хаах шийдвэр':'Бодит хариу / засвар хүлээж байна'});
@@ -161,7 +162,7 @@ export function effectCorrectionAction(m,role,action,data,files){
   if(finding.status==='posted_verified')fail('Бодитоор баталгаажсан засварыг шинэ саналд дарж алдахгүй.');
   if(role!=='reviewer')fail('Ахлах бэлтгэгч шаардлагатай.',403);if(!['disclosure','reclassification'].includes(data.mode))fail('Бодит залруулгын төрөл шаардлагатай.');
   const exposure=amount(input(data,'amount',24));if(exposure>Math.round(Math.abs(finding.amount)*100))fail('Илрүүлэлтийн өртөлтөөс илүүг засагдсан гэж тооцохгүй.');
-  const row={version:(prior?.version??0)+1,mode:data.mode,amount:exposure,reference:input(data,'reference',150),description:input(data,'description'),support:attachment(m,files,data.evidence),statement:m.engagements[0].fsVersion,by:role,at:now(),postings:[]};
+  const row={version:(prior?.version??0)+1,mode:data.mode,amount:exposure,reference:input(data,'reference',150),description:input(data,'description'),support:attachment(m,files,data.evidence),statement:m.engagements[0].fsVersion,by:actorKey(role),at:now(),postings:[]};
   if(row.mode==='reclassification'){
    let effects=parse(data.effects,'Дансны тусдаа нөлөөнүүд');if(!Array.isArray(effects)||effects.length<2||effects.length>40)fail('Хоёроос 40 тусдаа дансны нөлөө оруулна уу.');
    const keys=new Set();row.effects=effects.map(effect=>{required(effect,['account','reference','amount','currency']);const centsValue=cents(effect.amount);if(centsValue===null||centsValue===0||!/^[A-Z]{3}$/.test(effect.currency)||keys.has(effect.account+':'+effect.reference))fail('Тусдаа нөлөөний дүн, валют, түлхүүрийг шалгана уу.');keys.add(effect.account+':'+effect.reference);return {...effect,cents:centsValue};});
@@ -172,10 +173,10 @@ export function effectCorrectionAction(m,role,action,data,files){
   if(!prior||!['disclosure','reclassification'].includes(prior.mode)||String(prior.version)!==data.version||!fileLive(m,prior.support))fail('Одоогийн тусдаа нөлөөний залруулга шаардлагатай.');
   if(action==='correction-effect-response'){
    if(role==='preparer')fail('Бодит удирдлагын хариуг бүртгэх эрх шаардлагатай.',403);if(prior.response)fail('Өмнөх хариуг дарж өөрчлөхгүй.');
-   const accepted=amount(data.amount);if(!['accepted','partial','declined'].includes(data.result)||data.result==='accepted'&&accepted!==prior.amount||data.result==='partial'&&(accepted<=0||accepted>=prior.amount)||data.result==='declined'&&accepted!==0)fail('Бодит хариу ба зөвшөөрсөн дүн зөрсөн.');prior.response={amount:accepted,result:data.result,file:attachment(m,files,data.evidence),reason:input(data,'reason'),by:role,at:now()};
+   const accepted=amount(data.amount);if(!['accepted','partial','declined'].includes(data.result)||data.result==='accepted'&&accepted!==prior.amount||data.result==='partial'&&(accepted<=0||accepted>=prior.amount)||data.result==='declined'&&accepted!==0)fail('Бодит хариу ба зөвшөөрсөн дүн зөрсөн.');prior.response={amount:accepted,result:data.result,file:attachment(m,files,data.evidence),reason:input(data,'reason'),by:actorKey(role),at:now()};
   }else if(action==='correction-effect-verify'){
-   if(role!=='partner'||prior.by===role)fail('Хараат бус партнерын бодит шалгалт шаардлагатай.',403);if(!prior.response||prior.response.result==='declined'||!fileLive(m,prior.response.file))fail('Бодит тохирсон залруулга шаардлагатай.');
-   const post={amount:0,by:role,at:now(),reason:input(data,'reason'),evidence:attachment(m,files,data.evidence)};
+   if(role!=='partner'||prior.by===actorKey(role))fail('Хараат бус партнерын бодит шалгалт шаардлагатай.',403);if(!prior.response||prior.response.result==='declined'||!fileLive(m,prior.response.file))fail('Бодит тохирсон залруулга шаардлагатай.');
+   const post={amount:0,by:actorKey(role),at:now(),reason:input(data,'reason'),evidence:attachment(m,files,data.evidence)};
    if(prior.mode==='disclosure'){
     const management=currentManagement(m);if(!management||post.evidence.id!==management.notes.id||m.engagements[0].fsVersion<=prior.statement)fail('Зассан бодит шинэ СТ / тодруулгын хувилбар, удирдлагын зөвшөөрөл ба яг эх шаардлагатай.');
     post.amount=amount(data.amount);if(post.amount>prior.response.amount)fail('Тохирсон өртөлтөөс илүүг батлахгүй.');Object.assign(post,{statement:m.engagements[0].fsVersion,notes:management.notes,anchor:input(data,'anchor',300),actualWork:input(data,'actualWork')});

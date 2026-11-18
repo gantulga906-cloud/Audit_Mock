@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { randomUUID,createHash } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { recordEvent,snapshot } from '../src/lib/workspace.ts';
@@ -63,7 +64,7 @@ export function laterFactAction(m,role,action,data,files) {
     const {name,bytes}=fileInput(data), id=randomUUID(), sourceId=randomUUID();
     const facts=input(data,'facts'), knownAtReport=input(data,'knownAtReport');
     files.add(sourceId,name,bytes);
-    (m.pilotLaterFacts??=[]).push({id,by:role,at:now(),occurred,discovered,facts,knownAtReport,...impact,
+    (m.pilotLaterFacts??=[]).push({id,by:actorKey(role),at:now(),occurred,discovered,facts,knownAtReport,...impact,
       ...(phase&&{discoveredAt}),original:{...(phase&&{phase,authorizationAt}),package:packageId,digest,issued:bundle.issue.at,reportDate,reportSha256:bundle.issue.reportSha256,
         statements:bundle.authorization.fs,recipients},
       source:{id:sourceId,name,sha256:files.get(sourceId).sha256},communications:[]});
@@ -74,7 +75,7 @@ export function laterFactAction(m,role,action,data,files) {
       if (row.plan) fail('Шийдвэр баталсны дараа анхны үнэлгээг солихгүй.');
       const next=impactFor(data);
       if (row.impact===next.impact&&row.impactReason===next.impactReason) return;
-      (row.screeningHistory??=[]).push({impact:row.impact,impactReason:row.impactReason,by:role,at:row.screenedAt??row.at});
+      (row.screeningHistory??=[]).push({impact:row.impact,impactReason:row.impactReason,by:actorKey(role),at:row.screenedAt??row.at});
       Object.assign(row,next,{screenedAt:now()});
     } else if (action==='later-fact-communicate') {
       const {audience,state}=data;
@@ -87,7 +88,7 @@ export function laterFactAction(m,role,action,data,files) {
           audience==='users'&&(!row.original.recipients.includes(recipient)||row.plan?.outcome!=='prevent-reliance')) {
         fail('Одоогийн огноо ба өмнөх тайлангийн хүлээн авагчийг шалгана уу.');
       }
-      row.communications.push({id:randomUUID(),audience,state,recipient,day,by:role,at:now(),
+      row.communications.push({id:randomUUID(),audience,state,recipient,day,by:actorKey(role),at:now(),
         reference:input(data,'reference',300),detail:input(data,'detail')});
     } else if (action==='later-fact-decide') {
       if (row.plan||!['management','governance'].every(audience=>delivered(row,audience).length)) {
@@ -101,7 +102,7 @@ export function laterFactAction(m,role,action,data,files) {
       }
       if(controlledArchive(m)){if(row.original.phase==='dated-unissued'&&outcome==='reissue'||row.original.phase!=='dated-unissued'&&outcome==='revise-before-issue'||row.original.phase==='dated-unissued'&&outcome==='prevent-reliance')fail('Гараагүй тайланг дахин гаргасан / хүргэсэн гэж бүртгэхгүй. Зөв цаг үеийн шийдвэрийг сонгоно.');if(data.dateMode&&data.dateMode!=='full')fail('Хос огнооны хязгаарласан горим ба мэргэжлийн тусгай баталгаа хараахан дэмжигдээгүй. Энэ шаардлага нээлттэй хэвээр.');}
       const plan={outcome,revisedStatements,procedures:input(data,'procedures'),users:input(data,'users'),
-        authority:input(data,'authority'),advice:input(data,'advice'),reason:input(data,'reason'),by:role,at:now()};
+        authority:input(data,'authority'),advice:input(data,'advice'),reason:input(data,'reason'),by:actorKey(role),at:now()};
       if (['reissue','revise-before-issue'].includes(outcome)) {
         plan.paper=input(data,'paper',32);
         plan.reportDate=date(data,'reportDate');
@@ -114,7 +115,7 @@ export function laterFactAction(m,role,action,data,files) {
       if (!['reissue','revise-before-issue'].includes(row.plan?.outcome)||(m.pilotIssue?.at??null)!==(row.original.issued??null)) fail('Гараагүй шинэ тайлангийн огноог өөрчилнө.');
       const reportDate=date(data,'reportDate');
       if (reportDate<=row.plan.reportDate||reportDate<now().slice(0,10)) fail('Илүү хожуу тайлангийн огноо сонгоно уу.');
-      (row.plan.dateHistory??=[]).push({from:row.plan.reportDate,to:reportDate,reason:input(data,'reason'),by:role,at:now()});
+      (row.plan.dateHistory??=[]).push({from:row.plan.reportDate,to:reportDate,reason:input(data,'reason'),by:actorKey(role),at:now()});
       row.plan.reportDate=reportDate;
       if (m.archiveReopen?.laterFact===row.id) {
         m.archiveReopen.reportDate=reportDate;
@@ -134,7 +135,7 @@ export function laterFactAction(m,role,action,data,files) {
         const {bundle,digest}=files.archive.inspectCustody(m,successor);
         if (digest!==receipt.digest||bundle.authorization.laterFact?.id!==row.id) fail('Яг энэ дахин гаргалтын багцыг шалгана уу.');
       }
-      row.closed={by:role,at:now(),reason:input(data,'reason'),...(successor&&{successor})};
+      row.closed={by:actorKey(role),at:now(),reason:input(data,'reason'),...(successor&&{successor})};
     } else fail('Үйлдэл олдсонгүй.',404);
   }
   recordEvent(m,action);

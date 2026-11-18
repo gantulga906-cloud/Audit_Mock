@@ -15,8 +15,11 @@ export function recoveryManifest(path){
   const archives=db.prepare('SELECT id,engagement_id,previous,digest,payload FROM pilot_archives ORDER BY id').all().map(r=>{if(r.payload){assert.equal(sha(r.payload),r.digest,'Archive '+r.id);const b=JSON.parse(r.payload);if(b.authorization.artifact)assert.equal(sha(b.authorization.artifact.html),b.issue.reportSha256,'Archived report');for(const f of b.evidence)assert.equal(sha(Buffer.from(f.base64,'base64')),f.sha256,'Archived original');}return {id:r.id,engagement:r.engagement_id,previous:r.previous,digest:r.digest,disposed:r.payload===null};});
   const memberships=db.prepare('SELECT engagement_id,role FROM pilot_engagement_members ORDER BY engagement_id,role').all();
   const grants=db.prepare('SELECT id,body FROM pilot_engagements ORDER BY id').all().flatMap(row=>(JSON.parse(row.body).pilotRecords??[]).filter(r=>['M12-F07','M12-F10'].includes(r.kind)).map(r=>({engagement:row.id,id:r.id,version:r.version,status:r.status,scope:r.kind==='M12-F07'?'full':r.values.scope,package:r.values.package,accessor:r.values.accessor,until:r.values.until,revoked:!!r.revoked})));
-  const scopeDigest=sha(JSON.stringify({memberships,grants}));
-  return {evidence,authorizations,archives,memberships,grants,scopeDigest};
+  const exists=name=>!!db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?").get(name);
+  const named=exists('pilot_identities')?{users:db.prepare('SELECT id,username,name,staff,capacity,status,admin,firm_access,epoch FROM pilot_identities ORDER BY id').all(),grants:db.prepare('SELECT * FROM pilot_identity_grants ORDER BY id').all(),events:db.prepare('SELECT * FROM pilot_identity_events ORDER BY id').all(),settings:db.prepare('SELECT * FROM pilot_identity_settings ORDER BY id').all()}:undefined;
+  const records=Object.fromEntries(['pilot_firm','pilot_engagements','pilot_form_library','pilot_templates','pilot_external_effects'].filter(exists).map(table=>{const rows=db.prepare('SELECT * FROM '+table).all().map(r=>JSON.stringify(r)).sort();return [table,{count:rows.length,sha256:sha(rows.join('\n'))}];}));
+  const scopeDigest=sha(JSON.stringify({memberships,grants,...(named&&{named})}));
+  return {evidence,authorizations,archives,memberships,grants,scopeDigest,records,...(named&&{named})};
  }finally{db.close();}
 }
 export async function rehearseRecovery(source,targetDirectory){

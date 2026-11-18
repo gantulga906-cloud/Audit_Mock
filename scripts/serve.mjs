@@ -30,4 +30,5 @@ createServer(async (request, response) => {
 }).listen(port, '127.0.0.1', () => {
   console.log(pilot ? `Audit pilot: http://127.0.0.1:${port}/pilot` : `Audit prototype: http://127.0.0.1:${port}`);
   if (pilot?.setupCode) console.log('One-time setup code: ' + pilot.setupCode);
+  if (pilot?.identityBootstrapCode) console.log('Local named-administrator setup code: '+pilot.identityBootstrapCode);
 });

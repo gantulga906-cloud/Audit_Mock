@@ -24,7 +24,9 @@
     "verify:controlled-reporting-ui": "node scripts/verify-controlled-reporting-ui.mjs",
     "verify:archive-controls-ui": "node scripts/verify-archive-controls-ui.mjs",
     "verify:methodology-ui": "node scripts/verify-methodology-ui.mjs",
-    "verify:methodology-sources": "node scripts/verify-methodology-sources.mjs"
+    "verify:methodology-sources": "node scripts/verify-methodology-sources.mjs",
+    "verify:local-operations-ui": "node scripts/verify-local-operations-ui.mjs",
+    "rehearse:local-operations": "node scripts/pilot-operations-rehearsal.mjs"
   },
   "dependencies": {
     "fast-xml-parser": "5.12.1",

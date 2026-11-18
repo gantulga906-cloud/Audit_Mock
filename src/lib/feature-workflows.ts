@@ -7,7 +7,7 @@ import {applyTemplate,bench,DATE,type Client,type Period,type Template} from './
 export type Company={id:string;profile:Client;industry:string;status:'prospect'|'active'|'suspended'|'former';by:string};
 export type EngagementTeam={preparer:string;reviewer:string;partner:string;quality?:string};
 export const validDate=(v:string)=>DATE.test(v)&&Number.isFinite(Date.parse(v))&&new Date(v).toISOString().slice(0,10)===v;
-const manager=(m:Model)=>['reviewer','partner'].includes(personById(m.person).role);
+const manager=(m:Model)=>['reviewer','partner'].includes(personById(m.person,m).role);
 
 export function initCompanies(m:Model){
  const b=bench(m),companies=m.companies??={};
@@ -19,7 +19,7 @@ export function initCompanies(m:Model){
 }
 
 export function canSeeCompany(m:Model,c:Company){
- return personById(m.person).role!=='quality'&&(c.by===m.person||
+ return personById(m.person,m).role!=='quality'&&(c.by===m.person||
   (manager(m)&&!m.engagements.some(e=>e.companyId===c.id))||
   m.engagements.some(e=>e.companyId===c.id&&inScope(m,m.person,e.id)));
 }
@@ -46,7 +46,7 @@ export function createEngagement(m:Model,companyId:string,period:Period,reportDa
  if(!manager(m)||!c||!canSeeCompany(m,c))throw Error('Гэрээт ажил үүсгэхэд эрх шаардлагатай.');
  if(['suspended','former'].includes(c.status))throw Error('Компанийн төлөв шинэ ажил эхлүүлэх боломжгүй.');
  if(!validDate(period.start)||!validDate(period.end)||period.start>period.end||!validDate(reportDate)||reportDate<period.end)throw Error('Тайлант үе болон зорилтот гаргалтын өдрийг шалгана уу.');
- if(!(['preparer','reviewer','partner','quality'] as const).every(role=>role==='quality'&&!team[role]||PERSONS.some(p=>p.id===team[role]&&p.role===role))||!Object.values(team).includes(m.person))throw Error('Багийн хүчинтэй, тусдаа томилгоо шаардлагатай.');
+ if(!(['preparer','reviewer','partner','quality'] as const).every(role=>role==='quality'&&!team[role]||[...PERSONS,...(m.runtimePeople??[])].some(p=>p.id===team[role]&&p.role===role))||!Object.values(team).includes(m.person))throw Error('Багийн хүчинтэй, тусдаа томилгоо шаардлагатай.');
  const earlier=m.engagements.filter(e=>e.companyId===c.id);
  if(earlier.some(e=>{const p=b.periods[e.id];return p&&p.start<=period.end&&p.end>=period.start;}))throw Error('Энэ компанийн тайлант үетэй давхцаж байна.');
  if(carriedFrom&&!earlier.some(e=>e.id===carriedFrom&&inScope(m,m.person,e.id)&&b.periods[e.id]?.end<period.start))throw Error('Хандах эрхтэй өмнөх тайлант үе сонгоно уу.');
@@ -83,14 +83,14 @@ export const issuedRequest=(r:RequestItem)=>!r.dispatch||r.dispatch==='issued';
 
 function requestContext(m:Model,form:string){
  const e=m.engagements.find(x=>x.id===m.engagement),w=m.work[workKey(m.engagement,form)];
- if(!e||!w||e.locked||e.intake&&!e.intake.active||!canReadWork(m,w)||personById(m.person).role==='quality')throw Error('Идэвхтэй гэрээт ажил болон ажилд хандах эрх шаардлагатай.');
+ if(!e||!w||e.locked||e.intake&&!e.intake.active||!canReadWork(m,w)||personById(m.person,m).role==='quality')throw Error('Идэвхтэй гэрээт ажил болон ажилд хандах эрх шаардлагатай.');
  return w;
 }
 
 export function createRequest(m:Model,input:{title:string;form:string;contactId:string;owner:string;due:string;message:string;parts:string[];unagreedDue?:boolean}){
  const w=requestContext(m,input.form),contact=bench(m).clients[m.engagement]?.contacts.find(x=>x.id===input.contactId);
  if(!manager(m)&&!canEdit(m,w))throw Error('Хүсэлт үүсгэх томилгоо шаардлагатай.');
- if(!inScope(m,input.owner,m.engagement)||personById(input.owner).role==='quality'||(!manager(m)&&input.owner!==m.person))throw Error('Багийн хүчинтэй хариуцагч сонгоно уу.');
+ if(!inScope(m,input.owner,m.engagement)||personById(input.owner,m).role==='quality'||(!manager(m)&&input.owner!==m.person))throw Error('Багийн хүчинтэй хариуцагч сонгоно уу.');
  if(!contact?.name.trim()||!contact.email.trim())throw Error('Нэр, имэйлтэй холбоо барих хүн сонгоно уу.');
  const titles=input.parts.map(x=>x.trim()).filter(Boolean);
  if(!input.title.trim()||!(input.unagreedDue&&input.due===''||validDate(input.due))||!titles.length||new Set(titles).size!==titles.length)throw Error('Нэр, хугацаа болон давхардалгүй баримтын жагсаалт шаардлагатай.');
@@ -122,7 +122,7 @@ export function updateRequest(m:Model,id:string,action:'issue'|'cancel'|'followu
   (r.followUps??=[]).push({at,by:m.person,text:note});
  }
  const label={issue:'Гаргасан гэж тэмдэглэв',cancel:'Хаав',followup:'Дагаж тодруулав'}[action];
- r.history.push([at,personById(m.person).name,label,note].filter(Boolean).join(' · '));
+ r.history.push([at,personById(m.person,m).name,label,note].filter(Boolean).join(' · '));
  recordEvent(m,r.id+' · '+label,r.form);
 }
 

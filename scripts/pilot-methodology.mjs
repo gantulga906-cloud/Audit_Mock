@@ -1,3 +1,4 @@
+import {actorKey,currentIdentity} from './pilot-identity-context.mjs';
 import {createHash,randomUUID} from 'node:crypto';
 import {validDate} from '../src/lib/feature-workflows.ts';
 import {input,fileInput,PilotError} from './pilot-workflow.mjs';
@@ -17,7 +18,7 @@ export function methodologyOriginal(l,id,files){
 export function publisherAuthority(l,role,m,files){
  const grant=l.publishers?.[role];if(!grant||grant.revoked)fail('Нийтлэх тусдаа эрх шаардлагатай.',403);
  const person=approvedRows(m,'M01-F03').find(r=>r.id===grant.person&&r.values.account===role);
- if(!person||person.version!==grant.personVersion||!approvedRows(m,'M01-F06').some(r=>r.values.person===person.id&&r.values.capacity===role&&r.values.from<=today()&&r.values.to>=today()))fail('Нийтлэх эрхтэй бодит хүний одоогийн томилгоо шаардлагатай.',403);
+ if(!person||currentIdentity()&&currentIdentity().staff!==person.id||person.version!==grant.personVersion||!approvedRows(m,'M01-F06').some(r=>r.values.person===person.id&&r.values.capacity===role&&r.values.from<=today()&&r.values.to>=today()))fail('Нийтлэх эрхтэй бодит хүний одоогийн томилгоо шаардлагатай.',403);
  methodologyOriginal(l,grant.source,files);return grant;
 }
 export function validateMethodology(value){
@@ -57,35 +58,35 @@ export function importPreview(l,role,fields,files,sourceTemplate,validateCandida
 }
 export function methodologyAction(l,role,action,fields,files,m,callbacks){
  if(action==='methodology-enable'){
-  if(role!=='partner')fail('Партнерын шийдвэр шаардлагатай.',403);if(!managedMethodology(l))l.controls={profile:1,by:role,at:now(),reason:input(fields,'reason')};return true;
+  if(role!=='partner')fail('Партнерын шийдвэр шаардлагатай.',403);if(!managedMethodology(l))l.controls={profile:1,by:actorKey(role),at:now(),reason:input(fields,'reason')};return true;
  }
  if(!methodologyActions.includes(action))return false;if(!managedMethodology(l))fail('Арга зүйн хяналтын горим шаардлагатай.');
  if(action==='methodology-source-upload'){
   if(!['reviewer','partner'].includes(role))fail('Арга зүйн эх бүртгэх эрх шаардлагатай.',403);const {name,bytes}=fileInput(fields),id=randomUUID();files.add(id,name,bytes);
-  (l.sources??=[]).push({id,name,sha256:hash(bytes),version:1,status:'received',by:role,at:now(),source:input(fields,'source'),edition:input(fields,'edition',200)});return true;
+  (l.sources??=[]).push({id,name,sha256:hash(bytes),version:1,status:'received',by:actorKey(role),at:now(),source:input(fields,'source'),edition:input(fields,'edition',200)});return true;
  }
  if(action==='methodology-source-assess'){
-  const s=l.sources?.find(s=>s.id===fields.id&&s.status==='received');if(!s||!['reviewer','partner'].includes(role)||s.by===role)fail('Арга зүйн эхийг тусдаа хүн үнэлнэ.',403);
-  if(!['accepted','rejected'].includes(fields.result))fail('Үнэлгээний үр дүн шаардлагатай.');const raw=files.read(s.id);if(!raw||hash(raw.bytes)!==s.sha256)fail('Эхийн байт зөрсөн.');s.status=fields.result;s.assessment={by:role,at:now(),reason:input(fields,'reason')};return true;
+  const s=l.sources?.find(s=>s.id===fields.id&&s.status==='received');if(!s||!['reviewer','partner'].includes(role)||s.by===actorKey(role))fail('Арга зүйн эхийг тусдаа хүн үнэлнэ.',403);
+  if(!['accepted','rejected'].includes(fields.result))fail('Үнэлгээний үр дүн шаардлагатай.');const raw=files.read(s.id);if(!raw||hash(raw.bytes)!==s.sha256)fail('Эхийн байт зөрсөн.');s.status=fields.result;s.assessment={by:actorKey(role),at:now(),reason:input(fields,'reason')};return true;
  }
  if(action==='methodology-publisher'){
   if(role!=='partner'||!['reviewer','partner'].includes(fields.actor))fail('Нийтлэх тусдаа эрхийн шийдвэр шаардлагатай.',403);
-  const note=input(fields,'reason');l.publishers??={};if(fields.access==='revoke'){const old=l.publishers[fields.actor];if(!old)fail('Өмнөх эрх олдсонгүй.');old.revoked={by:role,at:now(),reason:note};return true;}
+  const note=input(fields,'reason');l.publishers??={};if(fields.access==='revoke'){const old=l.publishers[fields.actor];if(!old)fail('Өмнөх эрх олдсонгүй.');old.revoked={by:actorKey(role),at:now(),reason:note};return true;}
   if(fields.access!=='grant')fail('Эрхийн үйлдэл буруу байна.',400);
   const source=methodologyOriginal(l,fields.source,files),person=approvedRows(m,'M01-F03').find(r=>r.id===fields.person&&r.values.account===fields.actor);if(!person)fail('Баталсан бодит хүнийг данстай нь холбоно.');
-  const grant={actor:fields.actor,person:person.id,personVersion:person.version,source:source.id,sourceSha256:source.sha256,by:role,at:now(),reason:note};
+  const grant={actor:fields.actor,person:person.id,personVersion:person.version,source:source.id,sourceSha256:source.sha256,by:actorKey(role),at:now(),reason:note};
   (l.publisherHistory??=[]).push(structuredClone(grant));l.publishers[fields.actor]=grant;publisherAuthority(l,fields.actor,m,files);return true;
  }
  if(action==='template-retire'){
   const authority=publisherAuthority(l,role,m,files),r=l.releases[fields.form]?.find(r=>String(r.number)===fields.version);if(!r||r.digest!==fields.digest)fail('Яг нийтэлсэн хувилбарыг холбоно.');
   if((l.retirements??[]).some(x=>x.form===fields.form&&x.digest===r.digest))fail('Энэ хувилбар ашиглалтаас гарсан.');
-  (l.retirements??=[]).push({form:fields.form,number:r.number,digest:r.digest,by:role,at:now(),reason:input(fields,'reason'),authority:structuredClone(authority)});return true;
+  (l.retirements??=[]).push({form:fields.form,number:r.number,digest:r.digest,by:actorKey(role),at:now(),reason:input(fields,'reason'),authority:structuredClone(authority)});return true;
  }
  if(action==='template-import'){
   const preview=importPreview(l,role,fields,files,callbacks.sourceTemplate,callbacks.validateDraft);if(!preview.ready||fields.previewDigest!==preview.digest||fields.importAck!=='reviewed')fail('Яг одоогийн зураглал, зөрчил ба хязгаарыг урьдчилан хянана.');
-  const id=preview.body.id,old=l.drafts[id];if(old?.submitted||old&&old.by!==role)fail('Илгээсэн эсвэл өөр зохиогчийн нооргийг солихгүй.');
+  const id=preview.body.id,old=l.drafts[id];if(old?.submitted||old&&old.by!==actorKey(role))fail('Илгээсэн эсвэл өөр зохиогчийн нооргийг солихгүй.');
   const body=callbacks.validateDraft(id,preview.body,callbacks.sourceTemplate(id));
-  l.grants[id]??=[role];l.drafts[id]={body,by:role,submitted:false,note:input(fields,'reason'),parent:l.releases[id]?.at(-1)?.digest??null,import:{digest:preview.digest,source:preview.source,mapping:preview.body.provenance.mapping,warnings:preview.warnings,at:now()}};return true;
+  l.grants[id]??=[role];l.drafts[id]={body,by:actorKey(role),submitted:false,note:input(fields,'reason'),parent:l.releases[id]?.at(-1)?.digest??null,import:{digest:preview.digest,source:preview.source,mapping:preview.body.provenance.mapping,warnings:preview.warnings,at:now()}};return true;
  }
  return false;
 }
@@ -98,5 +99,5 @@ export function methodologyDecision(m,role,fields){
  if(role==='preparer')fail('Ахлах хянагч / партнерын шийдвэр шаардлагатай.',403);
  const notice=methodologyNotices(m).find(n=>n.form===fields.form&&n.target?.digest===fields.target&&n.from.digest===fields.from);if(!notice)fail('Одоогийн өөрчлөлтийн мэдэгдлийг дахин нээнэ.');
  if(fields.requiredChange!=='no'||fields.decision!=='defer')fail('Заавал өөрчлөх горимыг энэ шийдвэрээр хойшлуулахгүй. Баталсан өөрчлөлтийн ажлыг тусдаа хэрэгжүүлнэ.');
- (m.pilotFormDecisions??=[]).push({form:fields.form,from:fields.from,target:fields.target,decision:'defer',requiredChange:'no',reason:input(fields,'reason'),by:role,at:now()});
+ (m.pilotFormDecisions??=[]).push({form:fields.form,from:fields.from,target:fields.target,decision:'defer',requiredChange:'no',reason:input(fields,'reason'),by:actorKey(role),at:now()});
 }

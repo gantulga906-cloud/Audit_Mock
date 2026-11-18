@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { createHash } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { canEdit, changeWork, recordEvent, snapshot, workKey } from '../src/lib/workspace.ts';
@@ -6,7 +7,7 @@ import { parseAreaFile, runAreaChecks } from './pilot-area-checks.mjs';
 import { approvedPopulation, cents } from './pilot-population.mjs';
 import { programmeDecision } from './pilot-registers.mjs';
 import { evidenceCurrent } from './pilot-requests.mjs';
-import { accounts, input, PilotError } from './pilot-workflow.mjs';
+import { accounts, accountFor, input, PilotError } from './pilot-workflow.mjs';
 
 const fail = (message,status=409) => { throw new PilotError(status,message); };
 const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -109,7 +110,7 @@ function runChecks(m,role,form,data,files,prior) {
   const output=runAreaChecks(profile.method,scope,inputs,ledger,additional);
   (((m.pilotAreaRuns??={})[form])??=[]).push({version:(prior?.version??0)+1,form,population:population.version,
     source:population.evidence,line:bridge.line,through,currency:scope.currency,files:sources,params,stamp:identity,
-    by:role,at:now(),...output});
+    by:actorKey(role),at:now(),...output});
   return true;
 }
 
@@ -123,10 +124,10 @@ export function areaAction(m,role,action,data,files,forms) {
   } else {
     if (!prior||String(prior.version)!==data.version||!current(m,prior)) fail('Одоогийн ажиллуулалтыг сонгоно уу.');
     if (action==='area-review') {
-      if (paper.reviewer!==accounts[role]||paper.owner===accounts[role]) fail('Хараат бус томилсон хянагч шаардлагатай.',403);
+      if (paper.reviewer!==accountFor(m,role)||paper.owner===accountFor(m,role)) fail('Хараат бус томилсон хянагч шаардлагатай.',403);
       if (prior.cases.some(item=>!resolved(m,item))) fail('Бүх тохиолдлын үндэслэл ба нотлох баримтыг шалгана уу.');
       if (prior.approval) return false;
-      prior.approval={by:role,at:now(),conclusion:input(data,'conclusion'),reviewStamp:digest(prior.cases.map(c=>c.reviews?.at(-1)))};
+      prior.approval={by:actorKey(role),at:now(),conclusion:input(data,'conclusion'),reviewStamp:digest(prior.cases.map(c=>c.reviews?.at(-1)))};
       (prior.approvals??=[]).push(prior.approval);
     } else if (action==='area-dispose') {
       if (!owner) fail('Хөтөлбөрийн бэлтгэгч шаардлагатай.',403);
@@ -140,7 +141,7 @@ export function areaAction(m,role,action,data,files,forms) {
       if (finding&&(finding.resolution||finding.status!=='identified'||result!=='finding')) fail('Илрүүлэлтийн өмнөх шийдвэрийг хадгална.');
       const previous=item.reviews?.at(-1);
       if (previous?.result===result&&previous.evidence===evidence.id&&previous.amount===amount&&previous.note===note) return false;
-      const disposition={result,note,evidence:evidence.id,evidenceVersion:evidence.version,by:role,at:now(),amount,
+      const disposition={result,note,evidence:evidence.id,evidenceVersion:evidence.version,by:actorKey(role),at:now(),amount,
         ...(result==='finding'&&{finding:id})};
       (item.reviews??=[]).push(disposition);
       delete prior.approval;

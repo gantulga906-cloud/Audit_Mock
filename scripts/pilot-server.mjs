@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -21,6 +22,10 @@ import {importPreview,releaseReview,managedMethodology} from './pilot-methodolog
 import {inspectWorkbook} from './pilot-workbook.mjs';
 import {workpaperExportPreview,renderWorkpaperExport,searchWorkpapers} from './pilot-workpaper-export.mjs';
 import {isAcceptanceAction,acceptanceAction,acceptanceActivationGaps,acceptanceView} from './pilot-acceptance.mjs';
+import {createExternalEffects} from './pilot-external-effects.mjs';
+import {operationsView} from './pilot-operations.mjs';
+import {createIdentityStore} from './pilot-identity.mjs';
+import {currentIdentity,withIdentity} from './pilot-identity-context.mjs';
 
 const prefix = '/api/pilot';
 const termsRemediation = new Set(['intake-terms-save','intake-terms-approve','support-upload','support-assess','support-scope','schedule','access']);
@@ -81,6 +86,9 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
   db.prepare('INSERT OR IGNORE INTO workspace VALUES (1, 0, ?)').run(JSON.stringify(emptyWorkspace()));
   const archive = createArchiveStore(db);
   const store = createPilotStore(db);
+  const identities=createIdentityStore(db,store);
+  const externalEffects=createExternalEffects(db);
+  store.setIdentities(identities);
   const intake = createIntakeStore(db, store);
   const { transaction } = store;
   const configured = () => db.prepare('SELECT COUNT(*) AS total FROM accounts').get().total !== 0;
@@ -100,7 +108,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     confirmations: () => confirmations.view(engagementId),
     deliveries: () => releases.view(engagementId),
     reportingContacts: model => model.pilotIntake?intake.contextView(model).contacts:model.bench.clients[model.engagement].contacts,
-    oversightConfigured: role => !!db.prepare('SELECT 1 FROM accounts WHERE role=?').get(role),
+    oversightConfigured: role => identities.configured(role)||!!db.prepare('SELECT 1 FROM accounts WHERE role=?').get(role),
     checkArchiveRecord: (model, row) => {
       if(row.kind==='M12-F02'){
         if(archive.isSealed(model))throw new PilotError(409,'Архив түгжээтэй. Шинэ бүрдүүлэлтэд зөвшөөрсөн өөрчлөлт шаардлагатай.');
@@ -131,18 +139,20 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     return accessible.length === 1 ? accessible[0].id : null;
   }
   function view(role, id) {
-    const { model, revision } = store.load(role, id);
+    const { model, revision } = store.load(role, id,true);
     const portfolio = store.portfolio(role).map(item => id ? item : {
       ...item, progress: deliverySummary(store.load(role, item.id).model, role, archive),
     });
     const files = filesFor(id);
     const payload = pilotView(model, role, revision, files);
+    if(id&&!archive.isSealed(model)){payload.operations=operationsView(model,payload);payload.externalEffects=externalEffects.view(id);}
     if (payload.engagement && !payload.engagement.active) {
       payload.engagement.acceptanceGaps.push(...intake.activationGaps(model), ...termsGaps(model, files), ...staffingGaps(model),...acceptanceActivationGaps(model));
     }
     return { ...payload, selected: id, portfolio,
+      identity:currentIdentity()?{...model.runtimeIdentity,canAdmin:identities.canAdmin(),profile:'local-preview',people:model.runtimePeople}:undefined,
       formLibrary: libraryView(model.pilotFormLibrary, role, filesFor(null), !id,model),
-      ...(!id && { intake: intake.view(role), roster: rosterView(model, files, role, new Set(portfolio.map(item=>item.id))) }),
+      ...(!id && (!currentIdentity()||model.runtimeIdentity?.firmAccess) && { intake: intake.view(role), roster: rosterView(model, files, role, new Set(portfolio.map(item=>item.id))) }),
       ...(id && (role === 'partner' || !archive.isSealed(model)) && {
         staffing: { managed: managedStaffing(model), members: store.members(id), seats: approvedStaffing(model),
           gaps: staffingGaps(model), accepted: model.pilotStaffingAccepted },
@@ -217,7 +227,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
         if (req.method==='POST'&&req.headers.origin!=='http://'+host) throw new PilotError(403,'Хүсэлтийн эх хаяг тохирохгүй.');
         if (req.method==='POST'&&route==='/oversight/login') {
           limitAttempts();
-          const {role,password}=await readJson(req);
+          const data=await readJson(req),{role,password}=data;
+          if(data.username){const result=transaction(()=>identities.login(data));if(!oversightRoles.includes(result.identity.capacity)||result.identity.capacity!==role)throw new PilotError(401,'Use the entrance for your appointed independent capacity.');const payload=withIdentity(result.identity,()=>transaction(()=>oversight.view(role),false));json(res,200,payload,{'Set-Cookie':cookie(name,result.token,sessionMs/1000)});return true;}
           const account=oversightRoles.includes(role)&&db.prepare('SELECT salt,hash FROM accounts WHERE role=?').get(role);
           if (!account||typeof password!=='string'||password.length>128||!timingSafeEqual(account.hash,scryptSync(password,account.salt,64))) {
             throw new PilotError(401,'Хараат бус нэвтрэх эрх тохирохгүй.');
@@ -230,10 +241,12 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           json(res,200,transaction(()=>oversight.view(role),false),{'Set-Cookie':cookie(name,value,sessionMs/1000)});
           return true;
         }
-        const session=sessionToken&&/^[a-f0-9]{64}$/.test(sessionToken)&&
+        const independentNamed=identities.session(sessionToken);
+        const session=independentNamed||sessionToken&&/^[a-f0-9]{64}$/.test(sessionToken)&&
           db.prepare('SELECT role FROM sessions WHERE token=? AND expires>?').get(digest(sessionToken),Date.now());
         if (!session||!oversightRoles.includes(session.role)) throw new PilotError(401,'Хараат бус нэвтрэх эрх шаардлагатай.');
         const id=url.searchParams.get('engagement'), {role}=session;
+        return await withIdentity(independentNamed,async()=>{
         if (req.method==='GET'&&route==='/oversight') json(res,200,transaction(()=>oversight.view(role,id),false));
         else if (req.method==='POST'&&route==='/oversight/action') {
           const fields=await readJson(req);
@@ -244,10 +257,11 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             "attachment; filename*=UTF-8''"+encodeURIComponent(file.name).replace(/['()*]/g,c=>'%'+c.charCodeAt(0).toString(16))});
           res.end(file.bytes);
         } else if (req.method==='POST'&&route==='/oversight/logout') {
-          db.prepare('DELETE FROM sessions WHERE token=?').run(digest(sessionToken));
+          db.prepare('DELETE FROM sessions WHERE token=?').run(digest(sessionToken));identities.logout(sessionToken);
           json(res,200,{}, {'Set-Cookie':cookie(name,'',0)});
         } else throw new PilotError(404,'Хяналтын хуудас олдсонгүй.');
         return true;
+        });
       }
       const confirmation = /^\/confirmation\/([a-f0-9]{64})$/.exec(route);
       if (confirmation && ['GET','POST'].includes(req.method)) {
@@ -262,7 +276,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       }
       const name = 'audit_pilot_' + port;
       const token = (req.headers.cookie ?? '').split(';').map(x => x.trim()).find(x => x.startsWith(name + '='))?.slice(name.length + 1);
-      const session = token && /^[0-9a-f]{64}$/.test(token) &&
+      const namedSession=identities.session(token);
+      const session = namedSession || identities.legacyTeam() && token && /^[0-9a-f]{64}$/.test(token) &&
         db.prepare('SELECT role FROM sessions WHERE token = ? AND expires > ?').get(digest(token), Date.now());
       if (req.method === 'GET' && route === '' && !session) {
         json(res, 200, { setup: !configured() });
@@ -270,6 +285,12 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       }
       if (req.method === 'POST') {
         if (req.headers.origin !== 'http://' + host) throw new PilotError(403, 'Хүсэлтийн эх хаяг тохирохгүй.');
+        if(route==='/identity/bootstrap'){
+          limitAttempts();const data=await readJson(req);
+          if(session?.role!=='partner'||namedSession||typeof data.code!=='string'||!timingSafeEqual(Buffer.from(digest(data.code)),Buffer.from(digest(setupCode))))throw new PilotError(403,'The existing local partner and the server setup code are required for the first named administrator.');
+          json(res,201,transaction(()=>identities.bootstrap(data)));return true;
+        }
+        if(route==='/identity/activate'){limitAttempts();const data=await readJson(req);json(res,200,transaction(()=>identities.activate(data)));return true;}
         if (route === '/setup') {
           if (configured()) throw new PilotError(409, 'Нэвтрэх эрхүүд бүртгэгдсэн.');
           limitAttempts();
@@ -294,7 +315,10 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
         }
         if (route === '/login') {
           limitAttempts();
-          const { role, password } = await readJson(req);
+          const data=await readJson(req);
+          if(data.username){const result=transaction(()=>identities.login(data));if(!roles.includes(result.identity.capacity)){identities.logout(result.token);throw new PilotError(401,'Use the separate independent entrance.');}const payload=withIdentity(result.identity,()=>transaction(()=>view(result.identity.capacity,resolveScope(result.identity.capacity,url)),false));json(res,200,payload,{'Set-Cookie':cookie(name,result.token,sessionMs/1000)});return true;}
+          const { role, password } = data;
+          if(!identities.legacyTeam())throw new PilotError(401,'Shared team entrances are closed. Use your named local account.');
           const account = roles.includes(role) && db.prepare('SELECT salt, hash FROM accounts WHERE role = ?').get(role);
           if (!account || typeof password !== 'string' || password.length > 128 ||
               !timingSafeEqual(account.hash, scryptSync(password, account.salt, 64))) throw new PilotError(401, 'Дүр эсвэл нууц үг тохирохгүй.');
@@ -309,15 +333,19 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       }
       if (!session||!roles.includes(session.role)) throw new PilotError(401, 'Нэвтэрч орно уу.');
       const { role } = session;
+      return await withIdentity(namedSession,async()=>{
+      if(route==='/identity/directory'&&req.method==='GET'){json(res,200,transaction(()=>identities.directory(),false));return true;}
+      if(route==='/identity/manage'&&req.method==='POST'){const data=await readJson(req);json(res,200,transaction(()=>identities.manage(data)));return true;}
       if (req.method === 'GET' && route === '') {
         json(res, 200, transaction(() => view(role, resolveScope(role, url)), false));
       } else if (req.method === 'POST' && route === '/logout') {
         db.prepare('DELETE FROM sessions WHERE token = ?').run(digest(token));
+        identities.logout(token);
         json(res, 200, { setup: false }, { 'Set-Cookie': cookie(name, '', 0) });
       } else if (req.method === 'POST' && route === '/action') {
         const data = readCommand(await readJson(req));
         const result = transaction(() => {
-          if (!db.prepare('SELECT 1 FROM sessions WHERE token = ? AND expires > ?').get(digest(token), Date.now())) {
+          if (!(namedSession?identities.session(token,false):db.prepare('SELECT 1 FROM sessions WHERE token = ? AND expires > ?').get(digest(token), Date.now()))) {
             throw new PilotError(401, 'Нэвтрэх хугацаа дууссан.');
           }
           const id = resolveScope(role, url), context = store.load(role, id);
@@ -331,7 +359,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             }
             const fields = Object.entries(data.fields ?? {}).sort(([a], [b]) => a.localeCompare(b));
             fingerprint = digest(JSON.stringify([data.action, fields]));
-            const previous = db.prepare('SELECT fingerprint, scope, result_engagement FROM pilot_commands WHERE actor = ? AND key = ?').get(role, key);
+            const previous = db.prepare('SELECT fingerprint, scope, result_engagement FROM pilot_commands WHERE actor = ? AND key = ?').get(actorKey(role), key);
             if (previous) {
               const originalScope = previous.scope ?? store.legacyId;
               if (previous.fingerprint !== fingerprint || (originalScope !== scope &&
@@ -354,7 +382,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
               !['intake-refresh','intake-context-item'].includes(data.action)&&!acceptancePaper) throw new PilotError(409,termsHold);
           let enquiry, confirmationLink, deliveryLink;
           try {
-            if(isAcceptanceAction(data.action))acceptanceAction(model,role,data.action,data.fields,filesFor(id));
+            if(data.action.startsWith('external-')){if(!id||archive.isSealed(model))throw new PilotError(409,'An open engagement is required.');if(managedStaffing(model))requireSeat(model,filesFor(id),role);externalEffects.action(model,role,data.action,data.fields,filesFor(id));}
+            else if(isAcceptanceAction(data.action))acceptanceAction(model,role,data.action,data.fields,filesFor(id));
             else if(data.action==='intake-context-item')intake.contextItem(model,role,data.fields);
             else if (data.action === 'access') changeMembership(context, role, data.fields);
             else if (isLibraryAction(data.action)) libraryAction(model.pilotFormLibrary, role, data.action, data.fields, filesFor(null),model);
@@ -395,10 +424,11 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             throw error;
           }
           const resultId = store.save(context, data.action, data.fields);
+          identities.receipt(data.action,resultId??scope,revision,data.fields);
           intake.finish(model, role, data.action, enquiry);
           if (isIntakeAction(data.action) && !resultId) store.touchFirm();
           if (fingerprint) db.prepare(`INSERT INTO pilot_commands (actor, key, fingerprint, scope, result_engagement)
-            VALUES (?, ?, ?, ?, ?)`).run(role, key, fingerprint, scope, resultId);
+            VALUES (?, ?, ?, ?, ?)`).run(actorKey(role), key, fingerprint, scope, resultId);
           return {...view(role,resultId),...(confirmationLink&&{confirmationLink}),...(deliveryLink&&{deliveryLink})};
         });
         json(res, 200, result);
@@ -418,7 +448,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       } else if(req.method==='GET'&&route==='/methodology/workbook'){
         const value=transaction(()=>{if(resolveScope(role,url)||!['reviewer','partner'].includes(role))throw new PilotError(403,'Арга зүйн эхийн хүрээнд хандана.');const {model}=store.load(role,null),source=model.pilotFormLibrary.sources?.find(s=>s.id===url.searchParams.get('source'));if(!source)throw new PilotError(404,'Эх олдсонгүй.');const raw=filesFor(null).read(source.id);if(!raw||digest(raw.bytes)!==source.sha256)throw new PilotError(409,'Эхийн байт зөрсөн.');const book=inspectWorkbook(raw.bytes);return {...book,sheets:book.sheets.map(s=>({...s,cells:undefined,sample:Object.entries(s.cells).slice(0,40).map(([cell,value])=>({cell,...value})),cellCount:Object.keys(s.cells).length}))};},false);json(res,200,value,{'Cache-Control':'no-store'});
       } else if(req.method==='GET'&&route==='/methodology/review'){
-        const value=transaction(()=>{if(resolveScope(role,url)||!['reviewer','partner'].includes(role))throw new PilotError(403,'Нийтлэлийн хяналтын эрх шаардлагатай.');const {model}=store.load(role,null);const d=model.pilotFormLibrary.drafts[url.searchParams.get('form')];if(!d||d.by!==role&&!d.submitted)throw new PilotError(404,'Ноорог олдсонгүй.');return releaseReview(model.pilotFormLibrary,url.searchParams.get('form'),filesFor(null));},false);json(res,200,value,{'Cache-Control':'no-store'});
+        const value=transaction(()=>{if(resolveScope(role,url)||!['reviewer','partner'].includes(role))throw new PilotError(403,'Нийтлэлийн хяналтын эрх шаардлагатай.');const {model}=store.load(role,null);const d=model.pilotFormLibrary.drafts[url.searchParams.get('form')];if(!d||d.by!==actorKey(role)&&!d.submitted)throw new PilotError(404,'Ноорог олдсонгүй.');return releaseReview(model.pilotFormLibrary,url.searchParams.get('form'),filesFor(null));},false);json(res,200,value,{'Cache-Control':'no-store'});
       } else if(req.method==='GET'&&/^\/methodology\/source\/[a-f0-9-]{36}$/.test(route)){
         const file=transaction(()=>{if(resolveScope(role,url)||!['reviewer','partner'].includes(role))throw new PilotError(403,'Арга зүйн эхийн хүрээнд хандана.');const {model}=store.load(role,null),source=model.pilotFormLibrary.sources?.find(s=>s.id===route.split('/').at(-1));const raw=source&&filesFor(null).read(source.id);if(!raw||digest(raw.bytes)!==source.sha256)throw new PilotError(409,'Бодит эх олдсонгүй / хэш зөрсөн.');return {...source,...raw};},false);res.writeHead(200,{'Content-Type':'application/octet-stream','Content-Disposition':'attachment; filename="'+encodeURIComponent(file.name)+'"','X-Audit-Source-SHA256':file.sha256});res.end(file.bytes);
       } else if(req.method==='GET'&&route==='/form-adoption-preview'){
@@ -466,11 +496,13 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       } else {
         throw new PilotError(404, 'Хуудас олдсонгүй.');
       }
+      return true;
+      });
     } catch (error) {
       if (!(error instanceof PilotError)) console.error('Pilot API:', error);
       if (!res.headersSent) json(res, error.status || 500, { error: error instanceof PilotError ? error.message : 'Хадгалалтын алдаа гарлаа.' });
     }
     return true;
   }
-  return { handle, close: () => db.close(), setupCode: configured() ? null : setupCode };
+  return { handle, close: () => db.close(), setupCode: configured() ? null : setupCode,identityBootstrapCode:configured()&&!identities.hasAdministrator()?setupCode:null };
 }

@@ -151,7 +151,11 @@ test('G00 shared foundations preserve scoped work, exact evidence and approval h
     assert.equal(changed.authorized.current, false);
     assert.equal(paper(changed, '4.1.A1').status, 'changed');
     assert.equal(paper(changed, work.form).reviewedVersion, exactWorkVersion);
-    assert.deepEqual(await app.view('reviewer', b), bBefore);
+    const bAfter=await app.view('reviewer',b);
+    // Reading a fresh dashboard advances its observation timestamp without changing stored work.
+    assert.ok(Date.parse(bAfter.operations.asOf)>=Date.parse(bBefore.operations.asOf));
+    const domainState=view=>{const result=structuredClone(view);delete result.operations.asOf;delete result.operations.freshness.observedAt;return result;};
+    assert.deepEqual(domainState(bAfter),domainState(bBefore));
     assert.deepEqual(await (await app.request(app.scope('/authorizations', a), app.cookies.partner)).json(), authBefore);
 
     await app.write('partner', a, 'access', { role: 'preparer', access: 'revoke', reason: 'Assignment ended' });

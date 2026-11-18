@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { randomUUID } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { saveClient } from '../src/lib/workbench.ts';
@@ -64,7 +65,7 @@ export function termsAction(model, role, action, data, files) {
   if (active&&(files.archive.isSealed(model)||model.pilotIssue||e.issued)) fail(409,'Гаргасан тайлантай ажлын нөхцөлийг энэ хэсгээс өөрчлөхгүй.');
   const terms = model.pilotTerms;
   if (action === 'intake-terms-approve') {
-    allowed(role === 'partner' && terms?.by !== role);
+    allowed(role === 'partner' && terms?.by !== actorKey(role));
     if (active) requireSeat(model,files,role);
     if (terms?.status !== 'draft' || active!==!!terms.amendment || String(terms.version) !== data?.version || !currentTerms(model, files)) {
       fail(409, 'Одоогийн захидлын хувилбарыг нягтална уу.');
@@ -101,7 +102,7 @@ export function termsAction(model, role, action, data, files) {
       ...(amendment&&{amendment}) };
     if (terms&&Object.entries(draft).every(([key,value])=>key==='status'||JSON.stringify(terms[key])===JSON.stringify(value))) return;
     if (terms) (model.pilotTermsHistory ??= []).unshift(terms);
-    model.pilotTerms = { ...draft, version: (terms?.version ?? 0) + 1, by: role, at: now() };
+    model.pilotTerms = { ...draft, version: (terms?.version ?? 0) + 1, by:actorKey(role), at: now() };
     if (active) invalidateReport(model,'Тохиролцсон хамрах хүрээ өөрчлөгдөв · 1.4.3 v'+model.pilotTerms.version);
   }
   recordEvent(model, '1.4.3 · Захидал v'+model.pilotTerms.version+' · '+model.pilotTerms.status, '1.4.3');
@@ -125,7 +126,7 @@ export function createIntakeStore(db, store) {
         profile: { ...profile, industry: e.industry, contacts: profile.contacts.map(c => ({
           ...c, source: 'Өмнөх гэрээт ажлын бүртгэл', effective: '',
         })) },
-        history: [{ by: role, at: now(), version: 1, note: 'Өмнөх гэрээт ажлын мэдээллийг бүртгэв' }],
+        history: [{ by:actorKey(role), at: now(), version: 1, note: 'Өмнөх гэрээт ажлын мэдээллийг бүртгэв' }],
       };
       putClient(client);
     }
@@ -197,7 +198,7 @@ export function createIntakeStore(db, store) {
       const status = input(data, 'status', 12);
       if (!relationships.includes(status)) fail(400, 'Харилцааны төлөвийг шалгана уу.');
       if (status === current.status) return;
-      current.history.unshift({ by: role, at: now(), version: current.version, note, previousStatus: current.status });
+      current.history.unshift({ by:actorKey(role), at: now(), version: current.version, note, previousStatus: current.status });
       current.status = status;
       putClient(current);
       return;
@@ -240,7 +241,7 @@ export function createIntakeStore(db, store) {
     }
     const client = current || { id: randomUUID(), version: 0, status: 'prospect', owner: role, history: [] };
     client.version++;
-    client.history.unshift({ by: role, at: now(), version: client.version, note, ...(previous && { before: previous }) });
+    client.history.unshift({ by:actorKey(role), at: now(), version: client.version, note, ...(previous && { before: previous }) });
     client.profile = profile;
     putClient(client);
   }
@@ -263,7 +264,7 @@ export function createIntakeStore(db, store) {
       };
       if(!['preparer','reviewer','partner'].includes(row.nextOwner))fail(400,'Дараагийн хариуцагчийг сонгоно уу.');
       const prior = previous && Object.fromEntries(Object.entries(previous).filter(([key]) => key !== 'history'));
-      row.history.unshift({ by: role, at: now(), status: 'draft', note: 'Мэдээлэл хадгалав', ...(prior && { before: prior }) });
+      row.history.unshift({ by:actorKey(role), at: now(), status: 'draft', note: 'Мэдээлэл хадгалав', ...(prior && { before: prior }) });
       putEnquiry(row);
       return null;
     }
@@ -294,12 +295,12 @@ export function createIntakeStore(db, store) {
         engagement.intake.facts = previous.facts;
         if (earlier.length) engagement.kind = 'Үргэлжилсэн аудит';
         if (prior) engagement.carriedFrom = prior.id;
-        model.pilotIntake = { enquiry: id, client: client.id, version: client.version, confirmation: 1, contact, by: role, at: now(), note,
+        model.pilotIntake = { enquiry: id, client: client.id, version: client.version, confirmation: 1, contact, by:actorKey(role), at: now(), note,
           service:previous.service,intendedUsers:previous.intendedUsers??'',signatories:structuredClone(client.profile.contacts.filter(row=>row.signer)),
           ...(prior && { prior: prior.id }) };
         if(extended==='yes'){
           enableAcceptance(model);
-          model.pilotPlanning={profile:1,by:role,at:new Date().toISOString(),reason:'Шинэ гэрээт ажлын G02 төлөвлөлтийн хяналт'};
+          model.pilotPlanning={profile:1,by:actorKey(role),at:new Date().toISOString(),reason:'Шинэ гэрээт ажлын G02 төлөвлөлтийн хяналт'};
           model.pilotEvidenceEnabled=true;
         }
         previous.engagement = engagement.id;
@@ -308,7 +309,7 @@ export function createIntakeStore(db, store) {
       }
     }
     const item = action === 'intake-return' ? input(data, 'item', 200) : undefined;
-    previous.history.unshift({ by: role, at: now(), status: previous.status, note, ...(item && { item }) });
+    previous.history.unshift({ by:actorKey(role), at: now(), status: previous.status, note, ...(item && { item }) });
     return previous;
   }
 
@@ -335,7 +336,7 @@ export function createIntakeStore(db, store) {
     const intendedUsers=data.intendedUsers===undefined?current.intendedUsers: text(data,'intendedUsers');
     const changed = contact !== current.contact || client.version !== current.version||intendedUsers!==current.intendedUsers;
     if (changed) (model.pilotIntakeHistory ??= []).unshift(current);
-    model.pilotIntake = { ...current, contact,intendedUsers,signatories:structuredClone(client.profile.contacts.filter(row=>row.signer)),version: client.version, confirmation: current.confirmation + Number(changed), by: role, at: now(), note };
+    model.pilotIntake = { ...current, contact,intendedUsers,signatories:structuredClone(client.profile.contacts.filter(row=>row.signer)),version: client.version, confirmation: current.confirmation + Number(changed), by:actorKey(role), at: now(), note };
     recordEvent(model, 'Үйлчлүүлэгчийн баталсан мэдээлэл шинэчлэв · v' + client.version, '1.1.1');
   }
 
@@ -365,7 +366,7 @@ export function createIntakeStore(db, store) {
   function setStatus(id, role, status, from, note) {
     const client = findClient(id);
     if (!client || !from.includes(client.status)) return;
-    client.history.unshift({ by: role, at: now(), note, version: client.version, previousStatus: client.status });
+    client.history.unshift({ by:actorKey(role), at: now(), note, version: client.version, previousStatus: client.status });
     client.status = status;
     putClient(client);
   }
@@ -388,9 +389,9 @@ export function createIntakeStore(db, store) {
     const status=input(data,'status',16),note=input(data,'note'),owner=input(data,'owner',16),due=input(data,'due',10);
     if(!['confirmed','returned','responded'].includes(status)||!['preparer','reviewer','partner'].includes(owner)||!validDate(due))fail(400,'Мэдээллийн төлөв, хариуцагч, огноог шалгана уу.');
     if(status==='responded')allowed(existing?.status==='returned'&&existing.owner===role);
-    else allowed(managers.includes(role)&&!(existing?.status==='responded'&&existing.by===role));
+    else allowed(managers.includes(role)&&!(existing?.status==='responded'&&existing.by===actorKey(role)));
     const history=existing?[...(existing.history??[]),structuredClone({...existing,history:undefined})]:[];
-    const row={item,status,note,owner,due,by:role,at:now(),clientVersion:model.pilotIntake.version,confirmation:model.pilotIntake.confirmation,
+    const row={item,status,note,owner,due,by:actorKey(role),at:now(),clientVersion:model.pilotIntake.version,confirmation:model.pilotIntake.confirmation,
       period:{...model.bench.periods[model.engagement]},history};
     model.pilotContextItems=existing?items.map(old=>old===existing?row:old):[...items,row];
     recordEvent(model,'G01 · Мэдээлэл '+status+' · '+item);

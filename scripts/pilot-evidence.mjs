@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import {createHash} from 'node:crypto';
 import {validDate} from '../src/lib/feature-workflows.ts';
 import {managedEvidence,dataSource} from './pilot-data-methods.mjs';
@@ -56,7 +57,7 @@ export function validPartAcceptance(m,request,part){
 export function evidenceRequestAction(m,role,action,data,files,request,part){
  if(action==='request-scope'){
   if(request.owner!==m.person)fail('Хүсэлтийн эзэн шаардлагатай.',403);const requirements=partRequirements(m,data,request.parts.map(p=>p.title));
-  request.scopeHistory??=[];request.scopeHistory.push({at:now(),by:role,requirements:request.parts.map(p=>p.requirement),reason:input(data,'reason')});
+  request.scopeHistory??=[];request.scopeHistory.push({at:now(),by:actorKey(role),requirements:request.parts.map(p=>p.requirement),reason:input(data,'reason')});
   request.parts.forEach((p,i)=>{p.requirement=requirements[i];});
  }else{
   if(!part)fail('Хүсэлтийн хэсэг олдсонгүй.',404);
@@ -69,11 +70,11 @@ export function evidenceRequestAction(m,role,action,data,files,request,part){
    const source=dataSource(m,files,input(data,'evidence',64));if(source.id===part.evidence)fail('Өөр баримтын бодит хувилбарыг сонгоно уу.');
    const file=m.evidence.find(e=>e.id===source.id);if(!part.requirement||file.scope?.entity!==part.requirement.entity||file.scope?.start!==part.requirement.start||file.scope?.end!==part.requirement.end)fail('Өөр нотолгооны байгууллага ба үе хүссэн хэрэглээнд тохирохгүй.');
    if(part.alternative)(part.alternativeHistory??=[]).push(structuredClone(part.alternative));
-   part.alternative={status:'submitted',source:{id:source.id,version:source.version,sha256:source.sha256},reason:input(data,'reason'),by:role,at:now()};
+   part.alternative={status:'submitted',source:{id:source.id,version:source.version,sha256:source.sha256},reason:input(data,'reason'),by:actorKey(role),at:now()};
   }else if(action==='request-alternative-approve'||action==='request-alternative-return'){
-   const alternative=part.alternative;if(role==='preparer'||!alternative||alternative.by===role)fail('Хараат бус хянагч шаардлагатай.',403);if(alternative.status!=='submitted')fail('Хяналтад өгсөн өөр нотолгоог сонгоно уу.');
+   const alternative=part.alternative;if(role==='preparer'||!alternative||alternative.by===actorKey(role))fail('Хараат бус хянагч шаардлагатай.',403);if(alternative.status!=='submitted')fail('Хяналтад өгсөн өөр нотолгоог сонгоно уу.');
    if(action==='request-alternative-approve'){if(part.requirement?.positiveRequired)fail('Заавал шаардлагатай эерэг хариуг өөр горимоор автоматаар орлуулахгүй. Хязгаарлалтын тусдаа дүгнэлт шаардлагатай.');if(dataSource(m,files,alternative.source.id).sha256!==alternative.source.sha256)fail('Өөр нотолгооны эх өөрчлөгдсөн.');}
-   alternative.status=action==='request-alternative-approve'?'approved':'returned';alternative.review={by:role,at:now(),reason:input(data,'reason')};
+   alternative.status=action==='request-alternative-approve'?'approved':'returned';alternative.review={by:actorKey(role),at:now(),reason:input(data,'reason')};
   }else fail('Хүсэлтийн үйлдэл олдсонгүй.',404);
  }
  request.history.push(now()+' · '+action+' · '+role);syncRequestCoverage(m,request);

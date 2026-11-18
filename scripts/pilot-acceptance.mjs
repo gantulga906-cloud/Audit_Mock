@@ -1,3 +1,4 @@
+import {actorKey,currentIdentity} from './pilot-identity-context.mjs';
 import {createHash} from 'node:crypto';
 import {acceptanceChecks} from '../src/lib/pilot-acceptance.ts';
 import {validDate} from '../src/lib/feature-workflows.ts';
@@ -18,7 +19,7 @@ const scopeOf=m=>({engagement:m.engagement,client:m.pilotIntake?.client,clientVe
 export const enableAcceptance=m=>m.pilotAcceptance??={profile:1,assessments:[],decisions:[],proposals:[]};
 export const isAcceptanceAction=action=>action.startsWith('acceptance-')||action.startsWith('intake-terms-prop')||
  ['intake-terms-review','intake-terms-return','intake-terms-send'].includes(action);
-const personFor=(m,role)=>approvedRows(m,'M01-F03').find(row=>row.values.account===role&&row.values.status==='active');
+const personFor=(m,role)=>approvedRows(m,'M01-F03').find(row=>row.values.account===role&&row.values.status==='active'&&(!currentIdentity()||row.id===currentIdentity().staff));
 const personSnapshot=row=>({id:row.id,version:row.version,name:row.values.name,reference:row.values.reference});
 export function acceptanceActor(m,role){
  const person=personFor(m,role);if(!person)fail('Одоогийн нэртэй, данстай мэргэжилтний бүртгэл шаардлагатай.');return personSnapshot(person);
@@ -88,7 +89,7 @@ export function acceptanceActivationGaps(m) {
 }
 function rememberAssessment(state,role,status,reason) {
  const a=state.assessment;a.status=status;
- a.history.push({version:a.version,status,by:role,at:now(),reason});
+ a.history.push({version:a.version,status,by:actorKey(role),at:now(),reason});
 }
 const proposalKeys=['scope','framework','templateReference','auditorResponsibilities','managementResponsibilities','deliverable','timetable','fees','treatmentBasis','justification'];
 export function acceptanceAction(m,role,action,data,files) {
@@ -100,7 +101,7 @@ export function acceptanceAction(m,role,action,data,files) {
  }
  const state=m.pilotAcceptance;if(!state)fail('G01 горимыг партнер идэвхжүүлнэ.');
  if(action==='acceptance-assess'){
-  allow(role!=='partner'&&(!state.assessment||state.assessment.by===role));
+  allow(role!=='partner'&&(!state.assessment||state.assessment.by===actorKey(role)));
   const old=state.assessment;if(old?.status==='submitted')fail('Үнэлгээг засварт буцаана уу.');
   const kind=input(data,'kind',16);if(!['initial','continuance'].includes(kind)||kind==='initial'&&m.pilotIntake?.prior)fail('Анхны / үргэлжилсэн үнэлгээний төрлийг шалгана уу.');
   const checks=Object.fromEntries(acceptanceChecks.map(([key])=>{
@@ -110,16 +111,16 @@ export function acceptanceAction(m,role,action,data,files) {
    return [key,{result,basis:optional(data,'basis.'+key),evidence:optional(data,'evidence.'+key,64),owner,due,followup:optional(data,'followup.'+key)}];
   }));
   if(old)state.assessments.unshift(structuredClone(old));
-  state.assessment={version:(old?.version??0)+1,status:'draft',kind,by:role,at:now(),checks,scope:optional(data,'assessmentScope')||state.proposal?.scope||'',
+  state.assessment={version:(old?.version??0)+1,status:'draft',kind,by:actorKey(role),at:now(),checks,scope:optional(data,'assessmentScope')||state.proposal?.scope||'',
    requirement:optional(data,'requirement'),edition:optional(data,'edition',200),ruleEvidence:optional(data,'ruleEvidence',64),history:[]};
   rememberAssessment(state,role,'draft','Үнэлгээ хадгалав');
  }else if(action==='acceptance-submit'){
-  const a=state.assessment;allow(a?.by===role);
+  const a=state.assessment;allow(a?.by===actorKey(role));
   if(!['draft','returned'].includes(a.status))fail('Үнэлгээний ноорог шаардлагатай.');
   for(const [key,label] of acceptanceChecks){const c=a.checks[key];if(['unknown','adverse'].includes(c.result)&&(!c.owner||!c.due||!c.followup))fail(label+' · Дараагийн ажил, хариуцагч, огноо');}
   a.byPerson=acceptanceActor(m,role);a.basis=assessmentBasis(m);rememberAssessment(state,role,'submitted','Хараат бус хяналтад илгээв');
  }else if(action==='acceptance-review'||action==='acceptance-return'){
-  const a=state.assessment;allow(role!=='preparer'&&a?.by!==role);
+  const a=state.assessment;allow(role!=='preparer'&&a?.by!==actorKey(role));
   if(a?.status!=='submitted'||String(a.version)!==data.version)fail('Яг илгээсэн үнэлгээний хувилбарыг сонгоно уу.');
   const reason=input(data,'reason');
   if(action==='acceptance-return')rememberAssessment(state,role,'returned',reason);
@@ -149,24 +150,24 @@ export function acceptanceAction(m,role,action,data,files) {
    condition={text:input(data,'condition'),owner:input(data,'conditionOwner',16),due:input(data,'conditionDue',10),effect:input(data,'conditionEffect')};
    if(!roles.includes(condition.owner)||!validDate(condition.due))fail('Нөхцөлийн хариуцагч, огноог шалгана уу.',400);
   }
-  state.decisions.push({version:state.decisions.length+1,outcome,setupAuthorized:positive,by:role,at:now(),person:personSnapshot(person),authority,authorityEvidence,rationale,
+  state.decisions.push({version:state.decisions.length+1,outcome,setupAuthorized:positive,by:actorKey(role),at:now(),person:personSnapshot(person),authority,authorityEvidence,rationale,
    validThrough,assessmentVersion:a.version,termsVersion:m.pilotTerms?.version,basis:decisionBasis(m,authorityEvidence),
    snapshot:structuredClone({assessment:a,scope:scopeOf(m),terms:m.pilotTerms}),...(condition&&{condition})});
  }else if(action==='intake-terms-propose'){
-  allow(role!=='partner'&&(!state.proposal||state.proposal.by===role));const old=state.proposal;
+  allow(role!=='partner'&&(!state.proposal||state.proposal.by===actorKey(role)));const old=state.proposal;
   const fields=Object.fromEntries(proposalKeys.map(key=>[key,input(data,key)]));
   const treatment=input(data,'treatment',16),assuranceChange=input(data,'assuranceChange',16);
   if(!['new','revised','unchanged'].includes(treatment)||!['same','lower'].includes(assuranceChange))fail('Нөхцөлийн төрлийг шалгана уу.',400);
   if(fields.framework!==m.bench.clients[m.engagement].framework)fail('Баталгаажуулсан тайлагналын хүрээтэй тохируулна уу.');
   if(old)state.proposals.unshift(structuredClone(old));
-  state.proposal={...fields,treatment,assuranceChange,version:(old?.version??0)+1,status:'draft',by:role,at:now(),scopeBasis:structuredClone(scopeOf(m))};
+  state.proposal={...fields,treatment,assuranceChange,version:(old?.version??0)+1,status:'draft',by:actorKey(role),at:now(),scopeBasis:structuredClone(scopeOf(m))};
  }else if(['intake-terms-review','intake-terms-return'].includes(action)){
-  const p=state.proposal;allow(role!=='preparer'&&p?.by!==role);
+  const p=state.proposal;allow(role!=='preparer'&&p?.by!==actorKey(role));
   if(p?.status!=='draft'||String(p.version)!==data.version)fail('Нөхцөлийн яг ноорог хувилбар шаардлагатай.');
   Object.assign(p,{status:action==='intake-terms-return'?'returned':'reviewed',reviewedBy:role,reviewedPerson:acceptanceActor(m,role),reviewedAt:now(),reviewReason:input(data,'reason')});
  }else if(action==='intake-terms-send'){
   allow(role!=='preparer');const p=state.proposal;if(p?.status!=='reviewed'||String(p.version)!==data.version)fail('Хянасан яг хувилбар шаардлагатай.');
-  (p.sent??=[]).push({by:role,at:now(),reference:input(data,'reference')});
+  (p.sent??=[]).push({by:actorKey(role),at:now(),reference:input(data,'reference')});
  }else fail('Үйлдэл олдсонгүй.',404);
  if(m.engagements[0].intake.active&&!acceptanceCurrent(m))invalidateReport(m,'G01 · Хүлээн авахад ашигласан мэдээлэл / шийдвэр өөрчлөгдөв');
  recordEvent(m,'G01 · '+action);

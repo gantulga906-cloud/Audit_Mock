@@ -1,7 +1,8 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { randomUUID } from 'node:crypto';
 import { createRequest, updateRequest } from '../src/lib/feature-workflows.ts';
 import { recordEvent, recordRequestPart, snapshot, workKey } from '../src/lib/workspace.ts';
-import { accounts, fileInput, input, PilotError } from './pilot-workflow.mjs';
+import { accounts, accountFor, fileInput, input, PilotError } from './pilot-workflow.mjs';
 import { requireSeat } from './pilot-staffing.mjs';
 import { populationOptionalFields, populationRequiredFields } from '../src/lib/pilot-population.ts';
 import {managedEvidence} from './pilot-data-methods.mjs';
@@ -64,7 +65,7 @@ export function requestAction(m,role,action,data,files,forms,defaultForm) {
     const title=input(data,'title',200), form=data.form||defaultForm;
     if (!forms.includes(form)) fail('Хэрэгжүүлсэн хөтөлбөр сонгоно уу.');
     const owner=m.work[workKey(m.engagement,form)].owner;
-    requireSeat(m,files,Object.keys(accounts).find(role=>accounts[role]===owner));
+    requireSeat(m,files,Object.keys(accounts).find(role=>accountFor(m,role)===owner));
     const parts=data.parts ? input(data,'parts',5000).split(/\r?\n/).map(p=>p.trim()).filter(Boolean) : [title];
     if (parts.length>25||parts.some(p=>p.length>200)) fail('25 хүртэл ялгаатай хэсэг оруулна уу.',400);
     const contacts=m.bench.clients[m.engagement].contacts;
@@ -108,7 +109,7 @@ export function requestAction(m,role,action,data,files,forms,defaultForm) {
     const prior=parts.map(p=>m.evidence.find(e=>e.id===p.evidence)).filter(Boolean);
     m.evidence.push({id,name,engagement:m.engagement,version:1+Math.max(0,...prior.map(e=>e.version)),
       type:'FILE',obtained:now().slice(0,10),source,status:'received',specimen:false,request:request.id,
-      anchor:'',text:'',original:true,uploadedBy:role,...(request.extract&&{channel:'auditor-upload',population:true}),...receipt});
+      anchor:'',text:'',original:true,uploadedBy:actorKey(role),...(request.extract&&{channel:'auditor-upload',population:true}),...receipt});
     for (const part of parts) recordRequestPart(m,request.id,part.id,'receive',id,true);
     files.add(id,name,bytes);
     return false;

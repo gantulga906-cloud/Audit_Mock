@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { createHash, randomUUID } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { isCurrentReview, snapshot, workKey } from '../src/lib/workspace.ts';
@@ -226,11 +227,11 @@ export function createArchiveStore(db) {
   function approveRecord(m, row, role) {
     const v = row.values;
     if (row.kind === 'M12-F09') {
-      if(controlledArchive(m)&&v.type==='restore'){const source=db.prepare('SELECT bytes,sha256 FROM evidence WHERE engagement_id=? AND id=?').get(m.engagement,v.recoveryEvidence);let receipt;try{receipt=JSON.parse(Buffer.from(source?.bytes??[]).toString('utf8'));}catch{fail('Бодит сэргээх үр дүн JSON эх шаардлагатай.');}const archive=read(m,v.package);if(!source||sha(source.bytes)!==source.sha256||receipt.kind!=='audit-pilot-sqlite-recovery-v1'||receipt.verified!==true||!receipt.sourceManifest?.archives?.some(p=>p.id===archive.id&&p.digest===archive.digest)||JSON.stringify(receipt.sourceManifest)!==JSON.stringify(receipt.restoredManifest))fail('Яг архив, эрх ба эх байтын бодит сэргээх үр дүн таарахгүй.');row.verification={at:new Date().toISOString(),by:role,restored:true,ok:true,files:receipt.sourceManifest.evidence.length,digest:archive.digest,method:'supported-sqlite-rehearsal-receipt',elapsedMs:receipt.elapsedMs,evidence:v.recoveryEvidence};return;}
+      if(controlledArchive(m)&&v.type==='restore'){const source=db.prepare('SELECT bytes,sha256 FROM evidence WHERE engagement_id=? AND id=?').get(m.engagement,v.recoveryEvidence);let receipt;try{receipt=JSON.parse(Buffer.from(source?.bytes??[]).toString('utf8'));}catch{fail('Бодит сэргээх үр дүн JSON эх шаардлагатай.');}const archive=read(m,v.package);if(!source||sha(source.bytes)!==source.sha256||receipt.kind!=='audit-pilot-sqlite-recovery-v1'||receipt.verified!==true||!receipt.sourceManifest?.archives?.some(p=>p.id===archive.id&&p.digest===archive.digest)||JSON.stringify(receipt.sourceManifest)!==JSON.stringify(receipt.restoredManifest))fail('Яг архив, эрх ба эх байтын бодит сэргээх үр дүн таарахгүй.');row.verification={at:new Date().toISOString(),by:actorKey(role),restored:true,ok:true,files:receipt.sourceManifest.evidence.length,digest:archive.digest,method:'supported-sqlite-rehearsal-receipt',elapsedMs:receipt.elapsedMs,evidence:v.recoveryEvidence};return;}
 
       const archive = read(m, v.package);
       if (v.type === 'restore' && !archive.synthetic) fail('Сэргээх туршилтад зөвхөн зохиомол багц ашиглана.');
-      const meta = { at: new Date().toISOString(), by: role, restored: v.type === 'restore' };
+      const meta = { at: new Date().toISOString(), by:actorKey(role), restored: v.type === 'restore' };
       try {
         const bundle = checkPayload(archive);
         if (meta.restored) {

@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { createHash, generateKeyPairSync, randomBytes, sign, verify } from 'node:crypto';
 import { recordEvent } from '../src/lib/workspace.ts';
 import { currentApproval, input, PilotError } from './pilot-workflow.mjs';
@@ -34,7 +35,7 @@ export function signReport(m,role,files) {
   const signed=files.authorization()?.authorization, artifact=signed?.artifact;
   if (!artifact||hash(artifact.html)!==artifact.sha256) fail('Зөвшөөрсөн тайлангийн эх таарахгүй.');
   const {privateKey,publicKey}=generateKeyPairSync('ed25519');
-  const signature={authorizationAt:signed.at,artifact:artifact.sha256,method:'pilot-ed25519',by:role,at:now(),
+  const signature={authorizationAt:signed.at,artifact:artifact.sha256,method:'pilot-ed25519',by:actorKey(role),at:now(),
     publicKey:publicKey.export({type:'spki',format:'pem'}),value:sign(null,Buffer.from(artifact.html),privateKey).toString('base64')};
   (m.pilotSignatures??=[]).push(signature);
   recordEvent(m,'Тайлангийн яг эхэд локал гарын үсэг зурсан',artifact.form);

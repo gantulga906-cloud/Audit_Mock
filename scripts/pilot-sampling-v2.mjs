@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import {createHash,createHmac,randomBytes} from 'node:crypto';
 import {changeWork,workKey} from '../src/lib/workspace.ts';
 import {evidenceCurrent} from './pilot-requests.mjs';
@@ -52,7 +53,7 @@ export function testV2(m,role,design,unit,data,paper){
  const cause=complete&&difference!==0?input(data,'cause'):String(data.cause??'');
  const followup=!complete?input(data,'followup'):String(data.followup??'');
  if(!complete&&!['preparer','reviewer','partner'].includes(data.nextOwner))fail('Шалгаж чадаагүй нэгжийн дараагийн хариуцагч шаардлагатай.');
- const record={unit:unit.id,row:unit.row,result,detail,book,audited,signedDifference:difference,cents:Math.abs(difference??0),cause,followup,nextOwner:data.nextOwner??'',evidence:support?.id??'',evidenceVersion:support?.version??0,by:role,at:now(),group:unit.group};
+ const record={unit:unit.id,row:unit.row,result,detail,book,audited,signedDifference:difference,cents:Math.abs(difference??0),cause,followup,nextOwner:data.nextOwner??'',evidence:support?.id??'',evidenceVersion:support?.version??0,by:actorKey(role),at:now(),group:unit.group};
  const findingId='SAMPLE-'+hash([m.engagement,design.form,design.basis.source,unit.id]).slice(0,32),finding=m.findings.find(f=>f.id===findingId);
  if(finding&&(finding.resolution||finding.status!=='identified'||difference===0||difference===null))fail('Илрүүлэлтийг тусдаа шийдвэрлэнэ үү; сорилоор арилгахгүй.');
  const last=design.tests.findLast(r=>r.unit===unit.id);if(last&&hash({...last,at:''})===hash({...record,at:''}))return false;
@@ -86,17 +87,17 @@ export function sampleV2Action(m,role,action,data,design,{owner,reviewer,paper})
   if(role!=='partner'||design.preparedBy===role)fail('Партнерын тусдаа арга зүйн шийдвэр шаардлагатай.',403);
   if(data.convention!=='book-minus-audited-gross-incremental-v1')fail('Тэмдэг, нэгж, нэгтгэлийн ил тод хувилбарыг сонгоно уу.');
   const support=file(m,data.evidence);if(!support)fail('Арга зүйн шийдвэрийн бодит баталсан эх шаардлагатай.');
-  const convention={method:data.convention,evidence:support.id,evidenceVersion:support.version,by:role,reason:input(data,'reason'),at:now()};
+  const convention={method:data.convention,evidence:support.id,evidenceVersion:support.version,by:actorKey(role),reason:input(data,'reason'),at:now()};
   (design.conventionHistory??=[]).push(convention);design.convention=convention;delete design.resultReview;
  }else if(action==='sample-evaluate'){
   if(!owner||paper.status==='submitted')fail('Томилсон бэлтгэгч шаардлагатай.',403);
-  const output=projectionV2(m,design);design.evaluations.push({...output,version:design.evaluations.length+1,nature:input(data,'nature'),qualitative:input(data,'qualitative'),additionalWork:input(data,'additionalWork'),by:role,at:now()});delete design.resultReview;
+  const output=projectionV2(m,design);design.evaluations.push({...output,version:design.evaluations.length+1,nature:input(data,'nature'),qualitative:input(data,'qualitative'),additionalWork:input(data,'additionalWork'),by:actorKey(role),at:now()});delete design.resultReview;
  }else if(action==='sample-results-review'){
   if(!reviewer)fail('Хараат бус томилсон хянагч шаардлагатай.',403);
   const evaluation=design.evaluations.at(-1);if(!evaluation||String(evaluation.version)!==data.evaluation||evaluation.stamp!==evaluationBasis(m,design))fail('Одоогийн сорилын үнэлгээг дахин бэлтгэнэ үү.');
   const disposition=data.disposition;if(!['usable','limited'].includes(disposition))fail('Хэрэглээний шийдвэрийг сонгоно уу.');
   if(disposition==='usable'&&(evaluation.status!=='calculated'||testState(m,design).some(t=>!t.current||t.test.result==='unavailable')))fail('Дутуу эсвэл тооцох боломжгүй үнэлгээг цэвэр хэрэглээнд батлахгүй.');
-  const review={evaluation:evaluation.version,stamp:evaluation.stamp,by:role,at:now(),disposition,reason:input(data,'reason'),...(disposition==='limited'&&{nextOwner:input(data,'nextOwner',20),followup:input(data,'followup')})};
+  const review={evaluation:evaluation.version,stamp:evaluation.stamp,by:actorKey(role),at:now(),disposition,reason:input(data,'reason'),...(disposition==='limited'&&{nextOwner:input(data,'nextOwner',20),followup:input(data,'followup')})};
   if(disposition==='limited'&&!['preparer','reviewer','partner'].includes(review.nextOwner))fail('Хязгаарлалтын дараагийн хариуцагч шаардлагатай.');
   if(disposition==='usable'&&evaluation.incremental!==0){
    if(m.findings.some(f=>f.id.startsWith('PROJECTION-')&&f.form===design.form&&f.projection?.source!==design.basis.source&&f.status!=='posted_verified'))fail('Өмнөх ба шинэ эхийн давхцах төсөөллийн асуудлыг G05-д тусдаа үнэлнэ үү; давхар өртөлт нэмж батлахгүй.');
@@ -107,6 +108,6 @@ export function sampleV2Action(m,role,action,data,design,{owner,reviewer,paper})
   }else if(disposition==='usable'&&m.findings.some(f=>f.id.startsWith('PROJECTION-')&&f.form===design.form&&f.projection?.source===design.basis.source))fail('Өмнөх төсөөллийн илрүүлэлтийг тэгээр дарж арилгахгүй.');
   design.resultReview=review;(design.resultReviews??=[]).push(review);
  }else return false;
- design.events.push({action,by:role,at:now()});return true;
+ design.events.push({action,by:actorKey(role),at:now()});return true;
 }
 export function sampleEvidence(m){return Object.values(m.pilotSamples??{}).flatMap(versions=>versions.flatMap(d=>[d.basis.source,...d.tests.map(t=>t.evidence),...(d.conventionHistory??[]).map(c=>c.evidence)]));}

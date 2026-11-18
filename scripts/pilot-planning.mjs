@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import {createHash,randomUUID} from 'node:crypto';
 import {approvedRows,registerRows,pilotProgrammes} from './pilot-registers.mjs';
 import {PilotError,input} from './pilot-workflow.mjs';
@@ -153,7 +154,7 @@ export function planningAction(m,role,action,data,files){
  if(action==='planning-enable'){
   if(role!=='partner')throw new PilotError(403,'Партнерын эрх шаардлагатай.');
   if(!m.engagements[0]?.intake.active)bad('Идэвхтэй гэрээт ажил шаардлагатай.');
-  if(!managedPlanning(m)){m.pilotPlanning={profile:1,by:role,at:new Date().toISOString(),reason:input(data,'reason')};recordEvent(m,'G02 · Өмнөх ажлыг хадгалж, төлөвлөлтийн хяналт идэвхжүүлэв');}return;
+  if(!managedPlanning(m)){m.pilotPlanning={profile:1,by:actorKey(role),at:new Date().toISOString(),reason:input(data,'reason')};recordEvent(m,'G02 · Өмнөх ажлыг хадгалж, төлөвлөлтийн хяналт идэвхжүүлэв');}return;
  }
  if(!managedPlanning(m)||!m.engagements[0]?.intake.active)bad('G02 · Төлөвлөлтийн горимыг идэвхжүүлнэ үү.');
  const from=input(data,'from',40),through=input(data,'through',40);
@@ -165,20 +166,20 @@ export function planningAction(m,role,action,data,files){
  const seat=seatFor(m,role,from.slice(0,10),through.slice(0,10)),person=seat?.person;
  if(!person)bad('Нэртэй этгээдийн томилгоо шаардлагатай.');
  const entries=m.pilotEffort??=[],old=data.supersedes&&entries.find(e=>e.id===data.supersedes);
- if(data.supersedes&&(!old||old.by!==role||old.person!==person||entries.some(e=>e.supersedes===old.id)))bad('Зөвхөн өөрийн одоогийн бодит цагийг шалтгаантай залруулна.');
+ if(data.supersedes&&(!old||old.by!==actorKey(role)||old.person!==person||entries.some(e=>e.supersedes===old.id)))bad('Зөвхөн өөрийн одоогийн бодит цагийг шалтгаантай залруулна.');
  const work=input(data,'work',32);if(!m.work[workKey(m.engagement,work)])bad('Энэ гэрээт ажлын бодит ажлын баримтыг сонгоно уу.');
  for(const model of files.staffingModels(m)){
   const all=model.pilotEffort??[],replaced=new Set(all.map(e=>e.supersedes));
   if(all.some(e=>e.person===person&&!replaced.has(e.id)&&!(model.engagement===m.engagement&&e.id===old?.id)&&Date.parse(e.from)<end&&Date.parse(e.through)>start))bad('Тухайн этгээдийн бодит цаг өөр бүртгэлтэй давхцаж байна.');
  }
- entries.push({id:randomUUID(),person,by:role,assignment:seat&&{id:seat.id,version:seat.version},from,through,minutes,work,purpose:input(data,'purpose'),
+ entries.push({id:randomUUID(),person,by:actorKey(role),assignment:seat&&{id:seat.id,version:seat.version},from,through,minutes,work,purpose:input(data,'purpose'),
   ...(old&&{supersedes:old.id,correction:input(data,'reason')}),at:new Date().toISOString()});
  recordEvent(m,'G02 · Бодит цаг '+minutes+' минут · '+work,work);
 }
 
 export function planningView(m,role){
  const all=m.pilotEffort??[],replaced=new Set(all.map(e=>e.supersedes));
- return {managed:managedPlanning(m),effort:all.filter(e=>role!=='preparer'||e.by===role).map(e=>({...e,current:!replaced.has(e.id)})),
+ return {managed:managedPlanning(m),effort:all.filter(e=>role!=='preparer'||e.by===actorKey(role)).map(e=>({...e,current:!replaced.has(e.id)})),
   programmes:approvedRows(m,'M07-F01').filter(r=>r.values.decision==='adopt').map(r=>({form:r.template.form,gap:planningGap(m,r.template.form),
    risks:planningRisks(m,r.template.form).map(risk=>({id:risk.id,name:risk.values.risk,version:risk.version,status:risk.status,type:risk.values.type})),
    responses:r.programmeBasis?.responses??[]}))};

@@ -1,8 +1,9 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { createHash } from 'node:crypto';
 import { canEdit, changeWork, isCurrentReview, recordEvent, selectSample, snapshot, workKey } from '../src/lib/workspace.ts';
 import { approvedPopulation, cents } from './pilot-population.mjs';
 import { programmeDecision } from './pilot-registers.mjs';
-import { accounts, input, PilotError, validMateriality } from './pilot-workflow.mjs';
+import { accounts, accountFor, input, PilotError, validMateriality } from './pilot-workflow.mjs';
 import { evidenceCurrent } from './pilot-requests.mjs';
 import {sampleMethod,newSample,selectV2,testV2,sampleV2Action,resultCurrent} from './pilot-sampling-v2.mjs';
 
@@ -76,7 +77,7 @@ export function samplingAction(m,role,action,data,forms) {
   const form=input(data,'form',32);
   if (!forms.includes(form)) fail('Хэрэгжүүлсэн хөтөлбөр сонгоно уу.');
   const paper=m.work[workKey(m.engagement,form)], previous=latest(m,form);
-  const owner=canEdit(m,paper), reviewer=paper.reviewer===accounts[role]&&paper.owner!==accounts[role]&&role!=='preparer';
+  const owner=canEdit(m,paper), reviewer=paper.reviewer===accountFor(m,role)&&paper.owner!==accountFor(m,role)&&role!=='preparer';
   if (action==='sample-design'||action==='sample-expand') {
     if (!owner||paper.status==='submitted') fail('Хөтөлбөрийн бэлтгэгч шаардлагатай.',403);
     if(action==='sample-expand'){
@@ -105,7 +106,7 @@ export function samplingAction(m,role,action,data,forms) {
     if (action==='sample-approve') {
       if (!reviewer || previous.preparedBy===role) fail('Хараат бус томилсон хянагч шаардлагатай.',403);
       if (previous.approval) return;
-      previous.approval={by:role,at:now(),reason:input(data,'reason')};
+      previous.approval={by:actorKey(role),at:now(),reason:input(data,'reason')};
     } else if (action==='sample-select') {
       if (!owner && !reviewer) fail('Хөтөлбөрийн томилгоо шаардлагатай.',403);
       if (!previous.approval) fail('Түүврийн дизайныг эхлээд хянана уу.');
@@ -130,7 +131,7 @@ export function samplingAction(m,role,action,data,forms) {
       const last=previous.tests.findLast(r=>r.unit===unit.id);
       if (last?.result===result&&last.detail===detail&&last.cents===amount&&last.evidence===evidence.id) return;
       previous.tests.push({unit:unit.id,row:unit.row,result,detail,cents:amount,evidence:evidence.id,
-        evidenceVersion:evidence.version,by:role,at:now(),...(result==='exception'&&{finding:findingId})});
+        evidenceVersion:evidence.version,by:actorKey(role),at:now(),...(result==='exception'&&{finding:findingId})});
       const key='pilot.sample.'+previous.version+'.'+digest(unit.id).slice(0,24);
       changeWork(m,paper.id,{...paper.values,[key]:JSON.stringify(previous.tests.at(-1))},[...new Set([...paper.evidence,evidence.id])]);
       if (result==='exception') {

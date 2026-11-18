@@ -1,3 +1,4 @@
+import {actorKey,currentIdentity} from './pilot-identity-context.mjs';
 import { createHash, randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { latestArchiveSelection, registers } from '../src/lib/pilot-registers.ts';
@@ -474,7 +475,7 @@ function checkBusiness(m, row, spec, files) {
 
 function remember(row, role, status, reason) {
   row.status = status;
-  row.by = role;
+  row.by = actorKey(role);
   row.at = new Date().toISOString();
   row.reason = reason;
   const { history, ...revision } = row;
@@ -539,7 +540,7 @@ export function registerAction(m, role, data, files) {
       requireRole(role === 'partner' && archiveGrantKinds.includes(row.kind));
       if (row.status !== 'approved') bad('Баталсан архивын хандалт шаардлагатай.');
       if (row.revoked) return;
-      row.revoked = { by: role, at: new Date().toISOString(), reason: input(data, 'reason') };
+      row.revoked = { by:actorKey(role), at: new Date().toISOString(), reason: input(data, 'reason') };
       recordEvent(m, 'Архивын хандалтыг цуцлав · ' + row.id);
       return;
     } else if (operation === 'declare') {
@@ -548,6 +549,7 @@ export function registerAction(m, role, data, files) {
       requireRole(spec.id === 'M04-F04' && (manual?role===row.owner:(assignee === role || assignee === 'external' && role === row.owner)));
       if (!['draft','returned',...(m.pilotAcceptance?['approved']:[])].includes(row.status)) bad('Мэдүүлгийн нооргийг нээнэ үү.');
       const text = input(data, 'reason');
+      if(currentIdentity()&&!manual&&assignee!=='external'&&row.values.person!==currentIdentity().staff)throw new PilotError(403,'Only the actual named staff member can make this native personal declaration.');
       let extra;
       if(m.pilotAcceptance){
         const person=find(m,row.values.person),signedOn=input(data,'signedOn',10),disposition=input(data,'disposition',16);
@@ -560,12 +562,12 @@ export function registerAction(m, role, data, files) {
         if(manual){extra.evidence=extra.id;extra.evidenceVersion=extra.version;delete extra.id;delete extra.version;}
       }
       row.version++;
-      row.declaration = { text, by: role, at: new Date().toISOString(), evidence: assignee === 'external' ? input(data, 'source') : undefined,...extra };
+      row.declaration = { text, by:actorKey(role), at: new Date().toISOString(), evidence: assignee === 'external' ? input(data, 'source') : undefined,...extra };
       remember(row, role, 'draft', 'Мэдүүлгийг бүртгэв');
     } else if (operation === 'reply') {
       requireRole(spec.id === 'M08-F07');
       row.discussion ??= [];
-      row.discussion.push({ text: input(data, 'reason'), by: role, at: new Date().toISOString() });
+      row.discussion.push({ text: input(data, 'reason'), by:actorKey(role), at: new Date().toISOString() });
     } else if (operation === 'submit') {
       requireRole(row.owner === role);
       if (!['draft','returned'].includes(row.status)) bad('Зөвхөн ноорог эсвэл засварт буцаасан хувилбар илгээнэ.');
@@ -574,7 +576,7 @@ export function registerAction(m, role, data, files) {
       remember(row, role, 'submitted', 'Хяналтад илгээв');
     } else if (operation === 'approve' || operation === 'return') {
       const independent = spec.id === 'M04-F04'
-        ? row.declaration?.by !== role&&(!m.pilotAcceptance||row.values.assignee!==role)
+        ? row.declaration?.by !== actorKey(role)&&(!m.pilotAcceptance||row.values.assignee!==role)
         : role !== row.owner;
       requireRole(spec.approvers.includes(role) && independent);
       if (row.status !== 'submitted') bad('Хяналтад илгээсэн хувилбар шаардлагатай.');
@@ -584,7 +586,7 @@ export function registerAction(m, role, data, files) {
         checkBusiness(m, row, spec, files);
         if(row.kind==='M07-F01'&&row.adoptionPreview?.requiresReview){
           if(data.adoptionAck!=='reviewed'||data.adoptionReview!==row.adoptionPreview.digest)bad('Шилжихгүй хариулт ба холбоосыг яг одоогийн хувилбараар хянаж зөвшөөрнө үү.');
-          row.adoptionAcknowledgement={by:role,at:new Date().toISOString(),digest:row.adoptionPreview.digest};
+          row.adoptionAcknowledgement={by:actorKey(role),at:new Date().toISOString(),digest:row.adoptionPreview.digest};
         }
         if (spec.section === 'archive') files.approveArchiveRecord(m, row, role);
       }

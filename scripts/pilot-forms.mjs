@@ -1,10 +1,11 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { fieldAnswers, fieldPrefix, formKinds, procedureOutcomes, sharedBindings, yesNo,isNotApplicableAnswer } from '../src/lib/pilot-forms.ts';
 import { sharedFields, sharedForWork, tableColumns, validateTemplate, visibleField } from '../src/lib/workbench.ts';
 import { isCurrentReview, recordEvent, reportForm, snapshot, workKey } from '../src/lib/workspace.ts';
 import { excludedForms, formContract } from './pilot-registers.mjs';
 import { sha256 } from './pilot-report.mjs';
-import { accounts, input, PilotError } from './pilot-workflow.mjs';
+import { accounts, accountFor, input, PilotError } from './pilot-workflow.mjs';
 import { evidenceCurrent } from './pilot-requests.mjs';
 import {materialityBasisKey,materialitySourceAnswers} from '../src/lib/pilot-materiality.ts';
 import {managedMethodology,methodologyActions,methodologyAction,releaseDisposition,releaseReview,draftIdentity,validateMethodology,publisherAuthority,approvedMethodologyPeople,methodologyOriginal,methodologyNotices} from './pilot-methodology.mjs';
@@ -47,7 +48,7 @@ export function libraryView(library, role, files, firm, model) {
   const managed=managedMethodology(library),all=Object.entries(library.releases).flatMap(([id,versions])=>versions.map(r=>({...r,id,title:files.template(r.digest)?.title??id,...releaseDisposition(library,id,r,model)})));
   const releases=firm?all.filter(r=>library.releases[r.id].at(-1).number===r.number):managed?all.filter(r=>r.available):all.filter(r=>library.releases[r.id].at(-1).number===r.number);
   return {managed,editable:firm?Object.keys(library.grants).filter(id=>canEdit(library,role,id)):[],grants:firm&&role==='partner'?library.grants:{},
-    drafts:firm?Object.values(library.drafts).filter(d=>d.by===role||role==='partner'&&d.submitted||managed&&library.publishers?.[role]&&!library.publishers[role].revoked&&d.submitted).map(d=>{if(!managed)return d;let review,reviewError;try{review=releaseReview(library,d.body.id,files);}catch(e){reviewError=e.message;}return {...d,draftDigest:draftIdentity(d),review,reviewError};}):[],
+    drafts:firm?Object.values(library.drafts).filter(d=>d.by===actorKey(role)||role==='partner'&&d.submitted||managed&&library.publishers?.[role]&&!library.publishers[role].revoked&&d.submitted).map(d=>{if(!managed)return d;let review,reviewError;try{review=releaseReview(library,d.body.id,files);}catch(e){reviewError=e.message;}return {...d,draftDigest:draftIdentity(d),review,reviewError};}):[],
     releases,...(firm&&managed&&{history:all,sources:library.sources??[],publishers:role==='partner'?library.publishers??{}:{},canPublish:!!library.publishers?.[role]&&!library.publishers[role].revoked,people:(model?approvedMethodologyPeople(model):[])})};
 }
 
@@ -122,43 +123,43 @@ export function libraryAction(library, role, action, fields, files, model) {
     if (fields.access === 'grant') active.add(fields.actor);
     else active.delete(fields.actor);
     library.grants[id] = [...active];
-    (library.grantHistory ??= []).push({ id, actor: fields.actor, access: fields.access, by: role, note, at: new Date().toISOString() });
+    (library.grantHistory ??= []).push({ id, actor: fields.actor, access: fields.access, by:actorKey(role), note, at: new Date().toISOString() });
     return;
   }
   if (action === 'template-save') {
     allowed(known ? canEdit(library, role, id) : role === 'reviewer' && id.startsWith('F-'));
-    if (draft?.submitted || draft && draft.by !== role) fail('Илгээсэн эсвэл өөр зохиогчийн нооргийг засах боломжгүй.', 409);
+    if (draft?.submitted || draft && draft.by !== actorKey(role)) fail('Илгээсэн эсвэл өөр зохиогчийн нооргийг засах боломжгүй.', 409);
     if(managedMethodology(library)&&draft&&fields.expectedDraftDigest!==draftIdentity(draft))fail('Нооргийн өмнөх хувилбар өөрчлөгдсөн.',409);
     const body = validateDraft(id, parse(input(fields, 'body', 650_000), 'Маягтын бүтэц буруу байна.'), original);
     if(managedMethodology(library)){body.methodology=validateMethodology(body.methodology);methodologyOriginal(library,body.methodology.source,files);}
     if (!known) library.grants[id] = [role];
-    library.drafts[id] = { body, by: role, submitted: false, note: '',...(managedMethodology(library)&&{parent:release?.digest??null}) };
+    library.drafts[id] = { body, by:actorKey(role), authorCapacity:role, submitted: false, note: '',...(managedMethodology(library)&&{parent:release?.digest??null}) };
     return;
   }
   if (!draft) fail('Маягтын ноорог олдсонгүй.', 404);
   if(managedMethodology(library)&&fields.expectedDraftDigest!==draftIdentity(draft))fail('Яг нооргийн хувилбарыг дахин нээнэ.',409);
   const note = input(fields, 'note');
   if (action === 'template-submit') {
-    allowed(draft.by === role && canEdit(library, role, id));
+    allowed(draft.by === actorKey(role) && canEdit(library, role, id));
     if (draft.submitted) fail('Ноорог хяналтад илгээгдсэн.', 409);
     if(managedMethodology(library)){validateMethodology(draft.body.methodology);methodologyOriginal(library,draft.body.methodology.source,files);}
     draft.submitted = true;
     draft.note = note;
     return;
   }
-  allowed((managedMethodology(library)?!!publisherAuthority(library,role,model,files):role==='partner')&&draft.by!==role);
+  allowed((managedMethodology(library)?!!publisherAuthority(library,role,model,files):role==='partner')&&draft.by!==actorKey(role));
   if (!draft.submitted) fail('Хяналтад илгээсэн хувилбар шаардлагатай.', 409);
   if (action === 'template-return') {
     draft.submitted = false;
     draft.note = note;
     return;
   }
-  if (!canEdit(library, draft.by, id)) fail('Зохиогчийн маягтын эрхийг шалгана уу.', 409);
+  if (!canEdit(library, draft.authorCapacity??draft.by, id)) fail('Зохиогчийн маягтын эрхийг шалгана уу.', 409);
   const review=managedMethodology(library)?releaseReview(library,id,files):null;
   if(review&&fields.reviewDigest!==review.digest)fail('Яг эх, агуулга ба өөрчлөлтийг одоогийн хувилбараар хянана.',409);
   const governed=review?{methodology:validateMethodology(draft.body.methodology),parent:review.parent,changes:review.changes,approval:{draftDigest:review.draftDigest,contentSha256:review.contentSha256,reviewDigest:review.digest,authority:structuredClone(publisherAuthority(library,role,model,files)),professionalBasis:input(fields,'professionalBasis'),validationEvidence:input(fields,'validationEvidence'),conclusion:input(fields,'conclusion')}}:{};
   const versions = library.releases[id] ??= [];
-  versions.push({number:versions.length+1,digest:store(files,draft.body),author:draft.by,publisher:role,at:new Date().toISOString(),note,...governed});
+  versions.push({number:versions.length+1,digest:store(files,draft.body),author:draft.by,publisher:actorKey(role),publisherCapacity:role,at:new Date().toISOString(),note,...governed});
   delete library.drafts[id];
 }
 
@@ -357,14 +358,14 @@ export function bindForm(m, role, form, fields, files, programmeTemplate) {
     for(const [key,value] of Object.entries(plan.answers))w.values[fieldPrefix+key]=value;
     w.evidence=plan.evidence;
   } else {
-    w = m.work[key] = { id: key, engagement: m.engagement, form, owner: accounts.reviewer, reviewer: accounts.partner,
+    w = m.work[key] = { id: key, engagement: m.engagement, form, owner: accountFor(m,'reviewer'), reviewer: accountFor(m,'partner'),
       start: '', due: '', baselineStart: '', baselineDue: '', estimate: 0, actual: 0, status: 'not_started', version: 1,
       values: {}, evidence: [], notes: [], history: [], required: true };
   }
   w.title = contract.title;
   w.stage = contract.stage;
   w.values.templateDigest = version.digest;
-  w.values['template.adoption']=JSON.stringify({at:new Date().toISOString(),by:role,...plan.summary});
+  w.values['template.adoption']=JSON.stringify({at:new Date().toISOString(),by:actorKey(role),...plan.summary});
   (m.pilotForms ??= {})[form] = version;
   recordEvent(m, form+' · Маягтын хувилбар v'+version.number+' холбов', form);
   return true;

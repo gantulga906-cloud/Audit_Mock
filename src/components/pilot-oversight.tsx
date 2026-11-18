@@ -102,13 +102,13 @@ export function IndependentDesk({role}:{role:IndependentRole}){
  const act:PilotAction=(action,values={})=>send('/action'+pilotScope(view?.selected??null),{...values,...(role==='quality'&&{reviewKind:confirmation?'confirmation':'formal'}),action});
  function login(e:FormEvent<HTMLFormElement>){
   e.preventDefault();
-  void send('/login',{role,password:String(new FormData(e.currentTarget).get('password'))});
+  void send('/login',{role,username:String(new FormData(e.currentTarget).get('username')??''),password:String(new FormData(e.currentTarget).get('password'))});
  }
  return <main className="audit-app ew-independent"><div className="app-content pilot-content"><section className="card pad bench-card">
   <a href="/pilot#workspace">Аудитын багийн ажлын орчин</a><h1>{captions[role]}</h1>
   {error&&<p className="callout amber" role="alert">{error}</p>}
   <fieldset className="feature-fields" disabled={busy}>
-   {!view?<form className="feature-form" onSubmit={login}><label>Хараат бус нууц үг<input name="password" type="password" required/></label>
+   {!view?<form className="feature-form" onSubmit={login}><label>Named username (leave empty for the role preview)<input name="username" autoComplete="username"/></label><label>Хараат бус нууц үг<input name="password" type="password" required/></label>
     <button className="btn primary">Нэвтрэх</button></form>:<>
     <button type="button" className="btn secondary" onClick={()=>void send('/logout',{})}>Гарах</button>
     {view.assignments.map(item=><button type="button" key={item.id} className="btn secondary" onClick={()=>void send(pilotScope(item.id))}>{item.client}</button>)}

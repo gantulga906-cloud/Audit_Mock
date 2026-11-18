@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import {createHash} from 'node:crypto';
 import {approvedRows,opinionForm,registerRows} from './pilot-registers.mjs';
 import {PilotError,input} from './pilot-workflow.mjs';
@@ -22,7 +23,7 @@ export function reportingEnable(m,role,data){
  if(role!=='partner')fail('Тайлагналын горимыг эрх бүхий партнер сонгоно.',403);
  if(!m.engagements[0]?.intake.active||!managedCompletion(m)||m.pilotIssue)fail('Гаргаагүй, G05 дуусгалтын горимтой идэвхтэй ажил шаардлагатай.');
  if(managedReporting(m))return;
- m.pilotReporting={profile:1,by:role,at:new Date().toISOString(),reason:input(data,'reason')};
+ m.pilotReporting={profile:1,by:actorKey(role),at:new Date().toISOString(),reason:input(data,'reason')};
  recordEvent(m,'G06 · Яг тайлангийн шийдвэр, эх ба хүлээн авагчийн хяналтыг сонгов');
 }
 export function opinionContradictions(v,sufficiency){

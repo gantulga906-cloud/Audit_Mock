@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { randomUUID } from 'node:crypto';
 import { recordEvent,isCurrentReview,workKey } from '../src/lib/workspace.ts';
 import {createHash} from 'node:crypto';
@@ -75,13 +76,13 @@ export function oversightTeamAction(m,role,action,data,files) {
       const e=m.evidence.find(e=>e.id===data.eligibilityEvidence&&evidenceCurrent(m,e)),original=e&&files.get(e.id);if(!original&&eligibilityStatus==='eligible')fail('Бодит эрх, хараат бус байдал ба шалгуурын эх шаардлагатай.');if(e&&original)decision.source={id:e.id,version:e.version,sha256:original.sha256};
     }
     if (prior&&Object.entries(decision).every(([key,value])=>JSON.stringify(prior[key])===JSON.stringify(value))) return;
-    const row={...decision,version:(prior?.version??0)+1,by:role,at:now()};
+    const row={...decision,version:(prior?.version??0)+1,by:actorKey(role),at:now()};
     state.policies.push(row);state.policy=row;
   } else if (command==='quality-response') {
     if (files.archive.isSealed(m)) fail('Архив түгжээтэй.');
     const note=m[key]?.notes.find(item=>item.id===data.id&&!item.cleared);
     if (!note) fail('Чанарын нээлттэй тэмдэглэл шаардлагатай.');
-    (note.responses??=[]).push({text:input(data,'reason'),by:role,at:now(),basis:assigned?finalBasis(m):qualityBasis(m)});
+    (note.responses??=[]).push({text:input(data,'reason'),by:actorKey(role),at:now(),basis:assigned?finalBasis(m):qualityBasis(m)});
   } else if (action==='archive-offer-custody') {
     if (!files.archive.isSealed(m)||!files.oversightConfigured('custodian')) fail('Түгжээтэй архив ба хараат бус хадгалалтын нэвтрэх эрх шаардлагатай.');
     const id=input(data,'package',36), record=files.archive.inspectCustody(m,id,true);
@@ -89,7 +90,7 @@ export function oversightTeamAction(m,role,action,data,files) {
     if (prior?.id===id&&!prior.returned) return;
     const resolution=prior?.returned?input(data,'resolution'):'';
     const assignment=controlledArchive(m)?{custodian:input(data,'custodianName',150),authority:archiveOriginal(m,input(data,'custodianAuthority',80),files.read),independence:input(data,'independence'),location:input(data,'location',300),medium:input(data,'medium',200),confidentiality:input(data,'confidentiality')}:undefined;
-    (m.pilotCustody??=[]).push({id,digest:record.digest,recipient:input(data,'recipient',150),offeredAt:now(),by:role,...(assignment&&{assignment}),...(resolution&&{resolution,previousOffer:prior.offeredAt})});
+    (m.pilotCustody??=[]).push({id,digest:record.digest,recipient:input(data,'recipient',150),offeredAt:now(),by:actorKey(role),...(assignment&&{assignment}),...(resolution&&{resolution,previousOffer:prior.offeredAt})});
   } else fail('Хяналтын үйлдэл олдсонгүй.',404);
   recordEvent(m,action,action.startsWith('quality-')?'4.6':undefined);
 }
@@ -102,7 +103,7 @@ export function createOversightStore(store,filesFor) {
     if (!/^E-[a-f0-9-]{36}$/.test(id??'')) fail('Томилсон ажил олдсонгүй.',404);
     const context=store.load('partner',id);
     if (!allowed(role,context.model)) fail('Томилсон ажил олдсонгүй.',404);
-    context.model.person=role;
+    context.model.person=actorKey(role);
     return context;
   }
   function view(role,id) {
@@ -127,18 +128,18 @@ export function createOversightStore(store,filesFor) {
       if(!state||!eligible(state.policy)||!policyCurrent(m,state.policy))fail('Одоогийн эрхтэй тусдаа хяналтын томилгоо шаардлагатай.',403);
       if (data.basis!==basis) fail('Хянасан багц өөрчлөгдсөн. Одоогийн хувилбарыг нээнэ үү.');
       if (data.action==='return') {
-        state.notes.push({id:randomUUID(),text:input(data,'reason'),basis,by:role,at:now()});
+        state.notes.push({id:randomUUID(),text:input(data,'reason'),basis,by:actorKey(role),at:now()});
       } else if(data.action==='clear'){
-        const note=state.notes.find(n=>n.id===data.id&&!n.cleared),response=note?.responses?.at(-1);if(!note||!response||response.basis!==basis||String(note.responses.length)!==data.responseVersion)fail('Яг одоогийн хариу ба багц шаардлагатай.');note.cleared={at:now(),by:role,basis,reason:input(data,'reason'),responseVersion:note.responses.length};
+        const note=state.notes.find(n=>n.id===data.id&&!n.cleared),response=note?.responses?.at(-1);if(!note||!response||response.basis!==basis||String(note.responses.length)!==data.responseVersion)fail('Яг одоогийн хариу ба багц шаардлагатай.');note.cleared={at:now(),by:actorKey(role),basis,reason:input(data,'reason'),responseVersion:note.responses.length};
       } else if (data.action==='approve') {
         const material=assigned?finalMaterial(m):qualityMaterial(m);
         if (material.gaps.length||now().slice(0,10)>m.engagements[0].reportDate) fail('Багцын шаардлага эсвэл тайлангийн өдөр хангагдаагүй.');
         if (state.notes.some(note=>!note.cleared&&note.responses?.at(-1)?.basis!==basis)) fail('Одоогийн багцад холбосон хариу шаардлагатай.');
         if(managedCompletion(m)&&state.notes.some(n=>!n.cleared))fail('Хариу нь тэмдэглэл хаасан шийдвэр биш; тусдаа хаана уу.');
         if ((assigned?finalQualityRef(m):formalQualityRef(m))&&!state.notes.some(n=>!n.cleared)) return view(role,id);
-        const review={basis,policy:state.policy.version,artifact:material.artifact.sha256,by:role,at:now(),reason:input(data,'reason')};
+        const review={basis,policy:state.policy.version,artifact:material.artifact.sha256,by:actorKey(role),at:now(),reason:input(data,'reason')};
         if(managedCompletion(m)){review.workPerformed=input(data,'workPerformed');review.judgments=input(data,'judgments');review.conclusion=input(data,'conclusion');review.notice=input(data,'notice');}
-        for (const note of state.notes.filter(n=>!n.cleared)) note.cleared={at:review.at,by:role,basis};
+        for (const note of state.notes.filter(n=>!n.cleared)) note.cleared={at:review.at,by:actorKey(role),basis};
         review.notesStamp=noteStamp(state);
         state.approvals.push(review);
       } else fail('Чанарын үйлдэл олдсонгүй.',404);
@@ -149,7 +150,7 @@ export function createOversightStore(store,filesFor) {
       }
       if(data.action==='return'){
         if(offer.accepted||offer.returned||data.package!==offer.id||data.digest!==offer.digest||!['partner','reviewer'].includes(data.owner))fail('Одоогийн хүлээн аваагүй багц ба засвар хариуцах баг шаардлагатай.');
-        offer.returned={by:role,at:now(),reason:input(data,'reason'),owner:data.owner};
+        offer.returned={by:actorKey(role),at:now(),reason:input(data,'reason'),owner:data.owner};
         recordEvent(m,'Хадгалалтын багцыг зөрчилтэй буцаав · '+data.owner);store.save(context,'oversight',{});return view(role,id);
       }
       const record=files.archive.inspectCustody(m,offer.id);
@@ -158,7 +159,7 @@ export function createOversightStore(store,filesFor) {
       }
       if(controlledArchive(m)&&!custodyReady(offer))fail('Татсан хэш нь уншигдах байдлын бодит шалгалт биш. Бүрдэл бүрийн бодит үр дүн шаардлагатай.');
       if (offer.accepted) return view(role,id);
-      offer.accepted={by:role,at:now(),reason:input(data,'reason'),digest:record.digest,...(controlledArchive(m)&&{restrictions:files.archive.custodyRestrictions(m,offer.id)})};
+      offer.accepted={by:actorKey(role),at:now(),reason:input(data,'reason'),digest:record.digest,...(controlledArchive(m)&&{restrictions:files.archive.custodyRestrictions(m,offer.id)})};
     }
     recordEvent(m,role+' · '+data.action);
     store.save(context,'oversight',{});

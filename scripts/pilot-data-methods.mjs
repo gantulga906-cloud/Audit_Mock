@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import {createHash,randomUUID} from 'node:crypto';
 import {csvRows,cents} from './pilot-population.mjs';
 import {evidenceCurrent} from './pilot-requests.mjs';
@@ -14,7 +15,7 @@ const object=x=>!!x&&typeof x==='object'&&!Array.isArray(x);
 const now=()=>new Date().toISOString();
 function remember(version,role,operation,detail){
  const basis={definition:version.definition,configuration:version.configuration,inputs:version.inputs,outputs:version.outputs,cases:version.cases};
- (version.events??=[]).push({at:now(),by:role,operation,status:version.status,digest:hash(JSON.stringify(basis)),...detail,
+ (version.events??=[]).push({at:now(),by:actorKey(role),operation,status:version.status,digest:hash(JSON.stringify(basis)),...detail,
   ...(['submit','approve','return'].includes(operation)&&{inputs:structuredClone(version.inputs??[]),cases:structuredClone(version.cases??[]),review:version.review&&{...version.review}})});
 }
 export const managedEvidence=m=>!!m.pilotEvidenceEnabled;
@@ -169,21 +170,21 @@ export function dataAction(m,role,action,data,files){
  let item=data.id&&collection.find(r=>r.id===data.id),version=item&&last(item.versions),operation=action.replace(profile?'data-profile-':'data-check-',''),eventDetail;
  if(operation==='save'||operation==='run'){
   if(role==='partner')fail('Бэлтгэгч / ахлахын томилгоо шаардлагатай.',403);
-  if(version&&(version.by!==role||version.status==='submitted'))fail('Өөрийн буцаасан / ноорог хувилбарыг сонгоно уу.');
+  if(version&&(version.by!==actorKey(role)||version.status==='submitted'))fail('Өөрийн буцаасан / ноорог хувилбарыг сонгоно уу.');
   let content;
   if(profile){const definition=parse(input(data,'definition',10000),'Импортын профайл');validateProfile(definition);if(!object(definition)||!object(definition.mapping)||!['signed','debit-credit'].includes(definition.amount)||!['major','minor'].includes(definition.unit)||!['debit-positive','credit-positive'].includes(definition.sign)||!['iso','dmy'].includes(definition.dateFormat)||Object.entries(definition.mapping).some(([k,v])=>!['id','account','amount','debit','credit','entity','date','currency','journal','entry_type','reference'].includes(k)||typeof v!=='string'||!v.trim()))fail('Профайлын багана, нэгж, тэмдэг ба огнооны тодорхой дүрэм шаардлагатай.',400);content={name:input(data,'name',200),definition};}
   else {const method=input(data,'method',12),configuration=parse(input(data,'configuration',100000),'Аргын параметр');if(version&&version.method!==method)fail('Өөр арга сонгох бол тусдаа тооцоолол үүсгэнэ үү.');if(!object(configuration))fail('Аргын параметр объект байна.',400);content={method,configuration,...calculate(m,files,method,input(data,'primary',64),data.secondary,configuration),use:input(data,'use',500)};}
-  if(!item){item={id:randomUUID(),versions:[]};collection.push(item);}version={id:item.id,version:(version?.version??0)+1,status:'draft',by:role,at:now(),...content};item.versions.push(version);
+  if(!item){item={id:randomUUID(),versions:[]};collection.push(item);}version={id:item.id,version:(version?.version??0)+1,status:'draft',by:actorKey(role),at:now(),...content};item.versions.push(version);
  }else{
   if(!version||String(version.version)!==data.version)fail('Яг одоогийн хувилбарыг сонгоно уу.');
   if(operation==='explain'){
-   if(profile||version.by!==role||!['draft','returned'].includes(version.status))fail('Өөрийн ноорог дүгнэлтийг засна уу.');const target=version.cases.find(c=>c.id===data.case);if(!target)fail('Шинжилгээний тохиолдол олдсонгүй.');eventDetail={case:data.case,previous:structuredClone(target)};const ref=dataSource(m,files,input(data,'evidence',64));Object.assign(target,{result:input(data,'result',16),reason:input(data,'reason'),evidence:{id:ref.id,version:ref.version,sha256:ref.sha256},by:role,at:now()});eventDetail.value=structuredClone(target);if(!['resolved','incomplete'].includes(target.result))fail('Дүгнэлтийн төлөв буруу.',400);if(!version.inputs.some(i=>i.id===ref.id))version.inputs.push({...ref,bytes:undefined});
+   if(profile||version.by!==actorKey(role)||!['draft','returned'].includes(version.status))fail('Өөрийн ноорог дүгнэлтийг засна уу.');const target=version.cases.find(c=>c.id===data.case);if(!target)fail('Шинжилгээний тохиолдол олдсонгүй.');eventDetail={case:data.case,previous:structuredClone(target)};const ref=dataSource(m,files,input(data,'evidence',64));Object.assign(target,{result:input(data,'result',16),reason:input(data,'reason'),evidence:{id:ref.id,version:ref.version,sha256:ref.sha256},by:actorKey(role),at:now()});eventDetail.value=structuredClone(target);if(!['resolved','incomplete'].includes(target.result))fail('Дүгнэлтийн төлөв буруу.',400);if(!version.inputs.some(i=>i.id===ref.id))version.inputs.push({...ref,bytes:undefined});
   }else if(operation==='submit'){
-   if(version.by!==role||!['draft','returned'].includes(version.status))fail('Өөрийн ноорог / буцаасан хувилбарыг илгээнэ үү.');if(!profile&&version.inputs.some(ref=>!sourceCurrent(m,ref)))fail('Эх хувилбар өөрчлөгдсөн. Дахин тооцоолно уу.');version.status='submitted';
+   if(version.by!==actorKey(role)||!['draft','returned'].includes(version.status))fail('Өөрийн ноорог / буцаасан хувилбарыг илгээнэ үү.');if(!profile&&version.inputs.some(ref=>!sourceCurrent(m,ref)))fail('Эх хувилбар өөрчлөгдсөн. Дахин тооцоолно уу.');version.status='submitted';
   }else if(operation==='approve'||operation==='return'){
-   if(role==='preparer'||version.by===role)fail('Хараат бус хянагч шаардлагатай.',403);if(version.status!=='submitted')fail('Илгээсэн хувилбарыг сонгоно уу.');const reason=input(data,'reason');
+   if(role==='preparer'||version.by===actorKey(role))fail('Хараат бус хянагч шаардлагатай.',403);if(version.status!=='submitted')fail('Илгээсэн хувилбарыг сонгоно уу.');const reason=input(data,'reason');
    if(operation==='approve'&&!profile){if(!basisCurrent(m,version))fail('Эх, мөрийн төлөв эсвэл нээлтийн баталсан суурь өөрчлөгдсөн.');for(const ref of version.inputs)if(dataSource(m,files,ref.id).sha256!==ref.sha256)fail('Эхийн агуулга өөрчлөгдсөн.');const disposition=input(data,'disposition',16);if(!['usable','limited'].includes(disposition)||disposition==='usable'&&(version.issues.length||version.cases.some(c=>c.result!=='resolved')))fail('Шийдэгдээгүй зөрүүтэй тооцоолол цэвэр хэрэглээний зөвшөөрөл болохгүй.');version.disposition=disposition;}
-   version.status=operation==='approve'?'approved':'returned';version.review={by:role,at:now(),reason};
+   version.status=operation==='approve'?'approved':'returned';version.review={by:actorKey(role),at:now(),reason};
   }else fail('Өгөгдлийн үйлдэл олдсонгүй.',404);
  }
  remember(version,role,operation,eventDetail);recordEvent(m,'G03 · '+action+' · '+item.id+' v'+version.version);

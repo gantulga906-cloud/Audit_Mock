@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import {createHash,randomUUID} from 'node:crypto';
 import {approvedRows} from './pilot-registers.mjs';
 import {evidenceCurrent} from './pilot-requests.mjs';
@@ -14,7 +15,7 @@ export function enableArchive(m,role,data){
  if(role!=='partner')fail('Эцсийн файлын горимыг партнер сонгоно.',403);
  if(!m.engagements[0]?.intake.active||!managedReporting(m)||m.pilotLaterFacts?.some(r=>!r.closed))fail('G06 горимтой идэвхтэй ажил ба шийдсэн өмнөх нөхцөл шаардлагатай.');
  if(controlledArchive(m))return;
- m.pilotArchiveControls={profile:1,by:role,at:new Date().toISOString(),reason:input(data,'reason')};
+ m.pilotArchiveControls={profile:1,by:actorKey(role),at:new Date().toISOString(),reason:input(data,'reason')};
  recordEvent(m,'G07 · Бүрдүүлэлт, бодит хадгалалтын хүлээн авалт ба хязгаарлагдсан хандалтын горим сонгов');
 }
 export function archiveOriginal(m,id,read){
@@ -64,7 +65,7 @@ export function custodyInspection(m,offer,bundle,data,role){
  for(const e of expected){const row=items.find(r=>r.id===e.id);if(!row||row.sha256!==e.sha256||!['readable','unreadable','unavailable','unknown'].includes(row.result)||typeof row.method!=='string'||!row.method.trim()||typeof row.reason!=='string'||!row.reason.trim()||row.method.length>1000||row.reason.length>4000)fail('Бүрдэл бүрийн яг хэш, ашигласан арга / програм ба бодит үр дүн шаардлагатай.');}
  const day=input(data,'checkedOn',10);if(!validDate(day)||day>today()||day<offer.offeredAt.slice(0,10))fail('Бодитоор шалгасан өдрийг бүртгэнэ.');
  const key=input(data,'inspectionKey',36);if(!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(key))fail('Шалгалтын дахин илгээх яг таних тэмдэг шаардлагатай.');
- const inspection={key,version:(offer.inspections?.length??0)+1,by:role,at:new Date().toISOString(),checkedOn:day,digest:offer.digest,location:input(data,'location',300),medium:input(data,'medium',200),receipt:input(data,'receipt'),confidentiality:input(data,'confidentiality'),items};
+ const inspection={key,version:(offer.inspections?.length??0)+1,by:actorKey(role),at:new Date().toISOString(),checkedOn:day,digest:offer.digest,location:input(data,'location',300),medium:input(data,'medium',200),receipt:input(data,'receipt'),confidentiality:input(data,'confidentiality'),items};
  const payload=JSON.stringify({checkedOn:inspection.checkedOn,digest:inspection.digest,location:inspection.location,medium:inspection.medium,receipt:inspection.receipt,confidentiality:inspection.confidentiality,items:inspection.items});const fingerprint=sha(payload),prior=offer.inspections?.find(r=>r.key===key);if(prior){if(prior.fingerprint!==fingerprint)fail('Нэг шалгалтын таних тэмдэгтэй өөр агуулга илгээхгүй.');return prior;}if(offer.inspections?.at(-1)?.checkedOn>day)fail('Одоогийн үр дүнг хуучин өдрийн шалгалтаар орлуулахгүй.');inspection.fingerprint=fingerprint;
  (offer.inspections??=[]).push(inspection);return inspection;
 }
@@ -72,7 +73,7 @@ export function custodyReady(offer){const r=offer.inspections?.at(-1);return !!r
 
 export function archiveSupportAction(m,role,action,data,files){
  if(!controlledArchive(m))fail('G07 файлын горим шаардлагатай.');
- if(action==='archive-support-upload'){const original=input(data,'name',180),json=/\.json$/i.test(original),parsed=fileInput(json?{...data,name:original.replace(/\.json$/i,'.csv')}:data),name=json?original:parsed.name,bytes=parsed.bytes,id=randomUUID();if(json){try{JSON.parse(bytes.toString('utf8'));}catch{fail('JSON эхийн бодит бүтэц буруу байна.',400);}}files.add(id,name,bytes);m.evidence.push({id,name,engagement:m.engagement,version:1,type:'FILE',obtained:today(),source:input(data,'source',200),status:'received',specimen:false,anchor:'',text:'',original:true,uploadedBy:role,archiveOnly:true});}
- else{const item=m.evidence.find(e=>e.id===data.id&&e.archiveOnly&&e.status==='received');if(!item||role==='preparer'||role===item.uploadedBy)fail('Шинэ захиргааны эхийг тусдаа хүн үнэлнэ.',403);if(!['accepted','rejected'].includes(data.result))fail('Бодит үнэлгээ шаардлагатай.');item.status=data.result;item.assessment=input(data,'reason');item.standaloneAssessment={result:data.result,by:role,at:new Date().toISOString(),reason:item.assessment};}
+ if(action==='archive-support-upload'){const original=input(data,'name',180),json=/\.json$/i.test(original),parsed=fileInput(json?{...data,name:original.replace(/\.json$/i,'.csv')}:data),name=json?original:parsed.name,bytes=parsed.bytes,id=randomUUID();if(json){try{JSON.parse(bytes.toString('utf8'));}catch{fail('JSON эхийн бодит бүтэц буруу байна.',400);}}files.add(id,name,bytes);m.evidence.push({id,name,engagement:m.engagement,version:1,type:'FILE',obtained:today(),source:input(data,'source',200),status:'received',specimen:false,anchor:'',text:'',original:true,uploadedBy:actorKey(role),archiveOnly:true});}
+ else{const item=m.evidence.find(e=>e.id===data.id&&e.archiveOnly&&e.status==='received');if(!item||role==='preparer'||actorKey(role)===item.uploadedBy)fail('Шинэ захиргааны эхийг тусдаа хүн үнэлнэ.',403);if(!['accepted','rejected'].includes(data.result))fail('Бодит үнэлгээ шаардлагатай.');item.status=data.result;item.assessment=input(data,'reason');item.standaloneAssessment={result:data.result,by:actorKey(role),at:new Date().toISOString(),reason:item.assessment};}
  recordEvent(m,action);
 }

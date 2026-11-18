@@ -1,6 +1,6 @@
 import { createHash, randomBytes } from 'node:crypto';
 import { recordEvent } from '../src/lib/workspace.ts';
-import { accounts, fieldworkForms, input, PilotError } from './pilot-workflow.mjs';
+import { accounts, accountFor, fieldworkForms, input, PilotError } from './pilot-workflow.mjs';
 import { requestAction } from './pilot-requests.mjs';
 import { requireSeat } from './pilot-staffing.mjs';
 import {approvedRows,programmeDecision} from './pilot-registers.mjs';
@@ -55,12 +55,13 @@ export function createConfirmationStore(db,store,filesFor) {
         request.contactEmail!==invite.recipient || request.contact!==invite.contact ||
         !part || !['missing','rejected'].includes(part.state) || !fieldworkForms(m).includes(request.form)) unavailable();
     if(invite.basis){const basis=JSON.parse(invite.basis);if(!approvedRows(m,'M07-F08').some(r=>r.id===basis.record&&r.version===basis.version)||digest(JSON.stringify(part.requirement))!==basis.requirement)unavailable();}
-    return {invite,request,part};
+    return {invite,request,part,model:m};
   }
 
-  function receive(token,data) {
-    const {invite,request,part}=pending(token);
-    const role=Object.keys(accounts).find(role=>accounts[role]===request.owner);
+  function receive(token,data){const {request}=pending(token);return store.asPerson(request.owner,()=>receiveScoped(token,data));}
+  function receiveScoped(token,data) {
+    const {invite,request,part,model}=pending(token);
+    const role=Object.keys(accounts).find(role=>accountFor(model,role)===request.owner);
     if (!role) unavailable();
     const context=store.load(role,invite.engagement), m=context.model, files=filesFor(invite.engagement);
     const response=input(data,'response',4000);
