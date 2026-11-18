@@ -1,0 +1,1111 @@
+{
+  "guide": "G10",
+  "verifiedLocalCommit": "faf1cba56b6dd47d12092c6124f214da059c9a43",
+  "sourceRegister": "src/data/source-registers.json",
+  "handbookRegister": "docs/delivery/handbooks/registers/fieldwork_variants.json",
+  "scenarioCount": 110,
+  "variants": [
+    {
+      "id": "P09-UC02-V01",
+      "form": "3.1.1",
+      "title": "Intangible assets",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.1А!C10:C22",
+          "form_id": "FORM-028",
+          "title": "Audit program — intangible assets"
+        }
+      ],
+      "originalSourceRowSha256": "3eba39b953a1cf5e032fb78acac2d188c27d9101e36ebeaaf70384547ea652be",
+      "handbookCardRowSha256": "4ed41cf1bda8a10de59593b3317d561cf74b99e437caeb789d70b6ff7b96c46b",
+      "observations": [
+        {
+          "variant": "P09-UC02-V01",
+          "scenario": "P09-UC02-V01-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V01",
+          "scenario": "P09-UC02-V01-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V01",
+          "scenario": "P09-UC02-V01-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V01",
+          "scenario": "P09-UC02-V01-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V01",
+          "scenario": "P09-UC02-V01-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V02",
+      "form": "3.1.2",
+      "title": "Property, plant and equipment",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.2А!C10:C27",
+          "form_id": "FORM-029",
+          "title": "Audit program — property, plant and equipment"
+        }
+      ],
+      "originalSourceRowSha256": "a7a1ac7f2174c9352ca96df0c6ffa1fc7d212af7e2d6f84c791676a0e7a69c9e",
+      "handbookCardRowSha256": "f142a9c705c031b3ddf15c8a9ff330e50c39bfec8847fb49f872c5c182d854c3",
+      "observations": [
+        {
+          "variant": "P09-UC02-V02",
+          "scenario": "P09-UC02-V02-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V02",
+          "scenario": "P09-UC02-V02-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V02",
+          "scenario": "P09-UC02-V02-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V02",
+          "scenario": "P09-UC02-V02-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V02",
+          "scenario": "P09-UC02-V02-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V03",
+      "form": "3.1.3",
+      "title": "Investments",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.3А!C10:C24",
+          "form_id": "FORM-030",
+          "title": "Audit program — investments"
+        }
+      ],
+      "originalSourceRowSha256": "6f0a16f0efbc65a3d0e085639c47996e924e5e96a873b227d03c2efdbc71884b",
+      "handbookCardRowSha256": "b2efb775f9307126c1caa96b1e0425af0223bab664bf3afce0f2b5938cd72678",
+      "observations": [
+        {
+          "variant": "P09-UC02-V03",
+          "scenario": "P09-UC02-V03-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V03",
+          "scenario": "P09-UC02-V03-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V03",
+          "scenario": "P09-UC02-V03-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V03",
+          "scenario": "P09-UC02-V03-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V03",
+          "scenario": "P09-UC02-V03-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V04",
+      "form": "3.1.4",
+      "title": "Inventory values and movements",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.4А!C10:C25",
+          "form_id": "FORM-031",
+          "title": "Audit program — inventories"
+        }
+      ],
+      "originalSourceRowSha256": "f90a635f19e95af319ce6f806a2966d41fdb474fb697f5410bd4cc08cbdc316e",
+      "handbookCardRowSha256": "66d89b78507401f2028fff35cdcdcb4c8bca2d85348221991c09d3a2c7821444",
+      "observations": [
+        {
+          "variant": "P09-UC02-V04",
+          "scenario": "P09-UC02-V04-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V04",
+          "scenario": "P09-UC02-V04-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V04",
+          "scenario": "P09-UC02-V04-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V04",
+          "scenario": "P09-UC02-V04-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V04",
+          "scenario": "P09-UC02-V04-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V05",
+      "form": "3.1.5",
+      "title": "Trade receivables",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.5А!C10:C23",
+          "form_id": "FORM-032",
+          "title": "Audit program — receivables"
+        }
+      ],
+      "originalSourceRowSha256": "5b15d8c5e06fa82e65d9c16c179d88ce0c2de72c5f575b3e00e48193ec94ee90",
+      "handbookCardRowSha256": "ed8884cff7c7d6d110c75ca8b0f1372359f7d7b68d328ff449151923c6744a13",
+      "observations": [
+        {
+          "variant": "P09-UC02-V05",
+          "scenario": "P09-UC02-V05-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V05",
+          "scenario": "P09-UC02-V05-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V05",
+          "scenario": "P09-UC02-V05-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V05",
+          "scenario": "P09-UC02-V05-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V05",
+          "scenario": "P09-UC02-V05-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V06",
+      "form": "3.1.6",
+      "title": "Other long-term receivables",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.6А!C11:C18",
+          "form_id": "FORM-033",
+          "title": "Audit program — other long-term receivables"
+        }
+      ],
+      "originalSourceRowSha256": "a478e6689e54492c250b870988076bc869e03706635425e9b6beffa443350b78",
+      "handbookCardRowSha256": "e5e8d9a2c7545ba8c26114ebf79a1c6f2bcb675e7dbd71eae0bbbb210ab78946",
+      "observations": [
+        {
+          "variant": "P09-UC02-V06",
+          "scenario": "P09-UC02-V06-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V06",
+          "scenario": "P09-UC02-V06-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V06",
+          "scenario": "P09-UC02-V06-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V06",
+          "scenario": "P09-UC02-V06-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V06",
+          "scenario": "P09-UC02-V06-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V07",
+      "form": "3.1.7",
+      "title": "Other receivables and prepayments",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.7А!C11:C17",
+          "form_id": "FORM-034",
+          "title": "Audit program — other receivables and prepayments"
+        }
+      ],
+      "originalSourceRowSha256": "fbd5bad99e973aebef1cca90ed3906896d6e78648870cdc0ffb86455f64d0322",
+      "handbookCardRowSha256": "c011a88c0aecc9c59e5c4bd4147fae9202b069a9a24cf8441443f4b001182d2e",
+      "observations": [
+        {
+          "variant": "P09-UC02-V07",
+          "scenario": "P09-UC02-V07-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V07",
+          "scenario": "P09-UC02-V07-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V07",
+          "scenario": "P09-UC02-V07-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V07",
+          "scenario": "P09-UC02-V07-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V07",
+          "scenario": "P09-UC02-V07-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V08",
+      "form": "3.1.8",
+      "title": "Cash and cash equivalents",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.8А!C10:C23",
+          "form_id": "FORM-035",
+          "title": "Audit program — cash and cash equivalents"
+        }
+      ],
+      "originalSourceRowSha256": "3dca1a95382871a54126b3beffda81b722c89b642998b579065641da93d48798",
+      "handbookCardRowSha256": "abf245e93bcdc200d1bf26a25382a49c46f209fdacbc64f78560f9175c6839c7",
+      "observations": [
+        {
+          "variant": "P09-UC02-V08",
+          "scenario": "P09-UC02-V08-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V08",
+          "scenario": "P09-UC02-V08-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V08",
+          "scenario": "P09-UC02-V08-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V08",
+          "scenario": "P09-UC02-V08-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V08",
+          "scenario": "P09-UC02-V08-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V09",
+      "form": "3.1.9",
+      "title": "Borrowings",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.9А!C12:C24",
+          "form_id": "FORM-036",
+          "title": "Audit program — borrowings"
+        }
+      ],
+      "originalSourceRowSha256": "8c31b687b878191baa8804fa79f96c30991c43458ca0c21e6cce77a38e1747af",
+      "handbookCardRowSha256": "9d7f1639452d427205547e5edf28b504587f966891a4a55e7e07584a0881c629",
+      "observations": [
+        {
+          "variant": "P09-UC02-V09",
+          "scenario": "P09-UC02-V09-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V09",
+          "scenario": "P09-UC02-V09-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V09",
+          "scenario": "P09-UC02-V09-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V09",
+          "scenario": "P09-UC02-V09-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V09",
+          "scenario": "P09-UC02-V09-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V10",
+      "form": "3.1.10",
+      "title": "Purchases and trade payables",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.10А!C12:C20",
+          "form_id": "FORM-037",
+          "title": "Audit program — purchases and payables"
+        }
+      ],
+      "originalSourceRowSha256": "92e904e5196ff06d65e7d33e17084226063fc4f4b20ca2d1ae3ebe6803c87bbe",
+      "handbookCardRowSha256": "a75f71465150f822fd5198d0f14161646cd22fdd728a81bb15898e64280ca335",
+      "observations": [
+        {
+          "variant": "P09-UC02-V10",
+          "scenario": "P09-UC02-V10-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V10",
+          "scenario": "P09-UC02-V10-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V10",
+          "scenario": "P09-UC02-V10-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V10",
+          "scenario": "P09-UC02-V10-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V10",
+          "scenario": "P09-UC02-V10-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V11",
+      "form": "3.1.11",
+      "title": "Other payables and accruals",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.11А!C11:C16",
+          "form_id": "FORM-038",
+          "title": "Audit program — other payables and accruals"
+        }
+      ],
+      "originalSourceRowSha256": "41b763352d5caebd086dc5c55348f12e7f39fc74e52a89389a90aec936070f1a",
+      "handbookCardRowSha256": "e78bee95bbb8417149ee62a2e5cb38b4aa18fd6945322157dfcc824694e79772",
+      "observations": [
+        {
+          "variant": "P09-UC02-V11",
+          "scenario": "P09-UC02-V11-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V11",
+          "scenario": "P09-UC02-V11-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V11",
+          "scenario": "P09-UC02-V11-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V11",
+          "scenario": "P09-UC02-V11-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V11",
+          "scenario": "P09-UC02-V11-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V12",
+      "form": "3.1.12",
+      "title": "Deferred income",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.12А!C12:C17",
+          "form_id": "FORM-039",
+          "title": "Audit program — deferred income"
+        }
+      ],
+      "originalSourceRowSha256": "b146e5ab69416b6ff4b661c6af83a643f5759a760279d6ff76c67561b228ea30",
+      "handbookCardRowSha256": "e65f5498408a96512919a1d043741e44800d9bf908f23795e1e97f959a7a6937",
+      "observations": [
+        {
+          "variant": "P09-UC02-V12",
+          "scenario": "P09-UC02-V12-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V12",
+          "scenario": "P09-UC02-V12-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V12",
+          "scenario": "P09-UC02-V12-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V12",
+          "scenario": "P09-UC02-V12-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V12",
+          "scenario": "P09-UC02-V12-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V13",
+      "form": "3.1.13",
+      "title": "Intercompany transactions",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.13А!C10:C16",
+          "form_id": "FORM-040",
+          "title": "Audit program — intercompany transactions"
+        }
+      ],
+      "originalSourceRowSha256": "756850a6364b295c837a0a1f7be29a8d89863a911494da76162e05f393dfab04",
+      "handbookCardRowSha256": "1e1e927f5e08f6fe7ec345247ab6dcd2b6a58e2b8060fab8a54d4fa41eaeb7a5",
+      "observations": [
+        {
+          "variant": "P09-UC02-V13",
+          "scenario": "P09-UC02-V13-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V13",
+          "scenario": "P09-UC02-V13-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V13",
+          "scenario": "P09-UC02-V13-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V13",
+          "scenario": "P09-UC02-V13-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V13",
+          "scenario": "P09-UC02-V13-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V14",
+      "form": "3.1.14",
+      "title": "Tax balances and expense",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.14А!C10:C17",
+          "form_id": "FORM-041",
+          "title": "Audit program — taxation"
+        }
+      ],
+      "originalSourceRowSha256": "3f19b6451cb7efeecc4fead2b22ee0439272af8e019d0f2e14b6b879b44a2b83",
+      "handbookCardRowSha256": "d4d3875b999da7c8bd75fc465d25a21fbc90d9fb252b34ff7d4d115dc0eee74c",
+      "observations": [
+        {
+          "variant": "P09-UC02-V14",
+          "scenario": "P09-UC02-V14-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V14",
+          "scenario": "P09-UC02-V14-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V14",
+          "scenario": "P09-UC02-V14-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V14",
+          "scenario": "P09-UC02-V14-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V14",
+          "scenario": "P09-UC02-V14-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V15",
+      "form": "3.1.15",
+      "title": "Capital, reserves and dividends",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.15А!C10:C16",
+          "form_id": "FORM-042",
+          "title": "Audit program — share capital, reserves and dividends"
+        }
+      ],
+      "originalSourceRowSha256": "c297e4a6927bcbdd52eb630e0f014d2c2041580c692ab733b0846b0cd289d5fc",
+      "handbookCardRowSha256": "06e21a6da69ab31a939995b5e45b9d21e7a5e6f07d6db1bad415b13bdce08f39",
+      "observations": [
+        {
+          "variant": "P09-UC02-V15",
+          "scenario": "P09-UC02-V15-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V15",
+          "scenario": "P09-UC02-V15-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V15",
+          "scenario": "P09-UC02-V15-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V15",
+          "scenario": "P09-UC02-V15-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V15",
+          "scenario": "P09-UC02-V15-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V16",
+      "form": "3.1.16",
+      "title": "Revenue",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.16А!C10:C23",
+          "form_id": "FORM-043",
+          "title": "Audit program — revenue"
+        }
+      ],
+      "originalSourceRowSha256": "37d5573231342f39ca6a8ce3cf27124d235c2a568033011c69f817987f9d4530",
+      "handbookCardRowSha256": "5127c76630fc927cc4c1eac9a0cf77e42b27ac7ba40acd7e4451f13a5d44838d",
+      "observations": [
+        {
+          "variant": "P09-UC02-V16",
+          "scenario": "P09-UC02-V16-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V16",
+          "scenario": "P09-UC02-V16-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V16",
+          "scenario": "P09-UC02-V16-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V16",
+          "scenario": "P09-UC02-V16-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V16",
+          "scenario": "P09-UC02-V16-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V17",
+      "form": "3.1.17",
+      "title": "Cost of sales",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.17А!C10:C25",
+          "form_id": "FORM-044",
+          "title": "Audit program — cost of sales"
+        }
+      ],
+      "originalSourceRowSha256": "7d369fe2cfe65aa39c127f4cdf92b4f4946893d9641053d8d8018badcf91aa8e",
+      "handbookCardRowSha256": "018e04171081ebf015f9590728b2e0b677ea781e21098b8f447ff443b950ca2a",
+      "observations": [
+        {
+          "variant": "P09-UC02-V17",
+          "scenario": "P09-UC02-V17-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V17",
+          "scenario": "P09-UC02-V17-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V17",
+          "scenario": "P09-UC02-V17-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V17",
+          "scenario": "P09-UC02-V17-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V17",
+          "scenario": "P09-UC02-V17-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V18",
+      "form": "3.1.18",
+      "title": "Payroll and employee benefits",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.18А!C10:C20",
+          "form_id": "FORM-045",
+          "title": "Audit program — payroll and employee benefits"
+        }
+      ],
+      "originalSourceRowSha256": "51e446b98e195d1e4d48e5da5283e78b2983ae06ef3f60732e280de4db31d341",
+      "handbookCardRowSha256": "ce1b4619efe0951b27631a022cbda2630b4148e2966a32325d6d068610ee2930",
+      "observations": [
+        {
+          "variant": "P09-UC02-V18",
+          "scenario": "P09-UC02-V18-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V18",
+          "scenario": "P09-UC02-V18-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V18",
+          "scenario": "P09-UC02-V18-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V18",
+          "scenario": "P09-UC02-V18-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V18",
+          "scenario": "P09-UC02-V18-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V19",
+      "form": "3.1.19",
+      "title": "Selling and operating expenses",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.19А!C11:C16",
+          "form_id": "FORM-046",
+          "title": "Audit procedures — selling and operating expenses"
+        }
+      ],
+      "originalSourceRowSha256": "a890057495a90a8269efae6c58812c94955e9e3d0bbe8dcb08f1148a659c6dc2",
+      "handbookCardRowSha256": "9d79af37b3466bf63b8a6f785424ce8873a87b6fad3ec238ad6b70842fdaf1a5",
+      "observations": [
+        {
+          "variant": "P09-UC02-V19",
+          "scenario": "P09-UC02-V19-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V19",
+          "scenario": "P09-UC02-V19-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V19",
+          "scenario": "P09-UC02-V19-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V19",
+          "scenario": "P09-UC02-V19-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V19",
+          "scenario": "P09-UC02-V19-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V20",
+      "form": "3.1.20",
+      "title": "Other income-statement or comprehensive-income items",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.20А!C11:C15",
+          "form_id": "FORM-047",
+          "title": "Audit procedures — other income-statement items"
+        }
+      ],
+      "originalSourceRowSha256": "60e8a7446ab06deee0f48f67c6ae04e9af92fac06e9e5b291f9d8ed4353c7c65",
+      "handbookCardRowSha256": "a849f2cb41f54833c05a46e0d04c8e77a1cac6415e9f13f3866a65f0b87621c6",
+      "observations": [
+        {
+          "variant": "P09-UC02-V20",
+          "scenario": "P09-UC02-V20-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V20",
+          "scenario": "P09-UC02-V20-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V20",
+          "scenario": "P09-UC02-V20-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V20",
+          "scenario": "P09-UC02-V20-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V20",
+          "scenario": "P09-UC02-V20-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V21",
+      "form": "3.1.21",
+      "title": "Finance costs",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.21А!C11:C16",
+          "form_id": "FORM-048",
+          "title": "Audit program — finance costs"
+        }
+      ],
+      "originalSourceRowSha256": "49cdab8d219cc60800917422579de8a70640c06c4141b91094dc7db030828f3c",
+      "handbookCardRowSha256": "e79a605a4e9749a91fd167b65e232af2d5e2dffcec6adeb9ff98cb9db4cda2cb",
+      "observations": [
+        {
+          "variant": "P09-UC02-V21",
+          "scenario": "P09-UC02-V21-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V21",
+          "scenario": "P09-UC02-V21-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V21",
+          "scenario": "P09-UC02-V21-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V21",
+          "scenario": "P09-UC02-V21-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V21",
+          "scenario": "P09-UC02-V21-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    },
+    {
+      "id": "P09-UC02-V22",
+      "form": "3.1.22",
+      "title": "Other income and expenses",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.22А!C11:C15",
+          "form_id": "FORM-049",
+          "title": "Audit program — other income and expenses"
+        }
+      ],
+      "originalSourceRowSha256": "b94df5e44f54f23f54cb099afa46ab7ba08f84457b54fc12d6f045f702f324d3",
+      "handbookCardRowSha256": "209d6e175f318ce65da7bd2ade5c75cb55280913edb062a775f9ac3ae1484689",
+      "observations": [
+        {
+          "variant": "P09-UC02-V22",
+          "scenario": "P09-UC02-V22-MISSING",
+          "outcome": "passed",
+          "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+        },
+        {
+          "variant": "P09-UC02-V22",
+          "scenario": "P09-UC02-V22-UNAUTH",
+          "outcome": "passed",
+          "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+        },
+        {
+          "variant": "P09-UC02-V22",
+          "scenario": "P09-UC02-V22-NORMAL",
+          "outcome": "passed",
+          "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+        },
+        {
+          "variant": "P09-UC02-V22",
+          "scenario": "P09-UC02-V22-EXCEPTION",
+          "outcome": "passed",
+          "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+        },
+        {
+          "variant": "P09-UC02-V22",
+          "scenario": "P09-UC02-V22-CHANGE",
+          "outcome": "passed",
+          "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+        }
+      ],
+      "engineeringStatus": "partial-evidence",
+      "independentAcceptance": false,
+      "evidenceBoundary": "Actual manual area work and supported exception handoff against fictional accepted originals; separate kernel/original-file proofs support explicit calculations, not every native source procedure"
+    }
+  ],
+  "sourceAcceptance": [],
+  "releaseReady": false
+}

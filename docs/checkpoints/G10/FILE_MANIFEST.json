@@ -1,0 +1,91 @@
+{
+  "guide": "G10",
+  "hashEncoding": "SHA-256 of original artifact bytes; FILE_MANIFEST.json excludes itself",
+  "files": [
+    {
+      "path": "Backlog_Preservation.json",
+      "bytes": 2536,
+      "sha256": "aaa062ee7c418f81e72481eb6f3504d83e39036bf52e4b7f4a578bff3ea9ae6d"
+    },
+    {
+      "path": "Browser_Verification.json",
+      "bytes": 1496,
+      "sha256": "c6219423352d5e45e55867a06dc74c317543e2faccb63335bb2d1e4d0cee6b88"
+    },
+    {
+      "path": "browser/01-actual-cost-calculation.png",
+      "bytes": 114631,
+      "sha256": "c1851c8303f37ecf9c38ac85244b791193d3d553288e318c949e6b6bf9c303f3"
+    },
+    {
+      "path": "browser/02-current-source-work.png",
+      "bytes": 106149,
+      "sha256": "a6ba66a0c1499058c5428df725ed1566b5d86a12b68dbcdddb87749a28dabd50"
+    },
+    {
+      "path": "browser/03-independent-area-review.png",
+      "bytes": 109544,
+      "sha256": "0dedd00398e3f7cf4c3b4662e230afecb76542ada4728107b3138808ed983a51"
+    },
+    {
+      "path": "browser/04-preserved-stale-source.png",
+      "bytes": 111159,
+      "sha256": "f9f27dbedfe72ad7c0a3eaa28ce873cfd8426e5c9d42e2f3e3f1e7acd6b85ff1"
+    },
+    {
+      "path": "browser/05-mobile-area-record.png",
+      "bytes": 43498,
+      "sha256": "b902705a67fb6219d8c0423379e4aa24c907c6b6a0e4dfe66cf3bcab706c6ef1"
+    },
+    {
+      "path": "Foundation_Verification.json",
+      "bytes": 17864,
+      "sha256": "a03ffd5224e9a0719b0956f943c9432f9717dbb35a50d0a87980443a0b8a5cf1"
+    },
+    {
+      "path": "G10_Connected_Proof.json",
+      "bytes": 34360,
+      "sha256": "73512d16746b53eae1e94ceba139bac899eda1b21766eb40c0c5b09de10fba97"
+    },
+    {
+      "path": "G10_local_history.bundle",
+      "bytes": 48314,
+      "sha256": "236c6b4a500201a32b18a45a1c2afe91b14984ee2f3294dc0a9e3b99fe71177f"
+    },
+    {
+      "path": "G10_Variant_Matrix.json",
+      "bytes": 52607,
+      "sha256": "91c8d529b9598385b4a703c42bc04279362040c76f2fae37eca290182ea61cbe"
+    },
+    {
+      "path": "G10_Workflow_Evidence.json",
+      "bytes": 56734,
+      "sha256": "33bd6fcbe611e577e5002d9cafbd38d0da27ef83f2d91a774870dbb05269076c"
+    },
+    {
+      "path": "Publication_Provenance.json",
+      "bytes": 4858,
+      "sha256": "f764e210750f17ce8e29584c7666ec71b92c3411f21638975dd6d1b81409acba"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4804,
+      "sha256": "ccda77482ab428f568dd087ce7630c3c42bf52ff4f53ae50ac43b3ee7a81a12f"
+    },
+    {
+      "path": "Retained_Work.json",
+      "bytes": 2787,
+      "sha256": "d3eb6a9750a60aaa28aecc835b372327c0271d873ac790ff02e0134203dca0b9"
+    },
+    {
+      "path": "Source_Verification.json",
+      "bytes": 2937566,
+      "sha256": "1d49f965b762dd36b4d22a5c4540f7f5c1ea4e4e278f1dd9f62cd35747548ce0"
+    },
+    {
+      "path": "Verified_Build.json",
+      "bytes": 207,
+      "sha256": "8d46b3c1430a1e1d5c2b88ce8a6ca05d30164f3dbb5ec24801a2c3354ffbb3c2"
+    }
+  ]
+}

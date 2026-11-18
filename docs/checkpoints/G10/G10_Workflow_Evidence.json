@@ -1,0 +1,1010 @@
+{
+  "guide": "G10",
+  "verifiedLocalCommit": "faf1cba56b6dd47d12092c6124f214da059c9a43",
+  "scenarios": [
+    {
+      "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+      "file": "tests/pilot-area-cards.test.mjs",
+      "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+      "actors": [
+        "named preparer",
+        "named reviewer",
+        "named partner"
+      ],
+      "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+      "cases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "variants": [
+        "P09-UC02-V01",
+        "P09-UC02-V02",
+        "P09-UC02-V03",
+        "P09-UC02-V04",
+        "P09-UC02-V05",
+        "P09-UC02-V06",
+        "P09-UC02-V07",
+        "P09-UC02-V08",
+        "P09-UC02-V09",
+        "P09-UC02-V10",
+        "P09-UC02-V11",
+        "P09-UC02-V12",
+        "P09-UC02-V13",
+        "P09-UC02-V14",
+        "P09-UC02-V15",
+        "P09-UC02-V16",
+        "P09-UC02-V17",
+        "P09-UC02-V18",
+        "P09-UC02-V19",
+        "P09-UC02-V20",
+        "P09-UC02-V21",
+        "P09-UC02-V22"
+      ],
+      "outcome": "passed"
+    },
+    {
+      "test": "G10 new supported methods calculate independent source examples and reject missing unsupported and malformed inputs",
+      "file": "tests/pilot-area-cards.test.mjs",
+      "action": "bounded independent arithmetic and explicit unsupported/missing cases",
+      "actors": [
+        "independent synthetic expected values"
+      ],
+      "observed": "The new supported straight-line, contractual, calendar-month, cut-off, reciprocal, periodic-weighted-cost, expense and disposal profiles reproduce independently stated expectations. Missing primary inputs and unsupported method/edition do not become zero or pass. This is kernel evidence, separate from original-file integration and professional acceptance.",
+      "automations": [
+        "AUTO-028"
+      ],
+      "outcome": "passed"
+    },
+    {
+      "test": "G10 actual weighted-cost original files link exact quantities rounded costs ledger balances and independently reviewed calculation to the area packet",
+      "file": "tests/pilot-area-cards.test.mjs",
+      "action": "accepted exact original lots/issues through independent calculation, area review and changed-source preservation",
+      "actors": [
+        "named preparer",
+        "named reviewer"
+      ],
+      "observed": "Two actual accepted lot files total 200 units/value 3000; 50 issues cost 750 and remaining inventory 2250. Ledger mappings and independent calculation review precede the linked G10 work review. Changed issue source makes the prior work stale without rewriting its review. This bounded periodic profile is partial evidence for the complete automation minimum.",
+      "variants": [
+        "P09-UC02-V17"
+      ],
+      "automations": [
+        "AUTO-025"
+      ],
+      "outcome": "passed"
+    }
+  ],
+  "tests": [
+    {
+      "name": "G10 new supported methods calculate independent source examples and reject missing unsupported and malformed inputs",
+      "file": "tests/pilot-area-cards.test.mjs",
+      "line": 34,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 67880.2449
+    },
+    {
+      "name": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+      "file": "tests/pilot-area-cards.test.mjs",
+      "line": 45,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 160238.5821
+    },
+    {
+      "name": "G10 actual weighted-cost original files link exact quantities rounded costs ledger balances and independently reviewed calculation to the area packet",
+      "file": "tests/pilot-area-cards.test.mjs",
+      "line": 63,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 8435.0197
+    },
+    {
+      "name": "G10 unquantified limitations remain explicit G05 matters and readable exports while corrupt originals and other engagements are denied",
+      "file": "tests/pilot-area-cards.test.mjs",
+      "line": 71,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 4225.2803
+    }
+  ],
+  "testFile": {
+    "file": "tests/pilot-area-cards.test.mjs",
+    "sha256": "4bdb07ef00e5a434b8d17ca8d6fa6f0ad6dd3a711ed12a2f9fbf98ee98c91525"
+  },
+  "originalSourceVariants": [
+    {
+      "id": "P09-UC02-V01",
+      "title": "Intangible assets",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "3eba39b953a1cf5e032fb78acac2d188c27d9101e36ebeaaf70384547ea652be",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.1А!C10:C22",
+          "form_id": "FORM-028",
+          "title": "Audit program — intangible assets"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V02",
+      "title": "Property, plant and equipment",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "a7a1ac7f2174c9352ca96df0c6ffa1fc7d212af7e2d6f84c791676a0e7a69c9e",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.2А!C10:C27",
+          "form_id": "FORM-029",
+          "title": "Audit program — property, plant and equipment"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V03",
+      "title": "Investments",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "6f0a16f0efbc65a3d0e085639c47996e924e5e96a873b227d03c2efdbc71884b",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.3А!C10:C24",
+          "form_id": "FORM-030",
+          "title": "Audit program — investments"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V04",
+      "title": "Inventory values and movements",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "f90a635f19e95af319ce6f806a2966d41fdb474fb697f5410bd4cc08cbdc316e",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.4А!C10:C25",
+          "form_id": "FORM-031",
+          "title": "Audit program — inventories"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V05",
+      "title": "Trade receivables",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "5b15d8c5e06fa82e65d9c16c179d88ce0c2de72c5f575b3e00e48193ec94ee90",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.5А!C10:C23",
+          "form_id": "FORM-032",
+          "title": "Audit program — receivables"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V06",
+      "title": "Other long-term receivables",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "a478e6689e54492c250b870988076bc869e03706635425e9b6beffa443350b78",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.6А!C11:C18",
+          "form_id": "FORM-033",
+          "title": "Audit program — other long-term receivables"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V07",
+      "title": "Other receivables and prepayments",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "fbd5bad99e973aebef1cca90ed3906896d6e78648870cdc0ffb86455f64d0322",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.7А!C11:C17",
+          "form_id": "FORM-034",
+          "title": "Audit program — other receivables and prepayments"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V08",
+      "title": "Cash and cash equivalents",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "3dca1a95382871a54126b3beffda81b722c89b642998b579065641da93d48798",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.8А!C10:C23",
+          "form_id": "FORM-035",
+          "title": "Audit program — cash and cash equivalents"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V09",
+      "title": "Borrowings",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "8c31b687b878191baa8804fa79f96c30991c43458ca0c21e6cce77a38e1747af",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.9А!C12:C24",
+          "form_id": "FORM-036",
+          "title": "Audit program — borrowings"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V10",
+      "title": "Purchases and trade payables",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "92e904e5196ff06d65e7d33e17084226063fc4f4b20ca2d1ae3ebe6803c87bbe",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.10А!C12:C20",
+          "form_id": "FORM-037",
+          "title": "Audit program — purchases and payables"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V11",
+      "title": "Other payables and accruals",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "41b763352d5caebd086dc5c55348f12e7f39fc74e52a89389a90aec936070f1a",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.11А!C11:C16",
+          "form_id": "FORM-038",
+          "title": "Audit program — other payables and accruals"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V12",
+      "title": "Deferred income",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "b146e5ab69416b6ff4b661c6af83a643f5759a760279d6ff76c67561b228ea30",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.12А!C12:C17",
+          "form_id": "FORM-039",
+          "title": "Audit program — deferred income"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V13",
+      "title": "Intercompany transactions",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "756850a6364b295c837a0a1f7be29a8d89863a911494da76162e05f393dfab04",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.13А!C10:C16",
+          "form_id": "FORM-040",
+          "title": "Audit program — intercompany transactions"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V14",
+      "title": "Tax balances and expense",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "3f19b6451cb7efeecc4fead2b22ee0439272af8e019d0f2e14b6b879b44a2b83",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.14А!C10:C17",
+          "form_id": "FORM-041",
+          "title": "Audit program — taxation"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V15",
+      "title": "Capital, reserves and dividends",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "c297e4a6927bcbdd52eb630e0f014d2c2041580c692ab733b0846b0cd289d5fc",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.15А!C10:C16",
+          "form_id": "FORM-042",
+          "title": "Audit program — share capital, reserves and dividends"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V16",
+      "title": "Revenue",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "37d5573231342f39ca6a8ce3cf27124d235c2a568033011c69f817987f9d4530",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.16А!C10:C23",
+          "form_id": "FORM-043",
+          "title": "Audit program — revenue"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V17",
+      "title": "Cost of sales",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "7d369fe2cfe65aa39c127f4cdf92b4f4946893d9641053d8d8018badcf91aa8e",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.17А!C10:C25",
+          "form_id": "FORM-044",
+          "title": "Audit program — cost of sales"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G10 actual weighted-cost original files link exact quantities rounded costs ledger balances and independently reviewed calculation to the area packet",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "accepted exact original lots/issues through independent calculation, area review and changed-source preservation",
+          "actors": [
+            "named preparer",
+            "named reviewer"
+          ],
+          "observed": "Two actual accepted lot files total 200 units/value 3000; 50 issues cost 750 and remaining inventory 2250. Ledger mappings and independent calculation review precede the linked G10 work review. Changed issue source makes the prior work stale without rewriting its review. This bounded periodic profile is partial evidence for the complete automation minimum.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V18",
+      "title": "Payroll and employee benefits",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "51e446b98e195d1e4d48e5da5283e78b2983ae06ef3f60732e280de4db31d341",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.18А!C10:C20",
+          "form_id": "FORM-045",
+          "title": "Audit program — payroll and employee benefits"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V19",
+      "title": "Selling and operating expenses",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "a890057495a90a8269efae6c58812c94955e9e3d0bbe8dcb08f1148a659c6dc2",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.19А!C11:C16",
+          "form_id": "FORM-046",
+          "title": "Audit procedures — selling and operating expenses"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V20",
+      "title": "Other income-statement or comprehensive-income items",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "60e8a7446ab06deee0f48f67c6ae04e9af92fac06e9e5b291f9d8ed4353c7c65",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.20А!C11:C15",
+          "form_id": "FORM-047",
+          "title": "Audit procedures — other income-statement items"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V21",
+      "title": "Finance costs",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "49cdab8d219cc60800917422579de8a70640c06c4141b91094dc7db030828f3c",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.21А!C11:C16",
+          "form_id": "FORM-048",
+          "title": "Audit program — finance costs"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "P09-UC02-V22",
+      "title": "Other income and expenses",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "b94df5e44f54f23f54cb099afa46ab7ba08f84457b54fc12d6f045f702f324d3",
+      "source": [
+        {
+          "source": "F00788",
+          "locator": "3.1.22А!C11:C15",
+          "form_id": "FORM-049",
+          "title": "Audit program — other income and expenses"
+        }
+      ],
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "actual named area work across twenty-two source cards and 110 bounded workflow observations",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner"
+          ],
+          "observed": "Every card retains pinned source procedure, actual input locators, method/edition, area-specific work, professional boundaries and independent review. Missing input and self/other-owner actions are denied. A supported fictional transaction exception reaches the actual G05 completion list with a stable key; retry does not duplicate exposure. Changed original versions preserve prior work/review, and restart preserves all twenty-two packets. These manual-work fixtures do not claim automatic execution of every source procedure or independent whole-variant acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    }
+  ],
+  "engineeringScope": "Bounded actual application observations and explicit supported calculations; no implied whole-source or professional acceptance",
+  "sourceAcceptance": [],
+  "releaseReady": false
+}
