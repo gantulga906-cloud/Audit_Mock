@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-17",
+  "sources": [
+    {
+      "title": "IAASB 2025 Handbook, Volume 1",
+      "url": "https://ifacweb.blob.core.windows.net/publicfiles/2025-09/IAASB-2025-Handbook-Volume-1.pdf",
+      "sections": [
+        "ISA 530 paragraphs 6–15"
+      ],
+      "application": "Keep actual selected-unit procedures, investigation and human sample evaluation distinct. This product ratio profile and local legal adoption require their own approval."
+    },
+    {
+      "title": "Node.js cryptography documentation",
+      "url": "https://nodejs.org/api/crypto.html",
+      "application": "Documented random-byte and HMAC primitives support retained entropy and repeatable words; bounded rejection and without-replacement behavior are independently exercised by the application fixtures."
+    }
+  ],
+  "boundaries": [
+    "No confidence interval, MUS, stratification or whole-methodology compliance is claimed.",
+    "A synthetic per-design convention decision does not resolve firm-wide HB-D02 professional acceptance."
+  ]
+}

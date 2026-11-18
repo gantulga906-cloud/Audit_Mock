@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "guide": "G00",
+  "date": "2026-11-16",
+  "referencePackage": {
+    "file": "Audit_Mock_Implementation_Handbooks_2026-11-16.zip",
+    "sha256": "3e88a3255ac2b245f995e18e34dc4a208fba58cab28481c91dd7f32ece0ee168",
+    "readOrder": [
+      "INDEX",
+      "PILOT",
+      "G00"
+    ],
+    "baseline": "079f9da47a02eab681feeeda3de3dfb8cfc42848"
+  },
+  "sourceDigestEncoding": "UTF-8 text with CRLF normalized to LF; raw checkout hashes are recorded separately",
+  "sourceDigests": {
+    "src/data/source-registers.json": "27a7da39fda7488f62a43175df8fc97a53be42af43aec83393f80359efe7773e",
+    "docs/research/source-manifest.json": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b",
+    "src/data/source-bpmn-transitions.json": "b99190e631d46175bd363c8b42302de7c4af57d899c07a7a5f17e472118b71f3"
+  },
+  "inventories": {
+    "cases": 75,
+    "criteria": 315,
+    "features": 136,
+    "automations": 58,
+    "e2e": 476,
+    "forms": 70,
+    "variants": 22,
+    "dependencies": 20,
+    "extensions": 58,
+    "transitions": 1012,
+    "operational": 5
+  },
+  "scope": {
+    "coreFeatures": 127,
+    "conditionalFeatures": 8,
+    "excludedFeatures": 1,
+    "pendingExtensions": 58,
+    "registeredRows": 2247,
+    "originalPackages": 25,
+    "originalTasks": 128
+  },
+  "commandEnvelope": {
+    "route": "POST /api/pilot/action?engagement=ID",
+    "action": "Nonblank string up to 80 characters; existing unknown commands keep domain 404/state behavior",
+    "revision": "Nonnegative safe integer; exact scope revision required for a new write; successful retry remains checked before revision conflict",
+    "fields": "JSON object; omitted empty fields remain compatible; field types/units and business rules belong to each domain",
+    "idempotencyKey": "Existing optional UUID-shaped key; actor/scope/intent binding preserved",
+    "separateInterfaces": "Independent oversight, confirmation and recipient routes keep their existing own contracts"
+  },
+  "contracts": [
+    {
+      "id": "SC01",
+      "title": "Engagement scope and stable identity",
+      "owners": [
+        "scripts/pilot-server.mjs",
+        "scripts/pilot-store.mjs"
+      ],
+      "checks": [
+        {
+          "file": "tests/pilot-foundations.test.mjs",
+          "test": "G00 shared foundations preserve scoped work, exact evidence and approval history through change and restart"
+        },
+        {
+          "file": "tests/pilot.test.mjs",
+          "test": "two engagements isolate revisions, work, reports, grants and archive access"
+        }
+      ],
+      "open": [
+        "R10.1/R22.1 named identities and intended deployment/tenant model"
+      ],
+      "profile": "Bounded shared-pilot engineering evidence; not whole-contract source acceptance"
+    },
+    {
+      "id": "SC02",
+      "title": "Work revisions and exact-version review",
+      "owners": [
+        "src/lib/workspace.ts",
+        "scripts/pilot-workflow.mjs"
+      ],
+      "checks": [
+        {
+          "file": "tests/pilot-foundations.test.mjs",
+          "test": "G00 shared foundations preserve scoped work, exact evidence and approval history through change and restart"
+        },
+        {
+          "file": "tests/pilot.test.mjs",
+          "test": "separate accounts hand off one persisted audit engagement and authorize exact evidence and report versions"
+        }
+      ],
+      "open": [
+        "R07/R19 remaining form and review alternatives; independent source acceptance"
+      ],
+      "profile": "Bounded shared-pilot engineering evidence; not whole-contract source acceptance"
+    },
+    {
+      "id": "SC03",
+      "title": "Original evidence and separate accepted use",
+      "owners": [
+        "scripts/pilot-server.mjs",
+        "scripts/pilot-requests.mjs",
+        "scripts/pilot-population.mjs"
+      ],
+      "checks": [
+        {
+          "file": "tests/pilot-foundations.test.mjs",
+          "test": "G00 shared foundations preserve scoped work, exact evidence and approval history through change and restart"
+        },
+        {
+          "file": "tests/pilot.test.mjs",
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+        }
+      ],
+      "open": [
+        "R13/R14 broader intake, evidence-use and confirmation contracts"
+      ],
+      "profile": "Bounded shared-pilot engineering evidence; not whole-contract source acceptance"
+    },
+    {
+      "id": "SC04",
+      "title": "Actual authority, decisions and independent responsibilities",
+      "owners": [
+        "scripts/pilot-workflow.mjs",
+        "scripts/pilot-staffing.mjs",
+        "scripts/pilot-oversight.mjs"
+      ],
+      "checks": [
+        {
+          "file": "tests/pilot-foundations.test.mjs",
+          "test": "G00 shared foundations preserve scoped work, exact evidence and approval history through change and restart"
+        },
+        {
+          "file": "tests/pilot.test.mjs",
+          "test": "approved roster capacity and reassignment preserve historical staff sign-offs"
+        },
+        {
+          "file": "tests/pilot.test.mjs",
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+        }
+      ],
+      "open": [
+        "R10 named lifecycle/authority; R19 professional quality-rule acceptance; actual external declarants"
+      ],
+      "profile": "Bounded shared-pilot engineering evidence; not whole-contract source acceptance"
+    },
+    {
+      "id": "SC05",
+      "title": "Versioned method inputs, units, results and human disposition",
+      "owners": [
+        "scripts/pilot-materiality.mjs",
+        "scripts/pilot-sampling.mjs",
+        "scripts/pilot-area.mjs"
+      ],
+      "checks": [
+        {
+          "file": "tests/pilot-materiality.test.mjs",
+          "test": "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history"
+        },
+        {
+          "file": "tests/pilot.test.mjs",
+          "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+        }
+      ],
+      "open": [
+        "R15 FG-01 unbiased selection and ratio projection; HB-D02/HB-D03; R16 all minimum methods/variants"
+      ],
+      "profile": "Bounded shared-pilot engineering evidence; not whole-contract source acceptance"
+    },
+    {
+      "id": "SC06",
+      "title": "Exact authorization, signature, issue, receipt, assembly and custody",
+      "owners": [
+        "scripts/pilot-workflow.mjs",
+        "scripts/pilot-release.mjs",
+        "scripts/pilot-assembly.mjs",
+        "scripts/pilot-archive.mjs"
+      ],
+      "checks": [
+        {
+          "file": "tests/pilot-reporting.test.mjs",
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody"
+        },
+        {
+          "file": "tests/pilot.test.mjs",
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+        }
+      ],
+      "open": [
+        "R20/R21 other report/timing/policy variants; R22 real signing, delivery and custody adapters"
+      ],
+      "profile": "Bounded shared-pilot engineering evidence; not whole-contract source acceptance"
+    },
+    {
+      "id": "SC07",
+      "title": "External source ownership and confirmed dated facts",
+      "owners": [
+        "scripts/pilot-intake.mjs",
+        "scripts/pilot-staffing.mjs",
+        "scripts/pilot-registers.mjs"
+      ],
+      "checks": [
+        {
+          "file": "tests/pilot.test.mjs",
+          "test": "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+        },
+        {
+          "file": "tests/pilot.test.mjs",
+          "test": "approved roster capacity and reassignment preserve historical staff sign-offs"
+        }
+      ],
+      "open": [
+        "R09 all 20 confirmed dependencies and publication/roll-forward semantics; no canonical client consolidation"
+      ],
+      "profile": "Bounded shared-pilot engineering evidence; not whole-contract source acceptance"
+    },
+    {
+      "id": "SC08",
+      "title": "Targeted change impact and retained history",
+      "owners": [
+        "scripts/pilot-workflow.mjs",
+        "scripts/pilot-completion.mjs",
+        "scripts/pilot-forms.mjs"
+      ],
+      "checks": [
+        {
+          "file": "tests/pilot-foundations.test.mjs",
+          "test": "G00 shared foundations preserve scoped work, exact evidence and approval history through change and restart"
+        },
+        {
+          "file": "tests/pilot-materiality.test.mjs",
+          "test": "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history"
+        },
+        {
+          "file": "tests/pilot-form-adoption.test.mjs",
+          "test": "adoption preview preserves compatible table cells and pins explicit review of incompatible answers"
+        }
+      ],
+      "open": [
+        "R09/R12 complete dependency breadth; R08 dedicated programme-level loss acknowledgement"
+      ],
+      "profile": "Bounded shared-pilot engineering evidence; not whole-contract source acceptance"
+    }
+  ],
+  "exit": {
+    "referenceCheckpoint": "Fresh mapped tests pass, frozen source/scope hashes and populations match, and the clean production build matches the inspected commit.",
+    "release": "Separate professional/source/operational decisions; not granted by this checkpoint.",
+    "next": "F2 remaining form/control/import work; retain all cross-guide open work."
+  }
+}

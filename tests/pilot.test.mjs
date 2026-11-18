@@ -535,7 +535,11 @@ test('typed workpapers and one-form grants preserve published and reviewed versi
     assert.equal(unchanged.status,'reviewed');
     assert.equal(unchanged.template.digest,pub1.digest);
     assert.equal((await view('partner',a)).authorized.current,true);
-    const revision=await enable(a,id,'2');
+    await enable(a,id,'2',409);
+    const previewResponse=await service.fetch(scoped('/form-adoption-preview',a)+'&form='+id+'&version=2',cookies.reviewer);
+    assert.equal(previewResponse.status,200);const adoption=await previewResponse.json();
+    assert.equal(adoption.requiresReview,true);assert.ok(adoption.losses.some(item=>item.key==='amount'&&item.value==='0'));
+    const revision=await write('reviewer',a,'form-use',{form:id,version:'2',adoptionReview:adoption.digest,adoptionAck:'reviewed'});
     assert.equal(revision.authorized.current,false);
     const updated=pick(revision,id);
     assert.equal(updated.status,'changed');
@@ -856,7 +860,7 @@ test('separate accounts hand off one persisted audit engagement and authorize ex
   }
 });
 
-test('the extended engagement exercises all 34 registers and seals a scoped recoverable archive', async () => {
+test('the extended engagement preserves its original 34-register journey and scoped recoverable archive', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'audit-registers-'));
   const database = join(dir, 'test.sqlite'), restored = join(dir, 'restored.sqlite');
   let service;
@@ -1118,8 +1122,11 @@ test('the extended engagement exercises all 34 registers and seals a scoped reco
     assert.equal(current.authorized.current, false);
     assert.ok([finalAnalytics, sufficiency, opinion].every(id => find(id).stale));
     await write('partner', 'authorize', {}, 409);
-    assert.deepEqual([...new Set(current.registers.map(r => r.kind))].sort(), registers.map(r => r.id).sort());
-    assert.ok(registers.every(r => current.registers.some(row => row.kind === r.id && row.status === 'approved')));
+    const laterRegisters=['M10-F10','M12-F02','M05-F02','M05-F04','M05-F05','M05-F08','M06-F03','M06-F11','M06-F13','M06-F14','M08-F08'];
+    const originalRegisters=registers.filter(r=>!laterRegisters.includes(r.id));
+    assert.equal(originalRegisters.length,34);
+    assert.deepEqual([...new Set(current.registers.map(r => r.kind))].sort(), originalRegisters.map(r => r.id).sort());
+    assert.ok(originalRegisters.every(r => current.registers.some(row => row.kind === r.id && row.status === 'approved')));
 
     // Versioned planning after the archived first release. The excluded file stays out.
     const materiality = {benchmark:'1000',percentage:'2',performance:'60',trivial:'5',benchmarkSource:'Reviewed draft trial balance'};

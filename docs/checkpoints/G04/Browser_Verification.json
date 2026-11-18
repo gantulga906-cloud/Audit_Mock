@@ -1,0 +1,58 @@
+{
+  "guide": "G04",
+  "build": {
+    "build": "qulXLwf8YymZve8pSW5ZN",
+    "commit": "628efa1b9eef8ad6aa7278d0fdc6fdcf44ca8f4c",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "checks": [
+    "The actual ratio, separate specific item and reviewed incremental projection are visible through the workpaper",
+    "An expansion creates a new design and preserves the actual earlier selected IDs and tests",
+    "The actual additional item is tested through the UI without rewriting earlier results",
+    "The independent result review records 33.33 inclusive projection and 43.33 combined exposure with the specific item counted once",
+    "Approved procedure scope, actual exception and independent limited conclusion remain visible separately",
+    "Actual procedure work saves recorded/audited values and evidence while the earlier finding remains intact",
+    "A separate reviewer records a limited conclusion and named next work without clearing the actual outstanding finding"
+  ],
+  "sessions": [
+    {
+      "date": "2026-11-17T03:43:55.172Z",
+      "build": {
+        "build": "qulXLwf8YymZve8pSW5ZN",
+        "commit": "628efa1b9eef8ad6aa7278d0fdc6fdcf44ca8f4c",
+        "dirty": false,
+        "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+      },
+      "engagement": "E-125f1b42-a491-42a2-936e-d14d465b446f",
+      "checks": [
+        "The actual ratio, separate specific item and reviewed incremental projection are visible through the workpaper",
+        "An expansion creates a new design and preserves the actual earlier selected IDs and tests",
+        "The actual additional item is tested through the UI without rewriting earlier results",
+        "The independent result review records 33.33 inclusive projection and 43.33 combined exposure with the specific item counted once"
+      ],
+      "runtimeErrors": [],
+      "scope": "Disposable G04 standard-intake/G02-planned/G03-controlled fixture; actual execution, projections, limitations and human review remain distinct. No live data, independent source acceptance or external sending adapter changed."
+    },
+    {
+      "date": "2026-11-17T03:43:53.022Z",
+      "build": {
+        "build": "qulXLwf8YymZve8pSW5ZN",
+        "commit": "628efa1b9eef8ad6aa7278d0fdc6fdcf44ca8f4c",
+        "dirty": false,
+        "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+      },
+      "engagement": "E-9e883989-a54f-43c3-8219-6ff4ee95382b",
+      "checks": [
+        "Approved procedure scope, actual exception and independent limited conclusion remain visible separately",
+        "Actual procedure work saves recorded/audited values and evidence while the earlier finding remains intact",
+        "A separate reviewer records a limited conclusion and named next work without clearing the actual outstanding finding"
+      ],
+      "runtimeErrors": [],
+      "scope": "Disposable G04 standard-intake/G02-planned/G03-controlled fixture; actual execution, projections, limitations and human review remain distinct. No live data, independent source acceptance or external sending adapter changed."
+    }
+  ],
+  "screenshots": 5,
+  "runtimeErrors": [],
+  "scope": "Actual local browser interaction against disposable test databases; no running-preview mutation or independent audit acceptance"
+}

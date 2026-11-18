@@ -1,0 +1,19 @@
+{
+  "guide": "G04",
+  "core": "Programme dispositions, actual procedure records, versioned unbiased sampling, bounded projection, expansion and whole-journal investigation",
+  "stillOpen": [
+    "All 22 G10 variant-specific source procedures, remaining calculation minimums and five-scenario acceptance per variant",
+    "R16 area-engine gaps under G10/G11, rather than blanket closure from generic records",
+    "Full A13 branch/acceptance pack beyond the connected normal review/correction handoff",
+    "Remaining native 3.3.1 structured-field and readable-export/adoption work under G08",
+    "Firm methodology/local adoption, firm-wide HB-D02 and independent source/release acceptance"
+  ],
+  "futureOwnerGuides": [
+    "G05",
+    "G08",
+    "G10",
+    "G11",
+    "G09"
+  ],
+  "originalScopePreserved": true
+}

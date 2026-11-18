@@ -1,0 +1,1014 @@
+[
+  {
+    "id": "P09-UC02-V01",
+    "form": "3.1.1",
+    "title": "Intangible assets",
+    "trigger": "A newly recorded software/license cost needs support and the year's amortization is being tested.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Intangible register and movement list"
+      },
+      {
+        "key": "input_2",
+        "label": "license/development contracts"
+      },
+      {
+        "key": "input_3",
+        "label": "costs"
+      },
+      {
+        "key": "input_4",
+        "label": "approved useful-life/method basis"
+      }
+    ],
+    "preparer": "Inspect rights and selected additions/disposals, distinguish the nature of expenditure and recalculate the supported amortization.",
+    "reviewer": "Challenge rights, the recognition/capitalization basis, useful life and unsupported classifications; arithmetic is only part of the work.",
+    "limit": "No automatic recognition decision from a cost label or a successful amortization calculation.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.1А!C10:C22",
+        "form_id": "FORM-028",
+        "title": "Audit program — intangible assets"
+      }
+    ],
+    "sourceRowSha256": "4ed41cf1bda8a10de59593b3317d561cf74b99e437caeb789d70b6ff7b96c46b",
+    "example": "120 cost / 3 years = 40 annual charge under a selected straight-line full-year profile. Rights and capitalization evidence are a separate prerequisite.",
+    "scenarios": [
+      "P09-UC02-V01-NORMAL",
+      "P09-UC02-V01-EXCEPTION",
+      "P09-UC02-V01-MISSING",
+      "P09-UC02-V01-UNAUTH",
+      "P09-UC02-V01-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V02",
+    "form": "3.1.2",
+    "title": "Property, plant and equipment",
+    "trigger": "The asset register contains an addition, a disposal and changed depreciation for selected items.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Asset register"
+      },
+      {
+        "key": "input_2",
+        "label": "addition/disposal records"
+      },
+      {
+        "key": "input_3",
+        "label": "physical inspection record"
+      },
+      {
+        "key": "input_4",
+        "label": "cost and depreciation assumptions"
+      }
+    ],
+    "preparer": "Trace selected movements to support, inspect relevant assets, recalculate supported depreciation and record impairment/lease matters needing separate evaluation.",
+    "reviewer": "Challenge existence/rights, repair-versus-capital classification, timing, life/residual assumptions and the treatment of disposed assets.",
+    "limit": "A disposal/fully-depreciated flag is a candidate; impairment and lease conclusions require their actual supported work.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.2А!C10:C27",
+        "form_id": "FORM-029",
+        "title": "Audit program — property, plant and equipment"
+      }
+    ],
+    "sourceRowSha256": "f142a9c705c031b3ddf15c8a9ff330e50c39bfec8847fb49f872c5c182d854c3",
+    "example": "Cost 120, residual 20, life 5 gives annual straight-line charge 20 before any approved proration.",
+    "scenarios": [
+      "P09-UC02-V02-NORMAL",
+      "P09-UC02-V02-EXCEPTION",
+      "P09-UC02-V02-MISSING",
+      "P09-UC02-V02-UNAUTH",
+      "P09-UC02-V02-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V03",
+    "form": "3.1.3",
+    "title": "Investments",
+    "trigger": "An investment movement or changed ownership arrangement requires classification, valuation and disclosure work.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Investment register"
+      },
+      {
+        "key": "input_2",
+        "label": "contracts and ownership/decision rights"
+      },
+      {
+        "key": "input_3",
+        "label": "investee/custodian information"
+      },
+      {
+        "key": "input_4",
+        "label": "selected valuation inputs"
+      }
+    ],
+    "preparer": "Inspect the actual rights/arrangement and selected transactions, reconcile holdings and evaluate the applicable measurement/consolidation treatment.",
+    "reviewer": "Challenge whether evidence supports control, influence or joint control and the chosen accounting basis; request specialist/component work when needed.",
+    "limit": "Do not hard-code the source form's percentage shortcuts or its joint-arrangement wording as accounting conclusions.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.3А!C10:C24",
+        "form_id": "FORM-030",
+        "title": "Audit program — investments"
+      }
+    ],
+    "sourceRowSha256": "b2efb775f9307126c1caa96b1e0425af0223bab664bf3afce0f2b5938cd72678",
+    "example": "Opening 10 units + acquired 5 - disposed 2 = 13; custody confirms 12, leaving one unit to investigate.",
+    "scenarios": [
+      "P09-UC02-V03-NORMAL",
+      "P09-UC02-V03-EXCEPTION",
+      "P09-UC02-V03-MISSING",
+      "P09-UC02-V03-UNAUTH",
+      "P09-UC02-V03-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V04",
+    "form": "3.1.4",
+    "title": "Inventory values and movements",
+    "trigger": "Inventory movement/cost records disagree with the recorded value, or slow/damaged items need evaluation.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Item/location movement records"
+      },
+      {
+        "key": "input_2",
+        "label": "count link"
+      },
+      {
+        "key": "input_3",
+        "label": "cost method"
+      },
+      {
+        "key": "input_4",
+        "label": "sales/condition evidence"
+      },
+      {
+        "key": "input_5",
+        "label": "period boundaries"
+      }
+    ],
+    "preparer": "Reconcile quantities and values, inspect selected receipts/issues and cut-off, recalculate the supported cost profile and assess lower-value/write-down indicators.",
+    "reviewer": "Challenge count-to-record coverage, ownership, method, units and the evidence for estimated realizable amounts.",
+    "limit": "Attendance itself is P09-UC05. Aging or a computed shortfall alone does not decide an inventory write-down.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.4А!C10:C25",
+        "form_id": "FORM-031",
+        "title": "Audit program — inventories"
+      }
+    ],
+    "sourceRowSha256": "66d89b78507401f2028fff35cdcdcb4c8bca2d85348221991c09d3a2c7821444",
+    "example": "Opening 100 + receipts 20 - issues 10 + signed adjustment -3 = 107; physical 106 differs by -1.",
+    "scenarios": [
+      "P09-UC02-V04-NORMAL",
+      "P09-UC02-V04-EXCEPTION",
+      "P09-UC02-V04-MISSING",
+      "P09-UC02-V04-UNAUTH",
+      "P09-UC02-V04-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V05",
+    "form": "3.1.5",
+    "title": "Trade receivables",
+    "trigger": "Selected customer balances need evidence of existence, timing and recoverability.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Receivable/sales detail"
+      },
+      {
+        "key": "input_2",
+        "label": "contracts, invoices and delivery records"
+      },
+      {
+        "key": "input_3",
+        "label": "subsequent cash"
+      },
+      {
+        "key": "input_4",
+        "label": "aging/allowance support"
+      }
+    ],
+    "preparer": "Trace selected balances/transactions, evaluate confirmations when used, inspect subsequent receipts and record relevant cut-off/allowance implications.",
+    "reviewer": "Challenge whether subsequent cash relates to the selected debt and whether existence evidence also supports recovery; keep those assertions distinct.",
+    "limit": "A nonresponse is not agreement. An aging calculation is not an automatic allowance conclusion.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.5А!C10:C23",
+        "form_id": "FORM-032",
+        "title": "Audit program — receivables"
+      }
+    ],
+    "sourceRowSha256": "ed8884cff7c7d6d110c75ca8b0f1372359f7d7b68d328ff449151923c6744a13",
+    "example": "Invoice 100 less validated subsequent receipt 60 leaves 40 before credit/allowance analysis.",
+    "scenarios": [
+      "P09-UC02-V05-NORMAL",
+      "P09-UC02-V05-EXCEPTION",
+      "P09-UC02-V05-MISSING",
+      "P09-UC02-V05-UNAUTH",
+      "P09-UC02-V05-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V06",
+    "form": "3.1.6",
+    "title": "Other long-term receivables",
+    "trigger": "A long-dated balance includes principal and interest that need support and appropriate classification.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Receivable agreement"
+      },
+      {
+        "key": "input_2",
+        "label": "repayment/interest terms"
+      },
+      {
+        "key": "input_3",
+        "label": "balance/movement detail"
+      },
+      {
+        "key": "input_4",
+        "label": "support and security where relevant"
+      }
+    ],
+    "preparer": "Inspect selected rights and terms, reconcile movements, recalculate supported principal/interest and assess classification and recovery evidence.",
+    "reviewer": "Challenge timing, contract interpretation, valuation and whether apparent repayment actually settles the selected receivable.",
+    "limit": "Complex measurement remains manual/specialist work where the selected automation does not support it.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.6А!C11:C18",
+        "form_id": "FORM-033",
+        "title": "Audit program — other long-term receivables"
+      }
+    ],
+    "sourceRowSha256": "e5e8d9a2c7545ba8c26114ebf79a1c6f2bcb675e7dbd71eae0bbbb210ab78946",
+    "example": "Contractual 100 due after the next operating-cycle/current classification boundary needs explicit framework/contract analysis.",
+    "scenarios": [
+      "P09-UC02-V06-NORMAL",
+      "P09-UC02-V06-EXCEPTION",
+      "P09-UC02-V06-MISSING",
+      "P09-UC02-V06-UNAUTH",
+      "P09-UC02-V06-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V07",
+    "form": "3.1.7",
+    "title": "Other receivables and prepayments",
+    "trigger": "A prepayment remains open after goods/services should have been received.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Advance/prepayment detail"
+      },
+      {
+        "key": "input_2",
+        "label": "contracts/invoices"
+      },
+      {
+        "key": "input_3",
+        "label": "payment and settlement evidence"
+      },
+      {
+        "key": "input_4",
+        "label": "covered service period"
+      }
+    ],
+    "preparer": "Inspect selected advances and their later application, recalculate period allocation under the supported basis and assess the remaining balance.",
+    "reviewer": "Challenge whether receipt/use supports release to the appropriate asset/expense and whether unsupported balances need further work.",
+    "limit": "A paid invoice does not alone establish that a prepayment was consumed in this period.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.7А!C11:C17",
+        "form_id": "FORM-034",
+        "title": "Audit program — other receivables and prepayments"
+      }
+    ],
+    "sourceRowSha256": "c011a88c0aecc9c59e5c4bd4147fae9202b069a9a24cf8441443f4b001182d2e",
+    "example": "A synthetic 120 prepayment over 12 equal months, with four months expired, leaves 80 unexpired under that profile.",
+    "scenarios": [
+      "P09-UC02-V07-NORMAL",
+      "P09-UC02-V07-EXCEPTION",
+      "P09-UC02-V07-MISSING",
+      "P09-UC02-V07-UNAUTH",
+      "P09-UC02-V07-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V08",
+    "form": "3.1.8",
+    "title": "Cash and cash equivalents",
+    "trigger": "A bank/cash balance differs from a reconciliation or needs rights/restriction evidence.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Bank/cash listing"
+      },
+      {
+        "key": "input_2",
+        "label": "statements"
+      },
+      {
+        "key": "input_3",
+        "label": "reconciliation"
+      },
+      {
+        "key": "input_4",
+        "label": "relevant agreements"
+      },
+      {
+        "key": "input_5",
+        "label": "count/confirmation work when selected"
+      }
+    ],
+    "preparer": "Inspect selected receipts/payments and reconciling items, tie the relevant records and evaluate count/confirmation support and classification.",
+    "reviewer": "Challenge outstanding reconciling items, authority/ownership/restrictions, timing and source authenticity.",
+    "limit": "The system records actual count/confirmation work; importing a bank statement does not automatically confirm every bank relationship.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.8А!C10:C23",
+        "form_id": "FORM-035",
+        "title": "Audit program — cash and cash equivalents"
+      }
+    ],
+    "sourceRowSha256": "abf245e93bcdc200d1bf26a25382a49c46f209fdacbc64f78560f9175c6839c7",
+    "example": "Bank 100 versus ledger 90 with a supported +10 book-side reconciliation produces zero residual; preserve that signed taxonomy.",
+    "scenarios": [
+      "P09-UC02-V08-NORMAL",
+      "P09-UC02-V08-EXCEPTION",
+      "P09-UC02-V08-MISSING",
+      "P09-UC02-V08-UNAUTH",
+      "P09-UC02-V08-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V09",
+    "form": "3.1.9",
+    "title": "Borrowings",
+    "trigger": "The recorded loan balance and interest must be tested against the actual agreement and movements.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Loan agreements"
+      },
+      {
+        "key": "input_2",
+        "label": "drawdowns/repayments"
+      },
+      {
+        "key": "input_3",
+        "label": "lender records"
+      },
+      {
+        "key": "input_4",
+        "label": "rate/day-count terms"
+      },
+      {
+        "key": "input_5",
+        "label": "collateral/covenant information"
+      }
+    ],
+    "preparer": "Reconcile principal/interest movements, inspect selected support and recalculate the permitted interest profile; record condition and disclosure implications.",
+    "reviewer": "Challenge contract terms, classification, covenants, collateral/guarantees and unsupported measurement assumptions.",
+    "limit": "A simple interest calculation does not implement every effective-interest, modification or guarantee treatment.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.9А!C12:C24",
+        "form_id": "FORM-036",
+        "title": "Audit program — borrowings"
+      }
+    ],
+    "sourceRowSha256": "9d7f1639452d427205547e5edf28b504587f966891a4a55e7e07584a0881c629",
+    "example": "Principal 1000 x 12% x 30/360 = interest 10 for a supported simple-segment profile.",
+    "scenarios": [
+      "P09-UC02-V09-NORMAL",
+      "P09-UC02-V09-EXCEPTION",
+      "P09-UC02-V09-MISSING",
+      "P09-UC02-V09-UNAUTH",
+      "P09-UC02-V09-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V10",
+    "form": "3.1.10",
+    "title": "Purchases and trade payables",
+    "trigger": "An invoice, goods receipt and payment do not align, or a later payment may relate to an unrecorded liability.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Supplier balances"
+      },
+      {
+        "key": "input_2",
+        "label": "purchase orders/invoices/receipts"
+      },
+      {
+        "key": "input_3",
+        "label": "payments"
+      },
+      {
+        "key": "input_4",
+        "label": "contracts"
+      },
+      {
+        "key": "input_5",
+        "label": "post-period items"
+      }
+    ],
+    "preparer": "Trace selected purchase/payable items in the relevant direction, inspect cut-off and subsequent settlement, investigate matching differences and confirmations when used.",
+    "reviewer": "Challenge completeness, timing, returned goods and the actual supplier obligation; distinguish a match defect from an accounting error.",
+    "limit": "Repeated document headers and one-to-many lines need the actual grain; no automatic exposure multiplication.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.10А!C12:C20",
+        "form_id": "FORM-037",
+        "title": "Audit program — purchases and payables"
+      }
+    ],
+    "sourceRowSha256": "a75f71465150f822fd5198d0f14161646cd22fdd728a81bb15898e64280ca335",
+    "example": "Receipt 100, supplier bill 100 and payment 110 leaves excess 10 for investigation, not an automatic loss conclusion.",
+    "scenarios": [
+      "P09-UC02-V10-NORMAL",
+      "P09-UC02-V10-EXCEPTION",
+      "P09-UC02-V10-MISSING",
+      "P09-UC02-V10-UNAUTH",
+      "P09-UC02-V10-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V11",
+    "form": "3.1.11",
+    "title": "Other payables and accruals",
+    "trigger": "A period-end liability relies on an estimate or a service not yet invoiced.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Accrual/other-payable detail"
+      },
+      {
+        "key": "input_2",
+        "label": "agreements"
+      },
+      {
+        "key": "input_3",
+        "label": "service evidence"
+      },
+      {
+        "key": "input_4",
+        "label": "calculation basis"
+      },
+      {
+        "key": "input_5",
+        "label": "subsequent invoices/payments"
+      }
+    ],
+    "preparer": "Inspect selected obligations, completeness and timing, recalculate the supported accrual and compare later support with the period-end basis.",
+    "reviewer": "Challenge obligation, period, method and omitted amounts; use the estimate case where judgment is significant.",
+    "limit": "A later invoice amount is not automatically the correct earlier accrual without its service/period basis.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.11А!C11:C16",
+        "form_id": "FORM-038",
+        "title": "Audit program — other payables and accruals"
+      }
+    ],
+    "sourceRowSha256": "e78bee95bbb8417149ee62a2e5cb38b4aa18fd6945322157dfcc824694e79772",
+    "example": "A supported 40 invoice received after year end for pre-year-end goods suggests a 40 completeness test item, subject to actual obligation/support.",
+    "scenarios": [
+      "P09-UC02-V11-NORMAL",
+      "P09-UC02-V11-EXCEPTION",
+      "P09-UC02-V11-MISSING",
+      "P09-UC02-V11-UNAUTH",
+      "P09-UC02-V11-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V12",
+    "form": "3.1.12",
+    "title": "Deferred income",
+    "trigger": "Cash has been received but part of the promised goods/services may remain unperformed.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Customer contracts"
+      },
+      {
+        "key": "input_2",
+        "label": "receipt/invoice detail"
+      },
+      {
+        "key": "input_3",
+        "label": "delivery/service evidence"
+      },
+      {
+        "key": "input_4",
+        "label": "deferred-income roll-forward"
+      }
+    ],
+    "preparer": "Inspect the actual obligations and performance evidence, reconcile movements and evaluate/recalculate the supported release to revenue.",
+    "reviewer": "Challenge whether the conditions for recognition occurred and whether the contract liability/classification remains appropriate.",
+    "limit": "Invoice/payment date alone does not determine revenue recognition; no automatic all-contract accounting engine is implied.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.12А!C12:C17",
+        "form_id": "FORM-039",
+        "title": "Audit program — deferred income"
+      }
+    ],
+    "sourceRowSha256": "e65f5498408a96512919a1d043741e44800d9bf908f23795e1e97f959a7a6937",
+    "example": "Cash 120 for a uniform twelve-month service; three months earned implies revenue 30 and deferred 90 under the selected pattern.",
+    "scenarios": [
+      "P09-UC02-V12-NORMAL",
+      "P09-UC02-V12-EXCEPTION",
+      "P09-UC02-V12-MISSING",
+      "P09-UC02-V12-UNAUTH",
+      "P09-UC02-V12-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V13",
+    "form": "3.1.13",
+    "title": "Intercompany transactions",
+    "trigger": "Two related entities report different reciprocal balances or a material transaction needs support.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Declared related parties"
+      },
+      {
+        "key": "input_2",
+        "label": "intercompany agreements"
+      },
+      {
+        "key": "input_3",
+        "label": "reciprocal balance/transaction records"
+      },
+      {
+        "key": "input_4",
+        "label": "settlement and relevant group data"
+      }
+    ],
+    "preparer": "Inspect selected terms and transactions, reconcile reciprocal amounts and evaluate related-party disclosures; route group elimination work where applicable.",
+    "reviewer": "Challenge the relationship basis, unexplained differences and any asserted market/arm's-length terms.",
+    "limit": "A shared identifier is a lead, not proof of control. Intercompany reconciliation does not by itself perform a group audit.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.13А!C10:C16",
+        "form_id": "FORM-040",
+        "title": "Audit program — intercompany transactions"
+      }
+    ],
+    "sourceRowSha256": "1e1e927f5e08f6fe7ec345247ab6dcd2b6a58e2b8060fab8a54d4fa41eaeb7a5",
+    "example": "Entity A receivable 50 versus entity B payable 45 leaves difference 5; preserve currency/date/counterparty mapping.",
+    "scenarios": [
+      "P09-UC02-V13-NORMAL",
+      "P09-UC02-V13-EXCEPTION",
+      "P09-UC02-V13-MISSING",
+      "P09-UC02-V13-UNAUTH",
+      "P09-UC02-V13-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V14",
+    "form": "3.1.14",
+    "title": "Tax balances and expense",
+    "trigger": "Tax return figures and the ledger differ, or a recalculation needs the correct period's rules.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Returns"
+      },
+      {
+        "key": "input_2",
+        "label": "tax-ledger detail"
+      },
+      {
+        "key": "input_3",
+        "label": "taxable bases/adjustments"
+      },
+      {
+        "key": "input_4",
+        "label": "applicable approved rate/rule version"
+      },
+      {
+        "key": "input_5",
+        "label": "payments"
+      }
+    ],
+    "preparer": "Reconcile returns to records, inspect relevant bases and recalculate only the supported tax profile; document remaining timing/recognition issues.",
+    "reviewer": "Challenge period/entity applicability, adjustments and current/deferred tax distinctions; obtain specialist advice where needed.",
+    "limit": "Illustrative tax rates are not Mongolian law. A tax tie-out does not establish compliance with every tax rule.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.14А!C10:C17",
+        "form_id": "FORM-041",
+        "title": "Audit program — taxation"
+      }
+    ],
+    "sourceRowSha256": "d4d3875b999da7c8bd75fc465d25a21fbc90d9fb252b34ff7d4d115dc0eee74c",
+    "example": "Synthetic tax base 100 at an approved example rate 10% = 10; filed 9 leaves discrepancy 1.",
+    "scenarios": [
+      "P09-UC02-V14-NORMAL",
+      "P09-UC02-V14-EXCEPTION",
+      "P09-UC02-V14-MISSING",
+      "P09-UC02-V14-UNAUTH",
+      "P09-UC02-V14-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V15",
+    "form": "3.1.15",
+    "title": "Capital, reserves and dividends",
+    "trigger": "A share movement or dividend affects the equity roll-forward and disclosures.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Equity register/ledger"
+      },
+      {
+        "key": "input_2",
+        "label": "shareholder and issue records"
+      },
+      {
+        "key": "input_3",
+        "label": "resolutions"
+      },
+      {
+        "key": "input_4",
+        "label": "dividend/tax support"
+      },
+      {
+        "key": "input_5",
+        "label": "applicable disclosure basis"
+      }
+    ],
+    "preparer": "Inspect selected authorized movements, reconcile the roll-forward, recalculate supported share/dividend figures and evaluate classification/disclosure.",
+    "reviewer": "Challenge actual rights/authorization, timing and capital-versus-income treatment; assess EPS only where applicable.",
+    "limit": "A resolution is evidence to evaluate, not a software permission or universal EPS requirement.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.15А!C10:C16",
+        "form_id": "FORM-042",
+        "title": "Audit program — share capital, reserves and dividends"
+      }
+    ],
+    "sourceRowSha256": "06e21a6da69ab31a939995b5e45b9d21e7a5e6f07d6db1bad415b13bdce08f39",
+    "example": "Opening equity 100 + profit 20 + contributions 10 - distributions 5 = closing 125; each authorization remains evidenced.",
+    "scenarios": [
+      "P09-UC02-V15-NORMAL",
+      "P09-UC02-V15-EXCEPTION",
+      "P09-UC02-V15-MISSING",
+      "P09-UC02-V15-UNAUTH",
+      "P09-UC02-V15-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V16",
+    "form": "3.1.16",
+    "title": "Revenue",
+    "trigger": "A selected sale near year-end has delivery/service facts that differ from invoice or posting dates.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Sales detail"
+      },
+      {
+        "key": "input_2",
+        "label": "contract/pricing terms"
+      },
+      {
+        "key": "input_3",
+        "label": "invoices"
+      },
+      {
+        "key": "input_4",
+        "label": "delivery/service acceptance"
+      },
+      {
+        "key": "input_5",
+        "label": "returns and subsequent cash"
+      }
+    ],
+    "preparer": "Inspect the selected transaction and its supporting performance/terms, recalculate supported amounts and assess timing/classification.",
+    "reviewer": "Challenge the recognition basis and evidence of performance, unusual terms and subsequent reversals; do not infer success from cash alone.",
+    "limit": "Cut-off flags identify candidates; software does not automatically select the applicable recognition conclusion.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.16А!C10:C23",
+        "form_id": "FORM-043",
+        "title": "Audit program — revenue"
+      }
+    ],
+    "sourceRowSha256": "5127c76630fc927cc4c1eac9a0cf77e42b27ac7ba40acd7e4451f13a5d44838d",
+    "example": "Invoice 100 dated before year end but delivery in January is a cut-off investigation item; actual transfer terms decide treatment.",
+    "scenarios": [
+      "P09-UC02-V16-NORMAL",
+      "P09-UC02-V16-EXCEPTION",
+      "P09-UC02-V16-MISSING",
+      "P09-UC02-V16-UNAUTH",
+      "P09-UC02-V16-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V17",
+    "form": "3.1.17",
+    "title": "Cost of sales",
+    "trigger": "Recorded cost of sales is inconsistent with relevant inventory movements or selected source costs.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Inventory/cost-of-sales records"
+      },
+      {
+        "key": "input_2",
+        "label": "cost-method basis"
+      },
+      {
+        "key": "input_3",
+        "label": "selected receipts/issues"
+      },
+      {
+        "key": "input_4",
+        "label": "related sales and stock support"
+      }
+    ],
+    "preparer": "Reconcile the selected cost/movement basis, recalculate the supported costing profile and inspect classification/cut-off.",
+    "reviewer": "Challenge units, completeness, costing assumptions and whether costs relate to the relevant period's activity.",
+    "limit": "The source programme repeats inventory procedures; tailor them rather than assuming the same work proves every assertion.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.17А!C10:C25",
+        "form_id": "FORM-044",
+        "title": "Audit program — cost of sales"
+      }
+    ],
+    "sourceRowSha256": "018e04171081ebf015f9590728b2e0b677ea781e21098b8f447ff443b950ca2a",
+    "example": "100 units at 10 plus 100 at 20 gives periodic weighted average 15; 50 sold gives cost 750 and 150 remaining gives 2250.",
+    "scenarios": [
+      "P09-UC02-V17-NORMAL",
+      "P09-UC02-V17-EXCEPTION",
+      "P09-UC02-V17-MISSING",
+      "P09-UC02-V17-UNAUTH",
+      "P09-UC02-V17-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V18",
+    "form": "3.1.18",
+    "title": "Payroll and employee benefits",
+    "trigger": "Selected payroll amounts differ from contracts, attendance, deductions or actual payment.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Payroll register"
+      },
+      {
+        "key": "input_2",
+        "label": "employee/contract data"
+      },
+      {
+        "key": "input_3",
+        "label": "attendance"
+      },
+      {
+        "key": "input_4",
+        "label": "bank payment"
+      },
+      {
+        "key": "input_5",
+        "label": "applicable deduction/tax rule version"
+      },
+      {
+        "key": "input_6",
+        "label": "benefit support"
+      }
+    ],
+    "preparer": "Trace selected people and periods, reconcile gross-to-net/payment and recalculate supported deductions/benefits; investigate exceptions.",
+    "reviewer": "Challenge the actual employment/service basis, payment allocation and applicable rules; sensitive personal data need restricted access.",
+    "limit": "A repeated bank account or unusual payment is a candidate, not proof of a ghost employee or fraud.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.18А!C10:C20",
+        "form_id": "FORM-045",
+        "title": "Audit program — payroll and employee benefits"
+      }
+    ],
+    "sourceRowSha256": "ce1b4619efe0951b27631a022cbda2630b4148e2966a32325d6d068610ee2930",
+    "example": "Synthetic gross 100 less employee contribution 10 and withholding 9 gives net 81; employer contribution 5 is separate.",
+    "scenarios": [
+      "P09-UC02-V18-NORMAL",
+      "P09-UC02-V18-EXCEPTION",
+      "P09-UC02-V18-MISSING",
+      "P09-UC02-V18-UNAUTH",
+      "P09-UC02-V18-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V19",
+    "form": "3.1.19",
+    "title": "Selling and operating expenses",
+    "trigger": "A selected expense may belong to another period or lack support for its nature.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Expense ledger"
+      },
+      {
+        "key": "input_2",
+        "label": "contracts/invoices"
+      },
+      {
+        "key": "input_3",
+        "label": "payment and service/delivery evidence"
+      },
+      {
+        "key": "input_4",
+        "label": "period/cost-center basis"
+      }
+    ],
+    "preparer": "Inspect selected costs, recalculate supported amounts and allocation, and assess occurrence, classification and cut-off.",
+    "reviewer": "Challenge the business purpose and service period and corroborate unusual changes; route capital items for proper assessment.",
+    "limit": "A management explanation or payment alone does not establish the full audit conclusion.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.19А!C11:C16",
+        "form_id": "FORM-046",
+        "title": "Audit procedures — selling and operating expenses"
+      }
+    ],
+    "sourceRowSha256": "9d79af37b3466bf63b8a6f785424ce8873a87b6fad3ec238ad6b70842fdaf1a5",
+    "example": "Approved service/support 30 versus recorded operating expense 35 gives a 5 investigation difference for the actual assertion.",
+    "scenarios": [
+      "P09-UC02-V19-NORMAL",
+      "P09-UC02-V19-EXCEPTION",
+      "P09-UC02-V19-MISSING",
+      "P09-UC02-V19-UNAUTH",
+      "P09-UC02-V19-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V20",
+    "form": "3.1.20",
+    "title": "Other income-statement or comprehensive-income items",
+    "trigger": "A revaluation or foreign-exchange-related item needs support for its nature and presentation.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Relevant transactions/ledger"
+      },
+      {
+        "key": "input_2",
+        "label": "valuation or FX support"
+      },
+      {
+        "key": "input_3",
+        "label": "classification/presentation basis"
+      },
+      {
+        "key": "input_4",
+        "label": "related asset/liability evidence"
+      }
+    ],
+    "preparer": "Identify the actual item, test selected underlying calculations and evaluate whether its classification/presentation follows the applicable framework.",
+    "reviewer": "Challenge the item's nature and linkage rather than accepting the source form's broad account labels.",
+    "limit": "Do not classify every exchange difference or revaluation automatically as OCI; framework-specific professional evaluation remains required.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.20А!C11:C15",
+        "form_id": "FORM-047",
+        "title": "Audit procedures — other income-statement items"
+      }
+    ],
+    "sourceRowSha256": "a849f2cb41f54833c05a46e0d04c8e77a1cac6415e9f13f3866a65f0b87621c6",
+    "example": "Foreign amount 100 x accepted exact-date rate 2 = 200; recorded 190 differs by 10 in functional currency.",
+    "scenarios": [
+      "P09-UC02-V20-NORMAL",
+      "P09-UC02-V20-EXCEPTION",
+      "P09-UC02-V20-MISSING",
+      "P09-UC02-V20-UNAUTH",
+      "P09-UC02-V20-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V21",
+    "form": "3.1.21",
+    "title": "Finance costs",
+    "trigger": "Interest/fees or a financing-related cost needs recalculation and classification.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Loan/bond/lease terms"
+      },
+      {
+        "key": "input_2",
+        "label": "rate/period/day-count inputs"
+      },
+      {
+        "key": "input_3",
+        "label": "fee schedules"
+      },
+      {
+        "key": "input_4",
+        "label": "payments"
+      },
+      {
+        "key": "input_5",
+        "label": "capitalized-cost support"
+      }
+    ],
+    "preparer": "Recalculate the supported profile, inspect relevant fees and timing, and evaluate expense/capitalization and disclosure treatment.",
+    "reviewer": "Challenge effective-interest/lease assumptions and the actual capitalization basis; extend work where simple arithmetic is insufficient.",
+    "limit": "No universal straight-line, simple-interest or capitalization rule is inferred from a successful calculation.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.21А!C11:C16",
+        "form_id": "FORM-048",
+        "title": "Audit program — finance costs"
+      }
+    ],
+    "sourceRowSha256": "e79a605a4e9749a91fd167b65e232af2d5e2dffcec6adeb9ff98cb9db4cda2cb",
+    "example": "Two period-end fixed payments of 100 at zero rate give liability 200. Separately, simple loan interest follows the approved day basis.",
+    "scenarios": [
+      "P09-UC02-V21-NORMAL",
+      "P09-UC02-V21-EXCEPTION",
+      "P09-UC02-V21-MISSING",
+      "P09-UC02-V21-UNAUTH",
+      "P09-UC02-V21-CHANGE"
+    ]
+  },
+  {
+    "id": "P09-UC02-V22",
+    "form": "3.1.22",
+    "title": "Other income and expenses",
+    "trigger": "A one-off grant, penalty, fee or other transaction needs an appropriate accounting basis.",
+    "inputs": [
+      {
+        "key": "input_1",
+        "label": "Underlying agreement/notice"
+      },
+      {
+        "key": "input_2",
+        "label": "transaction detail"
+      },
+      {
+        "key": "input_3",
+        "label": "receipts/payments"
+      },
+      {
+        "key": "input_4",
+        "label": "relevant conditions and period"
+      }
+    ],
+    "preparer": "Inspect selected support and conditions, recalculate supported amounts and evaluate recognition, classification and cut-off.",
+    "reviewer": "Challenge the actual legal/business substance and restrictions and whether unusual items are fully explained.",
+    "limit": "A transaction description or recurring ledger account is not a sufficient recognition/classification conclusion.",
+    "source": [
+      {
+        "source": "F00788",
+        "locator": "3.1.22А!C11:C15",
+        "form_id": "FORM-049",
+        "title": "Audit program — other income and expenses"
+      }
+    ],
+    "sourceRowSha256": "209d6e175f318ce65da7bd2ade5c75cb55280913edb062a775f9ac3ae1484689",
+    "example": "Disposal proceeds 30 less supported carrying amount 20 gives gain 10; recorded gain 8 leaves difference 2.",
+    "scenarios": [
+      "P09-UC02-V22-NORMAL",
+      "P09-UC02-V22-EXCEPTION",
+      "P09-UC02-V22-MISSING",
+      "P09-UC02-V22-UNAUTH",
+      "P09-UC02-V22-CHANGE"
+    ]
+  }
+]

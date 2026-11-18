@@ -1,3 +1,4 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -7,17 +8,27 @@ import { createArchiveStore } from './pilot-archive.mjs';
 import { archiveGrantKinds } from './pilot-registers.mjs';
 import { registers } from '../src/lib/pilot-registers.ts';
 import { createPilotStore, firmCommand } from './pilot-store.mjs';
-import { isLibraryAction, libraryAction, libraryTemplate, libraryView } from './pilot-forms.mjs';
+import { isLibraryAction, libraryAction, libraryTemplate, libraryView,formAdoptionPreview,sourceTemplate,validateDraft } from './pilot-forms.mjs';
 import { activeTermsGap, canDraftTerms, createIntakeStore, isIntakeAction, termsAction, termsGaps } from './pilot-intake.mjs';
-import { approvedStaffing, managedStaffing, rosterView, seatFor, staffingGaps } from './pilot-staffing.mjs';
+import { approvedStaffing, managedStaffing, rosterView, seatFor, staffingGaps,requireSeat } from './pilot-staffing.mjs';
 import { recordEvent } from '../src/lib/workspace.ts';
 import { createConfirmationStore } from './pilot-confirmations.mjs';
 import { createOversightStore, oversightRoles } from './pilot-oversight.mjs';
 import { createReleaseStore } from './pilot-release.mjs';
 import { laterFactFiles } from './pilot-later-facts.mjs';
+import {checkAssemblyRecord} from './pilot-assembly.mjs';
+import {controlledArchive} from './pilot-archive-controls.mjs';
+import {importPreview,releaseReview,managedMethodology} from './pilot-methodology.mjs';
+import {inspectWorkbook} from './pilot-workbook.mjs';
+import {workpaperExportPreview,renderWorkpaperExport,searchWorkpapers} from './pilot-workpaper-export.mjs';
+import {isAcceptanceAction,acceptanceAction,acceptanceActivationGaps,acceptanceView} from './pilot-acceptance.mjs';
+import {createExternalEffects} from './pilot-external-effects.mjs';
+import {operationsView} from './pilot-operations.mjs';
+import {createIdentityStore} from './pilot-identity.mjs';
+import {currentIdentity,withIdentity} from './pilot-identity-context.mjs';
 
 const prefix = '/api/pilot';
-const termsRemediation = new Set(['intake-terms-save','intake-terms-approve','support-upload','support-assess','schedule','access']);
+const termsRemediation = new Set(['intake-terms-save','intake-terms-approve','support-upload','support-assess','support-scope','schedule','access']);
 const digest = value => createHash('sha256').update(value).digest('hex');
 const sessionMs = 8 * 60 * 60 * 1000;
 const roles = Object.keys(accounts);
@@ -45,6 +56,16 @@ async function readJson(req) {
   }
 }
 
+function readCommand(data) {
+  if (typeof data.action !== 'string' || !data.action.trim() || data.action.length > 80 ||
+      !Number.isSafeInteger(data.revision) || data.revision < 0 ||
+      data.fields !== undefined && (!data.fields || typeof data.fields !== 'object' || Array.isArray(data.fields))) {
+    throw new PilotError(400, 'Үйлдлийн нэр, хувилбар ба өгөгдлийн бүтцийг шалгана уу.');
+  }
+  // Domain actions retain ownership of their field types and business prerequisites.
+  return { ...data, fields: data.fields ?? {} };
+}
+
 export function createPilot({ database, setupCode = randomBytes(16).toString('hex') }) {
   if (database !== ':memory:') mkdirSync(dirname(database), { recursive: true });
   const db = new DatabaseSync(database);
@@ -65,12 +86,15 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
   db.prepare('INSERT OR IGNORE INTO workspace VALUES (1, 0, ?)').run(JSON.stringify(emptyWorkspace()));
   const archive = createArchiveStore(db);
   const store = createPilotStore(db);
+  const identities=createIdentityStore(db,store);
+  const externalEffects=createExternalEffects(db);
+  store.setIdentities(identities);
   const intake = createIntakeStore(db, store);
   const { transaction } = store;
   const configured = () => db.prepare('SELECT COUNT(*) AS total FROM accounts').get().total !== 0;
   const filesFor = engagementId => ({
-    get: id => db.prepare('SELECT name, sha256 FROM evidence WHERE engagement_id = ? AND id = ?').get(engagementId, id),
-    read: id => db.prepare('SELECT bytes, sha256 FROM evidence WHERE engagement_id = ? AND id = ?').get(engagementId,id),
+    get: id => db.prepare('SELECT name, sha256 FROM evidence WHERE engagement_id IS ? AND id = ?').get(engagementId, id),
+    read: id => db.prepare('SELECT bytes, sha256 FROM evidence WHERE engagement_id IS ? AND id = ?').get(engagementId,id),
     add: (id, name, bytes) => db.prepare(`INSERT INTO evidence (id, name, sha256, bytes, engagement_id)
       VALUES (?, ?, ?, ?, ?)`).run(id, name, digest(bytes), bytes, engagementId),
     authorize: (authorization, evidence) => db.prepare('INSERT INTO authorizations (snapshot, engagement_id) VALUES (?, ?)').run(JSON.stringify({ authorization, evidence }), engagementId),
@@ -78,12 +102,20 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       const saved = db.prepare('SELECT snapshot FROM authorizations WHERE engagement_id = ? ORDER BY id DESC LIMIT 1').get(engagementId);
       return saved && JSON.parse(saved.snapshot);
     },
+    authorizationAt: at => {const rows=db.prepare('SELECT snapshot FROM authorizations WHERE engagement_id=? ORDER BY id').all(engagementId);return rows.map(r=>JSON.parse(r.snapshot)).find(r=>r.authorization.at===at);},
     storeTemplate: (hash, contract) => db.prepare('INSERT OR IGNORE INTO pilot_templates VALUES (?, ?)').run(hash, JSON.stringify(contract)),
     template: hash => JSON.parse(db.prepare('SELECT body FROM pilot_templates WHERE digest = ?').get(hash)?.body ?? 'null'),
     confirmations: () => confirmations.view(engagementId),
     deliveries: () => releases.view(engagementId),
-    oversightConfigured: role => !!db.prepare('SELECT 1 FROM accounts WHERE role=?').get(role),
+    reportingContacts: model => model.pilotIntake?intake.contextView(model).contacts:model.bench.clients[model.engagement].contacts,
+    oversightConfigured: role => identities.configured(role)||!!db.prepare('SELECT 1 FROM accounts WHERE role=?').get(role),
     checkArchiveRecord: (model, row) => {
+      if(row.kind==='M12-F02'){
+        if(archive.isSealed(model))throw new PilotError(409,'Архив түгжээтэй. Шинэ бүрдүүлэлтэд зөвшөөрсөн өөрчлөлт шаардлагатай.');
+        const file=filesFor(engagementId);
+        try{checkAssemblyRecord(model,row,file.authorization(),file.read);}catch(error){throw new PilotError(409,error.message);}
+        return;
+      }
       if (archiveGrantKinds.includes(row.kind) && !store.members(engagementId).includes(row.values.accessor)) {
         throw new PilotError(409, 'Энэ дүр гэрээт ажилд хандах эрхгүй.');
       }
@@ -107,18 +139,20 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     return accessible.length === 1 ? accessible[0].id : null;
   }
   function view(role, id) {
-    const { model, revision } = store.load(role, id);
+    const { model, revision } = store.load(role, id,true);
     const portfolio = store.portfolio(role).map(item => id ? item : {
       ...item, progress: deliverySummary(store.load(role, item.id).model, role, archive),
     });
     const files = filesFor(id);
     const payload = pilotView(model, role, revision, files);
+    if(id&&!archive.isSealed(model)){payload.operations=operationsView(model,payload);payload.externalEffects=externalEffects.view(id);}
     if (payload.engagement && !payload.engagement.active) {
-      payload.engagement.acceptanceGaps.push(...intake.activationGaps(model), ...termsGaps(model, files), ...staffingGaps(model));
+      payload.engagement.acceptanceGaps.push(...intake.activationGaps(model), ...termsGaps(model, files), ...staffingGaps(model),...acceptanceActivationGaps(model));
     }
     return { ...payload, selected: id, portfolio,
-      formLibrary: libraryView(model.pilotFormLibrary, role, files, !id),
-      ...(!id && { intake: intake.view(role), roster: rosterView(model, files, role, new Set(portfolio.map(item=>item.id))) }),
+      identity:currentIdentity()?{...model.runtimeIdentity,canAdmin:identities.canAdmin(),profile:'local-preview',people:model.runtimePeople}:undefined,
+      formLibrary: libraryView(model.pilotFormLibrary, role, filesFor(null), !id,model),
+      ...(!id && (!currentIdentity()||model.runtimeIdentity?.firmAccess) && { intake: intake.view(role), roster: rosterView(model, files, role, new Set(portfolio.map(item=>item.id))) }),
       ...(id && (role === 'partner' || !archive.isSealed(model)) && {
         staffing: { managed: managedStaffing(model), members: store.members(id), seats: approvedStaffing(model),
           gaps: staffingGaps(model), accepted: model.pilotStaffingAccepted },
@@ -130,6 +164,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
         intakeTermsCanDraft: canDraftTerms(model,role),
       }),
       ...(id && !archive.isSealed(model) && {confirmations:confirmations.view(id)}),
+      ...(id && !archive.isSealed(model) && {acceptance:acceptanceView(model,files)}),
       ...(id && role === 'partner' && { members: store.members(id) }) };
   }
   function changeMembership(context, actor, fields) {
@@ -142,6 +177,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     }
     if (!store.setMember(context.id, role, grant)) return;
     const model = context.model;
+    (model.pilotRecipientRevisions??={})[role]=(model.pilotRecipientRevisions?.[role]??0)+1;
     if (!grant) {
       const revoked = { by: actor, at: new Date().toISOString(), reason };
       for (const row of model.pilotRecords) {
@@ -167,10 +203,11 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       const host = req.headers.host;
       if (host !== '127.0.0.1:' + port && host !== 'localhost:' + port) throw new PilotError(403, 'Зөвхөн локал хаягаар нээнэ үү.');
       const route = url.pathname.slice(prefix.length);
-      const delivery=/^\/delivery\/([a-f0-9]{64})(\/artifact)?$/.exec(route);
+      const delivery=/^\/delivery\/([a-f0-9]{64})(\/(?:artifact|statements|notes))?$/.exec(route);
       if (delivery&&['GET','POST'].includes(req.method)) {
         const token=delivery[1];
-        if (req.method==='GET'&&delivery[2]) {
+        if(req.method==='GET'&&delivery[2]&&delivery[2]!=='/artifact'){const file=transaction(()=>releases.attachment(token,delivery[2].slice(1)));res.writeHead(200,{'Content-Type':'application/octet-stream','X-Audit-Source-SHA256':file.sha256,'Content-Disposition':'attachment; filename="'+delivery[2].slice(1)+'-'+encodeURIComponent(file.name)+'"'});res.end(file.bytes);}
+        else if (req.method==='GET'&&delivery[2]) {
           const artifact=transaction(()=>releases.download(token));
           res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; sandbox",
             'X-Audit-Report-SHA256':artifact.sha256,'Content-Disposition':`attachment; filename="audit-report-${artifact.form}.html"`});
@@ -190,7 +227,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
         if (req.method==='POST'&&req.headers.origin!=='http://'+host) throw new PilotError(403,'Хүсэлтийн эх хаяг тохирохгүй.');
         if (req.method==='POST'&&route==='/oversight/login') {
           limitAttempts();
-          const {role,password}=await readJson(req);
+          const data=await readJson(req),{role,password}=data;
+          if(data.username){const result=transaction(()=>identities.login(data));if(!oversightRoles.includes(result.identity.capacity)||result.identity.capacity!==role)throw new PilotError(401,'Use the entrance for your appointed independent capacity.');const payload=withIdentity(result.identity,()=>transaction(()=>oversight.view(role),false));json(res,200,payload,{'Set-Cookie':cookie(name,result.token,sessionMs/1000)});return true;}
           const account=oversightRoles.includes(role)&&db.prepare('SELECT salt,hash FROM accounts WHERE role=?').get(role);
           if (!account||typeof password!=='string'||password.length>128||!timingSafeEqual(account.hash,scryptSync(password,account.salt,64))) {
             throw new PilotError(401,'Хараат бус нэвтрэх эрх тохирохгүй.');
@@ -203,10 +241,12 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           json(res,200,transaction(()=>oversight.view(role),false),{'Set-Cookie':cookie(name,value,sessionMs/1000)});
           return true;
         }
-        const session=sessionToken&&/^[a-f0-9]{64}$/.test(sessionToken)&&
+        const independentNamed=identities.session(sessionToken);
+        const session=independentNamed||sessionToken&&/^[a-f0-9]{64}$/.test(sessionToken)&&
           db.prepare('SELECT role FROM sessions WHERE token=? AND expires>?').get(digest(sessionToken),Date.now());
         if (!session||!oversightRoles.includes(session.role)) throw new PilotError(401,'Хараат бус нэвтрэх эрх шаардлагатай.');
         const id=url.searchParams.get('engagement'), {role}=session;
+        return await withIdentity(independentNamed,async()=>{
         if (req.method==='GET'&&route==='/oversight') json(res,200,transaction(()=>oversight.view(role,id),false));
         else if (req.method==='POST'&&route==='/oversight/action') {
           const fields=await readJson(req);
@@ -217,10 +257,11 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             "attachment; filename*=UTF-8''"+encodeURIComponent(file.name).replace(/['()*]/g,c=>'%'+c.charCodeAt(0).toString(16))});
           res.end(file.bytes);
         } else if (req.method==='POST'&&route==='/oversight/logout') {
-          db.prepare('DELETE FROM sessions WHERE token=?').run(digest(sessionToken));
+          db.prepare('DELETE FROM sessions WHERE token=?').run(digest(sessionToken));identities.logout(sessionToken);
           json(res,200,{}, {'Set-Cookie':cookie(name,'',0)});
         } else throw new PilotError(404,'Хяналтын хуудас олдсонгүй.');
         return true;
+        });
       }
       const confirmation = /^\/confirmation\/([a-f0-9]{64})$/.exec(route);
       if (confirmation && ['GET','POST'].includes(req.method)) {
@@ -235,7 +276,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       }
       const name = 'audit_pilot_' + port;
       const token = (req.headers.cookie ?? '').split(';').map(x => x.trim()).find(x => x.startsWith(name + '='))?.slice(name.length + 1);
-      const session = token && /^[0-9a-f]{64}$/.test(token) &&
+      const namedSession=identities.session(token);
+      const session = namedSession || identities.legacyTeam() && token && /^[0-9a-f]{64}$/.test(token) &&
         db.prepare('SELECT role FROM sessions WHERE token = ? AND expires > ?').get(digest(token), Date.now());
       if (req.method === 'GET' && route === '' && !session) {
         json(res, 200, { setup: !configured() });
@@ -243,6 +285,12 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       }
       if (req.method === 'POST') {
         if (req.headers.origin !== 'http://' + host) throw new PilotError(403, 'Хүсэлтийн эх хаяг тохирохгүй.');
+        if(route==='/identity/bootstrap'){
+          limitAttempts();const data=await readJson(req);
+          if(session?.role!=='partner'||namedSession||typeof data.code!=='string'||!timingSafeEqual(Buffer.from(digest(data.code)),Buffer.from(digest(setupCode))))throw new PilotError(403,'The existing local partner and the server setup code are required for the first named administrator.');
+          json(res,201,transaction(()=>identities.bootstrap(data)));return true;
+        }
+        if(route==='/identity/activate'){limitAttempts();const data=await readJson(req);json(res,200,transaction(()=>identities.activate(data)));return true;}
         if (route === '/setup') {
           if (configured()) throw new PilotError(409, 'Нэвтрэх эрхүүд бүртгэгдсэн.');
           limitAttempts();
@@ -267,7 +315,10 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
         }
         if (route === '/login') {
           limitAttempts();
-          const { role, password } = await readJson(req);
+          const data=await readJson(req);
+          if(data.username){const result=transaction(()=>identities.login(data));if(!roles.includes(result.identity.capacity)){identities.logout(result.token);throw new PilotError(401,'Use the separate independent entrance.');}const payload=withIdentity(result.identity,()=>transaction(()=>view(result.identity.capacity,resolveScope(result.identity.capacity,url)),false));json(res,200,payload,{'Set-Cookie':cookie(name,result.token,sessionMs/1000)});return true;}
+          const { role, password } = data;
+          if(!identities.legacyTeam())throw new PilotError(401,'Shared team entrances are closed. Use your named local account.');
           const account = roles.includes(role) && db.prepare('SELECT salt, hash FROM accounts WHERE role = ?').get(role);
           if (!account || typeof password !== 'string' || password.length > 128 ||
               !timingSafeEqual(account.hash, scryptSync(password, account.salt, 64))) throw new PilotError(401, 'Дүр эсвэл нууц үг тохирохгүй.');
@@ -282,15 +333,19 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       }
       if (!session||!roles.includes(session.role)) throw new PilotError(401, 'Нэвтэрч орно уу.');
       const { role } = session;
+      return await withIdentity(namedSession,async()=>{
+      if(route==='/identity/directory'&&req.method==='GET'){json(res,200,transaction(()=>identities.directory(),false));return true;}
+      if(route==='/identity/manage'&&req.method==='POST'){const data=await readJson(req);json(res,200,transaction(()=>identities.manage(data)));return true;}
       if (req.method === 'GET' && route === '') {
         json(res, 200, transaction(() => view(role, resolveScope(role, url)), false));
       } else if (req.method === 'POST' && route === '/logout') {
         db.prepare('DELETE FROM sessions WHERE token = ?').run(digest(token));
+        identities.logout(token);
         json(res, 200, { setup: false }, { 'Set-Cookie': cookie(name, '', 0) });
       } else if (req.method === 'POST' && route === '/action') {
-        const data = await readJson(req);
+        const data = readCommand(await readJson(req));
         const result = transaction(() => {
-          if (!db.prepare('SELECT 1 FROM sessions WHERE token = ? AND expires > ?').get(digest(token), Date.now())) {
+          if (!(namedSession?identities.session(token,false):db.prepare('SELECT 1 FROM sessions WHERE token = ? AND expires > ?').get(digest(token), Date.now()))) {
             throw new PilotError(401, 'Нэвтрэх хугацаа дууссан.');
           }
           const id = resolveScope(role, url), context = store.load(role, id);
@@ -304,7 +359,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             }
             const fields = Object.entries(data.fields ?? {}).sort(([a], [b]) => a.localeCompare(b));
             fingerprint = digest(JSON.stringify([data.action, fields]));
-            const previous = db.prepare('SELECT fingerprint, scope, result_engagement FROM pilot_commands WHERE actor = ? AND key = ?').get(role, key);
+            const previous = db.prepare('SELECT fingerprint, scope, result_engagement FROM pilot_commands WHERE actor = ? AND key = ?').get(actorKey(role), key);
             if (previous) {
               const originalScope = previous.scope ?? store.legacyId;
               if (previous.fingerprint !== fingerprint || (originalScope !== scope &&
@@ -322,17 +377,22 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           if (isIntakeAction(data.action) && id) throw new PilotError(409, 'Үйлчлүүлэгч ба хүсэлтийн хэсгээс өөрчилнө үү.');
           const termsHold=activeTermsGap(model);
           const acceptanceRegister=data.action==='register'&&registers.some(row=>row.id===data.fields?.kind&&row.section==='acceptance');
-          if (termsHold&&!termsRemediation.has(data.action)&&!acceptanceRegister) throw new PilotError(409,termsHold);
+          const acceptancePaper=['form-use','save','submit','review','return','respond','clear'].includes(data.action)&&['1.4.1','1.4.2','1.4.5'].includes(data.fields.form);
+          if (termsHold&&!termsRemediation.has(data.action)&&!acceptanceRegister&&!isAcceptanceAction(data.action)&&
+              !['intake-refresh','intake-context-item'].includes(data.action)&&!acceptancePaper) throw new PilotError(409,termsHold);
           let enquiry, confirmationLink, deliveryLink;
           try {
-            if (data.action === 'access') changeMembership(context, role, data.fields);
-            else if (isLibraryAction(data.action)) libraryAction(model.pilotFormLibrary, role, data.action, data.fields, filesFor(null));
+            if(data.action.startsWith('external-')){if(!id||archive.isSealed(model))throw new PilotError(409,'An open engagement is required.');if(managedStaffing(model))requireSeat(model,filesFor(id),role);externalEffects.action(model,role,data.action,data.fields,filesFor(id));}
+            else if(isAcceptanceAction(data.action))acceptanceAction(model,role,data.action,data.fields,filesFor(id));
+            else if(data.action==='intake-context-item')intake.contextItem(model,role,data.fields);
+            else if (data.action === 'access') changeMembership(context, role, data.fields);
+            else if (isLibraryAction(data.action)) libraryAction(model.pilotFormLibrary, role, data.action, data.fields, filesFor(null),model);
             else if (isIntakeAction(data.action)) {
               if (data.action.startsWith('client-')) intake.updateClient(role, data.action, data.fields);
               else enquiry = intake.enquiryAction(model, role, data.action, data.fields);
             } else if (data.action === 'intake-refresh') {
               if (!id) throw new PilotError(409, 'Хүлээн авах шатны ажлыг сонгоно уу.');
-              intake.refresh(model, role, data.fields);
+              intake.refresh(model, role, data.fields,filesFor(id));
             } else if (['intake-terms-save','intake-terms-approve'].includes(data.action)) {
               if (!id) throw new PilotError(409, 'Хүлээн авах шатны ажлыг сонгоно уу.');
               const gaps = model.engagements[0]?.intake.active ? [] : intake.activationGaps(model);
@@ -344,9 +404,13 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             } else if (data.action === 'delivery-start') {
               if (!id) throw new PilotError(409,'Гэрээт ажил сонгоно уу.');
               deliveryLink=releases.start(model,role,data.fields);
+            } else if(data.action==='delivery-result'){
+              if(!id)throw new PilotError(409,'Гэрээт ажил сонгоно уу.');
+              if(managedStaffing(model))requireSeat(model,filesFor(context.id),role);
+              releases.recordOutcome(model,role,data.fields);
             } else if (data.action === 'activate') {
               if (role !== 'partner') throw new PilotError(403, 'Партнерын томилгоо шаардлагатай.');
-              const files = filesFor(id), gaps = [...intake.activationGaps(model), ...termsGaps(model, files)];
+              const files = filesFor(id), gaps = [...intake.activationGaps(model), ...termsGaps(model, files),...acceptanceActivationGaps(model)];
               if (gaps.length) throw new PilotError(409, gaps.join(' · '));
               const terms = model.pilotTerms;
               const fields = terms ? { ...data.fields, letter: `1.4.3 v${terms.version} · ${terms.reference}` } : data.fields;
@@ -360,10 +424,11 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
             throw error;
           }
           const resultId = store.save(context, data.action, data.fields);
+          identities.receipt(data.action,resultId??scope,revision,data.fields);
           intake.finish(model, role, data.action, enquiry);
           if (isIntakeAction(data.action) && !resultId) store.touchFirm();
           if (fingerprint) db.prepare(`INSERT INTO pilot_commands (actor, key, fingerprint, scope, result_engagement)
-            VALUES (?, ?, ?, ?, ?)`).run(role, key, fingerprint, scope, resultId);
+            VALUES (?, ?, ?, ?, ?)`).run(actorKey(role), key, fingerprint, scope, resultId);
           return {...view(role,resultId),...(confirmationLink&&{confirmationLink}),...(deliveryLink&&{deliveryLink})};
         });
         json(res, 200, result);
@@ -373,6 +438,25 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           return archive.exportPackage(model, route.split('/').at(-1), role);
         });
         json(res, 200, bundle);
+      } else if(req.method==='GET'&&route==='/workpaper-search'){
+        const result=transaction(()=>{const id=resolveScope(role,url),{model}=store.load(role,id);return searchWorkpapers(model,role,url.searchParams.get('q')??'',filesFor(id));},false);json(res,200,result,{'Cache-Control':'no-store'});
+      } else if(req.method==='POST'&&(route==='/workpaper-export-preview'||route==='/workpaper-export')){
+        const fields=await readJson(req),result=transaction(()=>{const id=resolveScope(role,url),{model}=store.load(role,id),preview=workpaperExportPreview(model,role,fields,filesFor(id));if(route==='/workpaper-export-preview'){const {_papers,...safe}=preview;return safe;}if(fields.previewDigest!==preview.digest)throw new PilotError(409,'Сонгосон ажил / эх өөрчлөгдсөн. Экспортын хүрээг дахин хянана.');return renderWorkpaperExport(preview);},false);
+        if(route==='/workpaper-export-preview')json(res,200,result,{'Cache-Control':'no-store'});else{res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Content-Disposition':'attachment; filename="audit-workpapers.html"','X-Audit-Export-SHA256':result.sha256,'Cache-Control':'no-store'});res.end(result.html);}
+      } else if(req.method==='POST'&&route==='/methodology/import-preview'){
+        const data=await readJson(req);const preview=transaction(()=>{if(resolveScope(role,url))throw new PilotError(409,'Фирмийн арга зүйн сангаас нээнэ.');const {model}=store.load(role,null);return importPreview(model.pilotFormLibrary,role,data,filesFor(null),sourceTemplate,validateDraft);},false);json(res,200,preview,{'Cache-Control':'no-store'});
+      } else if(req.method==='GET'&&route==='/methodology/workbook'){
+        const value=transaction(()=>{if(resolveScope(role,url)||!['reviewer','partner'].includes(role))throw new PilotError(403,'Арга зүйн эхийн хүрээнд хандана.');const {model}=store.load(role,null),source=model.pilotFormLibrary.sources?.find(s=>s.id===url.searchParams.get('source'));if(!source)throw new PilotError(404,'Эх олдсонгүй.');const raw=filesFor(null).read(source.id);if(!raw||digest(raw.bytes)!==source.sha256)throw new PilotError(409,'Эхийн байт зөрсөн.');const book=inspectWorkbook(raw.bytes);return {...book,sheets:book.sheets.map(s=>({...s,cells:undefined,sample:Object.entries(s.cells).slice(0,40).map(([cell,value])=>({cell,...value})),cellCount:Object.keys(s.cells).length}))};},false);json(res,200,value,{'Cache-Control':'no-store'});
+      } else if(req.method==='GET'&&route==='/methodology/review'){
+        const value=transaction(()=>{if(resolveScope(role,url)||!['reviewer','partner'].includes(role))throw new PilotError(403,'Нийтлэлийн хяналтын эрх шаардлагатай.');const {model}=store.load(role,null);const d=model.pilotFormLibrary.drafts[url.searchParams.get('form')];if(!d||d.by!==actorKey(role)&&!d.submitted)throw new PilotError(404,'Ноорог олдсонгүй.');return releaseReview(model.pilotFormLibrary,url.searchParams.get('form'),filesFor(null));},false);json(res,200,value,{'Cache-Control':'no-store'});
+      } else if(req.method==='GET'&&/^\/methodology\/source\/[a-f0-9-]{36}$/.test(route)){
+        const file=transaction(()=>{if(resolveScope(role,url)||!['reviewer','partner'].includes(role))throw new PilotError(403,'Арга зүйн эхийн хүрээнд хандана.');const {model}=store.load(role,null),source=model.pilotFormLibrary.sources?.find(s=>s.id===route.split('/').at(-1));const raw=source&&filesFor(null).read(source.id);if(!raw||digest(raw.bytes)!==source.sha256)throw new PilotError(409,'Бодит эх олдсонгүй / хэш зөрсөн.');return {...source,...raw};},false);res.writeHead(200,{'Content-Type':'application/octet-stream','Content-Disposition':'attachment; filename="'+encodeURIComponent(file.name)+'"','X-Audit-Source-SHA256':file.sha256});res.end(file.bytes);
+      } else if(req.method==='GET'&&route==='/form-adoption-preview'){
+        const preview=transaction(()=>{
+          const id=resolveScope(role,url);if(!id)throw new PilotError(409,'Гэрээт ажил сонгоно уу.');
+          const {model}=store.load(role,id);
+          return formAdoptionPreview(model,role,input({form:url.searchParams.get('form')},'form',32),{version:url.searchParams.get('version')},filesFor(id));
+        },false);json(res,200,preview,{'Cache-Control':'no-store'});
       } else if (req.method === 'GET' && /^\/template\/[A-Za-z0-9.-]{1,32}$/.test(route)) {
         const body = transaction(() => {
           const { model } = store.load(role, resolveScope(role, url));
@@ -382,12 +466,14 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       } else if (req.method === 'GET' && /^\/evidence\/[a-f0-9-]{36}$/.test(route)) {
         const file = transaction(() => {
           const { model, id } = store.load(role, resolveScope(role, url));
-          const evidence=route.split('/').at(-1), factFile=laterFactFiles(model).includes(evidence);
-          if (factFile?role!=='partner':archive.isSealed(model)) throw new PilotError(403, 'Түгжсэн файлыг зөвшөөрсөн архивын багцаас авна уу.');
-          return db.prepare('SELECT name, bytes FROM evidence WHERE engagement_id = ? AND id = ?').get(id, evidence);
+          const evidence=route.split('/').at(-1), factFile=laterFactFiles(model).includes(evidence),archiveFile=controlledArchive(model)&&model.evidence.some(e=>e.id===evidence&&e.archiveOnly);
+          if (!archiveFile&&(factFile?role!=='partner':archive.isSealed(model))) throw new PilotError(403, 'Түгжсэн файлыг зөвшөөрсөн архивын багцаас авна уу.');
+          return db.prepare('SELECT name, bytes, sha256 FROM evidence WHERE engagement_id = ? AND id = ?').get(id, evidence);
         }, false);
         if (!file) throw new PilotError(404, 'Эх файл олдсонгүй.');
+        if(digest(file.bytes)!==file.sha256)throw new PilotError(409,'Эх файлын бүрэн бүтэн байдал зөрчигдсөн.');
         res.writeHead(200, { 'Content-Type': 'application/octet-stream',
+          'X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; sandbox",
           'Content-Disposition': "attachment; filename*=UTF-8''" + encodeURIComponent(file.name).replace(/['()*]/g, c => '%' + c.charCodeAt(0).toString(16)),
           'Content-Length': file.bytes.length });
         res.end(file.bytes);
@@ -410,11 +496,13 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
       } else {
         throw new PilotError(404, 'Хуудас олдсонгүй.');
       }
+      return true;
+      });
     } catch (error) {
       if (!(error instanceof PilotError)) console.error('Pilot API:', error);
       if (!res.headersSent) json(res, error.status || 500, { error: error instanceof PilotError ? error.message : 'Хадгалалтын алдаа гарлаа.' });
     }
     return true;
   }
-  return { handle, close: () => db.close(), setupCode: configured() ? null : setupCode };
+  return { handle, close: () => db.close(), setupCode: configured() ? null : setupCode,identityBootstrapCode:configured()&&!identities.hasAdministrator()?setupCode:null };
 }

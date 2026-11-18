@@ -1,0 +1,74 @@
+[
+  {
+    "id": "G00",
+    "title": "System foundations and shared contracts",
+    "master": "masters/G00_System_foundations_and_shared_contracts.md",
+    "pdf": "pdf/G00_System_foundations_and_shared_contracts.pdf"
+  },
+  {
+    "id": "G01",
+    "title": "Client acceptance, independence and terms",
+    "master": "masters/G01_Client_acceptance_independence_and_terms.md",
+    "pdf": "pdf/G01_Client_acceptance_independence_and_terms.pdf"
+  },
+  {
+    "id": "G02",
+    "title": "Staffing, planning, risk, controls and materiality",
+    "master": "masters/G02_Staffing_planning_risk_controls_and_materiality.md",
+    "pdf": "pdf/G02_Staffing_planning_risk_controls_and_materiality.pdf"
+  },
+  {
+    "id": "G03",
+    "title": "Data, evidence, requests and confirmations",
+    "master": "masters/G03_Data_evidence_requests_and_confirmations.md",
+    "pdf": "pdf/G03_Data_evidence_requests_and_confirmations.pdf"
+  },
+  {
+    "id": "G04",
+    "title": "Programmes, sampling and fieldwork execution",
+    "master": "masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+    "pdf": "pdf/G04_Programmes_sampling_and_fieldwork_execution.pdf"
+  },
+  {
+    "id": "G05",
+    "title": "Findings, completion, consultation and quality",
+    "master": "masters/G05_Findings_completion_consultation_and_quality.md",
+    "pdf": "pdf/G05_Findings_completion_consultation_and_quality.pdf"
+  },
+  {
+    "id": "G06",
+    "title": "Opinion, report preparation and controlled issue",
+    "master": "masters/G06_Opinion_report_preparation_and_controlled_issue.md",
+    "pdf": "pdf/G06_Opinion_report_preparation_and_controlled_issue.pdf"
+  },
+  {
+    "id": "G07",
+    "title": "Assembly, custody, retention and later facts",
+    "master": "masters/G07_Assembly_custody_retention_and_later_facts.md",
+    "pdf": "pdf/G07_Assembly_custody_retention_and_later_facts.pdf"
+  },
+  {
+    "id": "G08",
+    "title": "Source forms and controlled methodology",
+    "master": "masters/G08_Source_forms_and_controlled_methodology.md",
+    "pdf": "pdf/G08_Source_forms_and_controlled_methodology.pdf"
+  },
+  {
+    "id": "G09",
+    "title": "Access, operations and release acceptance",
+    "master": "masters/G09_Access_operations_and_release_acceptance.md",
+    "pdf": "pdf/G09_Access_operations_and_release_acceptance.pdf"
+  },
+  {
+    "id": "G10",
+    "title": "Fieldwork area implementation cards",
+    "master": "masters/G10_Fieldwork_area_implementation_cards.md",
+    "pdf": "pdf/G10_Fieldwork_area_implementation_cards.pdf"
+  },
+  {
+    "id": "G11",
+    "title": "Automation minimum methods and expected examples",
+    "master": "masters/G11_Automation_minimum_methods_and_expected_examples.md",
+    "pdf": "pdf/G11_Automation_minimum_methods_and_expected_examples.pdf"
+  }
+]

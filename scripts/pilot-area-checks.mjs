@@ -1,3 +1,4 @@
+import {assetSchedule,longReceivables,allocations,accruals,intercompany,costOfSales,expenses,otherIncome} from './pilot-area-extended.mjs';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { cents, csvRows } from './pilot-population.mjs';
 import { areaSources } from '../src/lib/pilot-area.ts';
@@ -7,14 +8,14 @@ import { equity, fx, investments, leases, loans } from './pilot-area-finance.mjs
 
 const fail = message => { throw new PilotError(400,message); };
 const day = 86_400_000;
-const dates = ['date','invoice_date','delivery_date','due_date','from','to'];
-const amounts = ['amount','open_amount','unit_price','discount','max_discount','closing_value','opening_cost','additions',
+const dates = ['date','invoice_date','delivery_date','due_date','service_date','invoice_date','from','to'];
+const amounts = ['cost','amount','open_amount','unit_price','discount','max_discount','closing_value','opening_cost','additions',
   'disposals','transfers','closing_cost','opening_accumulated','charge','disposed_accumulated','adjustments','closing_accumulated',
   'gross','employee_contribution','withholding','employer_contribution','other_deductions','net_adjustment','net','cap','base','adjustment','offset','tax',
   'opening','drawdowns','repayments','movements','closing','recorded_interest','covenant_metric','covenant_limit','principal',
-  'initial_adjustment','recorded_liability','recorded_rou','foreign_amount','recorded','profit','contributions','distributions','income','valuation'];
+  'initial_adjustment','proceeds','carrying','residual','recorded_liability','recorded_rou','foreign_amount','recorded','profit','contributions','distributions','income','valuation'];
 const quantities = ['quantity','opening_qty','closing_qty','counted_qty','life','elapsed','sequence','rate_micros','pay_day',
-  'opening_units','acquired_units','disposed_units','other_units','closing_units'];
+  'months','opening_units','acquired_units','disposed_units','other_units','closing_units'];
 const rates = ['employee_bps','employer_bps','withholding_bps','rate_bps'];
 const entityKey = value => value.replace(/\s/g,'').toLowerCase();
 const sum = (rows,key='amount') => rows.reduce((total,row)=>total+row[key],0);
@@ -331,6 +332,6 @@ function assets(scope,inputs,ledger,book) {
 
 export function runAreaChecks(method,scope,inputs,postings,additional) {
   const book=caseBook(scope);
-  const summary=({sales,purchases,bank,inventory,assets,payroll,tax,loans,leases,fx,equity,investments})[method](scope,inputs,postings,book,additional);
+  const summary=({sales,purchases,bank,inventory,assets,payroll,tax,loans,leases,fx,equity,investments,intangibles:assetSchedule,depreciation:assetSchedule,longReceivables,prepayments:allocations,deferredIncome:allocations,accruals,intercompany,costOfSales,expenses,otherIncome})[method](scope,inputs,postings,book,additional);
   return {summary,...book.results()};
 }

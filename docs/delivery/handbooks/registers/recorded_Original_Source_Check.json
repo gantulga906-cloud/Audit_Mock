@@ -1,0 +1,53 @@
+{
+  "verifiedOn": "2026-11-16",
+  "inputs": [
+    {
+      "id": "OUTER",
+      "file": "C:\\Users\\Zoloo\\OneDrive\\Documents\\Veritech\\Ecosystem\\Audit\\Audit_All_Materials_2026-10-26.zip",
+      "sha256": "329c0d68826f6f515715fac119a6256021a0c8423f500003cd9552ba2c7ece39",
+      "baselineSha256": "329c0d68826f6f515715fac119a6256021a0c8423f500003cd9552ba2c7ece39",
+      "matchesOriginal": true,
+      "modified": "2026-10-26T03:34:36.976Z"
+    },
+    {
+      "id": "STG01",
+      "file": "C:\\Users\\Zoloo\\OneDrive\\Documents\\Veritech\\Ecosystem\\Audit\\erd additions\\ERD\\Form+ERD\\Audit_Stage_1_Repaired.xlsx",
+      "sha256": "b2fd7ce85a9a9e63f600167a88e18e5f51c783272e8a29e12a8ab8e7179c0cf0",
+      "baselineSha256": "b2fd7ce85a9a9e63f600167a88e18e5f51c783272e8a29e12a8ab8e7179c0cf0",
+      "matchesOriginal": true,
+      "modified": "2026-11-04T11:15:24.469Z"
+    },
+    {
+      "id": "STG02",
+      "file": "C:\\Users\\Zoloo\\OneDrive\\Documents\\Veritech\\Ecosystem\\Audit\\erd additions\\ERD\\Form+ERD\\Audit_Stage_2_Repaired.xlsx",
+      "sha256": "05ca3480341707a32baf2ec054c4f38f87a1a6e89a13fef44bdd42c4b2978552",
+      "baselineSha256": "f3f7bb633a952f084b4b66c98d8dd1a243d655409058263f7306f38a24dea12b",
+      "matchesOriginal": false,
+      "modified": "2026-11-13T02:56:09.000Z"
+    },
+    {
+      "id": "STG03",
+      "file": "C:\\Users\\Zoloo\\OneDrive\\Documents\\Veritech\\Ecosystem\\Audit\\erd additions\\ERD\\Form+ERD\\Audit_Stage_3_Repaired.xlsx",
+      "sha256": "b34f18fd87ded28868b8a0f984b0da19c1b1931fc75e6b6bde6586d5316abb79",
+      "baselineSha256": "9cfe6c74f2659031f46243697308d809765f72175c49531363a73794ee64a2da",
+      "matchesOriginal": false,
+      "modified": "2026-11-13T03:53:03.000Z"
+    },
+    {
+      "id": "STG04",
+      "file": "C:\\Users\\Zoloo\\OneDrive\\Documents\\Veritech\\Ecosystem\\Audit\\erd additions\\ERD\\Form+ERD\\Audit_Stage_4_Repaired.xlsx",
+      "sha256": "74676a901fc671e4e188d04dc7950937f2f9cd8d7cd2e4073e3b902148b7a2a7",
+      "baselineSha256": "74676a901fc671e4e188d04dc7950937f2f9cd8d7cd2e4073e3b902148b7a2a7",
+      "matchesOriginal": true,
+      "modified": "2026-11-03T01:21:23.380Z"
+    },
+    {
+      "id": "STG05",
+      "file": "C:\\Users\\Zoloo\\OneDrive\\Documents\\Veritech\\Ecosystem\\Audit\\erd additions\\ERD\\Form+ERD\\Audit_Stage_5_Repaired.xlsx",
+      "sha256": "f812eb3d7e3f38e068389c3b5cfef1721611d6b04df85c3b92b66622e2513293",
+      "baselineSha256": "f812eb3d7e3f38e068389c3b5cfef1721611d6b04df85c3b92b66622e2513293",
+      "matchesOriginal": true,
+      "modified": "2026-11-03T01:21:23.427Z"
+    }
+  ]
+}

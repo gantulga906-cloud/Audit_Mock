@@ -1,0 +1,106 @@
+{
+  "guide": "G09",
+  "algorithm": "SHA-256 over original published bytes; manifest excludes itself",
+  "files": [
+    {
+      "path": "Backlog_Preservation.json",
+      "bytes": 2189,
+      "sha256": "0d4e727d6aa2d41e16fa2f3e7400df51cdf006f3a23c4dd76a6ef3b58103fcb0"
+    },
+    {
+      "path": "Browser_Verification.json",
+      "bytes": 1190,
+      "sha256": "c581093e4c454c48fe2d9fcd15b6c53b7c7b1bcb6ac2d99e37f7cbe6ecc68f87"
+    },
+    {
+      "path": "Foundation_Verification.json",
+      "bytes": 17864,
+      "sha256": "95cfea1ca92be50c5cf39fbda9077ab230b8750ff46b4a56709603d07032c0c6"
+    },
+    {
+      "path": "G08_to_G09_Copy_Migration.json",
+      "bytes": 8494,
+      "sha256": "44e941d38ab4d6cebde56178276ef9e93ac1e75acbafd19ffff42e6e078b478c"
+    },
+    {
+      "path": "G09_Connected_Proof.json",
+      "bytes": 2410,
+      "sha256": "4abf7364d8f35d91eece80d7fd6b8e3d9112021ca169029add06d223fa732c73"
+    },
+    {
+      "path": "G09_Criteria.json",
+      "bytes": 21173,
+      "sha256": "ff794ffd331e67d62e160cca2b47f4b0043db8d156d73e91a627ef4a017e155a"
+    },
+    {
+      "path": "G09_Operations_Receipt.json",
+      "bytes": 9334,
+      "sha256": "60e2fbc36b1ba0f45df6cd263b2a070090dee649291e1549809df0b4152996ba"
+    },
+    {
+      "path": "G09_Workflow_Evidence.json",
+      "bytes": 8463,
+      "sha256": "ba890db02de2013f76a580e917fa91cc9520af6de4f6b19d958060b67af545be"
+    },
+    {
+      "path": "G09_local_history.bundle",
+      "bytes": 46653,
+      "sha256": "7e191f3834da95e8a26dbb7308b5ea97fd82bcc561ef8c08b6d7c86c8382bb09"
+    },
+    {
+      "path": "Operational_Gates.json",
+      "bytes": 11662,
+      "sha256": "85a587c3dad630aea7a75dc6acb048daf4237369150e4b4302b922ed40d364ae"
+    },
+    {
+      "path": "Publication_Provenance.json",
+      "bytes": 4674,
+      "sha256": "5f1271851e8584a94ee9a883d7bdf7d941c6ce93cb59504b3389a2886c052258"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5248,
+      "sha256": "c2fd89b0af6ddec0fa0b9b8e9ae0b9188f051fb7bfce66161c055fa82045eaeb"
+    },
+    {
+      "path": "Retained_Work.json",
+      "bytes": 2147,
+      "sha256": "95b4f5932994e0e3a76093c1975f4c4b4d50da4e08a8d9cdbcd4fbffe7524cd8"
+    },
+    {
+      "path": "Source_Verification.json",
+      "bytes": 2883297,
+      "sha256": "cd9beb8ed8b5d9eec9de2044396e3138adace1a8840d1fc7be237e935c92aab1"
+    },
+    {
+      "path": "Verified_Build.json",
+      "bytes": 207,
+      "sha256": "00e1df503e2181634bc4b13cd0b339161754b1b7b5cc0a4520821b6794120155"
+    },
+    {
+      "path": "browser/01-named-queue.png",
+      "bytes": 127483,
+      "sha256": "c2e7f5007089d16cee2a982cec73abd311e17553b35b83d4aa618fffa6d1096e"
+    },
+    {
+      "path": "browser/02-metric-drill-through.png",
+      "bytes": 111861,
+      "sha256": "1f673c2381808f1023f3490880efbe3be2d0e4b39c9d6daeaab280de80097cad"
+    },
+    {
+      "path": "browser/03-local-accounts.png",
+      "bytes": 79608,
+      "sha256": "839355a6c032c5c39e3cf7a46536ee3954295f8ed5971e7a2d9f30d5086adcc1"
+    },
+    {
+      "path": "browser/04-revoked-grant.png",
+      "bytes": 92592,
+      "sha256": "7573ade90ea295f0b65f463c868f20fcdd6962b4db99fe39bda3b75bb5e07f72"
+    },
+    {
+      "path": "browser/05-mobile-local-admin.png",
+      "bytes": 43792,
+      "sha256": "9bc1750d4910ece4892e4558ff24ba4ca5bce4b847e5c7d47260390dde9608c9"
+    }
+  ]
+}

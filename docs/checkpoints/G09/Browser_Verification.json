@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-18T03:57:31.440Z",
+  "build": {
+    "build": "HZgvZ8aROf9m82mpGIVpH",
+    "commit": "a217352915c273b47551bcb6ed5bc03e27dad12f",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "engagement": "E-67137c0d-72ed-422d-a535-2b3d387a30d9",
+  "checks": [
+    "Actual named local login displays the individual identity and the current authorized queue",
+    "Clicking the overdue count shows the same exact permitted rows under its stated date and next-owner definition",
+    "The queue link opens its exact form and shows the actual named work owner without granting preparation rights",
+    "An actual named administrator changes a display label through the UI, with an attributable reason and retained actor ID",
+    "The UI revocation is enforced by the protected engagement endpoint for the affected named person",
+    "The local account administration remains usable at a 390-pixel viewport"
+  ],
+  "runtimeErrors": [],
+  "scope": "Actual named login, metric drill-through, exact work link, display-label change and grant revocation in a disposable G09 copy. No live-preview or deployment changes."
+}

@@ -1,12 +1,13 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { createHash } from 'node:crypto';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { canEdit, changeWork, recordEvent, snapshot, workKey } from '../src/lib/workspace.ts';
-import { areaMethods, areaProfiles } from '../src/lib/pilot-area.ts';
+import { areaMethods, areaProfiles, selectedAreaProfile } from '../src/lib/pilot-area.ts';
 import { parseAreaFile, runAreaChecks } from './pilot-area-checks.mjs';
 import { approvedPopulation, cents } from './pilot-population.mjs';
 import { programmeDecision } from './pilot-registers.mjs';
 import { evidenceCurrent } from './pilot-requests.mjs';
-import { accounts, input, PilotError } from './pilot-workflow.mjs';
+import { accounts, accountFor, input, PilotError } from './pilot-workflow.mjs';
 
 const fail = (message,status=409) => { throw new PilotError(status,message); };
 const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -66,7 +67,7 @@ export function areaView(m) {
 function runChecks(m,role,form,data,files,prior) {
   const population=approvedPopulation(m), bridge=population?.bridge.find(line=>line.line===data.line);
   if (!bridge?.accounts.length) fail('Баталсан олонлогийн тайлангийн мөрийг сонгоно уу.');
-  const profile=areaProfiles[form], period=m.bench.periods[m.engagement], through=input(data,'through',10);
+  const profile=selectedAreaProfile(form,data.method);if(!profile)fail('Select an explicitly supported method for this area.');const period=m.bench.periods[m.engagement], through=input(data,'through',10);
   const method=areaMethods[profile.method];
   const edition=method?.edition ? input(data,'edition',100) : undefined;
   const sign=profile.method==='bank'?'debit':data.sign;
@@ -78,7 +79,7 @@ function runChecks(m,role,form,data,files,prior) {
   const kinds=analytics?[...profile.inputs,...optional]:profile.inputs;
   for (const kind of kinds) {
     const file=liveEvidence(m,data[kind]), original=file&&files.read(file.id);
-    if (!file||!original||! /\.csv$/i.test(file.name)||original.bytes.length>750_000) fail(kind+' · Хүлээн зөвшөөрсөн UTF-8 CSV шаардлагатай.');
+    if (!file||!original||createHash('sha256').update(original.bytes).digest('hex')!==original.sha256||! /\.csv$/i.test(file.name)||original.bytes.length>750_000) fail(kind+' · Хүлээн зөвшөөрсөн UTF-8 CSV шаардлагатай.');
     sources[kind]={id:file.id,name:file.name,version:file.version,sha256:original.sha256};
     records[kind]=original.bytes;
   }
@@ -91,7 +92,7 @@ function runChecks(m,role,form,data,files,prior) {
   if (new Set([bridge.line,...Object.values(extraBridges).map(b=>b.line)]).size!==1+Object.keys(extraBridges).length) {
     fail('Дэвтрийн зураглалын мөрүүд тусдаа байна.');
   }
-  const params={line:bridge.line,through,sign,...(edition&&{edition}),
+  const params={line:bridge.line,through,sign,...(edition&&{edition}),...(data.method&&profile.method!==areaProfiles[form].method&&{method:profile.method}),
     ...(method?.lines&&{lines:Object.fromEntries(Object.entries(extraBridges).map(([kind,b])=>[kind,b.line]))})};
   const identity=stamp(m,form,population,params,sources);
   if (identity===prior?.stamp) return false;
@@ -109,7 +110,7 @@ function runChecks(m,role,form,data,files,prior) {
   const output=runAreaChecks(profile.method,scope,inputs,ledger,additional);
   (((m.pilotAreaRuns??={})[form])??=[]).push({version:(prior?.version??0)+1,form,population:population.version,
     source:population.evidence,line:bridge.line,through,currency:scope.currency,files:sources,params,stamp:identity,
-    by:role,at:now(),...output});
+    by:actorKey(role),at:now(),...output});
   return true;
 }
 
@@ -123,10 +124,10 @@ export function areaAction(m,role,action,data,files,forms) {
   } else {
     if (!prior||String(prior.version)!==data.version||!current(m,prior)) fail('Одоогийн ажиллуулалтыг сонгоно уу.');
     if (action==='area-review') {
-      if (paper.reviewer!==accounts[role]||paper.owner===accounts[role]) fail('Хараат бус томилсон хянагч шаардлагатай.',403);
+      if (paper.reviewer!==accountFor(m,role)||paper.owner===accountFor(m,role)) fail('Хараат бус томилсон хянагч шаардлагатай.',403);
       if (prior.cases.some(item=>!resolved(m,item))) fail('Бүх тохиолдлын үндэслэл ба нотлох баримтыг шалгана уу.');
       if (prior.approval) return false;
-      prior.approval={by:role,at:now(),conclusion:input(data,'conclusion'),reviewStamp:digest(prior.cases.map(c=>c.reviews?.at(-1)))};
+      prior.approval={by:actorKey(role),at:now(),conclusion:input(data,'conclusion'),reviewStamp:digest(prior.cases.map(c=>c.reviews?.at(-1)))};
       (prior.approvals??=[]).push(prior.approval);
     } else if (action==='area-dispose') {
       if (!owner) fail('Хөтөлбөрийн бэлтгэгч шаардлагатай.',403);
@@ -140,7 +141,7 @@ export function areaAction(m,role,action,data,files,forms) {
       if (finding&&(finding.resolution||finding.status!=='identified'||result!=='finding')) fail('Илрүүлэлтийн өмнөх шийдвэрийг хадгална.');
       const previous=item.reviews?.at(-1);
       if (previous?.result===result&&previous.evidence===evidence.id&&previous.amount===amount&&previous.note===note) return false;
-      const disposition={result,note,evidence:evidence.id,evidenceVersion:evidence.version,by:role,at:now(),amount,
+      const disposition={result,note,evidence:evidence.id,evidenceVersion:evidence.version,by:actorKey(role),at:now(),amount,
         ...(result==='finding'&&{finding:id})};
       (item.reviews??=[]).push(disposition);
       delete prior.approval;

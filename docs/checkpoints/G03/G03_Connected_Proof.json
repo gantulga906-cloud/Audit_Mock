@@ -1,0 +1,228 @@
+{
+  "guide": "G03",
+  "proofs": [
+    {
+      "name": "declared-profile-retains-raw-signed-source",
+      "engagement": "E-cf84b396-f73b-4b10-b7ce-38be657a44d5",
+      "expected": [
+        8000,
+        -8000
+      ],
+      "actual": [
+        8000,
+        -8000
+      ],
+      "versions": {
+        "population": 1,
+        "profile": 1
+      }
+    },
+    {
+      "name": "independent-full-source-control-approval",
+      "engagement": "E-cf84b396-f73b-4b10-b7ce-38be657a44d5",
+      "expected": true,
+      "actual": true,
+      "versions": {
+        "population": 3,
+        "original": "b61448658e3b79b417b41cf735527ec0b60c03bcb88a5c74a1394406834d7991"
+      }
+    },
+    {
+      "name": "profile-change-and-restart-preserve-earlier-input",
+      "engagement": "E-cf84b396-f73b-4b10-b7ce-38be657a44d5",
+      "expected": {
+        "usable": false,
+        "rawDate": "31/12/2025"
+      },
+      "actual": {
+        "usable": false,
+        "rawDate": "31/12/2025"
+      },
+      "versions": {
+        "profile": 2
+      }
+    },
+    {
+      "name": "complete-ledger-and-tb-residuals",
+      "engagement": "E-e87ead1b-bb97-4552-b560-e60be81bd28a",
+      "expected": [
+        0,
+        0
+      ],
+      "actual": [
+        0,
+        0
+      ],
+      "versions": {
+        "method": "AUTO-005",
+        "version": 1
+      }
+    },
+    {
+      "name": "approved-sign-and-unit-statement-bridge",
+      "engagement": "E-e87ead1b-bb97-4552-b560-e60be81bd28a",
+      "expected": [
+        0,
+        0
+      ],
+      "actual": [
+        0,
+        0
+      ],
+      "versions": {
+        "method": "AUTO-006",
+        "version": 1
+      }
+    },
+    {
+      "name": "controlled-statement-cast-and-repeat",
+      "engagement": "E-e87ead1b-bb97-4552-b560-e60be81bd28a",
+      "expected": [
+        0,
+        0
+      ],
+      "actual": [
+        0,
+        0
+      ],
+      "versions": {
+        "method": "AUTO-007",
+        "version": 1
+      }
+    },
+    {
+      "name": "new-analytical-operands-reopen-current-explanations",
+      "engagement": "E-e87ead1b-bb97-4552-b560-e60be81bd28a",
+      "expected": {
+        "old": [
+          "resolved",
+          "resolved",
+          "resolved"
+        ],
+        "current": [
+          "incomplete",
+          "incomplete",
+          "incomplete"
+        ]
+      },
+      "actual": {
+        "old": [
+          "resolved",
+          "resolved",
+          "resolved"
+        ],
+        "current": [
+          "incomplete",
+          "incomplete",
+          "incomplete"
+        ]
+      },
+      "versions": {
+        "method": "AUTO-010",
+        "version": 2
+      }
+    },
+    {
+      "name": "changed-statement-source-reopens-only-dependent-method",
+      "engagement": "E-e87ead1b-bb97-4552-b560-e60be81bd28a",
+      "expected": [
+        false,
+        true
+      ],
+      "actual": [
+        false,
+        true
+      ],
+      "versions": {
+        "changedSource": "a2c81f2b-3013-456e-8cc4-a744a2a2b9fe",
+        "statementCheck": 1,
+        "ledgerCheck": 1
+      }
+    },
+    {
+      "name": "independent-coverage-specification-example",
+      "engagement": "E-e358b6a8-b505-43a0-9bb7-840a8acc4b8d",
+      "expected": {
+        "covered": 1,
+        "missing": 1,
+        "rejected-only": 1,
+        "alternative": 0,
+        "unassessed": 0
+      },
+      "actual": {
+        "covered": 1,
+        "missing": 1,
+        "rejected-only": 1,
+        "alternative": 0,
+        "unassessed": 0
+      },
+      "versions": {
+        "method": "AUTO-001"
+      }
+    },
+    {
+      "name": "one-shared-original-has-separate-current-uses",
+      "engagement": "E-e358b6a8-b505-43a0-9bb7-840a8acc4b8d",
+      "expected": [
+        false,
+        true
+      ],
+      "actual": [
+        false,
+        true
+      ],
+      "versions": {
+        "source": "60534561-ad48-440f-b175-2957c509d14e",
+        "materiality": 2
+      }
+    },
+    {
+      "name": "required-positive-response-retains-explicit-limitation",
+      "engagement": "E-82d0efc1-842f-48fa-9497-8c2443289203",
+      "expected": "limited",
+      "actual": "limited",
+      "versions": {
+        "case": "644066bb-86e8-40e8-91ae-ba048009281d",
+        "version": 2
+      }
+    },
+    {
+      "name": "repeat-local-dispatch-does-not-inflate-confirmed-subjects",
+      "engagement": "E-82d0efc1-842f-48fa-9497-8c2443289203",
+      "expected": 1,
+      "actual": 1,
+      "versions": {
+        "request": "REQ-7A0FB3E5"
+      }
+    },
+    {
+      "name": "one-valid-two-quarantined-source-criterion",
+      "engagement": "E-7ba7afd9-f059-4192-8258-a82a18f31b55",
+      "expected": {
+        "read": 3,
+        "accepted": 1,
+        "quarantined": 2,
+        "amounts": [
+          0,
+          null,
+          -100
+        ]
+      },
+      "actual": {
+        "read": 3,
+        "accepted": 1,
+        "quarantined": 2,
+        "amounts": [
+          0,
+          null,
+          -100
+        ]
+      },
+      "versions": {
+        "population": 1,
+        "sha256": "d0e8a3a6b4cb9ac76bcb6cfdca74062702bd84da662ce76460ec32e67786718d"
+      }
+    }
+  ],
+  "scope": "Persisted fictional G01/G02 engagement through scoped G03 inputs and independent review; no independent source acceptance or external delivery claim"
+}

@@ -1,0 +1,1044 @@
+{
+  "guide": "G07",
+  "scope": "All 21 original criteria across five G07 cases retained with exact source hashes and evidence class",
+  "summary": {
+    "total": 21,
+    "backendDirect": 18,
+    "supporting": 3,
+    "independentlyAccepted": 0
+  },
+  "criteria": [
+    {
+      "id": "P12-UC01-AC01",
+      "title": "Every manifest item resolves to its stated content/version or an explicit exception.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "04f428d3c160a7f9738e39e664be144c6b9080d68a0bccd2baf5217f25932e6f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC01-AC01",
+      "relatedCases": [
+        "P12-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G07 assembly retains actual file authority and distinguishes missing unavailable corrupt and stale final content",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "assembly retains actual file authority and distinguishes missing unavailable corrupt and stale final content",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, corrupt and unavailable originals stay explicit and prevent sealing; the same incomplete assembly decision must receive actual file authority and independent review. A selected assembly deadline does not choose a retention rule.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC01-AC02",
+      "title": "A clean diagnostic does not authorize lock or cure missing judgment.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "fa2f33f7142725856dfee56f52f0936189e4257e12e2882859c07327a007b9e6",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC01-AC02",
+      "relatedCases": [
+        "P12-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G07 assembly retains actual file authority and distinguishes missing unavailable corrupt and stale final content",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "assembly retains actual file authority and distinguishes missing unavailable corrupt and stale final content",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, corrupt and unavailable originals stay explicit and prevent sealing; the same incomplete assembly decision must receive actual file authority and independent review. A selected assembly deadline does not choose a retention rule.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC01-AC03",
+      "title": "Administrative assembly does not falsely date newly performed audit work as earlier work.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "00f250e65ab2c8cc359b13a0c9abe4d6017fb241faf972e94d29226eedc8eeb5",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC01-AC03",
+      "relatedCases": [
+        "P12-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G07 assembly retains actual file authority and distinguishes missing unavailable corrupt and stale final content"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated source-case acceptance remains open",
+      "boundary": "Administrative/no-conclusion guards exist; a dedicated adversarial new-work/backdating source-case pack and independent acceptance remain open."
+    },
+    {
+      "id": "P12-UC01-AC04",
+      "title": "Assembly/custody/retention clocks retain their separate configured bases.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "3cf2ab349bc4a13170b08846639cabc5c12d0c5afe2fcf7da6f2495a8d609fb8",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC01-AC04",
+      "relatedCases": [
+        "P12-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G07 assembly retains actual file authority and distinguishes missing unavailable corrupt and stale final content",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "assembly retains actual file authority and distinguishes missing unavailable corrupt and stale final content",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, corrupt and unavailable originals stay explicit and prevent sealing; the same incomplete assembly decision must receive actual file authority and independent review. A selected assembly deadline does not choose a retention rule.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC02-AC01",
+      "title": "Ordinary editing of locked content is denied.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "c50de65fd93f2ed1ec3cb2ac68fdb74d83c6f64571708a4d0599535bfd1110e3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC02-AC01",
+      "relatedCases": [
+        "P12-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G07 dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "independent custodian",
+            "local recipient"
+          ],
+          "observed": "Dated-unissued, issued-unsealed and sealed reports each retain the original authorized bytes. Actual discussions precede an explicit full-redating plan; dual dating is denied. Fresh response work, completion/opinion/preparation review, authorization, signature, actual issue, original-package receipt, final assembly and independent readable custody precede closure.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        },
+        {
+          "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved planning, qualified report, archive hold and recovery",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC02-AC02",
+      "title": "The prior manifest/content remain identifiable after amendment.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4b03ec874ab90605abb11d9172db30913aa6129a76f895ce3eb9eed51283f53f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC02-AC02",
+      "relatedCases": [
+        "P12-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G07 unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Unknown requirements block disposal. A supported policy can resolve a named unknown requirement; a longer ancestor deadline and every other hold remain. Administrative successors retain predecessor hashes and require their own access grant.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        },
+        {
+          "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved planning, qualified report, archive hold and recovery",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC02-AC03",
+      "title": "The reason, actor/date, affected review and replacement manifest are retained.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "70cd08e2ef75bab8d87b5b977555bf56fc6121b60ef83d4576cb8c195bcbd7b0",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC02-AC03",
+      "relatedCases": [
+        "P12-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G07 unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Unknown requirements block disposal. A supported policy can resolve a named unknown requirement; a longer ancestor deadline and every other hold remain. Administrative successors retain predecessor hashes and require their own access grant.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC02-AC04",
+      "title": "An amendment cannot shorten applicable retention or remove active holds.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "8515440442202163bef47d858368c5367bca567af9f1ccc59bbb0514b4e86002",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC02-AC04",
+      "relatedCases": [
+        "P12-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G07 unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Unknown requirements block disposal. A supported policy can resolve a named unknown requirement; a longer ancestor deadline and every other hold remain. Administrative successors retain predecessor hashes and require their own access grant.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        },
+        {
+          "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved planning, qualified report, archive hold and recovery",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC03-AC01",
+      "title": "Sender and receiver are identifiable with actual transfer/acknowledgment dates.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4c5dc1dc337a88f179c2dc6bf7f2ced13495de4a4f3904166171554de327012e",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC03-AC01",
+      "relatedCases": [
+        "P12-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G07 independent custody requires actual readable contents and retains return reoffer retry and later degraded-health history",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "independent custody requires actual readable contents and retains return reoffer retry and later degraded-health history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "independent custodian"
+          ],
+          "observed": "An actual downloaded digest alone cannot authorize acceptance. Unknown items block acceptance; actual per-file readable inspection, exact retry, changed-payload rejection, return/reoffer with repair owner, and later degraded health preserve earlier acceptance. Active holds and report-only scopes survive transfer.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 supported backup and isolated restore preserve actual report originals archive hashes and granted scopes"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC03-AC02",
+      "title": "Missing/corrupt items keep custody unresolved or explicitly partial.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a14b20cd10eef331fb2c7d8d6a8c5aec066146fb4fbd55ab84b66c9addc2d619",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC03-AC02",
+      "relatedCases": [
+        "P12-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G07 independent custody requires actual readable contents and retains return reoffer retry and later degraded-health history",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "independent custody requires actual readable contents and retains return reoffer retry and later degraded-health history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "independent custodian"
+          ],
+          "observed": "An actual downloaded digest alone cannot authorize acceptance. Unknown items block acceptance; actual per-file readable inspection, exact retry, changed-payload rejection, return/reoffer with repair owner, and later degraded health preserve earlier acceptance. Active holds and report-only scopes survive transfer.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 supported backup and isolated restore preserve actual report originals archive hashes and granted scopes",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC03-AC03",
+      "title": "Access and retention restrictions survive a custody transfer.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "3bc86c34ce00517e881dad333f6179156ede09401400d3c554b4aeec69bb08a7",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC03-AC03",
+      "relatedCases": [
+        "P12-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G07 independent custody requires actual readable contents and retains return reoffer retry and later degraded-health history",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "independent custody requires actual readable contents and retains return reoffer retry and later degraded-health history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "independent custodian"
+          ],
+          "observed": "An actual downloaded digest alone cannot authorize acceptance. Unknown items block acceptance; actual per-file readable inspection, exact retry, changed-payload rejection, return/reoffer with repair owner, and later degraded health preserve earlier acceptance. Active holds and report-only scopes survive transfer.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 supported backup and isolated restore preserve actual report originals archive hashes and granted scopes",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC03-AC04",
+      "title": "Successful backup existence alone is not recorded as verified recovery.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "1dca99e85e694cee308e5957824223a37da9d00f17ab60ad2167af667c0e8add",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC03-AC04",
+      "relatedCases": [
+        "P12-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G07 supported backup and isolated restore preserve actual report originals archive hashes and granted scopes",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "supported backup and isolated restore preserve actual report originals archive hashes and granted scopes",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The supported SQLite backup API writes a snapshot, then restores into another fresh database. Integrity, actual originals, authorized report and archive hashes, identifiers, membership and scopes match; the restored application retrieves only the granted subset. Actual rehearsal evidence is independently reviewed in M12-F09.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 independent custody requires actual readable contents and retains return reoffer retry and later degraded-health history",
+        "approved report preparation connects exact issue to independently completed assembly and custody",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC03-AC05",
+      "title": "When the receiver verifies the offered manifest and actual content as intact and readable, the custody record identifies that manifest, receiver and acknowledgment date; a missing item instead produces an explicit discrepancy and responsible next action.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "2d5c2428f90365b10e95fcd285aa35992a34444b1cce888abe961f939eb5c394",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC03-AC05",
+      "relatedCases": [
+        "P12-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G07 independent custody requires actual readable contents and retains return reoffer retry and later degraded-health history",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "independent custody requires actual readable contents and retains return reoffer retry and later degraded-health history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "independent custodian"
+          ],
+          "observed": "An actual downloaded digest alone cannot authorize acceptance. Unknown items block acceptance; actual per-file readable inspection, exact retry, changed-payload rejection, return/reoffer with repair owner, and later degraded health preserve earlier acceptance. Active holds and report-only scopes survive transfer.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 supported backup and isolated restore preserve actual report originals archive hashes and granted scopes",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC04-AC01",
+      "title": "Only the permitted subset is disclosed.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d123dd50223123601a5402a227c456b8e7ffcd7748b4f84e2bbaa3834004a99e",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC04-AC01",
+      "relatedCases": [
+        "P12-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G07 inspection grants restrict actual metadata and contents and deny expired revoked wrong-scope or removed-member access",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "inspection grants restrict actual metadata and contents and deny expired revoked wrong-scope or removed-member access",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named report-only grant exposes one item without full filenames, counts, digest or hold metadata. Exact content scope, wrong roles, expiry, revocation and actual membership removal are checked.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "two engagements isolate revisions, work, reports, grants and archive access",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC04-AC02",
+      "title": "Restricted unrelated records and metadata are not exposed through search/export.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "90ad29cd824d051cb2350eaa321769472bdf175b59cbf48f88df1b74c91bd702",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC04-AC02",
+      "relatedCases": [
+        "P12-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G07 inspection grants restrict actual metadata and contents and deny expired revoked wrong-scope or removed-member access",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "inspection grants restrict actual metadata and contents and deny expired revoked wrong-scope or removed-member access",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named report-only grant exposes one item without full filenames, counts, digest or hold metadata. Exact content scope, wrong roles, expiry, revocation and actual membership removal are checked.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved report preparation connects exact issue to independently completed assembly and custody",
+        "two engagements isolate revisions, work, reports, grants and archive access",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC04-AC03",
+      "title": "The package retains stable identifiers and reference listings.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "b077d8dbb8e2c6bf67697c3b2a9eecc24fc657ffdf01570c337188f95a26881b",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC04-AC03",
+      "relatedCases": [
+        "P12-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G07 inspection grants restrict actual metadata and contents and deny expired revoked wrong-scope or removed-member access",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "inspection grants restrict actual metadata and contents and deny expired revoked wrong-scope or removed-member access",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A named report-only grant exposes one item without full filenames, counts, digest or hold metadata. Exact content scope, wrong roles, expiry, revocation and actual membership removal are checked.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "two engagements isolate revisions, work, reports, grants and archive access",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC04-AC04",
+      "title": "Dispatch, recipient receipt and return are recorded as different facts.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "f91a517e0a6bab074d001fd99bf007c3ecee7e1158451cba5b006936ac7d5a9c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC04-AC04",
+      "relatedCases": [
+        "P12-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G07 inspection grants restrict actual metadata and contents and deny expired revoked wrong-scope or removed-member access",
+        "approved report preparation connects exact issue to independently completed assembly and custody",
+        "two engagements isolate revisions, work, reports, grants and archive access",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated source-case acceptance remains open",
+      "boundary": "Grant/download scope is verified; full inspector dispatch, acknowledgment and return instruments remain separate work."
+    },
+    {
+      "id": "P12-UC05-AC01",
+      "title": "Elapsed time alone cannot trigger destruction.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "79023088d9a41f524ff6ed959eb308b6dbbe335ed0bf78ba8337a9a7fb6277ce",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC05-AC01",
+      "relatedCases": [
+        "P12-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G07 unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Unknown requirements block disposal. A supported policy can resolve a named unknown requirement; a longer ancestor deadline and every other hold remain. Administrative successors retain predecessor hashes and require their own access grant.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 disposition authorization remains distinct from bounded synthetic payload removal and preserves all other copies",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC05-AC02",
+      "title": "Unknown anchor or active restriction blocks eligibility.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "2e9219306483e72a71b287e0bed92ed6742e1cdbee05aa7deb6d753b990d03bd",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC05-AC02",
+      "relatedCases": [
+        "P12-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G07 unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Unknown requirements block disposal. A supported policy can resolve a named unknown requirement; a longer ancestor deadline and every other hold remain. Administrative successors retain predecessor hashes and require their own access grant.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 disposition authorization remains distinct from bounded synthetic payload removal and preserves all other copies",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC05-AC03",
+      "title": "Authorization is not recorded as performed destruction.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "bee3ae389f9e36ac0222695bc708b44bd9094eb519a0969e77992ec610029583",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC05-AC03",
+      "relatedCases": [
+        "P12-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G07 disposition authorization remains distinct from bounded synthetic payload removal and preserves all other copies",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "disposition authorization remains distinct from bounded synthetic payload removal and preserves all other copies",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real-class package is blocked. An actual independently authorized synthetic-only removal sets only the archive payload to null and records remaining original/backup scope. No secure erasure or all-copy reconciliation is established.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed bounded fixture; no independent source acceptance"
+    },
+    {
+      "id": "P12-UC05-AC04",
+      "title": "A partial/failed disposal retains the residual scope and next responsible work.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "517ad8f1bf222c3caf18fea5240cb07e1324a99407aab53e6e0537f695eaa340",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P12-UC05-AC04",
+      "relatedCases": [
+        "P12-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G07 unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+        "G07 disposition authorization remains distinct from bounded synthetic payload removal and preserves all other copies",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated source-case acceptance remains open",
+      "boundary": "Synthetic local-payload removal records remaining originals/backups; real partial/failure disposal adapters, copy reconciliation and secure-erasure evidence remain open."
+    }
+  ],
+  "relatedLaterFactCriteria": [
+    {
+      "id": "P10-UC09-AC01",
+      "title": "No automatic reissue or silent overwrite occurs.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "6d0cad7cf5e4b074e3ed07f5ac763aec58148e4e8460d5131799673904962769",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC09-AC01",
+      "relatedCases": [
+        "P10-UC09"
+      ],
+      "observations": [
+        {
+          "test": "G07 dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "independent custodian",
+            "local recipient"
+          ],
+          "observed": "Dated-unissued, issued-unsealed and sealed reports each retain the original authorized bytes. Actual discussions precede an explicit full-redating plan; dual dating is denied. Fresh response work, completion/opinion/preparation review, authorization, signature, actual issue, original-package receipt, final assembly and independent readable custody precede closure.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 sealed no-change and failed reliance notices preserve the original and cannot manufacture a completed response"
+      ]
+    },
+    {
+      "id": "P10-UC09-AC02",
+      "title": "New work, reviewed conclusions and revised package are attributable.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "98b00d39f809ba730b5e34692d3e13fcadaec6c8484087297d0849ab4eb2e565",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC09-AC02",
+      "relatedCases": [
+        "P10-UC09"
+      ],
+      "observations": [
+        {
+          "test": "G07 dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "independent custodian",
+            "local recipient"
+          ],
+          "observed": "Dated-unissued, issued-unsealed and sealed reports each retain the original authorized bytes. Actual discussions precede an explicit full-redating plan; dual dating is denied. Fresh response work, completion/opinion/preparation review, authorization, signature, actual issue, original-package receipt, final assembly and independent readable custody precede closure.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 sealed no-change and failed reliance notices preserve the original and cannot manufacture a completed response"
+      ]
+    },
+    {
+      "id": "P10-UC09-AC03",
+      "title": "Necessary communication/reliance-prevention actions remain visible.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "15b9ce58bd8bbe9cbe6dab08e2f2868082b4935b07b291e4d07d7351bdfcbf12",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC09-AC03",
+      "relatedCases": [
+        "P10-UC09"
+      ],
+      "observations": [
+        {
+          "test": "G07 dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "independent custodian",
+            "local recipient"
+          ],
+          "observed": "Dated-unissued, issued-unsealed and sealed reports each retain the original authorized bytes. Actual discussions precede an explicit full-redating plan; dual dating is denied. Fresh response work, completion/opinion/preparation review, authorization, signature, actual issue, original-package receipt, final assembly and independent readable custody precede closure.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G07 sealed no-change and failed reliance notices preserve the original and cannot manufacture a completed response",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "sealed no-change and failed reliance notices preserve the original and cannot manufacture a completed response",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A sealed no-change response restores valid original reliance with chronology retained. Failed notices cannot close a prevent-reliance response; actual recorded delivery is required and old redistribution remains blocked.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "P10-UC09-AC04",
+      "title": "The earlier report/date/signature is not automatically reused.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "7ed506cbe7cf8c7607ada9b26e881f5a214937ea8e105953dc60b77689dce784",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P10-UC09-AC04",
+      "relatedCases": [
+        "P10-UC09"
+      ],
+      "observations": [
+        {
+          "test": "G07 dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "independent custodian",
+            "local recipient"
+          ],
+          "observed": "Dated-unissued, issued-unsealed and sealed reports each retain the original authorized bytes. Actual discussions precede an explicit full-redating plan; dual dating is denied. Fresh response work, completion/opinion/preparation review, authorization, signature, actual issue, original-package receipt, final assembly and independent readable custody precede closure.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G07 sealed no-change and failed reliance notices preserve the original and cannot manufacture a completed response",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "sealed no-change and failed reliance notices preserve the original and cannot manufacture a completed response",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A sealed no-change response restores valid original reliance with chronology retained. Failed notices cannot close a prevent-reliance response; actual recorded delivery is required and old redistribution remains blocked.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    }
+  ],
+  "boundaries": {
+    "P12-UC01-AC03": "Administrative/no-conclusion guards exist; a dedicated adversarial new-work/backdating source-case pack and independent acceptance remain open.",
+    "P12-UC04-AC04": "Grant/download scope is verified; full inspector dispatch, acknowledgment and return instruments remain separate work.",
+    "P12-UC05-AC04": "Synthetic local-payload removal records remaining originals/backups; real partial/failure disposal adapters, copy reconciliation and secure-erasure evidence remain open."
+  }
+}

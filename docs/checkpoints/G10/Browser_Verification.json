@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-18T08:05:09.829Z",
+  "build": {
+    "build": "oio4NepB4XN2hod4FyoPu",
+    "commit": "faf1cba56b6dd47d12092c6124f214da059c9a43",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "engagement": "E-8c5e2655-2720-46f0-9fd1-468b70c89079",
+  "checks": [
+    "Actual named preparer selects accepted lot/issue originals and ledger mappings through the UI and obtains 750 cost of sales and 2250 closing inventory",
+    "The actual different named reviewer independently approves the exact source calculation",
+    "The preparer records actual method/edition, source procedure, all input locators and professional judgments and submits a current version while retaining prior work",
+    "The assigned independent reviewer approves this exact G10 work version while its actual finding stays visible in G05",
+    "The exact selected readable export retains actual area work, source/method, independent review and the separate native-paper state",
+    "Changing a relied-upon original makes the area stale without rewriting its prior independent review or G05 matter",
+    "Actual source work remains readable at a 390-pixel viewport"
+  ],
+  "runtimeErrors": [],
+  "scope": "Actual named-role UI source calculation, independent approval, work submission/review, G05 handoff, scoped readable export and source-change preservation in a disposable G10 copy. No whole-variant source acceptance or live-preview changes."
+}

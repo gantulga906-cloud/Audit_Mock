@@ -1,0 +1,127 @@
+{
+  "guide": "G06",
+  "proofs": [
+    {
+      "name": "explicit-opinion-and-recipient-boundaries",
+      "expected": {
+        "supportedCombinations": 5,
+        "unknownRejected": true,
+        "unattemptedRecipientGaps": 1
+      },
+      "actual": {
+        "supportedCombinations": 5,
+        "unknownRejected": true,
+        "unattemptedRecipientGaps": 1
+      }
+    },
+    {
+      "name": "connected-exact-report-and-full-originals",
+      "expected": {
+        "issueEffects": 1,
+        "received": 1,
+        "failed": 1,
+        "current": true
+      },
+      "actual": {
+        "issueEffects": 1,
+        "received": 1,
+        "failed": 1,
+        "current": true
+      }
+    },
+    {
+      "name": "actual-qualified-path",
+      "expected": {
+        "opinion": "qualified",
+        "form": "4.1.A2",
+        "sectionDecisions": 6
+      },
+      "actual": {
+        "opinion": "qualified",
+        "form": "4.1.A2",
+        "sectionDecisions": 6
+      }
+    },
+    {
+      "name": "actual-adverse-path",
+      "expected": {
+        "opinion": "adverse",
+        "form": "4.1.A3",
+        "sectionDecisions": 6
+      },
+      "actual": {
+        "opinion": "adverse",
+        "form": "4.1.A3",
+        "sectionDecisions": 6
+      }
+    },
+    {
+      "name": "actual-disclaimer-path",
+      "expected": {
+        "opinion": "disclaimer",
+        "form": "4.1.A4",
+        "sectionDecisions": 6
+      },
+      "actual": {
+        "opinion": "disclaimer",
+        "form": "4.1.A4",
+        "sectionDecisions": 6
+      }
+    },
+    {
+      "name": "returned-wording-and-fresh-approval",
+      "expected": {
+        "current": true,
+        "priorWording": true,
+        "returned": true,
+        "newSignatureRequired": true
+      },
+      "actual": {
+        "current": true,
+        "priorWording": true,
+        "returned": true,
+        "newSignatureRequired": true
+      }
+    },
+    {
+      "name": "actual-original-and-recipient-change",
+      "expected": {
+        "current": false,
+        "issueHistory": 1,
+        "oldHashRetained": true
+      },
+      "actual": {
+        "current": false,
+        "issueHistory": 1,
+        "oldHashRetained": true
+      }
+    },
+    {
+      "name": "actual-date-basis-change",
+      "expected": {
+        "current": false,
+        "completionCurrent": 4,
+        "unrelatedMateriality": 2
+      },
+      "actual": {
+        "current": false,
+        "completionCurrent": 4,
+        "unrelatedMateriality": 2
+      }
+    },
+    {
+      "name": "actual-statements-basis-change",
+      "expected": {
+        "current": false,
+        "completionCurrent": 0,
+        "unrelatedMateriality": 2
+      },
+      "actual": {
+        "current": false,
+        "completionCurrent": 0,
+        "unrelatedMateriality": 2
+      }
+    }
+  ],
+  "scope": "Persisted fictional source-grounded engineering observations; no independent acceptance or real dispatch"
+}

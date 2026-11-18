@@ -1,0 +1,23 @@
+
+> veritech-audit-mock@0.1.0 verify:archive-controls-ui
+> node scripts/verify-archive-controls-ui.mjs .audit-pilot/g07-fixture/custody-ready-fixture.json .audit-pilot/g07-custody-ui
+
+{
+  "date": "2026-11-17T10:14:48.645Z",
+  "build": {
+    "build": "UX2hycFronDUEAF0nDZGo",
+    "commit": "d032cfd9d3feca700dcaf0dbbd867eab30348d2a",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "engagement": "E-851ef724-a7e2-4e76-8e74-daff4f215737",
+  "checks": [
+    "Independent custodian sees the reoffer resolution, continuing hold and separate retention status; every readability result starts unknown",
+    "Browser downloads the exact sealed envelope and actually decodes every fictional original; report and file hashes match",
+    "Acceptance is denied after a real exact download when the per-item readability inspection has not been recorded",
+    "Independent acceptance follows an actual per-item readable inspection and retains the exact receipt, manifest and continuing restrictions",
+    "A later unreadable result changes current health while retaining the earlier acceptance, inspection versions and active hold"
+  ],
+  "runtimeErrors": [],
+  "scope": "Actual G07 browser interactions in private disposable synthetic database copies. Fictional UTF-8/JSON readability does not establish PDF/Office or production-media readability. No live-preview mutation or independent professional source acceptance."
+}

@@ -1,0 +1,1457 @@
+{
+  "guide": "G02",
+  "scope": "All 53 original criteria retained; fixture evidence is not independent source acceptance",
+  "summary": {
+    "total": 53,
+    "backendDirect": 28,
+    "independentlyAccepted": 0
+  },
+  "criteria": [
+    {
+      "id": "P03-UC01-AC01",
+      "title": "The created engagement retains the authorization reference.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "c276a9c771b9753ed28788ebbc53bfd17cfa5b1bc12f38e93ec50258c35fd974",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC01-AC01",
+      "relatedCases": [
+        "P03-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open"
+    },
+    {
+      "id": "P03-UC01-AC02",
+      "title": "The period start cannot be after its end.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "8d301b15ae9e1134f558b284d7918baed4a148c70a74ab9b592edadbd18c0417",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC01-AC02",
+      "relatedCases": [
+        "P03-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open"
+    },
+    {
+      "id": "P03-UC01-AC03",
+      "title": "A planning milestone is not labelled statutory without a verified basis.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "235f6a899b05b99deedd61a6529848109a94d77462aa1f2905fea2d0b922bbcf",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC01-AC03",
+      "relatedCases": [
+        "P03-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "separate auditor expert, management expert, internal audit function, conditional direct assistance, relevant component and opening-balance evaluations",
+          "actors": [
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An unsupported statutory deadline is rejected. Opening limitations require comparative/policy assessment and additional work. Direct assistance needs explicit source-backed applicability, not a universal permission. Component work requires actual group scope. Delivered work retains the auditor evaluation and never grants opinion or review-note authority. External accounts are not supplied by this profile.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P03-UC01-AC04",
+      "title": "Group/component structure is recorded only where relevant.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "83815a4273a06227c76e10365adee75e5d9d421e1709324292c5de7879ef9065",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC01-AC04",
+      "relatedCases": [
+        "P03-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "separate auditor expert, management expert, internal audit function, conditional direct assistance, relevant component and opening-balance evaluations",
+          "actors": [
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An unsupported statutory deadline is rejected. Opening limitations require comparative/policy assessment and additional work. Direct assistance needs explicit source-backed applicability, not a universal permission. Component work requires actual group scope. Delivered work retains the auditor evaluation and never grants opinion or review-note authority. External accounts are not supplied by this profile.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P03-UC02-AC01",
+      "title": "R1-R4 are capacities on work, not four mandatory people on every item.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "868e02bca09aae628315b64bbc76108c20b126b2e60178837c2a6903b9b48f2e",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC02-AC01",
+      "relatedCases": [
+        "P03-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P03-UC02-AC02",
+      "title": "An assignment does not create unrestricted technical access.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "ca70d62f3bef5916471aa1db12b9dd05a2b72ac863da5a69401032736fd79067",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC02-AC02",
+      "relatedCases": [
+        "P03-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P03-UC02-AC03",
+      "title": "External work identifies the expected deliverable and responsible auditor.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "4d87d20105a3bfd64969f27aba88113f95927865af80ef464b97bb9ef197e24f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC02-AC03",
+      "relatedCases": [
+        "P03-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P03-UC02-AC04",
+      "title": "Replacing a reviewer does not transfer their historical sign-off.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "65ada06a446da792684a3e3c8dbd27376bbba30f5085555a1e4f5898d5577ce3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC02-AC04",
+      "relatedCases": [
+        "P03-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P03-UC02-AC05",
+      "title": "When one practitioner becomes unavailable, reassignment shows the replacement for outstanding work and the applicable review route while preserving the former practitioner’s completed preparation/review attribution.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "5a6697eaac853b68cd9a8738722a9f611d722d9cf591065e672e5b20065d14ce",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC02-AC05",
+      "relatedCases": [
+        "P03-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P03-UC03-AC01",
+      "title": "Changing a budget cannot rewrite actual effort.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "6f98c44bd1f1eb84724b299d9bc301312f42fe96a07fa6155b7f0c6355ef02ed",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC03-AC01",
+      "relatedCases": [
+        "P03-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P03-UC03-AC02",
+      "title": "A deadline conflict remains visible until its owner resolves or accepts it with authority.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "42842e6ed8482ff38dcd386d288aab8a594d24b97420c7ab0bb994e8173beaf3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC03-AC02",
+      "relatedCases": [
+        "P03-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P03-UC03-AC03",
+      "title": "Commercial pressure cannot waive required audit work or EQR concerns.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "1e7f96e21b51e845e200117c9d42c3ac9c08e734d6647602f42b5b12c9697338",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC03-AC03",
+      "relatedCases": [
+        "P03-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open"
+    },
+    {
+      "id": "P03-UC03-AC04",
+      "title": "A lifecycle handoff identifies transferred versions and open work rather than relying only on a stage label.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a38f44d5e2d74ddb8dd2f8239038e1c9550aaab8ec80a67db68b9f6d204ada4e",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC03-AC04",
+      "relatedCases": [
+        "P03-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P03-UC04-AC01",
+      "title": "The new period has a separate identity.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "59169809052367940a321657f9b14f44ee3f6e76ad2d2384b5e72b061ab7e144",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC04-AC01",
+      "relatedCases": [
+        "P03-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "line": 153,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 3770.6555
+      }
+    },
+    {
+      "id": "P03-UC04-AC02",
+      "title": "Old acceptance, conclusions and sign-offs are not current approvals.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "e4d764d2721124c6fc7a97ad3eb0ec36387740222a729446c7f3c163e844f932",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC04-AC02",
+      "relatedCases": [
+        "P03-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "line": 153,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 3770.6555
+      }
+    },
+    {
+      "id": "P03-UC04-AC03",
+      "title": "Copied facts identify their origin and current confirmation state.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "7ef6b8a28d12047ebf9b2b63770c04f2448e1aaddc8a4d9bb0bd77c651f84bbb",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC04-AC03",
+      "relatedCases": [
+        "P03-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "line": 153,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 3770.6555
+      }
+    },
+    {
+      "id": "P03-UC04-AC04",
+      "title": "The preparer can omit changed/irrelevant items without deleting the prior audit.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "f84332936b85faf983d34b0fb277286e9ed1b2117571a2abbf090a0392aa8ba9",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P03-UC04-AC04",
+      "relatedCases": [
+        "P03-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "provisional intake, subsequent-period confirmation and signed terms survive independent review"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "file": "tests/pilot-acceptance.test.mjs",
+        "line": 153,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 3770.6555
+      }
+    },
+    {
+      "id": "P06-UC01-AC01",
+      "title": "A control description is not operating-effectiveness evidence.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "b4e03d249d486f78072facda7adc99dc92a1409fba23b0fa86eb4cdbcac5bf58",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC01-AC01",
+      "relatedCases": [
+        "P06-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC01-AC02",
+      "title": "Meeting invitations are not recorded as completed discussions.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "83c789d0cedf686b9e21803694216cebe3e382ebe218f20c4f089bd8a2c2f97a",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC01-AC02",
+      "relatedCases": [
+        "P06-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC01-AC03",
+      "title": "An unavailable answer remains open with its relevance explained.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "1a06b0e460d1d40ac1d2b87ff4949d110f72f70b2076b9be07360d7a20a2e2d3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC01-AC03",
+      "relatedCases": [
+        "P06-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC01-AC04",
+      "title": "Financial-statement-level risks can have overall scope without an invented single-account link.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "9993956bf97da7bd4600cbd45f7b3f6e51562994ae57423094e39b4b2f289ffe",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC01-AC04",
+      "relatedCases": [
+        "P06-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC02-AC01",
+      "title": "The response addresses the actual risk scope, not only a matching title.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4776b72f009b4ab92236f923899a057aacd8504a27d8df857b70a90bb08372cf",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC02-AC01",
+      "relatedCases": [
+        "P06-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC02-AC02",
+      "title": "Overall staffing/supervision responses do not require a fictional test procedure.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "294eaa045bce7072fc7ae424b2eee539dd5bf2c29a77707709cf8a0e017e108e",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC02-AC02",
+      "relatedCases": [
+        "P06-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC02-AC03",
+      "title": "Substantive work required for material areas is not removed merely because a questionnaire score is low.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "d6916e59f0e351b3fce727f9b0f9513204566ef18688ee69d8a93d1d69db9990",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC02-AC03",
+      "relatedCases": [
+        "P06-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open"
+    },
+    {
+      "id": "P06-UC02-AC04",
+      "title": "An analytical flag remains a candidate for investigation and not a finding of fraud.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "78db14adf6885d849679e2bb94f2125123116a1c0d70ffce4e053e17fd13fa26",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC02-AC04",
+      "relatedCases": [
+        "P06-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC03-AC01",
+      "title": "No default professional percentage is invented.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "af5c60a8e30a39df4b39d11c75ca0051d2419064c17e0198cd65c89dae3898f1",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC03-AC01",
+      "relatedCases": [
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC03-AC02",
+      "title": "Performance materiality is below the relevant overall/specific materiality under the applicable method.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "c43df3687bf016014677d4565ebe5c381a46a83a4ebfa92c6b0bff15739f284c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC03-AC02",
+      "relatedCases": [
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC03-AC03",
+      "title": "A missing denominator or benchmark cannot produce an apparently approved output.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "931924efacfb02ae4b1666488774576fdff0b37aa5df6532ad8a0fa38aa086b1",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC03-AC03",
+      "relatedCases": [
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC03-AC04",
+      "title": "A reduction identifies affected work for assessment and does not automatically redesign sampling.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "e23aa14f86ba413fbdd747512264ecaf333fc2cb9bba1b0d893ae95981227cc3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC03-AC04",
+      "relatedCases": [
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC04-AC01",
+      "title": "A delivered specialist report is not automatically sufficient evidence.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "1a849dda5457293107c06d93aea3113f1c89cdda39f7ca988905813277e0fce8",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC04-AC01",
+      "relatedCases": [
+        "P06-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open"
+    },
+    {
+      "id": "P06-UC04-AC02",
+      "title": "The specialist cannot clear auditor review notes or choose the audit opinion.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a5d6f759dcea34afde4748387d32b2f56a1d288a91c4403a4642a83a3439ee37",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC04-AC02",
+      "relatedCases": [
+        "P06-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open"
+    },
+    {
+      "id": "P06-UC04-AC03",
+      "title": "Inadequate work results in identified additional work or an explicit limitation.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "8141e5abd404d8194552f4810e78e90c64d7b3b9eb54d1a52c50628fdfebf6c0",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC04-AC03",
+      "relatedCases": [
+        "P06-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "separate auditor expert, management expert, internal audit function, conditional direct assistance, relevant component and opening-balance evaluations",
+          "actors": [
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An unsupported statutory deadline is rejected. Opening limitations require comparative/policy assessment and additional work. Direct assistance needs explicit source-backed applicability, not a universal permission. Component work requires actual group scope. Delivered work retains the auditor evaluation and never grants opinion or review-note authority. External accounts are not supplied by this profile.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC04-AC04",
+      "title": "Platform access, if provided, is limited to the granted material and contribution.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a8a90cd1805e53d24d6db01b476b62c5435ad5fb2f3ffbdfa1603bc6fe69bb2f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC04-AC04",
+      "relatedCases": [
+        "P06-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "boundary": "Conditional specialist portal not supplied. Manual contribution retains auditor responsibility; no external account or implicit access is granted."
+    },
+    {
+      "id": "P06-UC05-AC01",
+      "title": "The preparer’s response does not clear the note.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a28c7d93dbb74d787cb0dd39872f4756c99446361a51ed9e256cea6571b2e243",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC05-AC01",
+      "relatedCases": [
+        "P06-UC05"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC05-AC02",
+      "title": "The review refers to the content and source versions actually inspected.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "49ba0478e7d042e8da310ee539e9779f9d4a5b90d3c650b3b1de9842c46bb70f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC05-AC02",
+      "relatedCases": [
+        "P06-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC05-AC03",
+      "title": "An unexplained response gap cannot appear resolved through a stage-complete flag.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "33ddaa217d346bc8abd09e8aa1ad221837f1d4187062ef4f2696a45a65f80433",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC05-AC03",
+      "relatedCases": [
+        "P06-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC05-AC04",
+      "title": "After the reviewer returns an unsupported risk response and the preparer revises it, the reviewer can inspect both submissions and the new support and record a clear/return decision for that response without resetting unrelated planning.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "134151d15568f1ea96b7afd1191ad364e16f9aba786ff98f8769f2589073aa5e",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC05-AC04",
+      "relatedCases": [
+        "P06-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC06-AC01",
+      "title": "Approval identifies its actual scope and reviewed version.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4476bba431e7564986fbd94306cdd12dbd896f32344eea69ced057eadd2ddccc",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC06-AC01",
+      "relatedCases": [
+        "P06-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC06-AC02",
+      "title": "New contradictory information cannot be ignored because planning was approved.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "0b21de23d6e25ee97f915b3a95beeea4d93e87a60a08dd6cb9b1d48fd846b9ac",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC06-AC02",
+      "relatedCases": [
+        "P06-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC06-AC03",
+      "title": "Unaffected work remains supported by an explicit impact decision.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "c5d6f14760b235d1d056f962654a091cfd5cbb4dcece8f68c6e90933744fdc7f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC06-AC03",
+      "relatedCases": [
+        "P06-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P06-UC06-AC04",
+      "title": "A stage handoff includes usable work, next ownership and unresolved restrictions.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "02c110edb459ea8e80a0d919ba57413e57c75852d6541fa2a73d9fc581b68aab",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P06-UC06-AC04",
+      "relatedCases": [
+        "P06-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P14-UC01-AC01",
+      "title": "A departure does not delete historical preparation/review signatures.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "9d1ad60fc1d5d8ff41e4a080c2be21329dc6a4735ced61b3b05086802f039400",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC01-AC01",
+      "relatedCases": [
+        "P14-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P14-UC01-AC02",
+      "title": "Business role/status is separate from technical access.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "9e2246b53f06fd4628ee7057bc732a09e127025f6f49c2998ca6360effed18d9",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC01-AC02",
+      "relatedCases": [
+        "P14-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P14-UC01-AC03",
+      "title": "No universal credential-expiry rule is invented.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "91aca2f57f0f4bbc4c36b69b8490f74b36162ccd693cc6e5027c7c0d1a1b1e35",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC01-AC03",
+      "relatedCases": [
+        "P14-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P14-UC01-AC04",
+      "title": "A firm administrator does not obtain opinion/EQR authority from administration.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "e98e247af8578120f5a9fadfc46c5babb5253421facf9ba48d3c7a6d62656ef3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC01-AC04",
+      "relatedCases": [
+        "P14-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P14-UC02-AC01",
+      "title": "Issuer/credential facts retain their source.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "3d708adea632ee05d6ef62e1807d43880a1eaf492adc2010e8805ef97deea794",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC02-AC01",
+      "relatedCases": [
+        "P14-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P14-UC02-AC02",
+      "title": "Unknown/expired applicable evidence stays visible.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "c1a7b7f7a58c783c01f51f27ecd3d736a8ed03ad563c09e1c559e3145134616a",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC02-AC02",
+      "relatedCases": [
+        "P14-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P14-UC02-AC03",
+      "title": "A calendar slot alone does not establish suitability.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "476bd247dbb6b77d28130b7c2e61c1daf0215c7cd5db204ff4d9ebd415a4b0c4",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC02-AC03",
+      "relatedCases": [
+        "P14-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      }
+    },
+    {
+      "id": "P14-UC02-AC04",
+      "title": "AI staffing and grading remain future proposals.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "2aabf89c07d47365060bf5418ffe368946d03f1cf98ce349b1bc814e359c81fe",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC02-AC04",
+      "relatedCases": [
+        "P14-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingReference": {
+        "name": "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "file": "tests/pilot.test.mjs",
+        "line": 66,
+        "suite": false,
+        "outcome": "passed",
+        "ms": 1201.9752
+      },
+      "boundary": "AI allocation and grading remain future source scope; no automated competence or audit-quality conclusion is introduced."
+    },
+    {
+      "id": "P14-UC03-AC01",
+      "title": "Different time intervals and planned/actual hours are not silently combined.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "5280ce16005b0a7c4f7b1fd0cef5a3d993e50c98fea7fbb23c6bbf05fb2a3200",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC03-AC01",
+      "relatedCases": [
+        "P14-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 actual effort rejects cross-engagement overlap without revealing hidden work and preserves scoped portfolio intervals",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "actual named-person time and portfolio permissions across separate accepted periods",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Overlapping actual hours for the same person are rejected without naming hidden work. The reviewer sees actual intervals only for permitted engagements; the partner sees both. Planned commitments and actual intervals remain distinct.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P14-UC03-AC02",
+      "title": "The view does not disclose engagements outside the leader’s permitted scope.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "c43d96bbf8e98d68367d2582fc229aacab0e89830c917888b27ad138721a095c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC03-AC02",
+      "relatedCases": [
+        "P14-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 actual effort rejects cross-engagement overlap without revealing hidden work and preserves scoped portfolio intervals",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "actual named-person time and portfolio permissions across separate accepted periods",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Overlapping actual hours for the same person are rejected without naming hidden work. The reviewer sees actual intervals only for permitted engagements; the partner sees both. Planned commitments and actual intervals remain distinct.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P14-UC03-AC03",
+      "title": "Actual effort is not reduced to make capacity look feasible.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "13fa70a7e9f69f94f80b452f7b30d60bcc7c0b9edc3c27b70daf69b051e7285b",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC03-AC03",
+      "relatedCases": [
+        "P14-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 actual effort rejects cross-engagement overlap without revealing hidden work and preserves scoped portfolio intervals",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "actual named-person time and portfolio permissions across separate accepted periods",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Overlapping actual hours for the same person are rejected without naming hidden work. The reviewer sees actual intervals only for permitted engagements; the partner sees both. Planned commitments and actual intervals remain distinct.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P14-UC03-AC04",
+      "title": "Utilization is not represented as professional audit quality.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "edb895a5755373a2d5f31c6642245b37b2379aeb5469646eed465c8429f8950c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P14-UC03-AC04",
+      "relatedCases": [
+        "P14-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 actual effort rejects cross-engagement overlap without revealing hidden work and preserves scoped portfolio intervals",
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open"
+    }
+  ]
+}

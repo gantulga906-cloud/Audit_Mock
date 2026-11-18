@@ -1,0 +1,1133 @@
+{
+  "guide": "G03",
+  "scope": "All 30 original criteria retained; fixture evidence is not independent source acceptance",
+  "summary": {
+    "total": 30,
+    "backendDirect": 27,
+    "supporting": 3,
+    "independentlyAccepted": 0
+  },
+  "criteria": [
+    {
+      "id": "P05-UC01-AC01",
+      "title": "Invalid amounts and ambiguous dates are not silently converted.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "03fc1753f37df3d65c9bcb688a1e567696c36c0f3e6d9a7f55b1edcf0bbda947",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC01-AC01",
+      "relatedCases": [
+        "P05-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "accepted standard intake and reviewed G02 plan through approved source profile, explicit import, independent full-source controls, profile change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The chosen DMY format, sign and currency scale retain raw source cells and bytes. Zero arithmetic sum cannot conceal a missing certified source row. Import and approval are distinct; self-review is denied. A revised profile reopens use while earlier interpreted rows, source originals and exact replay survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently specified one-valid/two-defect example, source correction and cross-engagement original denial",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Exactly one row is accepted and two stay quarantined with their own keys and defect reasons. Blank amount remains null, genuine zero remains zero and the negative amount survives an ambiguous date. A separate copy of the same original cannot be an independent control. Corrected files preserve earlier raw inputs. A foreign original cannot be downloaded or used through another engagement.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P05-UC01-AC02",
+      "title": "Rejected rows remain visible and traceable to their original keys.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "edd8be386b18e49470dd4b7672e9e41c7c13908994b34cc1391b5b3df41cb90c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC01-AC02",
+      "relatedCases": [
+        "P05-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently specified one-valid/two-defect example, source correction and cross-engagement original denial",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Exactly one row is accepted and two stay quarantined with their own keys and defect reasons. Blank amount remains null, genuine zero remains zero and the negative amount survives an ambiguous date. A separate copy of the same original cannot be an independent control. Corrected files preserve earlier raw inputs. A foreign original cannot be downloaded or used through another engagement.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P05-UC01-AC03",
+      "title": "Import success does not claim source completeness or transaction validity.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "2f24d14a00a4b19ebbb99ab44ae5cea274470d0e2fccdc27805ddb841fa3ea27",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC01-AC03",
+      "relatedCases": [
+        "P05-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "accepted standard intake and reviewed G02 plan through approved source profile, explicit import, independent full-source controls, profile change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The chosen DMY format, sign and currency scale retain raw source cells and bytes. Zero arithmetic sum cannot conceal a missing certified source row. Import and approval are distinct; self-review is denied. A revised profile reopens use while earlier interpreted rows, source originals and exact replay survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently specified one-valid/two-defect example, source correction and cross-engagement original denial",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Exactly one row is accepted and two stay quarantined with their own keys and defect reasons. Blank amount remains null, genuine zero remains zero and the negative amount survives an ambiguous date. A separate copy of the same original cannot be an independent control. Corrected files preserve earlier raw inputs. A foreign original cannot be downloaded or used through another engagement.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P05-UC01-AC04",
+      "title": "A corrected file does not overwrite earlier audit inputs.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "7774889e40fa02c2cf7a460a62a0b77868d3f80b30fc2438d1975459562d0103",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC01-AC04",
+      "relatedCases": [
+        "P05-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "accepted standard intake and reviewed G02 plan through approved source profile, explicit import, independent full-source controls, profile change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The chosen DMY format, sign and currency scale retain raw source cells and bytes. Zero arithmetic sum cannot conceal a missing certified source row. Import and approval are distinct; self-review is denied. A revised profile reopens use while earlier interpreted rows, source originals and exact replay survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently specified one-valid/two-defect example, source correction and cross-engagement original denial",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Exactly one row is accepted and two stay quarantined with their own keys and defect reasons. Blank amount remains null, genuine zero remains zero and the negative amount survives an ambiguous date. A separate copy of the same original cannot be an independent control. Corrected files preserve earlier raw inputs. A foreign original cannot be downloaded or used through another engagement.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P05-UC01-AC05",
+      "title": "For an import in which one source row is valid and two have unresolved conformance defects, the result shows one accepted row, two quarantined rows and a source-row-specific reason for each defect; totals reconcile to the retained original.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "949dd891a8463d14148c03b8c641a72da5d932b9e8adc099eba550a1478edd2e",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC01-AC05",
+      "relatedCases": [
+        "P05-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently specified one-valid/two-defect example, source correction and cross-engagement original denial",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Exactly one row is accepted and two stay quarantined with their own keys and defect reasons. Blank amount remains null, genuine zero remains zero and the negative amount survives an ambiguous date. A separate copy of the same original cannot be an independent control. Corrected files preserve earlier raw inputs. A foreign original cannot be downloaded or used through another engagement.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P05-UC02-AC01",
+      "title": "The count bridge reconciles disjoint accepted, quarantined and excluded records.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "fe9ad417cba0f0537c983e137f57a32ff7cc3654a8f5c529cfe54fa00dd148f5",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC02-AC01",
+      "relatedCases": [
+        "P05-UC02"
+      ],
+      "observations": [
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P05-UC02-AC02",
+      "title": "One file’s total is not described as an independent control without a basis.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "267bc6ce74a8dab622d59c72469d764241743e9b7e94fd69c6d79ca84e15e201",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC02-AC02",
+      "relatedCases": [
+        "P05-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "accepted standard intake and reviewed G02 plan through approved source profile, explicit import, independent full-source controls, profile change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The chosen DMY format, sign and currency scale retain raw source cells and bytes. Zero arithmetic sum cannot conceal a missing certified source row. Import and approval are distinct; self-review is denied. A revised profile reopens use while earlier interpreted rows, source originals and exact replay survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently specified one-valid/two-defect example, source correction and cross-engagement original denial",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Exactly one row is accepted and two stay quarantined with their own keys and defect reasons. Blank amount remains null, genuine zero remains zero and the negative amount survives an ambiguous date. A separate copy of the same original cannot be an independent control. Corrected files preserve earlier raw inputs. A foreign original cannot be downloaded or used through another engagement.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P05-UC02-AC03",
+      "title": "Unmapped or multiply mapped accounts remain explicit.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "cc36c7846c56be4d9625432e237fdc488c6b19cfcb139c52c8e10c218e9ddca9",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC02-AC03",
+      "relatedCases": [
+        "P05-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "exact original CSV versions through controlled master matching, TB/ledger, statement, opening and analytical checks with independent dispositions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Historical inactive master rows match only in their actual validity interval; ambiguous and unmatched IDs remain exceptions. Complete-ledger imbalance and duplicate statement destinations remain explicit. Signed/unit-aware casts and approved opening adjustments produce independently asserted residuals. Empty checks and missing thresholds cannot become clean output. Zero denominator remains undefined; refreshed analytics require new explanations. Changed statement input invalidates only its dependent check.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P05-UC02-AC04",
+      "title": "A mapping change preserves previous results and identifies affected work.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "98fe30d277338c46c5755d5389b55129d3375de7f618e2a9c1ea53bb0b1dd5c9",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC02-AC04",
+      "relatedCases": [
+        "P05-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingEvidence": {
+        "implementation": [
+          "scripts/pilot-population.mjs",
+          "scripts/pilot-data-methods.mjs",
+          "scripts/pilot-workflow.mjs"
+        ],
+        "boundary": "Versioned population mappings, source digests and targeted impact retain prior results. No additional case-specific mapping-change proof is claimed by this receipt."
+      }
+    },
+    {
+      "id": "P05-UC03-AC01",
+      "title": "The review identifies the actual data/mapping versions and intended use.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d61ee0435fdad4ad92c3dd8170e677a7d15905bf9b178d73de15c2ea85ba9af8",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC03-AC01",
+      "relatedCases": [
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "accepted standard intake and reviewed G02 plan through approved source profile, explicit import, independent full-source controls, profile change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The chosen DMY format, sign and currency scale retain raw source cells and bytes. Zero arithmetic sum cannot conceal a missing certified source row. Import and approval are distinct; self-review is denied. A revised profile reopens use while earlier interpreted rows, source originals and exact replay survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "exact original CSV versions through controlled master matching, TB/ledger, statement, opening and analytical checks with independent dispositions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Historical inactive master rows match only in their actual validity interval; ambiguous and unmatched IDs remain exceptions. Complete-ledger imbalance and duplicate statement destinations remain explicit. Signed/unit-aware casts and approved opening adjustments produce independently asserted residuals. Empty checks and missing thresholds cannot become clean output. Zero denominator remains undefined; refreshed analytics require new explanations. Changed statement input invalidates only its dependent check.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P05-UC03-AC02",
+      "title": "Missing or untested population segments cannot appear covered.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4b5b6183aa1571f5b14c4f6d1596a3473739c6ce110f15d29890a78ccddb239c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC03-AC02",
+      "relatedCases": [
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "accepted standard intake and reviewed G02 plan through approved source profile, explicit import, independent full-source controls, profile change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The chosen DMY format, sign and currency scale retain raw source cells and bytes. Zero arithmetic sum cannot conceal a missing certified source row. Import and approval are distinct; self-review is denied. A revised profile reopens use while earlier interpreted rows, source originals and exact replay survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P05-UC03-AC03",
+      "title": "A zero denominator returns not-evaluable under the selected method.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a23380809c5d272f9afd434114d7392918125a7a6a1c6531823a97740d23c35b",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC03-AC03",
+      "relatedCases": [
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "exact original CSV versions through controlled master matching, TB/ledger, statement, opening and analytical checks with independent dispositions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Historical inactive master rows match only in their actual validity interval; ambiguous and unmatched IDs remain exceptions. Complete-ledger imbalance and duplicate statement destinations remain explicit. Signed/unit-aware casts and approved opening adjustments produce independently asserted residuals. Empty checks and missing thresholds cannot become clean output. Zero denominator remains undefined; refreshed analytics require new explanations. Changed statement input invalidates only its dependent check.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P05-UC03-AC04",
+      "title": "Changed inputs require impact assessment rather than silently refreshing signed conclusions.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "437e5aeca4d46f94307e3ac4f56a805ccd594a220ff7bf897f974c13661358d0",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P05-UC03-AC04",
+      "relatedCases": [
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "accepted standard intake and reviewed G02 plan through approved source profile, explicit import, independent full-source controls, profile change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The chosen DMY format, sign and currency scale retain raw source cells and bytes. Zero arithmetic sum cannot conceal a missing certified source row. Import and approval are distinct; self-review is denied. A revised profile reopens use while earlier interpreted rows, source originals and exact replay survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "exact original CSV versions through controlled master matching, TB/ledger, statement, opening and analytical checks with independent dispositions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Historical inactive master rows match only in their actual validity interval; ambiguous and unmatched IDs remain exceptions. Complete-ledger imbalance and duplicate statement destinations remain explicit. Signed/unit-aware casts and approved opening adjustments produce independently asserted residuals. Empty checks and missing thresholds cannot become clean output. Zero denominator remains undefined; refreshed analytics require new explanations. Changed statement input invalidates only its dependent check.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC01-AC01",
+      "title": "Receipt alone does not mark all requests fulfilled.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "5dd184f3c3d4e1ebafc558e4c3239ea9f739b23f77db623889df4d6c34ab4593",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC01-AC01",
+      "relatedCases": [
+        "P08-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "explicit requested purpose and actual received-file scope through separate acceptance, alternative review, replacement, use assessment, source correction and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The independent AUTO-001 example returns one covered, one missing and one rejected-only item. A received/accepted wrong-period original does not fulfil the intended request. An alternative needs separate independent approval. One original can support two individually accepted purposes; reopening one preserves the other and the unrelated materiality review. Replacements retain earlier originals and use history. Unreadable content cannot be positively supported; incorrect file signatures fail atomically. A corrected alternative scope renews coverage and cancellation preserves prior uses after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC01-AC02",
+      "title": "A partially useful file leaves the remaining work open.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "aa2b56d886ea074c7938b78457267e2f3888ba73080e372170ab9cc6fccf5d55",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC01-AC02",
+      "relatedCases": [
+        "P08-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "explicit requested purpose and actual received-file scope through separate acceptance, alternative review, replacement, use assessment, source correction and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The independent AUTO-001 example returns one covered, one missing and one rejected-only item. A received/accepted wrong-period original does not fulfil the intended request. An alternative needs separate independent approval. One original can support two individually accepted purposes; reopening one preserves the other and the unrelated materiality review. Replacements retain earlier originals and use history. Unreadable content cannot be positively supported; incorrect file signatures fail atomically. A corrected alternative scope renews coverage and cancellation preserves prior uses after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC01-AC03",
+      "title": "Replacement retains the previous file and the uses that relied on it.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "571afe2a9bd2a3b59dc08a120a5cc9962053d1dfad6af8fc8853abcc6569a4dc",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC01-AC03",
+      "relatedCases": [
+        "P08-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "explicit requested purpose and actual received-file scope through separate acceptance, alternative review, replacement, use assessment, source correction and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The independent AUTO-001 example returns one covered, one missing and one rejected-only item. A received/accepted wrong-period original does not fulfil the intended request. An alternative needs separate independent approval. One original can support two individually accepted purposes; reopening one preserves the other and the unrelated materiality review. Replacements retain earlier originals and use history. Unreadable content cannot be positively supported; incorrect file signatures fail atomically. A corrected alternative scope renews coverage and cancellation preserves prior uses after restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC01-AC04",
+      "title": "No automatic external message is claimed without an actual supported sending route.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "91ec1ef4ef987be388ffbed44c65cd366356b415f2477f1e7d86310748758b14",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC01-AC04",
+      "relatedCases": [
+        "P08-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently checked recipient and reply route through bounded local response, manual dispatch evidence, actual exception evaluation and independent conclusion",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "declared fictional local respondent"
+          ],
+          "observed": "Repeating local link generation revokes its predecessor without increasing confirmed subjects. The respondent confirms the exact declared scope; receipt alone is not acceptance and replay fails. Actual manual dispatch and direct response are separate. Mismatched amounts and unsupported management-forwarded replies fail. A necessary positive response cannot be replaced by an unsupported favorable conclusion. Management refusal retains actual reasons, implications and the next owner. Unsupported negative-only conditions and a revoked issuer deny further eligibility. No external mail or bank identity verification is claimed.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC01-AC05",
+      "title": "When a file is accepted for two of three requested schedules, those two items show the actual accepted file/version and the third remains outstanding with its next owner; replacing the file retains earlier uses.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ba389e32ef40dd1e94d2999b131fd789edcd565f0236890ca89906f328bda4d6",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC01-AC05",
+      "relatedCases": [
+        "P08-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "explicit requested purpose and actual received-file scope through separate acceptance, alternative review, replacement, use assessment, source correction and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The independent AUTO-001 example returns one covered, one missing and one rejected-only item. A received/accepted wrong-period original does not fulfil the intended request. An alternative needs separate independent approval. One original can support two individually accepted purposes; reopening one preserves the other and the unrelated materiality review. Replacements retain earlier originals and use history. Unreadable content cannot be positively supported; incorrect file signatures fail atomically. A corrected alternative scope renews coverage and cancellation preserves prior uses after restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC02-AC01",
+      "title": "The reviewer can retrieve the actual content and anchor used.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "b9a3d60211947bc512f746562a71fd7d9c8445a5827c53b2873f506d6f947750",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC02-AC01",
+      "relatedCases": [
+        "P08-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "explicit requested purpose and actual received-file scope through separate acceptance, alternative review, replacement, use assessment, source correction and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The independent AUTO-001 example returns one covered, one missing and one rejected-only item. A received/accepted wrong-period original does not fulfil the intended request. An alternative needs separate independent approval. One original can support two individually accepted purposes; reopening one preserves the other and the unrelated materiality review. Replacements retain earlier originals and use history. Unreadable content cannot be positively supported; incorrect file signatures fail atomically. A corrected alternative scope renews coverage and cancellation preserves prior uses after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC02-AC02",
+      "title": "Accepting evidence for one purpose does not accept it for every assertion/period.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "9d607385e6b7b0e8dc7ab0b003bdb8ff39ae340ec2dda2e7edc8013359c077ed",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC02-AC02",
+      "relatedCases": [
+        "P08-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "explicit requested purpose and actual received-file scope through separate acceptance, alternative review, replacement, use assessment, source correction and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The independent AUTO-001 example returns one covered, one missing and one rejected-only item. A received/accepted wrong-period original does not fulfil the intended request. An alternative needs separate independent approval. One original can support two individually accepted purposes; reopening one preserves the other and the unrelated materiality review. Replacements retain earlier originals and use history. Unreadable content cannot be positively supported; incorrect file signatures fail atomically. A corrected alternative scope renews coverage and cancellation preserves prior uses after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC02-AC03",
+      "title": "A contradiction remains visible through resolution.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "dc7d7ae735b61c2522f5224d79f5f169d02e02acaf6fceb4431aac55c8dc4f29",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC02-AC03",
+      "relatedCases": [
+        "P08-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingEvidence": {
+        "implementation": [
+          "scripts/pilot-evidence.mjs",
+          "scripts/pilot-registers.mjs"
+        ],
+        "boundary": "Exact-version contradictory/limited evidence uses retain next owner and follow-up; source-backed resolution and review history remain separately attributable. A complete contradiction-to-resolution journey is not claimed here."
+      }
+    },
+    {
+      "id": "P08-UC02-AC04",
+      "title": "A tickmark alone cannot represent the auditor’s conclusion.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "78a6e7b7a09d603d8b41efff10edfcc668cfd3175a2b782cd60a5961a3a298ba",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC02-AC04",
+      "relatedCases": [
+        "P08-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "explicit requested purpose and actual received-file scope through separate acceptance, alternative review, replacement, use assessment, source correction and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The independent AUTO-001 example returns one covered, one missing and one rejected-only item. A received/accepted wrong-period original does not fulfil the intended request. An alternative needs separate independent approval. One original can support two individually accepted purposes; reopening one preserves the other and the unrelated materiality review. Replacements retain earlier originals and use history. Unreadable content cannot be positively supported; incorrect file signatures fail atomically. A corrected alternative scope renews coverage and cancellation preserves prior uses after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC03-AC01",
+      "title": "Nonresponse is not agreement or zero.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "80de80aee14af5a1eb64b766b963fbf8e1e7b524f0c6bdd1c1dd264db081a454",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC03-AC01",
+      "relatedCases": [
+        "P08-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently checked recipient and reply route through bounded local response, manual dispatch evidence, actual exception evaluation and independent conclusion",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "declared fictional local respondent"
+          ],
+          "observed": "Repeating local link generation revokes its predecessor without increasing confirmed subjects. The respondent confirms the exact declared scope; receipt alone is not acceptance and replay fails. Actual manual dispatch and direct response are separate. Mismatched amounts and unsupported management-forwarded replies fail. A necessary positive response cannot be replaced by an unsupported favorable conclusion. Management refusal retains actual reasons, implications and the next owner. Unsupported negative-only conditions and a revoked issuer deny further eligibility. No external mail or bank identity verification is claimed.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC03-AC02",
+      "title": "Repeated dispatches do not inflate the number of subjects confirmed.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "e9f1e001fb6f9dea570c19ebf9300f4e3f049d965b05d624d09e682d798ff63c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC03-AC02",
+      "relatedCases": [
+        "P08-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently checked recipient and reply route through bounded local response, manual dispatch evidence, actual exception evaluation and independent conclusion",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "declared fictional local respondent"
+          ],
+          "observed": "Repeating local link generation revokes its predecessor without increasing confirmed subjects. The respondent confirms the exact declared scope; receipt alone is not acceptance and replay fails. Actual manual dispatch and direct response are separate. Mismatched amounts and unsupported management-forwarded replies fail. A necessary positive response cannot be replaced by an unsupported favorable conclusion. Management refusal retains actual reasons, implications and the next owner. Unsupported negative-only conditions and a revoked issuer deny further eligibility. No external mail or bank identity verification is claimed.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC03-AC03",
+      "title": "A client-forwarded reply requires its reliability evaluation.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a85e800855900c36c5f1cded398ae656ca6e81cbf49635b88ec86d3b3d7df0d1",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC03-AC03",
+      "relatedCases": [
+        "P08-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently checked recipient and reply route through bounded local response, manual dispatch evidence, actual exception evaluation and independent conclusion",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "declared fictional local respondent"
+          ],
+          "observed": "Repeating local link generation revokes its predecessor without increasing confirmed subjects. The respondent confirms the exact declared scope; receipt alone is not acceptance and replay fails. Actual manual dispatch and direct response are separate. Mismatched amounts and unsupported management-forwarded replies fail. A necessary positive response cannot be replaced by an unsupported favorable conclusion. Management refusal retains actual reasons, implications and the next owner. Unsupported negative-only conditions and a revoked issuer deny further eligibility. No external mail or bank identity verification is claimed.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC03-AC04",
+      "title": "Management refusal retains its reasons, implications and the appropriate escalation/report assessment.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "701da000e7530669a79cd123e64ed2c5204401b4e514bd13069340b803e71b84",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC03-AC04",
+      "relatedCases": [
+        "P08-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently checked recipient and reply route through bounded local response, manual dispatch evidence, actual exception evaluation and independent conclusion",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "declared fictional local respondent"
+          ],
+          "observed": "Repeating local link generation revokes its predecessor without increasing confirmed subjects. The respondent confirms the exact declared scope; receipt alone is not acceptance and replay fails. Actual manual dispatch and direct response are separate. Mismatched amounts and unsupported management-forwarded replies fail. A necessary positive response cannot be replaced by an unsupported favorable conclusion. Management refusal retains actual reasons, implications and the next owner. Unsupported negative-only conditions and a revoked issuer deny further eligibility. No external mail or bank identity verification is claimed.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC04-AC01",
+      "title": "Missing evidence cannot be relabelled N/A without an applicability basis.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "252276447ec5727c0fa3a6662b7e2edff58bd4906477a628ff6064431cf8cf43",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC04-AC01",
+      "relatedCases": [
+        "P08-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently checked recipient and reply route through bounded local response, manual dispatch evidence, actual exception evaluation and independent conclusion",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "declared fictional local respondent"
+          ],
+          "observed": "Repeating local link generation revokes its predecessor without increasing confirmed subjects. The respondent confirms the exact declared scope; receipt alone is not acceptance and replay fails. Actual manual dispatch and direct response are separate. Mismatched amounts and unsupported management-forwarded replies fail. A necessary positive response cannot be replaced by an unsupported favorable conclusion. Management refusal retains actual reasons, implications and the next owner. Unsupported negative-only conditions and a revoked issuer deny further eligibility. No external mail or bank identity verification is claimed.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC04-AC02",
+      "title": "The review records the specific purpose and version inspected.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "e88fc83024dd5e6bbc4f5b7f3799d6ee88857e3c9c53de065eda0b66b592f457",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC04-AC02",
+      "relatedCases": [
+        "P08-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "explicit requested purpose and actual received-file scope through separate acceptance, alternative review, replacement, use assessment, source correction and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The independent AUTO-001 example returns one covered, one missing and one rejected-only item. A received/accepted wrong-period original does not fulfil the intended request. An alternative needs separate independent approval. One original can support two individually accepted purposes; reopening one preserves the other and the unrelated materiality review. Replacements retain earlier originals and use history. Unreadable content cannot be positively supported; incorrect file signatures fail atomically. A corrected alternative scope renews coverage and cancellation preserves prior uses after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations"
+      ],
+      "checkpointDisposition": "direct executed backend fixture"
+    },
+    {
+      "id": "P08-UC04-AC03",
+      "title": "Reply and review-note clearance remain separate.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "636898678ed90fdfe5de25647020ad9f4162827d4a935a59fc90dc2476df09b8",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC04-AC03",
+      "relatedCases": [
+        "P08-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+        "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations"
+      ],
+      "checkpointDisposition": "supporting implementation/reference evidence; independent case-specific review remains open",
+      "supportingEvidence": {
+        "implementation": [
+          "scripts/pilot-evidence.mjs",
+          "scripts/pilot-workflow.mjs",
+          "tests/pilot.test.mjs"
+        ],
+        "boundary": "Evidence replies, preparer responses, independent note clearance and review are separate existing actions. This receipt does not assign direct new G03 case-closing evidence to their complete combined journey."
+      }
+    },
+    {
+      "id": "P08-UC04-AC04",
+      "title": "An unresolved significant limitation has a next owner and is visible to the appropriate higher review.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "94ac75046b784864ccc8676f3b08978d304443d9d9cc9f729b5915748d711b83",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P08-UC04-AC04",
+      "relatedCases": [
+        "P08-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "explicit requested purpose and actual received-file scope through separate acceptance, alternative review, replacement, use assessment, source correction and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The independent AUTO-001 example returns one covered, one missing and one rejected-only item. A received/accepted wrong-period original does not fulfil the intended request. An alternative needs separate independent approval. One original can support two individually accepted purposes; reopening one preserves the other and the unrelated materiality review. Replacements retain earlier originals and use history. Unreadable content cannot be positively supported; incorrect file signatures fail atomically. A corrected alternative scope renews coverage and cancellation preserves prior uses after restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently checked recipient and reply route through bounded local response, manual dispatch evidence, actual exception evaluation and independent conclusion",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "declared fictional local respondent"
+          ],
+          "observed": "Repeating local link generation revokes its predecessor without increasing confirmed subjects. The respondent confirms the exact declared scope; receipt alone is not acceptance and replay fails. Actual manual dispatch and direct response are separate. Mismatched amounts and unsupported management-forwarded replies fail. A necessary positive response cannot be replaced by an unsupported favorable conclusion. Management refusal retains actual reasons, implications and the next owner. Unsupported negative-only conditions and a revoked issuer deny further eligibility. No external mail or bank identity verification is claimed.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed backend fixture"
+    }
+  ]
+}

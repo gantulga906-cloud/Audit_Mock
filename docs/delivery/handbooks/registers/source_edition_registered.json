@@ -1,0 +1,163 @@
+[
+  {
+    "id": "OUTER",
+    "path": "Audit_All_Materials_2026-10-26.zip",
+    "sha256": "329c0d68826f6f515715fac119a6256021a0c8423f500003cd9552ba2c7ece39",
+    "bytes": 39293775,
+    "review": "Directory/member hash inventory; no archive edited."
+  },
+  {
+    "id": "SRC-01",
+    "path": "Veritech_Audit_User_Flows_and_Screen_Requirements(2).pdf",
+    "sha256": "b5d43f6763b25dcd95139911a56cb99ce27f5c9550698bc175104e5406b7ca73",
+    "bytes": 174023,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-02",
+    "path": "Audit_Grounded_Process_Specification_Working_Review(1).zip",
+    "sha256": "98827951f8ebda31bf24f3a519c7cdc22cae9206970ede9c610f988784dcf508",
+    "bytes": 3981315,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-03",
+    "path": "Wishlist (2)(2).docx",
+    "sha256": "a0091342397355f384d6d0922b28a328a1123c24c71e56d2dee26105da07cfcb",
+    "bytes": 172595,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-04",
+    "path": "Wishlist(2).docx",
+    "sha256": "7a3d7a5729f65abbf427fe0ab52d28f9fa92876755ca3918366622743821fce3",
+    "bytes": 170894,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-05",
+    "path": "Automation-wishlist (2)(2).pdf",
+    "sha256": "868eebbc684538b3454c00c49a34c773e3b0ee507e48e55b4d7c095350ec48c5",
+    "bytes": 94229,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-06",
+    "path": "Automation-wishlist(2).pdf",
+    "sha256": "27849285e19bf5fa6d47f8640c3c17f80cae252376b8cd132210723119f04909",
+    "bytes": 160936,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-07",
+    "path": "Veritech_Audit_Automation_Baseline_Capability_Scope_MN(5).pdf",
+    "sha256": "b8f7d3767566238929dcc216645a55cc63f1045e06d24ffa7aeae3aba7733e57",
+    "bytes": 198773,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-08",
+    "path": "Veritech_Audit_Automation_Feature_Catalogue_MN(5).pdf",
+    "sha256": "fd2557c4464ce68a4dfbc2fd9c682646393e83c671a4a89666efc18ae3f3bf3a",
+    "bytes": 109118,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-09",
+    "path": "Audit_E2E_Lifecycles_EN(6)(5).xlsx",
+    "sha256": "f616d137f0296aaad3706dbecf6f4aa887c5c4750c3ff3d85d38eab89be5e5cd",
+    "bytes": 264021,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-10",
+    "path": "Audit_E2E_Lifecycles_MN(6)(5).xlsx",
+    "sha256": "4757fcf6b365ac042e283e4d659bdac5668aa8b56b8644e8c01bd267ed131b75",
+    "bytes": 278250,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-11",
+    "path": "Audit_Process_Maps_MN(5).pdf",
+    "sha256": "5ce1f64f90dba7c8cd901e9457203ab827555ae5a61d3d1477b8f5cc4b54d907",
+    "bytes": 1150069,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-12",
+    "path": "Audit_Stages_1-5_Full_Package(20261026-032625).zip",
+    "sha256": "ec97fa8c159690af835a662982c66d13f610fef0ea8c177fa258df9173c18c72",
+    "bytes": 24883507,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-13",
+    "path": "Audit_Architect_ERD_Grouped_Diagram.pdf",
+    "sha256": "e20a99074fcb2e4a836b73ea17501462d0e25d1e24662407517cf7e86464babb",
+    "bytes": 89782,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-14",
+    "path": "audit_core_physical_erd_v3_3246.dbml",
+    "sha256": "b141a1b592afb493fd2e5d428839547ce9c72c466855410429317b34013a17de",
+    "bytes": 93278,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-15",
+    "path": "Audit_Core_v3_Catalogue_MN.pdf",
+    "sha256": "4e9750d9578f58b80923aea69b1f95217ebb6464cc074429538f212045a58e0b",
+    "bytes": 427732,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-16",
+    "path": "Audit_Ontology_Atlas_MN_EN_Compact_0640.pdf",
+    "sha256": "5c2e7ec8d14603e66389c4a176e188756980ea123008159de4c46bdd920fe7ce",
+    "bytes": 1203072,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "SRC-17",
+    "path": "Audit_Ontology_Business_Specification_MN_EN_Compact_7540.pdf",
+    "sha256": "585b295d1568dcfaa14b8a77b39c5c18d978fc48293108b9f487ac147b4abcf6",
+    "bytes": 7535149,
+    "review": "Direct bytes reopened; source text/structure reviewed through retained extracted references where relevant."
+  },
+  {
+    "id": "STG01",
+    "path": "Audit_Stage_1_Repaired.xlsx",
+    "sha256": "b2fd7ce85a9a9e63f600167a88e18e5f51c783272e8a29e12a8ab8e7179c0cf0",
+    "bytes": 124580,
+    "review": "Direct full worksheet/metadata/validation/formula structure inspected; read-only."
+  },
+  {
+    "id": "STG02",
+    "path": "Audit_Stage_2_Repaired.xlsx",
+    "sha256": "f3f7bb633a952f084b4b66c98d8dd1a243d655409058263f7306f38a24dea12b",
+    "bytes": 177828,
+    "review": "Direct full worksheet/metadata/validation/formula structure inspected; read-only."
+  },
+  {
+    "id": "STG03",
+    "path": "Audit_Stage_3_Repaired.xlsx",
+    "sha256": "9cfe6c74f2659031f46243697308d809765f72175c49531363a73794ee64a2da",
+    "bytes": 403080,
+    "review": "Direct full worksheet/metadata/validation/formula structure inspected; read-only."
+  },
+  {
+    "id": "STG04",
+    "path": "Audit_Stage_4_Repaired.xlsx",
+    "sha256": "74676a901fc671e4e188d04dc7950937f2f9cd8d7cd2e4073e3b902148b7a2a7",
+    "bytes": 129168,
+    "review": "Direct full worksheet/metadata/validation/formula structure inspected; read-only."
+  },
+  {
+    "id": "STG05",
+    "path": "Audit_Stage_5_Repaired.xlsx",
+    "sha256": "f812eb3d7e3f38e068389c3b5cfef1721611d6b04df85c3b92b66622e2513293",
+    "bytes": 20924,
+    "review": "Direct full worksheet/metadata/validation/formula structure inspected; read-only."
+  }
+]

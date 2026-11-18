@@ -1,0 +1,1171 @@
+[
+  {
+    "kind": "processes",
+    "id": "P01",
+    "title": "Client relationship and two way audit intake",
+    "cases": [
+      "P01-UC01",
+      "P01-UC02",
+      "P01-UC03"
+    ],
+    "screens": [
+      "S02"
+    ],
+    "roles": [
+      "R1",
+      "R2"
+    ],
+    "criteria": 13,
+    "guide": "G01",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P02",
+    "title": "Acceptance independence and engagement terms",
+    "cases": [
+      "P02-UC01",
+      "P02-UC02",
+      "P02-UC03",
+      "P02-UC04",
+      "P02-UC05"
+    ],
+    "screens": [
+      "S03"
+    ],
+    "roles": [
+      "R1",
+      "R2",
+      "R3"
+    ],
+    "criteria": 21,
+    "guide": "G01",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P03",
+    "title": "Engagement setup team timetable and budget",
+    "cases": [
+      "P03-UC01",
+      "P03-UC02",
+      "P03-UC03",
+      "P03-UC04"
+    ],
+    "screens": [
+      "S04",
+      "S05"
+    ],
+    "roles": [
+      "R1",
+      "R2",
+      "R3"
+    ],
+    "criteria": 17,
+    "guide": "G02",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P04",
+    "title": "Methodology templates and working forms",
+    "cases": [
+      "P04-UC01",
+      "P04-UC02",
+      "P04-UC03"
+    ],
+    "screens": [
+      "S06"
+    ],
+    "roles": [
+      "SUPPORT",
+      "R2"
+    ],
+    "criteria": 13,
+    "guide": "G08",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P05",
+    "title": "Data intake balances and financial statement links",
+    "cases": [
+      "P05-UC01",
+      "P05-UC02",
+      "P05-UC03"
+    ],
+    "screens": [
+      "S08"
+    ],
+    "roles": [
+      "R1",
+      "R2"
+    ],
+    "criteria": 13,
+    "guide": "G03",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P06",
+    "title": "Planning risk assessment and materiality",
+    "cases": [
+      "P06-UC01",
+      "P06-UC02",
+      "P06-UC03",
+      "P06-UC04",
+      "P06-UC05",
+      "P06-UC06"
+    ],
+    "screens": [
+      "S09",
+      "S10"
+    ],
+    "roles": [
+      "R1",
+      "R2",
+      "R3"
+    ],
+    "criteria": 24,
+    "guide": "G02",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P07",
+    "title": "Audit programmes populations and sampling",
+    "cases": [
+      "P07-UC01",
+      "P07-UC02",
+      "P07-UC03"
+    ],
+    "screens": [
+      "S11",
+      "S12"
+    ],
+    "roles": [
+      "R1",
+      "R2"
+    ],
+    "criteria": 13,
+    "guide": "G04",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P08",
+    "title": "Information requests evidence and confirmations",
+    "cases": [
+      "P08-UC01",
+      "P08-UC02",
+      "P08-UC03",
+      "P08-UC04"
+    ],
+    "screens": [
+      "S13",
+      "S14"
+    ],
+    "roles": [
+      "R1",
+      "R2"
+    ],
+    "criteria": 17,
+    "guide": "G03",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P09",
+    "title": "Fieldwork audit areas and significant matters",
+    "cases": [
+      "P09-UC01",
+      "P09-UC02",
+      "P09-UC03",
+      "P09-UC04",
+      "P09-UC05",
+      "P09-UC06",
+      "P09-UC07",
+      "P09-UC08",
+      "P09-UC09",
+      "P09-UC10",
+      "P09-UC11"
+    ],
+    "screens": [
+      "S15"
+    ],
+    "roles": [
+      "R1",
+      "R2"
+    ],
+    "criteria": 45,
+    "guide": "G04",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P10",
+    "title": "Findings final evaluation and reporting",
+    "cases": [
+      "P10-UC01",
+      "P10-UC02",
+      "P10-UC03",
+      "P10-UC04",
+      "P10-UC05",
+      "P10-UC06",
+      "P10-UC07",
+      "P10-UC08",
+      "P10-UC09"
+    ],
+    "screens": [
+      "S17",
+      "S18"
+    ],
+    "roles": [
+      "R1",
+      "R2",
+      "R3"
+    ],
+    "criteria": 39,
+    "guide": "G05",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P11",
+    "title": "Preparation review confirmation and consultation",
+    "cases": [
+      "P11-UC01",
+      "P11-UC02",
+      "P11-UC03",
+      "P11-UC04",
+      "P11-UC05",
+      "P11-UC06",
+      "P11-UC07"
+    ],
+    "screens": [
+      "S19",
+      "S20",
+      "S21"
+    ],
+    "roles": [
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+    ],
+    "criteria": 29,
+    "guide": "G05",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P12",
+    "title": "Final file archive retention and inspection",
+    "cases": [
+      "P12-UC01",
+      "P12-UC02",
+      "P12-UC03",
+      "P12-UC04",
+      "P12-UC05"
+    ],
+    "screens": [
+      "S22"
+    ],
+    "roles": [
+      "R1",
+      "R3",
+      "SUPPORT"
+    ],
+    "criteria": 21,
+    "guide": "G07",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P13",
+    "title": "Agreed recommendation follow up",
+    "cases": [
+      "P13-UC01",
+      "P13-UC02",
+      "P13-UC03"
+    ],
+    "screens": [
+      "S23"
+    ],
+    "roles": [
+      "R1",
+      "R2",
+      "R3"
+    ],
+    "criteria": 13,
+    "guide": "G05",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P14",
+    "title": "Firm people competence and capacity",
+    "cases": [
+      "P14-UC01",
+      "P14-UC02",
+      "P14-UC03"
+    ],
+    "screens": [
+      "S24"
+    ],
+    "roles": [
+      "SUPPORT",
+      "R3"
+    ],
+    "criteria": 12,
+    "guide": "G02",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P15",
+    "title": "Workpapers references and readable packages",
+    "cases": [
+      "P15-UC01",
+      "P15-UC02",
+      "P15-UC03"
+    ],
+    "screens": [
+      "S07"
+    ],
+    "roles": [
+      "R1",
+      "R2"
+    ],
+    "criteria": 12,
+    "guide": "G08",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "processes",
+    "id": "P16",
+    "title": "Workspace access tasks and operational views",
+    "cases": [
+      "P16-UC01",
+      "P16-UC02",
+      "P16-UC03"
+    ],
+    "screens": [
+      "S01",
+      "S25"
+    ],
+    "roles": [
+      "R1",
+      "R2",
+      "SUPPORT"
+    ],
+    "criteria": 13,
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S01",
+    "title": "My work and operational overview",
+    "page": 11,
+    "cases": [
+      "P16-UC01",
+      "P16-UC02"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S02",
+    "title": "Client profile and two-way enquiry",
+    "page": 11,
+    "cases": [
+      "P01-UC01",
+      "P01-UC02",
+      "P01-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S03",
+    "title": "Acceptance, independence and terms",
+    "page": 12,
+    "cases": [
+      "P02-UC01",
+      "P02-UC02",
+      "P02-UC03",
+      "P02-UC04",
+      "P02-UC05"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S04",
+    "title": "Engagement home and readiness",
+    "page": 12,
+    "cases": [
+      "P03-UC01"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S05",
+    "title": "Team, timetable, budget and next period",
+    "page": 13,
+    "cases": [
+      "P03-UC02",
+      "P03-UC03",
+      "P03-UC04"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S06",
+    "title": "Methodology and working-form library",
+    "page": 13,
+    "cases": [
+      "P04-UC01",
+      "P04-UC02",
+      "P04-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S07",
+    "title": "Workpaper, references and revision history",
+    "page": 14,
+    "cases": [
+      "P15-UC01",
+      "P15-UC02",
+      "P15-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S08",
+    "title": "Data hub, balances and statement links",
+    "page": 14,
+    "cases": [
+      "P05-UC01",
+      "P05-UC02",
+      "P05-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S09",
+    "title": "Understanding, risks, strategy and contributions",
+    "page": 15,
+    "cases": [
+      "P06-UC01",
+      "P06-UC02",
+      "P06-UC04",
+      "P06-UC05",
+      "P06-UC06"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S10",
+    "title": "Analytical review and materiality",
+    "page": 15,
+    "cases": [
+      "P06-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S11",
+    "title": "Audit programme and procedure allocation",
+    "page": 16,
+    "cases": [
+      "P07-UC01"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S12",
+    "title": "Population, sample design, selection and evaluation",
+    "page": 16,
+    "cases": [
+      "P07-UC02",
+      "P07-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S13",
+    "title": "Information requests and evidence received",
+    "page": 17,
+    "cases": [
+      "P08-UC01",
+      "P08-UC02",
+      "P08-UC04"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S14",
+    "title": "External confirmation case",
+    "page": 17,
+    "cases": [
+      "P08-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S15",
+    "title": "Audit area and significant-matter work",
+    "page": 18,
+    "cases": [
+      "P09-UC01",
+      "P09-UC02",
+      "P09-UC03",
+      "P09-UC04",
+      "P09-UC05",
+      "P09-UC06",
+      "P09-UC07",
+      "P09-UC08",
+      "P09-UC09",
+      "P09-UC10",
+      "P09-UC11"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S16",
+    "title": "Automation run and result detail",
+    "page": 18,
+    "cases": [],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S17",
+    "title": "Findings, corrections and final evaluation",
+    "page": 19,
+    "cases": [
+      "P10-UC01",
+      "P10-UC02",
+      "P10-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S18",
+    "title": "Completion, opinion, report and actual issue",
+    "page": 19,
+    "cases": [
+      "P10-UC04",
+      "P10-UC05",
+      "P10-UC06",
+      "P10-UC07",
+      "P10-UC08",
+      "P10-UC09"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S19",
+    "title": "Review queue, notes and change impact",
+    "page": 20,
+    "cases": [
+      "P11-UC01",
+      "P11-UC02",
+      "P11-UC04",
+      "P11-UC07"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S20",
+    "title": "Significant judgments, consultation and differences",
+    "page": 20,
+    "cases": [
+      "P11-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S21",
+    "title": "Formal engagement quality review",
+    "page": 21,
+    "cases": [
+      "P11-UC05",
+      "P11-UC06"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S22",
+    "title": "Final file, archive, custody and controlled retrieval",
+    "page": 21,
+    "cases": [
+      "P12-UC01",
+      "P12-UC02",
+      "P12-UC03",
+      "P12-UC04",
+      "P12-UC05"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S23",
+    "title": "Agreed recommendation follow-up",
+    "page": 22,
+    "cases": [
+      "P13-UC01",
+      "P13-UC02",
+      "P13-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S24",
+    "title": "Firm people, competence and capacity",
+    "page": 22,
+    "cases": [
+      "P14-UC01",
+      "P14-UC02",
+      "P14-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "screens",
+    "id": "S25",
+    "title": "Scoped access and shared settings",
+    "page": 23,
+    "cases": [
+      "P16-UC03"
+    ],
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "physical model / workflow",
+    "id": "D01",
+    "processes": [
+      "P01",
+      "P02",
+      "P03"
+    ],
+    "title": "Pre-engagement storage and activation circularity",
+    "evidence": "AUD_ACCEPTANCE_ASSESSMENT.ENGAGEMENT_OBJECT_ID is non-null and references AUD_ENGAGEMENT; the engagement requires client, period, framework, standard, currency, methodology and lead partner before incomplete professional intake can exist. M05-F01 requires accepted authorization before authorized engagement creation.",
+    "resolution": "Choose an explicitly separate provisional subject/lifecycle or a confirmed external intake/acceptance owner with an auditable activation link. Do not fake an accepted engagement or unknown professional facts.",
+    "owner": "Product owner and data architect",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G01",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "external ownership",
+    "id": "D02",
+    "processes": [
+      "P01",
+      "P14"
+    ],
+    "title": "Client/person/firm maintenance is not a verified source-system API",
+    "evidence": "AUD_MST_* are published source snapshots. Wishlist M01/M03 maintenance requirements do not prove a deployed CRM/HR/MDM write interface.",
+    "resolution": "Define actual ownership, permitted manual/native input, publication/correction contract, failure behavior and dated adoption. Audit must not silently rewrite the source masters.",
+    "owner": "Product owner and source-system owner",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G01",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "scope exclusion",
+    "id": "D03",
+    "processes": [
+      "P01",
+      "P16"
+    ],
+    "title": "Canonical client consolidation",
+    "evidence": "M03-F07 is explicitly analyst-inferred; the user rejects invented merging/investigation use cases. AUD_IDENTIFIER_MAPPING is not authority to merge legal parties or confidential records.",
+    "resolution": "Exclude Audit-owned consolidation. Preserve duplicate suspicion as an ordinary source-owner issue; identifier crosswalks for supplied data remain separately supported.",
+    "owner": "Product owner",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G01",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "model detail",
+    "id": "D04",
+    "processes": [
+      "P01",
+      "P02",
+      "P08"
+    ],
+    "title": "Contact channels and capacity history",
+    "evidence": "The physical contact/master model does not explicitly provide every phone/address/contact-history requirement described by M03. Party capacity and source identity are not signing/access authority.",
+    "resolution": "Confirm the authoritative contact representation and dated history. Add a justified field/contract only where actual requirements need it. No registry-monitoring product is implied.",
+    "owner": "Data architect and CRM owner",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G01",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "role policy",
+    "id": "D05",
+    "processes": [
+      "P03",
+      "P11",
+      "P14",
+      "P16"
+    ],
+    "title": "Four capacities and firm authority",
+    "evidence": "VARCHAR responsibility/role codes do not define R1-R4 permissions or independent review eligibility. The user gives broad capacities rather than a final per-item matrix.",
+    "resolution": "Configure a simple work-capacity hierarchy within granted scope, with actual work assignment and applicable independent eligibility. Decide which work needs R2/R3/R4; do not require all four everywhere.",
+    "owner": "Firm methodology/access owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G02",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "professional classification",
+    "id": "D06",
+    "processes": [
+      "P11"
+    ],
+    "title": "Final quality confirmation versus formal EQR",
+    "evidence": "The user R4 capacity is broader than an automatic assertion that every work item has a formal ISQM 2 review.",
+    "resolution": "Record assigned R4 confirmation separately from formal EQR applicability/eligibility/performance/completion. Specify actual formal trigger and edition.",
+    "owner": "Firm quality owner",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G05",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "integrity",
+    "id": "D07",
+    "processes": [
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05",
+      "P06",
+      "P07",
+      "P08",
+      "P09",
+      "P10",
+      "P11",
+      "P12",
+      "P13",
+      "P14",
+      "P15",
+      "P16"
+    ],
+    "title": "Tenant and engagement consistency across joins",
+    "evidence": "Inline FKs validate referenced identifiers but mostly do not enforce matching TENANT_ID and engagement across both endpoints. Notes about row security are not executed policies.",
+    "resolution": "Validate same scope at every write/read path and add appropriate composite constraints/RLS tests where selected. No cross-tenant identity/link/search/export leakage.",
+    "owner": "Platform and data architects",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G01",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "version model",
+    "id": "D08",
+    "processes": [
+      "P03",
+      "P04",
+      "P05",
+      "P06",
+      "P07",
+      "P08",
+      "P09",
+      "P10",
+      "P11",
+      "P12",
+      "P15",
+      "P16"
+    ],
+    "title": "Unique business keys and versioned typed rows",
+    "evidence": "Versioned AUD_OBJECT uses stable OBJECT_KEY plus distinct OBJECT_ID rows. Some typed-table unique keys may conflict when a new version repeats the same business reference.",
+    "resolution": "Review each unique key by identity/version/tenant scope before migration. Preserve exact historic target IDs; do not fix conflicts by overwriting a relied-upon row.",
+    "owner": "Data architect",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G02",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "command bootstrap",
+    "id": "D09",
+    "processes": [
+      "P16",
+      "P11"
+    ],
+    "title": "Required immutable action input for first creation",
+    "evidence": "AUD_ACTION_EXECUTION.INPUT_OBJECT_ID is non-null, including cases that need to create the first object. The initial root/link bootstrap is not fully specified.",
+    "resolution": "Define a valid creation-request/input representation and atomic bootstrap, or a justified nullable creation path. Do not invent a placeholder professional object.",
+    "owner": "Platform architect",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G09",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "integrity",
+    "id": "D10",
+    "processes": [
+      "P01",
+      "P04",
+      "P05",
+      "P06",
+      "P11",
+      "P16"
+    ],
+    "title": "Single-current and effective-date overlap",
+    "evidence": "IS_CURRENT/effective dates and invariant notes do not themselves provide exclusion/partial-unique enforcement for all versioned/reference rows.",
+    "resolution": "Select constraints and guarded commands for one current logical version and unambiguous effective context; test concurrent revisions and overlapping intervals.",
+    "owner": "Data/platform architects",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G01",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "method/model",
+    "id": "D11",
+    "processes": [
+      "P05"
+    ],
+    "title": "Account split allocation",
+    "evidence": "AUTO-006 minimum has one approved primary destination; current mapping does not by itself specify nonoverlapping allocation weights/rounding.",
+    "resolution": "Keep the minimum single destination. A later split method requires explicit weighted grain, sum/inclusion controls and verified reconciliation.",
+    "owner": "Methodology and data owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G03",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "model detail",
+    "id": "D12",
+    "processes": [
+      "P06"
+    ],
+    "title": "Calculated and human-selected materiality",
+    "evidence": "AUD_MATERIALITY has benchmark, percentage and one MATERIALITY_AMOUNT; it does not explicitly retain a separately calculated amount and selected override/reason pair.",
+    "resolution": "Retain the calculation run and exact parameters plus a linked human selection/rationale, or propose justified fields. Do not silently replace the calculated result.",
+    "owner": "Product/methodology/data owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G02",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "integrity",
+    "id": "D13",
+    "processes": [
+      "P07"
+    ],
+    "title": "Selected source-item uniqueness",
+    "evidence": "A unique sample sequence number is not necessarily unique source-record selection. Source-key/population-version consistency requires its own check.",
+    "resolution": "Enforce unique selected unit within the exact sample/population, reject missing/duplicate unit IDs and preserve changed selections separately.",
+    "owner": "Data and calculation owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G04",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "version model",
+    "id": "D14",
+    "processes": [
+      "P04",
+      "P15",
+      "P11"
+    ],
+    "title": "Native child answers and review history",
+    "evidence": "Appending/changing AUD_RESPONSE or row content under an already immutable parent would change the reviewed work without a new parent content version.",
+    "resolution": "Define the native content snapshot/hash boundary and child revision/supersession operation. Old reviewed content must remain reproducible.",
+    "owner": "Product/data architects",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G08",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "exact content",
+    "id": "D15",
+    "processes": [
+      "P10",
+      "P12"
+    ],
+    "title": "Full final financial-statement package binding",
+    "evidence": "AUD_REPORT_RELEASE.FS_VERSION_OBJECT_ID links a structured FS version; that alone does not prove every actual file/note/hash/management authorization in the full released set.",
+    "resolution": "Define an exact complete package/manifest binding using existing version/file facilities or a justified extension. Wrong/stale report-statement pairing must fail.",
+    "owner": "Reporting/product/data owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G05",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "model requiredness",
+    "id": "D16",
+    "processes": [
+      "P10"
+    ],
+    "title": "Other information expected but not received",
+    "evidence": "AUD_OTHER_INFORMATION.CONTENT_REF is non-null although ISA720 work can include expected later documents.",
+    "resolution": "Separate expected-document obligation from actual received-version content, or adjust conditional requiredness. Never fabricate a file reference for missing information.",
+    "owner": "Data architect and reporting owner",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G05",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "model requiredness",
+    "id": "D17",
+    "processes": [
+      "P10"
+    ],
+    "title": "Omitted applicable disclosure",
+    "evidence": "AUD_DISCLOSURE_ASSESSMENT.FS_ELEMENT_ID is non-null; an omitted note may have no existing statement element.",
+    "resolution": "Bind a controlled requirement independently from an existing note, keeping missing-note assessment explicit. No invented zero-value note should satisfy it.",
+    "owner": "Reporting/data owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G05",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "change policy",
+    "id": "D18",
+    "processes": [
+      "P11",
+      "P10"
+    ],
+    "title": "Targeted reliance and renewed review",
+    "evidence": "Model invariant I04 and sign-off invalidation need a consistent exact-target/change-impact interpretation. Administrative changes and unrelated work cannot be reset blindly.",
+    "resolution": "Preserve signed content and history; identify affected current reliance and required renewed review through AUD_CHANGE_IMPACT. Reconcile the precise invariant/command behavior with Part A before implementation.",
+    "owner": "Methodology and platform owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G05",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "scope reconciliation",
+    "id": "D19",
+    "processes": [
+      "P12",
+      "P16"
+    ],
+    "title": "Holds versus AUTO-058 minimum",
+    "evidence": "M12-F08 explicitly includes holds. AUTO-058 excludes legal-hold management from its minimum and treats it as an extension.",
+    "resolution": "Keep M12 hold requirements in P12; show the additional selected implementation separately from AUTO-058. No claim that the automation minimum already supplies legal-hold management.",
+    "owner": "Product/archive owner",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G07",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "legal/policy",
+    "id": "D20",
+    "processes": [
+      "P12"
+    ],
+    "title": "Retention anchor and distinct completion clocks",
+    "evidence": "Mongolian Audit Law12.5 states a ten-year workpaper minimum. Guide five years conflicts; guide30/14/60 day practices and generated timer values have different/unverified bases.",
+    "resolution": "Use the verified legal minimum with the actual applicable anchor and longer restrictions. Obtain firm assembly/correction/custody policies separately; unknown eligibility prevents destruction.",
+    "owner": "Firm legal/archive/methodology owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G07",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "professional applicability",
+    "id": "D21",
+    "processes": [
+      "P02",
+      "P06",
+      "P09",
+      "P10",
+      "P11",
+      "P12"
+    ],
+    "title": "Local adoption and future-effective editions",
+    "evidence": "IFAC Mongolia profile reports ISA2020 application and later quality-management adoption; a formal instrument for each later ISA/code and entity-specific trigger was not established. Current handbook publication is not automatic local adoption.",
+    "resolution": "Bind actual jurisdiction, period, entity category and adopted edition. Later 240/570/PIE/expert amendments remain future/conditional until applicable.",
+    "owner": "Firm methodology/legal owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G01",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "local eligibility",
+    "id": "D22",
+    "processes": [
+      "P02"
+    ],
+    "title": "Firm tenure and conflicting services",
+    "evidence": "Audit Law8.1-8.3 and9.5 have entity/service/framework conditions; the guide individual five-year shorthand is insufficient.",
+    "resolution": "Verify actual legal provider, service history and entity classification, including applicable exemptions. Do not implement a universal five-year individual-auditor rule.",
+    "owner": "Firm ethics/legal owner",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G01",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "method conflict",
+    "id": "D23",
+    "processes": [
+      "P06",
+      "P09"
+    ],
+    "title": "Source form scores and accounting shortcuts",
+    "evidence": "2.1.3 printed maximum versus actual questions; overlapping risk bands; materiality5% wording; investment control percentages, EPS applicability, asset repairs and prepayment-direction shorthand require method review.",
+    "resolution": "Preserve source wording in the form ledger, correct an adopted method with approval and tested boundaries. Do not infer professional outcomes from flawed scores or accounting shortcuts.",
+    "owner": "Methodology owner",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G02",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "scope/mandate",
+    "id": "D24",
+    "processes": [
+      "P13"
+    ],
+    "title": "Follow-up is indirect wishlist scope",
+    "evidence": "M11 has indirect evidence and needs owner confirmation. E2E/research proposals do not authorize a new service or portal/continuous retest.",
+    "resolution": "Document conditional manual action/progress/verification/closure behavior. Confirm offering, mandate, independence and authority before activating dependent work.",
+    "owner": "Product and firm service owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G05",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "implementation evidence",
+    "id": "D25",
+    "processes": [
+      "P04",
+      "P08",
+      "P10",
+      "P12",
+      "P16"
+    ],
+    "title": "External services and execution not demonstrated",
+    "evidence": "No live Veritech implementation, regulated signature, portal, bank/registry feed, automatic email, storage security, API or runtime workflow enforcement was demonstrated.",
+    "resolution": "Treat Part B commands and enforcement as proposed contracts. Select actual native/manual/external routes and demonstrate required outcomes before release.",
+    "owner": "Implementation owner",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G08",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "scope",
+    "id": "D26",
+    "processes": [
+      "P14",
+      "P16"
+    ],
+    "title": "Firm-quality, finance and separate-service research",
+    "evidence": "E2E B and C families/old ontology include broader firm ISQM, complaints/investigations, billing/settlement and non-FS services beyond the scoped wishlists.",
+    "resolution": "Retain professional context/future/conditional dispositions in registers; do not manufacture current software use cases from research objects or old OP codes.",
+    "owner": "Product owner",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G02",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "source-review limit",
+    "id": "D27",
+    "processes": [
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05",
+      "P06",
+      "P07",
+      "P08",
+      "P09",
+      "P10",
+      "P11",
+      "P12",
+      "P13",
+      "P14",
+      "P15",
+      "P16"
+    ],
+    "title": "Secondary generated corpus review remains partial",
+    "evidence": "Every inventoried content object has extraction/structural/provenance coverage. Not every older generated prose literal/page image has received complete semantic/manual visual reading.",
+    "resolution": "Keep the file ledger exact about direct reading, comparison and pending review. This review edition is not a claim that the master prompt full-corpus reading gate is completed. Finish pending semantic families before a final completeness certification.",
+    "owner": "Requirements author",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G01",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "model requiredness / design lifecycle",
+    "id": "D28",
+    "processes": [
+      "P07",
+      "P11"
+    ],
+    "title": "Proposed sample design precedes actual selection",
+    "evidence": "AUD_SAMPLE.SELECTED_AT is declared non-null in F00792. P07-UC02 prepares a design for review before actual selection, so an AUD_SAMPLE draft cannot honestly represent that state with an empty or fabricated selection timestamp.",
+    "resolution": "Retain the proposed typed design, exact population and method/size/seed/error/rationale in a real persisted workpaper/manifest, review that exact design, then create AUD_SAMPLE and membership with actual SELECTED_AT when selection occurs; alternatively approve a justified model change. Preserve design-to-selection lineage and do not label design approval as completed selection.",
+    "owner": "Methodology, product and data owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G04",
+    "disposition": "retained-source-reference; completion not inferred"
+  },
+  {
+    "kind": "model requiredness / native representation",
+    "id": "D29",
+    "processes": [
+      "P04",
+      "P11",
+      "P15"
+    ],
+    "title": "Native workpaper requires an actual persisted storage reference",
+    "evidence": "AUD_WORKPAPER.STORAGE_OBJECT_REF is non-null in F00792. Native AUD_WORKPAPER_ITEM/AUD_WORKPAPER_ROW/AUD_RESPONSE rows alone therefore do not establish a valid native workpaper row or immutable reviewed content snapshot.",
+    "resolution": "Define the actual native snapshot/storage object representation, exact CONTENT_HASH boundary, retained child membership/version and stable reference used by STORAGE_OBJECT_REF, or approve a justified conditional-requiredness/model change. Never fabricate a file path or imply that external uploads automatically populate native responses.",
+    "owner": "Product, platform and data owners",
+    "status": "Open - proposed resolution; no approval or implementation implied",
+    "guide": "G08",
+    "disposition": "retained-source-reference; completion not inferred"
+  }
+]

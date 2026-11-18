@@ -1,0 +1,46 @@
+{
+  "guide": "G08",
+  "build": {
+    "build": "XkR6OwC5uTYGhcYrIU1Ii",
+    "commit": "cf49477ed05e796925b4a9f5cde1cdf056c5d7b4",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "checks": [
+    "Reviewer reads the actual accepted workbook and previews mapped identities, five typed fields and fixed clauses without creating a release or migrating engagement work",
+    "Imported content remains a draft; the author records source edition, effective scope, required impact and a deliberate type change before submitting the exact candidate",
+    "A separately authorized publisher reviews exact changes and examples, publishes edition 2, and leaves the engagement on its original pinned answers",
+    "Engagement adoption first exposes the actual lost zero/type-changed answer; explicit current acknowledgement preserves original signed content and renews affected review",
+    "Repeated rows expose actual accepted-evidence selectors and typed cells; reordering preserves both stable row identities and exact zero/signed values",
+    "A real concurrent server save rejects the stale browser revision and displays both the saved contribution and retained unsaved attempt",
+    "The user deliberately selects a reconciled draft and then saves against the new revision; both earlier content and the actual resolution reason remain",
+    "The user previews one exact permitted work version and downloads a readable HTML package retaining source clauses, typed rows, evidence references and contributor/review context"
+  ],
+  "sessions": [
+    {
+      "date": "2026-11-18T02:58:26.682Z",
+      "build": {
+        "build": "XkR6OwC5uTYGhcYrIU1Ii",
+        "commit": "cf49477ed05e796925b4a9f5cde1cdf056c5d7b4",
+        "dirty": false,
+        "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+      },
+      "engagement": "E-0c24d1eb-d526-4c2e-a015-7fd2ae9b40fe",
+      "checks": [
+        "Reviewer reads the actual accepted workbook and previews mapped identities, five typed fields and fixed clauses without creating a release or migrating engagement work",
+        "Imported content remains a draft; the author records source edition, effective scope, required impact and a deliberate type change before submitting the exact candidate",
+        "A separately authorized publisher reviews exact changes and examples, publishes edition 2, and leaves the engagement on its original pinned answers",
+        "Engagement adoption first exposes the actual lost zero/type-changed answer; explicit current acknowledgement preserves original signed content and renews affected review",
+        "Repeated rows expose actual accepted-evidence selectors and typed cells; reordering preserves both stable row identities and exact zero/signed values",
+        "A real concurrent server save rejects the stale browser revision and displays both the saved contribution and retained unsaved attempt",
+        "The user deliberately selects a reconciled draft and then saves against the new revision; both earlier content and the actual resolution reason remain",
+        "The user previews one exact permitted work version and downloads a readable HTML package retaining source clauses, typed rows, evidence references and contributor/review context"
+      ],
+      "runtimeErrors": [],
+      "scope": "Actual UI import, additional publication authority, pinned adoption, typed rows, concurrent resolution and downloaded readable export in one private disposable G08 engagement. No source professional acceptance or live-preview mutation."
+    }
+  ],
+  "screenshots": 7,
+  "runtimeErrors": [],
+  "scope": "Actual source mapping, independent release, pinned loss review, typed evidence rows, stable reordering, actual stale save and deliberate reconciliation, and downloaded readable HTML in a private disposable engagement. No live-preview mutation or professional acceptance."
+}

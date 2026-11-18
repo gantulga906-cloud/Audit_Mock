@@ -1,0 +1,134 @@
+{
+  "guide": "G08",
+  "proof": [
+    {
+      "name": "actual-import-is-draft",
+      "expected": {
+        "fields": 5,
+        "clauses": 2,
+        "published": false,
+        "unsupportedBlocked": true
+      },
+      "actual": {
+        "fields": 5,
+        "clauses": 2,
+        "published": false,
+        "unsupportedBlocked": true
+      }
+    },
+    {
+      "name": "release-scope-and-retired-pin",
+      "expected": {
+        "originalRetained": true,
+        "retiredDenied": true,
+        "futureDenied": true,
+        "outsideScopeDenied": true
+      },
+      "actual": {
+        "originalRetained": true,
+        "retiredDenied": true,
+        "futureDenied": true,
+        "outsideScopeDenied": true
+      }
+    },
+    {
+      "name": "exact-independent-publishing",
+      "expected": {
+        "staleDenied": true,
+        "selfDenied": true,
+        "revokedDenied": true,
+        "noRelease": true
+      },
+      "actual": {
+        "staleDenied": true,
+        "selfDenied": true,
+        "revokedDenied": true,
+        "noRelease": true
+      }
+    },
+    {
+      "name": "seventy-source-contract-roundtrips",
+      "expected": {
+        "forms": 70,
+        "preserved": true,
+        "accepted": 0
+      },
+      "actual": {
+        "forms": 70,
+        "preserved": true,
+        "accepted": 0
+      }
+    },
+    {
+      "name": "exact-readable-export",
+      "expected": {
+        "selected": 1,
+        "originalHash": true,
+        "historyPreserved": true,
+        "changedExportDenied": true,
+        "corruptShown": true
+      },
+      "actual": {
+        "selected": 1,
+        "originalHash": true,
+        "historyPreserved": true,
+        "changedExportDenied": true,
+        "corruptShown": true
+      }
+    },
+    {
+      "name": "return-review-and-exact-adoption",
+      "expected": {
+        "returned": true,
+        "independentlyCleared": true,
+        "oldSignatureRetained": true,
+        "currentNeedsReview": true,
+        "originalRetained": true
+      },
+      "actual": {
+        "returned": true,
+        "independentlyCleared": true,
+        "oldSignatureRetained": true,
+        "currentNeedsReview": true,
+        "originalRetained": true
+      }
+    },
+    {
+      "name": "deliberate-concurrent-resolution",
+      "expected": {
+        "staleDenied": true,
+        "currentRetained": true,
+        "bothAttributed": true,
+        "reasonRetained": true
+      },
+      "actual": {
+        "staleDenied": true,
+        "currentRetained": true,
+        "bothAttributed": true,
+        "reasonRetained": true
+      }
+    },
+    {
+      "name": "unsafe-unavailable-and-value-states",
+      "expected": {
+        "unsafeDenied": true,
+        "duplicateBlocked": true,
+        "falseRejected": true,
+        "zeroRetained": true,
+        "naReasonRequired": true,
+        "foreignDenied": true,
+        "corruptAuthorityUnresolved": true
+      },
+      "actual": {
+        "unsafeDenied": true,
+        "duplicateBlocked": true,
+        "falseRejected": true,
+        "zeroRetained": true,
+        "naReasonRequired": true,
+        "foreignDenied": true,
+        "corruptAuthorityUnresolved": true
+      }
+    }
+  ],
+  "scope": "Disposable named-authority source/import/release/adoption/export scenarios; source acceptance remains a separate accountable decision"
+}

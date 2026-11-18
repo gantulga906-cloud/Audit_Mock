@@ -1,0 +1,155 @@
+[
+  {
+    "contract": "client-facts",
+    "owner": "Source/CRM owner -> confirmed client snapshot",
+    "consumers": "Intake, acceptance, terms/planning",
+    "change_trigger": "New effective client/contact version",
+    "required_effect_and_preserved_history": "Reconfirm depended-upon facts and exact terms/acceptance basis; preserve prior periods/source identity",
+    "owning_module": "scripts/pilot-intake.mjs",
+    "classification": "current bounded + wider publication proposed"
+  },
+  {
+    "contract": "terms",
+    "owner": "Exact signed terms and independent decision",
+    "consumers": "Activation/substantive work/report",
+    "change_trigger": "Amended scope/letter/client confirmation",
+    "required_effect_and_preserved_history": "Hold affected substantive actions until reassessment; retain signed earlier terms",
+    "owning_module": "scripts/pilot-intake.mjs",
+    "classification": "current"
+  },
+  {
+    "contract": "staff",
+    "owner": "Approved roster/credential/appointment/seat",
+    "consumers": "Assignment/schedule/authority",
+    "change_trigger": "Dates, capacity, credential, departure or assignment",
+    "required_effect_and_preserved_history": "Deny future unsuitable action; preserve old actors/signoffs; renew affected scheduling",
+    "owning_module": "scripts/pilot-staffing.mjs",
+    "classification": "current bounded; named lifecycle open"
+  },
+  {
+    "contract": "template",
+    "owner": "Controlled independently published edition",
+    "consumers": "Pinned native work/programme",
+    "change_trigger": "New edition or explicit adoption",
+    "required_effect_and_preserved_history": "No silent update. Compare losses and renew review on explicit use; keep old digest/answers",
+    "owning_module": "scripts/pilot-forms.mjs",
+    "classification": "current direct adoption; programme interaction open"
+  },
+  {
+    "contract": "work",
+    "owner": "Stable work ID and current revision",
+    "consumers": "Review/conclusion/authorization",
+    "change_trigger": "Answers, evidence or actual relied-upon basis",
+    "required_effect_and_preserved_history": "Snapshot old revision, mark affected current review stale; retain old exact approval",
+    "owning_module": "scripts/pilot-workflow.mjs",
+    "classification": "current"
+  },
+  {
+    "contract": "evidence",
+    "owner": "Original bytes + assessment ID/version/hash",
+    "consumers": "Every linked use/run/report/archive",
+    "change_trigger": "Replace/reopen evidence assessment",
+    "required_effect_and_preserved_history": "Target affected relying work/runs/decisions; retain originals/old links in history",
+    "owning_module": "scripts/pilot-requests.mjs",
+    "classification": "current bounded"
+  },
+  {
+    "contract": "population",
+    "owner": "Approved import/controls/mapping version",
+    "consumers": "Analytics/samples/area/posting",
+    "change_trigger": "Source, row disposition, mapping/control or approval",
+    "required_effect_and_preserved_history": "Old dependent sample/run/posting noncurrent; preserve rows, selections and original bytes",
+    "owning_module": "scripts/pilot-population.mjs",
+    "classification": "current"
+  },
+  {
+    "contract": "materiality",
+    "owner": "1.3 structured selected decision",
+    "consumers": "Programme/sample/evaluation/report",
+    "change_trigger": "Threshold/basis evidence/version",
+    "required_effect_and_preserved_history": "Reopen relying sample/evaluation/authorization, not unchanged actual controls; retain planning/final history",
+    "owning_module": "scripts/pilot-materiality.mjs",
+    "classification": "current bounded FG-02"
+  },
+  {
+    "contract": "risk-controls",
+    "owner": "Reviewed risk/response/reliance",
+    "consumers": "Programme/execution/sample",
+    "change_trigger": "Actual risk, assertion, reliance/support",
+    "required_effect_and_preserved_history": "Reassess exact affected response; complete many-to-many model remains open",
+    "owning_module": "scripts/pilot-registers.mjs",
+    "classification": "current bounded + proposed wider links"
+  },
+  {
+    "contract": "sample",
+    "owner": "Per-form version/method/basis/selection/tests",
+    "consumers": "Finding and conclusion",
+    "change_trigger": "Population/planning/assignment/test support",
+    "required_effect_and_preserved_history": "Old selection immutable; new design/method gets own identity; renew affected approvals",
+    "owning_module": "scripts/pilot-sampling.mjs",
+    "classification": "current legacy; unbiased/projection proposed"
+  },
+  {
+    "contract": "area-run",
+    "owner": "Exact inputs/params/edition/source rows",
+    "consumers": "Case review/workpaper/finding",
+    "change_trigger": "Source/method/mapping/period/assignment",
+    "required_effect_and_preserved_history": "Create new current run, preserve outputs/case history and original support",
+    "owning_module": "scripts/pilot-area.mjs",
+    "classification": "current profiles"
+  },
+  {
+    "contract": "correction",
+    "owner": "Management response and verified current posting",
+    "consumers": "Outstanding evaluation",
+    "change_trigger": "Population/response support/verified amount",
+    "required_effect_and_preserved_history": "Agreed amount stays outstanding until independently verified; preserve earlier posting decision",
+    "owning_module": "scripts/pilot-completion.mjs",
+    "classification": "current bounded; signed aggregation proposed"
+  },
+  {
+    "contract": "evaluation",
+    "owner": "Current FS/materiality/findings basis",
+    "consumers": "Opinion/report authorization",
+    "change_trigger": "Any relied-upon version or qualitative context",
+    "required_effect_and_preserved_history": "Renew reviewer preparation/partner approval; preserve earlier evaluation",
+    "owning_module": "scripts/pilot-completion.mjs",
+    "classification": "current bounded"
+  },
+  {
+    "contract": "quality",
+    "owner": "Applicability/eligibility + exact draft decision",
+    "consumers": "Authorization",
+    "change_trigger": "Policy/reviewer/draft/concern basis",
+    "required_effect_and_preserved_history": "Required unresolved/stale concern blocks; no fictional review if not required",
+    "owning_module": "scripts/pilot-oversight.mjs",
+    "classification": "current bounded"
+  },
+  {
+    "contract": "release",
+    "owner": "Exact authorized report/FS/work hash",
+    "consumers": "Sign/issue/distribution/assembly",
+    "change_trigger": "Report prep/FS/date/work/quality changes",
+    "required_effect_and_preserved_history": "Current authorization stale; keep issued bytes/signatures; successor for later change",
+    "owning_module": "scripts/pilot-workflow.mjs",
+    "classification": "current bounded"
+  },
+  {
+    "contract": "assembly-custody",
+    "owner": "Approved exact index/sealed bytes/offer",
+    "consumers": "Lock/independent custody/retrieval",
+    "change_trigger": "Index/source integrity/offer verification",
+    "required_effect_and_preserved_history": "Return/reoffer with owner and history; original bytes immutable",
+    "owning_module": "scripts/pilot-assembly.mjs",
+    "classification": "current bounded"
+  },
+  {
+    "contract": "retention-lineage",
+    "owner": "Applicable policy/anchor/hold and successor",
+    "consumers": "Retrieval/disposition/recovery",
+    "change_trigger": "Longer rule/hold/later fact",
+    "required_effect_and_preserved_history": "Preserve longer restrictions/predecessor; no automatic deletion; accountable legal policy open",
+    "owning_module": "scripts/pilot-archive.mjs",
+    "classification": "current reference + policy open"
+  }
+]

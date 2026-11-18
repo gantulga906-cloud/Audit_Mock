@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-16",
+  "sources": [
+    {
+      "title": "IAASB 2025 Handbook, Volume 1",
+      "url": "https://ifacweb.blob.core.windows.net/publicfiles/2025-09/IAASB-2025-Handbook-Volume-1.pdf",
+      "sections": [
+        "ISA 315 A177",
+        "ISA 330 A26",
+        "ISA 610 (Revised 2013) 26–35",
+        "ISA 620 9–13"
+      ],
+      "application": "Separate control design, implementation and effectiveness; distinguish contributor types and require auditor evaluation. Direct assistance requires applicable permission. The relevant edition and local legal adoption must be evidenced by the engagement, rather than inferred from this international reference."
+    }
+  ],
+  "boundaries": [
+    "No universal materiality percentage, credential expiry, risk rating, assertion code or direct-assistance permission is invented.",
+    "Actual production identity and conditional external portals remain separately scoped."
+  ]
+}

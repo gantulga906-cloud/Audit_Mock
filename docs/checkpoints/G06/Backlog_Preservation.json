@@ -1,0 +1,51 @@
+{
+  "baseline": "9e46d52bb8e08afb4f1d8e7631f49e8eb069c7d4",
+  "codeCommit": "2636da08679b66790494d31f8ec977eafae71baf",
+  "sourceChecks": [
+    {
+      "path": "src/data/source-registers.json",
+      "expected": "27a7da39fda7488f62a43175df8fc97a53be42af43aec83393f80359efe7773e",
+      "actual": "27a7da39fda7488f62a43175df8fc97a53be42af43aec83393f80359efe7773e",
+      "rawSha256": "27a7da39fda7488f62a43175df8fc97a53be42af43aec83393f80359efe7773e",
+      "encoding": "UTF-8 text with CRLF normalized to LF; raw checkout hashes are recorded separately",
+      "passed": true
+    },
+    {
+      "path": "docs/research/source-manifest.json",
+      "expected": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b",
+      "actual": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b",
+      "rawSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b",
+      "encoding": "UTF-8 text with CRLF normalized to LF; raw checkout hashes are recorded separately",
+      "passed": true
+    },
+    {
+      "path": "src/data/source-bpmn-transitions.json",
+      "expected": "b99190e631d46175bd363c8b42302de7c4af57d899c07a7a5f17e472118b71f3",
+      "actual": "b99190e631d46175bd363c8b42302de7c4af57d899c07a7a5f17e472118b71f3",
+      "rawSha256": "b99190e631d46175bd363c8b42302de7c4af57d899c07a7a5f17e472118b71f3",
+      "encoding": "UTF-8 text with CRLF normalized to LF; raw checkout hashes are recorded separately",
+      "passed": true
+    }
+  ],
+  "registeredRows": 2247,
+  "packages": 25,
+  "tasks": 128,
+  "backlogCopiesEqual": true,
+  "backlogSha256": "802fc4aa5db4643bb82b221b35ff9ece46d964ca06ac04805f710e6be79c7d4e",
+  "inventories": {
+    "cases": 75,
+    "criteria": 315,
+    "features": 136,
+    "automations": 58,
+    "e2e": 476,
+    "forms": 70,
+    "variants": 22,
+    "dependencies": 20,
+    "extensions": 58,
+    "transitions": 1012,
+    "operational": 5
+  },
+  "sourceAcceptance": [],
+  "releaseReady": false,
+  "retainedWork": "All original requirements and automation/acceptance branches remain. Unsupported complex opinion combinations and external adapters have explicit unresolved boundaries; no requirement is removed by the G06 core profile."
+}

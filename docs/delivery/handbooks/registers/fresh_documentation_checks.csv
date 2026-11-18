@@ -1,0 +1,10 @@
+﻿check,actual,expected,result,class
+candidate,20.00,20,pass,fresh independent decimal documentation arithmetic; no app run
+performance,10.80,10.8,pass,fresh independent decimal documentation arithmetic; no app run
+specific,13.50,13.5,pass,fresh independent decimal documentation arithmetic; no app run
+specific-performance,8.100,8.1,pass,fresh independent decimal documentation arithmetic; no app run
+revised-performance,7.20,7.2,pass,fresh independent decimal documentation arithmetic; no app run
+ratio-total,50,50,pass,fresh independent decimal documentation arithmetic; no app run
+unposted,40,40,pass,fresh independent decimal documentation arithmetic; no app run
+zero-rate-pv,200,200,pass,fresh independent decimal documentation arithmetic; no app run
+asset-bridge,112,112,pass,fresh independent decimal documentation arithmetic; no app run

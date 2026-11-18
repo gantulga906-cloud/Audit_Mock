@@ -5,6 +5,7 @@ import {currentClientContact,type ClientContact,type Enquiry,type IntakeClient,t
 import {pilotScope,type PilotRole} from '@/lib/pilot-registers';
 import type {Evidence} from '@/lib/workspace';
 import type {PilotAction} from './pilot-registers';
+import type {AcceptanceView} from '@/lib/pilot-acceptance';
 
 const status={draft:'Ноорог',forwarded:'Хүлээн авахаар шилжүүлсэн',returned:'Засварт буцаасан',declined:'Татгалзсан',converted:'Хүлээн авах ажил үүсгэсэн'};
 const relationship:Record<Relationship,string>={prospect:'Боломжит',pending:'Хүлээн авах шатанд',active:'Идэвхтэй',suspended:'Түдгэлзүүлсэн',former:'Хуучин',rejected:'Татгалзсан'};
@@ -14,7 +15,7 @@ type Intake={clients:IntakeClient[];enquiries:Enquiry[]};
 function Command({run,action,label,extra,children,done}:{
  run:PilotAction;action:string;label:string;extra?:Record<string,string>;children:ReactNode;done?:()=>void;
 }){
- return <form className="feature-form" onSubmit={e=>{
+ return <form className="feature-form" data-intake-action={action} onSubmit={e=>{
   e.preventDefault();
   const form=e.currentTarget;
   const data=Object.fromEntries([...new FormData(form)].map(([k,v])=>[k,String(v)]));
@@ -114,6 +115,7 @@ function EnquiryEditor({row,clients,run,done}:{row?:Enquiry;clients:IntakeClient
    <label>Тайлагналын хүрээ<input name="framework" defaultValue={row?.framework}/></label>
   </div>
   <label>Одоогоор мэдэгдэж буй мэдээлэл, дараагийн ажил<textarea name="facts" defaultValue={row?.facts}/></label>
+  <label>Хүлээгдэж буй тайлан ашиглагчид — мэдэгдэж байгаа бол<textarea name="intendedUsers" defaultValue={row?.intendedUsers}/></label>
  </Command>;
 }
 
@@ -147,9 +149,10 @@ function EnquiryCard({row,role,clients,run,open}:{row:Enquiry;role:PilotRole;cli
  const canEdit=row.owner===role&&['draft','returned'].includes(row.status);
  return <details className="feature-detail">
   <summary>{row.company} · {status[row.status]} · {row.id.slice(0,8)}</summary>
+  <p className="micro">Хүсэлтийн ишлэл {row.id}</p>
   <p>{row.origin==='client'?'Үйлчлүүлэгч хандсан':'Фирм санаачилсан'} · {row.service} · {row.contact||'Холбоо тодорхойгүй'} {row.email}</p>
   <p>{row.start||'Эхлэх өдөр тодорхойгүй'} — {row.end||'Дуусах өдөр тодорхойгүй'} · {row.framework||'Тайлагналын хүрээ тодорхойгүй'}</p>
-  <p className="micro">Эзэмшигч · {roles[row.owner]} · Дараагийн хариуцагч · {row.status==='forwarded'?roles.reviewer:roles[row.owner]}</p>
+  <p className="micro">Эзэмшигч · {roles[row.owner]} · Дараагийн хариуцагч · {['declined','converted'].includes(row.status)?'—':roles[row.nextOwner??(row.status==='forwarded'?'reviewer':row.owner)]}</p>
   {row.facts&&<p>{row.facts}</p>}
   {canEdit&&<>
    <button type="button" className="quiet" onClick={()=>setEdit(!edit)}>Ноорог засах</button>
@@ -182,6 +185,7 @@ export function PilotIntake({data,role,run,open}:{data:Intake;role:PilotRole;run
  return <section className="card pad bench-card">
   <h2>Үйлчлүүлэгч ба аудитын хүсэлт</h2>
   <p>Хүсэлтийн ноорог фирмийн бүртгэлд хадгалагдана. Хүлээн авах шийдвэр гэрээт ажлын хэсэгт бүртгэгдэнэ.</p>
+  <p className="micro">Гадаад үйлчлүүлэгчийн үндсэн бүртгэлд автоматаар илгээх холболт одоогооргүй.</p>
   <nav className="tabs" aria-label="Хүлээн авах хэсэг">
    <button type="button" className={tab==='enquiries'?'active':''} onClick={()=>{setTab('enquiries');setAdd(false);}}>Хүсэлт</button>
    <button type="button" className={tab==='clients'?'active':''} onClick={()=>{setTab('clients');setAdd(false);}}>Үйлчлүүлэгч</button>
@@ -206,22 +210,28 @@ export function IntakeProvenance({context,active,role,priorVisible,run,open}:{
  return <details className="feature-detail">
   <summary>Баталгаажуулсан үйлчлүүлэгчийн мэдээлэл · v{context.version}</summary>
   <p>{context.note} · {roles[context.by]} · {context.at.slice(0,10)} · Хүсэлт {context.enquiry.slice(0,8)}</p>
+  <p>{context.service} · Тайлан ашиглагчид: {context.intendedUsers||'Тодорхойгүй'}</p>
   {context.prior&&priorVisible&&<button type="button" className="quiet" onClick={()=>open(context.prior!)}>Өмнөх тайлант үеийг нээх</button>}
   {context.history.length>0&&<details><summary>Өмнөх баталгаажуулалт</summary>{context.history.map(h=><p className="micro" key={h.confirmation}>
    v{h.version} · {roles[h.by]} · {h.at.slice(0,10)} · {h.note}
   </p>)}</details>}
-  {!active&&context.currentVersion!==context.version&&<p className="text-amber">Одоогийн бүртгэл v{context.currentVersion} · дахин нягтална уу.</p>}
-  {!active&&role!=='preparer'&&<Command run={run} action="intake-refresh" label="Одоогийн мэдээллийг баталгаажуулах">
+  {context.currentVersion!==context.version&&<p className="text-amber">Одоогийн бүртгэл v{context.currentVersion} · дахин нягтална уу.</p>}
+  {context.canRefresh&&role!=='preparer'&&<Command run={run} action="intake-refresh" label="Одоогийн мэдээллийг баталгаажуулах">
    <label>Хүчинтэй холбоо барих хүн<select name="contactId" defaultValue={context.contact} required>
     <option value="">Сонгох</option>{context.contacts.map(c=><option key={c.id} value={c.id}>{c.name} · {c.email}</option>)}</select></label>
    <label>Баталгаажуулсан үндэслэл<input name="note" required/></label>
+   <label>Одоогийн тайлан ашиглагчид<textarea name="intendedUsers" defaultValue={context.intendedUsers}/></label>
   </Command>}
+  {context.items?.map(item=><details key={item.item}><summary>{item.item} · {item.status==='confirmed'?'Баталгаажсан':item.status==='returned'?'Буцаасан':'Хариулсан'}</summary><p>{item.note} · {roles[item.owner]} · {item.due}</p><p className="micro">{item.history.length} өмнөх үйлдэл · {roles[item.by]} · {item.at}</p>
+   {item.status==='returned'&&item.owner===role&&<Command run={run} action="intake-context-item" label="Бодит хариу, засварыг бүртгэх" extra={{item:item.item,status:'responded',owner:item.owner,due:item.due}}><label>Хариу ба эх сурвалж<textarea name="note" required/></label></Command>}
+  </details>)}
+  {context.canRefresh&&role!=='preparer'&&<details><summary>Тодорхой мэдээлэл баталгаажуулах / буцаах</summary><Command run={run} action="intake-context-item" label="Мэдээллийн үнэлгээ хадгалах"><label>Яг шалгах мэдээлэл<input name="item" required/></label><label>Төлөв<select name="status"><option value="returned">Буцаах — дутуу / өөрчлөгдсөн</option><option value="confirmed">Баталгаажуулах</option></select></label><label>Эх сурвалж ба үндэслэл<textarea name="note" required/></label><label>Дараагийн хариуцагч<select name="owner">{Object.entries(roles).map(([key,text])=><option key={key} value={key}>{text}</option>)}</select></label><label>Хугацаа<input type="date" name="due" required/></label></Command></details>}
  </details>;
 }
 
-export function TermsEditor({id,terms,history,role,evidence,active,amendable,canDraft,run}:{
+export function TermsEditor({id,terms,history,role,evidence,active,amendable,canDraft,run,acceptance,context}:{
  id:string;terms?:IntakeTerms;history:IntakeTerms[];role:PilotRole;evidence:(Evidence&{current?:boolean})[];
- active:boolean;amendable?:boolean;canDraft?:boolean;run:PilotAction;
+ active:boolean;amendable?:boolean;canDraft?:boolean;run:PilotAction;acceptance?:AcceptanceView;context?:IntakeContext;
 }){
  const prior=terms?.status==='approved'?terms:history.find(row=>row.status==='approved');
  const amendment=terms?.amendment;
@@ -239,17 +249,19 @@ export function TermsEditor({id,terms,history,role,evidence,active,amendable,can
    <p className="micro">Үйлчлүүлэгчийн мэдээлэл v{terms.clientVersion} · SHA-256 {terms.sha256}</p>
    <a className="quiet" href={'/api/pilot/evidence/'+terms.evidence+pilotScope(id)}>Баталгаажуулсан эх файл татах</a>
   </>}
-  {(!active?role==='reviewer':amendable&&prior&&canDraft)&&<Command key={terms?.version} run={run} action="intake-terms-save"
+  {(!active?(acceptance?role!=='partner':role==='reviewer'):amendable&&prior&&canDraft)&&(!acceptance||acceptance.proposal?.status==='reviewed')&&<Command key={terms?.version} run={run} action="intake-terms-save"
+   extra={acceptance&&context?{proposalVersion:String(acceptance.proposal?.version),client:context.client,start:context.period.start,end:context.period.end}:undefined}
    label={active?'Өөрчилсөн захидлыг дахин батлуулахаар хадгалах':'Захидлын хувилбар хадгалах'}>
    <div className="field-grid">
     <label>{active?'Шинэ гарын үсэгтэй, үнэлсэн эх файл':'Үнэлсэн эх файл'}<select name="evidence"
      defaultValue={active&&!awaitingAmendment?'':terms?.evidence??''} required><option value="">Сонгох</option>
      {accepted.map(e=><option key={e.id} value={e.id}>{e.name} · v{e.version}</option>)}</select></label>
     <label>Захидлын ишлэл<input name="reference" defaultValue={terms?.reference} required/></label>
-    <label>Үйлчлүүлэгчийн гарын үсэг зурсан хүн<input name="signatory" defaultValue={terms?.signatory} required/></label>
+    {!acceptance&&<label>Үйлчлүүлэгчийн гарын үсэг зурсан хүн<input name="signatory" defaultValue={terms?.signatory} required/></label>}
     <label>Гарын үсгийн огноо<input name="signedOn" type="date" defaultValue={terms?.signedOn} required/></label>
    </div>
-   <label>Тохиролцсон хамрах хүрээ<textarea name="scope" defaultValue={terms?.scope} required/></label>
+   {!acceptance&&<label>Тохиролцсон хамрах хүрээ<textarea name="scope" defaultValue={terms?.scope} required/></label>}
+   {acceptance&&<><p>Хянасан нөхцөл v{acceptance.proposal?.version} · {acceptance.proposal?.scope}</p><label>Тухайн өдөр эрхтэй гарын үсэг зурагч<select name="signatoryContact" required><option value="">Сонгох</option>{(context?.signatories??context?.contacts??[]).filter(contact=>contact.signer).map(contact=><option key={contact.id} value={contact.id}>{contact.name} · {contact.role}</option>)}</select></label><label>Гарын үсэг зурах эрхийн үнэлсэн эх файл<select name="signatoryEvidence" required><option value="">Сонгох</option>{evidence.filter(file=>file.status==='accepted'&&file.current!==false).map(file=><option key={file.id} value={file.id}>{file.name} · v{file.version}</option>)}</select></label><label>Бодит зөвшөөрөл, этгээд, хамрах хүрээ, хугацааг тулгасан үндэслэл<textarea name="agreementVerification" required/></label><p className="micro">Гарын үсэгтэй файл бүртгэх нь зохицуулалттай цахим гарын үсгийн баталгаажуулалт биш.</p></>}
    {active&&<label>Нөхцөл өөрчилсөн шалтгаан<textarea name="amendmentReason" defaultValue={awaitingAmendment?amendment?.reason:''} required/></label>}
   </Command>}
   {(!active||amendable&&awaitingAmendment)&&role==='partner'&&terms?.status==='draft'&&<Command run={run} action="intake-terms-approve"

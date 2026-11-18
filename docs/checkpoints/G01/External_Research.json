@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-16",
+  "sources": [
+    {
+      "title": "ISA 210, 2025 IAASB Handbook Volume 1",
+      "url": "https://ifacweb.blob.core.windows.net/publicfiles/2025-09/IAASB-2025-Handbook-Volume-1.pdf",
+      "locators": "ISA 210 paragraphs 6–10 and 13–17",
+      "use": "Preconditions, responsibilities, written agreement, recurring review and justified changes; no engagement-specific compliance approval"
+    },
+    {
+      "title": "IESBA International Code overview",
+      "url": "https://www.ethicsboard.org/iesba-code",
+      "use": "Identify/evaluate threats and appropriate responses; actual applicable edition/prohibitions require accountable selection"
+    },
+    {
+      "title": "Mongolian Audit Law official page",
+      "url": "https://legalinfo.mn/mn/detail?lawId=11192",
+      "access": "HTTP 403; full consolidated law not obtained",
+      "use": "Retain source article 8/9.5 questions and D21/D22 as explicit human applicability/edition decisions; no invented tenure or rotation engine"
+    }
+  ]
+}

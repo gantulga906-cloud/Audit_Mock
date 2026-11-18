@@ -1,0 +1,2254 @@
+{
+  "guide": "G05",
+  "sourceSteps": [
+    {
+      "id": "A19-P1-W1",
+      "title": "Describe condition, criterion and supporting evidence",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "6965206d6775d0fe356aa7500b636dc31c60b7abab0a79c736bc98f9b811fee0",
+      "source": "A19!C15:H15",
+      "relatedCases": [
+        "P10-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay"
+      ]
+    },
+    {
+      "id": "A19-P1-W2",
+      "title": "Separate evidence gap, control deficiency and misstatement",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "8f2cd858d30c834d9e7bdb626ab1c2bc077ffd9e041126b27477a208eabc9e00",
+      "source": "A19!C16:H16",
+      "relatedCases": [
+        "P10-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay"
+      ]
+    },
+    {
+      "id": "A19-P1-W3",
+      "title": "Remove duplicates and link related workpapers",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "2c01c76a126aa25fc1a18f25752c6effd3adc6881d04b224609fcb1f2613e7cc",
+      "source": "A19!C17:H17",
+      "relatedCases": [
+        "P10-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay"
+      ]
+    },
+    {
+      "id": "A19-P2-W1",
+      "title": "Send a specific request to the appropriate client contact",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "4505fee952258448f34cac87a65110bb23c0f757c2b188b14d628691b0903259",
+      "source": "A19!C18:H18",
+      "relatedCases": [
+        "P10-UC01",
+        "P08-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart"
+      ]
+    },
+    {
+      "id": "A19-P2-W2",
+      "title": "Evaluate new files, explanation or proposed correction",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "de58b115d812f924486dd5fea323664592d347a11579da46174b11ba52c15ef8",
+      "source": "A19!C19:H19",
+      "relatedCases": [
+        "P10-UC01",
+        "P08-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart"
+      ]
+    },
+    {
+      "id": "A19-P2-W3",
+      "title": "Resolve inconsistent or unsupported claims",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "949394c4ac6a7c83620a5384f0656eb7fb7712fd2b9509d1102cc51ad4ebce95",
+      "source": "A19!C20:H20",
+      "relatedCases": [
+        "P10-UC01",
+        "P08-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart"
+      ]
+    },
+    {
+      "id": "A19-P3-W1",
+      "title": "Record resolved or unresolved conclusion with reasons",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "8e14227882f9e794f8af4c14cbb649fe5c1edefd78475d58de777fbe012208b3",
+      "source": "A19!C21:H21",
+      "relatedCases": [
+        "P10-UC01",
+        "P10-UC02",
+        "P11-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A19-P3-W2",
+      "title": "Route misstatements, deficiencies and scope limits separately",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "d8772bfac58bc5f040e465b533c0e410811684c9a3ece82abb364c94992c4bf8",
+      "source": "A19!C22:H22",
+      "relatedCases": [
+        "P10-UC01",
+        "P10-UC02",
+        "P11-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A19-P3-W3",
+      "title": "Reopen the finding if new evidence changes the conclusion",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "827a550fef88fb7baf11e94d1687061d497f933449bf7cfcb96ac2959c9ce776",
+      "source": "A19!C23:H23",
+      "relatedCases": [
+        "P10-UC01",
+        "P10-UC02",
+        "P11-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A20-P1-W1",
+      "title": "Link each difference to assertion and audit evidence",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "6ccedbc136754bc572715b5c487ecdd63549a97084a9f27c7b4d703178471b30",
+      "source": "A20!C15:H15",
+      "relatedCases": [
+        "P10-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay"
+      ]
+    },
+    {
+      "id": "A20-P1-W2",
+      "title": "Distinguish factual, judgmental and projected differences",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "3125aa2b41d5e9e363e8446c0059144ed536ada62e48a08a1e2e444a8a1ee53e",
+      "source": "A20!C16:H16",
+      "relatedCases": [
+        "P10-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay"
+      ]
+    },
+    {
+      "id": "A20-P1-W3",
+      "title": "Exclude only clearly trivial items under approved policy",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "9e72e37ee7c4db8f385f658bedde49aee719d2233698d8196431ce0d3771e553",
+      "source": "A20!C17:H17",
+      "relatedCases": [
+        "P10-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay"
+      ]
+    },
+    {
+      "id": "A20-P2-W1",
+      "title": "Communicate proposed adjustments to management",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "6b1f1aa63b249d78179151f546acdce7f15251c016e333dcb2bf697efc622bde",
+      "source": "A20!C18:H18",
+      "relatedCases": [
+        "P10-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A20-P2-W2",
+      "title": "Record management acceptance or refusal",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "2bae6c6b3378738475226c1722ddf8b10fc43f75d9831639227212ff315dc009",
+      "source": "A20!C19:H19",
+      "relatedCases": [
+        "P10-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A20-P2-W3",
+      "title": "Verify corrected entries and revised statements",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "f84f7c83d5d521428decbfb04f8ec2e3cc7a26f23c7cd25f22fa87032ca7d50d",
+      "source": "A20!C20:H20",
+      "relatedCases": [
+        "P10-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A20-P3-W1",
+      "title": "Aggregate uncorrected differences across the engagement",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "0490e85f3eef2888b6b2204e6f256297554983ffeb5a8c287f38760bbb9d6c63",
+      "source": "A20!C21:H21",
+      "relatedCases": [
+        "P10-UC03",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A20-P3-W2",
+      "title": "Assess quantitative and qualitative materiality",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "684febbcb7940c92192f876aa848f9b6e074a291f0a1d1ff5bc75cc878efafec",
+      "source": "A20!C22:H22",
+      "relatedCases": [
+        "P10-UC03",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A20-P3-W3",
+      "title": "Decide further work, governance communication and opinion effect",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "92212a0e252e63d4c848693ec4fc1451b031332e3a182b7a82e7f586170a24bb",
+      "source": "A20!C23:H23",
+      "relatedCases": [
+        "P10-UC03",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A21-P1-W1",
+      "title": "Search subsequent events through the report date",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "b107040c75a73d9f87541e23fd0f1dada22a005127091e43952e49329a33c7d4",
+      "source": "A21!C15:H15",
+      "relatedCases": [
+        "P09-UC07",
+        "P09-UC08",
+        "P09-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A21-P1-W2",
+      "title": "Assess going concern and management plans",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "ad738a973c4c86b952b3c0069091f25dbc302d1bdf1774d7dfdfeda877adae54",
+      "source": "A21!C16:H16",
+      "relatedCases": [
+        "P09-UC07",
+        "P09-UC08",
+        "P09-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A21-P1-W3",
+      "title": "Identify contingencies, litigation and commitments",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a1ddbe845c492220da6d4e65a10356b72f49969c5a90a8ffd42bfc4703f41aa3",
+      "source": "A21!C17:H17",
+      "relatedCases": [
+        "P09-UC07",
+        "P09-UC08",
+        "P09-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A21-P2-W1",
+      "title": "Inspect minutes, correspondence and updated financial information",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a4b697d48bf14eb24e252530120618e3c8344aafc17c3e8a2f8ccf1f61a46dcd",
+      "source": "A21!C18:H18",
+      "relatedCases": [
+        "P09-UC07",
+        "P09-UC08",
+        "P09-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A21-P2-W2",
+      "title": "Inquire of management and obtain corroboration",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "65dfc2173d6d64a0fcf7d2adc2afc1b245e68a14763e93061e18aac1a5942357",
+      "source": "A21!C19:H19",
+      "relatedCases": [
+        "P09-UC07",
+        "P09-UC08",
+        "P09-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A21-P2-W3",
+      "title": "Perform additional work on material uncertainty or adjustment",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "7dc1f36e9cfffcf22228e69166bf6f298f77dddf0d58b02cad5a26854b034e07",
+      "source": "A21!C20:H20",
+      "relatedCases": [
+        "P09-UC07",
+        "P09-UC08",
+        "P09-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A21-P3-W1",
+      "title": "Determine adjustment or disclosure required",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "7c5e2b3207e1e55f3545666ac97ca25efd909bcd9740e0ea619b1965ab7e11b5",
+      "source": "A21!C21:H21",
+      "relatedCases": [
+        "P09-UC11",
+        "P10-UC04",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A21-P3-W2",
+      "title": "Communicate unresolved matters to governance",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "48ce37e55f4a496b9b06f63d20edfaf9b5cfd095a17476a6307d08f9e744de47",
+      "source": "A21!C22:H22",
+      "relatedCases": [
+        "P09-UC11",
+        "P10-UC04",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A21-P3-W3",
+      "title": "Route implications to final statements and opinion",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "aa7fa0cb59c359e235a7b59296f1207c5a5d39366573ebe21ba173f341fb1cda",
+      "source": "A21!C23:H23",
+      "relatedCases": [
+        "P09-UC11",
+        "P10-UC04",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A22-P1-W1",
+      "title": "Tie statements to ledger and trial balance",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "1b8adf321672a97d8d12cdccf1126abfd806c6d408e48f2d23c369167fe6b4bf",
+      "source": "A22!C15:H15",
+      "relatedCases": [
+        "P05-UC02",
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A22-P1-W2",
+      "title": "Check period, comparatives and required components",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "f4f9d7203809c1331119e354a2d2a1c9ef84dd6236a583c9d8b584cb280ede53",
+      "source": "A22!C16:H16",
+      "relatedCases": [
+        "P05-UC02",
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A22-P1-W3",
+      "title": "Track version and changes since tested draft",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "78cf122da68643d4b47167296303e46d368ab75942b7daa038b16adb7d22696f",
+      "source": "A22!C17:H17",
+      "relatedCases": [
+        "P05-UC02",
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A22-P2-W1",
+      "title": "Use the applicable reporting framework checklist",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "941d741f1a5e2f51afddc5c5d68d101876ae3f06ca3d5038c719b3c9f88c559b",
+      "source": "A22!C18:H18",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A22-P2-W2",
+      "title": "Verify material disclosures against supporting evidence",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "de4da980b594b7b944fc5bdbf37f456f7d997cd7e3f0d63b5ae814711de1faab",
+      "source": "A22!C19:H19",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A22-P2-W3",
+      "title": "Check consistency of statements, notes and comparative information",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "878010a97df50fddd6040e9a377bd349bf97c90b30dc8989a9142f3a3c04e9ca",
+      "source": "A22!C20:H20",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A22-P3-W1",
+      "title": "Perform final analytical procedures",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "6f50cd09754e34824fe64b94d4118a33f1cbcd53d2a249fcec82c6a4e82956f5",
+      "source": "A22!C21:H21",
+      "relatedCases": [
+        "P10-UC03",
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A22-P3-W2",
+      "title": "Investigate unexplained relationships or changes",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "56093e8dca1ad5603067bdf3789132be19854e753fd8c75e4ede52fce8a70ab7",
+      "source": "A22!C22:H22",
+      "relatedCases": [
+        "P10-UC03",
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A22-P3-W3",
+      "title": "Confirm revised statements address findings and misstatements",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "19e6f04b655d6c33269e41b4c6693a49e23b11991af4de87fada8ecb05ece7bb",
+      "source": "A22!C23:H23",
+      "relatedCases": [
+        "P10-UC03",
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A23-P1-W1",
+      "title": "Identify general and matter-specific representations",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "9fed7250c0bbc0c892cd01a3d1aa1673fa9e75564591ec58f511bde2c7c86cb5",
+      "source": "A23!C15:H15",
+      "relatedCases": [
+        "P10-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A23-P1-W2",
+      "title": "Confirm appropriate management signatories",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "781872094196798b2e4f0a84663acd965401d9e047c66a23af31dcb32ee32892",
+      "source": "A23!C16:H16",
+      "relatedCases": [
+        "P10-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A23-P1-W3",
+      "title": "Draft letter consistent with final statements and findings",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "c2c4f59c41aef445f0facb6f34c8f2294edae505170199ff157e7db67d710f47",
+      "source": "A23!C17:H17",
+      "relatedCases": [
+        "P10-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A23-P2-W1",
+      "title": "Discuss wording and date with management",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "4ac69076144cabc14d9e304ed4e200bb2362066e26fe0662e2474c9be84d0da2",
+      "source": "A23!C18:H18",
+      "relatedCases": [
+        "P10-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A23-P2-W2",
+      "title": "Obtain letter dated as near as practicable to, but not after, the auditor’s report date",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "d3bc710400e86b78369c5fdd1a77cf1b931a9ae5312a0af70712e5f2596b645a",
+      "source": "A23!C19:H19",
+      "relatedCases": [
+        "P10-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A23-P2-W3",
+      "title": "Verify completeness and authorized signature",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "f71cdd2797996bd605f71e80a9fd38c8990124bbeb9b78e7c79f12198d0c582b",
+      "source": "A23!C20:H20",
+      "relatedCases": [
+        "P10-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A23-P3-W1",
+      "title": "Compare representations with other audit evidence",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "e1cc8082f1e1adf8e340362a85c3c14f403501f279181981bc15fd44fc4cf9bf",
+      "source": "A23!C21:H21",
+      "relatedCases": [
+        "P10-UC05",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A23-P3-W2",
+      "title": "Follow up refusal, qualification or contradiction",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "bb72624c3c50c38ade4340a9080344d6a3efc57fe1c30607cfc4fb0d3940ea81",
+      "source": "A23!C22:H22",
+      "relatedCases": [
+        "P10-UC05",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A23-P3-W3",
+      "title": "Decide consequence for opinion or continuance",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "36a956cb2e5822978d905f6f243a425df1930ae8a95ab5cea6630308a333f963",
+      "source": "A23!C23:H23",
+      "relatedCases": [
+        "P10-UC05",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A24-P1-W1",
+      "title": "Map management and those charged with governance",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "0e3abe824936a51e4e445bc3a6830f5ec72d16d08456d51572fe2d7f23986382",
+      "source": "A24!C15:H15",
+      "relatedCases": [
+        "P01-UC02",
+        "P10-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A24-P1-W2",
+      "title": "Identify significant findings, independence and control deficiencies",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "17b9e756c98278a9ff0f1cd99dfccfabcdae36d32fdd825036dc9f391767443c",
+      "source": "A24!C16:H16",
+      "relatedCases": [
+        "P01-UC02",
+        "P10-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A24-P1-W3",
+      "title": "Determine mandatory timing and confidentiality",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "49083f8887c23d3f51f1a85e8e9fd7623f808cc010fdfb01a9e580f9f02de116",
+      "source": "A24!C17:H17",
+      "relatedCases": [
+        "P01-UC02",
+        "P10-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G01 current-period confirmations and amended terms reopen only the affected acceptance with history retained",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A24-P2-W1",
+      "title": "Prepare clear written or oral communication",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "76c983301e7455b7f80bf215a58361ab3006793b23c122ba869742694a8ed01a",
+      "source": "A24!C18:H18",
+      "relatedCases": [
+        "P10-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A24-P2-W2",
+      "title": "Present proposed opinion and significant judgments as appropriate",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "dbee142199f446ed354b1e74e3d9cbba517f0e8cb69c2aad032a206f171edf78",
+      "source": "A24!C19:H19",
+      "relatedCases": [
+        "P10-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A24-P2-W3",
+      "title": "Obtain responses and record disagreement",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "456ca93a4866c4d5605aea257b56d5e9422e2614537096dac6f2144ef6943f74",
+      "source": "A24!C20:H20",
+      "relatedCases": [
+        "P10-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A24-P3-W1",
+      "title": "Document date, recipients and content",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "5e349a08886747b690e9f50f8743358dff0237b8aac27c4d0d8ef5578864788c",
+      "source": "A24!C21:H21",
+      "relatedCases": [
+        "P10-UC07",
+        "P10-UC08"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved report preparation connects exact issue to independently completed assembly and custody",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A24-P3-W2",
+      "title": "Route matters requiring further audit work",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "99c9d7a2f85838cf6a8ed364f1ce9f4319a2646de8b11db4f362248195a538e8",
+      "source": "A24!C22:H22",
+      "relatedCases": [
+        "P10-UC07",
+        "P10-UC08"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved report preparation connects exact issue to independently completed assembly and custody",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A24-P3-W3",
+      "title": "Confirm required communication before issuing report",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "bbd63ad285296f060612cd2cda49c0575e502302f5cd3a2647fa9fbc5fcc8f00",
+      "source": "A24!C23:H23",
+      "relatedCases": [
+        "P10-UC07",
+        "P10-UC08"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved report preparation connects exact issue to independently completed assembly and custody",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A25-P1-W1",
+      "title": "Confirm planned procedures and key conclusions complete",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4995758cd1331f5ad701b1d358625150850afa3ab14c0bbfa49e94be8b10527d",
+      "source": "A25!C15:H15",
+      "relatedCases": [
+        "P11-UC01",
+        "P11-UC03"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ]
+    },
+    {
+      "id": "A25-P1-W2",
+      "title": "Assemble significant judgments and consultations",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "231c5615e766dd6bb522668b642e22213d55122b73075ac3e0e81837d78daeef",
+      "source": "A25!C16:H16",
+      "relatedCases": [
+        "P11-UC01",
+        "P11-UC03"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ]
+    },
+    {
+      "id": "A25-P1-W3",
+      "title": "Route workpapers to assigned reviewer",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "07b68ff5515d1fa4ef42163e4ef854bb3da91da7beaf4c207019fc834b3d1d8c",
+      "source": "A25!C17:H17",
+      "relatedCases": [
+        "P11-UC01",
+        "P11-UC03"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ]
+    },
+    {
+      "id": "A25-P2-W1",
+      "title": "Investigate and correct review queries with evidence",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "563103adf0620ff6ead94022b015031847963c9043e51fabf6568afcaad67e3a",
+      "source": "A25!C18:H18",
+      "relatedCases": [
+        "P11-UC01",
+        "P11-UC02",
+        "P11-UC03",
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ]
+    },
+    {
+      "id": "A25-P2-W2",
+      "title": "Resolve differences of professional opinion",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "46d821c1fa5a9334c90b41397aeced3940ec74bdd21239cf009d1e8bd029ed46",
+      "source": "A25!C19:H19",
+      "relatedCases": [
+        "P11-UC01",
+        "P11-UC02",
+        "P11-UC03",
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ]
+    },
+    {
+      "id": "A25-P2-W3",
+      "title": "Reassess material conclusions after changes",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "131731c4ca10c43a3107b3c00b7c0536dd871532e76a4e5b6477dd0e6cdac481",
+      "source": "A25!C20:H20",
+      "relatedCases": [
+        "P11-UC01",
+        "P11-UC02",
+        "P11-UC03",
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ]
+    },
+    {
+      "id": "A25-P3-W1",
+      "title": "Complete engagement partner review",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a411fc73c7d6032b28738fa488157e56b0a2a3659865cc62fc50b4480ee3f371",
+      "source": "A25!C21:H21",
+      "relatedCases": [
+        "P11-UC03",
+        "P11-UC06",
+        "P10-UC08"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "approved report preparation connects exact issue to independently completed assembly and custody"
+      ]
+    },
+    {
+      "id": "A25-P3-W2",
+      "title": "Complete independent EQR before report date if required",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "09422f022c3f90ac16b93ab0c2bcc85134b7d73cd27d8d6acd57cdcb1f426b21",
+      "source": "A25!C22:H22",
+      "relatedCases": [
+        "P11-UC03",
+        "P11-UC06",
+        "P10-UC08"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "approved report preparation connects exact issue to independently completed assembly and custody"
+      ]
+    },
+    {
+      "id": "A25-P3-W3",
+      "title": "Record approvals and unresolved restrictions",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "7797d15dd606c70dab8a16408ee8b0a52be6152b2914d746c4e5b557326a2582",
+      "source": "A25!C23:H23",
+      "relatedCases": [
+        "P11-UC03",
+        "P11-UC06",
+        "P10-UC08"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "approved report preparation connects exact issue to independently completed assembly and custody"
+      ]
+    },
+    {
+      "id": "A29-P1-W1",
+      "title": "Verify follow-up is in engagement scope or separately authorized",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "8a2a8bb86b355eb20adeed4a92b6d79c174faaaf65af38866f3a5466c5d9cb86",
+      "source": "A29!C15:H15",
+      "relatedCases": [
+        "P13-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ]
+    },
+    {
+      "id": "A29-P1-W2",
+      "title": "Import agreed recommendations and action owners",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "94934129ce04dfe619d33bd4461b697c86fcbb31d2d70d409287741d6f38b71f",
+      "source": "A29!C16:H16",
+      "relatedCases": [
+        "P13-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ]
+    },
+    {
+      "id": "A29-P1-W3",
+      "title": "Define evidence, dates and status criteria",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "329e275cb96a27cf04bd1fed0c1ca17fc87149b3eea64dfc345a9ad8dcd7ab48",
+      "source": "A29!C17:H17",
+      "relatedCases": [
+        "P13-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ]
+    },
+    {
+      "id": "A29-P2-W1",
+      "title": "Request progress and implementation evidence",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "8c380eadadc11fecae746904668f3db850d0cf9b84f4485f65501cfd17d163cf",
+      "source": "A29!C18:H18",
+      "relatedCases": [
+        "P13-UC01",
+        "P13-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ]
+    },
+    {
+      "id": "A29-P2-W2",
+      "title": "Test whether action addresses root issue",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "695e4bf087816c55d45022b1aa6b46a81bb5a6c77c7cbbde5939bcd18b5ac972",
+      "source": "A29!C19:H19",
+      "relatedCases": [
+        "P13-UC01",
+        "P13-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ]
+    },
+    {
+      "id": "A29-P2-W3",
+      "title": "Distinguish implemented, partial, overdue and ineffective",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "fabeb4873057e2bdf423e0af6e15eb574a76e3ae7e49aa401aac5c63c6ddd149",
+      "source": "A29!C20:H20",
+      "relatedCases": [
+        "P13-UC01",
+        "P13-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ]
+    },
+    {
+      "id": "A29-P3-W1",
+      "title": "Escalate high-risk overdue or ineffective actions",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "c6e4b541ab9cdf45b819e5daf87f7aa5fc25fb26d654bb0327abf5ddcdba8a67",
+      "source": "A29!C21:H21",
+      "relatedCases": [
+        "P13-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ]
+    },
+    {
+      "id": "A29-P3-W2",
+      "title": "Agree residual risk and next review date",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "66cba4046c9a04e661b08d40550bab3c3b0298deccf585cb2ff970b1cc7986f1",
+      "source": "A29!C22:H22",
+      "relatedCases": [
+        "P13-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ]
+    },
+    {
+      "id": "A29-P3-W3",
+      "title": "Issue status report and archive supporting evidence",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "47774cde5cd5fee81992b6a973679f2beb1a8654ded4bc310c16b663bcb0dd0f",
+      "source": "A29!C23:H23",
+      "relatedCases": [
+        "P13-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 conditional follow-up needs a current actual mandate and independent verification without changing audit reliance"
+      ]
+    },
+    {
+      "id": "A30-P1-W1",
+      "title": "Agree which documents comprise the annual report",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "82eaea229458cd7a775201059c97ebe4f34dd141140d620390d5f47488b6ca6a",
+      "source": "A30!C15:H15",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A30-P1-W2",
+      "title": "Determine expected delivery before or after the auditor’s report",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "60d47a279407e598a5531205babb722e7a0fe7a815ee414e67544cb2dedd6654",
+      "source": "A30!C16:H16",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A30-P1-W3",
+      "title": "Request final versions and record any outstanding document",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a03acbc7910a48e348dc3dea75f812464703ec107b239ddda8b345d7e2a7fb1c",
+      "source": "A30!C17:H17",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A30-P2-W1",
+      "title": "Compare relevant figures with audited financial statements",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "279e53fdfef28a5c2123035639cc6930ef32b1f4f783e51dd3ee7a78beb278aa",
+      "source": "A30!C18:H18",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A30-P2-W2",
+      "title": "Compare narrative claims with audit knowledge",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "60c2dbd698d9b2484f5ce3825ce2e1298d7b652cba0196b63a59ec5c29253c2b",
+      "source": "A30!C19:H19",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A30-P2-W3",
+      "title": "Remain alert for other apparently material misstatements",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "23045f1c909cdfd80860731ef0147ee87114fc7cd91066ff4a58b3a777ae5ac5",
+      "source": "A30!C20:H20",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A30-P3-W1",
+      "title": "Discuss the matter and obtain supporting explanation",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "52be62d8c7ebc3f41717c5c6a8443d1ee30e446a934ce78488af32d083449f2a",
+      "source": "A30!C21:H21",
+      "relatedCases": [
+        "P10-UC04",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A30-P3-W2",
+      "title": "Determine whether other information, financial statements or audit understanding needs correction",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "e52603b018494bbc7041eceb6553372201ac4e6a18b22bb81c1ede673d9895ef",
+      "source": "A30!C22:H22",
+      "relatedCases": [
+        "P10-UC04",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A30-P3-W3",
+      "title": "Request correction and escalate refusal to governance",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "7fd74b88edf14e7af481d0d416aa24e081b1b7c8f3d56200660e7df6179ef083",
+      "source": "A30!C23:H23",
+      "relatedCases": [
+        "P10-UC04",
+        "P10-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A30-P4-W1",
+      "title": "Route required Other Information section to A26 when available or expected",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "df6b2aeea78c27878357caee7ad4aabade01902ac79d8fff5e58017eb6c6d819",
+      "source": "A30!C24:H24",
+      "relatedCases": [
+        "P10-UC04",
+        "P10-UC07",
+        "P10-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A30-P4-W2",
+      "title": "If received after the auditor’s report, complete ISA 720 follow-up",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "e2677f4cab59c995b44d76ceee9eb6506fbf6c6e3aebc11e7ced47231002ef07",
+      "source": "A30!C25:H25",
+      "relatedCases": [
+        "P10-UC04",
+        "P10-UC07",
+        "P10-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A30-P4-W3",
+      "title": "Document conclusions, communication and any action for uncorrected matter",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "fccbcc9c77e49fb7860d1217de61e736992d0e3ea2358e17f39809c62a686716",
+      "source": "A30!C26:H26",
+      "relatedCases": [
+        "P10-UC04",
+        "P10-UC07",
+        "P10-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    }
+  ],
+  "connectedCycles": [
+    {
+      "id": "A19",
+      "title": "Resolve audit findings with the client",
+      "steps": 9,
+      "observedSteps": 0,
+      "applicableSteps": 9,
+      "complete": false,
+      "applicableComplete": false,
+      "branchIds": null,
+      "journeys": []
+    },
+    {
+      "id": "A20",
+      "title": "Evaluate misstatements and corrections",
+      "steps": 9,
+      "observedSteps": 0,
+      "applicableSteps": 9,
+      "complete": false,
+      "applicableComplete": false,
+      "branchIds": null,
+      "journeys": []
+    },
+    {
+      "id": "A21",
+      "title": "Complete period-end and reporting-date matters",
+      "steps": 9,
+      "observedSteps": 0,
+      "applicableSteps": 9,
+      "complete": false,
+      "applicableComplete": false,
+      "branchIds": null,
+      "journeys": []
+    },
+    {
+      "id": "A22",
+      "title": "Evaluate final financial statements and disclosures",
+      "steps": 9,
+      "observedSteps": 0,
+      "applicableSteps": 9,
+      "complete": false,
+      "applicableComplete": false,
+      "branchIds": null,
+      "journeys": []
+    },
+    {
+      "id": "A23",
+      "title": "Obtain management’s written representations",
+      "steps": 9,
+      "observedSteps": 0,
+      "applicableSteps": 9,
+      "complete": false,
+      "applicableComplete": false,
+      "branchIds": null,
+      "journeys": []
+    },
+    {
+      "id": "A24",
+      "title": "Communicate with management and those charged with governance",
+      "steps": 9,
+      "observedSteps": 0,
+      "applicableSteps": 9,
+      "complete": false,
+      "applicableComplete": false,
+      "branchIds": null,
+      "journeys": []
+    },
+    {
+      "id": "A25",
+      "title": "Clear engagement review and quality gates",
+      "steps": 9,
+      "observedSteps": 9,
+      "applicableSteps": 9,
+      "complete": true,
+      "applicableComplete": true,
+      "branchIds": [
+        "review-return-and-resubmit",
+        "unresolved-professional-difference",
+        "material-change-stales-review",
+        "eqr-not-required",
+        "eqr-ineligible",
+        "eqr-stale-or-open-note",
+        "eqr-after-report-date"
+      ],
+      "journeys": [
+        {
+          "lifecycle": "A25",
+          "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+          "steps": [
+            {
+              "id": "A25-P1-W1",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "partner",
+              "action": "GET /api/pilot",
+              "expected": [
+                [
+                  "1.3",
+                  "2.6",
+                  "3.1.13",
+                  "3.1.2",
+                  "3.2.4",
+                  "4.1.A1",
+                  "4.4"
+                ],
+                0,
+                true
+              ],
+              "actual": [
+                [
+                  "1.3",
+                  "2.6",
+                  "3.1.13",
+                  "3.1.2",
+                  "3.2.4",
+                  "4.1.A1",
+                  "4.4"
+                ],
+                0,
+                true
+              ],
+              "versions": {
+                "3.1.2": 6,
+                "4.4": 3,
+                "1.3": 2,
+                "2.6": 2,
+                "4.1.A1": 6,
+                "3.2.4": 4,
+                "3.1.13": 3
+              }
+            },
+            {
+              "id": "A25-P1-W2",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "reviewer and partner",
+              "action": "completion-consultation-record → completion-consultation-review",
+              "expected": [
+                "bc4863e6-def7-4164-874f-6d177cea3927",
+                4,
+                "resolved",
+                "91a5c40c-920c-4f94-9e04-68ee7ef280ae"
+              ],
+              "actual": [
+                "bc4863e6-def7-4164-874f-6d177cea3927",
+                4,
+                "resolved",
+                "91a5c40c-920c-4f94-9e04-68ee7ef280ae"
+              ],
+              "versions": {
+                "consultation": 3,
+                "paper": 4,
+                "advice": "91a5c40c-920c-4f94-9e04-68ee7ef280ae"
+              }
+            },
+            {
+              "id": "A25-P1-W3",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "preparer and partner",
+              "action": "work-assign → submit → review",
+              "expected": [
+                "nomin",
+                "bat",
+                2
+              ],
+              "actual": [
+                "nomin",
+                "bat",
+                2
+              ],
+              "versions": {
+                "work": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23/3.2.4",
+                "submission": 2,
+                "assignment": "2026-11-17T07:08:17.174Z"
+              }
+            },
+            {
+              "id": "A25-P2-W1",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "preparer and reviewer",
+              "action": "return → request-reopen → upload → respond → submit → clear → review",
+              "expected": [
+                "Authorized useful-life schedule supports the five-year life",
+                "Attached the approved replacement schedule and reconciled PPE-A to the recorded cost",
+                "b96181cc135a920c5d500121db93f116c35680cc3e222c1650d8e7c4783027fb",
+                true
+              ],
+              "actual": [
+                "Authorized useful-life schedule supports the five-year life",
+                "Attached the approved replacement schedule and reconciled PPE-A to the recorded cost",
+                "b96181cc135a920c5d500121db93f116c35680cc3e222c1650d8e7c4783027fb",
+                true
+              ],
+              "versions": {
+                "first": 3,
+                "final": 6,
+                "note": "a0f34899-417d-40b0-9a98-c9994b58cde6",
+                "evidence": "1cbf5e60-3259-4c15-868a-60e5ae62df1a"
+              }
+            },
+            {
+              "id": "A25-P2-W2",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "reviewer and partner",
+              "action": "completion-consultation-review",
+              "expected": [
+                true,
+                "returned",
+                "resolved"
+              ],
+              "actual": [
+                true,
+                "returned",
+                "resolved"
+              ],
+              "versions": {
+                "id": "bc4863e6-def7-4164-874f-6d177cea3927",
+                "returned": 1,
+                "resolved": 2,
+                "advice": "91a5c40c-920c-4f94-9e04-68ee7ef280ae"
+              }
+            },
+            {
+              "id": "A25-P2-W3",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "reviewer and partner",
+              "action": "register approval → submit → review → completion-consultation-review",
+              "expected": [
+                "changed",
+                false,
+                "reviewed",
+                true
+              ],
+              "actual": [
+                "changed",
+                false,
+                "reviewed",
+                true
+              ],
+              "versions": {
+                "first": 2,
+                "replacement": 4,
+                "previousConsultation": 2,
+                "newConsultation": 3
+              }
+            },
+            {
+              "id": "A25-P3-W1",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "partner",
+              "action": "review → authorize",
+              "expected": [
+                "reviewed",
+                "bat",
+                "e35cfc071d1cd66923c886566f26e47cee2828b0c66490bb17df83b453bfebbe"
+              ],
+              "actual": [
+                "reviewed",
+                "bat",
+                "e35cfc071d1cd66923c886566f26e47cee2828b0c66490bb17df83b453bfebbe"
+              ],
+              "versions": {
+                "completion": 3,
+                "authorization": "2026-11-17T07:08:19.377Z",
+                "artifact": "e35cfc071d1cd66923c886566f26e47cee2828b0c66490bb17df83b453bfebbe"
+              }
+            },
+            {
+              "id": "A25-P3-W2",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "quality",
+              "action": "POST /api/pilot/oversight/action approve",
+              "expected": [
+                "quality",
+                "0a8ac3c68604547b38b56ca2722e8a37578c9e38f05c479ed6b517425010e44b",
+                "e35cfc071d1cd66923c886566f26e47cee2828b0c66490bb17df83b453bfebbe",
+                true
+              ],
+              "actual": [
+                "quality",
+                "0a8ac3c68604547b38b56ca2722e8a37578c9e38f05c479ed6b517425010e44b",
+                "e35cfc071d1cd66923c886566f26e47cee2828b0c66490bb17df83b453bfebbe",
+                true
+              ],
+              "versions": {
+                "basis": "0a8ac3c68604547b38b56ca2722e8a37578c9e38f05c479ed6b517425010e44b",
+                "approvedAt": "2026-11-17T07:08:19.350Z",
+                "reportDate": "2026-11-17",
+                "artifact": "e35cfc071d1cd66923c886566f26e47cee2828b0c66490bb17df83b453bfebbe"
+              }
+            },
+            {
+              "id": "A25-P3-W3",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "quality and partner",
+              "action": "return → authorize denied → approve → authorize",
+              "expected": [
+                true,
+                "0a8ac3c68604547b38b56ca2722e8a37578c9e38f05c479ed6b517425010e44b",
+                true
+              ],
+              "actual": [
+                true,
+                "0a8ac3c68604547b38b56ca2722e8a37578c9e38f05c479ed6b517425010e44b",
+                true
+              ],
+              "versions": {
+                "note": "283ce124-2a81-4c23-bb4f-8b3a90e4a5b7",
+                "clearance": "2026-11-17T07:08:19.350Z",
+                "authorization": "2026-11-17T07:08:19.377Z"
+              }
+            }
+          ],
+          "branches": [
+            {
+              "id": "review-return-and-resubmit",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "preparer and reviewer",
+              "action": "return → respond → submit → clear → review",
+              "expected": [
+                "returned",
+                "submitted",
+                "reviewed",
+                true
+              ],
+              "actual": [
+                "returned",
+                "submitted",
+                "reviewed",
+                true
+              ],
+              "versions": {
+                "first": 3,
+                "final": 6,
+                "note": "a0f34899-417d-40b0-9a98-c9994b58cde6",
+                "evidence": "1cbf5e60-3259-4c15-868a-60e5ae62df1a"
+              }
+            },
+            {
+              "id": "unresolved-professional-difference",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "partner",
+              "action": "completion-consultation-review",
+              "expected": [
+                true,
+                "prohibited",
+                "returned"
+              ],
+              "actual": [
+                true,
+                "prohibited",
+                "returned"
+              ],
+              "versions": {
+                "id": "bc4863e6-def7-4164-874f-6d177cea3927",
+                "version": 1
+              }
+            },
+            {
+              "id": "material-change-stales-review",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "reviewer and partner",
+              "action": "approve ownership change → reassess",
+              "expected": [
+                "changed",
+                false,
+                "reviewed",
+                true
+              ],
+              "actual": [
+                "changed",
+                false,
+                "reviewed",
+                true
+              ],
+              "versions": {
+                "first": 2,
+                "replacement": 4,
+                "previousConsultation": 2,
+                "newConsultation": 3
+              }
+            },
+            {
+              "id": "eqr-not-required",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "partner",
+              "action": "quality-policy → authorize",
+              "expected": [
+                "not-required",
+                false,
+                0,
+                false,
+                true
+              ],
+              "actual": [
+                "not-required",
+                false,
+                0,
+                false,
+                true
+              ],
+              "versions": {
+                "policy": 2,
+                "authorization": "2026-11-17T07:08:18.861Z"
+              }
+            },
+            {
+              "id": "eqr-ineligible",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "partner and quality",
+              "action": "quality-policy → GET /api/pilot/oversight → authorize",
+              "expected": [
+                "ineligible",
+                404,
+                true
+              ],
+              "actual": [
+                "ineligible",
+                404,
+                true
+              ],
+              "versions": {
+                "policy": 4
+              }
+            },
+            {
+              "id": "eqr-stale-or-open-note",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "quality and partner",
+              "action": "approve denied → quality-response → stale approve denied",
+              "expected": [
+                409,
+                409,
+                true
+              ],
+              "actual": [
+                409,
+                409,
+                true
+              ],
+              "versions": {
+                "note": "283ce124-2a81-4c23-bb4f-8b3a90e4a5b7",
+                "initial": "9d47de409bb5ac60cd3a01085e95442e0d50960d12fbdb18b296f77ad6bc9fe4",
+                "final": "0a8ac3c68604547b38b56ca2722e8a37578c9e38f05c479ed6b517425010e44b"
+              }
+            },
+            {
+              "id": "eqr-after-report-date",
+              "engagement": "E-58012a2f-4dd6-4d0f-aee0-44593f88db23",
+              "actor": "quality",
+              "action": "POST /api/pilot/oversight/action approve",
+              "expected": [
+                "2026-11-15",
+                0,
+                409
+              ],
+              "actual": [
+                "2026-11-15",
+                0,
+                409
+              ],
+              "versions": {
+                "basis": "09e21e9877a300fe9585db2592f98fa9ef3fc068c56b5cdbb4bf17d07514a8f4",
+                "reportDate": "2026-11-15"
+              }
+            }
+          ],
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "line": 1946,
+          "missingSteps": [],
+          "missingApplicableSteps": [],
+          "missingBranches": [],
+          "complete": true,
+          "applicableComplete": true
+        }
+      ]
+    },
+    {
+      "id": "A29",
+      "title": "Follow up agreed recommendations or action plans",
+      "steps": 9,
+      "observedSteps": 0,
+      "applicableSteps": 9,
+      "complete": false,
+      "applicableComplete": false,
+      "branchIds": null,
+      "journeys": []
+    },
+    {
+      "id": "A30",
+      "title": "Read and respond to other information in the annual report",
+      "steps": 12,
+      "observedSteps": 0,
+      "applicableSteps": 12,
+      "complete": false,
+      "applicableComplete": false,
+      "branchIds": null,
+      "journeys": []
+    }
+  ],
+  "wholeApplicationCycles": {
+    "total": 51,
+    "complete": 9,
+    "applicable": 51,
+    "applicableComplete": 9
+  },
+  "note": "The seven G05 scenarios are bounded observations. Separate completion, document, quality and conditional-service fixtures are not combined into additional complete lifecycles. Existing A25 behavior remains covered by its own connected regression; full A19–A24 and A29/A30 alternatives and independent acceptance remain open."
+}

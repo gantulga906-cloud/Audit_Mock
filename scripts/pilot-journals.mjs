@@ -1,9 +1,10 @@
+import {actorKey} from './pilot-identity-context.mjs';
 import { createHash } from 'node:crypto';
 import { canEdit, changeWork, recordEvent, snapshot, workKey } from '../src/lib/workspace.ts';
 import { approvedPopulation, cents } from './pilot-population.mjs';
 import { programmeDecision } from './pilot-registers.mjs';
 import { evidenceCurrent } from './pilot-requests.mjs';
-import { accounts, input, PilotError } from './pilot-workflow.mjs';
+import { accounts, accountFor, input, PilotError } from './pilot-workflow.mjs';
 
 const fail = (message,status=409) => { throw new PilotError(status,message); };
 const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -11,15 +12,16 @@ const now = () => new Date().toISOString();
 const method='journal-posting-filters-v1';
 const latest = (m,form) => m.pilotJournals?.[form]?.at(-1);
 
-function basis(m,form,threshold,days) {
+function basis(m,form,threshold,days,parameters) {
   const population=approvedPopulation(m), decision=programmeDecision(m,form), paper=m.work[workKey(m.engagement,form)];
   if (!population || m.extendedPilot && decision?.values.decision!=='adopt') return undefined;
   const end=m.bench.periods[m.engagement].end;
-  const stamp=digest([method,population.version,population.sha256,end,threshold,days,form,decision?.id,decision?.version,paper.owner,paper.reviewer]);
+  if(parameters&&!m.evidence.some(e=>e.id===parameters.coverageEvidence&&e.version===parameters.coverageVersion&&evidenceCurrent(m,e)))return;
+  const stamp=digest([parameters?'journal-whole-multiset-v2':method,population.version,population.sha256,end,threshold,days,form,decision?.id,decision?.version,paper.owner,paper.reviewer,...(parameters?[parameters]:[])]);
   return {population,end,stamp};
 }
 
-const current = (m,run) => !!run && basis(m,run.form,run.threshold,run.days)?.stamp===run.stamp;
+const current = (m,run) => !!run && basis(m,run.form,run.threshold,run.days,run.parameters)?.stamp===run.stamp;
 const resolved = (m,entry) => {
   const review=entry.investigations.at(-1);
   return !!review&&review.result!=='incomplete'&&
@@ -50,7 +52,7 @@ export function syncJournalPapers(m) {
   }
 }
 
-function selectJournals(population,end,threshold,days) {
+export function selectJournals(population,end,threshold,days,parameters) {
   const groups=new Map(), close=Date.parse(end);
   const rows=population.rows.filter(row=>row.state==='accepted');
   if (rows.some(row=>!row.journal||!['manual','system'].includes(row.entryType))) {
@@ -61,17 +63,27 @@ function selectJournals(population,end,threshold,days) {
     if (row.entryType==='manual') entry.criteria.add('manual');
     if (Math.abs(row.cents)>=threshold) entry.criteria.add('amount');
     if (close-Date.parse(row.date)<=days*86_400_000) entry.criteria.add('cutoff');
-    entry.postings.push({id:row.id,row:row.row,account:row.account,date:row.date,cents:row.cents});
+    if(parameters?.roundUnit&&row.cents!==0&&row.cents%parameters.roundUnit===0)entry.criteria.add('round-unit');
+    entry.postings.push({id:row.id,row:row.row,account:row.account,date:row.date,cents:row.cents,...(parameters&&{entity:row.entity,currency:row.currency,entryType:row.entryType,reference:row.reference})});
     groups.set(row.journal,entry);
+  }
+  if(parameters){
+    const fingerprints=new Map();
+    for(const entry of groups.values()){
+      const fingerprint=digest(entry.postings.map(r=>[r.account,r.date,r.cents,r.entity??null,r.currency??null,r.entryType??null,r.reference??null]).map(r=>JSON.stringify(r)).sort());
+      const group=fingerprints.get(fingerprint)??[];group.push(entry);fingerprints.set(fingerprint,group);entry.fingerprint=fingerprint;
+    }
+    for(const entries of fingerprints.values())if(entries.length>1)for(const entry of entries){entry.criteria.add('duplicate-multiset');entry.duplicates=entries.filter(e=>e.id!==entry.id).map(e=>e.id);}
   }
   const selected=[...groups.values()].filter(e=>e.criteria.size);
   const selectedIds=new Set(selected.map(e=>e.id)), acceptedById=new Map(rows.map(row=>[row.id,row]));
   if (population.rows.some(row=>{
     if (row.state==='accepted'||!selectedIds.has(row.journal)) return false;
+    if(parameters)return true;
     const kept=acceptedById.get(row.id);
     return !kept||['journal','account','date','entity','currency','cents','entryType'].some(key=>row[key]!==kept[key]);
   })) fail('Сонгосон журналд хассан эсвэл дутуу бичилт байна. Бүрэн эхийг тулгана уу.');
-  return selected.map(e=>({...e,criteria:[...e.criteria].sort()}));
+  return selected.map(e=>({...e,criteria:[...e.criteria].sort(),...(parameters&&{grossDebit:e.postings.filter(r=>r.cents>0).reduce((n,r)=>n+r.cents,0),grossCredit:e.postings.filter(r=>r.cents<0).reduce((n,r)=>n-r.cents,0),net:e.postings.reduce((n,r)=>n+r.cents,0)})}));
 }
 
 export function journalAction(m,role,action,data,forms) {
@@ -83,23 +95,29 @@ export function journalAction(m,role,action,data,forms) {
     if (!owner) fail('Хөтөлбөрийн бэлтгэгч шаардлагатай.',403);
     const threshold=cents(input(data,'threshold',24)), cut=input(data,'days',2), days=Number(cut);
     if (threshold===null||threshold<=0||!/^\d+$/.test(cut)||days>31) fail('Эерэг дүн ба 0–31 хоног оруулна уу.',400);
-    const scope=basis(m,form,threshold,days);
+    let parameters;
+    if(data.method==='journal-whole-multiset-v2'){
+      const evidence=m.evidence.find(e=>e.id===data.coverageEvidence&&!e.population&&evidenceCurrent(m,e)),roundUnit=data.roundUnit?cents(data.roundUnit):undefined;
+      if(!evidence||roundUnit!==undefined&&(roundUnit===null||roundUnit<=0))fail('Нийт журнал, энгийн бус бичилтийн бодит хамрах хүрээ ба эерэг дугуй нэгж шаардлагатай.');
+      parameters={coverage:input(data,'coverage'),coverageEvidence:evidence.id,coverageVersion:evidence.version,...(roundUnit&&{roundUnit})};
+    }else if(data.method&&data.method!==method)fail('Дэмжигдээгүй журналын арга.');
+    const scope=basis(m,form,threshold,days,parameters);
     if (!scope) fail('Баталсан журналын эх олонлог шаардлагатай.');
     if (prior?.stamp===scope.stamp) return false;
-    if (prior?.population===scope.population.version && (!prior.approval||prior.cases.some(entry=>!resolved(m,entry)))) {
+    if (prior?.population===scope.population.version && current(m,prior) && (!prior.approval||prior.cases.some(entry=>!resolved(m,entry)))) {
       fail('Өмнөх ажиллуулалтын тохиолдлыг хянасны дараа шалгуурыг өөрчилнө.');
     }
     const {population,end,stamp}=scope;
-    const cases=selectJournals(population,end,threshold,days);
+    const cases=selectJournals(population,end,threshold,days,parameters);
     (((m.pilotJournals??={})[form])??=[]).push({form,version:(prior?.version??0)+1,population:population.version,
-      source:population.evidence,sha256:population.sha256,threshold,days,method,stamp,cases,by:role,at:now()});
+      source:population.evidence,sha256:population.sha256,threshold,days,method:parameters?'journal-whole-multiset-v2':method,parameters,stamp,cases,by:actorKey(role),at:now()});
   } else {
     if (!prior || data.version!==String(prior.version)||!current(m,prior)) fail('Журналын одоогийн ажиллуулалтыг сонгоно уу.');
     if (action==='journal-review') {
-      if (paper.reviewer!==accounts[role]||paper.owner===accounts[role]) fail('Хараат бус хянагч шаардлагатай.',403);
+      if (paper.reviewer!==accountFor(m,role)||paper.owner===accountFor(m,role)) fail('Хараат бус хянагч шаардлагатай.',403);
       if (prior.cases.some(entry=>!resolved(m,entry))) fail('Шийдвэрлээгүй журналын тохиолдлыг үнэлнэ үү.');
       if (prior.approval) return false;
-      prior.approval={by:role,at:now(),reason:input(data,'reason'),
+      prior.approval={by:actorKey(role),at:now(),reason:input(data,'reason'),
         investigationStamp:digest(prior.cases.map(entry=>entry.investigations.at(-1)))};
       (prior.approvals??=[]).push(prior.approval);
     } else if (action==='journal-investigate') {
@@ -113,7 +131,7 @@ export function journalAction(m,role,action,data,forms) {
       const finding=m.findings.find(f=>f.id===findingId);
       if (finding&&(finding.resolution||finding.status!=='identified'||result!=='finding')) fail('Илрүүлэлтийг тусдаа шийдвэрлэнэ үү.');
       const review={result,purpose,authority,accounting,evidence:evidence.id,evidenceVersion:evidence.version,cents:amount,
-        by:role,at:now(),...(result==='finding'&&{finding:findingId})};
+        by:actorKey(role),at:now(),...(result==='finding'&&{finding:findingId})};
       delete prior.approval;
       entry.investigations.push(review);
       const key='pilot.journal.'+prior.version+'.'+digest(entry.id).slice(0,24);

@@ -13,14 +13,15 @@ export type IntakeClient={
 export type EnquiryStatus='draft'|'forwarded'|'returned'|'declined'|'converted';
 export type Enquiry={
  id:string;owner:PilotRole;status:EnquiryStatus;clientId:string;company:string;contact:string;email:string;
- origin:'client'|'firm';service:string;start:string;end:string;framework:string;facts:string;
+ origin:'client'|'firm';service:string;start:string;end:string;framework:string;facts:string;nextOwner?:PilotRole;intendedUsers?:string;
  history:{by:PilotRole;at:string;status:EnquiryStatus;note:string;item?:string;before?:Omit<Enquiry,'history'>}[];
  engagement?:string;
 };
 export type IntakeConfirmation={
- enquiry:string;client:string;version:number;confirmation:number;contact:string;by:PilotRole;at:string;note:string;prior?:string;
+ enquiry:string;client:string;version:number;confirmation:number;contact:string;by:PilotRole;at:string;note:string;prior?:string;service?:string;intendedUsers?:string;signatories?:ClientContact[];
 };
-export type IntakeContext=IntakeConfirmation&{currentVersion?:number;contacts:ClientContact[];history:IntakeConfirmation[]};
+export type IntakeContext=IntakeConfirmation&{currentVersion?:number;contacts:ClientContact[];history:IntakeConfirmation[];period:Period;canRefresh?:boolean;
+ items?:{item:string;status:'returned'|'responded'|'confirmed';note:string;owner:PilotRole;due:string;by:PilotRole;at:string;history:unknown[]}[]};
 export type IntakeTerms={
  version:number;status:'draft'|'approved';evidence:string;sha256:string;reference:string;signatory:string;signedOn:string;
  scope:string;clientVersion:number;confirmation:number;start:string;end:string;by:PilotRole;at:string;

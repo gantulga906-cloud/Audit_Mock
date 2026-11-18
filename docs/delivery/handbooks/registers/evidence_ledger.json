@@ -1,0 +1,50 @@
+[
+  {
+    "id": "EV01",
+    "class": "direct original observation",
+    "source": "158 recursive archive member instances; original texts/registers and five current workbooks",
+    "limit": "Hash/text/structured review; not a full fresh visual/semantic review of all historical corpus"
+  },
+  {
+    "id": "EV02",
+    "class": "current code observation",
+    "source": "Pinned 079f9da files, hashes/symbols and selected owning service/type/test inspection",
+    "limit": "No new app suite execution; physical ERD proposals not assumed implemented"
+  },
+  {
+    "id": "EV03",
+    "class": "previously recorded test",
+    "source": ".audit-pilot/source-verification.json and November 16 implementation/browse evidence",
+    "limit": "69 tests, six connected profiles; independent acceptance empty"
+  },
+  {
+    "id": "EV04",
+    "class": "fresh documentation check",
+    "source": "Independent Decimal examples, current workbook inventory, source/ref/count/hash reconciliation and PDF structural/render QA",
+    "limit": "Checks the documents/known source identities; no actual auditor usability approval"
+  },
+  {
+    "id": "EV05",
+    "class": "fresh external reference",
+    "source": "external_research.csv",
+    "limit": "Selected official text/metadata only; access/adoption/edition limits per row"
+  },
+  {
+    "id": "EV06",
+    "class": "proposed interpretation",
+    "source": "Guide build sequences, normalized domain mapping and future method/adapter contracts",
+    "limit": "Not policy or scope approval; preserves original requirements"
+  },
+  {
+    "id": "EV07",
+    "class": "historical chat",
+    "source": "Assess traditional coding tradeoffs, ten recent turns inspected via five two-turn pages",
+    "limit": "Bounded extract only; no full-history review; all historical claims checked against newer evidence"
+  },
+  {
+    "id": "EV08",
+    "class": "unresolved",
+    "source": "29 original gaps plus eight HB clarifications",
+    "limit": "Actual owners/decisions remain to be assigned or confirmed"
+  }
+]

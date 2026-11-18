@@ -106,10 +106,15 @@ export function rosterView(m, files, role, visible) {
     const p = r.values;
     const bookings = p.availableFrom && p.availableTo ? committedRows(models,r.id,p.availableFrom,p.availableTo) : [];
     const scoped = bookings.filter(b=>visible.has(b.engagement.id));
+    const effort=models.filter(model=>visible.has(model.engagement)).flatMap(model=>{
+      const all=model.pilotEffort??[],replaced=new Set(all.map(e=>e.supersedes));
+      return all.filter(e=>e.person===r.id&&!replaced.has(e.id)).map(e=>({engagement:model.engagement,from:e.from,through:e.through,minutes:e.minutes}));
+    });
     return {
       id:r.id,name:p.name,version:r.version,status:p.status,account:p.account || undefined,
       start:p.availableFrom,end:p.availableTo,capacity:p.capacityHours ? Number(p.capacityHours) : null,
       committed:scoped.reduce((sum,b)=>sum+Number(b.row.values.hours),0),
+      actual:effort,
       assignments:scoped.map(({row,engagement})=>{
         const [start,end]=dates(row);
         return {engagement:engagement.id,client:engagement.client,start,end,hours:Number(row.values.hours),capacity:row.values.capacity};

@@ -7,7 +7,7 @@ const iso=(d:Date)=>d.toISOString().slice(0,10);
 const from=(s:string)=>new Date(s+'T00:00:00Z');
 const add=(s:string,n:number)=>iso(new Date(from(s).getTime()+n*DAY));
 const monday=(s:string)=>add(s,-((from(s).getUTCDay()+6)%7));
-const monthLabel=(s:string)=>new Intl.DateTimeFormat('mn-MN',{month:'long',year:'numeric',timeZone:'UTC'}).format(from(s));
+const monthLabel=(s:string)=>`${s.slice(0,4)} оны ${Number(s.slice(5,7))} сар`;
 const daysFrom=(s:string,count:number)=>Array.from({length:count},(_,i)=>add(s,i));
 const names=['Да','Мя','Лх','Пү','Ба','Бя','Ня'];
 

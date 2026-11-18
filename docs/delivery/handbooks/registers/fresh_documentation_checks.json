@@ -1,0 +1,65 @@
+[
+  {
+    "check": "candidate",
+    "actual": "20.00",
+    "expected": "20",
+    "result": "pass",
+    "class": "fresh independent decimal documentation arithmetic; no app run"
+  },
+  {
+    "check": "performance",
+    "actual": "10.80",
+    "expected": "10.8",
+    "result": "pass",
+    "class": "fresh independent decimal documentation arithmetic; no app run"
+  },
+  {
+    "check": "specific",
+    "actual": "13.50",
+    "expected": "13.5",
+    "result": "pass",
+    "class": "fresh independent decimal documentation arithmetic; no app run"
+  },
+  {
+    "check": "specific-performance",
+    "actual": "8.100",
+    "expected": "8.1",
+    "result": "pass",
+    "class": "fresh independent decimal documentation arithmetic; no app run"
+  },
+  {
+    "check": "revised-performance",
+    "actual": "7.20",
+    "expected": "7.2",
+    "result": "pass",
+    "class": "fresh independent decimal documentation arithmetic; no app run"
+  },
+  {
+    "check": "ratio-total",
+    "actual": "50",
+    "expected": "50",
+    "result": "pass",
+    "class": "fresh independent decimal documentation arithmetic; no app run"
+  },
+  {
+    "check": "unposted",
+    "actual": "40",
+    "expected": "40",
+    "result": "pass",
+    "class": "fresh independent decimal documentation arithmetic; no app run"
+  },
+  {
+    "check": "zero-rate-pv",
+    "actual": "200",
+    "expected": "200",
+    "result": "pass",
+    "class": "fresh independent decimal documentation arithmetic; no app run"
+  },
+  {
+    "check": "asset-bridge",
+    "actual": "112",
+    "expected": "112",
+    "result": "pass",
+    "class": "fresh independent decimal documentation arithmetic; no app run"
+  }
+]

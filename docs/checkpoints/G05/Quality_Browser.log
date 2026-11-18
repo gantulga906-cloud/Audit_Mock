@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-17T07:09:10.970Z",
+  "build": {
+    "build": "4vHIcJDJuFIx_W8OUn85Q",
+    "commit": "6df7da211d75d6d19867b38466fcd8b3fbd64a0d",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "engagement": "E-bb8bbe1f-61a3-4275-999b-70cbac73103e",
+  "checks": [
+    "The independent entrance shows the specifically assigned final-confirmation scope separately from a not-required formal EQR",
+    "A new actual quality concern invalidates the earlier confirmation while its signed history stays retained",
+    "The team response, independent note clearance and fresh final confirmation are three distinct recorded decisions",
+    "Fresh actual review, judgment and completion notice renew only the assigned confirmation; no fictional formal EQR approval is created"
+  ],
+  "runtimeErrors": [],
+  "scope": "Disposable G05 standard-intake/G02-planned/G03-controlled fixture; actual matters, corrections, completion decisions and separate independent quality responsibilities remain distinct. No live data, independent source acceptance or external sending adapter changed."
+}

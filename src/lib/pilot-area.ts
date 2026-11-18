@@ -1,6 +1,15 @@
 import type {PilotRole} from './pilot-registers.ts';
 
 export const areaProfiles={
+ '3.1.1':{method:'intangibles',title:'Биет бус хөрөнгө ба хорогдуулалт',inputs:['assetSchedule']},
+ '3.1.6':{method:'longReceivables',title:'Урт хугацаат авлага ба гэрээ',inputs:['receivableSchedule']},
+ '3.1.7':{method:'prepayments',title:'Урьдчилгаа ба хугацааны хуваарилалт',inputs:['allocationSchedule']},
+ '3.1.11':{method:'accruals',title:'Бусад өглөг ба хуримтлуулсан зардал',inputs:['accrualSchedule']},
+ '3.1.12':{method:'deferredIncome',title:'Урьдчилж орсон орлого',inputs:['allocationSchedule']},
+ '3.1.13':{method:'intercompany',title:'Холбоотой талуудын харилцан тулгалт',inputs:['intercompanyBalances','reciprocalBalances']},
+ '3.1.17':{method:'costOfSales',title:'Борлуулалтын өртөг',inputs:['costLots','costIssues']},
+ '3.1.19':{method:'expenses',title:'Үйл ажиллагааны зардлын тулгалт',inputs:['expenseSchedule','expenseSupport']},
+ '3.1.22':{method:'otherIncome',title:'Бусад орлого ба зардлын дүн',inputs:['otherIncomeSchedule']},
  '3.1.16':{method:'sales',title:'Борлуулалт, хугацааны зааг ба үнэ',inputs:['invoices','credits','cash','prices']},
  '3.1.5':{method:'sales',title:'Авлагын насжилт ба дараа үеийн төлөлт',inputs:['invoices','credits','cash','prices']},
  '3.1.10':{method:'purchases',title:'Худалдан авалт, өглөг ба төлбөр',inputs:['receipts','bills','payments']},
@@ -17,6 +26,16 @@ export const areaProfiles={
 } as const;
 
 export const areaMethods={
+ intangibles:{edition:true,primary:'Биет бус хөрөнгийн дүн',lines:[]},
+ depreciation:{edition:true,primary:'Үндсэн хөрөнгийн дүн',lines:[]},
+ longReceivables:{edition:true,primary:'Урт хугацаат авлага',lines:[]},
+ prepayments:{edition:true,primary:'Үлдсэн урьдчилгаа',lines:[]},
+ accruals:{edition:true,primary:'Хуримтлуулсан өглөг',lines:[]},
+ deferredIncome:{edition:true,primary:'Үлдсэн гэрээний өр төлбөр',lines:[]},
+ intercompany:{edition:true,primary:'Холбоотой талын үлдэгдэл',lines:[]},
+ costOfSales:{edition:true,primary:'Борлуулалтын өртөг',lines:[['inventory','Эцсийн бараа материал','debit']]},
+ expenses:{edition:true,primary:'Үйл ажиллагааны зардал',lines:[]},
+ otherIncome:{edition:true,primary:'Бусад орлого / зардал',lines:[]},
  payroll:{edition:true,primary:'Цалингийн зардлын мөр',lines:[['liability','Суутгал, шимтгэлийн өглөг'],['settlement','Цалингийн банкны төлөлт']]},
  tax:{edition:true,primary:'Татварын өглөгийн мөр',lines:[['settlement','Татварын төлөлт']]},
  loans:{edition:true,primary:'Зээлийн үндсэн үлдэгдэл',lines:[['interest','Зээлийн хүүгийн зардал','debit']]},
@@ -26,7 +45,23 @@ export const areaMethods={
  investments:{edition:true,primary:'Хөрөнгө оруулалтын өртгийн мөр',lines:[['income','Хөрөнгө оруулалтын орлого']]},
 } as const;
 
+export const areaAlternatives:Record<string,{method:string;title:string;inputs:readonly string[]}[]>={
+ '3.1.2':[{method:'depreciation',title:'Баталсан шулуун шугамын элэгдэл',inputs:['assetSchedule']}],
+ '3.1.4':[{method:'costOfSales',title:'Жигнэсэн дундаж өртөг ба үлдэгдэл',inputs:['costLots','costIssues']}],
+};
+export const selectedAreaProfile=(form:string,method?:string)=>{const base=areaProfiles[form as keyof typeof areaProfiles];return !method||method===base?.method?base:areaAlternatives[form]?.find(p=>p.method===method);};
 export const areaSources={
+ assetSchedule:{label:'Хорогдуулалт / элэгдлийн баталсан хуваарь',columns:'id,entity,currency,edition,method,cost,residual,life,elapsed,charge,recorded'},
+ receivableSchedule:{label:'Авлага ба гэрээний нөхцөл',columns:'id,entity,currency,edition,method,opening,additions,repayments,closing,due_date,terms'},
+ allocationSchedule:{label:'Баталсан жигд хуваарилалтын хуваарь',columns:'id,entity,currency,edition,method,amount,months,elapsed,recorded,from,to'},
+ accrualSchedule:{label:'Дараа ирсэн нэхэмжлэл ба үйлчилгээний баримт',columns:'id,entity,currency,edition,method,service_date,invoice_date,amount,recorded,support'},
+ intercompanyBalances:{label:'Өөрийн талын үлдэгдэл',columns:'id,entity,currency,edition,method,counterparty,reference,date,direction,amount'},
+ reciprocalBalances:{label:'Нөгөө талын баталсан үлдэгдэл',columns:'id,entity,currency,edition,method,counterparty,reference,date,direction,amount'},
+ costLots:{label:'Өртгийн үлдэгдэл ба орлогын багц',columns:'id,entity,currency,edition,method,item,location,unit,kind,date,quantity,unit_price'},
+ costIssues:{label:'Зарлагын тоо ба бүртгэсэн өртөг',columns:'id,entity,currency,edition,method,item,location,unit,date,quantity,recorded'},
+ expenseSchedule:{label:'Зардал ба гэрээний лавлагаа',columns:'id,entity,currency,edition,method,date,contract,recorded'},
+ expenseSupport:{label:'Бодит үйлчилгээ ба зардлын эх',columns:'id,entity,currency,expense,date,amount,basis'},
+ otherIncomeSchedule:{label:'Баталсан нэг удаагийн гүйлгээний тооцоо',columns:'id,entity,currency,edition,method,date,proceeds,carrying,recorded,support'},
  invoices:{label:'Борлуулалтын нэхэмжлэл',columns:'id,entity,currency,invoice_date,delivery_date,due_date,amount,open_amount,sku,quantity,unit_price,discount'},
  credits:{label:'Кредит баримт',columns:'id,entity,currency,invoice,date,amount'},
  cash:{label:'Дараа үеийн орлого',columns:'id,entity,currency,invoice,date,amount'},
@@ -65,6 +100,7 @@ export const areaSources={
 } as const;
 export type AreaSourceKey=keyof typeof areaSources;
 export const areaFlags:Record<string,string>={
+ judgment:'Мэргэжлийн тусдаа дүгнэлт шаардлагатай',unsupported:'Дэмжигдээгүй арга / дутуу нөхцөл',
  scope:'Байгууллага эсвэл валют зөрсөн', duplicate:'Түлхүүр давхардсан', cutoff:'Хугацааны заагийн зөрүү',
  unmatched:'Яг таарах эх бичилт олдоогүй', variance:'Дүнгийн зөрүү', credit:'Дараа үеийн кредит баримт',
  excess:'Үлдэгдлээс давсан дүн', partial:'Хэсэгчилсэн төлөлт', price:'Үнийн зөвшөөрөгдсөн нөхцөл зөрсөн',
@@ -90,6 +126,6 @@ export type AreaCase=AreaLink&{
 type AreaDisposition={result:'explained'|'finding'|'open';note:string;evidence:string;by:PilotRole;at:string;amount:number;finding?:string};
 type AreaFile={id:string;name:string;version:number;sha256:string};
 export type AreaRun={version:number;current:boolean;population:number;source:string;line:string;through:string;currency:string;stamp:string;
- files:Record<string,AreaFile>;params:{sign:'debit'|'credit';edition?:string;lines?:Record<string,string>};cases:AreaCase[];links:AreaLink[];summary:Record<string,number>;by:PilotRole;at:string;
+ files:Record<string,AreaFile>;params:{method?:string;sign:'debit'|'credit';edition?:string;lines?:Record<string,string>};cases:AreaCase[];links:AreaLink[];summary:Record<string,number>;by:PilotRole;at:string;
  approval?:{by:PilotRole;at:string;conclusion:string};history:{version:number;population:number;at:string;
   files:Record<string,AreaFile>;source:string;approval?:{conclusion:string}}[]};

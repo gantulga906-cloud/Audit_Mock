@@ -1,0 +1,247 @@
+[
+  {
+    "kind": "invoices",
+    "label": "Борлуулалтын нэхэмжлэл",
+    "columns": "id,entity,currency,invoice_date,delivery_date,due_date,amount,open_amount,sku,quantity,unit_price,discount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "credits",
+    "label": "Кредит баримт",
+    "columns": "id,entity,currency,invoice,date,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "cash",
+    "label": "Дараа үеийн орлого",
+    "columns": "id,entity,currency,invoice,date,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "prices",
+    "label": "Баталсан үнийн жагсаалт",
+    "columns": "sku,entity,currency,unit_price,max_discount,from,to",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "receipts",
+    "label": "Хүлээн авалтын баримт",
+    "columns": "id,entity,currency,vendor,date,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "bills",
+    "label": "Нийлүүлэгчийн нэхэмжлэл",
+    "columns": "id,entity,currency,receipt,vendor,date,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "payments",
+    "label": "Нийлүүлэгчийн төлбөр",
+    "columns": "id,entity,currency,invoice,vendor,date,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "bank",
+    "label": "Банкны хуулга",
+    "columns": "id,entity,currency,reference,date,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "reconciliation",
+    "label": "Банк ба дэвтрийн баталсан үлдэгдэл, тохируулга",
+    "columns": "id,entity,currency,kind,reference,date,amount,reason",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "inventory",
+    "label": "Бараа материалын бүртгэл",
+    "columns": "id,entity,currency,item,location,unit,opening_qty,closing_qty,closing_value",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "movements",
+    "label": "Бараа материалын хөдөлгөөн",
+    "columns": "id,entity,currency,item,location,unit,date,kind,quantity",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "counts",
+    "label": "Баталсан тооллогын хуудас",
+    "columns": "id,entity,currency,item,location,unit,date,counted_qty",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "assets",
+    "label": "Үндсэн хөрөнгийн бүртгэл",
+    "columns": "id,entity,currency,class,opening_cost,additions,disposals,transfers,closing_cost,opening_accumulated,charge,disposed_accumulated,adjustments,closing_accumulated",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "additions",
+    "label": "Үндсэн хөрөнгийн нэмэгдлийн нотолгоо",
+    "columns": "id,entity,currency,asset,date,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "payroll",
+    "label": "Цалингийн бүртгэл",
+    "columns": "id,entity,currency,employee,category,date,status,gross,employee_contribution,withholding,employer_contribution,other_deductions,net_adjustment,net",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "payrollRules",
+    "label": "Баталсан цалингийн дүрэм",
+    "columns": "id,entity,currency,edition,category,method,from,to,employee_bps,employer_bps,withholding_bps,cap,withholding_base",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "payrollBank",
+    "label": "Цалингийн банкны хуулга",
+    "columns": "id,entity,currency,payroll,employee,date,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "payrollHistory",
+    "label": "Өмнөх сарын харьцуулах цалин",
+    "columns": "id,entity,currency,employee,category,period,gross",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "payrollVariance",
+    "label": "Баталсан цалингийн хэлбэлзэл ба хуваарь",
+    "columns": "id,entity,currency,edition,from,to,method,amount,rate_bps,pay_day",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "tax",
+    "label": "Татварын тооцооны бүртгэл",
+    "columns": "id,entity,currency,period,category,date,base,adjustment,offset,tax",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "taxRules",
+    "label": "Баталсан татварын дүрэм",
+    "columns": "id,entity,currency,edition,category,method,from,to,rate_bps",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "taxReturns",
+    "label": "Илгээсэн тайлан ба хойшлогдсон татварын хүснэгт",
+    "columns": "id,entity,currency,period,category,date,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "taxPayments",
+    "label": "Татварын төлөлтийн баримт",
+    "columns": "id,entity,currency,period,category,date,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "loans",
+    "label": "Зээлийн бүртгэл",
+    "columns": "id,entity,currency,opening,drawdowns,repayments,movements,closing,recorded_interest,covenant_metric",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "loanTerms",
+    "label": "Хянасан зээлийн нөхцөл ба шалгуур",
+    "columns": "id,entity,currency,loan,edition,method,from,to,rate_bps,day_basis,covenant_direction,covenant_limit,definition",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "loanSegments",
+    "label": "Зээлийн хүүгийн үндсэн дүнгийн сегмент",
+    "columns": "id,entity,currency,loan,from,to,principal",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "leases",
+    "label": "Хянасан түрээсийн нөхцөл",
+    "columns": "id,entity,currency,edition,method,rate_bps,life,elapsed,initial_adjustment,recorded_liability,recorded_rou",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "leasePayments",
+    "label": "Түрээсийн тогтмол төлбөрийн хуваарь",
+    "columns": "id,entity,currency,lease,sequence,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "fxPositions",
+    "label": "Валютын ажил гүйлгээ ба мөнгөн үлдэгдэл",
+    "columns": "id,entity,currency,foreign_currency,date,basis,foreign_amount,recorded",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "fxRates",
+    "label": "Чиглэлтэй, баталсан валютын ханш",
+    "columns": "id,entity,currency,edition,foreign_currency,date,direction,rate_micros",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "equity",
+    "label": "Өмчийн хөдөлгөөний бүртгэл",
+    "columns": "id,entity,currency,edition,method,opening,profit,contributions,distributions,transfers,movements,closing",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "equityActions",
+    "label": "Өмчийн хөдөлгөөний баталсан шийдвэр",
+    "columns": "id,entity,currency,component,kind,date,amount,reference",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "investments",
+    "label": "Хөрөнгө оруулалтын бүртгэл",
+    "columns": "id,entity,currency,edition,method,opening_units,acquired_units,disposed_units,other_units,closing_units,opening_cost,additions,disposals,transfers,closing_cost,income,valuation",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "custody",
+    "label": "Кастодианы үлдэгдэл ба орлогын хуулга",
+    "columns": "id,entity,currency,instrument,date,closing_units,closing_cost,income",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  },
+  {
+    "kind": "investmentCashFlows",
+    "label": "Хянасан энгийн үнэлгээний мөнгөн урсгал",
+    "columns": "id,entity,currency,instrument,edition,method,sequence,rate_bps,amount",
+    "baseline": "079f9da",
+    "owning_file": "src/lib/pilot-area.ts"
+  }
+]

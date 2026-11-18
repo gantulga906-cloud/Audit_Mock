@@ -1,0 +1,112 @@
+{
+  "guide": "G05",
+  "proofs": [
+    {
+      "name": "actual-partial-posting",
+      "expected": {
+        "agreed": 10000,
+        "posted": 6000,
+        "outstanding": 4000
+      },
+      "actual": {
+        "agreed": 10000,
+        "posted": 6000,
+        "outstanding": 4000
+      }
+    },
+    {
+      "name": "separate-completion-documents-retain-exact-statement-basis",
+      "expected": {
+        "records": 8,
+        "currentAfterChange": 0,
+        "oldNotes": "29b53f7b-2926-4c5c-afa7-17ab1846a38c"
+      },
+      "actual": {
+        "records": 8,
+        "currentAfterChange": 0,
+        "oldNotes": "29b53f7b-2926-4c5c-afa7-17ab1846a38c"
+      }
+    },
+    {
+      "name": "zero-net-reclassification-counted-by-actual-effects",
+      "expected": {
+        "verified": 1000,
+        "rows": 2,
+        "secondOutstanding": 1000
+      },
+      "actual": {
+        "verified": 1000,
+        "rows": 2,
+        "secondOutstanding": 1000
+      }
+    },
+    {
+      "name": "qualitative-disclosure-needs-actual-new-notes",
+      "expected": {
+        "amount": 0,
+        "verified": true,
+        "statementAdvanced": true
+      },
+      "actual": {
+        "amount": 0,
+        "verified": true,
+        "statementAdvanced": true
+      }
+    },
+    {
+      "name": "separate-r4-and-formal-eqr",
+      "expected": {
+        "ordinaryHistory": 1,
+        "formalHistory": 0,
+        "ordinaryCurrent": false
+      },
+      "actual": {
+        "ordinaryHistory": 1,
+        "formalHistory": 0,
+        "ordinaryCurrent": false
+      }
+    },
+    {
+      "name": "conditional-service-requires-real-authority",
+      "expected": {
+        "active": true,
+        "managementClaim": "claimed-complete",
+        "verified": "supported",
+        "financialFindings": 0
+      },
+      "actual": {
+        "active": true,
+        "managementClaim": "claimed-complete",
+        "verified": "supported",
+        "financialFindings": 0
+      }
+    },
+    {
+      "name": "applied-consultation-source-change",
+      "expected": {
+        "current": false,
+        "history": "prohibited",
+        "materiality": "reviewed"
+      },
+      "actual": {
+        "current": false,
+        "history": "prohibited",
+        "materiality": "reviewed"
+      }
+    },
+    {
+      "name": "unknowns-and-restricted-consequence",
+      "expected": {
+        "financialFindings": 0,
+        "visibleToPreparer": false,
+        "retainedVersion": 1
+      },
+      "actual": {
+        "financialFindings": 0,
+        "visibleToPreparer": false,
+        "retainedVersion": 1
+      }
+    }
+  ],
+  "scope": "Persisted fictional source-grounded engineering evidence; independent source acceptance remains separate"
+}

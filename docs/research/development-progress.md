@@ -103,3 +103,27 @@ The A28 fixture starts from a signed, delivered and sealed report. The partner r
 The report includes the 20 confirmed form dependencies, the 58 proposed automation extensions, and the plan's 185 BPMN gateways and 827 flows across all five stages. BPMN rows retain the exact source ID and unresolved disposition pending action-by-action verification. The report tracks operational checks for fresh setup, cutover and rollback, recovery, workload and deployment separately.
 
 A fixture pass leaves its source contract open for independent acceptance. Record an actual decision in `scripts/pilot-release-acceptance.json` with its `kind`, source `id`, `sourceSha256` from the reported row, `decision`, accountable `owner`, separate `reviewer`, approval `reference` and `reason`. An `accepted` decision lists positive and negative `checks`, each with the scenario's `file`, `test`, test file `sha256`, `actor`, `action`, `branch`, `expected` and `observed`. The verifier reopens a decision when source content, test bytes, result or role evidence changes. Eligible E2E rows, BPMN transitions and future automations can receive a separately approved scope decision. Each future automation stays scope-pending until a decision is recorded. The D03 and D24 feature dispositions remain source-defined. No independent release decisions have been recorded.
+
+## Post-redesign functional continuation — 11 November 2026
+
+F0 repairs unavailable/revoked engagement recovery and returned-work navigation. F1 adds controlled report preparation (M10-F10), recipient failure/uncertainty reconciliation, policy-configured independent assembly (M12-F02), retained authorization/review histories and custody return/correction/reoffer. Existing pilot paths are preserved.
+
+The suite now has 65 passing tests and six connected reference cycles: A08, A11, A25, A26, A27 and A28. Direct fixture evidence covers 60/476 steps and 66/315 criteria. Representative browser checks cover the repaired navigation plus actual report-preparation/assembly approvals and custody handoffs. Source-owner acceptance and operational release remain open. The 25-package/128-task saved backlog and all source dispositions are retained.
+
+See [implementation, principal action inventory, scope limits and reproduction](functional-continuation-2026-11-11.md). Next is F2 source-form fidelity and explicit materiality overrides; unbiased sampling/projection and the broader automation/identity/integration backlog remain open.
+
+## Materiality selection and F2 source inventory — 11 November 2026
+
+The first F2 family adds explicit versioned benchmark candidates and auditor-selected/overridden overall, performance, specific and clearly trivial thresholds for 1.3 (FG-02 / AUTO-046). Calculations use selected amounts, preserve zero, generate compatible native source answers and retain planning/final decisions, independent review and downstream staleness/history. The old percentage profile remains supported.
+
+The five unchanged source workbooks have 70 form worksheets and one change-register sheet. All 272 formula cells generate row numbers; the 1,820 list validations comprise 1,048 responsibility assignments and 772 other categorical lists, with all options resolved. Structural inventory does not complete semantic form acceptance.
+
+See [implementation, source mapping, tests and remaining sequence](materiality-and-form-fidelity-2026-11-11.md). Continue the remaining representative F2 form families before whole-form closure; the original wider backlog remains in force.
+
+## Controlled form adoption and repeated schedules — 16 November 2026
+
+F2/R08 now has a read-only edition comparison, explicit acknowledgement for incompatible direct adoption, stale-review rejection and per-cell repeated-row migration. The builder persists actual typed columns, including accepted evidence links, while publication/adoption remain separate. Shared runtime source contracts correct narrative asset results and text sample identifiers/signed numeric differences. Previously pinned templates, old answers and original files remain in history.
+
+The existing signed questionnaire regression now demonstrates the loss gate before its original preservation assertions. New API and browser fixtures cover actual table-schema editing, migration review, compatible cells/IDs, typed source schedules and restart. Whole-form source acceptance and programme-specific acknowledgement, import mapping, effective dates/retirement and wider F2 work remain open.
+
+See [implementation, contracts and verification](form-adoption-2026-11-16.md). The original 25-package/128-task scope remains the development baseline.

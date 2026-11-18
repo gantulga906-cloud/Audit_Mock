@@ -1,0 +1,2155 @@
+[
+  {
+    "register": "acceptance_register",
+    "json": "acceptance_register.json",
+    "csv": "acceptance_register.csv",
+    "records": 204,
+    "columns": [
+      {
+        "name": "scenario",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "lifecycle",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "title",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "source_ids",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "actors",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "input_revisions",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "actions",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "expected_outcome",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "recorded_profile_evidence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "observed_this_session",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "independent_acceptance",
+        "meaning": "A separate accountable source decision; currently open."
+      },
+      {
+        "name": "scope",
+        "meaning": "Original scope disposition (core/conditional/excluded/pending); retained."
+      },
+      {
+        "name": "task_package",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "action_contracts_source",
+    "json": "action_contracts_source.json",
+    "csv": "action_contracts_source.csv",
+    "records": 75,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "case",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "process",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "authority",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "tables",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "inputs",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "steps",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "checks",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "failure_retry",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "limitations",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "output",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "state",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "shared",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "open_decisions",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "automation_methods",
+    "json": "automation_methods.json",
+    "csv": "automation_methods.csv",
+    "records": 58,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "title",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "name",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "source",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "scope",
+        "meaning": "Original scope disposition (core/conditional/excluded/pending); retained."
+      },
+      {
+        "name": "minimum",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "processes",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "cases",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "criteria",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "inputs",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "method",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "output",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "human",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "humanResponsibility",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "limits",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "extensions",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "baselineStatus",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "exampleStatus",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "section",
+        "meaning": "Stable Markdown anchor; source-map is the domain source-map section."
+      },
+      {
+        "name": "current_status",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "recorded_observations",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "independent_example",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "example_evidence_class",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "current_method_proof",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "staleness",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "task_package",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "automation_runtime_profiles",
+    "json": "automation_runtime_profiles.json",
+    "csv": "automation_runtime_profiles.csv",
+    "records": 58,
+    "columns": [
+      {
+        "name": "automation",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "source_input_contract",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "current_wire_profile",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "candidate_method",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "candidate_input_kinds",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "units_policy",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "status",
+        "meaning": "Original recorded/source status; not changed by guide mapping."
+      },
+      {
+        "name": "recorded_evidence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "remaining_contract_task",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "independent_acceptance",
+        "meaning": "A separate accountable source decision; currently open."
+      }
+    ]
+  },
+  {
+    "register": "code_observation_index",
+    "json": "code_observation_index.json",
+    "csv": "code_observation_index.csv",
+    "records": 72,
+    "columns": [
+      {
+        "name": "path",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sha256",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "lines",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "symbols",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "command_literals",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "baseline",
+        "meaning": "Inspected local commit; remote publication status is separate."
+      }
+    ]
+  },
+  {
+    "register": "criterion_acceptance",
+    "json": "criterion_acceptance.json",
+    "csv": "criterion_acceptance.csv",
+    "records": 315,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "case",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "process",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "role",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "criterion",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "contract",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "screen",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "baselineStatus",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "source",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "verification",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "expected",
+        "meaning": "Independent/source expected outcome; never automatically an observed result."
+      },
+      {
+        "name": "source_evidence_status",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "required_proof",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "session_execution",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "current_area_input_contracts",
+    "json": "current_area_input_contracts.json",
+    "csv": "current_area_input_contracts.csv",
+    "records": "object",
+    "columns": [
+      {
+        "name": "baseline",
+        "meaning": "Inspected local commit; remote publication status is separate."
+      },
+      {
+        "name": "file",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "areaProfiles",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "areaMethods",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "areaSources",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ],
+    "csv_projection_note": "CSV exposes areaSources only; JSON also retains areaProfiles/areaMethods"
+  },
+  {
+    "register": "current_area_input_schemas",
+    "json": "current_area_input_schemas.json",
+    "csv": "current_area_input_schemas.csv",
+    "records": 35,
+    "columns": [
+      {
+        "name": "kind",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "label",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "columns",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "baseline",
+        "meaning": "Inspected local commit; remote publication status is separate."
+      },
+      {
+        "name": "owning_file",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "current_area_typed_schemas",
+    "json": "current_area_typed_schemas.json",
+    "csv": "current_area_typed_schemas.csv",
+    "records": 35,
+    "columns": [
+      {
+        "name": "kind",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "label",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "headers",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "fields",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "file_contract",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "basis",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "supported_boundary",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "current_workbook_observations",
+    "json": "current_workbook_observations.json",
+    "csv": "current_workbook_observations.csv",
+    "records": 5,
+    "columns": [
+      {
+        "name": "file",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "path",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "registered_sha256",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "current_sha256",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "same_binary",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "inspection_date",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "semantic_evidence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "data_dictionary",
+    "json": "data_dictionary.json",
+    "csv": null,
+    "records": 44,
+    "columns": [
+      {
+        "name": "register",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "json",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "csv",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "records",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "columns",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "data_ownership_staleness",
+    "json": "data_ownership_staleness.json",
+    "csv": "data_ownership_staleness.csv",
+    "records": 17,
+    "columns": [
+      {
+        "name": "contract",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "owner",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "consumers",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "change_trigger",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "required_effect_and_preserved_history",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "owning_module",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "classification",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "dependencies",
+    "json": "dependencies.json",
+    "csv": "dependencies.csv",
+    "records": 20,
+    "columns": [
+      {
+        "name": "from",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "to",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "targetField",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "type",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "evidence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "locator",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "description",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "confidence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "enforcement",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "section",
+        "meaning": "Stable Markdown anchor; source-map is the domain source-map section."
+      },
+      {
+        "name": "current_status",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "apply_at",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "change_rule",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "tasks",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "domain_lifecycle_map",
+    "json": "domain_lifecycle_map.json",
+    "csv": "domain_lifecycle_map.csv",
+    "records": 51,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "title",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "totalSteps",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "observedSteps",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "currentConnectedScenarioPassed",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sourceScope",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "plannedScope",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "originalWorkPackages",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "proposedPrimaryPackage",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "remainingWork",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "acceptance",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "currentBranchIds",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "recorded_connected",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "recorded_direct_steps",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "independent_acceptance",
+        "meaning": "A separate accountable source decision; currently open."
+      },
+      {
+        "name": "evidence_class",
+        "meaning": "What the observation actually proves and when."
+      },
+      {
+        "name": "source_step_ids",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "evidence_ledger",
+    "json": "evidence_ledger.json",
+    "csv": "evidence_ledger.csv",
+    "records": 8,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "class",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "source",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "limit",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "external_research",
+    "json": "external_research.json",
+    "csv": "external_research.csv",
+    "records": 13,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "issuing_body",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "document",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "edition",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "locator",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "publication_date",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "international_effective_basis",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "engagement_applicability",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "jurisdiction_adoption",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "url",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "accessed",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "inspection_limit",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "supported_point",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "fieldwork_variants",
+    "json": "fieldwork_variants.json",
+    "csv": "fieldwork_variants.csv",
+    "records": 22,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "parent_case",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "area",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "scene",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "input_requirements",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "preparer_action",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "reviewer_goal",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "professional_or_method_limit",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "source_locators",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "scope_basis",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "handoff",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "section",
+        "meaning": "Stable Markdown anchor; source-map is the domain source-map section."
+      },
+      {
+        "name": "current_status",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "acceptance_scenarios",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "tasks",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "form_fidelity",
+    "json": "form_fidelity.json",
+    "csv": "form_fidelity.csv",
+    "records": 70,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "title",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "stage",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sheet",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "family",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "purpose",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "source",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "fields",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sections",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "clauses",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "reserveRows",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "cases",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "roles",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "interpretation",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "formulaCount",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "validationCount",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "rowCount",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "columnCount",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sourceLocator",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "bindingStatus",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "baselineStatus",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "baselineTitle",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "governance_guide",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "registered_source_locator",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "registered_formula_cells",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "registered_validation_definitions",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "current_evidence_status",
+        "meaning": "Recorded source-verifier status, not semantic parity."
+      },
+      {
+        "name": "whole_form_acceptance",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "runtime_correction",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "remaining_fidelity",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "task_ids",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "fresh_current_workbook_inventory",
+    "json": "fresh_current_workbook_inventory.json",
+    "csv": null,
+    "records": "object",
+    "columns": [
+      {
+        "name": "edition",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "readOnly",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "interpretation",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "counts",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "categories",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "workbooks",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "fresh_documentation_checks",
+    "json": "fresh_documentation_checks.json",
+    "csv": "fresh_documentation_checks.csv",
+    "records": 9,
+    "columns": [
+      {
+        "name": "check",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "actual",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "expected",
+        "meaning": "Independent/source expected outcome; never automatically an observed result."
+      },
+      {
+        "name": "result",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "class",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "future_development_compatibility",
+    "json": "future_development_compatibility.json",
+    "csv": "future_development_compatibility.csv",
+    "records": 19,
+    "columns": [
+      {
+        "name": "proposal",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "tasks",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "affected_scope",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "preserved_contracts",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "required_adaptations",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "possible_conflict_or_decision",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "integration_sequence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "requirement_disposition",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "nested_source_members",
+    "json": "nested_source_members.json",
+    "csv": "nested_source_members.csv",
+    "records": 158,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "locator",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "bytes",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sha256",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "pages",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "open_decisions",
+    "json": "open_decisions.json",
+    "csv": "open_decisions.csv",
+    "records": 37,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "kind",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "question",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "evidence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "required_decision",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "owner",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "status",
+        "meaning": "Original recorded/source status; not changed by guide mapping."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "blocks",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "original_backlog_preserved",
+    "json": "original_backlog_preserved.json",
+    "csv": null,
+    "records": "object",
+    "columns": [
+      {
+        "name": "planDate",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "baselineCommit",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "intent",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "ownerStatus",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sizing",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "packages",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "lifecycleMatrix",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "variantMatrix",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "reviewDate",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "previousBaselineCommit",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "scopeOfThisDeliverable",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sourceAcceptanceChanged",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "reviewFindings",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "preservationChecks",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "implementationCheckpoint",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "original_plan_preservation_checks",
+    "json": "original_plan_preservation_checks.json",
+    "csv": "original_plan_preservation_checks.csv",
+    "records": 2,
+    "columns": [
+      {
+        "name": "check",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "result",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "original",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "compared",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "process_screen_gap_dispositions",
+    "json": "process_screen_gap_dispositions.json",
+    "csv": "process_screen_gap_dispositions.csv",
+    "records": 70,
+    "columns": [
+      {
+        "name": "kind",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "title",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "cases",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "screens",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "roles",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "criteria",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "disposition",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "page",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "processes",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "evidence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "resolution",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "owner",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "status",
+        "meaning": "Original recorded/source status; not changed by guide mapping."
+      }
+    ]
+  },
+  {
+    "register": "recorded_Original_Source_Check",
+    "json": "recorded_Original_Source_Check.json",
+    "csv": null,
+    "records": "object",
+    "columns": [
+      {
+        "name": "verifiedOn",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "inputs",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "recorded_Scope_Preservation",
+    "json": "recorded_Scope_Preservation.json",
+    "csv": null,
+    "records": "object",
+    "columns": [
+      {
+        "name": "date",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "baselineCommit",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "currentCommit",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "groups",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "registeredRows",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "connectedCycles",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "allPriorCyclesPreserved",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sourceFileByteChanges",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "effectiveValidationRuleChanges",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sourceAcceptance",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "backlog",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "recorded_source_verification",
+    "json": "recorded_source_verification.json",
+    "csv": null,
+    "records": "object",
+    "columns": [
+      {
+        "name": "summary",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "build",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "scenarios",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "testFiles",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "tests",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "lifecycles",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "lifecycleErrors",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "reports",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "recorded_Validation_Cell_Coverage_Comparison",
+    "json": "recorded_Validation_Cell_Coverage_Comparison.json",
+    "csv": null,
+    "records": "object",
+    "columns": [
+      {
+        "name": "date",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "comparedWithExactRegisteredInventory",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "results",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "recorded_Workbook_Semantic_Comparison",
+    "json": "recorded_Workbook_Semantic_Comparison.json",
+    "csv": null,
+    "records": "object",
+    "columns": [
+      {
+        "name": "date",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "readOnly",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "results",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "remote_baseline_observation",
+    "json": "remote_baseline_observation.json",
+    "csv": null,
+    "records": "object",
+    "columns": [
+      {
+        "name": "checked_on",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "branches",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "prs",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "compare",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "chat",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "requirement_traceability",
+    "json": "requirement_traceability.json",
+    "csv": "requirement_traceability.csv",
+    "records": 2247,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "title",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "scope",
+        "meaning": "Original scope disposition (core/conditional/excluded/pending); retained."
+      },
+      {
+        "name": "status",
+        "meaning": "Original recorded/source status; not changed by guide mapping."
+      },
+      {
+        "name": "fixturePassed",
+        "meaning": "Direct engineering fixture evidence flag; independent acceptance is separate."
+      },
+      {
+        "name": "sourceRowSha256",
+        "meaning": "Frozen normalized source-row hash from recorded verifier; retained."
+      },
+      {
+        "name": "source",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "relatedCases",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "observations",
+        "meaning": "Previously recorded bounded test observations, not this-session app execution."
+      },
+      {
+        "name": "relatedScenarios",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "register",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "section",
+        "meaning": "Stable Markdown anchor; source-map is the domain source-map section."
+      },
+      {
+        "name": "disposition",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "owning_module_candidate",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "code_baseline",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "evidence_class",
+        "meaning": "What the observation actually proves and when."
+      },
+      {
+        "name": "acceptance_scenario",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "open_decision",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "implementation_note",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sourceDisposition",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "role_action_runtime",
+    "json": "role_action_runtime.json",
+    "csv": "role_action_runtime.csv",
+    "records": 11,
+    "columns": [
+      {
+        "name": "action",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "actor",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "preconditions",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "outcome_and_independence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "owning_file",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "baseline",
+        "meaning": "Inspected local commit; remote publication status is separate."
+      },
+      {
+        "name": "evidence_class",
+        "meaning": "What the observation actually proves and when."
+      }
+    ]
+  },
+  {
+    "register": "role_action_source",
+    "json": "role_action_source.json",
+    "csv": "role_action_source.csv",
+    "records": 375,
+    "columns": [
+      {
+        "name": "case",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "process",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "capacity",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "primary_capacity",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "command_or_goal",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "owning_contract",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "perform_goal",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "read",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "review_boundary",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "revocation",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "source_alias_crosswalk",
+    "json": "source_alias_crosswalk.json",
+    "csv": "source_alias_crosswalk.csv",
+    "records": 14,
+    "columns": [
+      {
+        "name": "source_id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "canonical_source_id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "historical_path",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "historical_sha256",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "current_archive_exact_hash_matches",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "authority",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "historical_review_status",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "current_review_limit",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "edition_conflict",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "historical_file_present",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "current_historical_path_sha256",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "current_historical_path_matches",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "decision_reference",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "source_conflicts",
+    "json": "source_conflicts.json",
+    "csv": "source_conflicts.csv",
+    "records": 16,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "source",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "issue",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "resolution",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "affected",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "source_edition_register",
+    "json": "source_edition_register.json",
+    "csv": "source_edition_register.csv",
+    "records": 200,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "identity",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "locator",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sha256",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "edition",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "observation_date",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "authority",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "content_date",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "inspection_limit",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "conflict",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "duplicate_canonical",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "source_edition_registered",
+    "json": "source_edition_registered.json",
+    "csv": "source_edition_registered.csv",
+    "records": 23,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "path",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "sha256",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "bytes",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "review",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "source_populations",
+    "json": "source_populations.json",
+    "csv": "source_populations.csv",
+    "records": 15,
+    "columns": [
+      {
+        "name": "population",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "rows",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "standards_source_edition",
+    "json": "standards_source_edition.json",
+    "csv": "standards_source_edition.csv",
+    "records": 52,
+    "columns": [
+      {
+        "name": "reference_id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "authority",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "reference",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "edition_inspected",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "provisions_inspected",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "effective_basis",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "effective_date",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "application_condition",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "local_applicability_status",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "affected_use_cases",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "reference_topic",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "verification_limit",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "related_decisions",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "primary_source_url",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "local_context_url",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "verified_on",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "task_to_guide",
+    "json": "task_to_guide.json",
+    "csv": "task_to_guide.csv",
+    "records": 128,
+    "columns": [
+      {
+        "name": "id",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "title",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "workAndExpectedResult",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "status",
+        "meaning": "Original recorded/source status; not changed by guide mapping."
+      },
+      {
+        "name": "owner",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "evidence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "priorStatus",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "checkpointStatus",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "proposedExecutionBatch",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "reviewAssessment",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "implementationAssessment",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "implementationStatus",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "implementationEvidence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "package",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "package_title",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "original_prerequisites",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "recommended_sequence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "handbook_status",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "done_condition",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "implementationCheckpoints",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "variant_acceptance_scenarios",
+    "json": "variant_acceptance_scenarios.json",
+    "csv": "variant_acceptance_scenarios.csv",
+    "records": 110,
+    "columns": [
+      {
+        "name": "scenario",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "variant",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "guide",
+        "meaning": "G00-G11 navigation assignment; interpretation, not acceptance."
+      },
+      {
+        "name": "source",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "expected",
+        "meaning": "Independent/source expected outcome; never automatically an observed result."
+      },
+      {
+        "name": "status",
+        "meaning": "Original recorded/source status; not changed by guide mapping."
+      },
+      {
+        "name": "evidence",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      }
+    ]
+  },
+  {
+    "register": "workflow_form_uses_source",
+    "json": "workflow_form_uses_source.json",
+    "csv": "workflow_form_uses_source.csv",
+    "records": 316,
+    "columns": [
+      {
+        "name": "lifecycle",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "phase",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "form_code",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "title",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "source",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "locator",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "source_use",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "lifetime",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "condition",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "cases",
+        "meaning": "Retained source/observation or explicitly named proposed contract value; see owning guide and evidence_class."
+      },
+      {
+        "name": "status",
+        "meaning": "Original recorded/source status; not changed by guide mapping."
+      }
+    ]
+  }
+]

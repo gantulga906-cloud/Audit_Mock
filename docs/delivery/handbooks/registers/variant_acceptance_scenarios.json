@@ -1,0 +1,1542 @@
+[
+  {
+    "scenario": "P09-UC02-V01-NORMAL",
+    "variant": "P09-UC02-V01",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.1А!C10:C22",
+      "form_id": "FORM-028",
+      "title": "Audit program — intangible assets"
+    },
+    "expected": "120 cost / 3 years = 40 annual charge under a selected straight-line full-year profile. Rights and capitalization evidence are a separate prerequisite.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V01-EXCEPTION",
+    "variant": "P09-UC02-V01",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.1А!C10:C22",
+      "form_id": "FORM-028",
+      "title": "Audit program — intangible assets"
+    },
+    "expected": "Unsupported right/recognition basis prevents an automated asset conclusion even if arithmetic is correct.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V01-MISSING",
+    "variant": "P09-UC02-V01",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.1А!C10:C22",
+      "form_id": "FORM-028",
+      "title": "Audit program — intangible assets"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V01-UNAUTH",
+    "variant": "P09-UC02-V01",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.1А!C10:C22",
+      "form_id": "FORM-028",
+      "title": "Audit program — intangible assets"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V01-CHANGE",
+    "variant": "P09-UC02-V01",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.1А!C10:C22",
+      "form_id": "FORM-028",
+      "title": "Audit program — intangible assets"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V02-NORMAL",
+    "variant": "P09-UC02-V02",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.2А!C10:C27",
+      "form_id": "FORM-029",
+      "title": "Audit program — property, plant and equipment"
+    },
+    "expected": "Cost 120, residual 20, life 5 gives annual straight-line charge 20 before any approved proration.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V02-EXCEPTION",
+    "variant": "P09-UC02-V02",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.2А!C10:C27",
+      "form_id": "FORM-029",
+      "title": "Audit program — property, plant and equipment"
+    },
+    "expected": "An addition without original support or a revised useful life needs investigation and affected recalculation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V02-MISSING",
+    "variant": "P09-UC02-V02",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.2А!C10:C27",
+      "form_id": "FORM-029",
+      "title": "Audit program — property, plant and equipment"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V02-UNAUTH",
+    "variant": "P09-UC02-V02",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.2А!C10:C27",
+      "form_id": "FORM-029",
+      "title": "Audit program — property, plant and equipment"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V02-CHANGE",
+    "variant": "P09-UC02-V02",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.2А!C10:C27",
+      "form_id": "FORM-029",
+      "title": "Audit program — property, plant and equipment"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V03-NORMAL",
+    "variant": "P09-UC02-V03",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.3А!C10:C24",
+      "form_id": "FORM-030",
+      "title": "Audit program — investments"
+    },
+    "expected": "Opening 10 units + acquired 5 - disposed 2 = 13; custody confirms 12, leaving one unit to investigate.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V03-EXCEPTION",
+    "variant": "P09-UC02-V03",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.3А!C10:C24",
+      "form_id": "FORM-030",
+      "title": "Audit program — investments"
+    },
+    "expected": "A quoted price does not decide control/influence/measurement category; missing exact-date valuation support stays open.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V03-MISSING",
+    "variant": "P09-UC02-V03",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.3А!C10:C24",
+      "form_id": "FORM-030",
+      "title": "Audit program — investments"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V03-UNAUTH",
+    "variant": "P09-UC02-V03",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.3А!C10:C24",
+      "form_id": "FORM-030",
+      "title": "Audit program — investments"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V03-CHANGE",
+    "variant": "P09-UC02-V03",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.3А!C10:C24",
+      "form_id": "FORM-030",
+      "title": "Audit program — investments"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V04-NORMAL",
+    "variant": "P09-UC02-V04",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.4А!C10:C25",
+      "form_id": "FORM-031",
+      "title": "Audit program — inventories"
+    },
+    "expected": "Opening 100 + receipts 20 - issues 10 + signed adjustment -3 = 107; physical 106 differs by -1.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V04-EXCEPTION",
+    "variant": "P09-UC02-V04",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.4А!C10:C25",
+      "form_id": "FORM-031",
+      "title": "Audit program — inventories"
+    },
+    "expected": "Wrong location/unit or count date cannot be silently combined; roll movements to the relevant date.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V04-MISSING",
+    "variant": "P09-UC02-V04",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.4А!C10:C25",
+      "form_id": "FORM-031",
+      "title": "Audit program — inventories"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V04-UNAUTH",
+    "variant": "P09-UC02-V04",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.4А!C10:C25",
+      "form_id": "FORM-031",
+      "title": "Audit program — inventories"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V04-CHANGE",
+    "variant": "P09-UC02-V04",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.4А!C10:C25",
+      "form_id": "FORM-031",
+      "title": "Audit program — inventories"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V05-NORMAL",
+    "variant": "P09-UC02-V05",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.5А!C10:C23",
+      "form_id": "FORM-032",
+      "title": "Audit program — receivables"
+    },
+    "expected": "Invoice 100 less validated subsequent receipt 60 leaves 40 before credit/allowance analysis.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V05-EXCEPTION",
+    "variant": "P09-UC02-V05",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.5А!C10:C23",
+      "form_id": "FORM-032",
+      "title": "Audit program — receivables"
+    },
+    "expected": "Unmatched or wrong-customer receipt cannot clear the invoice; aging is not an impairment conclusion.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V05-MISSING",
+    "variant": "P09-UC02-V05",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.5А!C10:C23",
+      "form_id": "FORM-032",
+      "title": "Audit program — receivables"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V05-UNAUTH",
+    "variant": "P09-UC02-V05",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.5А!C10:C23",
+      "form_id": "FORM-032",
+      "title": "Audit program — receivables"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V05-CHANGE",
+    "variant": "P09-UC02-V05",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.5А!C10:C23",
+      "form_id": "FORM-032",
+      "title": "Audit program — receivables"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V06-NORMAL",
+    "variant": "P09-UC02-V06",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.6А!C11:C18",
+      "form_id": "FORM-033",
+      "title": "Audit program — other long-term receivables"
+    },
+    "expected": "Contractual 100 due after the next operating-cycle/current classification boundary needs explicit framework/contract analysis.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V06-EXCEPTION",
+    "variant": "P09-UC02-V06",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.6А!C11:C18",
+      "form_id": "FORM-033",
+      "title": "Audit program — other long-term receivables"
+    },
+    "expected": "Missing terms or rights prevents automatic current/noncurrent classification or discounting.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V06-MISSING",
+    "variant": "P09-UC02-V06",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.6А!C11:C18",
+      "form_id": "FORM-033",
+      "title": "Audit program — other long-term receivables"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V06-UNAUTH",
+    "variant": "P09-UC02-V06",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.6А!C11:C18",
+      "form_id": "FORM-033",
+      "title": "Audit program — other long-term receivables"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V06-CHANGE",
+    "variant": "P09-UC02-V06",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.6А!C11:C18",
+      "form_id": "FORM-033",
+      "title": "Audit program — other long-term receivables"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V07-NORMAL",
+    "variant": "P09-UC02-V07",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.7А!C11:C17",
+      "form_id": "FORM-034",
+      "title": "Audit program — other receivables and prepayments"
+    },
+    "expected": "A synthetic 120 prepayment over 12 equal months, with four months expired, leaves 80 unexpired under that profile.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V07-EXCEPTION",
+    "variant": "P09-UC02-V07",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.7А!C11:C17",
+      "form_id": "FORM-034",
+      "title": "Audit program — other receivables and prepayments"
+    },
+    "expected": "A canceled service/right or nonuniform pattern cannot use the straight allocation without assessment.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V07-MISSING",
+    "variant": "P09-UC02-V07",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.7А!C11:C17",
+      "form_id": "FORM-034",
+      "title": "Audit program — other receivables and prepayments"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V07-UNAUTH",
+    "variant": "P09-UC02-V07",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.7А!C11:C17",
+      "form_id": "FORM-034",
+      "title": "Audit program — other receivables and prepayments"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V07-CHANGE",
+    "variant": "P09-UC02-V07",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.7А!C11:C17",
+      "form_id": "FORM-034",
+      "title": "Audit program — other receivables and prepayments"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V08-NORMAL",
+    "variant": "P09-UC02-V08",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.8А!C10:C23",
+      "form_id": "FORM-035",
+      "title": "Audit program — cash and cash equivalents"
+    },
+    "expected": "Bank 100 versus ledger 90 with a supported +10 book-side reconciliation produces zero residual; preserve that signed taxonomy.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V08-EXCEPTION",
+    "variant": "P09-UC02-V08",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.8А!C10:C23",
+      "form_id": "FORM-035",
+      "title": "Audit program — cash and cash equivalents"
+    },
+    "expected": "An unsupported reconciling item or duplicate movement is not a valid balancing adjustment.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V08-MISSING",
+    "variant": "P09-UC02-V08",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.8А!C10:C23",
+      "form_id": "FORM-035",
+      "title": "Audit program — cash and cash equivalents"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V08-UNAUTH",
+    "variant": "P09-UC02-V08",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.8А!C10:C23",
+      "form_id": "FORM-035",
+      "title": "Audit program — cash and cash equivalents"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V08-CHANGE",
+    "variant": "P09-UC02-V08",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.8А!C10:C23",
+      "form_id": "FORM-035",
+      "title": "Audit program — cash and cash equivalents"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V09-NORMAL",
+    "variant": "P09-UC02-V09",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.9А!C12:C24",
+      "form_id": "FORM-036",
+      "title": "Audit program — borrowings"
+    },
+    "expected": "Principal 1000 x 12% x 30/360 = interest 10 for a supported simple-segment profile.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V09-EXCEPTION",
+    "variant": "P09-UC02-V09",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.9А!C12:C24",
+      "form_id": "FORM-036",
+      "title": "Audit program — borrowings"
+    },
+    "expected": "Missing/ambiguous terms, actual-day basis, variable segments or covenant definition blocks the unsupported calculation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V09-MISSING",
+    "variant": "P09-UC02-V09",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.9А!C12:C24",
+      "form_id": "FORM-036",
+      "title": "Audit program — borrowings"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V09-UNAUTH",
+    "variant": "P09-UC02-V09",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.9А!C12:C24",
+      "form_id": "FORM-036",
+      "title": "Audit program — borrowings"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V09-CHANGE",
+    "variant": "P09-UC02-V09",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.9А!C12:C24",
+      "form_id": "FORM-036",
+      "title": "Audit program — borrowings"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V10-NORMAL",
+    "variant": "P09-UC02-V10",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.10А!C12:C20",
+      "form_id": "FORM-037",
+      "title": "Audit program — purchases and payables"
+    },
+    "expected": "Receipt 100, supplier bill 100 and payment 110 leaves excess 10 for investigation, not an automatic loss conclusion.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V10-EXCEPTION",
+    "variant": "P09-UC02-V10",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.10А!C12:C20",
+      "form_id": "FORM-037",
+      "title": "Audit program — purchases and payables"
+    },
+    "expected": "Wrong vendor/reference, duplicate payment or missing receipt needs a separate supported case.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V10-MISSING",
+    "variant": "P09-UC02-V10",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.10А!C12:C20",
+      "form_id": "FORM-037",
+      "title": "Audit program — purchases and payables"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V10-UNAUTH",
+    "variant": "P09-UC02-V10",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.10А!C12:C20",
+      "form_id": "FORM-037",
+      "title": "Audit program — purchases and payables"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V10-CHANGE",
+    "variant": "P09-UC02-V10",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.10А!C12:C20",
+      "form_id": "FORM-037",
+      "title": "Audit program — purchases and payables"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V11-NORMAL",
+    "variant": "P09-UC02-V11",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.11А!C11:C16",
+      "form_id": "FORM-038",
+      "title": "Audit program — other payables and accruals"
+    },
+    "expected": "A supported 40 invoice received after year end for pre-year-end goods suggests a 40 completeness test item, subject to actual obligation/support.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V11-EXCEPTION",
+    "variant": "P09-UC02-V11",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.11А!C11:C16",
+      "form_id": "FORM-038",
+      "title": "Audit program — other payables and accruals"
+    },
+    "expected": "No invoice/receiving-date evidence means missing evidence, not a proven unrecorded liability.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V11-MISSING",
+    "variant": "P09-UC02-V11",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.11А!C11:C16",
+      "form_id": "FORM-038",
+      "title": "Audit program — other payables and accruals"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V11-UNAUTH",
+    "variant": "P09-UC02-V11",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.11А!C11:C16",
+      "form_id": "FORM-038",
+      "title": "Audit program — other payables and accruals"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V11-CHANGE",
+    "variant": "P09-UC02-V11",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.11А!C11:C16",
+      "form_id": "FORM-038",
+      "title": "Audit program — other payables and accruals"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V12-NORMAL",
+    "variant": "P09-UC02-V12",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.12А!C12:C17",
+      "form_id": "FORM-039",
+      "title": "Audit program — deferred income"
+    },
+    "expected": "Cash 120 for a uniform twelve-month service; three months earned implies revenue 30 and deferred 90 under the selected pattern.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V12-EXCEPTION",
+    "variant": "P09-UC02-V12",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.12А!C12:C17",
+      "form_id": "FORM-039",
+      "title": "Audit program — deferred income"
+    },
+    "expected": "Nonuniform performance obligations or refunds require an approved different method, not the same schedule by default.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V12-MISSING",
+    "variant": "P09-UC02-V12",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.12А!C12:C17",
+      "form_id": "FORM-039",
+      "title": "Audit program — deferred income"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V12-UNAUTH",
+    "variant": "P09-UC02-V12",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.12А!C12:C17",
+      "form_id": "FORM-039",
+      "title": "Audit program — deferred income"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V12-CHANGE",
+    "variant": "P09-UC02-V12",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.12А!C12:C17",
+      "form_id": "FORM-039",
+      "title": "Audit program — deferred income"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V13-NORMAL",
+    "variant": "P09-UC02-V13",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.13А!C10:C16",
+      "form_id": "FORM-040",
+      "title": "Audit program — intercompany transactions"
+    },
+    "expected": "Entity A receivable 50 versus entity B payable 45 leaves difference 5; preserve currency/date/counterparty mapping.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V13-EXCEPTION",
+    "variant": "P09-UC02-V13",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.13А!C10:C16",
+      "form_id": "FORM-040",
+      "title": "Audit program — intercompany transactions"
+    },
+    "expected": "This comparison does not authorize canonical client consolidation or automatic elimination journals.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V13-MISSING",
+    "variant": "P09-UC02-V13",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.13А!C10:C16",
+      "form_id": "FORM-040",
+      "title": "Audit program — intercompany transactions"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V13-UNAUTH",
+    "variant": "P09-UC02-V13",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.13А!C10:C16",
+      "form_id": "FORM-040",
+      "title": "Audit program — intercompany transactions"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V13-CHANGE",
+    "variant": "P09-UC02-V13",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.13А!C10:C16",
+      "form_id": "FORM-040",
+      "title": "Audit program — intercompany transactions"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V14-NORMAL",
+    "variant": "P09-UC02-V14",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.14А!C10:C17",
+      "form_id": "FORM-041",
+      "title": "Audit program — taxation"
+    },
+    "expected": "Synthetic tax base 100 at an approved example rate 10% = 10; filed 9 leaves discrepancy 1.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V14-EXCEPTION",
+    "variant": "P09-UC02-V14",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.14А!C10:C17",
+      "form_id": "FORM-041",
+      "title": "Audit program — taxation"
+    },
+    "expected": "No production rate is supplied here. Missing/expired/multiple rule editions prevents supported recalculation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V14-MISSING",
+    "variant": "P09-UC02-V14",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.14А!C10:C17",
+      "form_id": "FORM-041",
+      "title": "Audit program — taxation"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V14-UNAUTH",
+    "variant": "P09-UC02-V14",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.14А!C10:C17",
+      "form_id": "FORM-041",
+      "title": "Audit program — taxation"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V14-CHANGE",
+    "variant": "P09-UC02-V14",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.14А!C10:C17",
+      "form_id": "FORM-041",
+      "title": "Audit program — taxation"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V15-NORMAL",
+    "variant": "P09-UC02-V15",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.15А!C10:C16",
+      "form_id": "FORM-042",
+      "title": "Audit program — share capital, reserves and dividends"
+    },
+    "expected": "Opening equity 100 + profit 20 + contributions 10 - distributions 5 = closing 125; each authorization remains evidenced.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V15-EXCEPTION",
+    "variant": "P09-UC02-V15",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.15А!C10:C16",
+      "form_id": "FORM-042",
+      "title": "Audit program — share capital, reserves and dividends"
+    },
+    "expected": "A balanced bridge does not validate legally authorized capital/dividend action.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V15-MISSING",
+    "variant": "P09-UC02-V15",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.15А!C10:C16",
+      "form_id": "FORM-042",
+      "title": "Audit program — share capital, reserves and dividends"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V15-UNAUTH",
+    "variant": "P09-UC02-V15",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.15А!C10:C16",
+      "form_id": "FORM-042",
+      "title": "Audit program — share capital, reserves and dividends"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V15-CHANGE",
+    "variant": "P09-UC02-V15",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.15А!C10:C16",
+      "form_id": "FORM-042",
+      "title": "Audit program — share capital, reserves and dividends"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V16-NORMAL",
+    "variant": "P09-UC02-V16",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.16А!C10:C23",
+      "form_id": "FORM-043",
+      "title": "Audit program — revenue"
+    },
+    "expected": "Invoice 100 dated before year end but delivery in January is a cut-off investigation item; actual transfer terms decide treatment.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V16-EXCEPTION",
+    "variant": "P09-UC02-V16",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.16А!C10:C23",
+      "form_id": "FORM-043",
+      "title": "Audit program — revenue"
+    },
+    "expected": "Invoice date alone does not establish recognition or a quantified misstatement.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V16-MISSING",
+    "variant": "P09-UC02-V16",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.16А!C10:C23",
+      "form_id": "FORM-043",
+      "title": "Audit program — revenue"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V16-UNAUTH",
+    "variant": "P09-UC02-V16",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.16А!C10:C23",
+      "form_id": "FORM-043",
+      "title": "Audit program — revenue"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V16-CHANGE",
+    "variant": "P09-UC02-V16",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.16А!C10:C23",
+      "form_id": "FORM-043",
+      "title": "Audit program — revenue"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V17-NORMAL",
+    "variant": "P09-UC02-V17",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.17А!C10:C25",
+      "form_id": "FORM-044",
+      "title": "Audit program — cost of sales"
+    },
+    "expected": "100 units at 10 plus 100 at 20 gives periodic weighted average 15; 50 sold gives cost 750 and 150 remaining gives 2250.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V17-EXCEPTION",
+    "variant": "P09-UC02-V17",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.17А!C10:C25",
+      "form_id": "FORM-044",
+      "title": "Audit program — cost of sales"
+    },
+    "expected": "This synthetic profile is not proof of current AUTO-025 implementation; missing movements or a different cost method stays explicit.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V17-MISSING",
+    "variant": "P09-UC02-V17",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.17А!C10:C25",
+      "form_id": "FORM-044",
+      "title": "Audit program — cost of sales"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V17-UNAUTH",
+    "variant": "P09-UC02-V17",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.17А!C10:C25",
+      "form_id": "FORM-044",
+      "title": "Audit program — cost of sales"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V17-CHANGE",
+    "variant": "P09-UC02-V17",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.17А!C10:C25",
+      "form_id": "FORM-044",
+      "title": "Audit program — cost of sales"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V18-NORMAL",
+    "variant": "P09-UC02-V18",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.18А!C10:C20",
+      "form_id": "FORM-045",
+      "title": "Audit program — payroll and employee benefits"
+    },
+    "expected": "Synthetic gross 100 less employee contribution 10 and withholding 9 gives net 81; employer contribution 5 is separate.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V18-EXCEPTION",
+    "variant": "P09-UC02-V18",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.18А!C10:C20",
+      "form_id": "FORM-045",
+      "title": "Audit program — payroll and employee benefits"
+    },
+    "expected": "Actual effective caps/base/rates must be accepted by edition; progressive unsupported rules cannot become a flat rate.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V18-MISSING",
+    "variant": "P09-UC02-V18",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.18А!C10:C20",
+      "form_id": "FORM-045",
+      "title": "Audit program — payroll and employee benefits"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V18-UNAUTH",
+    "variant": "P09-UC02-V18",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.18А!C10:C20",
+      "form_id": "FORM-045",
+      "title": "Audit program — payroll and employee benefits"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V18-CHANGE",
+    "variant": "P09-UC02-V18",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.18А!C10:C20",
+      "form_id": "FORM-045",
+      "title": "Audit program — payroll and employee benefits"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V19-NORMAL",
+    "variant": "P09-UC02-V19",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.19А!C11:C16",
+      "form_id": "FORM-046",
+      "title": "Audit procedures — selling and operating expenses"
+    },
+    "expected": "Approved service/support 30 versus recorded operating expense 35 gives a 5 investigation difference for the actual assertion.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V19-EXCEPTION",
+    "variant": "P09-UC02-V19",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.19А!C11:C16",
+      "form_id": "FORM-046",
+      "title": "Audit procedures — selling and operating expenses"
+    },
+    "expected": "Unsupported contract/completeness or wrong period prevents a confirmed price/expense conclusion.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V19-MISSING",
+    "variant": "P09-UC02-V19",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.19А!C11:C16",
+      "form_id": "FORM-046",
+      "title": "Audit procedures — selling and operating expenses"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V19-UNAUTH",
+    "variant": "P09-UC02-V19",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.19А!C11:C16",
+      "form_id": "FORM-046",
+      "title": "Audit procedures — selling and operating expenses"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V19-CHANGE",
+    "variant": "P09-UC02-V19",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.19А!C11:C16",
+      "form_id": "FORM-046",
+      "title": "Audit procedures — selling and operating expenses"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V20-NORMAL",
+    "variant": "P09-UC02-V20",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.20А!C11:C15",
+      "form_id": "FORM-047",
+      "title": "Audit procedures — other income-statement items"
+    },
+    "expected": "Foreign amount 100 x accepted exact-date rate 2 = 200; recorded 190 differs by 10 in functional currency.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V20-EXCEPTION",
+    "variant": "P09-UC02-V20",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.20А!C11:C15",
+      "form_id": "FORM-047",
+      "title": "Audit procedures — other income-statement items"
+    },
+    "expected": "No nearest-date fallback; missing category/rate/framework support remains unsupported.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V20-MISSING",
+    "variant": "P09-UC02-V20",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.20А!C11:C15",
+      "form_id": "FORM-047",
+      "title": "Audit procedures — other income-statement items"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V20-UNAUTH",
+    "variant": "P09-UC02-V20",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.20А!C11:C15",
+      "form_id": "FORM-047",
+      "title": "Audit procedures — other income-statement items"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V20-CHANGE",
+    "variant": "P09-UC02-V20",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.20А!C11:C15",
+      "form_id": "FORM-047",
+      "title": "Audit procedures — other income-statement items"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V21-NORMAL",
+    "variant": "P09-UC02-V21",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.21А!C11:C16",
+      "form_id": "FORM-048",
+      "title": "Audit program — finance costs"
+    },
+    "expected": "Two period-end fixed payments of 100 at zero rate give liability 200. Separately, simple loan interest follows the approved day basis.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V21-EXCEPTION",
+    "variant": "P09-UC02-V21",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.21А!C11:C16",
+      "form_id": "FORM-048",
+      "title": "Audit program — finance costs"
+    },
+    "expected": "The current form profile is fixed-payment leases; complete finance costs also needs its own source procedure coverage.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V21-MISSING",
+    "variant": "P09-UC02-V21",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.21А!C11:C16",
+      "form_id": "FORM-048",
+      "title": "Audit program — finance costs"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V21-UNAUTH",
+    "variant": "P09-UC02-V21",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.21А!C11:C16",
+      "form_id": "FORM-048",
+      "title": "Audit program — finance costs"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V21-CHANGE",
+    "variant": "P09-UC02-V21",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.21А!C11:C16",
+      "form_id": "FORM-048",
+      "title": "Audit program — finance costs"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V22-NORMAL",
+    "variant": "P09-UC02-V22",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.22А!C11:C15",
+      "form_id": "FORM-049",
+      "title": "Audit program — other income and expenses"
+    },
+    "expected": "Disposal proceeds 30 less supported carrying amount 20 gives gain 10; recorded gain 8 leaves difference 2.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V22-EXCEPTION",
+    "variant": "P09-UC02-V22",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.22А!C11:C15",
+      "form_id": "FORM-049",
+      "title": "Audit program — other income and expenses"
+    },
+    "expected": "Unproven disposal rights/amounts or another income type cannot be forced into this example.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V22-MISSING",
+    "variant": "P09-UC02-V22",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.22А!C11:C15",
+      "form_id": "FORM-049",
+      "title": "Audit program — other income and expenses"
+    },
+    "expected": "Specific missing/unsupported reason; no false pass/zero; work retained.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V22-UNAUTH",
+    "variant": "P09-UC02-V22",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.22А!C11:C15",
+      "form_id": "FORM-049",
+      "title": "Audit program — other income and expenses"
+    },
+    "expected": "Wrong scope/self-review denied without mutation.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  },
+  {
+    "scenario": "P09-UC02-V22-CHANGE",
+    "variant": "P09-UC02-V22",
+    "guide": "G10",
+    "source": {
+      "source": "F00788",
+      "locator": "3.1.22А!C11:C15",
+      "form_id": "FORM-049",
+      "title": "Audit program — other income and expenses"
+    },
+    "expected": "New source stales affected reliance; old result/signature preserved.",
+    "status": "specified; not executed in this documentation session",
+    "evidence": "No source-specific whole-variant acceptance yet"
+  }
+]

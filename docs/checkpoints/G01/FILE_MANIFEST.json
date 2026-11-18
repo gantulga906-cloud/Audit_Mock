@@ -1,0 +1,98 @@
+{
+  "guide": "G01",
+  "date": "2026-11-16",
+  "publishedCode": "cdb0f11b66be53f372d8a100b5548c0a27539956",
+  "verifiedLocalCode": "26df94b5a1af961b10490009cb7f2ab41ac038d3",
+  "files": [
+    {
+      "path": "Backlog_Preservation.json",
+      "bytes": 3535,
+      "sha256": "472d56a455ca95c5ea2f0e4f989edbcac5a9cdcb8061da0b67045598a8b2a678"
+    },
+    {
+      "path": "Browser_Verification.json",
+      "bytes": 1148,
+      "sha256": "727de0ac15925370941d0a0249942db7561445b47e0993ed4942fa7aadb961b6"
+    },
+    {
+      "path": "Browser_Verification.log",
+      "bytes": 1322,
+      "sha256": "b9fbb188cf75d918042caad1076b0d9626c2f49a7377c40516f4d08d64e24024"
+    },
+    {
+      "path": "External_Research.json",
+      "bytes": 1030,
+      "sha256": "e97ebde644f6ff95f8df83a4e81c764de93dd87d208a6d09f307512486b60287"
+    },
+    {
+      "path": "Foundation_Verification.json",
+      "bytes": 17863,
+      "sha256": "1aa22ee8dba4499187d0fdbc8691b2da697bb8afadb99f8509da0744c9eb8b8a"
+    },
+    {
+      "path": "G01_Connected_Proof.json",
+      "bytes": 826,
+      "sha256": "a07c97aa8aeef61cb5870241259db177d6095a4bb644fe239b064c8298f7d822"
+    },
+    {
+      "path": "G01_Criteria.json",
+      "bytes": 61850,
+      "sha256": "69f5d7dfaefbb18fa31d86e4faf3ace35698d458c72f691164da1aaf8e39837f"
+    },
+    {
+      "path": "G01_Lifecycles.json",
+      "bytes": 26426,
+      "sha256": "de44d188a3e52eebc2e4edbd14d0397ab11a67183575ccac1b9ee41646ff4d13"
+    },
+    {
+      "path": "G01_local_history.bundle",
+      "bytes": 42891,
+      "sha256": "8f4cb50afe4beeebc3c0692e7fb8182e046e2745cc4b2feb55ff8d9d63ddf990"
+    },
+    {
+      "path": "Publication_Provenance.json",
+      "bytes": 1148,
+      "sha256": "a0ebbae8cbfd827365b1799a99ce01b8f9461d10c31aab7da0345b97e2fec2c7"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5210,
+      "sha256": "8129bd3474984a5f356fc8f1a80c79a8aa884aaf5ddfefef6b61ba48bc380ed3"
+    },
+    {
+      "path": "Source_Verification.json",
+      "bytes": 1949817,
+      "sha256": "b3e44cd17743e4bfd3b3127129ff71c245e2969cf6a8020920866cc111f3f8b0"
+    },
+    {
+      "path": "Verification.log",
+      "bytes": 4608,
+      "sha256": "d1d58060136fb5ed5268c3c42c186fde1f3e301755521c96dd9f2b4672c8b399"
+    },
+    {
+      "path": "Verified_Build.json",
+      "bytes": 207,
+      "sha256": "348cbcce9f8242664fa03a0c240b0d15674fc86c2c54bea56aa3ea94aee4a7af"
+    },
+    {
+      "path": "screenshots/01-independent-decision.png",
+      "bytes": 87732,
+      "sha256": "5476041a919949b13848e628612afabc9a0da6d8ac301d746283022170533b7d"
+    },
+    {
+      "path": "screenshots/02-changed-scope-hold.png",
+      "bytes": 86486,
+      "sha256": "ecc6332d1e2f24047f7e173a3637e3fee52c5a49a5b0f051285ae23a3139cdea"
+    },
+    {
+      "path": "screenshots/03-reviewed-reassessment.png",
+      "bytes": 165769,
+      "sha256": "8a700b61c8cfd14eaa871a6337a6061a49bd566738e2e1137ea44632fd2a395b"
+    },
+    {
+      "path": "screenshots/04-findable-incomplete-enquiry.png",
+      "bytes": 86817,
+      "sha256": "42764c353e46dc53524b5b7eac54011fb90cc047dff3dbf67d3d0632068332a3"
+    }
+  ]
+}

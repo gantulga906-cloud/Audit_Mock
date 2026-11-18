@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-17",
+  "sources": [
+    {
+      "title": "SQLite Online Backup API",
+      "url": "https://www.sqlite.org/backup.html",
+      "application": "Supported snapshot API used for separate backup and restored databases; operational recovery targets remain unproved."
+    },
+    {
+      "title": "IAASB 2025 Handbook, Volume 1",
+      "url": "https://ifacweb.blob.core.windows.net/publicfiles/2025-09/IAASB-2025-Handbook-Volume-1.pdf",
+      "sections": [
+        "ISA 230 paragraphs 14–16",
+        "ISA 230 A21–A24"
+      ],
+      "application": "Separate administrative assembly, later audit work and retained change history; responsible local adoption remains required."
+    },
+    {
+      "title": "Mongolian legal source",
+      "url": "https://legalinfo.mn/mn/detail?lawId=11192",
+      "result": "HTTP 403; no current consolidated retention-rule certification"
+    }
+  ],
+  "boundaries": [
+    "No universal 5/10-year retention minimum or assembly deadline is installed.",
+    "No secure-erasure, production custody or RPO/RTO assurance is claimed."
+  ]
+}

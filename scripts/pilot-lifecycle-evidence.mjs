@@ -2,6 +2,26 @@ import { isDeepStrictEqual } from 'node:util';
 
 const marker = 'audit-lifecycle-v1 ';
 const branchPlans = {
+  A01:['unknown-intake-facts','missing-positive-prerequisites','independent-current-decision','exact-party-period-terms','changed-basis-retains-history','conversion-and-approval-retry'],
+  A02:['actual-declarant','manual-original','no-prohibition-waiver','disclosure-remains-separate','independent-response','change-and-restart'],
+  A03:['draft-and-send-not-agreement','exact-party-period-version','independent-firm-review','current-period-confirmation','new-scope-needs-reassessment','amendment-and-retry'],
+  A26: [
+    'wrong-template-or-stale-package',
+    'independent-issuer-required',
+    'renewed-preparation-stales-release',
+    'signature-and-receipt-required',
+    'idempotent-issue-and-changed-payload',
+    'ambiguous-delivery-reconciled-before-retry',
+  ],
+  A27: [
+    'missing-or-corrupt-source-blocks-assembly',
+    'assembly-return-and-independent-approval',
+    'locked-edit-denied',
+    'corrupt-custody-return-and-reoffer',
+    'scoped-and-expiring-retrieval',
+    'successor-retains-original-hold-and-retention',
+    'restart-preserves-exact-archive',
+  ],
   A08: [
     'missing-benchmark-inputs',
     'invalid-scoped-threshold',

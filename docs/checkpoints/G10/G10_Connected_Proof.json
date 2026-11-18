@@ -1,0 +1,824 @@
+{
+  "guide": "G10",
+  "proof": [
+    {
+      "method": "intangibles",
+      "expected": {
+        "annualCharge": 4000,
+        "carrying": 8000
+      },
+      "actual": {
+        "annualCharge": 4000,
+        "carrying": 8000
+      },
+      "missingDenied": true,
+      "unsupportedDenied": true,
+      "wrongEditionDenied": true
+    },
+    {
+      "method": "depreciation",
+      "expected": {
+        "annualCharge": 2000,
+        "carrying": 10000
+      },
+      "actual": {
+        "annualCharge": 2000,
+        "carrying": 10000
+      },
+      "missingDenied": true,
+      "unsupportedDenied": true,
+      "wrongEditionDenied": true
+    },
+    {
+      "method": "longReceivables",
+      "expected": {
+        "closing": 10000
+      },
+      "actual": {
+        "closing": 10000
+      },
+      "missingDenied": true,
+      "unsupportedDenied": true,
+      "wrongEditionDenied": true
+    },
+    {
+      "method": "prepayments",
+      "expected": {
+        "remaining": 8000,
+        "released": 4000
+      },
+      "actual": {
+        "remaining": 8000,
+        "released": 4000
+      },
+      "missingDenied": true,
+      "unsupportedDenied": true,
+      "wrongEditionDenied": true
+    },
+    {
+      "method": "deferredIncome",
+      "expected": {
+        "remaining": 9000,
+        "released": 3000
+      },
+      "actual": {
+        "remaining": 9000,
+        "released": 3000
+      },
+      "missingDenied": true,
+      "unsupportedDenied": true,
+      "wrongEditionDenied": true
+    },
+    {
+      "method": "accruals",
+      "expected": {
+        "expected": 4000
+      },
+      "actual": {
+        "expected": 4000
+      },
+      "missingDenied": true,
+      "unsupportedDenied": true,
+      "wrongEditionDenied": true
+    },
+    {
+      "method": "otherIncome",
+      "expected": {
+        "gain": 1000
+      },
+      "actual": {
+        "gain": 1000
+      },
+      "missingDenied": true,
+      "unsupportedDenied": true,
+      "wrongEditionDenied": true
+    },
+    {
+      "method": "expenses",
+      "expected": {
+        "supported": 3000
+      },
+      "actual": {
+        "supported": 3000
+      },
+      "missingDenied": true,
+      "unsupportedDenied": true,
+      "wrongEditionDenied": true
+    },
+    {
+      "method": "intercompany",
+      "expected": {
+        "own": 5000,
+        "reciprocal": 4500
+      },
+      "actual": {
+        "own": 5000,
+        "reciprocal": 4500
+      },
+      "missingDenied": true,
+      "unsupportedDenied": true,
+      "wrongEditionDenied": true
+    },
+    {
+      "method": "costOfSales",
+      "expected": {
+        "costOfSales": 75000,
+        "closingInventory": 225000
+      },
+      "actual": {
+        "costOfSales": 75000,
+        "closingInventory": 225000
+      },
+      "missingDenied": true,
+      "unsupportedDenied": true,
+      "wrongEditionDenied": true
+    },
+    {
+      "unsafeDifferenceRejected": true,
+      "rawInputsRetained": true
+    },
+    {
+      "restartPreservesAll22": true,
+      "actualNamedReviewer": true,
+      "originalsAndPriorReviewsPreserved": true
+    },
+    {
+      "actualWeightedCost": true,
+      "costOfSales": 75000,
+      "closingInventory": 225000,
+      "independentReview": true,
+      "changedRunInvalidatesCard": true
+    },
+    {
+      "unquantifiedRemainsUnknown": true,
+      "independentG05ReleaseAssessmentRequired": true,
+      "readableExactExport": true,
+      "otherEngagementDenied": true,
+      "corruptOriginalDetected": true
+    }
+  ],
+  "matrix": [
+    {
+      "variant": "P09-UC02-V01",
+      "scenario": "P09-UC02-V01-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V01",
+      "scenario": "P09-UC02-V01-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V01",
+      "scenario": "P09-UC02-V01-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V01",
+      "scenario": "P09-UC02-V01-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V02",
+      "scenario": "P09-UC02-V02-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V02",
+      "scenario": "P09-UC02-V02-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V02",
+      "scenario": "P09-UC02-V02-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V02",
+      "scenario": "P09-UC02-V02-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V03",
+      "scenario": "P09-UC02-V03-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V03",
+      "scenario": "P09-UC02-V03-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V03",
+      "scenario": "P09-UC02-V03-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V03",
+      "scenario": "P09-UC02-V03-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V04",
+      "scenario": "P09-UC02-V04-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V04",
+      "scenario": "P09-UC02-V04-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V04",
+      "scenario": "P09-UC02-V04-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V04",
+      "scenario": "P09-UC02-V04-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V05",
+      "scenario": "P09-UC02-V05-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V05",
+      "scenario": "P09-UC02-V05-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V05",
+      "scenario": "P09-UC02-V05-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V05",
+      "scenario": "P09-UC02-V05-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V06",
+      "scenario": "P09-UC02-V06-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V06",
+      "scenario": "P09-UC02-V06-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V06",
+      "scenario": "P09-UC02-V06-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V06",
+      "scenario": "P09-UC02-V06-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V07",
+      "scenario": "P09-UC02-V07-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V07",
+      "scenario": "P09-UC02-V07-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V07",
+      "scenario": "P09-UC02-V07-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V07",
+      "scenario": "P09-UC02-V07-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V08",
+      "scenario": "P09-UC02-V08-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V08",
+      "scenario": "P09-UC02-V08-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V08",
+      "scenario": "P09-UC02-V08-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V08",
+      "scenario": "P09-UC02-V08-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V09",
+      "scenario": "P09-UC02-V09-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V09",
+      "scenario": "P09-UC02-V09-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V09",
+      "scenario": "P09-UC02-V09-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V09",
+      "scenario": "P09-UC02-V09-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V10",
+      "scenario": "P09-UC02-V10-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V10",
+      "scenario": "P09-UC02-V10-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V10",
+      "scenario": "P09-UC02-V10-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V10",
+      "scenario": "P09-UC02-V10-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V11",
+      "scenario": "P09-UC02-V11-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V11",
+      "scenario": "P09-UC02-V11-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V11",
+      "scenario": "P09-UC02-V11-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V11",
+      "scenario": "P09-UC02-V11-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V12",
+      "scenario": "P09-UC02-V12-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V12",
+      "scenario": "P09-UC02-V12-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V12",
+      "scenario": "P09-UC02-V12-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V12",
+      "scenario": "P09-UC02-V12-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V13",
+      "scenario": "P09-UC02-V13-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V13",
+      "scenario": "P09-UC02-V13-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V13",
+      "scenario": "P09-UC02-V13-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V13",
+      "scenario": "P09-UC02-V13-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V14",
+      "scenario": "P09-UC02-V14-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V14",
+      "scenario": "P09-UC02-V14-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V14",
+      "scenario": "P09-UC02-V14-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V14",
+      "scenario": "P09-UC02-V14-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V15",
+      "scenario": "P09-UC02-V15-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V15",
+      "scenario": "P09-UC02-V15-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V15",
+      "scenario": "P09-UC02-V15-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V15",
+      "scenario": "P09-UC02-V15-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V16",
+      "scenario": "P09-UC02-V16-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V16",
+      "scenario": "P09-UC02-V16-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V16",
+      "scenario": "P09-UC02-V16-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V16",
+      "scenario": "P09-UC02-V16-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V17",
+      "scenario": "P09-UC02-V17-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V17",
+      "scenario": "P09-UC02-V17-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V17",
+      "scenario": "P09-UC02-V17-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V17",
+      "scenario": "P09-UC02-V17-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V18",
+      "scenario": "P09-UC02-V18-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V18",
+      "scenario": "P09-UC02-V18-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V18",
+      "scenario": "P09-UC02-V18-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V18",
+      "scenario": "P09-UC02-V18-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V19",
+      "scenario": "P09-UC02-V19-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V19",
+      "scenario": "P09-UC02-V19-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V19",
+      "scenario": "P09-UC02-V19-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V19",
+      "scenario": "P09-UC02-V19-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V20",
+      "scenario": "P09-UC02-V20-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V20",
+      "scenario": "P09-UC02-V20-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V20",
+      "scenario": "P09-UC02-V20-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V20",
+      "scenario": "P09-UC02-V20-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V21",
+      "scenario": "P09-UC02-V21-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V21",
+      "scenario": "P09-UC02-V21-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V21",
+      "scenario": "P09-UC02-V21-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V21",
+      "scenario": "P09-UC02-V21-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V22",
+      "scenario": "P09-UC02-V22-MISSING",
+      "outcome": "passed",
+      "observed": "Missing an exact required input/source blocks saving; no favorable result or packet is created."
+    },
+    {
+      "variant": "P09-UC02-V22",
+      "scenario": "P09-UC02-V22-UNAUTH",
+      "outcome": "passed",
+      "observed": "Actual named preparer cannot self-review and reviewer cannot prepare another person's area work."
+    },
+    {
+      "variant": "P09-UC02-V22",
+      "scenario": "P09-UC02-V22-NORMAL",
+      "outcome": "passed",
+      "observed": "Actual named manual work on selected source procedure, all input locators and area-specific judgments is independently reviewed; this does not claim all algorithms or professional source acceptance."
+    },
+    {
+      "variant": "P09-UC02-V22",
+      "scenario": "P09-UC02-V22-EXCEPTION",
+      "outcome": "passed",
+      "observed": "A supported signed exception creates one stable G05 finding, keeps the actual next owner, survives an idempotent retry and retains prior independent review."
+    },
+    {
+      "variant": "P09-UC02-V01",
+      "scenario": "P09-UC02-V01-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V02",
+      "scenario": "P09-UC02-V02-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V03",
+      "scenario": "P09-UC02-V03-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V04",
+      "scenario": "P09-UC02-V04-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V05",
+      "scenario": "P09-UC02-V05-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V06",
+      "scenario": "P09-UC02-V06-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V07",
+      "scenario": "P09-UC02-V07-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V08",
+      "scenario": "P09-UC02-V08-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V09",
+      "scenario": "P09-UC02-V09-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V10",
+      "scenario": "P09-UC02-V10-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V11",
+      "scenario": "P09-UC02-V11-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V12",
+      "scenario": "P09-UC02-V12-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V13",
+      "scenario": "P09-UC02-V13-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V14",
+      "scenario": "P09-UC02-V14-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V15",
+      "scenario": "P09-UC02-V15-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V16",
+      "scenario": "P09-UC02-V16-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V17",
+      "scenario": "P09-UC02-V17-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V18",
+      "scenario": "P09-UC02-V18-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V19",
+      "scenario": "P09-UC02-V19-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V20",
+      "scenario": "P09-UC02-V20-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V21",
+      "scenario": "P09-UC02-V21-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    },
+    {
+      "variant": "P09-UC02-V22",
+      "scenario": "P09-UC02-V22-CHANGE",
+      "outcome": "passed",
+      "observed": "Changing the actual relied-upon original version makes this packet stale, preserves prior answers/matters/review and leaves other independently sourced current areas intact."
+    }
+  ],
+  "sourceAcceptance": [],
+  "scope": "Bounded actual engineering workflows; manual inspection and computed outcomes are explicitly distinguished"
+}

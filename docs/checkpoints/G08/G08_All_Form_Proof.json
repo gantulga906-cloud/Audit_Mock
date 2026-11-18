@@ -1,0 +1,635 @@
+{
+  "scope": "All seventy runtime contracts exercised through typed-answer validation; engineering roundtrip does not establish source semantic or independent whole-form acceptance",
+  "forms": [
+    {
+      "form": "1.1.1",
+      "sheet": "1.1.1А",
+      "fields": 15,
+      "clauses": 0,
+      "typedAnswers": 5,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "1.1.2",
+      "sheet": "1.1.2А",
+      "fields": 9,
+      "clauses": 0,
+      "typedAnswers": 9,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "1.3",
+      "sheet": "1.3А",
+      "fields": 14,
+      "clauses": 12,
+      "typedAnswers": 14,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "1.4.1",
+      "sheet": "1.4.1А",
+      "fields": 26,
+      "clauses": 0,
+      "typedAnswers": 26,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "1.4.2",
+      "sheet": "1.4.2А",
+      "fields": 47,
+      "clauses": 0,
+      "typedAnswers": 47,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "1.4.3",
+      "sheet": "1.4.3 А",
+      "fields": 16,
+      "clauses": 14,
+      "typedAnswers": 16,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "1.4.4",
+      "sheet": "1.4.4A",
+      "fields": 12,
+      "clauses": 0,
+      "typedAnswers": 12,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "1.4.5",
+      "sheet": "1.4.5А",
+      "fields": 13,
+      "clauses": 0,
+      "typedAnswers": 13,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "1.4.6",
+      "sheet": "1.4.6А",
+      "fields": 1,
+      "clauses": 0,
+      "typedAnswers": 1,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "1.4.7",
+      "sheet": "1.4.7А",
+      "fields": 19,
+      "clauses": 0,
+      "typedAnswers": 19,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "1.5",
+      "sheet": "1.5.А",
+      "fields": 11,
+      "clauses": 0,
+      "typedAnswers": 11,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.1.1",
+      "sheet": "2.1.1А",
+      "fields": 44,
+      "clauses": 0,
+      "typedAnswers": 44,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.1.2",
+      "sheet": "2.1.2А",
+      "fields": 16,
+      "clauses": 0,
+      "typedAnswers": 16,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.1.3",
+      "sheet": "2.1.3А",
+      "fields": 32,
+      "clauses": 0,
+      "typedAnswers": 32,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.1.4",
+      "sheet": "2.1.4А",
+      "fields": 8,
+      "clauses": 0,
+      "typedAnswers": 8,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.1.5",
+      "sheet": "2.1.5А",
+      "fields": 52,
+      "clauses": 0,
+      "typedAnswers": 52,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.2.1",
+      "sheet": "2.2.1А",
+      "fields": 17,
+      "clauses": 0,
+      "typedAnswers": 17,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.2.2",
+      "sheet": "2.2.2А",
+      "fields": 19,
+      "clauses": 0,
+      "typedAnswers": 19,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.3",
+      "sheet": "2.3А",
+      "fields": 33,
+      "clauses": 0,
+      "typedAnswers": 33,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.4",
+      "sheet": "2.4А",
+      "fields": 7,
+      "clauses": 0,
+      "typedAnswers": 7,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.5",
+      "sheet": "2.5А",
+      "fields": 10,
+      "clauses": 0,
+      "typedAnswers": 10,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.6",
+      "sheet": "2.6А",
+      "fields": 15,
+      "clauses": 0,
+      "typedAnswers": 15,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.7.1",
+      "sheet": "2.7.1А",
+      "fields": 17,
+      "clauses": 0,
+      "typedAnswers": 17,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.7.2",
+      "sheet": "2.7.2А",
+      "fields": 17,
+      "clauses": 0,
+      "typedAnswers": 17,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.8",
+      "sheet": "2.8.А",
+      "fields": 77,
+      "clauses": 0,
+      "typedAnswers": 77,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.9",
+      "sheet": "2.9А",
+      "fields": 29,
+      "clauses": 0,
+      "typedAnswers": 29,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "2.10",
+      "sheet": "2.10А",
+      "fields": 18,
+      "clauses": 0,
+      "typedAnswers": 18,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.1",
+      "sheet": "3.1.1А",
+      "fields": 15,
+      "clauses": 0,
+      "typedAnswers": 93,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.2",
+      "sheet": "3.1.2А",
+      "fields": 20,
+      "clauses": 0,
+      "typedAnswers": 128,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.3",
+      "sheet": "3.1.3А",
+      "fields": 14,
+      "clauses": 0,
+      "typedAnswers": 81,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.4",
+      "sheet": "3.1.4А",
+      "fields": 18,
+      "clauses": 0,
+      "typedAnswers": 114,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.5",
+      "sheet": "3.1.5А",
+      "fields": 16,
+      "clauses": 0,
+      "typedAnswers": 100,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.6",
+      "sheet": "3.1.6А",
+      "fields": 13,
+      "clauses": 0,
+      "typedAnswers": 79,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.7",
+      "sheet": "3.1.7А",
+      "fields": 10,
+      "clauses": 0,
+      "typedAnswers": 58,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.8",
+      "sheet": "3.1.8А",
+      "fields": 16,
+      "clauses": 0,
+      "typedAnswers": 100,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.9",
+      "sheet": "3.1.9А",
+      "fields": 17,
+      "clauses": 0,
+      "typedAnswers": 107,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.10",
+      "sheet": "3.1.10А",
+      "fields": 13,
+      "clauses": 0,
+      "typedAnswers": 79,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.11",
+      "sheet": "3.1.11А",
+      "fields": 10,
+      "clauses": 0,
+      "typedAnswers": 58,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.12",
+      "sheet": "3.1.12А",
+      "fields": 10,
+      "clauses": 0,
+      "typedAnswers": 58,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.13",
+      "sheet": "3.1.13А",
+      "fields": 9,
+      "clauses": 0,
+      "typedAnswers": 51,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.14",
+      "sheet": "3.1.14А",
+      "fields": 10,
+      "clauses": 0,
+      "typedAnswers": 58,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.15",
+      "sheet": "3.1.15А",
+      "fields": 9,
+      "clauses": 0,
+      "typedAnswers": 51,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.16",
+      "sheet": "3.1.16А",
+      "fields": 16,
+      "clauses": 0,
+      "typedAnswers": 100,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.17",
+      "sheet": "3.1.17А",
+      "fields": 18,
+      "clauses": 0,
+      "typedAnswers": 114,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.18",
+      "sheet": "3.1.18А",
+      "fields": 13,
+      "clauses": 0,
+      "typedAnswers": 79,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.19",
+      "sheet": "3.1.19А",
+      "fields": 9,
+      "clauses": 0,
+      "typedAnswers": 51,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.20",
+      "sheet": "3.1.20А",
+      "fields": 8,
+      "clauses": 0,
+      "typedAnswers": 44,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.21",
+      "sheet": "3.1.21А",
+      "fields": 10,
+      "clauses": 0,
+      "typedAnswers": 58,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.22",
+      "sheet": "3.1.22А",
+      "fields": 8,
+      "clauses": 0,
+      "typedAnswers": 44,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.1.23",
+      "sheet": "3.1.23А",
+      "fields": 23,
+      "clauses": 0,
+      "typedAnswers": 127,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.2.1",
+      "sheet": "3.2.1А",
+      "fields": 16,
+      "clauses": 0,
+      "typedAnswers": 16,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.2.2",
+      "sheet": "3.2.2А",
+      "fields": 27,
+      "clauses": 0,
+      "typedAnswers": 27,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.2.3",
+      "sheet": "3.2.3А",
+      "fields": 15,
+      "clauses": 0,
+      "typedAnswers": 15,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.2.4",
+      "sheet": "3.2.4А",
+      "fields": 25,
+      "clauses": 0,
+      "typedAnswers": 25,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.2.5",
+      "sheet": "3.2.5А",
+      "fields": 19,
+      "clauses": 4,
+      "typedAnswers": 19,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.2.6",
+      "sheet": "3.2.6А",
+      "fields": 1,
+      "clauses": 0,
+      "typedAnswers": 1,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.3.1",
+      "sheet": "3.3.1А",
+      "fields": 32,
+      "clauses": 0,
+      "typedAnswers": 32,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "3.3.2",
+      "sheet": "3.3.2А",
+      "fields": 23,
+      "clauses": 0,
+      "typedAnswers": 23,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "4.1.A1",
+      "sheet": "4.1A1",
+      "fields": 6,
+      "clauses": 7,
+      "typedAnswers": 6,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "4.1.A2",
+      "sheet": "4.1.A2",
+      "fields": 9,
+      "clauses": 7,
+      "typedAnswers": 9,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "4.1.A3",
+      "sheet": "4.1A3",
+      "fields": 9,
+      "clauses": 7,
+      "typedAnswers": 9,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "4.1.A4",
+      "sheet": "4.1A4",
+      "fields": 7,
+      "clauses": 4,
+      "typedAnswers": 7,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "4.1.1",
+      "sheet": "4.1.1А",
+      "fields": 1,
+      "clauses": 0,
+      "typedAnswers": 1,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "4.1.2",
+      "sheet": "4.1.2А",
+      "fields": 8,
+      "clauses": 0,
+      "typedAnswers": 8,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "4.1.3",
+      "sheet": "4.1.3А",
+      "fields": 31,
+      "clauses": 0,
+      "typedAnswers": 31,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "4.3.1",
+      "sheet": "4.3.1А",
+      "fields": 24,
+      "clauses": 0,
+      "typedAnswers": 24,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "4.4",
+      "sheet": "4.4А",
+      "fields": 11,
+      "clauses": 0,
+      "typedAnswers": 11,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "4.5",
+      "sheet": "4.5А",
+      "fields": 28,
+      "clauses": 7,
+      "typedAnswers": 28,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "4.6",
+      "sheet": "4.6А",
+      "fields": 31,
+      "clauses": 0,
+      "typedAnswers": 31,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    },
+    {
+      "form": "5.1",
+      "sheet": "5.1А",
+      "fields": 16,
+      "clauses": 0,
+      "typedAnswers": 16,
+      "roundTrip": true,
+      "independentlyAccepted": false
+    }
+  ]
+}

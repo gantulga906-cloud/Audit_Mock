@@ -1,0 +1,150 @@
+{
+  "guide": "G07",
+  "proofs": [
+    {
+      "name": "assembly-diagnostics-and-authority",
+      "expected": {
+        "missing": true,
+        "corrupt": true,
+        "unavailable": true,
+        "sealed": true
+      },
+      "actual": {
+        "missing": true,
+        "corrupt": true,
+        "unavailable": true,
+        "sealed": true
+      }
+    },
+    {
+      "name": "custody-readability-and-retained-health",
+      "expected": {
+        "offers": 2,
+        "inspections": 3,
+        "currentReadable": false,
+        "acceptedHistory": true
+      },
+      "actual": {
+        "offers": 2,
+        "inspections": 3,
+        "currentReadable": false,
+        "acceptedHistory": true
+      }
+    },
+    {
+      "name": "scope-metadata-and-revocation",
+      "expected": {
+        "reportOnlyCount": 1,
+        "originalDenied": true,
+        "revokedDenied": true,
+        "removedMemberDenied": true
+      },
+      "actual": {
+        "reportOnlyCount": 1,
+        "originalDenied": true,
+        "revokedDenied": true,
+        "removedMemberDenied": true
+      }
+    },
+    {
+      "name": "retention-unknown-and-longest-lineage",
+      "expected": {
+        "expires": "2030-01-01",
+        "holds": 1,
+        "originalPreserved": true
+      },
+      "actual": {
+        "expires": "2030-01-01",
+        "holds": 1,
+        "originalPreserved": true
+      }
+    },
+    {
+      "name": "bounded-disposition-not-secure-erasure",
+      "expected": {
+        "localPayloadRemoved": true,
+        "secureErasureProven": false,
+        "otherOriginalsPreserved": true
+      },
+      "actual": {
+        "localPayloadRemoved": true,
+        "secureErasureProven": false,
+        "otherOriginalsPreserved": true
+      }
+    },
+    {
+      "name": "actual-supported-recovery",
+      "expected": {
+        "verified": true,
+        "scopeMatch": true,
+        "archiveMatch": true
+      },
+      "actual": {
+        "verified": true,
+        "scopeMatch": true,
+        "archiveMatch": true
+      }
+    },
+    {
+      "name": "actual-dated-later-fact-chain",
+      "expected": {
+        "closed": true,
+        "issueEffects": 1,
+        "originalRetained": true,
+        "custodyAccepted": true
+      },
+      "actual": {
+        "closed": true,
+        "issueEffects": 1,
+        "originalRetained": true,
+        "custodyAccepted": true
+      }
+    },
+    {
+      "name": "actual-issued-later-fact-chain",
+      "expected": {
+        "closed": true,
+        "issueEffects": 2,
+        "originalRetained": true,
+        "custodyAccepted": true
+      },
+      "actual": {
+        "closed": true,
+        "issueEffects": 2,
+        "originalRetained": true,
+        "custodyAccepted": true
+      }
+    },
+    {
+      "name": "actual-sealed-later-fact-chain",
+      "expected": {
+        "closed": true,
+        "issueEffects": 2,
+        "originalRetained": true,
+        "custodyAccepted": true
+      },
+      "actual": {
+        "closed": true,
+        "issueEffects": 2,
+        "originalRetained": true,
+        "custodyAccepted": true
+      }
+    },
+    {
+      "name": "no-change-and-actual-reliance-notice",
+      "expected": {
+        "closedFacts": 2,
+        "issueEffects": 1,
+        "originalPreserved": true,
+        "oldRedispatchBlocked": true
+      },
+      "actual": {
+        "closedFacts": 2,
+        "issueEffects": 1,
+        "originalPreserved": true,
+        "oldRedispatchBlocked": true
+      }
+    }
+  ],
+  "scope": "Independent disposable forks of one API-built accepted/planned/G05/G06 engagement. Separate forks do not form additional complete source lifecycles."
+}

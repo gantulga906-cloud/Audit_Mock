@@ -1,0 +1,32 @@
+{
+  "guide": "G01",
+  "engagement": "E-5ff7f33b-8090-4f3d-b168-7dbc24f58758",
+  "client": "dc93f084-85e4-4005-a814-d28d11c101c9",
+  "actors": [
+    "preparer",
+    "reviewer",
+    "partner"
+  ],
+  "assessment": 2,
+  "decisionVersions": [
+    1,
+    2,
+    3
+  ],
+  "terms": 1,
+  "original": {
+    "id": "027ad9cd-c199-4c23-8c67-bf5dbe1ae1cd",
+    "sha256": "7707bb4eec62fb5e615bf3f12a9cd782043fee25c3a3d587e3869d265406bdb4"
+  },
+  "checks": {
+    "normal": true,
+    "missingFact": true,
+    "wrongPeriod": true,
+    "selfReview": true,
+    "changedBasis": true,
+    "manualExpert": true,
+    "revokedScope": true,
+    "restartAndRetry": true
+  },
+  "profile": "Persisted fictional standard intake with approved named roster, independent declarations and dated manual rule checks; no professional/source acceptance granted"
+}

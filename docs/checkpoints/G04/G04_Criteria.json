@@ -1,0 +1,1719 @@
+{
+  "guide": "G04",
+  "scope": "All 58 original criteria retained with exact source hashes and current evidence class; original R16/G10 method and acceptance work remains",
+  "summary": {
+    "total": 58,
+    "backendDirect": 32,
+    "supporting": 26,
+    "independentlyAccepted": 0
+  },
+  "criteria": [
+    {
+      "id": "P07-UC01-AC01",
+      "title": "The programme identifies its source version and local changes.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "f6a54c5ceecf15986e9f2953db5956776fb9c0f883cf332efc6d235a7833169d",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC01-AC01",
+      "relatedCases": [
+        "P07-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P07-UC01-AC02",
+      "title": "A removed required procedure needs a supported permitted disposition, not an unchecked deletion.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "fa1d397c03a5582952ffa4e76788692e6fae8a8b024e7295185a2df61347659c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC01-AC02",
+      "relatedCases": [
+        "P07-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P07-UC01-AC03",
+      "title": "Planned steps do not appear performed.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "f84c3d3eae2324189ee59df83f8ff738fe26e6c126b1a94db98956b0dcc87c96",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC01-AC03",
+      "relatedCases": [
+        "P07-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P07-UC01-AC04",
+      "title": "Work ownership and due dates remain distinct from evidence sufficiency.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a6928cb5fb36758d4f77c8a4665eea447581c88a006bead578ea3e013d33206f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC01-AC04",
+      "relatedCases": [
+        "P07-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P07-UC02-AC01",
+      "title": "The design identifies exclusions and their effect.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "0cff5604982c9fd01960fcacf089ede2a5960e5ac6a5dfb10adbf75b9ffe6a07",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC02-AC01",
+      "relatedCases": [
+        "P07-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P07-UC02-AC02",
+      "title": "The residual count/amount reconciles on compatible units/currency.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ce6f3f27a7c948d286e4754fca89988006633e7621404c50d032c08710d0860c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC02-AC02",
+      "relatedCases": [
+        "P07-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P07-UC02-AC03",
+      "title": "A selected item without evidence is not silently replaced.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "126671973451a27fe86a3cdc1ec5cd6880e19df44826987cdf2b13bff40aa2d5",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC02-AC03",
+      "relatedCases": [
+        "P07-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "independent signed ratio example and unsupported projection boundaries",
+          "actors": [
+            "engineering fixture"
+          ],
+          "observed": "A -10 sample difference over book 200 with residual book 1000 gives -50 total and -40 incremental projection. Zero/nonpositive book units, mixed-direction errors, untested/unavailable units, controls objectives and absent explicit convention approval return not-evaluable with reasons and no invented total or confidence interval.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P07-UC02-AC04",
+      "title": "Confidence and sampling-risk claims are not offered by the simple baseline method.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "c8b594092f13b8180cf95f7a925f9030abb80e5c2f68ff42b7e901e36fda8c2c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC02-AC04",
+      "relatedCases": [
+        "P07-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "independent signed ratio example and unsupported projection boundaries",
+          "actors": [
+            "engineering fixture"
+          ],
+          "observed": "A -10 sample difference over book 200 with residual book 1000 gives -50 total and -40 incremental projection. Zero/nonpositive book units, mixed-direction errors, untested/unavailable units, controls objectives and absent explicit convention approval return not-evaluable with reasons and no invented total or confidence interval.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P07-UC03-AC01",
+      "title": "The same approved bindings reproduce the selected IDs.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "e88410ef4bf646c6f45e29a0abae9f869c618f806acf4738c422ee76f40f12f6",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC03-AC01",
+      "relatedCases": [
+        "P07-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P07-UC03-AC02",
+      "title": "Untested selected units remain visible in evaluation.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "8d846397d85a1931f033c11d4d3aa8590d400f5b5d2566410b94000edb2a47d3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC03-AC02",
+      "relatedCases": [
+        "P07-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "independent signed ratio example and unsupported projection boundaries",
+          "actors": [
+            "engineering fixture"
+          ],
+          "observed": "A -10 sample difference over book 200 with residual book 1000 gives -50 total and -40 incremental projection. Zero/nonpositive book units, mixed-direction errors, untested/unavailable units, controls objectives and absent explicit convention approval return not-evaluable with reasons and no invented total or confidence interval.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P07-UC03-AC03",
+      "title": "Known fully tested errors and inclusive projected errors are not counted twice.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "9664a46a7651a1a60fd933f193db358d1f55f75bafbb748cf92d9eeb08f14955",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC03-AC03",
+      "relatedCases": [
+        "P07-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P07-UC03-AC04",
+      "title": "A zero/invalid projection denominator cannot produce a clean result or an invented confidence interval.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "708d62033af27741fcf46f54b792b71dc34373328544388607813c034a50900a",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC03-AC04",
+      "relatedCases": [
+        "P07-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "independent signed ratio example and unsupported projection boundaries",
+          "actors": [
+            "engineering fixture"
+          ],
+          "observed": "A -10 sample difference over book 200 with residual book 1000 gives -50 total and -40 incremental projection. Zero/nonpositive book units, mixed-direction errors, untested/unavailable units, controls objectives and absent explicit convention approval return not-evaluable with reasons and no invented total or confidence interval.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P07-UC03-AC05",
+      "title": "When the approved eligible population and supported selection settings are used, the selected-unit listing contains the requested number of distinct eligible IDs with their source references; a repeat using the identical bindings reproduces that listing.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "56413188b2b062d657fd8d31683d067e84808b9269e7ca198969d70f9c1448cc",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P07-UC03-AC05",
+      "relatedCases": [
+        "P07-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC01-AC01",
+      "title": "Untested instances cannot be counted as passes.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "c5289df02dc7c355455263f118504478ea27744df46863fa99b4db4a3c65ca31",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC01-AC01",
+      "relatedCases": [
+        "P09-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC01-AC02",
+      "title": "Each deviation is traceable to tested work and evidence.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "eacec9b81c0d4e7e72be4abe60eefb46136d2f8dcb2add39cab3ca5c4a59c43a",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC01-AC02",
+      "relatedCases": [
+        "P09-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC01-AC03",
+      "title": "The conclusion addresses the actual period/reliance scope.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "214d01a1573589c07cd9e2b509c1c9f3bdedd479c443b6d345da67f302a0561c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC01-AC03",
+      "relatedCases": [
+        "P09-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC01-AC04",
+      "title": "A revised reliance decision identifies affected procedures.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "534a2defa40ebd59ae950458f5fb6fe71ec94bd44daeb1c50589ed45ae69fc67",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC01-AC04",
+      "relatedCases": [
+        "P09-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC02-AC01",
+      "title": "A programme tick cannot replace actual work and evidence.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4e6df603ea35544cd82011346cbe2342d38c5a334d28616cd74adc5142f77049",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC02-AC01",
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC02-AC02",
+      "title": "Unavailable support stays visible and affects the conclusion.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "fd2fbf1074c6c7352e1f06a64d3dd10f36729534083196d57a759ca68981c0d3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC02-AC02",
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC02-AC03",
+      "title": "The same issue detected by several tests is linked without duplicating monetary effects.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "b7b5569882de39c86b35a202424e1c11a2c341da6314a9f52b03360579877843",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC02-AC03",
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC02-AC04",
+      "title": "Calculation differences remain candidates until evaluated by the auditor.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "ac381f77cb3e2ed326c9d35e76595cd97c076233b997bb4b16910ca69bcd5369",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC02-AC04",
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC02-AC05",
+      "title": "For a selected invoice whose supported amount differs from its recorded amount, the saved work shows the selected source item, inspected evidence, both amounts, the difference and the preparer’s evaluated result or open investigation; the reviewer can retrieve that basis.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "7771b957608fb0c7e6529529c4f24627b952c01f5c9968fa5a9b8969e0018d32",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC02-AC05",
+      "relatedCases": [
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC03-AC01",
+      "title": "The expectation is identifiable before relying on its comparison.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "8c4574a58ad05e6047bf73a7d0ae3c64fead468409b0ac88111afefbafed200f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC03-AC01",
+      "relatedCases": [
+        "P09-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC03-AC02",
+      "title": "Thresholds and units are explicit and do not default to a universal percentage.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "cd49bbfc9e7db14a42e66129656e0c79f7cb9c7a45efa3f858a300a348d8977c",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC03-AC02",
+      "relatedCases": [
+        "P09-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC03-AC03",
+      "title": "A plausible management explanation alone does not close an unsupported difference.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "3503fc4f6111b6e622338e165f2c3ca19e4cbc8bb4408a7d77889dbbe4c64730",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC03-AC03",
+      "relatedCases": [
+        "P09-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC03-AC04",
+      "title": "Changed operands identify the previous result as requiring impact assessment.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "dc1978f1c3cb3f04f4a048eaab76e6924d40a43bfebf1796d345b5f6ccb23648",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC03-AC04",
+      "relatedCases": [
+        "P09-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC04-AC01",
+      "title": "Whole-journal duplicates preserve line multiplicity and original rows.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d4d3bd16b724f20d299b9acae8b6ab64ca1698ffd31f3d6a3d9f060e56066394",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC04-AC01",
+      "relatedCases": [
+        "P09-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "independent bounded-draw rejection, retained ordering and exact whole-journal multiset example",
+          "actors": [
+            "engineering fixture"
+          ],
+          "observed": "A rejected high random word is redrawn before modulo. Whole journals J1/J2 with A+10/B-10 form one duplicate cluster; J3 A+10/B-5/B-5 stays distinct. Gross debit/credit exposures are each 20 across the two cases, once regardless of triggers. This is bounded method evidence, not a fraud conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC04-AC02",
+      "title": "Several triggers on one journal do not multiply its financial exposure.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "0972fa2a826b6fa93caf881d8e926f1d86ba8c0de97feeabddf0817cbf883ee7",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC04-AC02",
+      "relatedCases": [
+        "P09-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "independent bounded-draw rejection, retained ordering and exact whole-journal multiset example",
+          "actors": [
+            "engineering fixture"
+          ],
+          "observed": "A rejected high random word is redrawn before modulo. Whole journals J1/J2 with A+10/B-10 form one duplicate cluster; J3 A+10/B-5/B-5 stays distinct. Gross debit/credit exposures are each 20 across the two cases, once regardless of triggers. This is bounded method evidence, not a fraud conclusion.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "approved source population and actual nonordinary-scope certificate through multiple journal triggers, separate investigations, independent review and renewed source revision",
+          "actors": [
+            "preparer",
+            "reviewer"
+          ],
+          "observed": "Eleven actual journals each retain one case despite duplicate/manual/amount/cutoff/round triggers; gross debit remains 1100 once. Uninvestigated and self-reviewed cases cannot pass. Each case records actual purpose, authority, accounting and source evidence. A scoped source revision makes the earlier run noncurrent and permits a new version while preserving the old independently approved run.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC04-AC03",
+      "title": "Selection criteria, population and result are reproducible.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "7a0430a97aa7fea2a787d16575d1e66e09b3a09dbe21703cf084cd6de16b1e35",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC04-AC03",
+      "relatedCases": [
+        "P09-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "approved source population and actual nonordinary-scope certificate through multiple journal triggers, separate investigations, independent review and renewed source revision",
+          "actors": [
+            "preparer",
+            "reviewer"
+          ],
+          "observed": "Eleven actual journals each retain one case despite duplicate/manual/amount/cutoff/round triggers; gross debit remains 1100 once. Uninvestigated and self-reviewed cases cannot pass. Each case records actual purpose, authority, accounting and source evidence. A scoped source revision makes the earlier run noncurrent and permits a new version while preserving the old independently approved run.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC04-AC04",
+      "title": "The auditor’s conclusion is distinct from the machine trigger.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "dc96c313e1bd9ee45191b2afde738413d1f880062efed665cd2303f965330e30",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC04-AC04",
+      "relatedCases": [
+        "P09-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "approved source population and actual nonordinary-scope certificate through multiple journal triggers, separate investigations, independent review and renewed source revision",
+          "actors": [
+            "preparer",
+            "reviewer"
+          ],
+          "observed": "Eleven actual journals each retain one case despite duplicate/manual/amount/cutoff/round triggers; gross debit remains 1100 once. Uninvestigated and self-reviewed cases cannot pass. Each case records actual purpose, authority, accounting and source evidence. A scoped source revision makes the earlier run noncurrent and permits a new version while preserving the old independently approved run.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC05-AC01",
+      "title": "A signed count sheet alone is not auditor attendance.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "76c7778fbee7abb4e7cf3227483f099146cbe54ea2075a2f9ddf449fe247dc4f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC05-AC01",
+      "relatedCases": [
+        "P09-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC05-AC02",
+      "title": "Count and register comparisons use compatible units, dates and item/location keys.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a7423d76d405aca851e0f1e146cc7f5aa79a100f31c1ed60e4e50d74fc740c76",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC05-AC02",
+      "relatedCases": [
+        "P09-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC05-AC03",
+      "title": "Unobserved locations are not automatically covered by another count.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "0cb18bf0c20dfe29a82ddfffb0d00a45480eb05a6d12692bde9847b49282b3d4",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC05-AC03",
+      "relatedCases": [
+        "P09-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC05-AC04",
+      "title": "Unresolved differences or inability to obtain evidence are escalated.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "65b30dc0cd4c16af4fa033467cbe39b6cb53ec06b5eaa47e6fe46b00d78a05a7",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC05-AC04",
+      "relatedCases": [
+        "P09-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC06-AC01",
+      "title": "A recalculated model does not prove its assumptions reasonable.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "4eb97d969a41601ef47b819274d144cab2a104bc2bd6097b0ba5af8cb7c28352",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC06-AC01",
+      "relatedCases": [
+        "P09-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC06-AC02",
+      "title": "An auditor range includes supported reasonable values under its stated basis.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "c8bc36f5cd188ef04a91a09af99cd72dd028e568a3d5125de5efd0a51d96b150",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC06-AC02",
+      "relatedCases": [
+        "P09-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC06-AC03",
+      "title": "Indicators of bias retain their audit implications without an automatic fraud conclusion.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "37e6a49455ffa0ccc19245eacfe7721e732a8eced7d16ee8edc441980e6b0633",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC06-AC03",
+      "relatedCases": [
+        "P09-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC06-AC04",
+      "title": "The conclusion and disclosure assessment identify the exact estimate/data versions.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "f9829b66fce8b1e183590df2ddaec068ed6c4ad32118234189fcd398d2d46ef0",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC06-AC04",
+      "relatedCases": [
+        "P09-UC06"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC07-AC01",
+      "title": "A procedure performed earlier cannot falsely show coverage through a later report date.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "83efe52eb5e2f95d4deb4ea4a568bdba56e9acd7eafa7b88a66eaf15f2e8cc4e",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC07-AC01",
+      "relatedCases": [
+        "P09-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC07-AC02",
+      "title": "Management representations support rather than replace necessary procedures.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a1f86e983be83393dde020bfc184e3e5c123fa728ab0f270a68094d4c4241ddd",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC07-AC02",
+      "relatedCases": [
+        "P09-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC07-AC03",
+      "title": "Event treatment is a human decision under the applicable framework.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ba0571fcbcaba45fe0b77391dacb9fc4e16b5ece2c2c3a56741d4a5856046875",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC07-AC03",
+      "relatedCases": [
+        "P09-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC07-AC04",
+      "title": "A material unresolved event remains visible to the partner.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d73a355b249863654808b4f63789aa8987454bf83907edd3799d9e0cda01b704",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC07-AC04",
+      "relatedCases": [
+        "P09-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC08-AC01",
+      "title": "Liquidity ratios do not choose the conclusion.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "e4cc174d568493367eadfe85b1afe21b6284b569b8742b4a17e6af244f1fc86d",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC08-AC01",
+      "relatedCases": [
+        "P09-UC08"
+      ],
+      "observations": [],
+      "relatedScenarios": [],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC08-AC02",
+      "title": "Financing support is not assumed available merely because it appears in a plan.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "3221fdf0640750e080916d6bf1966ee6815e278084d00081e9652f007b4a9af1",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC08-AC02",
+      "relatedCases": [
+        "P09-UC08"
+      ],
+      "observations": [],
+      "relatedScenarios": [],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC08-AC03",
+      "title": "Basis appropriateness, material uncertainty, disclosure adequacy and evidence limitation remain distinct.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "ad79831fd4db957a47db386a09afddfae148e2e4eb3ea724e2e16ce4f0e35b54",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC08-AC03",
+      "relatedCases": [
+        "P09-UC08"
+      ],
+      "observations": [],
+      "relatedScenarios": [],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC08-AC04",
+      "title": "The final result identifies the assessment and statement versions relied upon.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "8faf91229c032d68dbe75049b54c382bdd5fd6eae2f6473fc4eb6e9be306d430",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC08-AC04",
+      "relatedCases": [
+        "P09-UC08"
+      ],
+      "observations": [],
+      "relatedScenarios": [],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC09-AC01",
+      "title": "Unknown exposure is not zero.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "8510f4bea5943f17a8f1485df617a72780a9e94b73d0f08953663d34c3d06730",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC09-AC01",
+      "relatedCases": [
+        "P09-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC09-AC02",
+      "title": "A claimed arm’s-length transaction needs appropriate support.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "ed9391a31538543cfce8e4d653645f2430cee916207c1b1058a72e576566523f",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC09-AC02",
+      "relatedCases": [
+        "P09-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC09-AC03",
+      "title": "A matter’s presence in a register does not prove the register complete.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a817c791a280bc8ec0a76b80abd85010b7c1df7759f26310f44ba4616aa1e256",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC09-AC03",
+      "relatedCases": [
+        "P09-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC09-AC04",
+      "title": "Management’s account of a legal outcome remains distinct from counsel evidence and the auditor conclusion.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "de1c07d1bc03506b51ff24ecd42a8078f808cc2155d0e36fb6089673483f64a1",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC09-AC04",
+      "relatedCases": [
+        "P09-UC09"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC10-AC01",
+      "title": "Instructions identify the actual information, period and required work.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "5342c718ef6265566747652a9e21fd137f57d72134b476fac58235f560b60fc0",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC10-AC01",
+      "relatedCases": [
+        "P09-UC10"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC10-AC02",
+      "title": "Component materiality and communication thresholds follow the selected applicable edition, not an invented fixed ratio.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "eab26c3a9399d1f8824a7e3fb904f222dc4a6663569a9f9ca07db38621afe31b",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC10-AC02",
+      "relatedCases": [
+        "P09-UC10"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC10-AC03",
+      "title": "A component report does not automatically satisfy every group assertion.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "5414cde3fd8b46d3f4dbaf96dbb7f48662f5a9cd565a08e07032525c58701a12",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC10-AC03",
+      "relatedCases": [
+        "P09-UC10"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC10-AC04",
+      "title": "The group result evaluates actual work and unresolved matters.",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "d7c2f3827de0009d73468da364280a357516a4695dd1e6a43c657f26434d2e95",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC10-AC04",
+      "relatedCases": [
+        "P09-UC10"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ],
+      "checkpointDisposition": "supporting implementation/reference position; dedicated case-specific and professional acceptance remain open",
+      "implementationReferences": [
+        "scripts/pilot-execution.mjs",
+        "src/lib/pilot-execution.ts",
+        "docs/delivery/handbooks/masters/G04_Programmes_sampling_and_fieldwork_execution.md",
+        "docs/delivery/handbooks/masters/G10_Fieldwork_area_implementation_cards.md"
+      ],
+      "boundary": "Generic records and existing area profiles do not close an unsupported calculation, whole G10 variant or complete source case."
+    },
+    {
+      "id": "P09-UC11-AC01",
+      "title": "The area cannot appear cleared while applicable blockers remain unresolved.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "1ba2b55b8ca23694c4ebd52e51cbfe6b71744499faece34f4b7b676e13c096b6",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC11-AC01",
+      "relatedCases": [
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "actual operating instance, previously approved expectation and real subsequent-event coverage through explicit independent limitation and changed report date",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A real missing control authorization makes reliance noncurrent while design and implementation assessments remain unchanged. The analytical expectation 100 and threshold 5 precede actual 120; a plausible explanation without separate corroborating source cannot pass. Actual source review through 2025-12-31 cannot falsely cover a later report date. Independent limited review retains next work and a changed report date invalidates prior coverage.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC11-AC02",
+      "title": "Authorized non-performance has a reason and relevant alternatives, not an unexplained waiver.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "89e77c2399658545ba00e76e07127fdccd659978afbdea7981ae1d5590f395be",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC11-AC02",
+      "relatedCases": [
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC11-AC03",
+      "title": "The preparer’s reply is not reviewer clearance.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "85deed57928db3c410338de330b9d55c372e7142d7f91208b578233c7f862e6a",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC11-AC03",
+      "relatedCases": [
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    },
+    {
+      "id": "P09-UC11-AC04",
+      "title": "The handoff identifies the exact result and conclusion versions.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a5603140a4a287de0fc029f0c009ba8d819a6c2eebaa5c7d6af263e786c3c6fa",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P09-UC11-AC04",
+      "relatedCases": [
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "one accepted and planned persisted engagement through actual requested evidence, sample, projection, journal investigation, procedure work, independent limited conclusion, review note, separate clearance and G05 correction proposal",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The same actual engagement retains independently usable source data and sample results, actual journal cases and source/physical detail work. An existing sample finding is linked rather than duplicated by area work. The preparer response does not clear the review note; independent exact-response clearance and final workpaper review precede a 10 correction proposal. Factual 10 plus incremental projected 40 stays 50. Restart preserves exact reviewed work, cleared-note history, original finding and unposted correction proposal. This is the connected normal reference; the full A13 branch/acceptance pack remains open.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ],
+      "checkpointDisposition": "direct executed fixture; no independent source acceptance"
+    }
+  ]
+}

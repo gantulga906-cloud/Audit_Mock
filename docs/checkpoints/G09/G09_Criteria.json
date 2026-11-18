@@ -1,0 +1,412 @@
+{
+  "guide": "G09",
+  "scope": "Direct bounded engineering fixture observations; independent whole-case acceptance remains open",
+  "criteria": [
+    {
+      "id": "P16-UC01-AC01",
+      "title": "The task links to the relevant exact record/context.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "844c4f7075ff7dc03fe1fdc83ba679c8671fe789daea49e7a6cf74e6ed1ea04d",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC01-AC01",
+      "relatedCases": [
+        "P16-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G09 queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "Exact task links identify record and form. Metric IDs reconcile to the returned queue under the stated UTC date, next-owner and open-status definition. Unknown dates stay separate; task closure leaves the paper untouched; completion is explicitly not risk or quality and no external notification is sent.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 actual named preparation independent return response clearance and review retain exact actor identities"
+      ]
+    },
+    {
+      "id": "P16-UC01-AC02",
+      "title": "A task close cannot clear a reviewer note or professional judgment.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "09c45917c56c7426a0ff2cb64dedb336d59c2e5a5b26eee290e7ee7ecf5c42a3",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC01-AC02",
+      "relatedCases": [
+        "P16-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G09 queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "Exact task links identify record and form. Metric IDs reconcile to the returned queue under the stated UTC date, next-owner and open-status definition. Unknown dates stay separate; task closure leaves the paper untouched; completion is explicitly not risk or quality and no external notification is sent.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G09 actual named preparation independent return response clearance and review retain exact actor identities",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "actual named preparation independent return response clearance and review retain exact actor identities",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "A real named author prepares and submits a fictional typed work contract. The different named reviewer returns it; the actual reason and next owner appear in the queue. Closing its manual follow-up cannot clear its note. Self review is denied. Exact corrected work, response version and note-author clearance precede independent review.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "P16-UC01-AC03",
+      "title": "Returned work shows its reason and next owner.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "82a6d22105f15309b8484af40f82f1bc73e691c7fbdf060e1c14f67291cedab0",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC01-AC03",
+      "relatedCases": [
+        "P16-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G09 actual named preparation independent return response clearance and review retain exact actor identities",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "actual named preparation independent return response clearance and review retain exact actor identities",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "A real named author prepares and submits a fictional typed work contract. The different named reviewer returns it; the actual reason and next owner appear in the queue. Closing its manual follow-up cannot clear its note. Self review is denied. Exact corrected work, response version and note-author clearance precede independent review.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 queues drill through exact populations preserve review notes and disclose unknown dates without external notification"
+      ]
+    },
+    {
+      "id": "P16-UC01-AC04",
+      "title": "No automatic external email/client notification is assumed.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "8a83e90a60df98b5b5804b3e3850b0dd57647f8159dbd1139e1c55db9a7ccca5",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC01-AC04",
+      "relatedCases": [
+        "P16-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G09 queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "Exact task links identify record and form. Metric IDs reconcile to the returned queue under the stated UTC date, next-owner and open-status definition. Unknown dates stay separate; task closure leaves the paper untouched; completion is explicitly not risk or quality and no external notification is sent.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 actual named preparation independent return response clearance and review retain exact actor identities"
+      ]
+    },
+    {
+      "id": "P16-UC02-AC01",
+      "title": "Counts reconcile to the defined underlying population.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "572f406cb2eefef41d727f69b76f4ddd592900a772b47a73451d46d9bbce1978",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC02-AC01",
+      "relatedCases": [
+        "P16-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G09 queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "Exact task links identify record and form. Metric IDs reconcile to the returned queue under the stated UTC date, next-owner and open-status definition. Unknown dates stay separate; task closure leaves the paper untouched; completion is explicitly not risk or quality and no external notification is sent.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+        "G09 actual named preparation independent return response clearance and review retain exact actor identities"
+      ]
+    },
+    {
+      "id": "P16-UC02-AC02",
+      "title": "Restricted records do not leak through totals or previews.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4a794aff0b7e020eec50b01f091cde218b3c8912a3aa26a52730d280671cd28e",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC02-AC02",
+      "relatedCases": [
+        "P16-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G09 grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "Actual revocation denies nine protected read/search/template/original/report/authorization/action/export surfaces; other engagements stay out of the portfolio and totals. Suspension and departure block future use. Exact stored paper answers, history and conclusions remain unchanged after display relabeling and revocation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+        "G09 actual named preparation independent return response clearance and review retain exact actor identities"
+      ]
+    },
+    {
+      "id": "P16-UC02-AC03",
+      "title": "Task-completion percentage is not labelled an audit-risk/quality score.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "5995dadd9467ffd3af83a5722bd7e5ca4c8eb810a26008c2e06e04d848927cb0",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC02-AC03",
+      "relatedCases": [
+        "P16-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G09 queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "Exact task links identify record and form. Metric IDs reconcile to the returned queue under the stated UTC date, next-owner and open-status definition. Unknown dates stay separate; task closure leaves the paper untouched; completion is explicitly not risk or quality and no external notification is sent.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+        "G09 actual named preparation independent return response clearance and review retain exact actor identities"
+      ]
+    },
+    {
+      "id": "P16-UC02-AC04",
+      "title": "Dashboard interaction cannot bypass the owning action’s authority/checks.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "81d035daeabf97d747469052b428dffdefb12869aefc1e2ef00187acf47c5f6b",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC02-AC04",
+      "relatedCases": [
+        "P16-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G09 actual named preparation independent return response clearance and review retain exact actor identities",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "actual named preparation independent return response clearance and review retain exact actor identities",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "A real named author prepares and submits a fictional typed work contract. The different named reviewer returns it; the actual reason and next owner appear in the queue. Closing its manual follow-up cannot clear its note. Self review is denied. Exact corrected work, response version and note-author clearance precede independent review.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+        "G09 queues drill through exact populations preserve review notes and disclose unknown dates without external notification"
+      ]
+    },
+    {
+      "id": "P16-UC02-AC05",
+      "title": "When the reviewer opens a reported count of overdue assigned items, the permitted drill-through listing explains the same count using the stated period/status definition and identifies any stale/unknown inputs.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "5f4aa09a8806b43466da9714aa1dca0fc696ca7494113a010a520c1374a49430",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC02-AC05",
+      "relatedCases": [
+        "P16-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G09 queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "queues drill through exact populations preserve review notes and disclose unknown dates without external notification",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "Exact task links identify record and form. Metric IDs reconcile to the returned queue under the stated UTC date, next-owner and open-status definition. Unknown dates stay separate; task closure leaves the paper untouched; completion is explicitly not risk or quality and no external notification is sent.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+        "G09 actual named preparation independent return response clearance and review retain exact actor identities"
+      ]
+    },
+    {
+      "id": "P16-UC03-AC01",
+      "title": "A role title, hidden button or relationship edge alone is not authorization.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "6f6600ae4f89c3e93b3ec25dbccdc7b4dd28a3dae5dc45d79794b0abe6fd13b1",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC03-AC01",
+      "relatedCases": [
+        "P16-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G09 named local activation and explicit grants preserve legacy actors and prevent role-title access",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "named local activation and explicit grants preserve legacy actors and prevent role-title access",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "A real local named account activates once, receives an explicit dated grant, is independently assigned future work, records its actual subject ID and cannot enter another engagement or act as an account administrator through a role title.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 grant revocation suspension departure and relabeling cover every team resource without rewriting history"
+      ]
+    },
+    {
+      "id": "P16-UC03-AC02",
+      "title": "Search, links, files, exports and action endpoints apply the same actual scope rules.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d3f65ceb76f8e3e26194c7f048121fc5a5bc01f8c1dc6f942c0021702492a776",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC03-AC02",
+      "relatedCases": [
+        "P16-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G09 grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "Actual revocation denies nine protected read/search/template/original/report/authorization/action/export surfaces; other engagements stay out of the portfolio and totals. Suspension and departure block future use. Exact stored paper answers, history and conclusions remain unchanged after display relabeling and revocation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 named local activation and explicit grants preserve legacy actors and prevent role-title access"
+      ]
+    },
+    {
+      "id": "P16-UC03-AC03",
+      "title": "Revocation preserves historical authorship/signatures.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d8ff58b995935932e30fa2133ca471a0371064c055c17e961a272756f25872f1",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC03-AC03",
+      "relatedCases": [
+        "P16-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G09 grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "Actual revocation denies nine protected read/search/template/original/report/authorization/action/export surfaces; other engagements stay out of the portfolio and totals. Suspension and departure block future use. Exact stored paper answers, history and conclusions remain unchanged after display relabeling and revocation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 named local activation and explicit grants preserve legacy actors and prevent role-title access"
+      ]
+    },
+    {
+      "id": "P16-UC03-AC04",
+      "title": "Display-label changes cannot reinterpret old typed answers or professional conclusions.",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ba2611a4ca08fc72b5b279d00186e0179b8647ed1c7d31dec47ac20bbdbdda69",
+      "source": "SRC02 / Registers/Acceptance_Criteria.csv / P16-UC03-AC04",
+      "relatedCases": [
+        "P16-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G09 grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+          "file": "tests/pilot-local-identity.test.mjs",
+          "action": "grant revocation suspension departure and relabeling cover every team resource without rewriting history",
+          "actors": [
+            "named preparer",
+            "named reviewer",
+            "named partner",
+            "explicit local administrator"
+          ],
+          "observed": "Actual revocation denies nine protected read/search/template/original/report/authorization/action/export surfaces; other engagements stay out of the portfolio and totals. Suspension and departure block future use. Exact stored paper answers, history and conclusions remain unchanged after display relabeling and revocation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G09 named local activation and explicit grants preserve legacy actors and prevent role-title access"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "date": "2026-11-16",
+  "baselineCommit": "3de63dcdff4adcd44972da7f8b3a7de2e509f597",
+  "currentCommit": "079f9da47a02eab681feeeda3de3dfb8cfc42848",
+  "groups": [
+    {
+      "kind": "cases",
+      "count": 75,
+      "idsHashesAndScopePreserved": true,
+      "oldFixturePassesPreserved": true
+    },
+    {
+      "kind": "criteria",
+      "count": 315,
+      "idsHashesAndScopePreserved": true,
+      "oldFixturePassesPreserved": true
+    },
+    {
+      "kind": "features",
+      "count": 136,
+      "idsHashesAndScopePreserved": true,
+      "oldFixturePassesPreserved": true
+    },
+    {
+      "kind": "automations",
+      "count": 58,
+      "idsHashesAndScopePreserved": true,
+      "oldFixturePassesPreserved": true
+    },
+    {
+      "kind": "e2e",
+      "count": 476,
+      "idsHashesAndScopePreserved": true,
+      "oldFixturePassesPreserved": true
+    },
+    {
+      "kind": "forms",
+      "count": 70,
+      "idsHashesAndScopePreserved": true,
+      "oldFixturePassesPreserved": true
+    },
+    {
+      "kind": "variants",
+      "count": 22,
+      "idsHashesAndScopePreserved": true,
+      "oldFixturePassesPreserved": true
+    },
+    {
+      "kind": "dependencies",
+      "count": 20,
+      "idsHashesAndScopePreserved": true,
+      "oldFixturePassesPreserved": true
+    },
+    {
+      "kind": "extensions",
+      "count": 58,
+      "idsHashesAndScopePreserved": true,
+      "oldFixturePassesPreserved": true
+    },
+    {
+      "kind": "transitions",
+      "count": 1012,
+      "idsHashesAndScopePreserved": true,
+      "oldFixturePassesPreserved": true
+    },
+    {
+      "kind": "operational",
+      "count": 5,
+      "idsHashesAndScopePreserved": true,
+      "oldFixturePassesPreserved": true
+    }
+  ],
+  "registeredRows": 2247,
+  "connectedCycles": [
+    "A08",
+    "A11",
+    "A25",
+    "A26",
+    "A27",
+    "A28"
+  ],
+  "allPriorCyclesPreserved": true,
+  "sourceFileByteChanges": [
+    {
+      "id": "STG02",
+      "file": "C:\\Users\\Zoloo\\OneDrive\\Documents\\Veritech\\Ecosystem\\Audit\\erd additions\\ERD\\Form+ERD\\Audit_Stage_2_Repaired.xlsx",
+      "sha256": "05ca3480341707a32baf2ec054c4f38f87a1a6e89a13fef44bdd42c4b2978552",
+      "baselineSha256": "f3f7bb633a952f084b4b66c98d8dd1a243d655409058263f7306f38a24dea12b",
+      "matchesOriginal": false,
+      "modified": "2026-11-13T02:56:09.000Z"
+    },
+    {
+      "id": "STG03",
+      "file": "C:\\Users\\Zoloo\\OneDrive\\Documents\\Veritech\\Ecosystem\\Audit\\erd additions\\ERD\\Form+ERD\\Audit_Stage_3_Repaired.xlsx",
+      "sha256": "b34f18fd87ded28868b8a0f984b0da19c1b1931fc75e6b6bde6586d5316abb79",
+      "baselineSha256": "9cfe6c74f2659031f46243697308d809765f72175c49531363a73794ee64a2da",
+      "matchesOriginal": false,
+      "modified": "2026-11-13T03:53:03.000Z"
+    }
+  ],
+  "effectiveValidationRuleChanges": 0,
+  "sourceAcceptance": [],
+  "backlog": {
+    "date": "2026-11-16",
+    "commit": "079f9da47a02eab681feeeda3de3dfb8cfc42848",
+    "packages": 25,
+    "tasks": 128,
+    "next": [
+      "F2 structured risk/response source work in 2.6",
+      "F2 readable source-linked workpaper exports and remaining form families",
+      "R08 Excel mapping/preview and programme-level loss acknowledgement"
+    ],
+    "openMinimumGap": "FG-01 unbiased selection/projection remains in its original scope"
+  }
+}

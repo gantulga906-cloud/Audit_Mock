@@ -14,6 +14,7 @@ export type StaffingView={
 export type RosterAvailability={
  id:string;name:string;version:number;status:'active'|'inactive'|'external';account?:PilotRole;start:string;end:string;capacity:number|null;
  committed:number;assignments:{engagement:string;client:string;start:string;end:string;hours:number;capacity:StaffCapacity}[];
+ actual?:{engagement:string;from:string;through:string;minutes:number}[];
  credentials:{id:string;title:string;source:string;issuer:string;from:string;to:string;validity:string;current:boolean}[];
 };
 export type WorkAssignment={

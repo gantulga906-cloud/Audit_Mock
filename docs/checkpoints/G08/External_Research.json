@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-18",
+  "sources": [
+    {
+      "title": "fflate ZIP API",
+      "url": "https://github.com/101arrowz/fflate/blob/master/README.md",
+      "application": "ZIP entry filtering with explicit file-count and expanded-size bounds; workbook formula evaluation is not provided."
+    },
+    {
+      "title": "fast-xml-parser",
+      "url": "https://github.com/NaturalIntelligence/fast-xml-parser/blob/master/README.md",
+      "application": "OOXML structure parsing with unsafe declarations rejected and actual source identities retained."
+    }
+  ],
+  "boundary": "Implementation libraries do not certify source semantics, professional methodology or local legal adoption."
+}

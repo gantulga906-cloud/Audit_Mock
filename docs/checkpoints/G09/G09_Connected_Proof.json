@@ -1,0 +1,95 @@
+[
+  {
+    "name": "local-identity-and-explicit-future-reassignment",
+    "actual": {
+      "individualActors": true,
+      "legacyHistoryPreserved": true,
+      "otherEngagementDenied": true,
+      "nonAdminDenied": true,
+      "selfReviewDenied": true
+    }
+  },
+  {
+    "name": "revocation-across-team-surfaces",
+    "actual": {
+      "scopedEndpoints": 9,
+      "sessionRevoked": true,
+      "departurePreservesAnswers": true,
+      "expiryEnforced": true
+    }
+  },
+  {
+    "name": "exact-queue-and-metric-definitions",
+    "actual": {
+      "drillThroughReconciles": true,
+      "taskCloseLeavesWorkUntouched": true,
+      "unknownDateNotOverdue": true,
+      "returnedReasonAndOwner": true,
+      "externalSent": false
+    }
+  },
+  {
+    "name": "named-recovery",
+    "actual": {
+      "verified": true,
+      "namedIdentityPreserved": true,
+      "scopePreserved": true
+    }
+  },
+  {
+    "name": "named-professional-review-cycle",
+    "actual": {
+      "preparedBy": "U-9e2e635d-5667-47d5-b3f6-5e994783da84",
+      "returnedBy": "U-f047182c-c4c3-4267-8016-cf36e64cb04f",
+      "responseBy": "U-9e2e635d-5667-47d5-b3f6-5e994783da84",
+      "clearedBy": "U-f047182c-c4c3-4267-8016-cf36e64cb04f",
+      "reviewedBy": "U-f047182c-c4c3-4267-8016-cf36e64cb04f",
+      "taskCloseDidNotClearNote": true
+    }
+  },
+  {
+    "name": "named-independent-capacities",
+    "actual": {
+      "qualityNamed": true,
+      "custodianNamed": true,
+      "capacityAloneDenied": true,
+      "qualityConcernAttributed": true,
+      "otherEngagementDenied": true,
+      "unrelatedFileDenied": true,
+      "suspensionEnforced": true
+    }
+  },
+  {
+    "name": "local-adapter-correlation-and-reconciliation",
+    "actual": {
+      "externalEffect": false,
+      "attempts": 2,
+      "unknownRetryDenied": true,
+      "exactPayloadApproved": true,
+      "correctionPreservesPrior": true,
+      "scopePreserved": true
+    }
+  },
+  {
+    "name": "five-operational-families",
+    "actual": {
+      "bootstrap": true,
+      "copyMigration": true,
+      "rollback": true,
+      "restore": true,
+      "boundedReads": 12,
+      "approvedWorkloadTarget": false,
+      "deployed": false,
+      "releaseReady": false
+    }
+  },
+  {
+    "name": "explicit-shared-entrance-cutover",
+    "actual": {
+      "legacyTeamClosed": true,
+      "oldSessionInvalid": true,
+      "namedScopeRetained": true,
+      "reversiblePolicy": true
+    }
+  }
+]

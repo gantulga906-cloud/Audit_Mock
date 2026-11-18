@@ -1,0 +1,2134 @@
+{
+  "guide": "G02",
+  "sourceSteps": [
+    {
+      "id": "A04-P1-W1",
+      "title": "Estimate skills, time, locations and specialist needs",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "69f8f3b54cc728a779ecdbf58a86326edac2f6f6adf1d3970d7940070447b823",
+      "source": "A04!C15:H15",
+      "relatedCases": [
+        "P03-UC02",
+        "P03-UC03",
+        "P11-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A04-P1-W2",
+      "title": "Identify partner, reviewer and EQR applicability",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "484e6a912626be317213952e6146b26e651f7ab8433861a19be76f431c2291ca",
+      "source": "A04!C16:H16",
+      "relatedCases": [
+        "P03-UC02",
+        "P03-UC03",
+        "P11-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A04-P1-W3",
+      "title": "Check conflicts and competing portfolio commitments",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "01169da293d81ffb416f507adc9a2df01658497d961d5e68ab0c5aeebe087767",
+      "source": "A04!C17:H17",
+      "relatedCases": [
+        "P03-UC02",
+        "P03-UC03",
+        "P11-UC05"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "approved roster capacity and reassignment preserve historical staff sign-offs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A04-P2-W1",
+      "title": "Assign partner, team and specialist responsibilities",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a8dc3732facea214db7756485f75bd773ab80a1ae438c30f232550717e3ca3fd",
+      "source": "A04!C18:H18",
+      "relatedCases": [
+        "P03-UC02",
+        "P06-UC04"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ]
+    },
+    {
+      "id": "A04-P2-W2",
+      "title": "Confirm competence, availability and independence",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "27aedbe6914b70c48b8cd9869669673818eebb9f3288b8ca1af3822d830ab74d",
+      "source": "A04!C19:H19",
+      "relatedCases": [
+        "P03-UC02",
+        "P06-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ]
+    },
+    {
+      "id": "A04-P2-W3",
+      "title": "Set supervision and consultation routes",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ceaa39edde0173bb25de70d997978e55ed8884f2d5a2ee25fc07ba423ffdd1db",
+      "source": "A04!C20:H20",
+      "relatedCases": [
+        "P03-UC02",
+        "P06-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ]
+    },
+    {
+      "id": "A04-P3-W1",
+      "title": "Grant appropriate engagement access",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "91193b53875751320e8ac1090b8948c9b7629c5a67a648d9b52b4d84a4fa9e24",
+      "source": "A04!C21:H21",
+      "relatedCases": [
+        "P03-UC02",
+        "P16-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ]
+    },
+    {
+      "id": "A04-P3-W2",
+      "title": "Communicate objectives, deadlines and review expectations",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "0930f7559144d868ad723180a9d7016e9be5a101eea63c4619c2f6f97987ab02",
+      "source": "A04!C22:H22",
+      "relatedCases": [
+        "P03-UC02",
+        "P16-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ]
+    },
+    {
+      "id": "A04-P3-W3",
+      "title": "Reassign resources when scope or risk changes",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "7e47e11f06c3d838cfa137a17c0f239f88b74e6b74e8e892b2ef49c520253d1c",
+      "source": "A04!C23:H23",
+      "relatedCases": [
+        "P03-UC02",
+        "P16-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "approved roster capacity and reassignment preserve historical staff sign-offs"
+      ]
+    },
+    {
+      "id": "A05-P1-W1",
+      "title": "Gather prior-year, preliminary financial and client information",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "cceeef6d13ac4dc3dd1b5abe5a955a7befa6584e5a4179e4d49931d67de23eee",
+      "source": "A05!C15:H15",
+      "relatedCases": [
+        "P03-UC01",
+        "P05-UC01",
+        "P08-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A05-P1-W2",
+      "title": "Set a preliminary scope and key dates",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "fe5ada7c45fc9f9fd4192866de0169fe79fddfb9622c410a16e9cbcdf7215aa8",
+      "source": "A05!C16:H16",
+      "relatedCases": [
+        "P03-UC01",
+        "P05-UC01",
+        "P08-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A05-P1-W3",
+      "title": "List client contacts and initial information requests",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "be6357a8bfc16c4a7e2e3c0aa175e3ad23ce815c181c51ba169d4f588f6e9536",
+      "source": "A05!C17:H17",
+      "relatedCases": [
+        "P03-UC01",
+        "P05-UC01",
+        "P08-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A05-P2-W1",
+      "title": "Discuss reporting responsibilities and audit access",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "7020519b55c0d4caabc71babecf40ab0beeecfc9e2e0b18f376f37b0e40532c0",
+      "source": "A05!C18:H18",
+      "relatedCases": [
+        "P06-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort"
+      ]
+    },
+    {
+      "id": "A05-P2-W2",
+      "title": "Agree deliverable dates and communication channels",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "197ab8333a7b6e259f57da8fa90faa7cf6150e2ac7807c38b08d358159131be1",
+      "source": "A05!C19:H19",
+      "relatedCases": [
+        "P06-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort"
+      ]
+    },
+    {
+      "id": "A05-P2-W3",
+      "title": "Record early issues, constraints and dependencies",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "8d69f554b465f45ccd904fe5e3c41304a719bfc114f9072afad290c01c44bbe7",
+      "source": "A05!C20:H20",
+      "relatedCases": [
+        "P06-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "A05-P3-W1",
+      "title": "Document meeting decisions and action owners",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "2c88cfa5a7c18d9d663cf714cc06db5f71965400743ae1bed7dee6d0069d3a6b",
+      "source": "A05!C21:H21",
+      "relatedCases": [
+        "P06-UC01",
+        "P06-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A05-P3-W2",
+      "title": "Resolve blockers to risk assessment",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "290540b466fd556fb3a86677837598d1c96fee1652971efd9c18e5d7799a6b08",
+      "source": "A05!C22:H22",
+      "relatedCases": [
+        "P06-UC01",
+        "P06-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A05-P3-W3",
+      "title": "Transfer the approved baseline to detailed planning",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "e93c6140fcf50cc0d2565de817c2347b1e5b891ab3cd9a0fe0336e943945a857",
+      "source": "A05!C23:H23",
+      "relatedCases": [
+        "P06-UC01",
+        "P06-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A06-P1-W1",
+      "title": "Map ownership, business model and significant transactions",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "e9747448dd04941623ff4d698ff2e799d3f7b4f46e26916ae96933ab2c55a8f2",
+      "source": "A06!C15:H15",
+      "relatedCases": [
+        "P06-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "A06-P1-W2",
+      "title": "Identify reporting framework and accounting policies",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "59cba6559c601f60dc6a9291f6100fb30e562c2ebebd028138a089dd643a41f4",
+      "source": "A06!C16:H16",
+      "relatedCases": [
+        "P06-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "A06-P1-W3",
+      "title": "Review legal, industry and external factors",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "c0d384903717efafe1bf565291791b631779d716636684022ed19e12e601556d",
+      "source": "A06!C17:H17",
+      "relatedCases": [
+        "P06-UC01"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort"
+      ]
+    },
+    {
+      "id": "A06-P2-W1",
+      "title": "Trace major transaction cycles and source systems",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "776a895cfe1b411cfe4e231b152e07a456ed26e5991c90444272a3f5810c1d56",
+      "source": "A06!C18:H18",
+      "relatedCases": [
+        "P06-UC01",
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A06-P2-W2",
+      "title": "Understand IT applications, interfaces and data changes",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "343fe81a14d4b8c3d006207b374e39de7db41f734e7e7982aecf08746363537b",
+      "source": "A06!C19:H19",
+      "relatedCases": [
+        "P06-UC01",
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A06-P2-W3",
+      "title": "Identify relevant service organizations and outsourced work",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "469d703c885f0f6c8e048dd04c9894765f0b21e4af3fc907ded3152e161576c9",
+      "source": "A06!C20:H20",
+      "relatedCases": [
+        "P06-UC01",
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A06-P3-W1",
+      "title": "Identify controls relevant to assessed risks",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a3bf5b9b9cc68fbf47fc05218c0c189ed194a7f42aeb102153f746da0702d255",
+      "source": "A06!C21:H21",
+      "relatedCases": [
+        "P06-UC01",
+        "P06-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A06-P3-W2",
+      "title": "Evaluate design and implementation where required",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "8583d4ad073ca0498b059ffecec06f6d8440a9bf9b0d12ba2bc2ebfadee87d75",
+      "source": "A06!C22:H22",
+      "relatedCases": [
+        "P06-UC01",
+        "P06-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A06-P3-W3",
+      "title": "Document gaps and hand findings to risk assessment",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "421dd08dac4342a3f414af1be35cee10901c3f77edeb52ba41785173d7ead65b",
+      "source": "A06!C23:H23",
+      "relatedCases": [
+        "P06-UC01",
+        "P06-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A07-P1-W1",
+      "title": "Perform inquiries and preliminary analytical procedures",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "8474ec5d7392d7da383021b9c788bb6ad9ddaea35a8ee20a03d6a71a09d2520c",
+      "source": "A07!C15:H15",
+      "relatedCases": [
+        "P06-UC01",
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A07-P1-W2",
+      "title": "Consider fraud incentives and management override",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "eb7f38fb4746c909b95208017263779d84ed892b2ae5c41d2809a70b2dcaae24",
+      "source": "A07!C16:H16",
+      "relatedCases": [
+        "P06-UC01",
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A07-P1-W3",
+      "title": "Review prior issues, changes and legal exposures",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "8c4548035d1072c54a69738d42490a773d08079b36ddde53d8141eb51971e1fe",
+      "source": "A07!C17:H17",
+      "relatedCases": [
+        "P06-UC01",
+        "P06-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A07-P2-W1",
+      "title": "Identify risks at statement and assertion levels",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ba93d6665e7bcc112f5b91fde845ccf8d3ed81979b3c0ba716f129bd247bf3cd",
+      "source": "A07!C18:H18",
+      "relatedCases": [
+        "P06-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A07-P2-W2",
+      "title": "Determine significance, inherent factors and relevant controls",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "efc030240cca5cfd6b71f5fb8a96c8293d8515b3a8eaf55df3d1d25acc779fa4",
+      "source": "A07!C19:H19",
+      "relatedCases": [
+        "P06-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A07-P2-W3",
+      "title": "Distinguish fraud and other required risk categories",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a3380c470b3d42bf0884b6148749d37d94d8cfdb08b1ab53f7bd4ef4cd20341d",
+      "source": "A07!C20:H20",
+      "relatedCases": [
+        "P06-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A07-P3-W1",
+      "title": "Record risk rationale and affected accounts or disclosures",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4a45b57fed1134ea62439e1c1b99f30c5e783ce82011f726c61958849b1a2ab5",
+      "source": "A07!C21:H21",
+      "relatedCases": [
+        "P06-UC02",
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A07-P3-W2",
+      "title": "Link each assessed risk to a planned response",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "fc1da9a9c63b9618cae0d907546ff53e6c7c114307d6d47a4648dd6a11bf427f",
+      "source": "A07!C22:H22",
+      "relatedCases": [
+        "P06-UC02",
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A07-P3-W3",
+      "title": "Reassess when fieldwork yields contradictory evidence",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "9eac8766d36d39cf743f805e6bac909b6054110ff152889e9929dc0a4fa9b90d",
+      "source": "A07!C23:H23",
+      "relatedCases": [
+        "P06-UC02",
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A08-P1-W1",
+      "title": "Identify relevant users and benchmark measures",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4f16363c8f235cc8ad1dca09f6779996dcef94ab395515e66ed3471a2bd3b1f5",
+      "source": "A08!C15:H15",
+      "relatedCases": [
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A08-P1-W2",
+      "title": "Assess unusual results and benchmark stability",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "bdfb1516f57ca576f339d4963b806120766edb584d6b5a6f5a738e7f5bede4c5",
+      "source": "A08!C16:H16",
+      "relatedCases": [
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A08-P1-W3",
+      "title": "Document the benchmark rationale",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "24daa51dd2d0df9d930da99a5a5a1d9e84aa729183eb56f67baf450824ff2d15",
+      "source": "A08!C17:H17",
+      "relatedCases": [
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A08-P2-W1",
+      "title": "Calculate overall and performance materiality",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "1c98d1d61a5ef6cced3dfc36ebba3845f64eb6e8de207c7b92dfeb510f803f07",
+      "source": "A08!C18:H18",
+      "relatedCases": [
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        },
+        {
+          "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved planning, qualified report, archive hold and recovery",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history"
+      ]
+    },
+    {
+      "id": "A08-P2-W2",
+      "title": "Set specific levels where circumstances require them",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "7caec902b91673a2575d08474fe3a2cb88035283f2ae9a6780574618405412d0",
+      "source": "A08!C19:H19",
+      "relatedCases": [
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A08-P2-W3",
+      "title": "Set clearly trivial threshold for accumulating differences",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "c689ff278e1184233747acbc0fcfa70a01bff23321af34f7fe075102845f5875",
+      "source": "A08!C20:H20",
+      "relatedCases": [
+        "P06-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A08-P3-W1",
+      "title": "Review and approve assumptions and thresholds",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "87a2f67a4bd73df04e42ab9dc205ec182744bd91c8ca05eab84f4f016c87e42b",
+      "source": "A08!C21:H21",
+      "relatedCases": [
+        "P06-UC05",
+        "P06-UC06",
+        "P07-UC02",
+        "P10-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A08-P3-W2",
+      "title": "Link thresholds to sampling and misstatement evaluation",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "2722c5991a8825c85164539894d92959ea0661fa4fd86c7c8963fa7fe839d0f1",
+      "source": "A08!C22:H22",
+      "relatedCases": [
+        "P06-UC05",
+        "P06-UC06",
+        "P07-UC02",
+        "P10-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A08-P3-W3",
+      "title": "Recalculate when new information warrants revision",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a62d246fccc4236065cfdc82676b399f52a06daa8d0767884b50ab6a7064d5ee",
+      "source": "A08!C23:H23",
+      "relatedCases": [
+        "P06-UC05",
+        "P06-UC06",
+        "P07-UC02",
+        "P10-UC03"
+      ],
+      "observations": [
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A09-P1-W1",
+      "title": "Identify comparative amounts and relevant policies",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "dfe19d9f6fc9c61250708ef74eacf424bb036e56b5fb19b3a1e767f131d09a09",
+      "source": "A09!C15:H15",
+      "relatedCases": [
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "separate auditor expert, management expert, internal audit function, conditional direct assistance, relevant component and opening-balance evaluations",
+          "actors": [
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An unsupported statutory deadline is rejected. Opening limitations require comparative/policy assessment and additional work. Direct assistance needs explicit source-backed applicability, not a universal permission. Component work requires actual group scope. Delivered work retains the auditor evaluation and never grants opinion or review-note authority. External accounts are not supplied by this profile.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A09-P1-W2",
+      "title": "Review prior auditor reports where permitted",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a01367d8110be62cf5b2e457443f167d8f9cd196c443375bfb0f9b2f769c9e71",
+      "source": "A09!C16:H16",
+      "relatedCases": [
+        "P05-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A09-P1-W3",
+      "title": "Determine opening-balance risks and scope",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "290a252a510505e7739e108dabc3a9bcc68dd1bbf34bd0d1e6319c7fe1e3d477",
+      "source": "A09!C17:H17",
+      "relatedCases": [
+        "P05-UC03"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A09-P2-W1",
+      "title": "Test roll-forward and opening transactions",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "7fc1f2e9c5d2c2b96ff21ef6ba3450b05b0c304a08da2cd3d28394e4f6bbb99b",
+      "source": "A09!C18:H18",
+      "relatedCases": [
+        "P05-UC03",
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "separate auditor expert, management expert, internal audit function, conditional direct assistance, relevant component and opening-balance evaluations",
+          "actors": [
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An unsupported statutory deadline is rejected. Opening limitations require comparative/policy assessment and additional work. Direct assistance needs explicit source-backed applicability, not a universal permission. Component work requires actual group scope. Delivered work retains the auditor evaluation and never grants opinion or review-note authority. External accounts are not supplied by this profile.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "A09-P2-W2",
+      "title": "Evaluate prior work or perform alternative procedures",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "4842674bdba1670c417807c4d5d191befa849b49decb957e0be149791f492d1f",
+      "source": "A09!C19:H19",
+      "relatedCases": [
+        "P05-UC03",
+        "P09-UC02"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "A09-P2-W3",
+      "title": "Investigate inconsistencies in accounting policies",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "5d33125cddb25f5e851c709e3284e48cafa8985013a79a0798ebbacd84d605e8",
+      "source": "A09!C20:H20",
+      "relatedCases": [
+        "P05-UC03",
+        "P09-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "separate auditor expert, management expert, internal audit function, conditional direct assistance, relevant component and opening-balance evaluations",
+          "actors": [
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An unsupported statutory deadline is rejected. Opening limitations require comparative/policy assessment and additional work. Direct assistance needs explicit source-backed applicability, not a universal permission. Component work requires actual group scope. Delivered work retains the auditor evaluation and never grants opinion or review-note authority. External accounts are not supplied by this profile.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "A09-P3-W1",
+      "title": "Document whether evidence is sufficient and appropriate",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "8b1d5130df813e4dec0bd2af14cf3bdf97a152a6fb0bd57321bf6c6d393d8d1b",
+      "source": "A09!C21:H21",
+      "relatedCases": [
+        "P05-UC03",
+        "P10-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "separate auditor expert, management expert, internal audit function, conditional direct assistance, relevant component and opening-balance evaluations",
+          "actors": [
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An unsupported statutory deadline is rejected. Opening limitations require comparative/policy assessment and additional work. Direct assistance needs explicit source-backed applicability, not a universal permission. Component work requires actual group scope. Delivered work retains the auditor evaluation and never grants opinion or review-note authority. External accounts are not supplied by this profile.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A09-P3-W2",
+      "title": "Carry unresolved effects into current-year testing",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ab2a7f1dc07c7d572aa0236e7e4e893833386f3f8ffdb0040c11c706e6207141",
+      "source": "A09!C22:H22",
+      "relatedCases": [
+        "P05-UC03",
+        "P10-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "separate auditor expert, management expert, internal audit function, conditional direct assistance, relevant component and opening-balance evaluations",
+          "actors": [
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An unsupported statutory deadline is rejected. Opening limitations require comparative/policy assessment and additional work. Direct assistance needs explicit source-backed applicability, not a universal permission. Component work requires actual group scope. Delivered work retains the auditor evaluation and never grants opinion or review-note authority. External accounts are not supplied by this profile.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A09-P3-W3",
+      "title": "Assess any reporting consequence of a scope limitation",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "a331eaa1c690bd987f7c6dfb23a9f1aa0926afe5986e8a642a8717736f925332",
+      "source": "A09!C23:H23",
+      "relatedCases": [
+        "P05-UC03",
+        "P10-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 scope and contributor safeguards retain unknowns, opening limitations and conditional legal applicability",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "separate auditor expert, management expert, internal audit function, conditional direct assistance, relevant component and opening-balance evaluations",
+          "actors": [
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An unsupported statutory deadline is rejected. Opening limitations require comparative/policy assessment and additional work. Direct assistance needs explicit source-backed applicability, not a universal permission. Component work requires actual group scope. Delivered work retains the auditor evaluation and never grants opinion or review-note authority. External accounts are not supplied by this profile.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "A10-P1-W1",
+      "title": "Define audit scope, timing and significant areas",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "0800e02c78be7bba1445652ff0d8a25a2f0e1372d39e1eff47bd461fec3f4208",
+      "source": "A10!C15:H15",
+      "relatedCases": [
+        "P06-UC02",
+        "P06-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A10-P1-W2",
+      "title": "Plan team direction, supervision and specialists",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "74cfa3870a04ab4f9fcc7812af72c11e449ef99abdfd93c13f0634eed776d030",
+      "source": "A10!C16:H16",
+      "relatedCases": [
+        "P06-UC02",
+        "P06-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A10-P1-W3",
+      "title": "Consider governance communication and reporting deadlines",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "4a35811d9cadd1abc56fbe31827ad0ee24671f42d5e1a2be47579a203760a7e0",
+      "source": "A10!C17:H17",
+      "relatedCases": [
+        "P06-UC02",
+        "P06-UC06"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "A10-P2-W1",
+      "title": "Map assessed risks to relevant assertions and procedures",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "c35183a7c32f7ffcb318926e570dd45d3d5936e636035d1971d5fe3b8be2bb4c",
+      "source": "A10!C18:H18",
+      "relatedCases": [
+        "P07-UC01",
+        "P06-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved planning, qualified report, archive hold and recovery",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ]
+    },
+    {
+      "id": "A10-P2-W2",
+      "title": "Choose control reliance and substantive approaches",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "5a357683f2747f2f3d3c0b229234112eb2baadefa099e7807209155dfe89e41e",
+      "source": "A10!C19:H19",
+      "relatedCases": [
+        "P07-UC01",
+        "P06-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved planning, qualified report, archive hold and recovery",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ]
+    },
+    {
+      "id": "A10-P2-W3",
+      "title": "Set nature, timing and extent for each response",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "ebb8af24ceab172a8f1dc36596b9e93a994d58f78ac0e6be14787156bcafbc98",
+      "source": "A10!C20:H20",
+      "relatedCases": [
+        "P07-UC01",
+        "P06-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved planning, qualified report, archive hold and recovery",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ]
+    },
+    {
+      "id": "A10-P3-W1",
+      "title": "Review programs for uncovered risks and dependencies",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "b8e2be3ffbda9d834694465ba245d69e5bebf2bcc3de56b42a73ce544a67acf4",
+      "source": "A10!C21:H21",
+      "relatedCases": [
+        "P06-UC05",
+        "P06-UC06",
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A10-P3-W2",
+      "title": "Approve the strategy, programs and assignments",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "68481b63dc22cebad304c8828bdb4c57f3c0bb0693d0d8e4c326711ecba243db",
+      "source": "A10!C22:H22",
+      "relatedCases": [
+        "P06-UC05",
+        "P06-UC06",
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A10-P3-W3",
+      "title": "Revise the plan when evidence changes the risk assessment",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "2ee7e47b105f5e98531b0141fafa82f093d9f52e45f3093dc35bea858292facc",
+      "source": "A10!C23:H23",
+      "relatedCases": [
+        "P06-UC05",
+        "P06-UC06",
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A12-P1-W1",
+      "title": "Link control objectives to assessed risks",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "30f7e5052135ed96ba18baa9475d08aad2d605021b6aa5228c44dfb4f92cc530",
+      "source": "A12!C15:H15",
+      "relatedCases": [
+        "P06-UC01",
+        "P09-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "A12-P1-W2",
+      "title": "Identify control owner, frequency and evidence",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "b222851b8bc81802662b1c804a0dd246598d43ea3938778e0dc4e7f2fada1910",
+      "source": "A12!C16:H16",
+      "relatedCases": [
+        "P06-UC01",
+        "P09-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "A12-P1-W3",
+      "title": "Distinguish design assessment from operating tests",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "d062a48a84423efd9cbfa27ac7b5755000324efba87c1f0351b226e0cde23d8e",
+      "source": "A12!C17:H17",
+      "relatedCases": [
+        "P06-UC01",
+        "P09-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "A12-P2-W1",
+      "title": "Walk through the transaction or process",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "968a89f731e4d5d473672cb607e1857fd14f55a86f0004930eb40d8b611fd3d1",
+      "source": "A12!C18:H18",
+      "relatedCases": [
+        "P06-UC01",
+        "P09-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "A12-P2-W2",
+      "title": "Assess whether design addresses the relevant risk",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "8754829d432fd370480a74a7ef529e43b8eba0f5c71ff1ba5d9686e3c31da912",
+      "source": "A12!C19:H19",
+      "relatedCases": [
+        "P06-UC01",
+        "P09-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "A12-P2-W3",
+      "title": "Confirm implementation through observation or inspection",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "9a7b8b3e759c213ebc2725a5285f94b0941689b78b68d6156558601a625bbea2",
+      "source": "A12!C20:H20",
+      "relatedCases": [
+        "P06-UC01",
+        "P09-UC01"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": []
+    },
+    {
+      "id": "A12-P3-W1",
+      "title": "Set population, timing and sample approach",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "fa40377881659d674ad10cbe82870fff395bdb19d2680b6b1c1c2090a1aed341",
+      "source": "A12!C21:H21",
+      "relatedCases": [
+        "P09-UC01",
+        "P07-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation"
+      ]
+    },
+    {
+      "id": "A12-P3-W2",
+      "title": "Inspect performance evidence and record deviations",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "3c73029ec7e97af924f43cb5a5d3160aa2ea4a4a4b1d8afb879e4467d9826f15",
+      "source": "A12!C22:H22",
+      "relatedCases": [
+        "P09-UC01",
+        "P07-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation"
+      ]
+    },
+    {
+      "id": "A12-P3-W3",
+      "title": "Evaluate deviations and reliability of control reliance",
+      "scope": "core",
+      "status": "fixture-passed",
+      "fixturePassed": true,
+      "sourceRowSha256": "c3bfa75107cfe586b97604988c2f99f88f1663d762262cadceeb445a694f8f78",
+      "source": "A12!C23:H23",
+      "relatedCases": [
+        "P09-UC01",
+        "P07-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation"
+      ]
+    },
+    {
+      "id": "A12-P4-W1",
+      "title": "Document control conclusion and limitations",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "36408591c3fcc57158f2394620ffe2ce7efe9c2fed64f072e88b619ea725bb6c",
+      "source": "A12!C24:H24",
+      "relatedCases": [
+        "P09-UC01",
+        "P10-UC01",
+        "P10-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A12-P4-W2",
+      "title": "Revise substantive testing if reliance fails",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "a02be67546f0e8503f83fab78dd29d716746ff6337c51083ae43d0b0d17c4a01",
+      "source": "A12!C25:H25",
+      "relatedCases": [
+        "P09-UC01",
+        "P10-UC01",
+        "P10-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "A12-P4-W3",
+      "title": "Communicate significant control deficiencies as appropriate",
+      "scope": "core",
+      "status": "unverified",
+      "fixturePassed": false,
+      "sourceRowSha256": "be93c390f0a6846bcc3bff40161e3e1cdd29a2233b65041dcbfea5944ef95cbb",
+      "source": "A12!C26:H26",
+      "relatedCases": [
+        "P09-UC01",
+        "P10-UC01",
+        "P10-UC07"
+      ],
+      "observations": [],
+      "relatedScenarios": [
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    }
+  ],
+  "connectedCycles": {
+    "total": 51,
+    "complete": 9,
+    "applicable": 51,
+    "applicableComplete": 9
+  },
+  "note": "New G02 observations link only exercised steps. No new fully closed A-series lifecycle is claimed without complete persisted step and branch diagnostics."
+}

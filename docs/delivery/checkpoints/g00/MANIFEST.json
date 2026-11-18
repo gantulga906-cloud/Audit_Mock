@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-16",
+  "commit": "0b2118c5ba72ae963bcce95f9b4c3ce63e0be7d9",
+  "purpose": "Index / Pilot / G00 shared-pilot engineering checkpoint; separate acceptance remains open",
+  "files": [
+    {
+      "path": "G00_Checkpoint.md",
+      "sha256": "0e180718b89d5db65e1b3717a0f1a9970ba574cc1e0d8403e89d2b226efb96e7"
+    },
+    {
+      "path": "G00_Foundation_Verification.json",
+      "sha256": "7883721449ab66c8362749c3f841109180407a9223da9beddd160c305ec19d68"
+    },
+    {
+      "path": "Source_Verification.json",
+      "sha256": "79028588101db7ad79fd00dba8529f8173763915034f26f2f19c3abc652e4de3"
+    },
+    {
+      "path": "Verified_Build.json",
+      "sha256": "1e0953d958a31c0b707b005a07ab1adab5acc8b9dbcfc632787daf1c9719ff78"
+    },
+    {
+      "path": "Preserved_Preview_Build.json",
+      "sha256": "064a60073c0e57c949b8fde1a44e683356aea6932cc2cf84315f3a3df962e711"
+    },
+    {
+      "path": "G00_Contract_Matrix.json",
+      "sha256": "a0a1361c234a5109519d250da1b12907559303c8aec254a6f1c6ba651348d973"
+    },
+    {
+      "path": "G00_Implementation_Notes.md",
+      "sha256": "551d74d19534171629d8047887a332b5e10e1dcb262768540def5082fa8d8025"
+    },
+    {
+      "path": "Backlog_Preservation.json",
+      "sha256": "a81770bb364be0d4f5e54f97b81b36f09ddd6d31d58bd1f03d053bcfa44fdfe1"
+    },
+    {
+      "path": "fixtures/g00-connected-evidence.json",
+      "sha256": "06195dfe5a46368fec0ba48ff43a76499485f919aaf4a1c67206d8eb0ad989fb"
+    },
+    {
+      "path": "verification.log",
+      "sha256": "5029501a4fe9080078eb5c648da8e4406f4cb88d99d5c28bde72b5b92902bd5b"
+    }
+  ]
+}

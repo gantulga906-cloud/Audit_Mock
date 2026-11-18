@@ -3,7 +3,47 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "scripts": {"dev": "next dev --hostname 127.0.0.1", "build": "node scripts/build.mjs", "start": "node scripts/serve.mjs", "pilot": "node scripts/serve.mjs --pilot", "typecheck": "tsc --noEmit", "test": "node --test tests/*.test.mjs", "verify:release": "node scripts/verify-release.mjs"},
-  "dependencies": {"next": "^16.0.0", "react": "^19.2.0", "react-dom": "^19.2.0", "lucide-react": "^0.468.0"},
-  "devDependencies": {"typescript": "^5.7.0", "@types/node": "^22.0.0", "@types/react": "^19.0.0", "@types/react-dom": "^19.0.0", "tailwindcss": "^4.1.0", "@tailwindcss/postcss": "^4.1.0"}
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/serve.mjs",
+    "pilot": "node scripts/serve.mjs --pilot",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs",
+    "verify:release": "node scripts/verify-release.mjs",
+    "verify:foundations": "node scripts/verify-foundations.mjs",
+    "verify:workspace": "node scripts/verify-workspace-ui.mjs",
+    "verify:reporting-ui": "node scripts/verify-reporting-ui.mjs",
+    "verify:materiality-ui": "node scripts/verify-materiality-ui.mjs",
+    "verify:form-adoption-ui": "node scripts/verify-form-adoption-ui.mjs",
+    "verify:acceptance-ui": "node scripts/verify-acceptance-ui.mjs",
+    "verify:planning-ui": "node scripts/verify-planning-ui.mjs",
+    "verify:data-evidence-ui": "node scripts/verify-data-evidence-ui.mjs",
+    "verify:execution-ui": "node scripts/verify-execution-ui.mjs",
+    "verify:finalisation-ui": "node scripts/verify-finalisation-ui.mjs",
+    "verify:controlled-reporting-ui": "node scripts/verify-controlled-reporting-ui.mjs",
+    "verify:archive-controls-ui": "node scripts/verify-archive-controls-ui.mjs",
+    "verify:methodology-ui": "node scripts/verify-methodology-ui.mjs",
+    "verify:methodology-sources": "node scripts/verify-methodology-sources.mjs",
+    "verify:local-operations-ui": "node scripts/verify-local-operations-ui.mjs",
+    "rehearse:local-operations": "node scripts/pilot-operations-rehearsal.mjs",
+    "verify:area-cards-ui": "node scripts/verify-area-cards-ui.mjs",
+    "verify:automation-methods-ui": "node scripts/verify-automation-methods-ui.mjs"
+  },
+  "dependencies": {
+    "fast-xml-parser": "5.12.1",
+    "fflate": "0.8.3",
+    "lucide-react": "^0.468.0",
+    "next": "^16.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.7.0"
+  }
 }

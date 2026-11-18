@@ -1,0 +1,60 @@
+{
+  "guide": "G03",
+  "build": {
+    "build": "8zeBOuk4HcNe8g6s5EjSC",
+    "commit": "cdedf986d57c7ebbf8dd255e7792788b52590bf3",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "checks": [
+    "The actual controlled ledger/TB results, whole-ledger balance and source versions are visible",
+    "The preparer saves an explicit column, sign, unit and date profile and submits its actual version",
+    "A different assigned reviewer approves the exact profile through the UI",
+    "Refreshed analytical cases require new evidence-backed explanations while earlier reviewed explanations remain historical",
+    "Usable analytical output requires the separately recorded independent conclusion",
+    "Purpose-specific missing, rejected, alternative and covered evidence states are visible",
+    "The UI saves three explicit entity, period, type and purpose requirements with an honestly unagreed due date",
+    "One actual file is accepted for exactly two of three purposes; the third retains its outstanding owner"
+  ],
+  "sessions": [
+    {
+      "date": "2026-11-17T02:33:21.730Z",
+      "build": {
+        "build": "8zeBOuk4HcNe8g6s5EjSC",
+        "commit": "cdedf986d57c7ebbf8dd255e7792788b52590bf3",
+        "dirty": false,
+        "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+      },
+      "engagement": "E-e87ead1b-bb97-4552-b560-e60be81bd28a",
+      "checks": [
+        "The actual controlled ledger/TB results, whole-ledger balance and source versions are visible",
+        "The preparer saves an explicit column, sign, unit and date profile and submits its actual version",
+        "A different assigned reviewer approves the exact profile through the UI",
+        "Refreshed analytical cases require new evidence-backed explanations while earlier reviewed explanations remain historical",
+        "Usable analytical output requires the separately recorded independent conclusion"
+      ],
+      "runtimeErrors": [],
+      "scope": "Disposable G03 standard-intake/G02-planned fixture; original files and human review remain distinct from coverage. No live data, independent source acceptance or external sending adapter changed."
+    },
+    {
+      "date": "2026-11-17T02:33:21.106Z",
+      "build": {
+        "build": "8zeBOuk4HcNe8g6s5EjSC",
+        "commit": "cdedf986d57c7ebbf8dd255e7792788b52590bf3",
+        "dirty": false,
+        "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+      },
+      "engagement": "E-e358b6a8-b505-43a0-9bb7-840a8acc4b8d",
+      "checks": [
+        "Purpose-specific missing, rejected, alternative and covered evidence states are visible",
+        "The UI saves three explicit entity, period, type and purpose requirements with an honestly unagreed due date",
+        "One actual file is accepted for exactly two of three purposes; the third retains its outstanding owner"
+      ],
+      "runtimeErrors": [],
+      "scope": "Disposable G03 standard-intake/G02-planned fixture; original files and human review remain distinct from coverage. No live data, independent source acceptance or external sending adapter changed."
+    }
+  ],
+  "screenshots": 6,
+  "runtimeErrors": [],
+  "visualReview": "Purpose coverage and analytical-use result screens inspected; data result tables use the existing spaced, horizontally scrollable workspace table styles. Browser assertions verify the profile save and independent approval; its screenshot is a supplementary viewport capture, not proof of acceptance."
+}

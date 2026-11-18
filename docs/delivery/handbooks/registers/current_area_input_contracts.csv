@@ -1,0 +1,36 @@
+﻿kind,label,columns,baseline,owning_file
+invoices,Борлуулалтын нэхэмжлэл,"id,entity,currency,invoice_date,delivery_date,due_date,amount,open_amount,sku,quantity,unit_price,discount",079f9da,src/lib/pilot-area.ts
+credits,Кредит баримт,"id,entity,currency,invoice,date,amount",079f9da,src/lib/pilot-area.ts
+cash,Дараа үеийн орлого,"id,entity,currency,invoice,date,amount",079f9da,src/lib/pilot-area.ts
+prices,Баталсан үнийн жагсаалт,"sku,entity,currency,unit_price,max_discount,from,to",079f9da,src/lib/pilot-area.ts
+receipts,Хүлээн авалтын баримт,"id,entity,currency,vendor,date,amount",079f9da,src/lib/pilot-area.ts
+bills,Нийлүүлэгчийн нэхэмжлэл,"id,entity,currency,receipt,vendor,date,amount",079f9da,src/lib/pilot-area.ts
+payments,Нийлүүлэгчийн төлбөр,"id,entity,currency,invoice,vendor,date,amount",079f9da,src/lib/pilot-area.ts
+bank,Банкны хуулга,"id,entity,currency,reference,date,amount",079f9da,src/lib/pilot-area.ts
+reconciliation,"Банк ба дэвтрийн баталсан үлдэгдэл, тохируулга","id,entity,currency,kind,reference,date,amount,reason",079f9da,src/lib/pilot-area.ts
+inventory,Бараа материалын бүртгэл,"id,entity,currency,item,location,unit,opening_qty,closing_qty,closing_value",079f9da,src/lib/pilot-area.ts
+movements,Бараа материалын хөдөлгөөн,"id,entity,currency,item,location,unit,date,kind,quantity",079f9da,src/lib/pilot-area.ts
+counts,Баталсан тооллогын хуудас,"id,entity,currency,item,location,unit,date,counted_qty",079f9da,src/lib/pilot-area.ts
+assets,Үндсэн хөрөнгийн бүртгэл,"id,entity,currency,class,opening_cost,additions,disposals,transfers,closing_cost,opening_accumulated,charge,disposed_accumulated,adjustments,closing_accumulated",079f9da,src/lib/pilot-area.ts
+additions,Үндсэн хөрөнгийн нэмэгдлийн нотолгоо,"id,entity,currency,asset,date,amount",079f9da,src/lib/pilot-area.ts
+payroll,Цалингийн бүртгэл,"id,entity,currency,employee,category,date,status,gross,employee_contribution,withholding,employer_contribution,other_deductions,net_adjustment,net",079f9da,src/lib/pilot-area.ts
+payrollRules,Баталсан цалингийн дүрэм,"id,entity,currency,edition,category,method,from,to,employee_bps,employer_bps,withholding_bps,cap,withholding_base",079f9da,src/lib/pilot-area.ts
+payrollBank,Цалингийн банкны хуулга,"id,entity,currency,payroll,employee,date,amount",079f9da,src/lib/pilot-area.ts
+payrollHistory,Өмнөх сарын харьцуулах цалин,"id,entity,currency,employee,category,period,gross",079f9da,src/lib/pilot-area.ts
+payrollVariance,Баталсан цалингийн хэлбэлзэл ба хуваарь,"id,entity,currency,edition,from,to,method,amount,rate_bps,pay_day",079f9da,src/lib/pilot-area.ts
+tax,Татварын тооцооны бүртгэл,"id,entity,currency,period,category,date,base,adjustment,offset,tax",079f9da,src/lib/pilot-area.ts
+taxRules,Баталсан татварын дүрэм,"id,entity,currency,edition,category,method,from,to,rate_bps",079f9da,src/lib/pilot-area.ts
+taxReturns,Илгээсэн тайлан ба хойшлогдсон татварын хүснэгт,"id,entity,currency,period,category,date,amount",079f9da,src/lib/pilot-area.ts
+taxPayments,Татварын төлөлтийн баримт,"id,entity,currency,period,category,date,amount",079f9da,src/lib/pilot-area.ts
+loans,Зээлийн бүртгэл,"id,entity,currency,opening,drawdowns,repayments,movements,closing,recorded_interest,covenant_metric",079f9da,src/lib/pilot-area.ts
+loanTerms,Хянасан зээлийн нөхцөл ба шалгуур,"id,entity,currency,loan,edition,method,from,to,rate_bps,day_basis,covenant_direction,covenant_limit,definition",079f9da,src/lib/pilot-area.ts
+loanSegments,Зээлийн хүүгийн үндсэн дүнгийн сегмент,"id,entity,currency,loan,from,to,principal",079f9da,src/lib/pilot-area.ts
+leases,Хянасан түрээсийн нөхцөл,"id,entity,currency,edition,method,rate_bps,life,elapsed,initial_adjustment,recorded_liability,recorded_rou",079f9da,src/lib/pilot-area.ts
+leasePayments,Түрээсийн тогтмол төлбөрийн хуваарь,"id,entity,currency,lease,sequence,amount",079f9da,src/lib/pilot-area.ts
+fxPositions,Валютын ажил гүйлгээ ба мөнгөн үлдэгдэл,"id,entity,currency,foreign_currency,date,basis,foreign_amount,recorded",079f9da,src/lib/pilot-area.ts
+fxRates,"Чиглэлтэй, баталсан валютын ханш","id,entity,currency,edition,foreign_currency,date,direction,rate_micros",079f9da,src/lib/pilot-area.ts
+equity,Өмчийн хөдөлгөөний бүртгэл,"id,entity,currency,edition,method,opening,profit,contributions,distributions,transfers,movements,closing",079f9da,src/lib/pilot-area.ts
+equityActions,Өмчийн хөдөлгөөний баталсан шийдвэр,"id,entity,currency,component,kind,date,amount,reference",079f9da,src/lib/pilot-area.ts
+investments,Хөрөнгө оруулалтын бүртгэл,"id,entity,currency,edition,method,opening_units,acquired_units,disposed_units,other_units,closing_units,opening_cost,additions,disposals,transfers,closing_cost,income,valuation",079f9da,src/lib/pilot-area.ts
+custody,Кастодианы үлдэгдэл ба орлогын хуулга,"id,entity,currency,instrument,date,closing_units,closing_cost,income",079f9da,src/lib/pilot-area.ts
+investmentCashFlows,Хянасан энгийн үнэлгээний мөнгөн урсгал,"id,entity,currency,instrument,edition,method,sequence,rate_bps,amount",079f9da,src/lib/pilot-area.ts

@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-17T07:09:08.232Z",
+  "build": {
+    "build": "4vHIcJDJuFIx_W8OUn85Q",
+    "commit": "6df7da211d75d6d19867b38466fcd8b3fbd64a0d",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "engagement": "E-ba712ad6-4bc8-4e5a-bc08-0dd2ebc98777",
+  "checks": [
+    "The actual 100 finding, agreed 100, independently posted 60 and outstanding 40 are retained in the completion workspace",
+    "A preparer records an actual evidence gap and unknown cause without fabricating a zero-value financial finding",
+    "A different reviewer retains the real limitation and existing monetary exposure, with a current sufficiency decision still required",
+    "The shared outstanding-work queue retains the actual limitation and next owner rather than counting a reply as clearance"
+  ],
+  "runtimeErrors": [],
+  "scope": "Disposable G05 standard-intake/G02-planned/G03-controlled fixture; actual matters, corrections, completion decisions and separate independent quality responsibilities remain distinct. No live data, independent source acceptance or external sending adapter changed."
+}

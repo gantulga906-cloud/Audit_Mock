@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-16T09:04:18.109Z",
+  "build": {
+    "build": "SkIrp2z3gOguKj8lLzdn8",
+    "commit": "69ce4179b65fa54d505757f46deb01916ece13a9",
+    "dirty": false,
+    "sourceManifestSha256": "c307f51ad3528f970956d12c7e7f8937a9fd1059bb3b2db6f13906ac0f25595b"
+  },
+  "engagement": "E-13c59514-9e78-4ee9-b0a3-30c550a81d07",
+  "checks": [
+    "Programme migration shows the actual incompatible answer and rejects approval without acknowledgement",
+    "Explicit current acknowledgement approves migration and preserves the incompatible answer in historical work"
+  ],
+  "runtimeErrors": [],
+  "scope": "Disposable G02 source-grounded test profile; no live database, production deployment or independent source acceptance changes"
+}

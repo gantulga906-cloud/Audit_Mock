@@ -1,0 +1,12 @@
+flowchart LR
+  N0["Issued exact package"]
+  N1["Assemble + diagnose"]
+  N2["Independent index approval"]
+  N3["Lock immutable file"]
+  N4["Independent custody verify"]
+  N5["Controlled retrieval / successor"]
+  N0 --> N1
+  N1 --> N2
+  N2 --> N3
+  N3 --> N4
+  N4 --> N5
