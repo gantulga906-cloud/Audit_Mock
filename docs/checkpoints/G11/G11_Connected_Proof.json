@@ -1,0 +1,992 @@
+{
+  "guide": "G11",
+  "proof": [
+    {
+      "automation": "AUTO-012",
+      "expected": {
+        "cases": 1,
+        "timingCandidates": 1
+      },
+      "actual": {
+        "cases": 1,
+        "timingCandidates": 1
+      },
+      "algorithm": "sales-cutoff-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-013",
+      "expected": {
+        "daysOverdue": 30,
+        "residual": 6000
+      },
+      "actual": {
+        "daysOverdue": 30,
+        "residual": 6000
+      },
+      "algorithm": "aging-cash-allocation-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-018",
+      "expected": {
+        "invoiceMinusReceipt": 2
+      },
+      "actual": {
+        "invoiceMinusReceipt": 2
+      },
+      "algorithm": "purchase-document-chain-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-025",
+      "expected": {
+        "issueCost": 12000,
+        "closingValue": 18000,
+        "expectedClosingQuantity": 12
+      },
+      "actual": {
+        "issueCost": 12000,
+        "closingValue": 18000,
+        "expectedClosingQuantity": 12
+      },
+      "algorithm": "periodic-cost-bridge-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-027",
+      "expected": {
+        "expectedGross": 11000,
+        "grossDifference": -100,
+        "expectedAccumulated": 3500
+      },
+      "actual": {
+        "expectedGross": 11000,
+        "grossDifference": -100,
+        "expectedAccumulated": 3500
+      },
+      "algorithm": "asset-double-rollforward-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-041",
+      "expected": {
+        "confirmedAmount": 1000,
+        "disclosureDifference": 100,
+        "unconfirmedIndicators": 1
+      },
+      "actual": {
+        "confirmedAmount": 1000,
+        "disclosureDifference": 100,
+        "unconfirmedIndicators": 1
+      },
+      "algorithm": "related-party-bridge-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-042",
+      "expected": {
+        "matrix": 5000,
+        "difference": 500,
+        "rollforward": 5000
+      },
+      "actual": {
+        "matrix": 5000,
+        "difference": 500,
+        "rollforward": 5000
+      },
+      "algorithm": "estimate-matrix-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-011",
+      "expected": {
+        "expected": 30000,
+        "difference": -1000
+      },
+      "actual": {
+        "expected": 30000,
+        "difference": -1000
+      },
+      "algorithm": "sales-population-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-015",
+      "expected": {
+        "expected": 30000,
+        "difference": -1000,
+        "expectedDeferred": 90000
+      },
+      "actual": {
+        "expected": 30000,
+        "difference": -1000,
+        "expectedDeferred": 90000
+      },
+      "algorithm": "service-allocation-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-017",
+      "expected": {
+        "gross": 30000
+      },
+      "actual": {
+        "gross": 30000
+      },
+      "algorithm": "party-identifiers-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-021",
+      "expected": {
+        "cases": 1,
+        "gross": 103000
+      },
+      "actual": {
+        "cases": 1,
+        "gross": 103000
+      },
+      "algorithm": "cash-indicators-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-024",
+      "expected": {
+        "quantityResidual": -1,
+        "timingReasons": 1
+      },
+      "actual": {
+        "quantityResidual": -1,
+        "timingReasons": 1
+      },
+      "algorithm": "inventory-transfers-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-026",
+      "expected": {
+        "nrvUnit": 700,
+        "shortfall": 900,
+        "ageDays": 400,
+        "ageIndicator": true
+      },
+      "actual": {
+        "nrvUnit": 700,
+        "shortfall": 900,
+        "ageDays": 400,
+        "ageIndicator": true
+      },
+      "algorithm": "inventory-nrv-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-028",
+      "expected": {
+        "annual": 25000,
+        "charge": 5000,
+        "closingAccumulated": 100000
+      },
+      "actual": {
+        "annual": 25000,
+        "charge": 5000,
+        "closingAccumulated": 100000
+      },
+      "algorithm": "straight-line-overlap-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-029",
+      "expected": {
+        "cases": 2
+      },
+      "actual": {
+        "cases": 2
+      },
+      "algorithm": "asset-lifecycle-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-030",
+      "expected": {
+        "cases": 2
+      },
+      "actual": {
+        "cases": 2
+      },
+      "algorithm": "capitalization-screen-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-043",
+      "expected": {
+        "expected": 27000,
+        "difference": -100,
+        "reciprocalResidual": 500
+      },
+      "actual": {
+        "expected": 27000,
+        "difference": -100,
+        "reciprocalResidual": 500
+      },
+      "algorithm": "consolidation-bridge-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-044",
+      "expected": {
+        "currentRatio": "2",
+        "headroom": 500,
+        "firstBreachPeriod": 3
+      },
+      "actual": {
+        "currentRatio": "2",
+        "headroom": 500,
+        "firstBreachPeriod": 3
+      },
+      "algorithm": "liquidity-indicators-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "automation": "AUTO-045",
+      "expected": {
+        "cases": 1
+      },
+      "actual": {
+        "cases": 1
+      },
+      "algorithm": "subsequent-transactions-v1",
+      "fictionalPolicy": true
+    },
+    {
+      "eventExposureNotMultiplied": true,
+      "identitySignificantCharactersPreserved": true,
+      "actualDayAllocation": true,
+      "ambiguousGrainNotEvaluated": true,
+      "overflowRejected": true,
+      "negativeRemainingBaseNotComputed": true,
+      "unknownAvailabilityNotZero": true,
+      "sourceEventMultiplicityPreserved": true
+    },
+    {
+      "actualAcceptedOriginalMethods": 19,
+      "actualNamedPreparer": "U-89832b00-779b-47e9-97ea-fa9fa0fb6f39",
+      "actualDifferentReviewer": "U-e75e7c4d-40b0-4412-ad7e-45c01cd2e3cf",
+      "returnedAndReviewed": true,
+      "exactRetryPreservesApproval": true,
+      "changedPolicyCreatesNewVersion": true,
+      "selectiveSourceChange": true,
+      "corruptPolicyDenied": true,
+      "otherEngagementDenied": true,
+      "restartPreservesExactHistory": true
+    },
+    {
+      "nativeLegal": {
+        "open": 1,
+        "readyForReview": 1,
+        "unknownExposure": 1
+      },
+      "nativeGoing": {
+        "unresolved": 1,
+        "ready": false
+      },
+      "nativeDisclosures": {
+        "missingBefore": 1,
+        "justifiedNa": 1,
+        "readyAfterExactAnchorAndIndependentReview": true
+      },
+      "missingEvidenceCannotSubmit": true,
+      "noAutomaticProfessionalConclusion": true
+    },
+    {
+      "ledgerSourceExample": {
+        "expected": 11000,
+        "sourceDifference": -100,
+        "legacyRollforward": 100
+      },
+      "statementSourceExample": {
+        "expected": 30000,
+        "sourceDifference": 100,
+        "legacyResidual": -100,
+        "missingReferences": 1
+      },
+      "actualOriginals": true,
+      "independentReview": true
+    }
+  ],
+  "matrix": [
+    {
+      "automation": "AUTO-012",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "cases": 1,
+        "timingCandidates": 1
+      }
+    },
+    {
+      "automation": "AUTO-012",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-012",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-013",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "daysOverdue": 30,
+        "residual": 6000
+      }
+    },
+    {
+      "automation": "AUTO-013",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-013",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-018",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "invoiceMinusReceipt": 2
+      }
+    },
+    {
+      "automation": "AUTO-018",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-018",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-025",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "issueCost": 12000,
+        "closingValue": 18000,
+        "expectedClosingQuantity": 12
+      }
+    },
+    {
+      "automation": "AUTO-025",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-025",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-027",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "expectedGross": 11000,
+        "grossDifference": -100,
+        "expectedAccumulated": 3500
+      }
+    },
+    {
+      "automation": "AUTO-027",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-027",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-041",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "confirmedAmount": 1000,
+        "disclosureDifference": 100,
+        "unconfirmedIndicators": 1
+      }
+    },
+    {
+      "automation": "AUTO-041",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-041",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-042",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "matrix": 5000,
+        "difference": 500,
+        "rollforward": 5000
+      }
+    },
+    {
+      "automation": "AUTO-042",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-042",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-011",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "expected": 30000,
+        "difference": -1000
+      }
+    },
+    {
+      "automation": "AUTO-011",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-011",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-015",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "expected": 30000,
+        "difference": -1000,
+        "expectedDeferred": 90000
+      }
+    },
+    {
+      "automation": "AUTO-015",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-015",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-017",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "gross": 30000
+      }
+    },
+    {
+      "automation": "AUTO-017",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-017",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-021",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "cases": 1,
+        "gross": 103000
+      }
+    },
+    {
+      "automation": "AUTO-021",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-021",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-024",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "quantityResidual": -1,
+        "timingReasons": 1
+      }
+    },
+    {
+      "automation": "AUTO-024",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-024",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-026",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "nrvUnit": 700,
+        "shortfall": 900,
+        "ageDays": 400,
+        "ageIndicator": true
+      }
+    },
+    {
+      "automation": "AUTO-026",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-026",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-028",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "annual": 25000,
+        "charge": 5000,
+        "closingAccumulated": 100000
+      }
+    },
+    {
+      "automation": "AUTO-028",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-028",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-029",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "cases": 2
+      }
+    },
+    {
+      "automation": "AUTO-029",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-029",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-030",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "cases": 2
+      }
+    },
+    {
+      "automation": "AUTO-030",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-030",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-043",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "expected": 27000,
+        "difference": -100,
+        "reciprocalResidual": 500
+      }
+    },
+    {
+      "automation": "AUTO-043",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-043",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-044",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "currentRatio": "2",
+        "headroom": 500,
+        "firstBreachPeriod": 3
+      }
+    },
+    {
+      "automation": "AUTO-044",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-044",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-045",
+      "scenario": "independent-example",
+      "outcome": "passed",
+      "actual": {
+        "cases": 1
+      }
+    },
+    {
+      "automation": "AUTO-045",
+      "scenario": "missing-or-unsupported",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-045",
+      "scenario": "scope-or-key-quarantine",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-012",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-012",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "44989776-826c-4c5a-9ba8-9caeec180ecb"
+    },
+    {
+      "automation": "AUTO-012",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-013",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-013",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "1f96cbe9-84fb-400b-b9cf-e3bdc6913ff8"
+    },
+    {
+      "automation": "AUTO-013",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-018",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-018",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "d66a121a-5862-4df1-b0c1-b3ed3aff47c8"
+    },
+    {
+      "automation": "AUTO-018",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-025",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-025",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "20de1036-c994-4c11-979d-d6ad028ebd07"
+    },
+    {
+      "automation": "AUTO-025",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-027",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-027",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "9e0f5fc2-b892-443b-881c-43f8d165e475"
+    },
+    {
+      "automation": "AUTO-027",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-041",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-041",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "21d5a2e5-9caf-421a-8131-fc8798eb72b9"
+    },
+    {
+      "automation": "AUTO-041",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-042",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-042",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "70d4ab59-305a-4d87-8aaa-f0c39607a35d"
+    },
+    {
+      "automation": "AUTO-042",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-011",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-011",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "4829204f-e3ce-4116-8dab-610de1f0f340"
+    },
+    {
+      "automation": "AUTO-011",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-015",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-015",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "f21c6df0-bf10-4adc-ae70-00f407337e4d"
+    },
+    {
+      "automation": "AUTO-015",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-017",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-017",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "f8ece3ce-7000-44ab-9bbf-29e10491b268"
+    },
+    {
+      "automation": "AUTO-017",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-021",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-021",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "dc54c5ba-fb56-484d-9f06-7751465b7499"
+    },
+    {
+      "automation": "AUTO-021",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-024",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-024",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "5d8ad6ba-8940-46fa-b315-acdd28fe49bd"
+    },
+    {
+      "automation": "AUTO-024",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-026",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-026",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "1e2fa8f6-c66e-4e79-ac18-3bc79f3b892d"
+    },
+    {
+      "automation": "AUTO-026",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-028",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-028",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "07718870-c756-43fa-9eba-28fab30851be"
+    },
+    {
+      "automation": "AUTO-028",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-029",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-029",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "5bf33006-4654-4330-afd1-9f3722d2ab9d"
+    },
+    {
+      "automation": "AUTO-029",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-030",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-030",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "8fff541d-6f36-416d-83df-50fda27f2858"
+    },
+    {
+      "automation": "AUTO-030",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-043",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-043",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "7fa3a70d-118b-4feb-9557-88004057a49d"
+    },
+    {
+      "automation": "AUTO-043",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-044",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-044",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "208b772c-1e0f-4179-9eae-39e11669045d"
+    },
+    {
+      "automation": "AUTO-044",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-045",
+      "scenario": "changed-original-renewed-independent-review",
+      "outcome": "passed"
+    },
+    {
+      "automation": "AUTO-045",
+      "scenario": "accepted-original-named-independent-review",
+      "outcome": "passed",
+      "check": "97e486b6-a259-4fb6-96c3-f45e44720086"
+    },
+    {
+      "automation": "AUTO-045",
+      "scenario": "missing-denied-self-return-retry",
+      "outcome": "passed"
+    }
+  ],
+  "scope": "Actual supported method executions and persisted named-role checks. Historical specification examples, existing domain fixtures and whole-minimum acceptance remain distinct.",
+  "sourceAcceptance": [],
+  "releaseReady": false
+}

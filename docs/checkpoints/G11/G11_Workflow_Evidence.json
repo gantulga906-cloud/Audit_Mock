@@ -1,0 +1,2968 @@
+{
+  "guide": "G11",
+  "verifiedLocalCommit": "578dba5428c86542966298b578e286e54c44d28f",
+  "tests": [
+    {
+      "name": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+      "file": "tests/pilot-automation-methods.test.mjs",
+      "line": 39,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 10.8608
+    },
+    {
+      "name": "G11 method boundaries preserve event grain, exact identities, rounding, caps, unknowns and signed direction",
+      "file": "tests/pilot-automation-methods.test.mjs",
+      "line": 48,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 1.4415
+    },
+    {
+      "name": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+      "file": "tests/pilot-automation-methods.test.mjs",
+      "line": 61,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 23059.3215
+    },
+    {
+      "name": "G11 native legal going-concern and disclosure diagnostics require actual support judgments anchors and independent review",
+      "file": "tests/pilot-automation-methods.test.mjs",
+      "line": 89,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 3141.3606
+    },
+    {
+      "name": "G11 actual ledger and statement source examples expose expected-minus-recorded while preserving legacy residual conventions",
+      "file": "tests/pilot-automation-methods.test.mjs",
+      "line": 105,
+      "suite": false,
+      "outcome": "passed",
+      "ms": 2853.7711
+    }
+  ],
+  "testFile": {
+    "file": "tests/pilot-automation-methods.test.mjs",
+    "sha256": "73202d3a8255a0709069b4b3d2dd66752d3a8f5b83b2ff5b5eda75fc79dbca7e"
+  },
+  "scenarios": [
+    {
+      "test": "G11 actual ledger and statement source examples expose expected-minus-recorded while preserving legacy residual conventions",
+      "file": "tests/pilot-automation-methods.test.mjs",
+      "actors": [
+        "actual named preparer",
+        "different named reviewer"
+      ],
+      "action": "actual original EX-005 and EX-007 arithmetic with explicit canonical signed comparison",
+      "observed": "Expected closing 110 versus recorded 111 retains source difference -1 and old rollforward +1. Components 100 and 200 versus reported 299 retain expected 300/source difference +1 and old residual -1; a missing exact note reference stays separate. Actual independent review remains limited.",
+      "automations": [
+        "AUTO-005",
+        "AUTO-007"
+      ],
+      "outcome": "passed"
+    },
+    {
+      "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+      "file": "tests/pilot-automation-methods.test.mjs",
+      "actors": [
+        "independent synthetic expectations"
+      ],
+      "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+      "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+      "automations": [
+        "AUTO-012",
+        "AUTO-013",
+        "AUTO-018",
+        "AUTO-025",
+        "AUTO-027",
+        "AUTO-041",
+        "AUTO-042",
+        "AUTO-011",
+        "AUTO-015",
+        "AUTO-017",
+        "AUTO-021",
+        "AUTO-024",
+        "AUTO-026",
+        "AUTO-028",
+        "AUTO-029",
+        "AUTO-030",
+        "AUTO-043",
+        "AUTO-044",
+        "AUTO-045"
+      ],
+      "outcome": "passed"
+    },
+    {
+      "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+      "file": "tests/pilot-automation-methods.test.mjs",
+      "actors": [
+        "actual named preparer",
+        "different named reviewer"
+      ],
+      "action": "accepted original data and method policies through actual independent review and replacement",
+      "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+      "automations": [
+        "AUTO-012",
+        "AUTO-013",
+        "AUTO-018",
+        "AUTO-025",
+        "AUTO-027",
+        "AUTO-041",
+        "AUTO-042",
+        "AUTO-011",
+        "AUTO-015",
+        "AUTO-017",
+        "AUTO-021",
+        "AUTO-024",
+        "AUTO-026",
+        "AUTO-028",
+        "AUTO-029",
+        "AUTO-030",
+        "AUTO-043",
+        "AUTO-044",
+        "AUTO-045"
+      ],
+      "outcome": "passed"
+    },
+    {
+      "test": "G11 native legal going-concern and disclosure diagnostics require actual support judgments anchors and independent review",
+      "file": "tests/pilot-automation-methods.test.mjs",
+      "actors": [
+        "preparer",
+        "independent reviewer"
+      ],
+      "action": "actual G05 records retain missing support, unknown exposure and exact disclosure anchors",
+      "observed": "An unsupported unknown-exposure legal matter cannot submit; another supported independently reviewed matter remains separate. Missing auditor going-concern decisions are unresolved despite numerical work. An applicable disclosure without an exact note anchor cannot submit; a supported actual next version and separate review renew current readiness. No legal/going-concern or semantic compliance decision is inferred.",
+      "automations": [
+        "AUTO-049",
+        "AUTO-050",
+        "AUTO-052"
+      ],
+      "outcome": "passed"
+    },
+    {
+      "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+      "file": "tests/pilot-execution.test.mjs",
+      "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+      "actors": [
+        "preparer",
+        "reviewer",
+        "partner"
+      ],
+      "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+      "cases": [
+        "P07-UC01",
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "features": [
+        "M07-F01",
+        "M08-F08"
+      ],
+      "criteria": [
+        "P07-UC01-AC01",
+        "P07-UC01-AC02",
+        "P07-UC01-AC03",
+        "P09-UC02-AC01",
+        "P09-UC02-AC03",
+        "P09-UC02-AC05",
+        "P09-UC11-AC01",
+        "P09-UC11-AC02",
+        "P09-UC11-AC04"
+      ],
+      "e2e": [
+        "A13-P1-W1",
+        "A13-P1-W2",
+        "A13-P2-W1",
+        "A13-P2-W3",
+        "A13-P2-W4",
+        "A13-P4-W1",
+        "A13-P4-W2"
+      ],
+      "automations": [
+        "AUTO-053"
+      ],
+      "outcome": "passed"
+    },
+    {
+      "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+      "file": "tests/pilot-planning.test.mjs",
+      "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+      "actors": [
+        "preparer",
+        "reviewer",
+        "partner"
+      ],
+      "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+      "cases": [
+        "P03-UC01",
+        "P03-UC02",
+        "P03-UC03",
+        "P06-UC01",
+        "P06-UC02",
+        "P06-UC05",
+        "P06-UC06",
+        "P14-UC03"
+      ],
+      "features": [
+        "M05-F02",
+        "M05-F04",
+        "M05-F05",
+        "M05-F08",
+        "M06-F02",
+        "M06-F03",
+        "M06-F04",
+        "M06-F06",
+        "M06-F09",
+        "M06-F11",
+        "M06-F13",
+        "M06-F14",
+        "M07-F01"
+      ],
+      "criteria": [
+        "P03-UC03-AC01",
+        "P03-UC03-AC02",
+        "P03-UC03-AC04",
+        "P06-UC01-AC01",
+        "P06-UC01-AC02",
+        "P06-UC01-AC03",
+        "P06-UC01-AC04",
+        "P06-UC02-AC01",
+        "P06-UC02-AC02",
+        "P06-UC02-AC04",
+        "P06-UC05-AC02",
+        "P06-UC05-AC03",
+        "P06-UC05-AC04",
+        "P06-UC06-AC01",
+        "P06-UC06-AC02",
+        "P06-UC06-AC03",
+        "P06-UC06-AC04",
+        "P14-UC03-AC01",
+        "P14-UC03-AC03"
+      ],
+      "e2e": [
+        "A04-P2-W2",
+        "A04-P2-W3",
+        "A04-P3-W1",
+        "A04-P3-W2",
+        "A05-P2-W3",
+        "A05-P3-W1",
+        "A05-P3-W2",
+        "A05-P3-W3",
+        "A06-P1-W1",
+        "A06-P1-W2",
+        "A06-P2-W1",
+        "A06-P2-W2",
+        "A06-P2-W3",
+        "A06-P3-W1",
+        "A06-P3-W2",
+        "A06-P3-W3",
+        "A07-P1-W1",
+        "A07-P1-W2",
+        "A07-P2-W1",
+        "A07-P2-W3",
+        "A07-P3-W1",
+        "A07-P3-W2",
+        "A07-P3-W3",
+        "A10-P1-W1",
+        "A10-P1-W2",
+        "A10-P1-W3",
+        "A10-P2-W1",
+        "A10-P2-W2",
+        "A10-P2-W3",
+        "A10-P3-W1",
+        "A10-P3-W2",
+        "A10-P3-W3",
+        "A12-P1-W1",
+        "A12-P1-W2",
+        "A12-P1-W3",
+        "A12-P2-W1",
+        "A12-P2-W2",
+        "A12-P2-W3",
+        "A12-P3-W1",
+        "A12-P3-W2",
+        "A12-P3-W3"
+      ],
+      "forms": [
+        "1.3",
+        "2.6",
+        "3.1.2",
+        "3.1.4"
+      ],
+      "automations": [
+        "AUTO-054"
+      ],
+      "outcome": "passed"
+    }
+  ],
+  "originalMinimumReports": [
+    {
+      "id": "AUTO-001",
+      "title": "Evidence coverage monitoring",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "1d6dca2bb1b85d4fb1d025538e5fabeec7cb7ee8cbc1a0e61089579c07b662bc",
+      "source": "F00010 p.2, card 1; F00011 matching card 1; F00009/F00012 catalogue entry 1",
+      "relatedCases": [
+        "P08-UC01",
+        "P08-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G03 purpose-specific multipart coverage retains wrong-period, rejected, alternative, replacement and evidence-use histories across restart",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "explicit requested purpose and actual received-file scope through separate acceptance, alternative review, replacement, use assessment, source correction and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The independent AUTO-001 example returns one covered, one missing and one rejected-only item. A received/accepted wrong-period original does not fulfil the intended request. An alternative needs separate independent approval. One original can support two individually accepted purposes; reopening one preserves the other and the unrelated materiality review. Replacements retain earlier originals and use history. Unreadable content cannot be positively supported; incorrect file signatures fail atomically. A corrected alternative scope renews coverage and cancellation preserves prior uses after restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 confirmation control separates local response, actual delivery, differences, nonresponse and required-positive limitations"
+      ]
+    },
+    {
+      "id": "AUTO-002",
+      "title": "Dataset conformance and scope validation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "56c1a72b67529466bec63da09f03e6e65bb7bd54a2b1e03d0d91c8929b2481fb",
+      "source": "F00010 p.2, card 2; F00011 matching card 2; F00009/F00012 catalogue entry 2",
+      "relatedCases": [
+        "P05-UC01",
+        "P05-UC02",
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "accepted standard intake and reviewed G02 plan through approved source profile, explicit import, independent full-source controls, profile change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The chosen DMY format, sign and currency scale retain raw source cells and bytes. Zero arithmetic sum cannot conceal a missing certified source row. Import and approval are distinct; self-review is denied. A revised profile reopens use while earlier interpreted rows, source originals and exact replay survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently specified one-valid/two-defect example, source correction and cross-engagement original denial",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Exactly one row is accepted and two stay quarantined with their own keys and defect reasons. Blank amount remains null, genuine zero remains zero and the negative amount survives an ambiguous date. A separate copy of the same original cannot be an independent control. Corrected files preserve earlier raw inputs. A foreign original cannot be downloaded or used through another engagement.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "AUTO-003",
+      "title": "Population integrity and import reconciliation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "1ef41e3613913dfec99d370f1e6eb268dbfa6785ced966dd958c465b64d5aeef",
+      "source": "F00010 p.3, card 3; F00011 matching card 3; F00009/F00012 catalogue entry 3",
+      "relatedCases": [
+        "P05-UC01",
+        "P05-UC02",
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "accepted standard intake and reviewed G02 plan through approved source profile, explicit import, independent full-source controls, profile change and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The chosen DMY format, sign and currency scale retain raw source cells and bytes. Zero arithmetic sum cannot conceal a missing certified source row. Import and approval are distinct; self-review is denied. A revised profile reopens use while earlier interpreted rows, source originals and exact replay survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "independently specified one-valid/two-defect example, source correction and cross-engagement original denial",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Exactly one row is accepted and two stay quarantined with their own keys and defect reasons. Blank amount remains null, genuine zero remains zero and the negative amount survives an ambiguous date. A separate copy of the same original cannot be an independent control. Corrected files preserve earlier raw inputs. A foreign original cannot be downloaded or used through another engagement.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "AUTO-004",
+      "title": "Master-data and identifier consistency",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "10feafbdeff68c4058c0e13ec1a608ac01ab4b38e96d5947ff42fd59e928c6d9",
+      "source": "F00010 p.3, card 4; F00011 matching card 4; F00009/F00012 catalogue entry 4",
+      "relatedCases": [
+        "P05-UC01",
+        "P05-UC02",
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "exact original CSV versions through controlled master matching, TB/ledger, statement, opening and analytical checks with independent dispositions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Historical inactive master rows match only in their actual validity interval; ambiguous and unmatched IDs remain exceptions. Complete-ledger imbalance and duplicate statement destinations remain explicit. Signed/unit-aware casts and approved opening adjustments produce independently asserted residuals. Empty checks and missing thresholds cannot become clean output. Zero denominator remains undefined; refreshed analytics require new explanations. Changed statement input invalidates only its dependent check.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "AUTO-005",
+      "title": "Ledger and trial-balance integrity",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "e12162c706b99466eed0a4c8b88c31801d2c70f6fff2c0867222f1c3ffb00981",
+      "source": "F00010 p.4, card 5; F00011 matching card 5; F00009/F00012 catalogue entry 5",
+      "relatedCases": [
+        "P05-UC01",
+        "P05-UC02",
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G11 actual ledger and statement source examples expose expected-minus-recorded while preserving legacy residual conventions",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "actual original EX-005 and EX-007 arithmetic with explicit canonical signed comparison",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "Expected closing 110 versus recorded 111 retains source difference -1 and old rollforward +1. Components 100 and 200 versus reported 299 retain expected 300/source difference +1 and old residual -1; a missing exact note reference stays separate. Actual independent review remains limited.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "exact original CSV versions through controlled master matching, TB/ledger, statement, opening and analytical checks with independent dispositions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Historical inactive master rows match only in their actual validity interval; ambiguous and unmatched IDs remain exceptions. Complete-ledger imbalance and duplicate statement destinations remain explicit. Signed/unit-aware casts and approved opening adjustments produce independently asserted residuals. Empty checks and missing thresholds cannot become clean output. Zero denominator remains undefined; refreshed analytics require new explanations. Changed statement input invalidates only its dependent check.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "AUTO-006",
+      "title": "Account mapping and financial-statement bridge",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "f3a8b81c6d0543fb638e191cd7e177e944770fec4966b8c39f9d7f3196148ffa",
+      "source": "F00010 p.4, card 6; F00011 matching card 6; F00009/F00012 catalogue entry 6",
+      "relatedCases": [
+        "P05-UC01",
+        "P05-UC02",
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "exact original CSV versions through controlled master matching, TB/ledger, statement, opening and analytical checks with independent dispositions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Historical inactive master rows match only in their actual validity interval; ambiguous and unmatched IDs remain exceptions. Complete-ledger imbalance and duplicate statement destinations remain explicit. Signed/unit-aware casts and approved opening adjustments produce independently asserted residuals. Empty checks and missing thresholds cannot become clean output. Zero denominator remains undefined; refreshed analytics require new explanations. Changed statement input invalidates only its dependent check.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls"
+      ]
+    },
+    {
+      "id": "AUTO-007",
+      "title": "Financial-statement technical and comparative review",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "5f8505bc3b4d40c16bc56136d484b417fd037f2ee33d4a1b1cb0173c97946283",
+      "source": "F00010 p.5, card 7; F00011 matching card 7; F00009/F00012 catalogue entry 7",
+      "relatedCases": [
+        "P05-UC01",
+        "P05-UC02",
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G11 actual ledger and statement source examples expose expected-minus-recorded while preserving legacy residual conventions",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "actual original EX-005 and EX-007 arithmetic with explicit canonical signed comparison",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "Expected closing 110 versus recorded 111 retains source difference -1 and old rollforward +1. Components 100 and 200 versus reported 299 retain expected 300/source difference +1 and old residual -1; a missing exact note reference stays separate. Actual independent review remains limited.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "exact original CSV versions through controlled master matching, TB/ledger, statement, opening and analytical checks with independent dispositions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Historical inactive master rows match only in their actual validity interval; ambiguous and unmatched IDs remain exceptions. Complete-ledger imbalance and duplicate statement destinations remain explicit. Signed/unit-aware casts and approved opening adjustments produce independently asserted residuals. Empty checks and missing thresholds cannot become clean output. Zero denominator remains undefined; refreshed analytics require new explanations. Changed statement input invalidates only its dependent check.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "AUTO-008",
+      "title": "Opening-balance reconciliation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "5e6537f4c4dd99a4609eccb01216fdc2f61242d0ea2cd0abd3d7c485ff730ca2",
+      "source": "F00010 p.5, card 8; F00011 matching card 8; F00009/F00012 catalogue entry 8",
+      "relatedCases": [
+        "P05-UC01",
+        "P05-UC02",
+        "P05-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "exact original CSV versions through controlled master matching, TB/ledger, statement, opening and analytical checks with independent dispositions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Historical inactive master rows match only in their actual validity interval; ambiguous and unmatched IDs remain exceptions. Complete-ledger imbalance and duplicate statement destinations remain explicit. Signed/unit-aware casts and approved opening adjustments produce independently asserted residuals. Empty checks and missing thresholds cannot become clean output. Zero denominator remains undefined; refreshed analytics require new explanations. Changed statement input invalidates only its dependent check.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows"
+      ]
+    },
+    {
+      "id": "AUTO-009",
+      "title": "Journal-entry analysis workspace",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "38ee4a8e713fc27a90221d9ae86b6d29bf18662517ef8aaa19417df5dd099ca3",
+      "source": "F00010 p.6, card 9; F00011 matching card 9; F00009/F00012 catalogue entry 9",
+      "relatedCases": [
+        "P09-UC04",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "independent bounded-draw rejection, retained ordering and exact whole-journal multiset example",
+          "actors": [
+            "engineering fixture"
+          ],
+          "observed": "A rejected high random word is redrawn before modulo. Whole journals J1/J2 with A+10/B-10 form one duplicate cluster; J3 A+10/B-5/B-5 stays distinct. Gross debit/credit exposures are each 20 across the two cases, once regardless of triggers. This is bounded method evidence, not a fraud conclusion.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "approved source population and actual nonordinary-scope certificate through multiple journal triggers, separate investigations, independent review and renewed source revision",
+          "actors": [
+            "preparer",
+            "reviewer"
+          ],
+          "observed": "Eleven actual journals each retain one case despite duplicate/manual/amount/cutoff/round triggers; gross debit remains 1100 once. Uninvestigated and self-reviewed cases cannot pass. Each case records actual purpose, authority, accounting and source evidence. A scoped source revision makes the earlier run noncurrent and permits a new version while preserving the old independently approved run.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-010",
+      "title": "Analytical review workspace",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "682e0be964234fb82f5564ca95f7eb44691bc15748bfb6bd7640c31432920bf8",
+      "source": "F00010 p.6, card 10; F00011 matching card 10; F00009/F00012 catalogue entry 10",
+      "relatedCases": [
+        "P06-UC03",
+        "P06-UC05"
+      ],
+      "observations": [
+        {
+          "test": "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+          "file": "tests/pilot-data-evidence.test.mjs",
+          "action": "exact original CSV versions through controlled master matching, TB/ledger, statement, opening and analytical checks with independent dispositions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Historical inactive master rows match only in their actual validity interval; ambiguous and unmatched IDs remain exceptions. Complete-ledger imbalance and duplicate statement destinations remain explicit. Signed/unit-aware casts and approved opening adjustments produce independently asserted residuals. Empty checks and missing thresholds cannot become clean output. Zero denominator remains undefined; refreshed analytics require new explanations. Changed statement input invalidates only its dependent check.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive"
+      ]
+    },
+    {
+      "id": "AUTO-011",
+      "title": "Sales-population integrity and reconciliation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "612bb89b7ba62b134ac3099d9d57651a0997f06f097d825d60982f2fa73b3ccd",
+      "source": "F00010 p.7, card 11; F00011 matching card 11; F00009/F00012 catalogue entry 11",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-012",
+      "title": "Revenue cut-off and credit-note review",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "884b0a51cebce82e8dfedabd035222cbf6c1fd1a3a596b4a8ddc198a33ac2783",
+      "source": "F00010 p.7, card 12; F00011 matching card 12; F00009/F00012 catalogue entry 12",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        },
+        {
+          "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+          "file": "tests/pilot.test.mjs",
+          "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-013",
+      "title": "Receivables aging and subsequent-cash matching",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "9946a269a0f5d42e6df7a14d7a20f151a547e11957073edf18b86d073889d41d",
+      "source": "F00010 p.8, card 13; F00011 matching card 13; F00009/F00012 catalogue entry 13",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        },
+        {
+          "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+          "file": "tests/pilot.test.mjs",
+          "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-014",
+      "title": "Sales pricing and discount compliance",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "960bdc7932320d1da1b1ccc49fa54f1cee5e871d03132a1339b41738b04979e4",
+      "source": "F00010 p.8, card 14; F00011 matching card 14; F00009/F00012 catalogue entry 14",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+          "file": "tests/pilot.test.mjs",
+          "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-015",
+      "title": "Revenue-recognition schedule recalculation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "31a6ae9f1b74bc09be05ea64336087384d54a447c3ac3c2583075b7448ab6ac8",
+      "source": "F00010 p.9, card 15; F00011 matching card 15; F00009/F00012 catalogue entry 15",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-016",
+      "title": "Purchases and payments population review",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "a304b016ea7d16fc63061fe66fd6e28970369862933a7c93b88b3da4f6cb47bc",
+      "source": "F00010 p.9, card 16; F00011 matching card 16; F00009/F00012 catalogue entry 16",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+          "file": "tests/pilot.test.mjs",
+          "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-017",
+      "title": "Supplier and payee identity-risk analysis",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "7895e11873dd77fdc894b974daaab01bfbc53a1f2704d47d77188b3fe86334af",
+      "source": "F00010 p.10, card 17; F00011 matching card 17; F00009/F00012 catalogue entry 17",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-018",
+      "title": "Procure-to-pay document matching",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "d4e7b7e89160ff3cdf6fb9e0b00ca0263dee721c23f2f1bd45e62151a1073961",
+      "source": "F00010 p.10, card 18; F00011 matching card 18; F00009/F00012 catalogue entry 18",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        },
+        {
+          "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+          "file": "tests/pilot.test.mjs",
+          "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-019",
+      "title": "Payables cut-off and unrecorded-liability review",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "081fa401a89d9e84232902d2432b6c7fde3171af26610ef468b43e237d858cbe",
+      "source": "F00010 p.11, card 19; F00011 matching card 19; F00009/F00012 catalogue entry 19",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+          "file": "tests/pilot.test.mjs",
+          "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-020",
+      "title": "Bank matching and reconciliation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "e13ac66d51f231733c644057d33c13349d6007d2b6a362d0d96fb1cff47930a9",
+      "source": "F00010 p.11, card 20; F00011 matching card 20; F00009/F00012 catalogue entry 20",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+          "file": "tests/pilot.test.mjs",
+          "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-021",
+      "title": "Cash movement and payment-risk analytics",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "c0ebdc706037c3c081c5c870bf6865b56af20f1cd5aafd8d55e895f83af79a4d",
+      "source": "F00010 p.12, card 21; F00011 matching card 21; F00009/F00012 catalogue entry 21",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-022",
+      "title": "Inventory register and movement integrity",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "8569a72ea52d837268753f15d58152935fc41b9146028b327b6b78ac8f2dbb26",
+      "source": "F00010 p.12, card 22; F00011 matching card 22; F00009/F00012 catalogue entry 22",
+      "relatedCases": [
+        "P05-UC01",
+        "P05-UC02",
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+          "file": "tests/pilot.test.mjs",
+          "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "G03 approved import profiles preserve raw lineage, full-source controls, independent approval, targeted currentness and exact retry",
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+        "G03 conformance defects remain row-specific and scoped originals cannot become their own independent controls",
+        "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-023",
+      "title": "Inventory-count reconciliation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "dae06346bb24e783310ca67dcf677bc74664370335fed67ad55aa3b255cdb2bb",
+      "source": "F00010 p.13, card 23; F00011 matching card 23; F00009/F00012 catalogue entry 23",
+      "relatedCases": [
+        "P09-UC05",
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+          "file": "tests/pilot.test.mjs",
+          "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-024",
+      "title": "Inventory cut-off and transfer consistency",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "c1b2e6d5354197c4c4de52fcd1950f2d346845deffa6f04af30c11b0cced0bc3",
+      "source": "F00010 p.13, card 24; F00011 matching card 24; F00009/F00012 catalogue entry 24",
+      "relatedCases": [
+        "P09-UC05",
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-025",
+      "title": "Inventory costing and cost-of-sales recalculation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "c3a3ebf9729d697ea7fdf30c3ba5c9c509ebc37d0764b2ed18340358497d55bb",
+      "source": "F00010 p.14, card 25; F00011 matching card 25; F00009/F00012 catalogue entry 25",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G10 actual weighted-cost original files link exact quantities rounded costs ledger balances and independently reviewed calculation to the area packet",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "accepted exact original lots/issues through independent calculation, area review and changed-source preservation",
+          "actors": [
+            "named preparer",
+            "named reviewer"
+          ],
+          "observed": "Two actual accepted lot files total 200 units/value 3000; 50 issues cost 750 and remaining inventory 2250. Ledger mappings and independent calculation review precede the linked G10 work review. Changed issue source makes the prior work stale without rewriting its review. This bounded periodic profile is partial evidence for the complete automation minimum.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-026",
+      "title": "Inventory obsolescence and NRV indicators",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "2303dbe61f830719ad47bf9960f9172a96ea240f3f7eba04d7b28c91202aec2e",
+      "source": "F00010 p.14, card 26; F00011 matching card 26; F00009/F00012 catalogue entry 26",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC06",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "AUTO-027",
+      "title": "Asset-register roll-forward and ledger reconciliation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "65a513c7553ac12ade09658cbc7dd04abd18b8367c124b0d8674510436b6d802",
+      "source": "F00010 p.15, card 27; F00011 matching card 27; F00009/F00012 catalogue entry 27",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        },
+        {
+          "test": "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+          "file": "tests/pilot.test.mjs",
+          "action": "source-linked sales, receivables, purchasing, bank, inventory and fixed assets",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Sales discrepancy signed against exact run, partial receipts and unmatched postings, payment duplicates, bank and inventory residuals, fixed-asset recalculation.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-028",
+      "title": "Depreciation and amortization recalculation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "ad26939639ff30ae4340c32a6d8e942ed73247ade935286abd30a8423ebad312",
+      "source": "F00010 p.15, card 28; F00011 matching card 28; F00009/F00012 catalogue entry 28",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G10 new supported methods calculate independent source examples and reject missing unsupported and malformed inputs",
+          "file": "tests/pilot-area-cards.test.mjs",
+          "action": "bounded independent arithmetic and explicit unsupported/missing cases",
+          "actors": [
+            "independent synthetic expected values"
+          ],
+          "observed": "The new supported straight-line, contractual, calendar-month, cut-off, reciprocal, periodic-weighted-cost, expense and disposal profiles reproduce independently stated expectations. Missing primary inputs and unsupported method/edition do not become zero or pass. This is kernel evidence, separate from original-file integration and professional acceptance.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-029",
+      "title": "Asset lifecycle and useful-life analysis",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "626c10e0550369be4a410662fdcf59c19b30ae9fa5d2e0aa144982b6e1fef90d",
+      "source": "F00010 p.16, card 29; F00011 matching card 29; F00009/F00012 catalogue entry 29",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-030",
+      "title": "Capitalization and repairs screening",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "bcb70783022f4d15d8b9c2624af85affdea6186d9efe84b382d51b1c38fa9e46",
+      "source": "F00010 p.16, card 30; F00011 matching card 30; F00009/F00012 catalogue entry 30",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-031",
+      "title": "Payroll population and disbursement integrity",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "bfc3302f78f36ea9a35c2fd0ae76f01647dd227977182ebca3c4f68c8951ca93",
+      "source": "F00010 p.17, card 31; F00011 matching card 31; F00009/F00012 catalogue entry 31",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+          "file": "tests/pilot.test.mjs",
+          "action": "statutory and finance calculations from named rule editions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ]
+    },
+    {
+      "id": "AUTO-032",
+      "title": "Gross-to-net and payroll statutory recalculation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "5685cc2676bb697f619ef5f6036d36db0a788c1c0752e61d7cfd3832f7f6fae5",
+      "source": "F00010 p.17, card 32; F00011 matching card 32; F00009/F00012 catalogue entry 32",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+          "file": "tests/pilot.test.mjs",
+          "action": "statutory and finance calculations from named rule editions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ]
+    },
+    {
+      "id": "AUTO-033",
+      "title": "Payroll variance and off-cycle analytics",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "1ac4ae083f96dc280e07df9487bd372f58d59796765de8e05cfcfe579ad1d584",
+      "source": "F00010 p.18, card 33; F00011 matching card 33; F00009/F00012 catalogue entry 33",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+          "file": "tests/pilot.test.mjs",
+          "action": "statutory and finance calculations from named rule editions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ]
+    },
+    {
+      "id": "AUTO-034",
+      "title": "VAT and withholding-tax reconciliation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "c391c467d9785ef8377119eb8e853b5c429bfe8e5a15a841c324eb714cebc7fe",
+      "source": "F00010 p.18, card 34; F00011 matching card 34; F00009/F00012 catalogue entry 34",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+          "file": "tests/pilot.test.mjs",
+          "action": "statutory and finance calculations from named rule editions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ]
+    },
+    {
+      "id": "AUTO-035",
+      "title": "Corporate-income-tax reconciliation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "0a4f03a1d7848cf8643b903befba6fa068f2d9a54e397f081ba5a3355035bdf1",
+      "source": "F00010 p.19, card 35; F00011 matching card 35; F00009/F00012 catalogue entry 35",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+          "file": "tests/pilot.test.mjs",
+          "action": "statutory and finance calculations from named rule editions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ]
+    },
+    {
+      "id": "AUTO-036",
+      "title": "Borrowings, interest and covenant review",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "138aa08aa00978d9182782252f067665d08f6212af9e3d492d797bc9d68d1103",
+      "source": "F00010 p.19, card 36; F00011 matching card 36; F00009/F00012 catalogue entry 36",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+          "file": "tests/pilot.test.mjs",
+          "action": "statutory and finance calculations from named rule editions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ]
+    },
+    {
+      "id": "AUTO-037",
+      "title": "Lease-accounting recalculation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "9319e00182dc50c4278dd722685412889c23b1f6be8e739ce6df2cefede29b24",
+      "source": "F00010 p.20, card 37; F00011 matching card 37; F00009/F00012 catalogue entry 37",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+          "file": "tests/pilot.test.mjs",
+          "action": "statutory and finance calculations from named rule editions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ]
+    },
+    {
+      "id": "AUTO-038",
+      "title": "Foreign-currency recalculation and retranslation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "796770b24e20d784ee01d076e78fcfbd75b65eaca41737e687151fa85bf897df",
+      "source": "F00010 p.20, card 38; F00011 matching card 38; F00009/F00012 catalogue entry 38",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+          "file": "tests/pilot.test.mjs",
+          "action": "statutory and finance calculations from named rule editions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ]
+    },
+    {
+      "id": "AUTO-039",
+      "title": "Equity roll-forward and authorization review",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "269df4fa5a4dd70a177a6de56f3355ee4f4ee62449a902cb726547bcf94b9416",
+      "source": "F00010 p.21, card 39; F00011 matching card 39; F00009/F00012 catalogue entry 39",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+          "file": "tests/pilot.test.mjs",
+          "action": "statutory and finance calculations from named rule editions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ]
+    },
+    {
+      "id": "AUTO-040",
+      "title": "Investment holdings, income and valuation-input review",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "0897315067cd06dd86a602265579822f4661d3a3844dc0872f0a614f4ae7c090",
+      "source": "F00010 p.21, card 40; F00011 matching card 40; F00009/F00012 catalogue entry 40",
+      "relatedCases": [
+        "P09-UC02",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+          "file": "tests/pilot.test.mjs",
+          "action": "statutory and finance calculations from named rule editions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, expired and unsupported rule cases; expected amounts for seven areas; payroll independent sign-off and restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review"
+      ]
+    },
+    {
+      "id": "AUTO-041",
+      "title": "Connected-party and related-party review",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "13baf6cb3a11c796179d345033c2711ddde07b62240590791e55231d26b5a3a6",
+      "source": "F00010 p.22, card 41; F00011 matching card 41; F00009/F00012 catalogue entry 41",
+      "relatedCases": [
+        "P09-UC09",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-042",
+      "title": "Estimate, allowance and impairment review",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "ff10a110c87ae3920a2b1ce3f78cd066682431051e078feed30f7d0ebdabd50c",
+      "source": "F00010 p.22, card 42; F00011 matching card 42; F00009/F00012 catalogue entry 42",
+      "relatedCases": [
+        "P09-UC06",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-043",
+      "title": "Consolidation and intercompany review",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "2e98a11421580bfe1d627d4f86250f0ce4b7aa06d0a701aa5af0f0feac28c0c0",
+      "source": "F00010 p.23, card 43; F00011 matching card 43; F00009/F00012 catalogue entry 43",
+      "relatedCases": [
+        "P09-UC10",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "AUTO-044",
+      "title": "Going-concern financial indicators",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "909ea49de6411cb1da4810b2d09e1b37aed3cef2d0bd2389626966bfac4c01c8",
+      "source": "F00010 p.23, card 44; F00011 matching card 44; F00009/F00012 catalogue entry 44",
+      "relatedCases": [
+        "P09-UC08",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-045",
+      "title": "Subsequent-event transaction review",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "32a6d22235882791fd017c8cef089d7c853b7140560a1b33169d3301ab42c79a",
+      "source": "F00010 p.24, card 45; F00011 matching card 45; F00009/F00012 catalogue entry 45",
+      "relatedCases": [
+        "P09-UC07",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 nineteen source method examples calculate independent expected results and preserve missing unsupported and quarantined outcomes",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "exact declared algorithms, policy editions and source examples across nineteen added profiles",
+          "actors": [
+            "independent synthetic expectations"
+          ],
+          "observed": "Actual algorithms reproduce independent expected source examples in integer minor units and declared physical units. Missing sources and unsupported policies are denied; invalid entity/key rows remain quarantined with no apparently complete total. These are bounded engineering calculations, not professional whole-minimum acceptance.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G11 named accepted original methods preserve independent review changed policy source retry private scope corruption and restart",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "accepted original data and method policies through actual independent review and replacement",
+          "actors": [
+            "actual named preparer",
+            "different named reviewer"
+          ],
+          "observed": "All nineteen profiles use accepted exact originals and scoped algorithm/edition/parameter policies. Actual named submission, return and independent review are separate. A replaced primary original creates a new draft and renewed review for each profile; exact rerun preserves approval. Policy edition, selective staleness, corrupt bytes, private engagement and persisted restart are exercised without a preview database or automatic professional conclusion.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "AUTO-046",
+      "title": "Materiality management",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "2ae7becdcb19edd75ed77125c629e4a9ba72483b5c3245d59a0c5e9f4a90a9d4",
+      "source": "F00010 p.24, card 46; F00011 matching card 46; F00009/F00012 catalogue entry 46",
+      "relatedCases": [
+        "P06-UC03",
+        "P06-UC05"
+      ],
+      "observations": [
+        {
+          "test": "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+          "file": "tests/pilot-materiality.test.mjs",
+          "action": "choose and independently review materiality overrides, then reduce and reapprove the exact decision",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Candidate amounts remain separate from selected overall, performance, specific and zero trivial thresholds. Operative source rows use the owning decisions. Self-review, missing rationale, downgrade and stale sample use are denied; review history and the original selection survive restart.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved materiality and its revision govern the same sample and misstatement evaluation",
+          "file": "tests/pilot.test.mjs",
+          "action": "benchmark assessment through approved scoped thresholds, sampling, and reevaluation",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Explicit benchmark, users, comparative, stability and scoped rationale were reviewed against retained evidence. Scoped performance materiality fed sampling. A reduction reopened the dependent work and changed the outstanding comparison while retaining the earlier selection and evaluation.",
+          "outcome": "passed"
+        },
+        {
+          "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved planning, qualified report, archive hold and recovery",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G03 controlled master, ledger, statement, opening and analytical methods retain independent expected results and exceptions",
+        "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history"
+      ]
+    },
+    {
+      "id": "AUTO-047",
+      "title": "Audit sampling workspace",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "95a61c637318ca6c464ce2b634628838901a98b8bf74432cb05c1d55f04c1061",
+      "source": "F00010 p.25, card 47; F00011 matching card 47; F00009/F00012 catalogue entry 47",
+      "relatedCases": [
+        "P07-UC02",
+        "P07-UC03"
+      ],
+      "observations": [
+        {
+          "test": "G04 rejection draws reproduce exact ordered units and whole-journal multisets preserve multiplicity and exposure",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "independent bounded-draw rejection, retained ordering and exact whole-journal multiset example",
+          "actors": [
+            "engineering fixture"
+          ],
+          "observed": "A rejected high random word is redrawn before modulo. Whole journals J1/J2 with A+10/B-10 form one duplicate cluster; J3 A+10/B-5/B-5 stays distinct. Gross debit/credit exposures are each 20 across the two cases, once regardless of triggers. This is bounded method evidence, not a fraud conclusion.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 ratio guards retain signed direction, zero, mixed-sign, unknown and non-detail limitations",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "independent signed ratio example and unsupported projection boundaries",
+          "actors": [
+            "engineering fixture"
+          ],
+          "observed": "A -10 sample difference over book 200 with residual book 1000 gives -50 total and -40 incremental projection. Zero/nonpositive book units, mixed-direction errors, untested/unavailable units, controls objectives and absent explicit convention approval return not-evaluable with reasons and no invented total or confidence interval.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "standard accepted and planned engagement through reconciled data, independently reviewed versioned draw, actual tests, convention approval, ratio evaluation, expansion, exact retry and restart",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Specific/excluded/residual groups cannot overlap. Actual selected IDs and source references survive repeat selection and restart. Unperformed work cannot pass. The explicit synthetic policy binds signed differences, gross exposure and incremental aggregation: 10/200×1000=50 inclusive, plus separate specific error 10 gives total exposure 60 without double count. Expansion retains prior selections/tests and creates a new independently reviewed design. Source correction invalidates current test reliance while retaining original bytes, findings and history. The fixture does not approve firm-wide HB-D02 methodology.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved data feeds the same scoped analytics, multipart confirmation and sampled source rows",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved population through source rows, confirmation and report",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "sandbox recipient"
+          ],
+          "observed": "Issued extract specifies system, period and fields. Scoped upload retains exact versions and bytes. Independent reconciliation detects a missing source row and blocks sampling until the corrected extract is approved. Reopening it makes dependent work and authorization stale.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation"
+      ]
+    },
+    {
+      "id": "AUTO-048",
+      "title": "Misstatement management and evaluation",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "83837c6014550c97c5dd2310e7fb0830a4cd994d83720b617c3f2ac66ac98011",
+      "source": "F00010 p.25, card 48; F00011 matching card 48; F00009/F00012 catalogue entry 48",
+      "relatedCases": [
+        "P10-UC02",
+        "P10-UC03"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 confirmed matters retain actual consequences, partial posting, nonduplicating effects, independent evaluation and restart",
+        "G05 reclassification and disclosure correction require actual independent effect verification rather than net-zero or agreement",
+        "G05 incomplete and restricted matters retain unknowns, reject self-clearance and preserve exact approval replay",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "selected materiality overrides bind source rows and reopen sampling and evaluation without losing signed history",
+        "approved materiality and its revision govern the same sample and misstatement evaluation"
+      ]
+    },
+    {
+      "id": "AUTO-049",
+      "title": "Legal matters, commitments and contingencies",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "7ba42ef86d87f27a8fe2fe5ff14840d67760d36f4ebddef05d4e783e6894e9be",
+      "source": "F00010 p.26, card 49; F00011 matching card 49; F00009/F00012 catalogue entry 49",
+      "relatedCases": [
+        "P09-UC09",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 native legal going-concern and disclosure diagnostics require actual support judgments anchors and independent review",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "actual G05 records retain missing support, unknown exposure and exact disclosure anchors",
+          "actors": [
+            "preparer",
+            "independent reviewer"
+          ],
+          "observed": "An unsupported unknown-exposure legal matter cannot submit; another supported independently reviewed matter remains separate. Missing auditor going-concern decisions are unresolved despite numerical work. An applicable disclosure without an exact note anchor cannot submit; a supported actual next version and separate review renew current readiness. No legal/going-concern or semantic compliance decision is inferred.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "AUTO-050",
+      "title": "Going-concern evidence and conclusion",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "e5edb5556db18e2f1a28135b9f3e6f3814c2bd988a7d9d4dea85b4ebb303f838",
+      "source": "F00010 p.26, card 50; F00011 matching card 50; F00009/F00012 catalogue entry 50",
+      "relatedCases": [
+        "P09-UC08",
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G11 native legal going-concern and disclosure diagnostics require actual support judgments anchors and independent review",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "actual G05 records retain missing support, unknown exposure and exact disclosure anchors",
+          "actors": [
+            "preparer",
+            "independent reviewer"
+          ],
+          "observed": "An unsupported unknown-exposure legal matter cannot submit; another supported independently reviewed matter remains separate. Missing auditor going-concern decisions are unresolved despite numerical work. An applicable disclosure without an exact note anchor cannot submit; a supported actual next version and separate review renew current readiness. No legal/going-concern or semantic compliance decision is inferred.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-051",
+      "title": "Subsequent-event inquiry and completion",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "fb1f25dc192d85031883387463c8749903842f755e246d590bffbcc579ba3a51",
+      "source": "F00010 p.27, card 51; F00011 matching card 51; F00009/F00012 catalogue entry 51",
+      "relatedCases": [
+        "P09-UC07",
+        "P10-UC08"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 consistency checks reject contradictory human decisions without choosing an opinion or hiding an unattempted recipient",
+        "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+        "G06 returned wording retains prior content and exact review history while changed preparation invalidates old signatures and approval",
+        "G06 changed originals and recipient capacity block current release while retaining prior authorized bytes",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "approved report preparation connects exact issue to independently completed assembly and custody"
+      ]
+    },
+    {
+      "id": "AUTO-052",
+      "title": "Disclosure applicability and completion",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "a16d1fa540ff4d839f9f6c8571a78e56193d40bdda654e4e2e2c165f1d85504d",
+      "source": "F00010 p.27, card 52; F00011 matching card 52; F00009/F00012 catalogue entry 52",
+      "relatedCases": [
+        "P10-UC04"
+      ],
+      "observations": [
+        {
+          "test": "G11 native legal going-concern and disclosure diagnostics require actual support judgments anchors and independent review",
+          "file": "tests/pilot-automation-methods.test.mjs",
+          "action": "actual G05 records retain missing support, unknown exposure and exact disclosure anchors",
+          "actors": [
+            "preparer",
+            "independent reviewer"
+          ],
+          "observed": "An unsupported unknown-exposure legal matter cannot submit; another supported independently reviewed matter remains separate. Missing auditor going-concern decisions are unresolved despite numerical work. An applicable disclosure without an exact note anchor cannot submit; a supported actual next version and separate review renew current readiness. No legal/going-concern or semantic compliance decision is inferred.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 final statements, disclosures, representations, actual communications and other-information retain distinct current decisions",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "AUTO-053",
+      "title": "Audit-area completion and conclusion",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "09ef48a59b669e7b54497aabc921435ec14df73ec30a3df1fbe13146a644b4c5",
+      "source": "F00010 p.28, card 53; F00011 matching card 53; F00009/F00012 catalogue entry 53",
+      "relatedCases": [
+        "P09-UC11"
+      ],
+      "observations": [
+        {
+          "test": "G04 procedure execution separates plan approval, actual work, limitation review and targeted source change",
+          "file": "tests/pilot-execution.test.mjs",
+          "action": "exact source procedure tailoring through independent scope review, actual inspected detail tests, same-issue linkage, limited conclusion, targeted source change and persisted history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Every source procedure has an explicit disposition; a risk-linked procedure cannot be omitted without renewed planning. Plan approval is not performed work. Actual book 100/audited 90 and inspected source create one 10 finding; a corroborating test links the same finding without multiplying its effect. No work, self-review, unsupported clearance and erasing a finding by changing to pass are denied. Limited independent review retains partner follow-up and current M10-F08 requirement. Source change invalidates that conclusion and preserves unaffected materiality and actual findings across restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G10 all twenty-two actual area work packets retain normal exception missing unauthorized and changed-source scenarios with G05 handoffs",
+        "G04 one accepted engagement connects actual sample, journal, area conclusion, review-note clearance and correction handoff",
+        "G04 connected unbiased sampling retains groups, actual signed tests, independent projection, expansion, retry and restart",
+        "G04 real control deviations, pre-approved analytical expectations and performed event coverage retain separate conclusions",
+        "G04 versioned journal filters preserve one actual case per journal through independent investigation and scoped source revision",
+        "commercial fieldwork reconciles revenue, receipts, purchases and bank evidence with independent case review",
+        "approved payroll, tax and financing editions calculate exact outputs and reject unsupported inputs"
+      ]
+    },
+    {
+      "id": "AUTO-054",
+      "title": "Risk-response linkage and change-impact control",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "3c92f74284fbc473ccd76b1efc240f850dea35fdce05efb12d393a8e33da055e",
+      "source": "F00010 p.28, card 54; F00011 matching card 54; F00009/F00012 catalogue entry 54",
+      "relatedCases": [
+        "P06-UC02",
+        "P11-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G02 connected planning preserves staffing, proves control distinctions, many-to-many coverage, selective revision, handoff and append-only effort",
+          "file": "tests/pilot-planning.test.mjs",
+          "action": "standard accepted engagement through current methodology, understanding, fraud/analytics candidates, separately evaluated controls, materiality, multiple risk responses, independent strategy, actual-version handoff, contradiction reassessment, recipient revocation and immutable actual effort",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "An invitation and open deadline conflict cannot approve a strategy. Overall risk uses a real staffing/supervision response. Exact template procedures cover multiple risks and one risk spans programmes. Design/implementation without operating tests cannot support reliance. A failed control and changed risk reopen linked plans while separate inventory support remains current. Access restoration does not revive old handoffs. Budget reductions leave original and corrected actual hours intact after restart.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G05 assigned final confirmation remains separate from formal EQR with exact responses, eligibility and selective change",
+        "G05 consultation cannot resolve advice alone or a copied prohibition and preserves scoped application across restart",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "AUTO-055",
+      "title": "Exception, review-note and sign-off closure",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "37e895e86fb0c5c141d50dc3ec74f80f13b33caf40174e48bdb3b601173fa158",
+      "source": "F00010 p.29, card 55; F00011 matching card 55; F00009/F00012 catalogue entry 55",
+      "relatedCases": [
+        "P11-UC01",
+        "P11-UC02"
+      ],
+      "observations": [
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G02 programme adoption requires current explicit loss acknowledgement and preserves incompatible answers in history",
+        "adoption preview preserves compatible table cells and pins explicit review of incompatible answers",
+        "typed workpapers and one-form grants preserve published and reviewed versions"
+      ]
+    },
+    {
+      "id": "AUTO-056",
+      "title": "Final statements, conclusions and report consistency",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "28e2a3c9e7f705228438ce5f8060a429466576d19f5f7458daf5516ccffec807",
+      "source": "F00010 p.29, card 56; F00011 matching card 56; F00009/F00012 catalogue entry 56",
+      "relatedCases": [
+        "P10-UC06",
+        "P10-UC07"
+      ],
+      "observations": [
+        {
+          "test": "G06 consistency checks reject contradictory human decisions without choosing an opinion or hiding an unattempted recipient",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "explicit decision-combination guards and complete permitted-recipient accounting",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "Five declared single-cause combinations are supported without selecting an opinion. Unknown, contradictory and unsupported combined-material states remain unresolved. One received recipient does not conceal an approved unattempted or unknown recipient.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "accepted planned persisted engagement through all eight current G05 assessments, explicit opinion/section decisions, reviewed wording, separate authorization/signature/issue and original-package receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "One actual issue binds the report and original full statements/notes. Unknown dispatch must be reconciled before retry. Receipt requires all three actual downloads, exact report/package hashes and actual acknowledgment; exact retry has one effect and changed payload fails. New content after issue requires the existing controlled successor route. Restart preserves one issue and its recipient history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G06 qualified adverse and disclaimer paths retain actual separate opinion and section decisions with no copied source-wording adoption",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "separate persisted qualified, adverse and disclaimer decisions with reviewed instance wording and six actual section dispositions",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "Each actual opinion follows its separately recorded evidence/known-effect/pervasiveness basis. Source wording, including the adverse-template conflict, is not adopted automatically. Routine KAM inclusion in a disclaimer is denied without actual special legal authority. The responsible auditor retains the wording decision.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 returned wording retains prior content and exact review history while changed preparation invalidates old signatures and approval",
+        "G06 changed originals and recipient capacity block current release while retaining prior authorized bytes",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority",
+        "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+        "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle"
+      ]
+    },
+    {
+      "id": "AUTO-057",
+      "title": "Report approval, issuance and distribution",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "72b07ef308e7d8c800d0533587b5e551f6bce3c0f4750723a43293ae11737d4e",
+      "source": "F00010 p.30, card 57; F00011 matching card 57; F00009/F00012 catalogue entry 57",
+      "relatedCases": [
+        "P10-UC08"
+      ],
+      "observations": [
+        {
+          "test": "G06 consistency checks reject contradictory human decisions without choosing an opinion or hiding an unattempted recipient",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "explicit decision-combination guards and complete permitted-recipient accounting",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "Five declared single-cause combinations are supported without selecting an opinion. Unknown, contradictory and unsupported combined-material states remain unresolved. One received recipient does not conceal an approved unattempted or unknown recipient.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G06 accepted planned engagement connects current completion and reviewed wording to one exact signed issue and full-package receipt",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "accepted planned persisted engagement through all eight current G05 assessments, explicit opinion/section decisions, reviewed wording, separate authorization/signature/issue and original-package receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "One actual issue binds the report and original full statements/notes. Unknown dispatch must be reconciled before retry. Receipt requires all three actual downloads, exact report/package hashes and actual acknowledgment; exact retry has one effect and changed payload fails. New content after issue requires the existing controlled successor route. Restart preserves one issue and its recipient history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G06 changed originals and recipient capacity block current release while retaining prior authorized bytes",
+          "file": "tests/pilot-controlled-reporting.test.mjs",
+          "action": "corrupt actual full-statement original and changed canonical recipient authority",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local recipient"
+          ],
+          "observed": "Corrupt stored authorized-report bytes or full-statement originals block current download, authorization, signing and issue. Restoring the exact original permits the unchanged verified basis. A changed actual contact scope blocks the pending recipient link and current release while the earlier issued hash remains in history.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G06 returned wording retains prior content and exact review history while changed preparation invalidates old signatures and approval",
+        "G06 date and statement changes reopen affected completion and required quality cannot be waived by report authority"
+      ]
+    },
+    {
+      "id": "AUTO-058",
+      "title": "Engagement-file lock, retention and amendments",
+      "scope": "core",
+      "status": "partial-evidence",
+      "fixturePassed": false,
+      "sourceRowSha256": "e640a0ef0b8daaab558e661cc877dfa6e95beaf8a3bbb3ead85bf00c9c991b67",
+      "source": "F00010 p.30, card 58; F00011 matching card 58; F00009/F00012 catalogue entry 58",
+      "relatedCases": [
+        "P12-UC02"
+      ],
+      "observations": [
+        {
+          "test": "G07 assembly retains actual file authority and distinguishes missing unavailable corrupt and stale final content",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "assembly retains actual file authority and distinguishes missing unavailable corrupt and stale final content",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Missing, corrupt and unavailable originals stay explicit and prevent sealing; the same incomplete assembly decision must receive actual file authority and independent review. A selected assembly deadline does not choose a retention rule.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G07 independent custody requires actual readable contents and retains return reoffer retry and later degraded-health history",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "independent custody requires actual readable contents and retains return reoffer retry and later degraded-health history",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "independent custodian"
+          ],
+          "observed": "An actual downloaded digest alone cannot authorize acceptance. Unknown items block acceptance; actual per-file readable inspection, exact retry, changed-payload rejection, return/reoffer with repair owner, and later degraded health preserve earlier acceptance. Active holds and report-only scopes survive transfer.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G07 unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "unresolved retention blocks disposition and successor amendments preserve the longest deadline and every remaining hold",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "Unknown requirements block disposal. A supported policy can resolve a named unknown requirement; a longer ancestor deadline and every other hold remain. Administrative successors retain predecessor hashes and require their own access grant.",
+          "outcome": "passed"
+        },
+        {
+          "test": "G07 supported backup and isolated restore preserve actual report originals archive hashes and granted scopes",
+          "file": "tests/pilot-archive-controls.test.mjs",
+          "action": "supported backup and isolated restore preserve actual report originals archive hashes and granted scopes",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "The supported SQLite backup API writes a snapshot, then restores into another fresh database. Integrity, actual originals, authorized report and archive hashes, identifiers, membership and scopes match; the restored application retrieves only the granted subset. Actual rehearsal evidence is independently reviewed in M12-F09.",
+          "outcome": "passed"
+        },
+        {
+          "test": "approved report preparation connects exact issue to independently completed assembly and custody",
+          "file": "tests/pilot-reporting.test.mjs",
+          "action": "approved qualified report preparation through actual issue, delivery outcomes, assembly diagnostics and independent custody",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "local report recipient",
+            "custodian"
+          ],
+          "observed": "Wrong report template, unauthorized approval, stale preparation and unsigned issue are denied. Ambiguous delivery is reconciled before retry. Original-file corruption blocks assembly; return and independent approval bind the exact index. Corrupt custody is returned with an owner, restored and reoffered. Expired/revoked retrieval is denied; successor retention/holds, original bytes and restart history remain intact.",
+          "outcome": "passed"
+        },
+        {
+          "test": "the extended engagement preserves its original 34-register journey and scoped recoverable archive",
+          "file": "tests/pilot.test.mjs",
+          "action": "approved planning, qualified report, archive hold and recovery",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner"
+          ],
+          "observed": "A source and published programme version, selective reliance invalidation, correct qualified artifact, locked edits denied, recorded amendment and scoped access, longer inherited retention and holds enforced, and exact successor bytes restored from an online SQLite backup.",
+          "outcome": "passed"
+        },
+        {
+          "test": "technical changes, posting verification, exact-package EQR and independent custody form one scoped cycle",
+          "file": "tests/pilot.test.mjs",
+          "action": "technical work through exact signed release and receipt",
+          "actors": [
+            "preparer",
+            "reviewer",
+            "partner",
+            "quality",
+            "custodian",
+            "sandbox recipient"
+          ],
+          "observed": "Assigned workpaper review and independent EQR clear the exact draft. Accepted 100 leaves 40 outstanding after ledger verification. The original archive stays intact through later-fact intake, management and governance discussions, decision, targeted rework and exact successor custody. The no-change and confirmed reliance-notice branches retain separate histories.",
+          "outcome": "passed"
+        }
+      ],
+      "relatedScenarios": [
+        "G07 dated-unissued issued-unsealed and sealed facts require real response work before exact new release archive and independent custody"
+      ]
+    }
+  ],
+  "sourceAcceptance": [],
+  "releaseReady": false,
+  "limits": "Bounded actual examples and owning workflows, not independent whole-minimum or professional source acceptance."
+}
