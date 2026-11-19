@@ -1,0 +1,363 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "D02 M35 research input contract",
+  "description": "Schema validation plus semantic checks are required: unique IDs/person-dates, calendar ordering/timezone, matching scope/cutoff, replacement references and actual overlap. Inputs are already scoped/version-selected by owning production records; no financial rates or costs.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "days",
+        "baseline",
+        "scenarios",
+        "selectedScenario"
+      ],
+      "properties": {
+        "kind": {
+          "const": "capacity"
+        },
+        "days": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "person",
+              "date",
+              "timeZone",
+              "schedule",
+              "unavailable"
+            ],
+            "properties": {
+              "person": {
+                "type": "string",
+                "minLength": 1
+              },
+              "date": {
+                "type": "string",
+                "format": "date"
+              },
+              "timeZone": {
+                "type": "string",
+                "minLength": 1
+              },
+              "schedule": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "prefixItems": [
+                        {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        {
+                          "type": "integer",
+                          "minimum": 0
+                        }
+                      ],
+                      "items": false
+                    }
+                  }
+                ]
+              },
+              "unavailable": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "prefixItems": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "dayMinutes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1800
+              }
+            }
+          }
+        },
+        "baseline": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "person",
+              "engagement",
+              "date",
+              "minutes"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "person": {
+                "type": "string",
+                "minLength": 1
+              },
+              "engagement": {
+                "type": "string",
+                "minLength": 1
+              },
+              "date": {
+                "type": "string",
+                "format": "date"
+              },
+              "minutes": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "removeIds",
+              "add"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "removeIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "add": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "person",
+                    "engagement",
+                    "date",
+                    "minutes"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "person": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "engagement": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "date": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "minutes": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "selectedScenario": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "scope",
+        "planScope",
+        "actualThrough",
+        "planThrough",
+        "plannedToDate",
+        "originalBudget",
+        "revisedBudget",
+        "remainingEstimate",
+        "coverage",
+        "entries"
+      ],
+      "properties": {
+        "kind": {
+          "const": "effort"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "planScope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actualThrough": {
+          "type": "string",
+          "format": "date"
+        },
+        "planThrough": {
+          "type": "string",
+          "format": "date"
+        },
+        "plannedToDate": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "originalBudget": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "revisedBudget": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "remainingEstimate": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "integer",
+              "minimum": 0
+            }
+          ]
+        },
+        "coverage": {
+          "enum": [
+            "complete",
+            "partial",
+            "unsubmitted"
+          ]
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "minutes"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minutes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "supersedes": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "cutoff",
+        "entries"
+      ],
+      "properties": {
+        "kind": {
+          "const": "timestamps"
+        },
+        "cutoff": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d(?::\\d\\d)?(?:Z|[+-]\\d\\d:\\d\\d)$"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "person",
+              "engagement",
+              "from",
+              "through"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "person": {
+                "type": "string",
+                "minLength": 1
+              },
+              "engagement": {
+                "type": "string",
+                "minLength": 1
+              },
+              "from": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d(?::\\d\\d)?(?:Z|[+-]\\d\\d:\\d\\d)$"
+              },
+              "through": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d(?::\\d\\d)?(?:Z|[+-]\\d\\d:\\d\\d)$"
+              },
+              "supersedes": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

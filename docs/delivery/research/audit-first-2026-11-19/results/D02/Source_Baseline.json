@@ -1,0 +1,41 @@
+{
+  "asOf": "2026-11-19",
+  "repositoryParent": "55d2996ebca93b888557ce79a50772799bb792c9",
+  "scope": "D02 only",
+  "d01BaselineDecision": "../D01/Baseline_Decision.json",
+  "book": {
+    "file": "Audit_Stage_1_Repaired.xlsx",
+    "sha256": "5fde7db15e766cdb616cb816d25a8fe6a6d5718f9975d4c0f885c344b079602c",
+    "selection": "USER_ACCEPTED_CURRENT_WORKBOOK"
+  },
+  "inspectedSheets": [
+    {
+      "sheet": "1.4.4A",
+      "nonemptyCells": 225,
+      "merges": 22,
+      "formulaCells": []
+    },
+    {
+      "sheet": "1.4.6А",
+      "nonemptyCells": 196,
+      "merges": 20,
+      "formulaCells": []
+    },
+    {
+      "sheet": "1.4.7А",
+      "nonemptyCells": 193,
+      "merges": 34,
+      "formulaCells": []
+    }
+  ],
+  "researchTasks": [
+    "R-D02-01",
+    "R-D02-02",
+    "R-D02-03",
+    "R-D02-04"
+  ],
+  "researchStatus": "COMPLETE_SPECIFIED",
+  "professionalApproval": "NOT_CLAIMED",
+  "applicationImplementation": "NEXT_WORK",
+  "openResearchQuestions": []
+}

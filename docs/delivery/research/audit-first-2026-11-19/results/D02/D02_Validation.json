@@ -1,0 +1,83 @@
+{
+  "asOf": "2026-11-19",
+  "scope": "D02 research/specification only",
+  "pinnedApplicationCommit": "55d2996ebca93b888557ce79a50772799bb792c9",
+  "result": "PASS",
+  "counts": {
+    "researchTasks": 4,
+    "resolvedDecisions": 21,
+    "authorityRows": 17,
+    "sourceSteps": 18,
+    "sourceFieldAndStaticClauses": 34,
+    "appAcceptanceScenariosSpecified": 42,
+    "decisionTransitionRules": 14,
+    "methodFixtures": 37,
+    "numericalExpectedResultsPassed": 20,
+    "semanticRejectionsPassed": 17,
+    "separateFormulationChecksPassed": 20
+  },
+  "checks": [
+    {
+      "check": "unique IDs and four completed work packages",
+      "result": "PASS"
+    },
+    {
+      "check": "all eighteen A04/A16 source work IDs and real source locators",
+      "result": "PASS"
+    },
+    {
+      "check": "all deployed source fields plus visible static declarations retained",
+      "result": "PASS"
+    },
+    {
+      "check": "decisions, cases and M36 guards cross-reference actual scoped artifacts",
+      "result": "PASS"
+    },
+    {
+      "check": "M35 literal expectations, semantic rejections and separate minute-set formulation",
+      "result": "PASS"
+    },
+    {
+      "check": "M35 typed schema accepts every positive example and rejects unknown fields",
+      "result": "PASS"
+    },
+    {
+      "check": "Markdown local links resolve and no result claims app execution/professional approval",
+      "result": "PASS"
+    },
+    {
+      "check": "D02-only changed-file boundary; accepted D01 baseline and application unchanged",
+      "result": "PASS"
+    }
+  ],
+  "fileHashes": {
+    "AS_IS_and_Engineering_Tickets.md": "a7a0eaa41b6a3ba2eaaaf64820e6e1af8a1789a3ee2c9a5e865037f2f8667d36",
+    "Acceptance_Scenarios.csv": "ffbf634a6654944aee79a14e266efcae2c46a420e7f018436da2515aa747dd81",
+    "Assignment_and_Authority_Contract.md": "a8a5f9ef8dbca386e706f5a55de6db5574af481b985a521416a542aa602eac34",
+    "Capacity_Method_M35.md": "9d5a5242cab5b4f3f9cda4e4b6bb45098d7eb9be7378f7331654d5e0409540ea",
+    "Connected_Worked_Case.md": "c2fd867c8f1cf33646356c900ae0981a071bffcf6f4cbabbad2c87464a852c0b",
+    "Credentials_and_Specialists.md": "16bb8c8de51cc8291f2fd3c932443fd8dacaec539b5640a68d36fb5361cb4684",
+    "Decisions.csv": "8f58ef2563d66e4c4944ffb04dea331f2a27c4176efda77de038ff2ee58b3f38",
+    "M35_Fixtures.json": "27bdabc98c19ff23b286d593a132cc571e7ae6a668b8575c0bf3354ef1d89e74",
+    "M35_Input_Schema.json": "12d4c60fd900a2035fc6d83f07d7ee2d8ceee555c68abd5cd74f37ccaaff57c3",
+    "M36_Transition_Table.csv": "98a606ef0e1c99a189022bb8d4d2db66ad73294e09718a30028711939d82a245",
+    "Question_Contract.csv": "fb0256b7f9eed9675de69230e4958c3e2413f2ff8793a462c7a63fcb75c31cac",
+    "README.md": "89e26f114c44b18a1f69ff426560b913c9aae318ccded38bc66fee46d28a5c14",
+    "Source_Baseline.json": "e31f755c6c64e068373ec972c2f6026683bd7eba4b87543686c0dcaeac174c93",
+    "Source_Interpretation_and_Standards.md": "f0bf5f9f433931d7999573a3ba082820b583fc0f34b32b41ccc9fbe0184cb349",
+    "Source_Step_Crosswalk.csv": "b4399c71374fa93ad4de9852fa53d1110293fea893b1a9307d21e6a1d7b319eb",
+    "Sources_and_Standards.csv": "fb44d7e16ca309f2b7430e4310aa8124f18c182db436d503facd5a976525790c",
+    "Specialist_Access_Contract.md": "a96cc400c4009717c48c75cb845d9fe58329bb94a6297ccfab0992a419702c3d",
+    "independent_checker.cjs": "3606e6f01648b951431b6bbe0c2bfb351195ad2c39a52d9ca9f618564c6085b2",
+    "reference_calculator.cjs": "1ac0eb96b3ec762a17be062a9b079d01b862323ce103fc48ed886132aec208ed",
+    "validate.cjs": "17fe0617d87701ac2874da799331c08cb0ff192c39a48aaf0c644d22e46741bf"
+  },
+  "independence": "Literal expected values and separate minute-set formulation; same assistant authored both. No independent human approval claimed.",
+  "applicationRegressionAttempt": {
+    "state": "NOT_PASSED_HOST_RESTRICTED",
+    "selectedStaffingTests": 1,
+    "planningTests": 4,
+    "reason": "After resolving existing dependency access, HTTP tests failed before assertions on host-denied loopback fetch: connect EACCES 127.0.0.1. No application modifications or runtime acceptance claimed."
+  },
+  "remaining": "Implement D02-E01–E06 and run actual source/permission/UI tests; optional D02-E07 portal only if offered. Engagement-specific judgments use defined records, not unresolved research."
+}

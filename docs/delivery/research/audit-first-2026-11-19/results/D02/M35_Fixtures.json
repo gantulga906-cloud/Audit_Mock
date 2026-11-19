@@ -1,0 +1,1731 @@
+{
+  "method": "D02-M35-v1",
+  "units": "integer elapsed minutes; percent with explicit base; null=unknown/undefined as contracted",
+  "expectedValueProvenance": "Literal expected numbers and hand arithmetic authored separately; reference_calculator is not called while generating expectations. Same assistant authored both; no independent human signoff claimed.",
+  "cases": [
+    {
+      "id": "M35-C01",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": [
+              [
+                600,
+                720
+              ],
+              [
+                690,
+                780
+              ]
+            ]
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 180
+          },
+          {
+            "id": "B",
+            "person": "P1",
+            "engagement": "E2",
+            "date": "2026-11-19",
+            "minutes": 150
+          }
+        ],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "availableMinutes": 300,
+            "plannedMinutes": 330,
+            "headroomMinutes": -30,
+            "overbookedMinutes": 30,
+            "loadPercent": 110,
+            "flag": "overbooked"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": 300,
+            "plannedMinutes": 330,
+            "headroomMinutes": -30,
+            "overbookedMinutes": 30,
+            "loadPercent": 110
+          }
+        ]
+      },
+      "independentHandCheck": "480 scheduled minus 180 union absence=300;180+150=330;excess30;330/300=110%."
+    },
+    {
+      "id": "M35-C02",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                780
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 210
+          }
+        ],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "availableMinutes": 240,
+            "plannedMinutes": 210,
+            "headroomMinutes": 30,
+            "overbookedMinutes": 0,
+            "loadPercent": 87.5,
+            "flag": "within-capacity"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": 240,
+            "plannedMinutes": 210,
+            "headroomMinutes": 30,
+            "overbookedMinutes": 0,
+            "loadPercent": 87.5
+          }
+        ]
+      },
+      "independentHandCheck": "Part-time four hours=240min;210/240=87.5%;free30."
+    },
+    {
+      "id": "M35-C03",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": [
+              [
+                0,
+                1440
+              ],
+              [
+                600,
+                720
+              ]
+            ]
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 60
+          }
+        ],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "availableMinutes": 0,
+            "plannedMinutes": 60,
+            "headroomMinutes": -60,
+            "overbookedMinutes": 60,
+            "loadPercent": null,
+            "flag": "zero-capacity"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": 0,
+            "plannedMinutes": 60,
+            "headroomMinutes": -60,
+            "overbookedMinutes": 60,
+            "loadPercent": null
+          }
+        ]
+      },
+      "independentHandCheck": "Full-day holiday plus overlapping leave still yields zero, not negative120;60 planned is60 excess;ratio undefined."
+    },
+    {
+      "id": "M35-C04",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                720
+              ],
+              [
+                780,
+                1020
+              ]
+            ],
+            "unavailable": [
+              [
+                660,
+                840
+              ]
+            ]
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 150
+          }
+        ],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "availableMinutes": 300,
+            "plannedMinutes": 150,
+            "headroomMinutes": 150,
+            "overbookedMinutes": 0,
+            "loadPercent": 50,
+            "flag": "within-capacity"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": 300,
+            "plannedMinutes": 150,
+            "headroomMinutes": 150,
+            "overbookedMinutes": 0,
+            "loadPercent": 50
+          }
+        ]
+      },
+      "independentHandCheck": "Split shift180+240=420;absence clips60morning+60afternoon=120;available300."
+    },
+    {
+      "id": "M35-C05",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [],
+            "unavailable": []
+          }
+        ],
+        "baseline": [],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "availableMinutes": 0,
+            "plannedMinutes": 0,
+            "headroomMinutes": 0,
+            "overbookedMinutes": 0,
+            "loadPercent": null,
+            "flag": "within-capacity"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": 0,
+            "plannedMinutes": 0,
+            "headroomMinutes": 0,
+            "overbookedMinutes": 0,
+            "loadPercent": null
+          }
+        ]
+      },
+      "independentHandCheck": "Known nonworking day;zero/zero is undefined ratio, not0%."
+    },
+    {
+      "id": "M35-C06",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": null,
+            "unavailable": []
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 60
+          }
+        ],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "availableMinutes": null,
+            "plannedMinutes": 60,
+            "headroomMinutes": null,
+            "overbookedMinutes": null,
+            "loadPercent": null,
+            "flag": "unknown-capacity"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": null,
+            "plannedMinutes": 60,
+            "headroomMinutes": null,
+            "overbookedMinutes": null,
+            "loadPercent": null
+          }
+        ]
+      },
+      "independentHandCheck": "No calendar means unknown availability;planned60 remains known."
+    },
+    {
+      "id": "M35-C07",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                780
+              ]
+            ],
+            "unavailable": []
+          },
+          {
+            "person": "P1",
+            "date": "2026-11-20",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 300
+          },
+          {
+            "id": "B",
+            "person": "P1",
+            "engagement": "E2",
+            "date": "2026-11-20",
+            "minutes": 120
+          }
+        ],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "availableMinutes": 240,
+            "plannedMinutes": 300,
+            "headroomMinutes": -60,
+            "overbookedMinutes": 60,
+            "loadPercent": 125,
+            "flag": "overbooked"
+          },
+          {
+            "person": "P1",
+            "date": "2026-11-20",
+            "availableMinutes": 480,
+            "plannedMinutes": 120,
+            "headroomMinutes": 360,
+            "overbookedMinutes": 0,
+            "loadPercent": 25,
+            "flag": "within-capacity"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": 720,
+            "plannedMinutes": 420,
+            "headroomMinutes": 300,
+            "overbookedMinutes": 60,
+            "loadPercent": 58.333333333333336
+          }
+        ]
+      },
+      "independentHandCheck": "Window720 available/420planned leaves300 net, yet Thursday60 excess;420/720=58.3333%, not average75%."
+    },
+    {
+      "id": "M35-C08",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                840
+              ]
+            ],
+            "unavailable": []
+          },
+          {
+            "person": "P2",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                780
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 180
+          },
+          {
+            "id": "B",
+            "person": "P1",
+            "engagement": "E2",
+            "date": "2026-11-19",
+            "minutes": 150
+          }
+        ],
+        "scenarios": [
+          {
+            "id": "TRANSFER60",
+            "removeIds": [
+              "B"
+            ],
+            "add": [
+              {
+                "id": "B2",
+                "person": "P1",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 90
+              },
+              {
+                "id": "Q",
+                "person": "P2",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 60
+              }
+            ]
+          },
+          {
+            "id": "TRANSFER90",
+            "removeIds": [
+              "B"
+            ],
+            "add": [
+              {
+                "id": "B3",
+                "person": "P1",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 60
+              },
+              {
+                "id": "Q2",
+                "person": "P2",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 90
+              }
+            ]
+          }
+        ],
+        "selectedScenario": "TRANSFER60"
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "availableMinutes": 300,
+            "plannedMinutes": 270,
+            "headroomMinutes": 30,
+            "overbookedMinutes": 0,
+            "loadPercent": 90,
+            "flag": "within-capacity"
+          },
+          {
+            "person": "P2",
+            "date": "2026-11-19",
+            "availableMinutes": 240,
+            "plannedMinutes": 60,
+            "headroomMinutes": 180,
+            "overbookedMinutes": 0,
+            "loadPercent": 25,
+            "flag": "within-capacity"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": 300,
+            "plannedMinutes": 270,
+            "headroomMinutes": 30,
+            "overbookedMinutes": 0,
+            "loadPercent": 90
+          },
+          {
+            "person": "P2",
+            "availableMinutes": 240,
+            "plannedMinutes": 60,
+            "headroomMinutes": 180,
+            "overbookedMinutes": 0,
+            "loadPercent": 25
+          }
+        ]
+      },
+      "independentHandCheck": "Replace150 by90+60;original total330 unchanged;other alternative ignored."
+    },
+    {
+      "id": "M35-C09",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                840
+              ]
+            ],
+            "unavailable": []
+          },
+          {
+            "person": "P2",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                780
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 180
+          },
+          {
+            "id": "B",
+            "person": "P1",
+            "engagement": "E2",
+            "date": "2026-11-19",
+            "minutes": 150
+          }
+        ],
+        "scenarios": [
+          {
+            "id": "TRANSFER60",
+            "removeIds": [
+              "B"
+            ],
+            "add": [
+              {
+                "id": "B2",
+                "person": "P1",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 90
+              },
+              {
+                "id": "Q",
+                "person": "P2",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 60
+              }
+            ]
+          },
+          {
+            "id": "TRANSFER90",
+            "removeIds": [
+              "B"
+            ],
+            "add": [
+              {
+                "id": "B3",
+                "person": "P1",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 60
+              },
+              {
+                "id": "Q2",
+                "person": "P2",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 90
+              }
+            ]
+          }
+        ],
+        "selectedScenario": "TRANSFER90"
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "availableMinutes": 300,
+            "plannedMinutes": 240,
+            "headroomMinutes": 60,
+            "overbookedMinutes": 0,
+            "loadPercent": 80,
+            "flag": "within-capacity"
+          },
+          {
+            "person": "P2",
+            "date": "2026-11-19",
+            "availableMinutes": 240,
+            "plannedMinutes": 90,
+            "headroomMinutes": 150,
+            "overbookedMinutes": 0,
+            "loadPercent": 37.5,
+            "flag": "within-capacity"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": 300,
+            "plannedMinutes": 240,
+            "headroomMinutes": 60,
+            "overbookedMinutes": 0,
+            "loadPercent": 80
+          },
+          {
+            "person": "P2",
+            "availableMinutes": 240,
+            "plannedMinutes": 90,
+            "headroomMinutes": 150,
+            "overbookedMinutes": 0,
+            "loadPercent": 37.5
+          }
+        ]
+      },
+      "independentHandCheck": "Other mutually exclusive alternative replaces150 by60+90;never add both scenarios."
+    },
+    {
+      "id": "M35-C10",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                840
+              ]
+            ],
+            "unavailable": []
+          },
+          {
+            "person": "P2",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                780
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 180
+          },
+          {
+            "id": "B",
+            "person": "P1",
+            "engagement": "E2",
+            "date": "2026-11-19",
+            "minutes": 150
+          }
+        ],
+        "scenarios": [
+          {
+            "id": "TRANSFER60",
+            "removeIds": [
+              "B"
+            ],
+            "add": [
+              {
+                "id": "B2",
+                "person": "P1",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 90
+              },
+              {
+                "id": "Q",
+                "person": "P2",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 60
+              }
+            ]
+          },
+          {
+            "id": "TRANSFER90",
+            "removeIds": [
+              "B"
+            ],
+            "add": [
+              {
+                "id": "B3",
+                "person": "P1",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 60
+              },
+              {
+                "id": "Q2",
+                "person": "P2",
+                "engagement": "E2",
+                "date": "2026-11-19",
+                "minutes": 90
+              }
+            ]
+          }
+        ],
+        "selectedScenario": null
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "availableMinutes": 300,
+            "plannedMinutes": 330,
+            "headroomMinutes": -30,
+            "overbookedMinutes": 30,
+            "loadPercent": 110,
+            "flag": "overbooked"
+          },
+          {
+            "person": "P2",
+            "date": "2026-11-19",
+            "availableMinutes": 240,
+            "plannedMinutes": 0,
+            "headroomMinutes": 240,
+            "overbookedMinutes": 0,
+            "loadPercent": 0,
+            "flag": "within-capacity"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": 300,
+            "plannedMinutes": 330,
+            "headroomMinutes": -30,
+            "overbookedMinutes": 30,
+            "loadPercent": 110
+          },
+          {
+            "person": "P2",
+            "availableMinutes": 240,
+            "plannedMinutes": 0,
+            "headroomMinutes": 240,
+            "overbookedMinutes": 0,
+            "loadPercent": 0
+          }
+        ]
+      },
+      "independentHandCheck": "Baseline only is180+150;proposed alternatives do not reserve time."
+    },
+    {
+      "id": "M35-C11",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-01",
+            "timeZone": "America/New_York",
+            "schedule": [
+              [
+                0,
+                1500
+              ]
+            ],
+            "unavailable": [],
+            "dayMinutes": 1500
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-01",
+            "minutes": 60
+          }
+        ],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-01",
+            "availableMinutes": 1500,
+            "plannedMinutes": 60,
+            "headroomMinutes": 1440,
+            "overbookedMinutes": 0,
+            "loadPercent": 4,
+            "flag": "within-capacity"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": 1500,
+            "plannedMinutes": 60,
+            "headroomMinutes": 1440,
+            "overbookedMinutes": 0,
+            "loadPercent": 4
+          }
+        ]
+      },
+      "independentHandCheck": "Adapter-supplied 25-hour elapsed-day interval;60/1500=4%;reference does not infer wall-clock DST conversion."
+    },
+    {
+      "id": "M35-C12",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                780
+              ],
+              [
+                720,
+                900
+              ]
+            ],
+            "unavailable": [
+              [
+                480,
+                540
+              ],
+              [
+                900,
+                1020
+              ]
+            ]
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 180
+          }
+        ],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expected": {
+        "rows": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "availableMinutes": 360,
+            "plannedMinutes": 180,
+            "headroomMinutes": 180,
+            "overbookedMinutes": 0,
+            "loadPercent": 50,
+            "flag": "within-capacity"
+          }
+        ],
+        "totals": [
+          {
+            "person": "P1",
+            "availableMinutes": 360,
+            "plannedMinutes": 180,
+            "headroomMinutes": 180,
+            "overbookedMinutes": 0,
+            "loadPercent": 50
+          }
+        ]
+      },
+      "independentHandCheck": "Overlapping schedules union540..900=360;touching outside absence subtracts0."
+    },
+    {
+      "id": "M35-X01",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 60
+          },
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 120
+          }
+        ],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expectedError": "DUPLICATE_ID",
+      "independentHandCheck": "Duplicate allocation cannot be counted twice."
+    },
+    {
+      "id": "M35-X02",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 60
+          }
+        ],
+        "scenarios": [
+          {
+            "id": "S",
+            "removeIds": [
+              "MISSING"
+            ],
+            "add": []
+          }
+        ],
+        "selectedScenario": "S"
+      },
+      "expectedError": "UNKNOWN_REMOVAL",
+      "independentHandCheck": "Scenario must target real baseline rows."
+    },
+    {
+      "id": "M35-X03",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": []
+          },
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expectedError": "DUPLICATE_DAY",
+      "independentHandCheck": "Duplicate person-date calendar is ambiguous, not additive."
+    },
+    {
+      "id": "M35-X04",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": -1
+          }
+        ],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expectedError": "INVALID_MINUTES",
+      "independentHandCheck": "Negative planned minutes invalid."
+    },
+    {
+      "id": "M35-X05",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-02-30",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expectedError": "INVALID_DATE",
+      "independentHandCheck": "Calendar rollover must not accept nonexistent date."
+    },
+    {
+      "id": "M35-X06",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                540
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expectedError": "INVALID_INTERVAL",
+      "independentHandCheck": "Zero-length interval invalid;use empty array for known zero schedule."
+    },
+    {
+      "id": "M35-X07",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Invented/Nowhere",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expectedError": "INVALID_TIMEZONE",
+      "independentHandCheck": "Invalid IANA time zone rejected."
+    },
+    {
+      "id": "M35-X08",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P2",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 60
+          }
+        ],
+        "scenarios": [],
+        "selectedScenario": null
+      },
+      "expectedError": "MISSING_DAY",
+      "independentHandCheck": "No hidden full-time default for an unprovided person-date."
+    },
+    {
+      "id": "M35-X09",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "date": "2026-11-19",
+            "minutes": 60
+          }
+        ],
+        "scenarios": [
+          {
+            "id": "S",
+            "removeIds": [],
+            "add": [
+              {
+                "id": "A",
+                "person": "P1",
+                "engagement": "E1",
+                "date": "2026-11-19",
+                "minutes": 120
+              }
+            ]
+          }
+        ],
+        "selectedScenario": "S"
+      },
+      "expectedError": "DUPLICATE_ID",
+      "independentHandCheck": "Add cannot duplicate retained allocation ID."
+    },
+    {
+      "id": "M35-X10",
+      "input": {
+        "kind": "capacity",
+        "days": [
+          {
+            "person": "P1",
+            "date": "2026-11-19",
+            "timeZone": "Asia/Ulaanbaatar",
+            "schedule": [
+              [
+                540,
+                1020
+              ]
+            ],
+            "unavailable": []
+          }
+        ],
+        "baseline": [],
+        "scenarios": [],
+        "selectedScenario": "UNKNOWN"
+      },
+      "expectedError": "UNKNOWN_SCENARIO",
+      "independentHandCheck": "No silent fallback from nonexistent scenario to baseline."
+    },
+    {
+      "id": "M35-E01",
+      "input": {
+        "kind": "effort",
+        "scope": "E1/WORK1/2026-11-19",
+        "planScope": "E1/WORK1/2026-11-19",
+        "actualThrough": "2026-11-19",
+        "planThrough": "2026-11-19",
+        "plannedToDate": 300,
+        "originalBudget": 600,
+        "revisedBudget": 720,
+        "remainingEstimate": 360,
+        "coverage": "complete",
+        "entries": [
+          {
+            "id": "T1",
+            "minutes": 360
+          }
+        ]
+      },
+      "expected": {
+        "recordedMinutes": 360,
+        "actualMinutes": 360,
+        "provisional": false,
+        "varianceMinutes": 60,
+        "variancePercent": 20,
+        "budgetDeltaMinutes": 120,
+        "budgetDeltaPercent": 20,
+        "forecastMinutes": 720,
+        "forecastVarianceMinutes": 0
+      },
+      "independentHandCheck": "360-300=60/300=20%;budget720-600=120/600=20%;360actual+360remaining=720."
+    },
+    {
+      "id": "M35-E02",
+      "input": {
+        "kind": "effort",
+        "scope": "E1/WORK1/2026-11-19",
+        "planScope": "E1/WORK1/2026-11-19",
+        "actualThrough": "2026-11-19",
+        "planThrough": "2026-11-19",
+        "plannedToDate": 300,
+        "originalBudget": 600,
+        "revisedBudget": 720,
+        "remainingEstimate": 360,
+        "coverage": "partial",
+        "entries": [
+          {
+            "id": "T1",
+            "minutes": 120
+          }
+        ]
+      },
+      "expected": {
+        "recordedMinutes": 120,
+        "actualMinutes": null,
+        "provisional": true,
+        "varianceMinutes": -180,
+        "variancePercent": -60,
+        "budgetDeltaMinutes": 120,
+        "budgetDeltaPercent": 20,
+        "forecastMinutes": 480,
+        "forecastVarianceMinutes": -240
+      },
+      "independentHandCheck": "Only120 recorded;recorded variance120-300=-180/-60% provisional,not final productivity;forecast480 provisional."
+    },
+    {
+      "id": "M35-E03",
+      "input": {
+        "kind": "effort",
+        "scope": "E1/WORK1/2026-11-19",
+        "planScope": "E1/WORK1/2026-11-19",
+        "actualThrough": "2026-11-19",
+        "planThrough": "2026-11-19",
+        "plannedToDate": 300,
+        "originalBudget": 600,
+        "revisedBudget": 720,
+        "remainingEstimate": 360,
+        "coverage": "unsubmitted",
+        "entries": []
+      },
+      "expected": {
+        "recordedMinutes": 0,
+        "actualMinutes": null,
+        "provisional": true,
+        "varianceMinutes": null,
+        "variancePercent": null,
+        "budgetDeltaMinutes": 120,
+        "budgetDeltaPercent": 20,
+        "forecastMinutes": null,
+        "forecastVarianceMinutes": null
+      },
+      "independentHandCheck": "No submission is unknown actual, not a negative300 overrun/efficiency result."
+    },
+    {
+      "id": "M35-E04",
+      "input": {
+        "kind": "effort",
+        "scope": "E1/WORK1/2026-11-19",
+        "planScope": "E1/WORK1/2026-11-19",
+        "actualThrough": "2026-11-19",
+        "planThrough": "2026-11-19",
+        "plannedToDate": 0,
+        "originalBudget": 0,
+        "revisedBudget": 0,
+        "remainingEstimate": 0,
+        "coverage": "complete",
+        "entries": []
+      },
+      "expected": {
+        "recordedMinutes": 0,
+        "actualMinutes": 0,
+        "provisional": false,
+        "varianceMinutes": 0,
+        "variancePercent": null,
+        "budgetDeltaMinutes": 0,
+        "budgetDeltaPercent": null,
+        "forecastMinutes": 0,
+        "forecastVarianceMinutes": 0
+      },
+      "independentHandCheck": "Explicit complete zero is real zero;0/0 percentage undefined."
+    },
+    {
+      "id": "M35-E05",
+      "input": {
+        "kind": "effort",
+        "scope": "E1/WORK1/2026-11-19",
+        "planScope": "E1/WORK1/2026-11-19",
+        "actualThrough": "2026-11-19",
+        "planThrough": "2026-11-19",
+        "plannedToDate": 300,
+        "originalBudget": 600,
+        "revisedBudget": 720,
+        "remainingEstimate": null,
+        "coverage": "complete",
+        "entries": [
+          {
+            "id": "OLD",
+            "minutes": 360
+          },
+          {
+            "id": "NEW",
+            "minutes": 300,
+            "supersedes": "OLD"
+          }
+        ]
+      },
+      "expected": {
+        "recordedMinutes": 300,
+        "actualMinutes": 300,
+        "provisional": false,
+        "varianceMinutes": 0,
+        "variancePercent": 0,
+        "budgetDeltaMinutes": 120,
+        "budgetDeltaPercent": 20,
+        "forecastMinutes": null,
+        "forecastVarianceMinutes": null
+      },
+      "independentHandCheck": "Corrected300 replaces360,does not add to660;no remaining estimate means no forecast."
+    },
+    {
+      "id": "M35-X11",
+      "input": {
+        "kind": "effort",
+        "scope": "E1/WORK1/2026-11-19",
+        "planScope": "OTHER",
+        "actualThrough": "2026-11-19",
+        "planThrough": "2026-11-19",
+        "plannedToDate": 300,
+        "originalBudget": 600,
+        "revisedBudget": 720,
+        "remainingEstimate": 360,
+        "coverage": "complete",
+        "entries": [
+          {
+            "id": "T1",
+            "minutes": 360
+          }
+        ]
+      },
+      "expectedError": "SCOPE_MISMATCH",
+      "independentHandCheck": "Different engagement/work scope cannot produce a meaningful variance."
+    },
+    {
+      "id": "M35-X12",
+      "input": {
+        "kind": "effort",
+        "scope": "E1/WORK1/2026-11-19",
+        "planScope": "E1/WORK1/2026-11-19",
+        "actualThrough": "2026-11-19",
+        "planThrough": "2026-11-20",
+        "plannedToDate": 300,
+        "originalBudget": 600,
+        "revisedBudget": 720,
+        "remainingEstimate": 360,
+        "coverage": "complete",
+        "entries": [
+          {
+            "id": "T1",
+            "minutes": 360
+          }
+        ]
+      },
+      "expectedError": "CUTOFF_MISMATCH",
+      "independentHandCheck": "Partial actual cutoff cannot compare with later plan cutoff."
+    },
+    {
+      "id": "M35-X13",
+      "input": {
+        "kind": "effort",
+        "scope": "E1/WORK1/2026-11-19",
+        "planScope": "E1/WORK1/2026-11-19",
+        "actualThrough": "2026-11-19",
+        "planThrough": "2026-11-19",
+        "plannedToDate": 300,
+        "originalBudget": 600,
+        "revisedBudget": 720,
+        "remainingEstimate": 360,
+        "coverage": "complete",
+        "entries": [
+          {
+            "id": "A",
+            "minutes": 60,
+            "supersedes": "B"
+          },
+          {
+            "id": "B",
+            "minutes": 120,
+            "supersedes": "A"
+          }
+        ]
+      },
+      "expectedError": "CYCLIC_SUPERSESSION",
+      "independentHandCheck": "Cyclic corrections must not disappear into zero recorded time."
+    },
+    {
+      "id": "M35-T01",
+      "input": {
+        "kind": "timestamps",
+        "cutoff": "2026-11-19T23:00:00Z",
+        "entries": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "from": "2026-11-19T09:00:00+08:00",
+            "through": "2026-11-19T10:00:00+08:00"
+          },
+          {
+            "id": "B",
+            "person": "P1",
+            "engagement": "E2",
+            "from": "2026-11-19T02:00:00Z",
+            "through": "2026-11-19T03:00:00Z"
+          }
+        ]
+      },
+      "expected": {
+        "currentEntries": 2,
+        "totalMinutes": 120
+      },
+      "independentHandCheck": "First interval01:00..02:00UTC;second02:00..03:00UTC;touching endpoint allowed."
+    },
+    {
+      "id": "M35-X14",
+      "input": {
+        "kind": "timestamps",
+        "cutoff": "2026-11-19T23:00:00Z",
+        "entries": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "from": "2026-11-19T09:00:00+08:00",
+            "through": "2026-11-19T10:00:00+08:00"
+          },
+          {
+            "id": "B",
+            "person": "P1",
+            "engagement": "E2",
+            "from": "2026-11-19T01:30:00Z",
+            "through": "2026-11-19T02:30:00Z"
+          }
+        ]
+      },
+      "expectedError": "OVERLAPPING_ACTUALS",
+      "independentHandCheck": "Different offsets expose same-person30-minute cross-client overlap."
+    },
+    {
+      "id": "M35-T02",
+      "input": {
+        "kind": "timestamps",
+        "cutoff": "2026-11-19T23:00:00Z",
+        "entries": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "from": "2026-11-19T01:00:00Z",
+            "through": "2026-11-19T02:00:00Z"
+          },
+          {
+            "id": "B",
+            "person": "P2",
+            "engagement": "E2",
+            "from": "2026-11-19T01:30:00Z",
+            "through": "2026-11-19T02:30:00Z"
+          }
+        ]
+      },
+      "expected": {
+        "currentEntries": 2,
+        "totalMinutes": 120
+      },
+      "independentHandCheck": "Different people may work concurrently;each60min."
+    },
+    {
+      "id": "M35-T03",
+      "input": {
+        "kind": "timestamps",
+        "cutoff": "2026-11-19T23:00:00Z",
+        "entries": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "from": "2026-11-19T01:00:00Z",
+            "through": "2026-11-19T02:00:00Z"
+          },
+          {
+            "id": "B",
+            "person": "P1",
+            "engagement": "E1",
+            "from": "2026-11-19T01:00:00Z",
+            "through": "2026-11-19T01:30:00Z",
+            "supersedes": "A"
+          }
+        ]
+      },
+      "expected": {
+        "currentEntries": 1,
+        "totalMinutes": 30
+      },
+      "independentHandCheck": "Correction replaces old60-minute actual with30;historical entry retained but not counted."
+    },
+    {
+      "id": "M35-X15",
+      "input": {
+        "kind": "timestamps",
+        "cutoff": "2026-11-19T23:00:00Z",
+        "entries": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "from": "2026-11-20T01:00:00Z",
+            "through": "2026-11-20T02:00:00Z"
+          }
+        ]
+      },
+      "expectedError": "INVALID_TIME_ENTRY",
+      "independentHandCheck": "Future time beyond declared cutoff rejected."
+    },
+    {
+      "id": "M35-X16",
+      "input": {
+        "kind": "timestamps",
+        "cutoff": "2026-11-19T23:00:00Z",
+        "entries": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "from": "2026-11-19T01:00:00Z",
+            "through": "2026-11-19T02:00:00Z",
+            "supersedes": "B"
+          },
+          {
+            "id": "B",
+            "person": "P1",
+            "engagement": "E1",
+            "from": "2026-11-19T01:00:00Z",
+            "through": "2026-11-19T02:00:00Z",
+            "supersedes": "A"
+          }
+        ]
+      },
+      "expectedError": "CYCLIC_SUPERSESSION",
+      "independentHandCheck": "Timestamp correction cycle must not produce invented zero actuals."
+    },
+    {
+      "id": "M35-X17",
+      "input": {
+        "kind": "timestamps",
+        "cutoff": "2026-11-19T23:00:00Z",
+        "entries": [
+          {
+            "id": "A",
+            "person": "P1",
+            "engagement": "E1",
+            "from": "2026-11-19T01:00:00Z",
+            "through": "2026-11-19T02:00:00Z"
+          },
+          {
+            "id": "B",
+            "person": "P2",
+            "engagement": "E1",
+            "from": "2026-11-19T01:00:00Z",
+            "through": "2026-11-19T01:30:00Z",
+            "supersedes": "A"
+          }
+        ]
+      },
+      "expectedError": "INVALID_SUPERSESSION",
+      "independentHandCheck": "A second worker cannot take over another person historical actual time by correction."
+    }
+  ]
+}

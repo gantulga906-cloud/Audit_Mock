@@ -1,8 +1,14 @@
 # D02 — Team allocation, capacity and external specialists: dedicated research plan
 
-**Status:** PLANNED; research questions and execution instructions, not professional approval or completed implementation. **As of:** 19 November 2026. **Parent:** [audit-first execution index](../README.md). **Priority:** required audit scope or explicitly conditional child applicability.
+**Status:** RESEARCH/SPECIFICATION COMPLETE; implementation and actual professional/operational acceptance are separate. **As of:** 19 November 2026. **Parent:** [audit-first execution index](../README.md). **Priority:** required audit scope or explicitly conditional child applicability.
 
 Classic staffing and controlled expert participation; broad HR/payroll ERP remains outside scope.
+
+## Execution results — 19 November 2026
+
+All four work packages are resolved in the [D02 result pack](../results/D02/README.md): named many-person assignment/authority, source-linked transfer and review rules, M35 capacity/budget/scenario calculations with executable worked examples, manual credential verification and category-specific specialist agreement/access/return/evaluation. [Decisions](../results/D02/Decisions.csv) state the selected answers and contrary cases; no unanswered design question is left because research was unfinished. [Engineering tickets](../results/D02/AS_IS_and_Engineering_Tickets.md) distinguish existing controls from the next implementation work. Actual auditor judgments have defined evidence/review workflows and are not unresolved product questions.
+
+The user-accepted workbook and Mongolian ISA 2020 compilation including integrated ISQM 1/2 and revised ISA 220 remain settled from D01. The wider task CSV is the initial planning snapshot; this execution note and the result index give current D02 status. Only D02 was advanced in this batch; no application code or other domain results were changed.
 
 ## Research contract
 
