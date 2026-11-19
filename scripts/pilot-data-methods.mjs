@@ -9,6 +9,8 @@ import {recordEvent} from '../src/lib/workspace.ts';
 import {validDate} from '../src/lib/feature-workflows.ts';
 import {automationChecks} from '../src/lib/pilot-automation-methods.ts';
 import {calculateAutomation} from './pilot-automation-checks.mjs';
+import {buildMethodRun,methodRunCurrent,methodReviewDigest,contractDigest} from './pilot-method-contracts.mjs';
+import {allocateStatements} from './pilot-allocations.mjs';
 
 const fail=(message,status=409)=>{throw new PilotError(status,message);};
 const hash=value=>createHash('sha256').update(value).digest('hex');
@@ -43,10 +45,10 @@ export function dataSource(m,files,id){
 }
 const sourceCurrent=(m,ref)=>m.evidence.some(e=>e.id===ref.id&&e.version===ref.version&&evidenceCurrent(m,e));
 const populationDigest=rows=>hash(JSON.stringify(rows.map(r=>[r.row,r.id,r.cents,r.state,r.reason,r.issues,r.sourcePayload])));
-const basisCurrent=(m,check)=>check.inputs.every(ref=>sourceCurrent(m,ref))&&
+const basisCurrent=(m,check)=>methodRunCurrent(m,check)&&check.inputs.every(ref=>sourceCurrent(m,ref))&&
  (!check.populationBasis||check.populationBasis.evidence===m.pilotPopulation?.at(-1)?.evidence&&check.populationBasis.rowsDigest===populationDigest(m.pilotPopulation.at(-1).rows))&&
  (check.registers??[]).every(ref=>approvedRows(m,'M06-F05').some(r=>r.id===ref.id&&r.version===ref.version));
-export const dataCheckCurrent=(m,check,files)=>{try{return check?.status==='approved'&&basisCurrent(m,check)&&last(state(m).checks.find(r=>r.id===check.id)?.versions??[])===check&&(!files||check.inputs.every(ref=>dataSource(m,files,ref.id).sha256===ref.sha256));}catch{return false;}};
+export const dataCheckCurrent=(m,check,files)=>{try{return check?.status==='approved'&&basisCurrent(m,check)&&(!check.methodRun||check.review?.digest===methodReviewDigest(check))&&last(state(m).checks.find(r=>r.id===check.id)?.versions??[])===check&&(!files||check.inputs.every(ref=>dataSource(m,files,ref.id).sha256===ref.sha256));}catch{return false;}};
 export const approvedDataChecks=m=>state(m).checks.map(p=>last(p.versions)).filter(r=>dataCheckCurrent(m,r));
 
 export function normalizePopulation(m,text,profile,currency){
@@ -136,10 +138,7 @@ function calculate(m,files,method,primary,secondary,c){
   const balance=sum(ledger,'debit')-sum(ledger,'credit');outputs.push({ledgerScope:c.ledgerScope,grossDebit:sum(ledger,'debit'),grossCredit:sum(ledger,'credit'),wholeLedgerBalance:c.ledgerScope==='complete'?balance:null});if(c.ledgerScope==='complete'&&Math.abs(balance)>tolerance)issues.push({issue:'unbalanced-complete-ledger',balance});
  }else if(method==='AUTO-006'){
   const tb=matchAmounts(read(primary,['account','closing','entity','currency','period'],m.bench.periods[m.engagement].end),['closing']),statements=matchAmounts(read(secondary,['line','amount','entity','currency','unit','period'],m.bench.periods[m.engagement].end),['amount']);sameCurrency(tb,currency,issues);sameCurrency(statements,currency,issues);unique(statements,'line',issues);
-  if(!Array.isArray(c.mapping))fail('Баталсан дансны зураглалыг оруулна уу.',400);const mapping=groups(c.mapping,'account'),totals=new Map();
-  for(const [account,rows] of groups(tb,'account')){const links=mapping.get(account);if(links?.length!==1||![1,-1].includes(links[0]?.sign)){issues.push({issue:'unmapped-or-multiple-destination',account});continue;}const link=links[0];totals.set(link.line,safe((totals.get(link.line)??0)+sum(rows,'closing')*link.sign));}
-  const tolerance=money(c.tolerance,'Хүлцэл');if(tolerance<0)fail('Хүлцэл сөрөг биш байна.',400);
-  for(const line of new Set([...totals.keys(),...statements.map(r=>r.line)])){const row=statements.find(r=>r.line===line),unit=Number(row?.unit);if(![1,1000,1000000].includes(unit)){issues.push({issue:'missing-or-invalid-display-unit',line});continue;}const computed=totals.get(line),residual=computed===undefined?null:safe(computed-safe(row.amount*unit));outputs.push({line,computed,reported:row.amount,unit,residual,currency});if(residual===null||Math.abs(residual)>safe(tolerance*unit))issues.push({issue:'statement-mapping-residual',line,residual});}
+  let allocated;try{allocated=allocateStatements(tb,statements,c,{money,safe});}catch(error){fail(error.message,400);}outputs.push(...allocated.outputs);issues.push(...allocated.issues);
  }else if(method==='AUTO-007'){
   const nodes=matchAmounts(primaryRows(['id','amount','unit','period']),['amount']),indexed=unique(nodes,'id',issues);sameCurrency(nodes,currency,issues);for(const n of nodes)if(![1,1000,1000000].includes(Number(n.unit))||!validDate(n.period))fail('Тайлангийн нэгж ба үеийг шалгана уу.',400);
   const value=id=>indexed.get(id)?.length===1?indexed.get(id)[0]:undefined,normal=n=>safe(n.amount*Number(n.unit));const tolerance=money(c.tolerance,'Хүлцэл');if(tolerance<0)fail('Хүлцэл сөрөг биш байна.',400);
@@ -185,8 +184,9 @@ export function dataAction(m,role,action,data,files){
   let content;
   if(profile){const definition=parse(input(data,'definition',10000),'Импортын профайл');validateProfile(definition);if(!object(definition)||!object(definition.mapping)||!['signed','debit-credit'].includes(definition.amount)||!['major','minor'].includes(definition.unit)||!['debit-positive','credit-positive'].includes(definition.sign)||!['iso','dmy'].includes(definition.dateFormat)||Object.entries(definition.mapping).some(([k,v])=>!['id','account','amount','debit','credit','entity','date','currency','journal','entry_type','reference'].includes(k)||typeof v!=='string'||!v.trim()))fail('Профайлын багана, нэгж, тэмдэг ба огнооны тодорхой дүрэм шаардлагатай.',400);content={name:input(data,'name',200),definition};}
   else {const method=input(data,'method',12),configuration=parse(input(data,'configuration',100000),'Аргын параметр');if(version&&version.method!==method)fail('Өөр арга сонгох бол тусдаа тооцоолол үүсгэнэ үү.');if(!object(configuration))fail('Аргын параметр объект байна.',400);content={method,configuration,...calculate(m,files,method,input(data,'primary',64),data.secondary,configuration),use:input(data,'use',500)};}
-  const executionDigest=!profile&&automationChecks[content.method]?hash(JSON.stringify(content)):undefined;
-  if(executionDigest&&executionDigest===version?.executionDigest)return false;
+  if(!profile)content.methodRun=buildMethodRun(m,content);
+  const executionDigest=!profile?content.methodRun.digest:undefined;
+  if(executionDigest&&executionDigest===version?.executionDigest&&contractDigest(content.cases)===contractDigest(version.cases))return false;
   if(!item){item={id:randomUUID(),versions:[]};collection.push(item);}version={id:item.id,version:(version?.version??0)+1,status:'draft',by:actorKey(role),at:now(),...content,...(executionDigest&&{executionDigest})};item.versions.push(version);
  }else{
   if(!version||String(version.version)!==data.version)fail('Яг одоогийн хувилбарыг сонгоно уу.');
@@ -197,7 +197,7 @@ export function dataAction(m,role,action,data,files){
   }else if(operation==='approve'||operation==='return'){
    if(role==='preparer'||version.by===actorKey(role))fail('Хараат бус хянагч шаардлагатай.',403);if(version.status!=='submitted')fail('Илгээсэн хувилбарыг сонгоно уу.');const reason=input(data,'reason');
    if(operation==='approve'&&!profile){if(!basisCurrent(m,version))fail('Эх, мөрийн төлөв эсвэл нээлтийн баталсан суурь өөрчлөгдсөн.');for(const ref of version.inputs)if(dataSource(m,files,ref.id).sha256!==ref.sha256)fail('Эхийн агуулга өөрчлөгдсөн.');const disposition=input(data,'disposition',16);if(!['usable','limited'].includes(disposition)||disposition==='usable'&&(version.issues.length||version.cases.some(c=>c.result!=='resolved')))fail('Шийдэгдээгүй зөрүүтэй тооцоолол цэвэр хэрэглээний зөвшөөрөл болохгүй.');version.disposition=disposition;}
-   version.status=operation==='approve'?'approved':'returned';version.review={by:actorKey(role),at:now(),reason};
+   version.status=operation==='approve'?'approved':'returned';version.review={by:actorKey(role),at:now(),reason,...(!profile&&version.methodRun&&{digest:methodReviewDigest(version)})};
   }else fail('Өгөгдлийн үйлдэл олдсонгүй.',404);
  }
  remember(version,role,operation,eventDetail);recordEvent(m,'G03 · '+action+' · '+item.id+' v'+version.version);

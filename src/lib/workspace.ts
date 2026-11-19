@@ -19,7 +19,7 @@ export const CAPACITY={preparer:'R1 · Бэлтгэсэн',reviewer:'R2 · Хя�
 export type Note={id:string;author:string;text:string;version:number;response:string;cleared:boolean;anchor?:string;
  responses?:{version:number;workVersion:number;by:string;at:string;text:string}[];
  decisions?:{result:'cleared'|'returned';workVersion:number;responseVersion:number;response:string;by:string;at:string;reason:string}[]};
-export type Snapshot={version:number;values:Record<string,string>;evidence:string[];at:string;by:string;action:string;template?:Template};
+export type Snapshot={answerContract?:import('./audit-values').AuditAnswerContract;version:number;values:Record<string,string>;evidence:string[];at:string;by:string;action:string;template?:Template};
 export type Intake={contact:string;origin:'client'|'firm';period:string;facts:string;active:boolean};
 export type DecisionRecord={version:number;by:string;at:string;decision:Engagement['acceptance'];assessment:string;independence:string;letter:string};
 export type Statements={version:number;statements:string;notes:string};
@@ -27,7 +27,7 @@ export type ReportPackage={report:number;fs:number;reportDate?:string;paper:Snap
 type SnapshotContent={id:string;version:number;reviewedVersion?:number;values:Record<string,string>;evidence:string[]};
 type Authorization={report:number;fs:number;by:string;at:string;package?:ReportPackage};
 type Release={report:number;fs:number;authorizedAt:string;issuedAt:string;recipients:{name:string;status:string}[];package?:ReportPackage};
-export type WorkItem={id:string;engagement:string;form:string;title:string;stage:number;owner:string;reviewer:string;start:string;due:string;baselineStart:string;baselineDue:string;estimate:number;actual:number;status:StageStatus;version:number;submittedVersion?:number;submittedBy?:string;reviewedVersion?:number;values:Record<string,string>;evidence:string[];notes:Note[];history:Snapshot[];required:boolean;naReason?:string;completedAt?:string;qualityVersion?:number};
+export type WorkItem={answerContract?:import('./audit-values').AuditAnswerContract;id:string;engagement:string;form:string;title:string;stage:number;owner:string;reviewer:string;start:string;due:string;baselineStart:string;baselineDue:string;estimate:number;actual:number;status:StageStatus;version:number;submittedVersion?:number;submittedBy?:string;reviewedVersion?:number;values:Record<string,string>;evidence:string[];notes:Note[];history:Snapshot[];required:boolean;naReason?:string;completedAt?:string;qualityVersion?:number};
 export type Engagement={id:string;companyId?:string;team?:EngagementTeam;carriedFrom?:string;client:string;initials:string;industry:string;period:string;kind:string;phase:string;reportDate:string;reportForm?:string;acceptance:'pending'|'accepted'|'declined'|'conditional';termsAgreed:boolean;independence:boolean;formalEqr:boolean;eqrComplete:boolean;fsVersion:number;reportVersion:number;reportFsVersion:number;authorized?:Authorization;issued?:{report:number;fs:number;at:string};recipients:{name:string;status:'pending'|'delivered'|'failed'}[];locked:boolean;custody:'none'|'offered'|'accepted';hold:boolean;followup:boolean;qualityConcerns:{id:string;text:string;resolved:boolean}[];releaseHistory?:Release[];decisionVersion?:number;intake?:Intake;decisions?:DecisionRecord[];statements?:Statements;authorizationHistory?:Authorization[];eqrReview?:{by:string;at:string;basis:string}};
 export type Evidence={id:string;engagement:string;name:string;version:number;type:string;obtained:string;status:'received'|'accepted'|'rejected';source:string;anchor:string;text:string;specimen:boolean;dataUrl?:string;original?:boolean;archiveOnly?:boolean;uploadedBy?:string;channel?:string;request?:string;replaces?:string;assessment?:string;population?:boolean;scope?:EvidenceScope;receivedOn?:string;supplier?:string;scopeHistory?:{version:number;scope?:EvidenceScope;status:string;at:string;by:string;reason:string}[];standaloneAssessment?:{result:'accepted'|'rejected';by:string;at:string;reason:string}};
 export type EvidenceScope={entity:string;start:string;end:string;evidenceType:string};
@@ -70,7 +70,7 @@ export function canReviewWork(m:Model,w:WorkItem){return canReadWork(m,w)&&!m.en
 export function stamp(value:unknown){const s=JSON.stringify(value);let h=2166136261;for(let i=0;i<s.length;i++)h=Math.imul(h^s.charCodeAt(i),16777619);return (h>>>0).toString(16)}
 export function now(){return new Date().toISOString()}
 export function recordEvent(m:Model,text:string,form?:string){m.activity.unshift({id:crypto.randomUUID(),engagement:m.engagement,text,by:m.person,at:now(),form});}
-export function snapshot(w:WorkItem,by:string,action:string){w.history.unshift({version:w.version,values:{...w.values},evidence:[...w.evidence],by,action,at:now()});}
+export function snapshot(w:WorkItem,by:string,action:string){w.history.unshift({...(w.answerContract&&{answerContract:structuredClone(w.answerContract)}),version:w.version,values:{...w.values},evidence:[...w.evidence],by,action,at:now()});}
 export function changeWork(m:Model,id:string,values:Record<string,string>,evidence?:string[]){
  const w=m.work[id];if(!w||!canEdit(m,w))throw Error('Энэ ажлын бэлтгэгчийн томилгоо шаардлагатай.');
  if(stamp([w.values,w.evidence])===stamp([values,evidence??w.evidence]))return;

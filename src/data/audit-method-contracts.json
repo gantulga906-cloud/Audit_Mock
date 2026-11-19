@@ -1,0 +1,445 @@
+{
+  "schemaVersion": 1,
+  "version": "audit-method-contracts-v1",
+  "methods": [
+    {
+      "id": "M01",
+      "title": "Population integrity, control totals and reconciliations",
+      "profile": "Typed source reconciliation v1",
+      "automationIds": [
+        "AUTO-001",
+        "AUTO-002",
+        "AUTO-003",
+        "AUTO-004",
+        "AUTO-005",
+        "AUTO-008",
+        "AUTO-011",
+        "AUTO-016",
+        "AUTO-022",
+        "AUTO-031"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Source completeness, appropriate exclusions, tolerances and intended use require actual auditor approval.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M02",
+      "title": "Allocations, adjustments and financial statement bridges",
+      "profile": "Primary allocation and statement bridge v1",
+      "automationIds": [
+        "AUTO-006",
+        "AUTO-007",
+        "AUTO-043",
+        "AUTO-056"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Accounting classification, comparative restatement, current/noncurrent and cash-flow presentation are reviewed elections.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M03",
+      "title": "Materiality and clearly trivial thresholds",
+      "profile": "Selected materiality policy arithmetic v1",
+      "automationIds": [
+        "AUTO-046"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Benchmark/normalization/percentages and qualitative materiality are professional judgments, not ISA-prescribed constants.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M04",
+      "title": "Sampling frame and reproducible selection",
+      "profile": "Reproducible simple random selection without replacement",
+      "automationIds": [
+        "AUTO-047"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Audit objective, unit and design appropriateness require review. Reproducibility is not assurance.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M05",
+      "title": "Audit sample-size determination",
+      "profile": "Bounded attribute size helper + evidenced substantive-size route",
+      "automationIds": [
+        "AUTO-047"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Selected risk, tolerable deviation, acceptance plan and adequacy are professional methodology decisions; this helper is a proposed bounded design.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M06",
+      "title": "Projection, sampling evaluation and risk allowance",
+      "profile": "Point projection with explicit risk-evaluation boundary",
+      "automationIds": [
+        "AUTO-047",
+        "AUTO-048"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Projection method, anomaly classification, sampling-risk allowance and acceptable audit basis require methodology review.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M07",
+      "title": "Analytical expectations, ratios, trends and tolerances",
+      "profile": "Purpose-specific analytical calculations",
+      "automationIds": [
+        "AUTO-010",
+        "AUTO-033",
+        "AUTO-044"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Suitability, reliable data, sufficiently precise expectation, threshold and interpretation remain auditor decisions.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M08",
+      "title": "Journal-entry and anomaly rules",
+      "profile": "Explainable journal candidate rules",
+      "automationIds": [
+        "AUTO-009",
+        "AUTO-021"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Fraud risk, rule thresholds, unusualness and final conclusions require human inquiry/investigation.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M09",
+      "title": "Receivables aging and subsequent-cash application",
+      "profile": "As-of aging and explicit receipt allocation",
+      "automationIds": [
+        "AUTO-013"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Due-date basis, disputed credit allocation, confirmation alternatives and collectability are auditor decisions.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M10",
+      "title": "Revenue and deferred-revenue schedules",
+      "profile": "Approved time-based revenue schedule and separate recognition record",
+      "automationIds": [
+        "AUTO-015"
+      ],
+      "specificationVersion": 1,
+      "judgment": "A schedule is arithmetic support; enforceable contract, control transfer, progress, principal/agent and constraint judgments remain recorded professional work.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M11",
+      "title": "Revenue cut-off, prices, discounts and credit notes",
+      "profile": "Commercial price/cut-off comparisons",
+      "automationIds": [
+        "AUTO-012",
+        "AUTO-014"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Delivery terms/control transfer, contract enforceability and adjustment versus subsequent event require actual evaluation.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M12",
+      "title": "Procure-to-pay matching, accruals and unrecorded liabilities",
+      "profile": "Line-grain P2P matching/accrual/search",
+      "automationIds": [
+        "AUTO-016",
+        "AUTO-017",
+        "AUTO-018",
+        "AUTO-019"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Receipt/service obligation, appropriate matching tolerance, shared-identity relationship and completeness are human decisions.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M13",
+      "title": "Bank reconciliation and cash movements",
+      "profile": "Signed bank reconciliation and explicit matching",
+      "automationIds": [
+        "AUTO-020",
+        "AUTO-021"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Bank authenticity, account rights/restrictions, completeness and clearing evidence require evaluation.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M14",
+      "title": "Inventory movement, count and cut-off",
+      "profile": "Inventory quantity/count/cut-off bridge",
+      "automationIds": [
+        "AUTO-022",
+        "AUTO-023",
+        "AUTO-024"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Attendance, count instructions, ownership, consignment and reliability remain actual audit work.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M15",
+      "title": "Inventory cost and cost of sales",
+      "profile": "Periodic weighted-average costing v1; separate additional profiles",
+      "automationIds": [
+        "AUTO-025"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Permitted cost formula, eligible cost, normal capacity, abnormal waste and policy consistency require reviewed basis.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M16",
+      "title": "Inventory NRV and obsolescence indicators",
+      "profile": "NRV input comparison and movement indicators",
+      "automationIds": [
+        "AUTO-026"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Estimated selling price/costs, grouping, obsolescence and reversals require professional evidence; turnover alone is not NRV.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M17",
+      "title": "Asset roll-forward, disposals and revaluation movements",
+      "profile": "Dual asset roll-forwards",
+      "automationIds": [
+        "AUTO-027",
+        "AUTO-029"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Recognition, revaluation class policy, derecognition date and classification remain human decisions.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M18",
+      "title": "Depreciation and amortization",
+      "profile": "Straight-line time-apportioned charge v1",
+      "automationIds": [
+        "AUTO-028",
+        "AUTO-029"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Useful life, residual, consumption method, componentization, ready date and estimate revisions require actual review.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M19",
+      "title": "Capitalization, repairs and borrowing-cost support",
+      "profile": "Capitalization screening and borrowing-cost support",
+      "automationIds": [
+        "AUTO-030"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Recognition criteria cannot be replaced by a monetary threshold; qualifying development and asset-ready dates require evidence.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M20",
+      "title": "Effective interest, borrowings and covenants",
+      "profile": "Contractual interest + bounded effective-interest support",
+      "automationIds": [
+        "AUTO-036",
+        "AUTO-040"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Classification, EIR inputs, modification/derecognition and covenant rights/waivers remain reviewed judgments.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M21",
+      "title": "Lease liability and right-of-use schedules",
+      "profile": "Fixed-payment lessee schedule v1",
+      "automationIds": [
+        "AUTO-037"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Lease definition, exemptions, options, rate, life and modifications require professional conclusions.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M22",
+      "title": "Foreign-currency measurement and translation",
+      "profile": "Rate-role-specific FX calculation",
+      "automationIds": [
+        "AUTO-038",
+        "AUTO-043",
+        "AUTO-048"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Functional currency, monetary nature, rate accessibility and P&L/OCI classification require review.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M23",
+      "title": "Investment income and fair-value input review",
+      "profile": "Holdings/income bridge and valuation-input evaluation",
+      "automationIds": [
+        "AUTO-040"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Rights, classification, market activity, valuation technique and observable-input appropriateness require evaluation.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M24",
+      "title": "Expected credit losses and allowances",
+      "profile": "Approved provision-matrix calculation + separately reviewed ECL models",
+      "automationIds": [
+        "AUTO-013",
+        "AUTO-040",
+        "AUTO-042"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Scope, segmentation, rates, forecast adjustments, staging, collateral and model appropriateness require independent professional evaluation.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M25",
+      "title": "Nonfinancial asset impairment",
+      "profile": "Recoverable-amount comparison + controlled valuation support",
+      "automationIds": [
+        "AUTO-042"
+      ],
+      "specificationVersion": 1,
+      "judgment": "CGU identification, forecast plausibility, discount/terminal assumptions, recognition and reversal limits require professional work.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M26",
+      "title": "Payroll, benefits and gross-to-net",
+      "profile": "Effective-dated payroll rule-set recalculation",
+      "automationIds": [
+        "AUTO-031",
+        "AUTO-032",
+        "AUTO-033"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Employment validity, benefit classification, taxable base, relief and local legal parameters require authority and actual review.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M27",
+      "title": "VAT and withholding reconciliation",
+      "profile": "Dated VAT/withholding arithmetic and reconciliation",
+      "automationIds": [
+        "AUTO-034"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Applicable rate, taxable event, deduction/exemption and filing obligations are legal/accounting decisions with actual dated authority.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M28",
+      "title": "Current and deferred income tax",
+      "profile": "Approved current/deferred tax schedule arithmetic",
+      "automationIds": [
+        "AUTO-035"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Tax law, temporary versus permanent differences, recognition, rate on recovery/settlement and offsetting require actual review.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M29",
+      "title": "Equity, reserves and dividends",
+      "profile": "Equity-class roll-forward and authorization linkage",
+      "automationIds": [
+        "AUTO-039"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Liability-versus-equity classification, lawful distribution, treasury shares and authorization require professional/legal work.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M30",
+      "title": "Consolidation and intercompany eliminations",
+      "profile": "Component aggregation and explicit eliminations v1",
+      "automationIds": [
+        "AUTO-043"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Control, acquisition date, ownership, consolidation policy, impairment and elimination basis require actual review.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M31",
+      "title": "Provisions, commitments and contingencies",
+      "profile": "Provision/contingency register and structured estimate support",
+      "automationIds": [
+        "AUTO-049"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Present obligation, probability, reliable estimate, best estimate and disclosure are professional/legal conclusions; probability alone is insufficient.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M32",
+      "title": "Going-concern indicators and forecast scenarios",
+      "profile": "Explicit forecast/liquidity/covenant indicators",
+      "automationIds": [
+        "AUTO-044",
+        "AUTO-050"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Going-concern basis and material uncertainty are audit/accounting judgments; indicator success cannot make a going-concern opinion.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M33",
+      "title": "Signed misstatements, correction and exposure aggregation",
+      "profile": "Canonical signed error/correction evaluation",
+      "automationIds": [
+        "AUTO-048"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Misstatement classification, permissible offset, qualitative materiality and final evaluation require auditor judgment.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M34",
+      "title": "Dates, temporal states and retention clocks",
+      "profile": "Policy-based dates, limited amendment and retention clocks",
+      "automationIds": [
+        "AUTO-045",
+        "AUTO-051",
+        "AUTO-057",
+        "AUTO-058"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Legal permission for restricted amendment, policy anchor/retention and prevention-of-reliance actions need actual authority.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M35",
+      "title": "Capacity, budgets and staffing scenario variance",
+      "profile": "Use completed D02 M35-v1 capacity specification",
+      "automationIds": [],
+      "specificationVersion": 1,
+      "judgment": "Working calendar, feasible allocations, suitability and staffing decisions are actual firm judgments; no quality/utilization target is invented.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    },
+    {
+      "id": "M36",
+      "title": "Coverage, decision tables, review and authorization rules",
+      "profile": "Versioned decision/coverage/authority tables",
+      "automationIds": [
+        "AUTO-001",
+        "AUTO-007",
+        "AUTO-041",
+        "AUTO-052",
+        "AUTO-053",
+        "AUTO-054",
+        "AUTO-055",
+        "AUTO-056",
+        "AUTO-057",
+        "AUTO-058"
+      ],
+      "specificationVersion": 1,
+      "judgment": "Professional judgments remain attributable decisions. Configurable roles cannot waive a nonwaivable rule or required independent review.",
+      "scope": "Bounded specifications; linked automation support does not imply every method branch is implemented or professionally approved."
+    }
+  ]
+}

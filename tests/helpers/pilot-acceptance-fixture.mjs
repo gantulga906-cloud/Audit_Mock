@@ -6,6 +6,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createPilot} from '../../scripts/pilot-server.mjs';
 import {acceptanceChecks} from '../../src/lib/pilot-acceptance.ts';
+import {inProcessRequest} from './in-process-http.mjs';
 
 const passwords={preparer:'G01-fixture-preparer',reviewer:'G01-fixture-reviewer',partner:'G01-fixture-partner'};
 const today=()=>new Date().toISOString().slice(0,10);
@@ -13,9 +14,10 @@ const dates={start:'2025-01-01',end:'2025-12-31',reportDate:'2026-12-31'};
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 async function start(database,setup=false,oversight={}){
  const pilot=createPilot({database,setupCode:'G01-fixture-only'}),server=createServer((req,res)=>void pilot.handle(req,res,new URL(req.url,'http://127.0.0.1')));
- await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
- const origin='http://127.0.0.1:'+server.address().port;
- const request=(path,cookie,data)=>fetch(origin+'/api/pilot'+path,{method:data===undefined?'GET':'POST',headers:{...(cookie&&{Cookie:cookie}),...(data!==undefined&&{'Content-Type':'application/json',Origin:origin})},body:data===undefined?undefined:JSON.stringify(data)});
+ const inProcess=process.env.AUDIT_TEST_TRANSPORT==='in-process';
+ if(!inProcess)await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
+ const origin='http://127.0.0.1:'+(server.address()?.port??18765);
+ const request=inProcess?inProcessRequest(pilot):(path,cookie,data)=>fetch(origin+'/api/pilot'+path,{method:data===undefined?'GET':'POST',headers:{...(cookie&&{Cookie:cookie}),...(data!==undefined&&{'Content-Type':'application/json',Origin:origin})},body:data===undefined?undefined:JSON.stringify(data)});
  const cookies={};
  try{
   if(setup)assert.equal((await request('/setup','',{code:'G01-fixture-only',...passwords,...oversight})).status,201);
@@ -36,8 +38,8 @@ async function start(database,setup=false,oversight={}){
    const bytes=Buffer.from(content),saved=await write('reviewer',id,'support-upload',{name:'G01-fixture.csv',source:'Fictional source owner / test policy',base64:bytes.toString('base64')}),evidence=saved.evidence.at(-1).id;
    await write('partner',id,'support-assess',{id:evidence,result:'accepted',reason:'Compared exact fixture content, actor, client and period'});return evidence;
   };
-  return {cookies,path,request,view,write,register,file,async close(){await new Promise((resolve,reject)=>server.close(error=>error?reject(error):resolve()));pilot.close();}};
- }catch(error){await new Promise(resolve=>server.close(resolve));pilot.close();throw error;}
+  return {cookies,path,request,view,write,register,file,async close(){if(!inProcess)await new Promise((resolve,reject)=>server.close(error=>error?reject(error):resolve()));pilot.close();}};
+ }catch(error){if(!inProcess)await new Promise(resolve=>server.close(resolve));pilot.close();throw error;}
 }
 async function firm(app){
  await app.register('firm','M01-F01',{name:'G01 fictional firm',licence:'TEST-ONLY',reporting:'G01 audit test',contact:'firm@example.test'});

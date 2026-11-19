@@ -1,4 +1,5 @@
 import {actorKey} from './pilot-identity-context.mjs';
+import {auditScalar} from '../src/lib/audit-values.ts';
 import { validDate } from '../src/lib/feature-workflows.ts';
 import { fieldAnswers, fieldPrefix, formKinds, procedureOutcomes, sharedBindings, yesNo,isNotApplicableAnswer } from '../src/lib/pilot-forms.ts';
 import { sharedFields, sharedForWork, tableColumns, validateTemplate, visibleField } from '../src/lib/workbench.ts';
@@ -251,7 +252,10 @@ export function readTypedAnswers(m, paper, data, files) {
   const old = new Set(typedEvidence(defs, fieldAnswers(paper.values)));
   const requestIds = new Set(m.requests.filter(r => r.form === paper.form).flatMap(r => r.parts?.map(p => p.evidence) ?? []));
   const evidence = [...new Set([...paper.evidence.filter(id => !old.has(id) || requestIds.has(id)), ...ids])];
-  return { evidence, values: { ...Object.fromEntries(Object.entries(paper.values).filter(([k]) => !k.startsWith(fieldPrefix))),
+  const scalar=(f,v,key)=>auditScalar(f.type,v,{yes:yesNo[0],no:yesNo[1],unknown:yesNo[2],na:yesNo[3],reason:answers[key+'.reason'],draft:true});
+  const answerContract={schemaVersion:1,templateDigest:template.digest,fields:template.body.fields.filter(f=>!f.binding&&!f.decision&&visibleField(f,answers)).map(f=>({fieldId:f.key,source:f.source,
+    ...(f.type==='table'?{rows:JSON.parse(answers[f.key]||'[]').map(row=>({rowId:row.id,values:Object.fromEntries((f.columns??tableColumns).map(c=>[c.key,scalar(c,row.values[c.key],f.key+'.'+row.id+'.'+c.key)]))}))}:{value:scalar(f,answers[f.key],f.key)})}))};
+  return { evidence, answerContract, values: { ...Object.fromEntries(Object.entries(paper.values).filter(([k]) => !k.startsWith(fieldPrefix))),
     ...Object.fromEntries(Object.entries(answers).map(([k,v]) => [fieldPrefix+k,v])) } };
 }
 

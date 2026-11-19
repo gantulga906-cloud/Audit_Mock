@@ -1,5 +1,6 @@
 import {areaCardAction,areaCardReleaseGaps,areaCardGap,areaCardView,areaCardEvidence,syncAreaCards} from './pilot-area-cards.mjs';
 import {actorKey} from './pilot-identity-context.mjs';
+import {foundationView} from './pilot-method-contracts.mjs';
 import { randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { createCompany, createEngagement, validDate } from '../src/lib/feature-workflows.ts';
@@ -250,7 +251,7 @@ export function pilotReport(m, files) {
 
 export function pilotView(m, role, revision, files) {
   const engagement = m.engagements[0];
-  const resources = { methodologyNotices:methodologyNotices(m),archiveControls:{enabled:controlledArchive(m)},registers: registerView(m), programmes: pilotProgrammes, rules: programmeView(m), forms: forms.map(({ id, title }) => ({ id, title })),
+  const resources = { foundation:foundationView(),methodologyNotices:methodologyNotices(m),archiveControls:{enabled:controlledArchive(m)},registers: registerView(m), programmes: pilotProgrammes, rules: programmeView(m), forms: forms.map(({ id, title }) => ({ id, title })),
     archive: files.archive.view(m, role), extended: !!m.extendedPilot,acceptanceManaged:!!m.pilotAcceptance };
   if (!engagement) return { role, revision, engagement: null, ...resources };
   const sealed = files.archive.isSealed(m);
@@ -793,6 +794,7 @@ export function pilotAction(m, role, action, data, files) {
         }
       }
       changeWork(m, paper.id, values, linkedEvidence);
+      if(typed&&version!==paper.version)paper.answerContract=typed.answerContract;
       if(managedMethodology(m.pilotFormLibrary)&&version!==paper.version)paper.values['work.preparation']=JSON.stringify({by:m.person,at:new Date().toISOString(),version:paper.version});
       if (planning) {
         syncPlanningPapers(m);
