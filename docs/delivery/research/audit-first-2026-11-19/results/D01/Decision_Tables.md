@@ -1,6 +1,6 @@
 # M36 / D01 acceptance decision tables
 
-**Status:** specified for implementation within the [resolved manual-review design](D01_Resolved_Design.md); not deployed or professionally approved. Rule catalogue version D01-2026-11-19-spec2. [Rule register](Blocker_Register.csv), [scenarios](Acceptance_Scenarios.csv), [open decisions](Decisions_Open.csv).
+**Status:** specified for implementation within the [resolved manual-review design](D01_Resolved_Design.md); not deployed or professionally approved. Rule catalogue version D01-2026-11-19-spec3. [Rule register](Blocker_Register.csv), [scenarios](Acceptance_Scenarios.csv), [open decisions](Decisions_Open.csv).
 
 This is decision modelling, not a weighted acceptance score. Adverse reputation, a low proposed fee and going-concern uncertainty do not become prohibitions by adding points. Auditors reach and document the professional conclusion.
 

@@ -470,8 +470,14 @@
     "interpretation": "Six differences are an instruction-backed decision reference, a rendered declaration table label and four disclosure/instruction labels. Map explicitly; do not claim registered binary equivalence."
   },
   "limits": [
-    "Historical b2fd7ce8 and 44d89904 bytes not recovered in permitted references/archives",
+    "Historical observation only: b2fd7ce8/44d89904 bytes were not recovered during the earlier comparison. Current use authorized by user; no open recovery/equivalence task.",
     "Comparison covers eight D01-related sheets, including staffing appointment context only",
     "No original source or application data changed"
-  ]
+  ],
+  "project_decision": {
+    "status": "CLOSED_USER_CONFIRMED",
+    "reference": "Baseline_Decision.json",
+    "user_confirmation": "Older workbook versions have no differences; use the available copy.",
+    "further_historical_recovery_required": false
+  }
 }

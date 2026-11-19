@@ -10,9 +10,11 @@ The primary [2023 MonICPA resolution 23/14](https://legalinfo.mn/mn/detail?lawId
 
 **Resolved ethical profile:** local 2023 code plus its identified 2018 international reference, subject to actual scope and any documented firm additions. Retain 2026 international material as a comparison/update candidate. The English-precedence clause concerns that ethical translation, not Mongolian statutory law.
 
-**Resolved audit profile:** ISA 2020 is the reported local baseline. MonICPA's 2023 annual report also describes a publication including ISQM 1/2 and related amendments. Therefore capture quality-management amendments separately; do not label every paragraph in the old English 2020 volume as the complete current local package.
+**Resolved audit profile:** use the Mongolian ISA 2020 compilation with its integrated ISQM 1, ISQM 2, ISA 220 (Revised) and related conforming amendments. In its [15 June 2023 publication notice](https://www.monicpa.mn/c/576093?content=3856683), MonICPA confirms early-2023 committee approval of the translation and explains that the compilation includes those updates while removing superseded material. The [IFAC jurisdiction profile](https://www.ifac.org/about-ifac/membership/profile/mongolia), updated February 2026 and retrieved 19 November 2026, corroborates ISA 2020 as the local baseline. Record included component versions explicitly. This closes the standards-basis issue.
 
-The exact ISA approval instrument and every amendment commencement were not retrieved. This limits a claim of automatic legal certification; it does not prevent implementing versioned profiles and manual auditor confirmation. The firm's methodology owner records the actual source package and period applicability once, then engagements reference it. A change creates a new version; historical engagements retain theirs. No hard-coded universal 2026 default or silent fallback.
+Use the direct MonICPA confirmation and IFAC assessment as the documented project basis; obtaining separate ministerial instruments is not a prerequisite or open D01 research task. The firm's methodology owner records any additional applicable requirements once; engagements reference the profile. A later profile change creates a new version and does not rewrite historical engagements. Newer international publications are comparison material unless an additional requirement is explicitly identified.
+
+The [baseline decision record](Baseline_Decision.json) records the authority and closure. The plan does not repeat the unverified generalized claim about international-firm practice. ISA 315 (Revised 2019) was issued in 2019, so it is not an example of a standard issued after 2020.
 
 Store: profile ID/version; jurisdiction; source title/edition; paragraph identifiers; source evidence/reference; effective scope/dates if established; evidence status; firm additions; responsible methodology person; confirmation date. The auditor confirms the applicable profile before positive acceptance.
 
@@ -72,7 +74,7 @@ A lower-assurance request records circumstances and the auditor's conclusion on 
 
 [Workbook comparison](Workbook_Comparison.json) covers eight relevant sheets. The same resolved cells/formulas and validation definitions appear in two independently retained local derivatives. Comparison with the deployed register finds 141 of 147 field labels matching after whitespace normalization; six are instruction/table-label mappings, documented individually. The 135-field answer contract excludes the staffing appointment form, which was inspected as context only.
 
-The historical registered b2fd7ce8 and observed 44d89904 binary versions were not recovered from permitted references/archives; the original location denied reading. Do not claim exact equivalence or replace their registered hashes. This is a bounded provenance limitation, not a reason to stop D01 design.
+**User-confirmed source decision:** the user confirms that the older workbook versions have no differences and instructs using the available copy. Use the inspected workbook above as the D01 reference. This closes the historical-version question; no recovery or further equivalence investigation is required. Preserve earlier comparison observations and hashes as history, without representing user confirmation as a newly performed bytewise test.
 
 **Answer decisions:** retain original wording/response; store normalized meaning separately. Group sibling checkbox options into one categorical answer without losing aliases. A completed check, an absence assertion, an adverse fact and a conclusion have different meanings. No default scoring.
 
@@ -104,4 +106,4 @@ The ten earlier items are now either research findings, explicit design decision
 
 Remaining product work is the identified implementation backlog and actual scenario execution. Before release, the responsible auditor verifies the configured methodology package and representative behavior. This pack does not invent that sign-off.
 
-Two evidence limits remain visible: historical workbook binaries not recovered; exact ISA approval/amendment instruments not obtained. Neither is silently marked verified. Neither blocks writing the versioned/manual workflow; affected claims of automatic compliance remain excluded.
+**Both former baseline issues are closed:** current workbook authorized by the user; Mongolian ISA 2020 compilation, including ISQM 1/2, revised ISA 220 and related amendments, confirmed by MonICPA and corroborated by IFAC. Earlier source-retrieval observations remain historical notes, not open problems, approval demands or implementation blockers. Actual engagement facts, auditor judgments and release verification remain normal implementation/use requirements.

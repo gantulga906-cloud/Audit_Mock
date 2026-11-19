@@ -17,7 +17,7 @@ Source paths are recorded in Sources.csv for reproducibility. Raw reference arch
 
 | ID | Locator | Finding | Required treatment / reviewer decision |
 | --- | --- | --- | --- |
-| SF01 | Workbook binary; G08 provenance | Inspected bytes differ from registered `b2fd7ce85a9a9e63f600167a88e18e5f51c783272e8a29e12a8ab8e7179c0cf0` and previously reported `44d89904490e8c9f1814b55e4f0dbd016fc1f03baf55ba327cae37c3d43efd81` | D01 working baseline pinned to inspected 5fde7db1; historical identities preserved. Comparison and six explicit instruction/table-label mappings recorded; no registered-binary equivalence claimed |
+| SF01 | Workbook binary; G08 provenance | Inspected bytes differ from registered `b2fd7ce85a9a9e63f600167a88e18e5f51c783272e8a29e12a8ab8e7179c0cf0` and previously reported `44d89904490e8c9f1814b55e4f0dbd016fc1f03baf55ba327cae37c3d43efd81` | CLOSED: user confirms no differences between older versions and authorizes the available 5fde7db1 copy. Preserve historical identities and six field mappings; no further historical-version investigation required |
 | SF02 | 1.4.1 rows 10-28; 1.4.2 | Reputation, management change, fees, deadline, going concern and predecessor matters require judgment | Do not make every adverse answer a statutory prohibition |
 | SF03 | 1.4.5 row 12 | Service-category list is presented too broadly as prohibited | Preserve wording; classify actual service, applicable ethical edition, entity and local rule before conclusion |
 | SF04 | 1.4.5 rows 10,14-16,18,22,24-26 | Negative assertions and checks-performed are mixed with substantive facts | Store response meaning per question: negative_assertion / fact / check_performed / conclusion; never global Yes=pass |
@@ -38,4 +38,4 @@ Keep source ID, exact locator, original wording, original answer, normalized pro
 
 Example: a Yes to a question meaning "I have no financial interest" supports an absence assertion; a Yes to "Do you have a financial interest?" discloses a fact; a Yes to "Have you checked relatives?" proves only a check was recorded. None independently proves compliance.
 
-The eight inspected sheets do not establish completeness of every source in the broader project. D01 now has a pinned working baseline and question-level answer contract. Exact historical source binaries remain a provenance limit; no application question repair or professional release acceptance is claimed.
+The eight inspected sheets do not establish completeness of every source in the broader project. D01 now has a pinned working baseline and question-level answer contract. Historical-version investigation is closed by explicit user confirmation; no application question repair or professional release acceptance is claimed.

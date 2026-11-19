@@ -1,0 +1,66 @@
+{
+  "as_of": "2026-11-19",
+  "scope": "D01 only",
+  "workbook": {
+    "status": "CLOSED_USER_CONFIRMED",
+    "file": "Audit_Stage_1_Repaired.xlsx",
+    "sha256": "5fde7db15e766cdb616cb816d25a8fe6a6d5718f9975d4c0f885c344b079602c",
+    "authority": "User confirms older workbook versions have no differences and explicitly instructs using the available copy.",
+    "historical_binary_recovery_required": false,
+    "comparison_record": "Workbook_Comparison.json",
+    "historical_observation": "Earlier binary versions were not recovered; this remains a historical fact, not an open D01 task. User confirmation is not represented as a new bytewise test."
+  },
+  "standards": {
+    "status": "CLOSED_IFAC_AND_MONICPA_CONFIRMED",
+    "audit_baseline": "ISA 2020 Mongolian compilation including ISQM 1, ISQM 2, ISA 220 (Revised) and related conforming amendments",
+    "jurisdiction": "Mongolia",
+    "source": "https://www.ifac.org/about-ifac/membership/profile/mongolia",
+    "corroborating_member_page": "https://www.ifac.org/about-ifac/membership/members/mongolian-institute-certified-public-accountants",
+    "source_last_updated": "02/2026",
+    "retrieved_on": "2026-11-19",
+    "evidence_class": "Direct MonICPA publication confirmation plus current IFAC jurisdiction assessment",
+    "source_finding": "IFAC identifies the 2020 local baseline; MonICPA directly confirms the translated compilation approval and its integrated quality-management updates.",
+    "quality_management": [
+      "ISQM 1",
+      "ISQM 2"
+    ],
+    "quality_management_basis": "Included directly in the published Mongolian 2020 compilation; record component versions explicitly rather than treating the old unrevised ISA 220 text as current.",
+    "ethics_baseline": "Local MonICPA 2023 code with its identified IESBA 2018 reference",
+    "newer_international_material": "Comparison or explicitly documented additional firm/engagement requirement; not an automatic replacement of the local baseline.",
+    "ministerial_instrument_retrieval_required_to_continue_D01": false,
+    "historical_observation": "Individual ministerial approval instruments were not independently retrieved; no claim of retrieving them is made. This is not an open D01 baseline blocker.",
+    "audit_base_edition": "2020",
+    "local_publication_notice": {
+      "url": "https://www.monicpa.mn/c/576093?content=3856683",
+      "published_at": "2023-06-15 16:14",
+      "inspection": "Full article body read in official browser on 2026-11-19",
+      "confirmation": "MonICPA reports early-2023 committee approval of the translated compilation, integration of ISQM 1/2, revised ISA 220 and related changes, and removal of superseded material."
+    },
+    "included_quality_updates": [
+      "ISQM 1",
+      "ISQM 2",
+      "ISA 220 (Revised)",
+      "Related conforming amendments"
+    ],
+    "isa220_reference": {
+      "edition": "December 2020 final pronouncement",
+      "publisher_url": "https://www.iaasb.org/publications/international-standard-auditing-220-revised-quality-management-audit-financial-statements",
+      "original_pronouncement_mirror": "https://www.irba.co.za/upload/IAASB-International-Standard-Auditing-220-Revised.pdf",
+      "D01_paragraphs": "16-24;25-28 as resource inputs;41 documentation",
+      "global_effective_scope": "Audits of financial statements for periods beginning on or after 2022-12-15"
+    }
+  },
+  "claim_controls": {
+    "isa315_note": "ISA 315 (Revised 2019) was issued in 2019; do not describe it as issued after 2020. Publication date and effective date are distinct.",
+    "international_firm_practice": "No generalized claim that Mongolian Big Four offices apply the latest handbook has been verified or adopted into the D01 requirements. Additional firm requirements must be identified in the actual methodology profile."
+  },
+  "closure": {
+    "closed_baseline_issues": [
+      "Historical workbook equivalence",
+      "Local ISA edition selection"
+    ],
+    "open_baseline_blockers": 0,
+    "application_implementation": "NOT_PERFORMED_BY_THIS_DOCUMENTATION_BATCH",
+    "runtime_acceptance": "NOT_PERFORMED"
+  }
+}

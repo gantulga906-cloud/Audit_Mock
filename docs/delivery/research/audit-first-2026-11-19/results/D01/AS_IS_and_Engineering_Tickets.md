@@ -21,7 +21,7 @@
 
 | ID | Change / exact handoff | Depends on | Definition of done | Disposition |
 | --- | --- | --- | --- | --- |
-| D01-T01 | Implement versioned firm methodology profile and bounded manual checklist catalogue | Resolved design sections 1-3 and 7 | Local 2023 ethics basis/2018 reference represented; actual audit package recorded; comparison editions separate; no unsupported automatic-compliance claim | Ready to implement; firm confirms actual profile before use |
+| D01-T01 | Implement versioned firm methodology profile and bounded manual checklist catalogue | Resolved design sections 1-3 and 7 | Local 2023 ethics basis/2018 reference represented; Mongolian 2020 compilation includes ISQM 1/2 and revised ISA 220; comparison editions separate | Ready to implement; firm confirms actual profile before use |
 | D01-T02 | Add structured applicability/fact/result records around existing acceptance checks | T01 | Rule/version/evidence/actor persisted; manual conclusions supported; unresolved applicable rule holds only affected positive action | Ready to implement |
 | D01-T03 | Add rule-specific not-applicable reasons, including firm-tenure exception | T01,T02 | Qualified exception passes; unknown category and generic N/A fail; predecessor N/A retained | Required bounded build |
 | D01-T04 | Implement the 135-field answer contract and explicit source mappings | Question_Answer_Contract.csv; working baseline; T01 | Original answers retained; grouped options, polarity, qualified declaration and six mapping differences tested | Ready to implement |
@@ -46,6 +46,6 @@
 
 Use the pinned working source and resolved contracts. Implement in the existing owning commands; T09 can proceed independently of statutory calendar interpretation. Test actual behavior against the recorded scenarios. The responsible firm confirms its real methodology profile and engagement conclusions; independent release verification follows implementation.
 
-The historical source-binary and exact ISA approval-instrument limits remain recorded in the resolved design. They do not justify waiting on unrelated implementation or claiming automatic compliance. The research pack does not confer real professional sign-off.
+The two former baseline issues are closed by the user-confirmed workbook and MonICPA/IFAC-confirmed Mongolian 2020 compilation including integrated quality updates; see Baseline_Decision.json. Neither is an implementation blocker. Actual engagement conclusions and professional release verification remain separate.
 
-No estimate, assignee identity or completion date is invented. Review meetings should assign a named person and due date to every open decision before scheduling blocked implementation.
+No estimate, assignee identity or completion date is invented. The listed tickets can be assigned and sized against the resolved design; the closed baseline issues require no additional approval round.

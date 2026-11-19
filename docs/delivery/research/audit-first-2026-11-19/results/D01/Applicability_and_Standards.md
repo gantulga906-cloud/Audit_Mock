@@ -11,7 +11,7 @@ Store one immutable assessment version per client, engagement/period and decisio
 | Legal entity and jurisdiction | Registration document, legal name, identifiers and parent/related-entity information relevant to the rule | Acceptance preparer; reviewer confirms | Draft enquiry allowed; no definitive entity-based clearance |
 | Reporting framework classification | Client facts; Accounting Law 4.1-4.4; applicable ministry classification or instrument | Practicing auditor; local adviser for ambiguity | No automatic SME/IPSAS or full-IFRS classification |
 | Financial period and service | Exact period boundaries, service requested, intended users | Preparer and reviewer | Terms/positive acceptance incomplete |
-| Audit standards edition | Official text, effective provisions, local adoption instrument, exceptions/transitional rules | Methodology lead | Store candidate edition; no approved applicability conclusion |
+| Audit standards edition | Mongolian ISA 2020 compilation with included quality updates; direct MonICPA confirmation, IFAC assessment and identified additional requirements | Methodology lead | Use the established baseline; clarify actual additional requirements where relevant |
 | Ethical edition and entity classification | Local adoption evidence, relevant PIE/publicly traded or other classification and applicable relationships | Ethics reviewer | Do not default to a less demanding category |
 | Firm eligibility | Permit scope/status as of decision, evidence issuer/date, required professional eligibility attestation | Authorized partner; manual registry/document check | Hold positive acceptance where eligibility cannot be established |
 | Firm tenure and return history | Prior service years, service types, replacement basis and entity framework classification | Partner + local reviewer | No inferred tenure clearance |
@@ -27,10 +27,10 @@ These references support the versioned profile in the resolved design; 2026 mate
 
 | Work | International source / locator | Local status in this research |
 | --- | --- | --- |
-| Audit preconditions, terms and changes | ISA 210 paragraphs 6-22; related A2-A39, as applicable to the selected edition | Full 2020 and 2026 texts inspected; local adoption instrument not obtained |
-| Acceptance/continuance and ethics | 2020 ISA 220 paragraphs 12-14; 2026 ISA 220 (Revised) paragraphs 16-26 | Version distinction required; do not relabel old guidance as revised |
-| Firm acceptance policy | ISQM 1 paragraphs 31-32 and related application material | International reference; local applicability to be approved |
-| Ethics, judgment and documentation | 2026 ISA 200 paragraphs 16-18; ISA 230 paragraphs 7-10 | Paragraph numbers must travel with edition |
+| Audit preconditions, terms and changes | ISA 210 paragraphs 6-22; related A2-A39, as applicable to the selected edition | Mongolian 2020 compilation confirmed by MonICPA/IFAC; 2026 retained for comparison |
+| Acceptance/continuance and ethics | ISA 220 (Revised), December 2020 pronouncement: 16-21 ethics; 22-24 acceptance/continuance; 25-28 resource inputs; 41 documentation | Included in Mongolian compilation per MonICPA; superseded unrevised ISA 220 is historical comparison only |
+| Firm acceptance policy | ISQM 1 paragraphs 31-32 and related application material | ISQM 1/2 included in local compilation per MonICPA; component versions recorded explicitly |
+| Ethics, judgment and documentation | 2020 ISA 200 paragraphs 14-16; ISA 230 paragraphs 7-10 | Use baseline paragraph numbering; 2026 numbering remains comparison only |
 | Limits of legal-compliance work | ISA 250 (Revised), paragraph 4 and relevant requirements | Does not justify a universal legal compliance engine |
 | Appointment / predecessor communication | IESBA 2018 and 2026 Section 320, including R320.6 and R320.8 | Communication facts and applicable edition required |
 | Independence / services / relationships | IESBA Part 4A; selected Sections 400, 410, 420, 510, 521, 522, 524, 540 and 600 | Local 2023 code explicitly identifies the 2018 international reference; 2026 remains a comparison |
@@ -40,7 +40,7 @@ The 2026 handbook contains provisions with different effective dates. In particu
 
 ## Local statutory findings
 
-**Primary source:** current Mongolian legal text, Audit Law and Accounting Law, read on 19 November 2026. English explanations here are working translations; the Mongolian text controls. See open decisions L01-L06.
+**Primary source:** current Mongolian legal text, Audit Law and Accounting Law, read on 19 November 2026. English explanations here are working translations; the Mongolian text controls. See the resolved decisions L01-L06 and Baseline_Decision.json.
 
 | Article | D01 consequence to investigate / record | Important limit |
 | --- | --- | --- |
@@ -59,9 +59,9 @@ The 17 June 2022 amendment removed valuation wording from article 9.5; its comme
 ## Edition-selection procedure
 
 1. Preparer records engagement dates, jurisdiction, entity category and candidate instruments.
-2. Methodology lead supplies the official adoption instrument or signed firm-policy basis with scope/effective dates.
+2. Reference the established Mongolian 2020 compilation and its MonICPA/IFAC confirmation. Methodology lead records any additional applicable requirements and their basis; individual ministerial instruments are not required to reopen the settled baseline.
 3. Reviewer records a paragraph-level comparison where the source template uses a different edition.
 4. Partner approves the applicability conclusion, evidence versions and unresolved limits.
 5. Activation reads the approved version; a material fact/rule change opens a new assessment. Historical records retain the original basis.
 
-The primary 2023 local ethics resolution/annex is now identified; see Sources.csv. IFAC reports ISA 2020 and quality-management adoption, corroborated by the institute publication report. Exact ISA approval/amendment instruments remain an explicit evidence limit. A versioned manual firm-methodology confirmation resolves the v1 product behavior; do not claim every engagement's historical applicability has been established. No calculation of accounting recognition or measurement is needed in D01; framework selection is the accounting-standard dependency.
+The primary 2023 local ethics resolution/annex is identified; see Sources.csv. Direct MonICPA confirmation, corroborated by IFAC, establishes D01's Mongolian ISA 2020 compilation with integrated ISQM 1/2, revised ISA 220 and related conforming amendments. This closes the baseline adoption question; routine engagement applicability and additional firm requirements remain attributable auditor work. No calculation of accounting recognition or measurement is needed in D01; framework selection is the accounting-standard dependency.
