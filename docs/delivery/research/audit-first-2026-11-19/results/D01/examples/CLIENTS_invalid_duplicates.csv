@@ -1,0 +1,3 @@
+"source_client_key","legal_name","registration_number","legal_form","framework_claim","industry","source_reference"
+"DEMO-C01","Example Alpha LLC","00012345","LLC","Client states SME framework","Retail","Synthetic document A"
+"DEMO-C01","Conflicting name","00012345","LLC","Client states SME framework","Retail","Synthetic document A"

@@ -1,0 +1,32 @@
+{
+  "as_of": "2026-11-19",
+  "baseline_commit": "13322c8a6aaa3d0a4ebda56ba94086da62545712",
+  "scope": "D01 / M36 research and specification only",
+  "result": "PASS",
+  "checks": {
+    "exact_source_steps": 29,
+    "source_step_counts": {
+      "A01": 11,
+      "A02": 9,
+      "A03": 9
+    },
+    "rules": 25,
+    "acceptance_scenarios": 44,
+    "import_scenarios": 32,
+    "source_records": 13,
+    "open_decisions": 10,
+    "field_definitions": 16,
+    "engineering_tickets": 11,
+    "local_markdown_links": 20,
+    "original_work_case_role_locator_preserved": true,
+    "dangling_cross_references": 0,
+    "all_rules_unapproved_draft": true,
+    "synthetic_package_and_template_structure": "PASS"
+  },
+  "limitations": [
+    "Structural validation only; not application runtime tests",
+    "Not legal or professional approval",
+    "No importer implemented; expected scenarios are specifications",
+    "Local adoption and authoritative workbook edition remain unresolved"
+  ]
+}

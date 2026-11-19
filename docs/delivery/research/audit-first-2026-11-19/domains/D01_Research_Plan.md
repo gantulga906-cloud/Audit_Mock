@@ -4,6 +4,12 @@
 
 Finish audit acceptance without attempting comprehensive legal automation.
 
+## Execution results - 19 November 2026
+
+The [D01 research result pack](../results/D01/README.md) contains the applicability analysis, versioned blocker register, M36 decision tables, complete A01-A03 source crosswalk, source interpretation findings, acceptance/import scenarios, client-import specification and engineering handoff. Research/specification drafting is delivered for R-D01-01 through R-D01-04. Professional approval and implementation are not complete; see the [bounded open decisions](../results/D01/Decisions_Open.csv). The PLANNED status above preserves the original planning baseline; this execution note and the result index state current delivery status.
+
+Only D01 was executed. No other domain's research status or application behavior is changed by this documentation batch.
+
 ## Research contract
 
 - **Original remaining-work links:** RW02 RW06 RW07 RW10 RW34 RW35. Preserve child source IDs and earlier dispositions.

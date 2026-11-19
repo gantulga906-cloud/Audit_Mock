@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:audit-mock:d01:client-import:1.0",
+  "title": "D01 client import normalized package",
+  "description": "Normalized values after blank optional cells are omitted. JSON Schema does not enforce cross-row uniqueness, real calendar dates without format assertion, master matching, date ordering, approval or transaction semantics; apply the specification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "metadata",
+    "clients"
+  ],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format_version",
+        "source_namespace",
+        "country_code",
+        "source_as_of",
+        "source_description"
+      ],
+      "properties": {
+        "format_version": {
+          "const": "1.0"
+        },
+        "source_namespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "country_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "source_as_of": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "source_description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      }
+    },
+    "clients": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_client_key",
+          "legal_name",
+          "registration_number",
+          "legal_form"
+        ],
+        "properties": {
+          "source_client_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "legal_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "registration_number": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "legal_form": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "framework_claim": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 150
+          },
+          "industry": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 150
+          },
+          "source_reference": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 250
+          }
+        }
+      }
+    },
+    "contacts": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_client_key",
+          "contact_key",
+          "full_name",
+          "capacity",
+          "effective_from",
+          "source_reference"
+        ],
+        "properties": {
+          "source_client_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "contact_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "full_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 150
+          },
+          "capacity": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 150
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 254,
+            "format": "email"
+          },
+          "effective_from": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "effective_to": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "signer_claim": {
+            "enum": [
+              "yes",
+              "no"
+            ]
+          },
+          "source_reference": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 250
+          }
+        }
+      }
+    }
+  }
+}

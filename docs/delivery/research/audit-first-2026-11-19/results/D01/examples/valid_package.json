@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "format_version": "1.0",
+    "source_namespace": "demo-only",
+    "country_code": "MN",
+    "source_as_of": "2026-11-19",
+    "source_description": "Synthetic examples; not real national identifiers"
+  },
+  "clients": [
+    {
+      "source_client_key": "DEMO-C01",
+      "legal_name": "Example Alpha LLC",
+      "registration_number": "00012345",
+      "legal_form": "LLC",
+      "framework_claim": "Client states SME framework",
+      "industry": "Retail",
+      "source_reference": "Synthetic document A"
+    },
+    {
+      "source_client_key": "DEMO-C02",
+      "legal_name": "Example Beta LLC",
+      "registration_number": "00098765",
+      "legal_form": "LLC",
+      "source_reference": "Synthetic document B"
+    }
+  ],
+  "contacts": [
+    {
+      "source_client_key": "DEMO-C01",
+      "contact_key": "CONTACT-01",
+      "full_name": "Example Person",
+      "capacity": "Finance contact",
+      "email": "example@example.invalid",
+      "effective_from": "2026-01-01",
+      "signer_claim": "no",
+      "source_reference": "Synthetic contact list"
+    }
+  ]
+}
