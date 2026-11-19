@@ -1,0 +1,6 @@
+export type CapacityAllocation={id:string;person:string;engagement:string;date:string;minutes:number;work?:string};
+export type CapacityRow={person:string;date:string;availableMinutes:number|null;plannedMinutes:number;headroomMinutes:number|null;overbookedMinutes:number|null;loadPercent:number|null;flag:string};
+export type CapacityView={method:string;revision:number;days:{person:string;date:string;timeZone:string}[];allocations:CapacityAllocation[];rows:CapacityRow[];totals:Omit<CapacityRow,'date'|'flag'>[];hiddenCommitments:{person:string;date:string;minutes:number}[];
+ scenarios:{workTransfers?:{engagement:string;form:string;owner:string;reviewer:string;handoff:{openNotes:{id:string;text:string;author:string}[]}}[];id:string;name:string;status:string;digest:string;stale:boolean;preview:{rows:CapacityRow[]};add:CapacityAllocation[]}[];
+ budgets:{id:string;engagement:string;person:string;from:string;through:string;minutes:number;version:number}[];
+ variances:{id:string;person:string;engagement:string;from:string;cutoff:string;output:{recordedMinutes:number;actualMinutes:number|null;provisional:boolean;varianceMinutes:number|null;variancePercent:number|null;budgetDeltaMinutes:number;forecastMinutes:number|null;forecastVarianceMinutes:number|null}}[];boundary:string};

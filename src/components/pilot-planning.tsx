@@ -1,15 +1,16 @@
 import {useState,type FormEvent} from 'react';
 import type {PilotAction,RegisterResources} from './pilot-registers';
+import type {StaffingView} from '@/lib/pilot-staffing';
 import type {PilotRole} from '@/lib/pilot-registers';
 
-export function PlanningDesk({resources,role,sealed,run}:{resources:RegisterResources;role:PilotRole;sealed:boolean;run:PilotAction}){
+export function PlanningDesk({resources,role,sealed,staffing,run}:{resources:RegisterResources;role:PilotRole;sealed:boolean;staffing?:StaffingView;run:PilotAction}){
  const planning=resources.planning;
- const [correction,setCorrection]=useState('');
+ const [correction,setCorrection]=useState(''),[worker,setWorker]=useState('');
  if(!planning)return null;
  async function log(event:FormEvent<HTMLFormElement>){
   event.preventDefault();const form=event.currentTarget,fields=Object.fromEntries([...new FormData(form)].map(([key,value])=>[key,String(value)]));
   fields.from=new Date(fields.from).toISOString();fields.through=new Date(fields.through).toISOString();
-  if(await run('effort-log',fields)){form.reset();setCorrection('');}
+  if(await run('effort-log',fields)){form.reset();setCorrection('');setWorker('');}
  }
  return <section className="card pad bench-card" data-planning-desk>
   <h2>Төлөвлөлтийн суурь ба бодит цаг</h2>
@@ -28,16 +29,19 @@ export function PlanningDesk({resources,role,sealed,run}:{resources:RegisterReso
   })}
   {planning.managed&&!sealed&&<form className="feature-form" data-effort-form onSubmit={event=>void log(event)}>
    <div className="field-grid">
+    {role!=='preparer'&&<><label>Actual worker, blank means my own time<select name="worker" value={worker} onChange={e=>setWorker(e.target.value)}><option value="">My own time</option>{[...new Map((staffing?.seats??[]).filter(s=>s.current&&s.capacity!=='specialist').map(s=>[s.person,s])).values()].map(s=><option value={s.person} key={s.person}>{s.name}</option>)}</select></label>{worker&&<label>Authority and source for recording another worker time<textarea name="proxyReason" required/></label>}</>}
+    <p>Entered clock times use this browser time zone; the worker time zone determines their appointment dates. Stored intervals retain the exact UTC instants.</p>
+    <label>Actual worker time zone<input name="timeZone" defaultValue="Asia/Ulaanbaatar" required/></label>
     <label>Ажлын баримт<select name="work" required><option value="">Сонгох</option>{resources.forms.map(f=><option key={f.id} value={f.id}>{f.id} · {f.title}</option>)}</select></label>
     <label>Эхэлсэн · таны цагийн бүс<input name="from" type="datetime-local" required/></label>
     <label>Дууссан · таны цагийн бүс<input name="through" type="datetime-local" required/></label>
     <label>Гүйцэтгэсэн ажил<textarea name="purpose" required maxLength={4000}/></label>
-    <label>Залруулах өмнөх бүртгэл<select name="supersedes" value={correction} onChange={event=>setCorrection(event.target.value)}><option value="">Шинэ бодит цаг</option>{planning.effort.filter(e=>e.current&&e.by===role).map(e=><option key={e.id} value={e.id}>{e.work} · {e.from} · {e.minutes} минут</option>)}</select></label>
+    <label>Залруулах өмнөх бүртгэл<select name="supersedes" value={correction} onChange={event=>{setCorrection(event.target.value);const entry=planning.effort.find(e=>e.id===event.target.value);if(role!=='preparer')setWorker(entry?.person??'');}}><option value="">Шинэ бодит цаг</option>{planning.effort.filter(e=>e.current).map(e=><option key={e.id} value={e.id}>{e.work} · {e.from} · {e.minutes} минут</option>)}</select></label>
     {correction&&<label>Залруулгын шалтгаан<textarea name="reason" required maxLength={4000}/></label>}
    </div><button className="btn primary">Бодит цаг бүртгэх</button>
   </form>}
   <details className="feature-detail"><summary>Бодит цагийн өөрчлөгдөшгүй түүх ({planning.effort.length})</summary>
-   {planning.effort.map(e=><p key={e.id}>{e.by} · {e.work} · {e.from}–{e.through} · {e.minutes} минут · {e.current?'Одоогийн':'Залруулсан · эхийг хадгалсан'} · {e.purpose}{e.correction&&' · '+e.correction}</p>)}
+   {planning.effort.map(e=><p key={e.id}>Actual worker {staffing?.seats.find(s=>s.person===e.person)?.name??e.person} · recorded by {staffing?.people?.find(p=>p.id===e.by)?.name??e.by}{e.proxy&&' · proxy: '+e.proxy.reason} · {e.work} · {e.from}–{e.through} · {e.minutes} минут · {e.current?'Одоогийн':'Залруулсан · эхийг хадгалсан'} · {e.purpose}{e.correction&&' · '+e.correction}</p>)}
   </details>
  </section>;
 }

@@ -101,7 +101,7 @@ export function acceptanceAction(m,role,action,data,files) {
  }
  const state=m.pilotAcceptance;if(!state)fail('G01 горимыг партнер идэвхжүүлнэ.');
  if(action==='acceptance-assess'){
-  allow(role!=='partner'&&(!state.assessment||state.assessment.by===actorKey(role)));
+  allow(role!=='partner'&&(!state.assessment||state.assessment.by===actorKey(role)||currentIdentity()&&state.assessment.byPerson?.id===currentIdentity().staff));
   const old=state.assessment;if(old?.status==='submitted')fail('Үнэлгээг засварт буцаана уу.');
   const kind=input(data,'kind',16);if(!['initial','continuance'].includes(kind)||kind==='initial'&&m.pilotIntake?.prior)fail('Анхны / үргэлжилсэн үнэлгээний төрлийг шалгана уу.');
   const checks=Object.fromEntries(acceptanceChecks.map(([key])=>{

@@ -1,8 +1,8 @@
-import {actorKey} from './pilot-identity-context.mjs';
+import {actorKey,currentIdentity} from './pilot-identity-context.mjs';
 import {createHash,randomUUID} from 'node:crypto';
 import {approvedRows,registerRows,pilotProgrammes} from './pilot-registers.mjs';
 import {PilotError,input} from './pilot-workflow.mjs';
-import {requireSeat,seatFor} from './pilot-staffing.mjs';
+import {requireSeat,seatFor,approvedStaffing} from './pilot-staffing.mjs';
 import {recordEvent,workKey,isCurrentReview} from '../src/lib/workspace.ts';
 import {evidenceCurrent} from './pilot-requests.mjs';
 import {validDate} from '../src/lib/feature-workflows.ts';
@@ -162,24 +162,35 @@ export function planningAction(m,role,action,data,files){
  if(!timestamp.test(from)||!timestamp.test(through)||!validDate(from.slice(0,10))||!validDate(through.slice(0,10)))bad('Цагийн бүс бүхий бодит эхлэх / дуусах цаг оруулна уу.');
  const start=Date.parse(from),end=Date.parse(through),minutes=(end-start)/60000;
  if(!Number.isInteger(minutes)||minutes<=0||minutes>24*60||end>Date.now())bad('Нэг бүртгэлд өнгөрсөн бодит 24 цаг хүртэл хугацаа оруулна уу.');
- requireSeat(m,files,role,from.slice(0,10),through.slice(0,10));
- const seat=seatFor(m,role,from.slice(0,10),through.slice(0,10)),person=seat?.person;
+ let fromDate=from.slice(0,10),throughDate=through.slice(0,10);
+ if(data.timeZone){
+  let format;try{format=new Intl.DateTimeFormat('en-CA',{timeZone:input(data,'timeZone',80),year:'numeric',month:'2-digit',day:'2-digit'});}catch{bad('Select the actual worker IANA time zone.');}
+  const local=instant=>{const parts=Object.fromEntries(format.formatToParts(new Date(instant)).map(p=>[p.type,p.value]));return parts.year+'-'+parts.month+'-'+parts.day;};fromDate=local(start);throughDate=local(end-1);
+ }
+ let seat=requireSeat(m,files,role,fromDate,throughDate)??seatFor(m,role,fromDate,throughDate,currentIdentity()?.staff),proxy;
+ if(data.worker&&data.worker!==seat?.person){
+  if(role==='preparer')throw new PilotError(403,'Only an appointed senior or partner can record another worker time.');
+  seat=approvedStaffing(m).find(s=>s.current&&s.person===data.worker&&['preparer','reviewer','partner'].includes(s.capacity)&&s.start<=fromDate&&s.end>=throughDate);
+  if(!seat)bad('The actual worker needs a valid approved engagement appointment for this interval.');
+  proxy={recordedBy:actorKey(role),forPerson:seat.person,reason:input(data,'proxyReason')};
+ }
+ const person=seat?.person;
  if(!person)bad('Нэртэй этгээдийн томилгоо шаардлагатай.');
  const entries=m.pilotEffort??=[],old=data.supersedes&&entries.find(e=>e.id===data.supersedes);
- if(data.supersedes&&(!old||old.by!==actorKey(role)||old.person!==person||entries.some(e=>e.supersedes===old.id)))bad('Зөвхөн өөрийн одоогийн бодит цагийг шалтгаантай залруулна.');
+ if(data.supersedes&&(!old||old.person!==person||!(old.by===actorKey(role)||currentIdentity()?.staff===person||proxy)||entries.some(e=>e.supersedes===old.id)))bad('Correct only the selected actual worker current entry with explicit authority and reason.');
  const work=input(data,'work',32);if(!m.work[workKey(m.engagement,work)])bad('Энэ гэрээт ажлын бодит ажлын баримтыг сонгоно уу.');
  for(const model of files.staffingModels(m)){
   const all=model.pilotEffort??[],replaced=new Set(all.map(e=>e.supersedes));
   if(all.some(e=>e.person===person&&!replaced.has(e.id)&&!(model.engagement===m.engagement&&e.id===old?.id)&&Date.parse(e.from)<end&&Date.parse(e.through)>start))bad('Тухайн этгээдийн бодит цаг өөр бүртгэлтэй давхцаж байна.');
  }
- entries.push({id:randomUUID(),person,by:actorKey(role),assignment:seat&&{id:seat.id,version:seat.version},from,through,minutes,work,purpose:input(data,'purpose'),
+ entries.push({id:randomUUID(),person,by:actorKey(role),...(proxy&&{proxy}),...(data.timeZone&&{timeZone:data.timeZone,calendarDates:{from:fromDate,through:throughDate}}),assignment:seat&&{id:seat.id,version:seat.version},from,through,minutes,work,purpose:input(data,'purpose'),
   ...(old&&{supersedes:old.id,correction:input(data,'reason')}),at:new Date().toISOString()});
  recordEvent(m,'G02 · Бодит цаг '+minutes+' минут · '+work,work);
 }
 
 export function planningView(m,role){
  const all=m.pilotEffort??[],replaced=new Set(all.map(e=>e.supersedes));
- return {managed:managedPlanning(m),effort:all.filter(e=>role!=='preparer'||e.by===actorKey(role)).map(e=>({...e,current:!replaced.has(e.id)})),
+ return {managed:managedPlanning(m),effort:all.filter(e=>role!=='preparer'||(currentIdentity()?e.person===currentIdentity().staff:e.by===actorKey(role))).map(e=>({...e,current:!replaced.has(e.id)})),
   programmes:approvedRows(m,'M07-F01').filter(r=>r.values.decision==='adopt').map(r=>({form:r.template.form,gap:planningGap(m,r.template.form),
    risks:planningRisks(m,r.template.form).map(risk=>({id:risk.id,name:risk.values.risk,version:risk.version,status:risk.status,type:risk.values.type})),
    responses:r.programmeBasis?.responses??[]}))};

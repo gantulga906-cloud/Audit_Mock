@@ -61,23 +61,23 @@ export function EngagementStaffing({staffing,role,sealed,run}:{staffing:Staffing
 }
 
 export function WorkAssignmentEditor({paper,history,staffing,run}:{paper:WorkItem;history:WorkAssignment[];staffing?:StaffingView;run:PilotAction}){
- const options=roleChoices.filter(([key])=>staffing?.members.includes(key as PilotRole)&&
-  (!staffing.managed||staffing.seats.some(s=>s.current&&s.capacity===key)));
+ const legacy=roleChoices.filter(([key])=>staffing?.members.includes(key as PilotRole)&&(!staffing.managed||staffing.seats.some(s=>s.current&&s.capacity===key)));
+ const options=staffing?.people??legacy.map(([id,name])=>({id,name,role:id}));
+ const named=!!staffing?.people;
  return <details className="feature-detail">
-  <summary>Бэлтгэгч, хянагч солих</summary>
-  <form className="feature-form" key={paper.owner+'/'+paper.reviewer} onSubmit={e=>{
-   e.preventDefault();const form=e.currentTarget,data=new FormData(form);
-   void run('work-assign',{form:paper.form,owner:String(data.get('owner')),reviewer:String(data.get('reviewer')),reason:String(data.get('reason'))});
+  <summary>Assign named leads and contributors</summary>
+  <form className="feature-form" key={String(paper.assignmentRevision??0)+'/'+paper.owner+'/'+paper.reviewer} onSubmit={e=>{
+   e.preventDefault();const data=new FormData(e.currentTarget);
+   void run('work-assign',{form:paper.form,owner:String(data.get('owner')),reviewer:String(data.get('reviewer')),reason:String(data.get('reason')),expectedAssignmentRevision:String(paper.assignmentRevision??0),...(named&&{contributors:JSON.stringify(data.getAll('contributor')),reviewers:JSON.stringify(data.getAll('coReviewer'))})});
   }}>
-   <label>Бэлтгэгч<select name="owner" defaultValue={accountRoles[paper.owner]} required><option value="">Сонгох</option>
-    {options.map(([key,value])=><option value={key} key={key}>{value}</option>)}</select></label>
-   <label>Хянагч<select name="reviewer" defaultValue={accountRoles[paper.reviewer]} required><option value="">Сонгох</option>
-    {options.map(([key,value])=><option value={key} key={key}>{value}</option>)}</select></label>
-   <label>Солих үндэслэл<input name="reason" required/></label>
-   <button className="btn secondary" disabled={options.length<2}>Томилгоо хадгалах</button>
+   <label>Lead preparer<select name="owner" defaultValue={named?paper.owner:accountRoles[paper.owner]} required><option value="">Choose person</option>{options.map(p=><option value={p.id} key={p.id}>{p.name}</option>)}</select></label>
+   <label>Lead reviewer<select name="reviewer" defaultValue={named?paper.reviewer:accountRoles[paper.reviewer]} required><option value="">Choose person</option>{options.filter(p=>!named||p.role!=='preparer').map(p=><option value={p.id} key={p.id}>{p.name}</option>)}</select></label>
+   {named&&<><fieldset><legend>Other preparers / contributors</legend>{options.map(p=><label key={p.id}><input type="checkbox" name="contributor" value={p.id} defaultChecked={paper.contributors?.includes(p.id)&&p.id!==paper.owner}/>{p.name}</label>)}</fieldset>
+    <fieldset><legend>Other reviewers</legend>{options.filter(p=>p.role!=='preparer').map(p=><label key={p.id}><input type="checkbox" name="coReviewer" value={p.id} defaultChecked={paper.reviewers?.includes(p.id)&&p.id!==paper.reviewer}/>{p.name}</label>)}</fieldset></>}
+   <label>Reason and outstanding handoff scope<input name="reason" required/></label>
+   <p>Contributors can prepare. The lead preparer submits; only the accountable lead reviewer approves. Authors cannot review their own work.</p>
+   <button className="btn secondary" disabled={options.length<2}>Save assignment</button>
   </form>
-  {history.map(h=><p className="micro" key={h.at+'/'+h.owner}>
-   {h.at.slice(0,10)} · {person(h.by)} · {person(h.previous.owner)}/{person(h.previous.reviewer)} → {person(h.owner)}/{person(h.reviewer)} · {h.reason}
-  </p>)}
+  {history.map(h=><p className="micro" key={h.at+'/'+h.owner}>{h.at.slice(0,10)} · {person(h.by)} · {person(h.previous.owner)}/{person(h.previous.reviewer)} → {person(h.owner)}/{person(h.reviewer)} · {h.reason}</p>)}
  </details>;
 }

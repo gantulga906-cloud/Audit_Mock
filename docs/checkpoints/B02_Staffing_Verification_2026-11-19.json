@@ -1,0 +1,29 @@
+{
+  "asOf": "2026-11-19",
+  "baselineCommit": "ddd5bf98377591bbd8233bcbc088e794cea0c287",
+  "batch": "B02",
+  "profile": "Bounded engineering v1; whole-workpaper assignments and manual specialist route",
+  "tests": {
+    "mainGroup": {"tests": 100, "passed": 100, "failed": 0},
+    "selectedNamedIdentityRegressions": {"tests": 8, "passed": 8, "failed": 0},
+    "distinctPassed": 108,
+    "includedM35FixtureTests": 37,
+    "includedConnectedB02Tests": 8,
+    "transport": "actual API handler/authorization/SQLite; optional test-only in-process transport",
+    "liveHttpMigrationWorkload": "not-passed; host loopback connect EACCES"
+  },
+  "typeScript": "passed",
+  "baselineIdentitySets": "exact-match",
+  "workingWorkbookHashes": "all-five-match",
+  "sourceFilesEdited": false,
+  "historicalCheckpointEvidenceRewritten": false,
+  "browserAcceptance": "not-performed",
+  "professionalAcceptance": "not-performed",
+  "nativeReaderAcceptance": "not-performed",
+  "operationalAcceptance": "not-performed",
+  "optionalExternalSpecialistPortal": "not-offered",
+  "automaticExternalMessaging": false,
+  "releaseReadyChanged": false,
+  "deployed": false,
+  "nextEngineeringBatch": "B03"
+}

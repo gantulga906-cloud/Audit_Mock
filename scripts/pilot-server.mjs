@@ -1,4 +1,7 @@
+import {specialistPacketExport} from './pilot-specialist-packets.mjs';
+import {credentialAction} from './pilot-credentials.mjs';
 import {actorKey} from './pilot-identity-context.mjs';
+import {capacityAction,capacityView} from './pilot-capacity.mjs';
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -92,7 +95,30 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
   const intake = createIntakeStore(db, store);
   const { transaction } = store;
   const configured = () => db.prepare('SELECT COUNT(*) AS total FROM accounts').get().total !== 0;
+  function prepareWorkTransfers(role,items,reason,commit=false){
+    if(!Array.isArray(items)||items.length>100||new Set(items.map(t=>t?.engagement+'/'+t?.form)).size!==items.length)throw new PilotError(400,'Select at most 100 distinct scoped work transfers.');
+    const contexts=new Map(),result=[];
+    for(const item of items){
+      if(!item||typeof item.engagement!=='string'||typeof item.form!=='string')throw new PilotError(400,'Invalid selected work transfer.');
+      let context=contexts.get(item.engagement);if(!context){context=store.load(role,item.engagement);contexts.set(item.engagement,context);}
+      if(commit&&item.engagementRevision!==context.revision)throw new PilotError(409,'A selected engagement changed after scenario preview.');
+      if(activeTermsGap(context.model))throw new PilotError(409,'Reassess current acceptance/terms before this work transfer.');
+      const paper=Object.values(context.model.work).find(w=>w.form===item.form);
+      if(!paper||paper.status==='reviewed')throw new PilotError(409,'Select existing open work; completed reviews remain historical.');
+      const command={form:item.form,owner:item.owner,reviewer:item.reviewer,...(item.contributors!==undefined&&{contributors:item.contributors}),...(item.reviewers!==undefined&&{reviewers:item.reviewers}),expectedAssignmentRevision:item.expectedAssignmentRevision??String(paper.assignmentRevision??0),reason};
+      const handoff={owner:paper.owner,reviewer:paper.reviewer,status:paper.status,openNotes:paper.notes.filter(n=>!n.cleared).map(n=>({id:n.id,text:n.text,author:n.author}))};
+      pilotAction(context.model,role,'work-assign',command,filesFor(item.engagement));
+      result.push({...command,engagement:item.engagement,engagementRevision:context.revision,handoff});
+    }
+    if(commit)for(const context of contexts.values())store.save(context,'work-transfer',{});
+    return result;
+  }
   const filesFor = engagementId => ({
+    previewWorkTransfers:(role,items,reason)=>prepareWorkTransfers(role,items,reason),
+    applyWorkTransfers:(role,items,reason)=>prepareWorkTransfers(role,items,reason,true),
+    logSpecialistExport:entry=>db.prepare('INSERT INTO pilot_specialist_exports(engagement_id,body) VALUES(?,?)').run(engagementId,JSON.stringify(entry)),
+    credentialOriginal:id=>db.prepare('SELECT bytes,sha256 FROM evidence WHERE engagement_id IS NULL AND id=?').get(id),
+    credentialDocument:id=>JSON.parse(db.prepare('SELECT body FROM pilot_credential_documents WHERE id=1').get().body).find(d=>d.id===id),
     get: id => db.prepare('SELECT name, sha256 FROM evidence WHERE engagement_id IS ? AND id = ?').get(engagementId, id),
     read: id => db.prepare('SELECT bytes, sha256 FROM evidence WHERE engagement_id IS ? AND id = ?').get(engagementId,id),
     add: (id, name, bytes) => db.prepare(`INSERT INTO evidence (id, name, sha256, bytes, engagement_id)
@@ -152,9 +178,10 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     return { ...payload, selected: id, portfolio,
       identity:currentIdentity()?{...model.runtimeIdentity,canAdmin:identities.canAdmin(),profile:'local-preview',people:model.runtimePeople}:undefined,
       formLibrary: libraryView(model.pilotFormLibrary, role, filesFor(null), !id,model),
-      ...(!id && (!currentIdentity()||model.runtimeIdentity?.firmAccess) && { intake: intake.view(role), roster: rosterView(model, files, role, new Set(portfolio.map(item=>item.id))) }),
+      ...(!id && (!currentIdentity()||model.runtimeIdentity?.firmAccess) && { intake: intake.view(role), roster: rosterView(model, files, role, new Set(portfolio.map(item=>item.id))),capacity:capacityView(model,role,new Set(portfolio.map(item=>item.id))),...(role!=='preparer'&&{credentialDocuments:model.pilotCredentialDocuments}) }),
       ...(id && (role === 'partner' || !archive.isSealed(model)) && {
         staffing: { managed: managedStaffing(model), members: store.members(id), seats: approvedStaffing(model),
+          ...(currentIdentity()&&{people:model.runtimePeople.filter(p=>p.scope.includes(id)&&roles.includes(p.role)).map(p=>({id:p.id,name:p.name,role:p.role}))}),
           gaps: staffingGaps(model), accepted: model.pilotStaffingAccepted },
       }),
       ...(id && model.pilotIntake && (role === 'partner' || !archive.isSealed(model)) && { intakeContext: intake.contextView(model) }),
@@ -177,6 +204,7 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
     }
     if (!store.setMember(context.id, role, grant)) return;
     const model = context.model;
+    model.pilotStaffingRequiredRoles=store.members(context.id);
     (model.pilotRecipientRevisions??={})[role]=(model.pilotRecipientRevisions?.[role]??0)+1;
     if (!grant) {
       const revoked = { by: actor, at: new Date().toISOString(), reason };
@@ -383,6 +411,8 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           let enquiry, confirmationLink, deliveryLink;
           try {
             if(data.action.startsWith('external-')){if(!id||archive.isSealed(model))throw new PilotError(409,'An open engagement is required.');if(managedStaffing(model))requireSeat(model,filesFor(id),role);externalEffects.action(model,role,data.action,data.fields,filesFor(id));}
+            else if(data.action.startsWith('credential-document-')){if(id)throw new PilotError(409,'Open firm roster to maintain credential documents.');credentialAction(model,role,data.action,data.fields,filesFor(null));}
+            else if(data.action.startsWith('capacity-')){if(id)throw new PilotError(409,'Open firm planning for capacity changes.');capacityAction(model,role,data.action,data.fields,filesFor(null),new Set(store.portfolio(role).map(e=>e.id)));}
             else if(isAcceptanceAction(data.action))acceptanceAction(model,role,data.action,data.fields,filesFor(id));
             else if(data.action==='intake-context-item')intake.contextItem(model,role,data.fields);
             else if (data.action === 'access') changeMembership(context, role, data.fields);
@@ -438,6 +468,12 @@ export function createPilot({ database, setupCode = randomBytes(16).toString('he
           return archive.exportPackage(model, route.split('/').at(-1), role);
         });
         json(res, 200, bundle);
+      } else if(req.method==='POST'&&route==='/specialist-packet-export'){
+        const fields=await readJson(req),result=transaction(()=>{const id=resolveScope(role,url);if(!id)throw new PilotError(409,'Select the exact engagement.');const context=store.load(role,id);if(fields.revision!==context.revision)throw new PilotError(409,'The engagement changed. Inspect the current packet.');const result=specialistPacketExport(context.model,role,fields,filesFor(id));return result;});
+        res.writeHead(200,{'Content-Type':'application/zip','Content-Disposition':'attachment; filename="specialist-packet.zip"','X-Audit-Export-SHA256':result.sha256,'Cache-Control':'no-store'});res.end(result.bytes);
+      } else if(req.method==='GET'&&/^\/credential-document\/[a-f0-9-]{36}$/.test(route)){
+        const doc=transaction(()=>{if(resolveScope(role,url)||role==='preparer')throw new PilotError(403,'Open authorized firm credential records.');const {model}=store.load(role,null),id=route.split('/').at(-1),meta=model.pilotCredentialDocuments.find(d=>d.id===id),file=meta&&filesFor(null).read(id);if(!file||file.sha256!==meta.sha256||digest(file.bytes)!==meta.sha256)throw new PilotError(404,'Qualification original unavailable.');return {...meta,bytes:file.bytes};},false);
+        res.writeHead(200,{'Content-Type':'application/octet-stream','Content-Disposition':'attachment; filename="qualification-document'+(/\.[A-Za-z0-9]+$/.exec(doc.name)?.[0]??'')+'"','Cache-Control':'no-store'});res.end(doc.bytes);
       } else if(req.method==='GET'&&route==='/workpaper-search'){
         const result=transaction(()=>{const id=resolveScope(role,url),{model}=store.load(role,id);return searchWorkpapers(model,role,url.searchParams.get('q')??'',filesFor(id));},false);json(res,200,result,{'Cache-Control':'no-store'});
       } else if(req.method==='POST'&&(route==='/workpaper-export-preview'||route==='/workpaper-export')){

@@ -62,7 +62,7 @@ export function createIdentityStore(db,store){
  function grantFor(u,id,m){
   const g=db.prepare('SELECT * FROM pilot_identity_grants WHERE subject=? AND engagement=? AND revoked IS NULL AND first<=? AND last>=?').get(u.id,id,day(),day());
   if(!g||g.capacity!==u.capacity||!eligible(u,m))return;
-  if(['quality','custodian'].includes(u.capacity)){if(!independentAppointed(u,m))return;}else if(m.engagements[0]?.intake.active){const seat=seatFor(m,u.capacity,day());if(!seat||seat.person!==u.staff)return;}
+  if(['quality','custodian'].includes(u.capacity)){if(!independentAppointed(u,m))return;}else if(m.engagements[0]?.intake.active){const seat=seatFor(m,u.capacity,day(),day(),u.staff);if(!seat)return;}
   return g;
  }
  function permitted(id,m){const c=currentIdentity();if(!c)return true;const u=live(c.id);return id?!!grantFor(u,id,m):!!u.firm_access;}
@@ -71,7 +71,7 @@ export function createIdentityStore(db,store){
   const granted=users.filter(u=>u.status==='active'&&eligible(u,m)&&(id?grantFor(u,id,m):u.firm_access));
   const referred=new Set([m.person,currentIdentity().id,...granted.map(u=>u.id)]);for(const w of Object.values(m.work??{})){for(const id of [w.owner,w.reviewer,w.submittedBy,...w.history.map(h=>h.by),...w.notes.flatMap(n=>[n.author,...(n.responses??[]).map(r=>r.by),...(n.decisions??[]).map(r=>r.by)])])referred.add(id);}for(const a of m.activity??[])referred.add(a.by);
   const counts=Map.groupBy(granted,u=>u.capacity),aliases=Object.fromEntries([...counts].filter(([,rows])=>rows.length===1).map(([capacity,rows])=>[capacity,rows[0].id]));
-  return {runtimePeople:users.filter(u=>!id&&currentIdentity().firmAccess||referred.has(u.id)).map(u=>({id:u.id,name:u.name,initials:u.name.slice(0,2),role:u.capacity,title:u.capacity,scope:id&&granted.includes(u)?[id]:[],support:[]})),runtimeAccounts:aliases,runtimeScope:id?{[id]:granted.map(u=>u.id)}:{},runtimeIdentity:safe(live(currentIdentity().id))};
+  return {runtimePeople:users.filter(u=>!id&&currentIdentity().firmAccess||referred.has(u.id)).map(u=>({id:u.id,name:u.name,initials:u.name.slice(0,2),role:u.capacity,staff:u.staff,title:u.capacity,scope:id&&granted.includes(u)?[id]:[],support:[]})),runtimeAccounts:aliases,runtimeScope:id?{[id]:granted.map(u=>u.id)}:{},runtimeIdentity:safe(live(currentIdentity().id))};
  }
  function retireAuthority(subject,reason,by){
   const grants=db.prepare('SELECT * FROM pilot_identity_grants WHERE subject=? AND revoked IS NULL').all(subject);
@@ -93,8 +93,8 @@ export function createIdentityStore(db,store){
    const id=text(data.engagement,80),row=db.prepare('SELECT body FROM pilot_engagements WHERE id=?').get(id);if(!row)fail(404,'Engagement not found.');
    const m={...JSON.parse(row.body),pilotRecords:[...firm().pilotRecords,...JSON.parse(row.body).pilotRecords??[]]};
    const first=text(data.first,10),last=text(data.last,10);if(!validDay(first)||!validDay(last)||first>last||!eligible(u,m))fail(409,'Select valid grant dates and a current staff appointment.');
-   if(['quality','custodian'].includes(u.capacity)){if(!independentAppointed(u,m))fail(409,'The independent policy or custody offer must explicitly appoint this staff ID, with its separate eligibility and authority.');}else if(m.engagements[0].intake.active){const seat=seatFor(m,u.capacity,first,last);if(!seat||seat.person!==u.staff)fail(409,'The named person must hold the approved M04-F06 appointment for the full grant window.');}
-   if(db.prepare('SELECT 1 FROM pilot_identity_grants WHERE engagement=? AND capacity=? AND revoked IS NULL AND first<=? AND last>=?').get(id,u.capacity,last,first))fail(409,'Revoke the overlapping named capacity grant before replacing it.');
+   if(['quality','custodian'].includes(u.capacity)){if(!independentAppointed(u,m))fail(409,'The independent policy or custody offer must explicitly appoint this staff ID, with its separate eligibility and authority.');}else if(m.engagements[0].intake.active){const seat=seatFor(m,u.capacity,first,last,u.staff);if(!seat)fail(409,'The named person must hold the approved M04-F06 appointment for the full grant window.');}
+   if(db.prepare("SELECT 1 FROM pilot_identity_grants WHERE engagement=? AND capacity=? AND revoked IS NULL AND first<=? AND last>=? AND (subject=? OR capacity IN ('partner','quality','custodian'))").get(id,u.capacity,last,first,u.id))fail(409,'Revoke the overlapping named capacity grant before replacing it.');
    db.prepare('INSERT INTO pilot_identity_grants VALUES(?,?,?,?,?,?,?,?,?,NULL)').run(randomUUID(),u.id,id,u.capacity,first,last,a.id,now(),reason);event(u.id,a.id,'grant',{engagement:id,capacity:u.capacity,first,last,reason});
   }else if(operation==='revoke'){
    const g=db.prepare('SELECT * FROM pilot_identity_grants WHERE id=? AND subject=? AND revoked IS NULL').get(data.grant,u.id);if(!g)fail(404,'Current grant not found.');db.prepare('UPDATE pilot_identity_grants SET revoked=? WHERE id=?').run(JSON.stringify({by:a.id,at:now(),reason}),g.id);invalidateCapacity(g.engagement,g.capacity,a.id,reason);event(u.id,a.id,operation,{grant:g.id,reason});

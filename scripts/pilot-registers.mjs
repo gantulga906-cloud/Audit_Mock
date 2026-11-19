@@ -1,3 +1,4 @@
+import {checkCredentialRecord} from './pilot-credentials.mjs';
 import {actorKey,currentIdentity} from './pilot-identity-context.mjs';
 import { createHash, randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -323,13 +324,11 @@ function checkBusiness(m, row, spec, files) {
       if (rows(m, row.kind).some(r => r.id !== row.id && r.values.reference.toLowerCase() === v.reference.toLowerCase())) bad('Ажилтны дугаар давхардсан.');
       if (v.availableFrom && v.availableTo && v.availableFrom > v.availableTo) bad('Боломжит хугацааг шалгана уу.');
       if (v.capacityHours && (!v.availableFrom || !v.availableTo || Number(v.capacityHours) <= 0)) bad('Боломжит хугацаа ба эерэг нийт цагийг оруулна уу.');
-      const bound = row.history.find(h => h.status === 'approved' && h.values.account)?.values.account;
-      if (bound && bound !== v.account || v.account && (v.status === 'external' ||
-          rows(m, row.kind).some(r => r.id !== row.id && (r.values.account === v.account ||
-            r.history.some(h => h.status === 'approved' && h.values.account === v.account))))) bad('Нэвтрэх дүрийн түүхэн холбоосыг давхардуулах эсвэл өөрчлөх боломжгүй.');
+      if(v.account&&v.status==='external')bad('External people cannot hold an internal team login capacity.');
       break;
     }
     case 'M01-F04':
+      checkCredentialRecord(m,row,files);
       if (v.validTo && (!v.validFrom || v.validTo < v.validFrom) || v.validity === 'dated' && !v.validTo || v.validity === 'no-expiry' && !v.validFrom ||
           ['unknown','no-expiry'].includes(v.validity) && v.validTo) bad('Үнэмлэхийн хүчинтэй хугацааг шалгана уу.');
       break;
@@ -524,6 +523,7 @@ export function registerAction(m, role, data, files) {
     delete row.paperVersions;
     delete row.programmeBasis;
     delete row.staffingBasis;
+    delete row.credentialBasis;
     delete row.planningBasis;
     delete row.adoptionPreview;
     delete row.adoptionAcknowledgement;
@@ -576,8 +576,8 @@ export function registerAction(m, role, data, files) {
       remember(row, role, 'submitted', 'Хяналтад илгээв');
     } else if (operation === 'approve' || operation === 'return') {
       const independent = spec.id === 'M04-F04'
-        ? row.declaration?.by !== actorKey(role)&&(!m.pilotAcceptance||row.values.assignee!==role)
-        : role !== row.owner;
+        ? row.declaration?.by !== actorKey(role)&&(!m.pilotAcceptance||(currentIdentity()?row.values.person!==currentIdentity().staff:row.values.assignee!==role))
+        : currentIdentity()?row.by!==actorKey(role):role!==row.owner;
       requireRole(spec.approvers.includes(role) && independent);
       if (row.status !== 'submitted') bad('Хяналтад илгээсэн хувилбар шаардлагатай.');
       const reason = input(data, 'reason');

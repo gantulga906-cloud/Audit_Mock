@@ -28,7 +28,9 @@
     "verify:local-operations-ui": "node scripts/verify-local-operations-ui.mjs",
     "rehearse:local-operations": "node scripts/pilot-operations-rehearsal.mjs",
     "verify:area-cards-ui": "node scripts/verify-area-cards-ui.mjs",
-    "verify:automation-methods-ui": "node scripts/verify-automation-methods-ui.mjs"
+    "verify:automation-methods-ui": "node scripts/verify-automation-methods-ui.mjs",
+    "test:team-foundations": "node scripts/test-team-foundations.mjs",
+    "verify:audit-baseline": "node scripts/verify-audit-baseline.mjs"
   },
   "dependencies": {
     "fast-xml-parser": "5.12.1",

@@ -1,5 +1,7 @@
+import {specialistPacketAction,specialistPacketView} from './pilot-specialist-packets.mjs';
 import {areaCardAction,areaCardReleaseGaps,areaCardGap,areaCardView,areaCardEvidence,syncAreaCards} from './pilot-area-cards.mjs';
-import {actorKey} from './pilot-identity-context.mjs';
+import {actorKey,currentIdentity} from './pilot-identity-context.mjs';
+import {assignWork,acknowledgeHandoff,requireAcknowledgement,assignmentPerson} from './pilot-work-assignments.mjs';
 import {foundationView} from './pilot-method-contracts.mjs';
 import { randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -44,8 +46,14 @@ import {managedPlanning,planningAction,planningGap,planningView} from './pilot-p
 import {dataAction,dataView} from './pilot-data-methods.mjs';
 
 export const accounts = { preparer: 'nomin', reviewer: 'temuulen', partner: 'bat' };
-export const accountFor=(m,role)=>m.runtimeAccounts?.[role]??accounts[role];
-const roleOf = (m,person) => seats.find(role => accountFor(m,role) === person);
+export const accountFor=(m,role)=>{
+ const identity=currentIdentity();
+ if(identity?.capacity===role)return identity.id;
+ const candidates=(m.runtimePeople??[]).filter(p=>p.role===role&&m.runtimeScope?.[m.engagement]?.includes(p.id));
+ if(candidates.length>1)throw new PilotError(409,'Choose a named person; this capacity has multiple members.');
+ return m.runtimeAccounts?.[role]??accounts[role];
+};
+const roleOf = (m,person) => m.runtimePeople?.find(p=>p.id===person)?.role??seats.find(role=>accounts[role]===person);
 const workstream = '3.1.2';
 const forms = JSON.parse(readFileSync(new URL('../src/data/forms.json', import.meta.url), 'utf8'));
 const shownForms = m => [...new Set([...(m.extendedPilot ? ['1.3','2.6','4.4'] : [workstream,'4.4',...(m.pilotPopulation?.length?['1.3','2.6']:[])]),
@@ -289,7 +297,7 @@ export function pilotView(m, role, revision, files) {
     const pendingPlanning = m.extendedPilot && pendingProgrammes(m).includes(form);
     const template = paperFormView(m, w, files);
     const oldDigests = new Set(w.history.flatMap(h => h.values.templateDigest && h.values.templateDigest !== template?.digest ? [h.values.templateDigest] : []));
-    const canWork = !engagement.intake.active || !managedStaffing(m) || !!seatFor(m,role,w.start||w.due,w.due||w.start);
+    const canWork = !engagement.intake.active || !managedStaffing(m) || !!seatFor(m,role,w.start||w.due,w.due||w.start,currentIdentity()?.staff);
     return { ...w, ...(changed && {status:'changed',completedAt:undefined}),
       ...(planning && {planning}), ...(pendingPlanning && {pendingPlanning}),
       ...(fieldGap && {fieldGap}),
@@ -299,11 +307,11 @@ export function pilotView(m, role, revision, files) {
       ...(oldDigests.size && { oldTemplates: Object.fromEntries([...oldDigests].map(hash => [hash, files.template(hash)])) }),
       ...(m.pilotWorkAssignments?.[form] && { assignmentHistory: m.pilotWorkAssignments[form] }),
       ...(m.pilotStaffSignoffs?.[form] && { staffingSignoffs: m.pilotStaffSignoffs[form] }),
-      editable: !sealed && canWork && canEdit(m, w), reviewable: !sealed && !changed && !pendingPlanning && canWork && canReviewWork(m, w) };
+      editable: !sealed && canWork && canEdit(m, w), returnable:!sealed&&!changed&&!pendingPlanning&&canWork&&canReviewWork(m,w,true),reviewable: !sealed && !changed && !pendingPlanning && canWork && canReviewWork(m, w) };
   });
   return {
     role, revision, ...resources, fieldwork: fieldworkForms(m), statementLines: m.pilotStatementLines ?? {},
-    planning:planningView(m,role),reporting:reportingView(m,files),
+    planning:planningView(m,role),reporting:reportingView(m,files),...(!sealed&&{specialistPackets:specialistPacketView(m,role)}),
     dataMethods:dataView(m,files),
     requestCoverage:requestCoverage(m),
     ...(role==='partner'&&{laterFacts:laterFactView(m)}),
@@ -364,6 +372,7 @@ export function pilotAction(m, role, action, data, files) {
   if(action==='evidence-enable'||action.startsWith('data-profile-')||action.startsWith('data-check-')){
     if(dataAction(m,role,action,data,files)===false)return;syncFieldwork(m);invalidateReport(m,'G03 · Өгөгдлийн эх / аргын хувилбар өөрчлөгдөв');return;
   }
+  if(action.startsWith('specialist-packet-')){specialistPacketAction(m,role,action,data,files);return;}
   if(action==='planning-enable'||action==='effort-log'){
     planningAction(m,role,action,data,files);invalidateReport(m,'G02 · Төлөвлөлт / бодит цаг өөрчлөгдөв');if(!sealed)syncFieldwork(m);return;
   }
@@ -411,7 +420,8 @@ export function pilotAction(m, role, action, data, files) {
     if (sealed) throw new PilotError(409, 'Архив түгжээтэй.');
     if (managedStaffing(m)) return;
     m.pilotStaffingEnabled = true;
-    for (const capacity of seats) requireSeat(m,files,capacity);
+    m.pilotStaffingRequiredRoles=seats.filter(capacity=>files.member(capacity));
+    for (const capacity of m.pilotStaffingRequiredRoles) requireSeat(m,files,capacity);
     m.pilotStaffingAccepted = approvedStaffing(m).filter(s=>s.current);
     recordEvent(m, 'Одоогийн баталсан багийн томилгоог холбов');
     return;
@@ -427,7 +437,7 @@ export function pilotAction(m, role, action, data, files) {
     const gaps = [...acceptanceRegisterGaps(m),...staffingGaps(m)];
     if (gaps.length) throw new PilotError(409, gaps.join(' · '));
     if (managedStaffing(m)) {
-      for (const capacity of seats) requireSeat(m,files,capacity);
+      for (const capacity of m.pilotStaffingRequiredRoles??seats.filter(capacity=>files.member(capacity))) requireSeat(m,files,capacity);
       m.pilotStaffingAccepted = approvedStaffing(m).filter(s=>s.current);
     }
     setEngagementDecision(m, 'independence', true, input(data, 'independence'));
@@ -481,7 +491,7 @@ export function pilotAction(m, role, action, data, files) {
     if (bindForm(m, role, form, data, files) && form !== reportForm(engagement)) invalidateReport(m, 'Тайланд ашиглах маягтын хувилбар өөрчлөгдөв');
     return;
   }
-  const earlyPaper = ['save','submit','review','return','respond','clear'].includes(action) && m.pilotForms?.[data?.form] &&
+  const earlyPaper = ['save','submit','review','return','respond','clear','work-acknowledge'].includes(action) && m.pilotForms?.[data?.form] &&
     m.work[workKey(m.engagement, data.form)]?.stage === 1;
   if (!engagement.intake.active && !earlyPaper) throw new PilotError(409, 'Партнер гэрээт ажлыг идэвхжүүлнэ.');
   if (action === 'archive-seal' || action === 'archive-dispose') {
@@ -712,44 +722,38 @@ export function pilotAction(m, role, action, data, files) {
     recordEvent(m, (done ? 'Даалгавар дуусгав · ' : 'Даалгавар дахин нээв · ') + task.title, task.form);
     return;
   }
+  if(action==='work-transfer'){
+    requireActor(role!=='preparer');
+    let selected;try{selected=JSON.parse(input(data,'items',100000));}catch{throw new PilotError(400,'Select a valid work transfer.');}
+    if(!Array.isArray(selected)||!selected.length||selected.length>100||new Set(selected.map(x=>x?.form)).size!==selected.length)throw new PilotError(400,'Select 1-100 distinct work items.');
+    const candidate=structuredClone(m);
+    for(const item of selected){if(!item||typeof item!=='object'||Array.isArray(item))throw new PilotError(400,'Invalid transfer item.');pilotAction(candidate,role,'work-assign',{...item,reason:input(data,'reason')},files);}
+    Object.assign(m,candidate);return;
+  }
   const paper = shownForms(m).includes(data?.form) && m.work[workKey(engagement.id, data.form)];
   if (!paper) throw new PilotError(404, 'Туршилтын ажлын баримт олдсонгүй.');
-  const actorSeat = engagement.intake.active && managedStaffing(m) && ['save','submit','review','return','respond','clear'].includes(action)
+  const actorSeat = engagement.intake.active && managedStaffing(m) && ['save','submit','review','return','respond','clear','work-acknowledge'].includes(action)
     ? requireSeat(m,files,role,paper.start||paper.due,paper.due||paper.start) : undefined;
+  if(paper.assignmentContractVersion===2&&['save','submit','review','return','clear'].includes(action))assignmentPerson(m,m.person,files,paper.start||paper.due,paper.due||paper.start);
   switch (action) {
     case 'work-assign': {
       requireActor(role !== 'preparer');
       if (managedStaffing(m)) requireSeat(m,files,role);
       if (paper.form === '4.4' || /^4\.1\.A[1-4]$/.test(paper.form)) throw new PilotError(409, 'Тайлангийн хяналтын тусдаа үүргийг хадгална.');
-      const ownerRole = input(data,'owner',20), reviewerRole = input(data,'reviewer',20), reason = input(data,'reason');
-      const start = paper.start || paper.due, end = paper.due || paper.start;
-      const ownerBasis = requireSeat(m,files,ownerRole,start,end), reviewBasis = requireSeat(m,files,reviewerRole,start,end);
-      if (paper.submittedVersion === paper.version && paper.submittedBy === accountFor(m,reviewerRole)) {
-        throw new PilotError(409, 'Одоогийн хувилбарыг илгээсэн хүн өөрөө хянах боломжгүй.');
-      }
-      if (paper.owner === accountFor(m,ownerRole) && paper.reviewer === accountFor(m,reviewerRole)) return;
-      const previous = { owner:paper.owner, reviewer:paper.reviewer };
-      reassign(m,paper.id,accountFor(m,ownerRole),accountFor(m,reviewerRole));
-      if (previous.owner !== paper.owner) {
-        for (const request of m.requests.filter(r => r.form === paper.form && r.owner === previous.owner &&
-            r.status !== 'complete' && r.dispatch !== 'cancelled')) {
-          request.owner = paper.owner;
-          request.history.push(`${new Date().toISOString()} · ${previous.owner} → ${paper.owner} · ${reason}`);
-        }
-      }
-      ((m.pilotWorkAssignments ??= {})[paper.form] ??= []).unshift({
-        at:new Date().toISOString(),by:m.person,reason,previous,owner:paper.owner,reviewer:paper.reviewer,ownerBasis,reviewBasis,
-      });
+      assignWork(m,paper,data,files);
       break;
     }
+    case 'work-acknowledge':
+      acknowledgeHandoff(m,paper,data);
+      break;
     case 'schedule': {
       requireActor(role !== 'preparer');
       const start = input(data, 'start', 10), due = input(data, 'due', 10);
       if (!validDate(start) || !validDate(due) || start > due) throw new PilotError(400, 'Ажлын төлөвлөсөн хугацааг шалгана уу.');
       if (managedStaffing(m)) {
         requireSeat(m,files,role);
-        requireSeat(m,files,roleOf(m,paper.owner),start,due);
-        requireSeat(m,files,roleOf(m,paper.reviewer),start,due);
+        assignmentPerson(m,paper.owner,files,start,due);
+        assignmentPerson(m,paper.reviewer,files,start,due);
       }
       if (paper.start === start && paper.due === due) return;
       reschedule(m, paper.id, due, start);
@@ -813,6 +817,8 @@ export function pilotAction(m, role, action, data, files) {
     }
     case 'submit':
       requireActor(canEdit(m, paper));
+      if(paper.assignmentContractVersion===2)requireActor(paper.owner===m.person);
+      requireAcknowledgement(m,paper);
       if (paper.notes.some(note=>!note.cleared&&note.responses?.length&&note.responses.at(-1).workVersion!==paper.version)) {
         throw new PilotError(409,'Хяналтын тэмдэглэлийн хариуг одоогийн ажлын хувилбарт шинэчилнэ үү.');
       }
@@ -841,12 +847,13 @@ export function pilotAction(m, role, action, data, files) {
       if (actorSeat) recordStaffSignoff(m,paper,'submit',actorSeat);
       break;
     case 'return':
-      requireActor(canReviewWork(m, paper));
+      requireActor(canReviewWork(m, paper,true));
       if(data.anchor&&!['execution','conclusion',...(effectiveForm(m,paper.form,files)?.body.fields.map(f=>f.key)??[])].includes(data.anchor))throw new PilotError(400,'Бодит ажлын талбарын байршил шаардлагатай.');
       returnWork(m, paper.id, input(data, 'reason'), data.anchor??'conclusion');
       break;
     case 'review':
       requireActor(canReviewWork(m, paper));
+      requireAcknowledgement(m,paper);
       if (fieldworkGap(m,paper.form)) throw new PilotError(409,fieldworkGap(m,paper.form));
       checkNative(m, paper, files);
       checkPlanning(m,paper,files);
@@ -865,7 +872,7 @@ export function pilotAction(m, role, action, data, files) {
         const responses=note.responses??=[];
         responses.push({version:responses.length+1,workVersion:paper.version,by:m.person,at:new Date().toISOString(),text});
       } else {
-        requireActor(note.author === m.person && paper.status === 'submitted');
+        requireActor(paper.status==='submitted'&&(paper.assignmentContractVersion===2?canReviewWork(m,paper,true)&&(note.author===m.person||paper.reviewer===m.person):note.author===m.person));
         const responseVersion=note.responses?.at(-1)?.version??0;
         const result=data.result??'cleared';
         if (!['cleared','returned'].includes(result)) throw new PilotError(400,'Хяналтын шийдвэрийг сонгоно уу.');

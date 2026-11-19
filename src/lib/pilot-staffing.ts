@@ -8,6 +8,7 @@ export type StaffSeat={
  deliverable?:string;supervisor?:PilotRole;current:boolean;
 };
 export type StaffingView={
+ people?:{id:string;name:string;role:PilotRole}[];
  managed:boolean;members:PilotRole[];seats:StaffSeat[];gaps:string[];
  accepted?:StaffSeat[];
 };

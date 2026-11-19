@@ -1,6 +1,6 @@
 # Audit-first implementation progress
 
-**As of:** 19 November 2026. **Starting commit:** `469d48cfbd1bb1d6760f5ef2ae90794cd91987b3`. **Scope:** B00 and B01 engineering foundation. Practitioner, browser/network, production and release acceptance remain separate; `releaseReady` was not enabled.
+**As of:** 19 November 2026. **Starting commit:** `469d48cfbd1bb1d6760f5ef2ae90794cd91987b3`. **Current scope:** B00/B01 foundation plus [B02 bounded staffing/authority/capacity/credential/specialist implementation](B02_Staffing_Implementation_2026-11-19.md). Practitioner, browser/network, production and release acceptance remain separate; `releaseReady` was not enabled.
 
 The [complete plan](research/audit-first-2026-11-19/results/FULL/FULL_RESEARCH_AND_EXECUTION_PLAN.md) remains the scope baseline. Its original assignment registers are historical and are not rewritten as delivered functionality. This register records actual implementation progress.
 
@@ -8,8 +8,8 @@ The [complete plan](research/audit-first-2026-11-19/results/FULL/FULL_RESEARCH_A
 | --- | --- | --- |
 | B00 | Engineering checks passed | Frozen original identity manifest; all five working workbook hashes checked; settled D01 adoption profile carried forward; tests use isolated temporary databases. |
 | B01 | Shared foundation implemented and tested | Versioned calculation/review records; exact typed answer snapshots; stable repeated-row identity; account-grain primary splits versus nonadditive notes; existing read compatibility. This registers all 36 method specifications, not 36 fully implemented or professionally accepted accounting models. |
-| B02 | Next dependency-ready batch | Many named assignees, scoped authority, credentials and specialist packet changes remain to implement. |
-| B03 | Queued after B01 | Full form-family enhancements, native XLSX/DOCX and all 20 reliance edges. |
+| B02 | Bounded engineering v1 implemented and tested | Multiple named assignees/reviewers; attributed handoffs; atomic selected plan/work transfer; M35 daily capacity/scenarios/budget/actuals; credential facts/files; required manual specialist packets. Optional portal, practitioner and operating acceptance remain separate. |
+| B03 | Next dependency-ready batch | Full form-family enhancements, native XLSX/DOCX and all 20 reliance edges. |
 | B04 | Queued after B01/B02 | Controlled XLSX, full source bridges and remaining method/data runtime changes. Account-grain split arithmetic was implemented with B01; row-grain allocations and broader B04 scope remain. |
 | B05 | Queued | Planning/control/materiality/sampling deltas. |
 | B06 | Queued | Complete revenue/cut-off/receivables slice through reporting/archive consequences. |
@@ -46,4 +46,4 @@ Native typed saves retain an answer snapshot bound to the exact template digest.
 - API tests used the real handler, authorization and SQLite transactions through an optional in-process test transport. Ordinary test mode still uses real HTTP. Earlier socket attempts were blocked by this host's `connect EACCES` policy; those attempts are not passed network tests. Browser rendering, live HTTP, native Office readers and production operation were not verified by this batch.
 - Source references, prior checkpoint evidence and original assignment dispositions were preserved. No real practitioner acceptance, release approval, main merge or deployment occurred.
 
-Next implementation work follows B02's published handoff. B01 is a reviewable engineering checkpoint, not completion of the full audit product.
+The current B02 checkpoint adds 108 passed engineering tests and retains the B00/B01 scope/source pins. Next implementation work follows B03's published handoff. These are reviewable engineering checkpoints, not completion of the full audit product.

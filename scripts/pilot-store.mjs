@@ -12,7 +12,7 @@ const serialize = ({ pilotFormLibrary: _,runtimePeople: _p,runtimeAccounts: _a,r
 });
 const notFound = () => new PilotError(404, 'Гэрээт ажил олдсонгүй.');
 
-export const firmCommand = (action, fields) => isLibraryAction(action) || action === 'register' && firmKinds.has(fields?.kind);
+export const firmCommand = (action, fields) => action.startsWith('credential-document-') || action.startsWith('capacity-') || isLibraryAction(action) || action === 'register' && firmKinds.has(fields?.kind);
 export const createsEngagement = action => action === 'create' || action === 'intake-convert';
 
 export function createPilotStore(db) {
@@ -64,8 +64,13 @@ export function createPilotStore(db) {
       CREATE TABLE IF NOT EXISTS pilot_form_library (
         id INTEGER PRIMARY KEY CHECK(id=1), body TEXT NOT NULL
       );
+      CREATE TABLE IF NOT EXISTS pilot_credential_documents (id INTEGER PRIMARY KEY CHECK(id=1), body TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS pilot_specialist_exports (id INTEGER PRIMARY KEY, engagement_id TEXT NOT NULL REFERENCES pilot_engagements(id), body TEXT NOT NULL);
+      CREATE TABLE IF NOT EXISTS pilot_capacity_state (id INTEGER PRIMARY KEY CHECK(id=1), body TEXT NOT NULL);
     `);
     db.prepare('INSERT OR IGNORE INTO pilot_form_library VALUES (1, ?)').run(JSON.stringify(emptyFormLibrary()));
+    db.prepare('INSERT OR IGNORE INTO pilot_credential_documents VALUES (1, ?)').run('[]');
+    db.prepare('INSERT OR IGNORE INTO pilot_capacity_state VALUES (1, ?)').run(JSON.stringify({schemaVersion:1,revision:0,days:[],allocations:[],scenarios:[],budgets:[],variances:[],history:[]}));
     if (db.prepare('SELECT 1 FROM pilot_firm WHERE id = 1').get()) return;
     db.prepare('INSERT INTO pilot_firm VALUES (1, ?, ?)').run(legacy.revision, JSON.stringify(firmRecords(legacyModel)));
     if (legacyId) insert(legacyModel, legacy.revision, roles.filter(role => db.prepare('SELECT 1 FROM accounts WHERE role = ?').get(role)));
@@ -94,6 +99,8 @@ export function createPilotStore(db) {
     const pilotFormLibrary = JSON.parse(db.prepare('SELECT body FROM pilot_form_library WHERE id = 1').get().body);
     if (!id) {const model={
       ...emptyWorkspace(), person: accounts[role], pilotRecords: JSON.parse(firm.records), pilotFormLibrary,
+      pilotCredentialDocuments:JSON.parse(db.prepare('SELECT body FROM pilot_credential_documents WHERE id=1').get().body),
+      pilotCapacity:JSON.parse(db.prepare('SELECT body FROM pilot_capacity_state WHERE id=1').get().body),
     };if(currentIdentity()){if(!identities.permitted(null,model)){if(!landing)throw notFound();model.pilotRecords=[];model.pilotFormLibrary=emptyFormLibrary();}Object.assign(model,identities.bindings(null,model),{person:currentIdentity().id});}return {id:null,revision:firm.revision,model};}
     const engagement = db.prepare(`SELECT e.body, e.revision FROM pilot_engagements e
       JOIN pilot_engagement_members m ON m.engagement_id = e.id WHERE e.id = ? AND m.role = ?`).get(id, role);
@@ -113,6 +120,8 @@ export function createPilotStore(db) {
       db.prepare('UPDATE pilot_firm SET revision = revision + 1, records = ? WHERE id = 1').run(JSON.stringify(firmRecords(model)));
     }
     if (isLibraryAction(action)) db.prepare('UPDATE pilot_form_library SET body = ? WHERE id = 1').run(JSON.stringify(model.pilotFormLibrary));
+    if(action.startsWith('credential-document-'))db.prepare('UPDATE pilot_credential_documents SET body=? WHERE id=1').run(JSON.stringify(model.pilotCredentialDocuments));
+    if(action.startsWith('capacity-'))db.prepare('UPDATE pilot_capacity_state SET body=? WHERE id=1').run(JSON.stringify(model.pilotCapacity));
     if (id) {
       const e = model.engagements[0];
       db.prepare(`UPDATE pilot_engagements SET revision = revision + 1, body = ?, active = ?, report_date = ?, client = ?

@@ -3,7 +3,7 @@ import {useState,type FormEvent} from 'react';
 import {readPilotResponse} from '@/lib/pilot-client';
 type QueueRow={id:string;kind:string;form:string|null;title:string;owner:string;due:string|null;status:string;reason:string;nextAction:string;executable:boolean;dateState:string;target:{page:string;form:string|null;record:string}};
 export type Operations={asOf:string;day:string;revision:number;scope:string;freshness:{state:string;externalInputs:string};queue:QueueRow[];metrics:{id:string;label:string;grain:string;definition:string;rows:string[];count:number}[];progress:{label:string;numerator:number;denominator:number;percent:number|null;grain:string;meaning:string};tasks:{done:number;total:number;percent:number|null}};
-export type LocalIdentity={id:string;name:string;capacity:string;canAdmin:boolean;profile:string;people:{id:string;name:string}[]};
+export type LocalIdentity={id:string;name:string;capacity:string;canAdmin:boolean;profile:string;people:{id:string;name:string;staff?:string;role?:string;scope?:string[]}[]};
 export type LocalEffect={id:string;logicalKey:string;kind:string;version:number;provider:string;state:string;digest:string;payload:unknown;artifact:{id:string;sha256:string};attempts:{id:string;number:number;outcome:string;externalEffect:boolean;reconciliation?:{outcome:string}}[]};
 type Account={id:string;username:string;name:string;staff:string;capacity:string;status:string;admin:boolean};
 type Grant={id:string;subject:string;engagement:string;capacity:string;first:string;last:string;reason:string;revoked:string|null};

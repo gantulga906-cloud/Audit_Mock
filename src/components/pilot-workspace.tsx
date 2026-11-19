@@ -1,4 +1,8 @@
 'use client';
+import {SpecialistPacketDesk,type SpecialistPacket} from './pilot-specialist-packets';
+import {CredentialDesk,type CredentialDocument} from './pilot-credentials';
+import {CapacityDesk} from './pilot-capacity';
+import type {CapacityView} from '@/lib/pilot-capacity';
 import {AreaCardDesk} from './pilot-area-cards';
 import type {AreaCardPacket} from '@/lib/pilot-area-cards';
 
@@ -54,7 +58,7 @@ const staffNames=(staffing?:StaffingView)=>Object.fromEntries((staffing?.seats??
 const status:Record<WorkItem['status'],string>={not_started:'Эхлээгүй',in_progress:'Бэлтгэж буй',waiting:'Хүлээгдэж буй',submitted:'Хяналтад ирсэн',returned:'Засварт буцаасан',reviewed:'Хянагдсан',changed:'Дахин хянуулах'};
 const deliveryStates:Record<string,string>={pending:'Хүлээгдэж байна',expired:'Холбоосын хугацаа дууссан',unknown:'Үр дүн тодорхойгүй',failed:'Оролдлого амжилтгүй',withdrawn:'Хүлээн авагчийн хүрээг цуцалсан'};
 const partStatus={missing:'Ирээгүй',received:'Үнэлэх',accepted:'Зөвшөөрсөн',rejected:'Буцаасан'};
-export type Paper=WorkItem&{editable:boolean;reviewable:boolean;template?:PaperForm;oldTemplates?:Record<string,Template>;nativeGaps?:string[];
+export type Paper=WorkItem&{editable:boolean;reviewable:boolean;returnable?:boolean;template?:PaperForm;oldTemplates?:Record<string,Template>;nativeGaps?:string[];
  assignmentHistory?:WorkAssignment[];staffingSignoffs?:StaffSignoff[];pendingPlanning?:boolean;fieldGap?:string;requestGap?:string;
  materiality?:MaterialityAmounts|null;materialityBasis?:MaterialityBasis|null;materialityTargets?:MaterialityTarget[];
  planning?:{id:string;version:number;basis?:ProgrammeBasis;template:{form:string;sheet:string;digest:string;number?:number}}};
@@ -64,8 +68,8 @@ export type View=RegisterResources&{
  identity?:LocalIdentity;operations?:Operations;externalEffects?:LocalEffect[];role:PilotRole;revision:number;selected:string|null;portfolio:PortfolioItem[];members?:PilotRole[];formLibrary:LibraryView;
  intake?:{clients:IntakeClient[];enquiries:Enquiry[]};intakeContext?:IntakeContext;
  intakeTerms?:IntakeTerms;intakeTermsHistory?:IntakeTerms[];intakeTermsAmendable?:boolean;intakeTermsCanDraft?:boolean;
- acceptance?:AcceptanceView;
- roster?:RosterAvailability[];staffing?:StaffingView;
+ acceptance?:AcceptanceView;specialistPackets?:SpecialistPacket[];
+ roster?:RosterAvailability[];staffing?:StaffingView;capacity?:CapacityView;credentialDocuments?:CredentialDocument[];
  engagement:null|{client:string;period:Period;active:boolean;reportDate:string;statements?:Statements;decisions:DecisionRecord[];acceptanceGaps:string[];firm:{id:string;kind:string;version:number;values:Record<string,string>}[]};
  methodologyNotices?:MethodologyNotice[];papers?:Paper[];requests?:RequestItem[];evidence?:(Evidence&{sha256:string;current?:boolean})[];gaps?:string[];
  requestContacts?:{id:string;name:string;email:string}[];
@@ -347,8 +351,8 @@ function Delivery({view,run,openPaper:selectPaper}:{view:View;run:Action;openPap
  </section>;
 }
 
-function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,actorPeople=[],sampling,restored,unsaved=false}:{paper:Paper;run:Action;role:View['role'];evidence:View['evidence'];sealed:boolean;active:boolean;engagementId:string|null;staffing?:StaffingView;actorPeople?:{id:string;name:string}[];sampling?:ReactNode;restored?:Record<string,string>;unsaved?:boolean}){
- const form=paper.form,reference={form};
+function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,actor,actorPeople=[],sampling,restored,unsaved=false}:{paper:Paper;run:Action;role:View['role'];evidence:View['evidence'];sealed:boolean;active:boolean;engagementId:string|null;staffing?:StaffingView;actor?:string;actorPeople?:{id:string;name:string}[];sampling?:ReactNode;restored?:Record<string,string>;unsaved?:boolean}){
+ const form=paper.form,reference={form},actualActor=actor??accountByRole[role],pendingHandoff=!!paper.handoff?.pending.includes(actor??accountByRole[role]);
  const [tab,setTab]=useState('work');
  const [answers,setAnswers]=useState<Record<string,string>>(()=>restored?.answers?JSON.parse(restored.answers):fieldAnswers(paper.values));
  const native=paper.template;
@@ -359,6 +363,7 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,
  return <section id={'pilot-paper-'+paper.id} tabIndex={-1} className="card pad bench-card feature-desk">
   <div className="section-heading"><h2>Ажлын баримт · {form}</h2><span className="pill">v{paper.version} · {status[paper.status]}</span></div>
   <p className="micro">{people[paper.owner]??people[paper.owner]} → {people[paper.reviewer]??people[paper.reviewer]} · {paper.evidence.length} холбоотой баримт · {paper.due||'Хугацаа төлөвлөөгүй'}</p>
+  {!sealed&&pendingHandoff&&<ActionForm action="work-acknowledge" extra={{form,assignmentRevision:String(paper.assignmentRevision)}} run={run} button="Acknowledge current handoff"><p>Review the assigned scope and outstanding notes before signing off.</p><label>Acknowledgement<textarea name="reason" required/></label></ActionForm>}
   <nav className="ew-paper-tabs" aria-label="Ажлын баримтын хэсгүүд">{[['work','Ажлын агуулга'],['review','Хяналт · '+paper.notes.filter(n=>!n.cleared).length],['analysis','Түүвэр ба шинжилгээ'],['history','Хувилбарын түүх']].map(([id,label])=><button type="button" key={id} aria-pressed={tab===id} className={tab===id?'is-active':''} onClick={()=>setTab(id)}>{label}</button>)}</nav>
   <div hidden={tab!=='work'} className="ew-paper-body">
   {paper.pendingPlanning&&<p className="callout amber">Төлөвлөлтийн шийдвэрийн шинэ хувилбар батлагдсаны дараа хяналтад илгээнэ.</p>}
@@ -406,11 +411,11 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,
    <p>{paper.values.execution}</p><p>{paper.values.conclusion}</p>
   </>}
   {paper.editable&&!['submitted','reviewed'].includes(paper.status)&&<button type="button" className="btn secondary space-top"
-   disabled={unsaved||!!paper.requestGap||paper.pendingPlanning||!!paper.fieldGap||!!paper.nativeGaps?.length||summaryNeeded&&(!paper.values.execution||!paper.values.conclusion)} onClick={()=>void run('submit',reference)}>Хадгалсан v{paper.version} хувилбарыг хяналтад илгээх</button>}
+   disabled={pendingHandoff||paper.assignmentContractVersion===2&&paper.owner!==actualActor||unsaved||!!paper.requestGap||paper.pendingPlanning||!!paper.fieldGap||!!paper.nativeGaps?.length||summaryNeeded&&(!paper.values.execution||!paper.values.conclusion)} onClick={()=>void run('submit',reference)}>Хадгалсан v{paper.version} хувилбарыг хяналтад илгээх</button>}
   {unsaved&&<p className="ew-draft-notice" role="status">Хадгалаагүй өөрчлөлт байна. Хяналтад илгээхийн өмнө ажлаа хадгална уу.</p>}
   </div><div hidden={tab!=='review'} className="ew-paper-body">
-  {paper.reviewable&&<div className="space-top">
-   <button type="button" className="btn primary" disabled={paper.notes.some(n=>!n.cleared)} onClick={()=>void run('review',reference)}>v{paper.version} хувилбарыг хянаж батлах</button>
+  {(paper.reviewable||paper.returnable)&&<div className="space-top">
+   <button type="button" className="btn primary" hidden={!paper.reviewable} disabled={pendingHandoff||paper.notes.some(n=>!n.cleared)} onClick={()=>void run('review',reference)}>v{paper.version} хувилбарыг хянаж батлах</button>
    <ActionForm run={run} action="return" extra={reference} button="Засварт буцаах"><label>Яг шалгасан талбар<select name="anchor"><option value="conclusion">Дүгнэлт</option><option value="execution">Бодит гүйцэтгэл</option>{paper.template?.body.fields.map(field=><option key={field.key} value={field.key}>{field.label}</option>)}</select></label><label>Хяналтын тэмдэглэл<input name="reason" required/></label></ActionForm>
   </div>}
   {paper.notes.map(n=><div className="bench-item" key={n.id}>
@@ -419,7 +424,7 @@ function Workpaper({paper,run,role,evidence,sealed,active,engagementId,staffing,
    {n.decisions?.map((decision,i)=><p key={i}>{decision.result==='cleared'?'Шийдвэрлэсэн':'Дахин буцаасан'} · {people[decision.by]} ·
     {' '}{decision.at.slice(0,16)} · Ажил v{decision.workVersion} · Хариу {decision.responseVersion?('v'+decision.responseVersion):'хуучин бүртгэл'} · {decision.reason}</p>)}
    {paper.editable&&!n.cleared&&['returned','changed','in_progress'].includes(paper.status)&&<ActionForm run={run} action="respond" extra={{form,note:n.id}} button="Хариу хадгалах"><label>Хариу<input name="response" defaultValue={n.response} required/></label></ActionForm>}
-   {paper.status==='submitted'&&!n.cleared&&n.author===({preparer:'nomin',reviewer:'temuulen',partner:'bat'}[role])&&n.response&&
+   {paper.status==='submitted'&&!n.cleared&&(n.author===actualActor||paper.assignmentContractVersion===2&&paper.reviewer===actualActor)&&n.response&&
     <ActionForm run={run} action="clear" extra={{form,note:n.id,version:String(paper.version),responseVersion:String(n.responses?.at(-1)?.version??0)}} button="Хянагчийн шийдвэр хадгалах">
      <label>Шийдвэр<select name="result"><option value="cleared">Шийдвэрлэсэн</option><option value="returned">Дахин буцаах</option></select></label>
      <label>Хянасан хамрах хүрээ ба үндэслэл<input name="reason" required/></label>
@@ -559,7 +564,7 @@ function SharedPilotWorkspace(){
    {(route.page==='clients'||!engagement&&route.page==='home')&&<EngagementPicker view={view} open={(id,form)=>void openEngagement(id,form)}/>}
    {!engagement&&route.page==='clients'&&view.intake&&<PilotIntake data={view.intake} role={view.role} run={run} open={id=>void openEngagement(id)}/>}
    {route.page==='library'&&<>{engagement&&<MethodologyNotices notices={view.methodologyNotices??[]} run={run}/>}{!engagement?<PilotFormLibrary role={view.role} forms={view.forms} library={view.formLibrary} run={run} onError={setError} onDraftChange={templateDraft}/>:<section className="ew-panel ew-panel-pad"><h2>Гэрээт ажилд маягт холбох</h2><p>Баталсан хувилбарыг энэ ажлын хүрээнд сонгоно. Шинээр зохиох болон нийтлэх ажил фирмийн санд хийгдэнэ.</p><button className="btn secondary space-top" onClick={()=>void navigate({engagement:null,page:'library',paper:null})}>Фирмийн маягтын сан нээх</button></section>}{engagement&&!sealed&&view.role!=='preparer'&&<AdoptPilotForm forms={view.forms.filter(f=>!view.extended||!view.programmes.some(p=>p.id===f.id)||view.papers?.some(p=>p.form===f.id&&p.planning?.template.number===undefined)&&view.fieldwork?.includes(f.id))} library={view.formLibrary} pins={Object.fromEntries((view.papers??[]).flatMap(p=>p.template?[[p.form,p.template.number]]:[]))} run={run} engagementId={view.selected!}/>}</>}
-   {route.page==='people'&&<>{view.roster&&<RosterOverview roster={view.roster} open={id=>void openEngagement(id)}/ >}{view.staffing&&<EngagementStaffing staffing={view.staffing} role={view.role} sealed={sealed} run={run}/>}</>}
+   {route.page==='people'&&<>{view.selected&&view.specialistPackets&&<SpecialistPacketDesk packets={view.specialistPackets} evidence={view.evidence??[]} records={view.registers} engagement={view.selected} revision={view.revision} run={run}/>}{view.credentialDocuments&&<CredentialDesk documents={view.credentialDocuments} roster={view.roster??[]} actor={view.identity?.id??view.role} run={run}/>}{view.capacity&&<CapacityDesk data={view.capacity} roster={view.roster??[]} portfolio={view.portfolio} accounts={view.identity?.people} run={run}/>}{view.roster&&<RosterOverview roster={view.roster} open={id=>void openEngagement(id)}/ >}{view.staffing&&<EngagementStaffing staffing={view.staffing} role={view.role} sealed={sealed} run={run}/>}</>}
    {route.page==='admin'&&<><LocalAccountsDesk identity={view.identity} role={view.role} roster={view.roster} engagements={view.portfolio}/>{view.externalEffects&&<LocalConnectionsDesk jobs={view.externalEffects} role={view.role} evidence={view.evidence??[]} run={run}/ >}{registers(['firm'])}</>}
    {engagement&&<>
     {route.page==='overview'&&<>     <section className="card pad bench-card">
@@ -585,12 +590,12 @@ function SharedPilotWorkspace(){
 {registers(['acceptance'])}</>}
     {route.page==='workpapers'&&(route.paper?<>
      <div className="ew-paper-toolbar"><button className="btn secondary" onClick={()=>void navigate({...route,page:'workpapers',paper:null})}><ArrowLeft size={15}/>Ажлын жагсаалт</button><span>{paper?'Хадгалсан v'+paper.version:''}{dirty?' · Хадгалаагүй өөрчлөлт':''}</span><button className="btn secondary" aria-expanded={contextOpen} onClick={()=>setContextOpen(v=>!v)}><PanelRightOpen size={16}/>Нотлох баримт</button></div>
-     {paper?<div className={'ew-paper-layout '+(contextOpen?'with-context':'')}><Workpaper key={paper.id+'/'+paper.version+'/'+(restoredDraft?.token??'')} restored={restoredDraft?.form===paper.form?restoredDraft.values:undefined} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed} active={engagement.active} engagementId={view.selected} staffing={view.staffing} actorPeople={view.identity?.people} sampling={analysis(paper)} unsaved={dirty}/>{contextOpen&&(selectedEvidence?<EvidencePreview file={selectedEvidence} engagement={view.selected} onClose={()=>{setEvidenceId('');setContextOpen(false);}}/>:<aside className="ew-paper-context"><h2>Холбоотой эх баримт</h2><p>Баримтын хувилбарыг сонгож, агуулгыг нь ажлын хажууд үзнэ.</p>{(view.evidence??[]).filter(e=>!query||e.name.toLowerCase().includes(query.toLowerCase())).map(e=><button className="ew-context-file" key={e.id} onClick={()=>showContext(e.id)}><FileText size={16}/><span>{e.name}<small>v{e.version} · {paper.evidence.includes(e.id)?'Энэ ажилд холбогдсон':e.source}</small></span></button>)}</aside>)}</div>:<WorkspaceEmpty title="Энэ ажлын баримт боломжгүй" description="Хандах эрх, хэрэглэх нөхцөл эсвэл баримтын дугаарыг шалгана уу."/>}
+     {paper?<div className={'ew-paper-layout '+(contextOpen?'with-context':'')}><Workpaper key={paper.id+'/'+paper.version+'/'+(restoredDraft?.token??'')} restored={restoredDraft?.form===paper.form?restoredDraft.values:undefined} paper={paper} run={run} role={view.role} evidence={sealed?[]:view.evidence} sealed={sealed} active={engagement.active} engagementId={view.selected} staffing={view.staffing} actor={view.identity?.id} actorPeople={view.identity?.people} sampling={analysis(paper)} unsaved={dirty}/>{contextOpen&&(selectedEvidence?<EvidencePreview file={selectedEvidence} engagement={view.selected} onClose={()=>{setEvidenceId('');setContextOpen(false);}}/>:<aside className="ew-paper-context"><h2>Холбоотой эх баримт</h2><p>Баримтын хувилбарыг сонгож, агуулгыг нь ажлын хажууд үзнэ.</p>{(view.evidence??[]).filter(e=>!query||e.name.toLowerCase().includes(query.toLowerCase())).map(e=><button className="ew-context-file" key={e.id} onClick={()=>showContext(e.id)}><FileText size={16}/><span>{e.name}<small>v{e.version} · {paper.evidence.includes(e.id)?'Энэ ажилд холбогдсон':e.source}</small></span></button>)}</aside>)}</div>:<WorkspaceEmpty title="Энэ ажлын баримт боломжгүй" description="Хандах эрх, хэрэглэх нөхцөл эсвэл баримтын дугаарыг шалгана уу."/>}
      {paper&&<div className="ew-next-paper"><span>Дараагийн баримтыг нээх нь энэ ажлыг илгээхгүй.</span><button className="btn secondary" disabled={availablePapers.indexOf(paper)>=availablePapers.length-1} onClick={()=>openPaper(availablePapers[availablePapers.indexOf(paper)+1].form)}>Дараагийн баримт<ArrowRight size={15}/></button></div>}
     </>:<>{!sealed&&view.role!=='preparer'&&<div className="ew-list-actions"><span>Холбогдсон эх болон баталсан маягтууд</span><button className="btn secondary" onClick={()=>go('library')}>Маягт холбох</button></div>}{!sealed&&view.selected&&<WorkpaperExportDesk papers={availablePapers} engagement={view.selected}/>}<WorkpaperIndex view={{...view,papers:availablePapers}} query={query} open={openPaper} routeFilter={route.filter} routeStage={route.stage} onFiltersChange={listFilters}/></>)}
     {route.page==='evidence'&&<><div className={'ew-paper-layout '+(contextOpen&&selectedEvidence?'with-context':'')}><EvidenceLibraryView view={view} query={query} preview={showContext}/>{contextOpen&&selectedEvidence&&<EvidencePreview file={selectedEvidence} engagement={view.selected} onClose={()=>{setEvidenceId('');setContextOpen(false);}}/>}</div>{!sealed&&<><SupportingEvidence view={view} run={run} onError={setError}/><Requests view={view} run={run} onError={setError}/></>}</>}
     {route.page==='data'&&(engagement.active&&!sealed?<><AutomationWorkbench view={view} run={run} open={(page,form)=>{if(form)openPaper(form);else void navigate({...route,page,paper:null});}}/><PopulationDesk dataMethods={view.dataMethods} key={view.population?.current.version} population={view.population} role={view.role} engagement={view.selected!} evidence={view.evidence??[]} run={run} readFile={readEvidence} onError={setError} requestImport={(view.requests??[]).some(r=>r.extract&&r.dispatch==='issued')}/><section className="ew-panel ew-panel-pad"><h2>Ажилтай холбогдсон шинжилгээ</h2><p>Түүвэр, журнал болон салбарын шинжилгээг тухайн ажлын баримтаас нээнэ.</p><div className="ew-analysis-links">{availablePapers.filter(p=>view.fieldwork?.includes(p.form)||view.samples?.[p.form]||view.areas?.[p.form]).map(p=><button key={p.id} onClick={()=>openPaper(p.form)}><FileText size={17}/><span>{p.form} · {p.title}</span><ArrowRight size={16}/></button>)}</div></section></>:<WorkspaceEmpty title={sealed?'Архивын эх хувилбарыг ашиглана':'Идэвхжүүлэх шийдвэр шаардлагатай'} description="Өгөгдөл боловсруулах эрх нь гэрээт ажлын одоогийн төлөвөөс хамаарна."/>)}
-    {route.page==='planning'&&<><PlanningDesk resources={view} role={view.role} sealed={sealed} run={run}/>{registers(['planning'])}{!sealed&&<Delivery view={view} run={run} openPaper={id=>{const p=view.papers?.find(p=>p.id===id||p.form===id);if(p)openPaper(p.form);}}/>}{view.staffing&&<EngagementStaffing staffing={view.staffing} role={view.role} sealed={sealed} run={run}/>}</>}
+    {route.page==='planning'&&<><PlanningDesk resources={view} role={view.role} sealed={sealed} staffing={view.staffing} run={run}/>{registers(['planning'])}{!sealed&&<Delivery view={view} run={run} openPaper={id=>{const p=view.papers?.find(p=>p.id===id||p.form===id);if(p)openPaper(p.form);}}/>}{view.staffing&&<EngagementStaffing staffing={view.staffing} role={view.role} sealed={sealed} run={run}/>}</>}
     {route.page==='review'&&<><WorkpaperIndex key="review" view={view} query={query} open={openPaper} mode="review" routeFilter={route.filter} routeStage={route.stage} onFiltersChange={listFilters}/>      {view.impacts?.map(impact=><section className="card pad bench-card" key={impact.id}><h2>{impact.source} · Өөрчлөлтийн нөлөө</h2><p>{impact.reason} · {impact.targets.join(', ')}</p>
        {view.role==='reviewer'&&<ActionForm run={run} action="resolve-impact" extra={{id:impact.id}} button="Нөлөөллийн үнэлгээг бүртгэх"><label>Шийдвэрийн үндэслэл<input name="reason" required/></label></ActionForm>}
       </section>)}

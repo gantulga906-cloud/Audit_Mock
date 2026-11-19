@@ -1,5 +1,6 @@
 import { approvedRows, registerRows } from './pilot-registers.mjs';
 import { PilotError } from './pilot-workflow.mjs';
+import {currentIdentity} from './pilot-identity-context.mjs';
 
 export const seats = ['preparer','reviewer','partner'];
 export const managedStaffing = m => !!m.pilotStaffingEnabled;
@@ -12,6 +13,7 @@ const strict = (m, v) => managedStaffing(m) || !!v.assignmentEnd || !!v.appointm
 const appointmentCapacity = v => v.capacity || v.role.toLowerCase();
 
 function knownCredential(v, start, end) {
+  if(['expired','suspended'].includes(v.authorityStatus))return false;
   const expiry = v.validity || (v.validTo ? 'dated' : 'unknown');
   return !!v.validFrom && start >= v.validFrom && (expiry === 'no-expiry' || expiry === 'dated' && !!v.validTo && end <= v.validTo);
 }
@@ -30,13 +32,14 @@ export function checkStaffing(m, row, files) {
   const [start,end] = dates(row);
   const specialist = v.capacity === 'specialist', full = strict(m,v);
   const p = person?.values;
+  if(v.requiresAuthority==='yes'&&(!credential||credential.values.authorityStatus!=='current'||!credential.values.practiceScope))fail('This selected regulated work needs supported current practice authority and scope.');
   if (!p || p.status !== (specialist ? 'external' : 'active') || start > end || Number(v.hours) <= 0 ||
       !inWindow(start,end,p.availableFrom,p.availableTo) || credential?.values.person !== person.id ||
       !knownCredential(credential.values,start,end)) {
     fail('Идэвхтэй мэргэжилтэн, хүчинтэй үнэмлэх, боломжит хугацаа ба цаг шаардлагатай.');
   }
   if (approvedRows(m,'M04-F06').some(r => r.id !== row.id && r.values.result === 'suitable' &&
-      (r.values.person === v.person || !specialist && r.values.capacity === v.capacity))) {
+      overlaps(...dates(r),start,end) && (r.values.person === v.person || v.capacity==='partner'&&r.values.capacity==='partner'))) {
     fail('Гэрээт ажлын үүрэг бүр тусдаа мэргэжилтэнтэй байна.');
   }
   if (!full) return;
@@ -80,19 +83,20 @@ export function approvedStaffing(m) {
   });
 }
 
-export function seatFor(m, role, start, end = start) {
-  return approvedStaffing(m).find(s => s.current && s.capacity === role && (!start || inWindow(start,end,s.start,s.end)));
+export function seatFor(m, role, start, end = start, person) {
+  return approvedStaffing(m).find(s => s.current && s.capacity === role && (!person||s.person===person) && (!start || inWindow(start,end,s.start,s.end)));
 }
 
 export function staffingGaps(m) {
   if (!managedStaffing(m)) return [];
-  return seats.filter(role => !seatFor(m,role)).map(role => 'M04-F06 · Одоогийн баталсан томилгоо · '+role);
+  return (m.pilotStaffingRequiredRoles??seats).filter(role => !seatFor(m,role)).map(role => 'M04-F06 · Одоогийн баталсан томилгоо · '+role);
 }
 
-export function requireSeat(m, files, role, start, end) {
+export function requireSeat(m, files, role, start, end, person) {
   if (!seats.includes(role) || !files.member(role)) fail('Энэ гэрээт ажлын нэвтрэх эрх шаардлагатай.');
   if (!managedStaffing(m)) return undefined;
-  const seat = seatFor(m,role,start,end);
+  const identity=currentIdentity();
+  const seat = seatFor(m,role,start,end,person??(identity?.capacity===role?identity.staff:undefined));
   if (!seat) fail('M04-F06 · Тухайн хугацаанд хүчинтэй, баталсан томилгоо шаардлагатай · '+role);
   return seat;
 }

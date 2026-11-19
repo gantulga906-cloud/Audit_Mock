@@ -13,6 +13,7 @@ type ArchiveItem={
  access?:{actor:PilotRole;at:string;reason:string;scope:string}[];
 };
 export type RegisterResources={
+ credentialDocuments?:{id:string;person:string;name:string;status:string}[];
  registers:PilotRecord[];forms:NamedForm[];programmes:NamedForm[];
  rules:{id:string;form:string;matches:boolean;outcome:string;basis:string}[];
  programmeTemplates?:Record<string,{version:string;procedures:{key:string;label:string}[]}[]>;
@@ -105,6 +106,7 @@ function Editor({kind,row,resources,evidence,run,onDone}:{
    (!planning||field.key!=='rule'||resources.rules.some(rule=>rule.id===r.id&&rule.matches))&&
    (!planning||field.key!=='risk'||r.values.programme===selectedForm)).map(r=>[r.id,heading(r)+' · v'+r.version]);
   if(field.type==='programme'||field.type==='form')return (field.type==='programme'?resources.programmes:resources.forms).map(f=>[f.id,f.id+' · '+f.title]);
+  if(kind==='M01-F04'&&field.key==='credentialDocument')return (resources.credentialDocuments??[]).filter(d=>d.person===values.person&&d.status==='accepted').map(d=>[d.id,d.name]);
   if(field.type==='evidence')return evidence.map(e=>[e.id,e.name+' · v'+e.version]);
   if(field.key==='package'){
    const packages=resources.archive.packages.map(p=>[p.id,p.summary.client+' · '+p.sealed.slice(0,16)+' · '+p.id.slice(0,8)] as const);
