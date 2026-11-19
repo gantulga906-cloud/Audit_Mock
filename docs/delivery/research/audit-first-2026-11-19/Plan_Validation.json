@@ -1,0 +1,32 @@
+{
+  "asOf": "2026-11-19",
+  "kind": "Research-plan structural validation only; not runtime/method/legal/professional acceptance",
+  "baselineCommit": "ffdf647b2851a4d0239d4766ae0d162c281ea41e",
+  "passed": true,
+  "checks": [
+    "Research_Tasks: 60 unique rows",
+    "Method_Research: 36 unique rows",
+    "Fieldwork_Research: 22 unique rows",
+    "Automation_Research: 58 unique rows",
+    "Dependency_Research: 20 unique rows",
+    "Sources: 30 unique rows",
+    "Decisions: 12 unique rows",
+    "Task dependencies: referential integrity and acyclic graph",
+    "Fieldwork_Research: exact original IDs and selected source semantics preserved",
+    "Automation_Research: exact original IDs and selected source semantics preserved",
+    "Dependency_Research: exact original IDs and selected source semantics preserved",
+    "Markdown internal links: 235 targets/anchors valid",
+    "Application, tests, original source registers/checkpoints and consolidated register unchanged",
+    "All new research rows PLANNED; decisions OPEN; no professional acceptance claimed"
+  ],
+  "counts": {
+    "Research_Tasks": 60,
+    "Method_Research": 36,
+    "Fieldwork_Research": 22,
+    "Automation_Research": 58,
+    "Dependency_Research": 20,
+    "Sources": 30,
+    "Decisions": 12
+  },
+  "errors": []
+}

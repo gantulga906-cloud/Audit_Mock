@@ -1,8 +1,16 @@
 # Audit_Mock — Audit-first reprioritized implementation plan
 
-**Status:** Proposed project-director scope and priority reset, 19 November 2026. **Implementation:** Not started by this document. **Source baseline:** [consolidated remaining-work register (18 November)](Audit_Mock_Consolidated_Remaining_Work_2026-11-18.md) at `ab62b39941b7b90c88cf14a55e34ee3d9a39ce80`; implemented G01–G11 application and published checkpoints. This is a new **planning** document, not evidence of requirement closure or a legal opinion.
+**Status:** Research-expanded project-director scope and priority plan, 19 November 2026; professional adoption and implementation remain open. **Implementation:** Not started by this document. **Source baseline:** [consolidated remaining-work register (18 November)](Audit_Mock_Consolidated_Remaining_Work_2026-11-18.md) at `ab62b39941b7b90c88cf14a55e34ee3d9a39ce80`; implemented G01–G11 application and published checkpoints. This is a new **planning** document, not evidence of requirement closure or a legal opinion.
 
 **Executive decision:** Finish **financial-statement audit workflows across Stages 1–5** and audit-specific quality, reporting and archive obligations first. Treat broad firm operations and unrelated product expansion as lower priority. **Preserve every original requirement ID and historical source disposition**; changing priority is not deleting source scope. External ERP, credential validation APIs, live confirmations, digital-signature providers and malware infrastructure are assigned to later specialist/integration teams, not silently implemented here.
+
+## Research execution pack — mandatory companion
+
+The established method is **requirements engineering with standards traceability and independent method validation**. The scope decisions below now have a [dedicated actionable research pack](research/audit-first-2026-11-19/README.md): 13 domain plans, 60 research tasks, 36 calculation/rule method packs, individual plans for all 22 original fieldwork variants and 58 original automation minimums, a 20-edge dependency research register, a 30-entry source/access register and 12 open decision records. These are planned work counts, not closure evidence.
+
+**Mandate:** use full applicable ISA, ISQM, IESBA ethics/independence and IFRS/IAS/IFRIC/SIC or selected IFRS for SMEs requirements in the corresponding domain/method; document exact edition, paragraph, period, jurisdiction/local adoption and approved firm policy. Keep accounting measurement, audit procedures, human professional judgments and software design choices distinct. Read [research protocol and gates](research/audit-first-2026-11-19/Research_Protocol.md) before declaring a method or implementation ticket ready.
+
+Start with the [dependency-based execution queue](research/audit-first-2026-11-19/README.md#first-execution-queue-and-dependency-gates). Research does not stop at a bibliography: deliver source/standard interpretation, input/action/result/review/export contracts, independently expected examples, meaningful exception cases and a bounded implementation delta. Existing scope, IDs, G01–G11 histories and releaseReady are preserved.
 
 ## 1. The new delivery contract
 
@@ -43,6 +51,8 @@
 ## 4. Domain-by-domain revised decisions
 
 ### D01 Client acceptance & independence — audit-specific, bounded legal scope
+
+**Dedicated research:** [D01 task plan](research/audit-first-2026-11-19/domains/D01_Research_Plan.md), with 4 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M36. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Keep** current client enquiry, declarations, assessed threats, independent recommendation, terms and activation.
 - **Mandatory:** Build a *hard-blocker register* with exact source (ISA/IESBA/local applicable law/firm policy), applicability conditions, effective period, explanatory text, required evidence, responsible reviewer, version and **block/needs-review/informational** status. Research likely categories: professional authorization/licence, prohibited independence relationships/services, invalid engagement preconditions, client/partner appointment and identified nonwaivable restrictions. Never claim a universal Mongolian legal rule without a verified text and adoption decision.
 - **Human remains responsible** for fact investigation, disputed applicability and all non-deterministic judgments. Unknown/unresolved nonwaivable restrictions block *positive final acceptance*, not ordinary collection of draft data. Clear by new accepted authority evidence rather than fake override.
@@ -52,6 +62,8 @@
 - **Crosswalk:** RW02/RW06/RW07(selected import only)/RW10/RW34/RW35.
 
 ### D02 Engagement team, workload and specialists — expand now, don't make a staffing ERP
+
+**Dedicated research:** [D02 task plan](research/audit-first-2026-11-19/domains/D02_Research_Plan.md), with 4 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M35, M36. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Keep** named accounts, grants, suitability, work history and actual effort.
 - **Mandatory:** senior/authorized manager may allocate multiple preparers and reviewers per engagement and per work item, change ownership, transfer open work, designate lead/secondary staff, preserve prior authorship and clear work queues accordingly.
 - **Mandatory:** multi-engagement capacity visibility, planned vs actual hours, overlap/conflict flags, budget/resource scenario variance, reassignment effects, handoff/reviewer conflicts and past-period retention. No invented utilization or audit-quality score.
@@ -61,6 +73,8 @@
 - **Crosswalk:** RW08/RW09/RW13/RW31/RW33(selected identity boundaries).
 
 ### D03 Forms, source fidelity, Excel and dependencies — constrained supported form families
+
+**Dedicated research:** [D03 task plan](research/audit-first-2026-11-19/domains/D03_Research_Plan.md), with 5 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M01, M02, M36. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Mandatory:** specify stable **supported form archetypes**: intake/questionnaire; narrative judgment; structured checklist; financial reconciliation; schedule/repeated table; analytical/calculation; confirmation/evidence request; formal approvals; report/archive. Define types, conditional logic, repeat rows, references, supporting evidence, exact outputs.
 - **Mandatory:** verify each of 70 original forms against an archetype. Maintain source->semantic->UI->data->export trace. Handle exceptions as explicit extensions to a family, not arbitrary generalized UI rules.
 - **Source fact to reconcile:** currently supplied Stage 1–3 workbook binaries differ from registered versions; Stage 4–5 match. Fresh inventory shows **987** validation definitions versus **1,820** in the registered inventory *across the compared workbook set*, not "833 missing audit rules". There are **272** presentation-numbering formula cells. Stage 2 may be an image/book reproduction: read actual visible text/images and source anchors with human validation, rather than inferring completeness from machine-readable spreadsheets. Exact earlier registered Stage 2 content is not available in recorded comparison. Resolve the authoritative edition and differences; don't replace history silently.
@@ -70,12 +84,16 @@
 - **Crosswalk:** RW01–RW05/RW39.
 
 ### D04 Risk, controls and audit planning — research ISA, then finish source branches
+
+**Dedicated research:** [D04 task plan](research/audit-first-2026-11-19/domains/D04_Research_Plan.md), with 4 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M03, M07, M36. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Mandatory:** source-to-ISA research and approved applicability matrix for ISA 300/315/320/330, 240, 402, 610, 620 and relevant firm policies; avoid mechanically forcing document wording as risk score.
 - **Mandatory:** implement and verify A04–A10/A12, entity/IT/control understanding, risks at FS/assertion levels, design vs implementation vs operating test, control deficiency, fraud inquiries, multiple risks/multiple responses, contributor/opening branches, revised strategies, materiality and scope changes, performed work and actual handoff.
 - **Acceptance:** source-based normal/adverse/unknown/change/review cases with defined expected outcomes and no unsupported risk judgments.
 - **Crosswalk:** RW02/RW06/RW09/RW11/RW19/RW35.
 
 ### D05 Data intake, financial mappings and accounting method infrastructure — mandatory core, bounded contracts
+
+**Dedicated research:** [D05 task plan](research/audit-first-2026-11-19/domains/D05_Research_Plan.md), with 5 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M01, M02, M22, M30. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Mandatory:** published accepted import schemas for selected CSV/XLSX export families: GL, TB, FS, journals, sales, receipts, purchases, payables, payroll, asset and inventory registers; controlled preview, source required/optional fields, row counts, signed totals, unknown/zero/null, duplicates, quarantine, currency/date/unit, complete/partial population flags and independent approval. Scale/performance targets set using representative real-world *synthetic* datasets, not blanket arbitrary import.
 - **Non-negotiable:** split account allocations, controlled many-to-one and one-to-many mappings, multi-entity and consolidation cases, adjustment provenance, exchange-rate policy and linked statement/note reconciliation with disjoint effects and reversals. No unapproved auto-journals or invalid balancing.
 - **Mandatory:** build versioned approved accounting method catalog for applicable source procedures across D08 (inventory cost, depreciation, effective interest, FX, lease schedules, ECL/impairment, tax, revenue, consolidation and other approved cases); actual framework/effective period attached.
@@ -84,6 +102,8 @@
 - **Crosswalk:** RW04/RW05/RW12/RW18/RW20/RW32/RW40.
 
 ### D06 Evidence, files and confirmations — core work now; live channels later
+
+**Dedicated research:** [D06 task plan](research/audit-first-2026-11-19/domains/D06_Research_Plan.md), with 4 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M01, M09, M13, M36. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Mandatory:** finish A14/A18 full request/confirmation alternatives, recipient/scope checks, missing/partial/wrong-period/contradictory evidence, returned responses, difference escalation, optional alternate procedures with independent authority, completion consequences and appropriate urgency status.
 - **Mandatory:** file identity/hash/readability/corruption detection, selected PDF/DOCX/XLSX/CSV/image previews or extraction with clear "unsupported" and authenticity limits, source anchors, original download, replacements and scoped confidentiality. Parsing is not proof of accuracy or malware safety.
 - **Mandatory:** per-file/specific-set grants for team/expert/client where selected, with revoke/expiry/logging; never only hide UI menu. Re-read content with appropriate tools and preserve original.
@@ -92,6 +112,8 @@
 - **Crosswalk:** RW08/RW13/RW14/RW26(HOLD).
 
 ### D07 Programmes, sampling and substantive execution — all applicable audit methods
+
+**Dedicated research:** [D07 task plan](research/audit-first-2026-11-19/domains/D07_Research_Plan.md), with 5 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M04, M05, M06, M07, M08, M14, M33. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Keep:** current approved programmes, tailored actions, actual work/review, unbiased HMAC sample, unique units, signed test differences, bounded ratio projection, expansion and whole-journal detection.
 - **Mandatory:** research and approve method support matrix under ISA 530, ISA 500, 520 and applicable firm policy; include random/nonstatistical/statistical design distinctions, stratified and monetary-unit methods *where source/approved offering requires*, sample-size decisions as approved inputs/algorithms, tested specifics vs projected residuals, negative/mixed sign, zero denominators, unavailable tests, revised designs, replacement controls and transparent non-evaluable outcomes.
 - **Mandatory:** complete 3.3.1 native schedule parity, A13 journal/analytical/inventory execution, evidence links, risk reassessment, findings and independent review.
@@ -99,6 +121,8 @@
 - **Crosswalk:** RW15/RW16/RW17/RW34/RW35.
 
 ### D08 All 22 audit areas and 58 original automation minimums — highest functional effort
+
+**Dedicated research:** [D08 task plan](research/audit-first-2026-11-19/domains/D08_Research_Plan.md), with 5 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M09, M10, M11, M12, M13, M14, M15, M16, M17, M18, M19, M20, M21, M22, M23, M24, M25, M26, M27, M28, M29, M30, M31, M32, M33, M34, M36. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Mandatory coverage for each original fieldwork variant P09-UC02-V01–V22:** mapped source procedure and assertion, applicable source and method, required inputs, executable calculation where promised, manual/specialist judgment path where professional, normal/exception/missing/changed/denied scenarios, G05 finding and review/export.
 - **Method groups (apply appropriate framework and licensed/approved texts):**
   1. Intangibles/PPE: recognition candidate, component vs simple charge, additions/disposals, methods, impairment, revaluation, useful life, asset-register movement.
@@ -115,6 +139,8 @@
 - **Crosswalk:** RW17–RW21/RW34/RW36/RW37(only audit-critical overlap).
 
 ### D09 Findings and audit completion — finish exact branches
+
+**Dedicated research:** [D09 task plan](research/audit-first-2026-11-19/domains/D09_Research_Plan.md), with 5 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M22, M24, M25, M28, M31, M32, M33, M34. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Keep:** actual matter/finding, signed exposure, distinct management agreement/verified correction, partial posting, anti-duplicate projection, eight final assessments.
 - **Mandatory:** complete A19–A24/A30 correction failures, revised/prior-period/qualitative effects, multiple currencies under approved rate/basis, missing representation, notes and other-info differences, changed reporting date, legal/going-concern/subsequent-event updates and consequences.
 - **Auditor certifies disclosures and sufficiency.** The software supplies evidence-based applicability checklist, unresolved exception flags, reviewer decision and source/version record; do not build a universal "supermind" making professional conclusions.
@@ -122,6 +148,8 @@
 - **Crosswalk:** RW21–RW23/RW34/RW35.
 
 ### D10 Roles, review and quality — configurable controls, fixed duties
+
+**Dedicated research:** [D10 task plan](research/audit-first-2026-11-19/domains/D10_Research_Plan.md), with 5 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M36. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Build generic roles/settings** from a *fixed, comprehensible permission vocabulary*: create "lawyer", "valuation specialist", "senior auditor", etc.; select view/upload/comment/prepare/review/assign/access class; grant person+engagement+document scopes, dates and reasons; assign several staff to work.
 - **Non-togglable invariants:** cannot approve own authored work, bypass required professional EQR/quality, bypass legal blockers, impersonate an actor, change signed history or get cross-client access. Grant administrator/policy changes require elevated authorization and append-only change log; privileged role changes cannot retroactively approve an old report.
 - **Audit-critical:** full consultation/disagreement, review-note anchors, reviewer replacement/refusal, ordinary review versus EQR, late/stale quality, assignment changes; required professional judgments remain human.
@@ -129,6 +157,8 @@
 - **Crosswalk:** RW08/RW09/RW24/RW31/RW33(selected role boundary).
 
 ### D11 Report opinions and report release — opinion logic mandatory, signing provider deferred
+
+**Dedicated research:** [D11 task plan](research/audit-first-2026-11-19/domains/D11_Research_Plan.md), with 4 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M33, M34, M36. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Mandatory:** support all applicable source opinion branches under ISA 700/705/706/701/570 and required specialized forms; particularly multiple simultaneous known errors/evidence limitations and complex combinations; separate the actual auditor decision from structural opinion compatibility.
 - **Template wording:** senior/authorized professional selects and approves report instance, with exact source/jurisdiction/edition and review. Software doesn't silently author legally final prose.
 - **Keep** exact statements/notes/report hashes, local signing/receipt and report-date/source impact. **HOLD** real external signature and dispatch provider.
@@ -136,6 +166,8 @@
 - **Crosswalk:** RW23–RW27/RW35.
 
 ### D12 Later facts, assembly, retention, custody and inspection — keep full original audit scope
+
+**Dedicated research:** [D12 task plan](research/audit-first-2026-11-19/domains/D12_Research_Plan.md), with 5 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M34, M36. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Mandatory:** dual dating and limited-procedure alternatives after authorized professional method decision; full redating remains supported.
 - **Mandatory:** source-backed retention policy and holds, inherited deadlines, actual assembly/custody/retrieval/inspector receipts and amended successors, corruption/readability, recovery/rollback and adversarial retroactive modification cases.
 - **Real storage/disposal:** design the authoritative retention/disposal contract and test selected actual storage/replicas/backups with operating owner; never implement silent expiry deletion. Where storage/provider infrastructure belongs to other team, do not mark it completed until real evidence is available.
@@ -144,6 +176,8 @@
 - **Crosswalk:** RW27–RW30/RW32/RW33.
 
 ### D13 UI, ERD, release validation — keep existing UX and runtime
+
+**Dedicated research:** [D13 task plan](research/audit-first-2026-11-19/domains/D13_Research_Plan.md), with 5 work packages, standards/applicability questions, dependencies, deliverables and discriminating validation cases. Linked calculation/rule research: M01, M02, M35, M36. Required method approval and original-ID trace precede affected implementation; actual source acceptance follows engineering evidence.
 - **Keep** current shared enterprise workspace, audit process desks, G00 protected records and G09 named local identities; no wholesale redesign or replatform.
 - **Mandatory:** source-action coverage in current UI, full role-specific workpaper usability, conditional/long tables, keyboard/focus/readability and affected legacy capabilities.
 - **Mandatory:** exact conceptual ERD to runtime/command mapping, split allocations, many assignees, reviewer conflicts, immutable history, source IDs and concurrency. No schema rewrite without demonstrated functional or integrity need.
@@ -224,13 +258,17 @@ A slice is finished only if:
 7. Appropriate independent practicing-auditor/source acceptance is attached to the **exact build/test/source**. QA passing is not professional adoption.
 8. Original IDs and unaffected previous work remain intact. Required source gaps cannot be closed by "form exists", "manual explanation exists", "automated method shares a name" or "137 tests passed".
 
-## 8. Source-version and research watchlist — verified as of 19 November 2026
+## 8. Source-version and research watchlist — publication facts checked as of 19 November 2026
 
 - **IAASB 2026 Handbook** released; includes ISA 240 (Revised) and ISA 570 (Revised 2024), effective for audits of financial statements for periods beginning **on or after 15 December 2026** internationally. Adoption/effective rule in Mongolia must be separately approved. Keep both pre-/post-effective method editions rather than replacing all earlier engagements.
 - **IFRS 18** replaces IAS 1 and is effective for annual reporting periods beginning **on or after 1 January 2027**, early application permitted. Include FS presentation/disclosure source-version impact in D03/D05/D09.
 - **ISA 330/500/520 proposals (Aug 2026)** are *exposure drafts*, not assumed effective binding rules. Track until final issuance/adoption, but do not code them as enacted standards.
 - **Role configuration:** OWASP advocates default-deny and object-level checks; NIST recognizes static/dynamic separation of duty. Flexible "lawyer" role is supported as restricted permissions, not an unrestricted universal action toggle.
 - **Accounting methods:** IAS 2 official overview supports FIFO or weighted-average cost models where appropriate; IFRS 9 covers ECL, IFRS 15 revenue and IFRS 16 leases. Adopt exact current edition and independently check each approved method, not unsourced illustrative formulas.
+
+**Local adoption evidence is a separate gap:** retrieved IFAC Mongolia/MonICPA profiles report ISA 2020 application and do not confirm later ISA adoption, while describing quality-management adoption separately. They share underlying reporting and are not primary adoption instruments. Do not assume the latest international handbook governs every Mongolian engagement. Primary Mongolian legal texts returned access errors on original and alternate routes in this update; no local article-level rule, tax rate or retention period is approved. See the [source register and limitations](research/audit-first-2026-11-19/Source_Register.md), especially SRC-03–06.
+
+**IFRS for SMEs:** the 2025 edition is internationally effective for periods beginning on or after 1 January 2027, with early application permitted; maintain distinct 2015/2025/ full-IFRS profiles where applicable. The latest IESBA handbook also has external-expert changes with their own effective-date scopes. All underlying full clauses and local applicability require the dedicated research work; a synopsis is not an adopted algorithm.
 
 Official source URLs (public reference; they do not themselves certify local adoption):
 - IAASB 2026 Handbook: https://www.iaasb.org/publications/2026-handbook-international-quality-management-auditing-review-sustainability-and-other-assurance
@@ -267,6 +305,26 @@ Official source URLs (public reference; they do not themselves certify local ado
 - Which B-series audit-facing firm quality requirements are needed for defensible audit operations; which wider B-series/C-series offerings are deferred?
 
 **Change-control rule:** These are *decision records*, not grounds to block all independent audit-core implementation. Scope for a work slice can proceed under a signed, explicit method/edition assumption until an affected blocker is resolved.
+
+
+## 11. Research deliverables, method validation and task readiness
+
+Every original section now has research execution coverage in the [parent-section crosswalk](research/audit-first-2026-11-19/README.md#mapping-every-section-of-the-parent-plan). Do not implement "research ISA/IFRS" as a vague unbounded ticket. Use the exact dedicated task, source item, decision and M-card.
+
+| Work | Concrete research output | Ready gate |
+| --- | --- | --- |
+| D01–D13 | [60 research tasks](research/audit-first-2026-11-19/registers/Research_Tasks.csv): question, reading/work steps, dependency, owner/reviewer roles, deliverable and adverse case | Relevant full source/standard interpretation and authorized decision are recorded |
+| Quantitative and rule methods | [36 method packs](research/audit-first-2026-11-19/Calculation_and_Method_Research_Plan.md): audit sampling/materiality/projection, accounting recalculation, tax/FX/estimates/consolidation, temporal/role rules and staffing variance | Approved typed spec plus independently derived expected vectors/decision cases; no universal default rates or formulas |
+| Original fieldwork areas | [22 individual area plans](research/audit-first-2026-11-19/Fieldwork_Research_Plan.md): exact source locator, assertion/procedure, accounting framework, M-card, performed work and exceptions | Every required applicable source procedure has a complete supported action/evidence/review/handoff path |
+| Original automation minimums | [58 individual minimum plans](research/audit-first-2026-11-19/Automation_Research_Plan.md): unique question, original promise/boundary, latest G11 evidence locator, method and discriminating test | Each promised minimum is reconciled against actual supported behavior; future extensions remain separate |
+| Cross-form references | [20 dependency research cards](research/audit-first-2026-11-19/registers/Dependency_Research.csv): original source/target, action gate and change impact | Per-edge reviewed applicability/version/manual confirmation; no blanket form-order lock |
+| Sources and decisions | [Source/access register](research/audit-first-2026-11-19/Source_Register.md) + [12 decision records](research/audit-first-2026-11-19/Decision_Register.md) | Exact clauses/adoption/authority and actual owner disposition; inaccessible material remains explicitly unresolved |
+
+**Method sequence:** original source + current implementation → full applicable standard/policy/primary methodology → approved inputs/algorithm/judgment boundary → independent expected examples → scoped engineering delta → QA execution → independent practitioner source acceptance. Professional judgment is not inferred from arithmetic and passing tests do not constitute adoption.
+
+**Implementation order:** retain W0–W7 and vertical slices; resolve the source/method subset needed by each slice, then build it while other research continues. Start applicability/source editions and revenue data/contracts; approve the materiality/sampling/evidence/revenue methods actually required by that slice; carry results into G05 and report consequences. [Execution queue and ownership](research/audit-first-2026-11-19/README.md#first-execution-queue-and-dependency-gates) and [ticket template](research/audit-first-2026-11-19/templates/Capability_Ticket_Template.md) make the next work reviewable. No sprint estimate or calendar date is invented before triage and actual owner assignment.
+
+**Planning update boundary:** this update authors research plans/registers and preliminary source findings. All new research task/method/area/AUTO/dependency rows start PLANNED. It performs no full-corpus legal or paragraph-level standard certification, no application change and no source/professional acceptance closure.
 
 ---
 
