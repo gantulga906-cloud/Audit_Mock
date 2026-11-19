@@ -1,5 +1,7 @@
 # D13 — UI, ERD, operational validation and release: dedicated research plan
 
+> **Current implementation design:** [D13 researched decisions, steps, data, cases and owning code](../results/FULL/D13_Implementation_Design.md). The original assignment below is retained; use the linked whole-scope result for the current handoff.
+
 **Status:** PLANNED; research questions and execution instructions, not professional approval or completed implementation. **As of:** 19 November 2026. **Parent:** [audit-first execution index](../README.md). **Priority:** release-enabling, alongside required audit slices.
 
 Preserve current product/ERD foundation; research only demonstrated deltas and measurable release needs.

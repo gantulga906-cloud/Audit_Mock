@@ -42,7 +42,7 @@ checkedLinks++;
 }
 checks.push("Markdown internal links: "+checkedLinks+" targets/anchors valid");
 for(let i=1;i<=13;i++){const d="D"+String(i).padStart(2,"0");assert(fs.existsSync(path.join(out,"domains",d+"_Research_Plan.md")),"Missing domain "+d);assert(tasks.has("R-"+d+"-01"),"Missing domain task "+d);}
-const expected=new Set([path.relative(root,parent).replaceAll(path.sep,"/"),"scripts/validate-audit-first-research-plan.cjs"]);
+const expected=new Set([path.relative(root,parent).replaceAll(path.sep,"/"),"scripts/validate-audit-first-research-plan.cjs","scripts/build-full-audit-plan.py","scripts/full-audit-plan-data.cjs","scripts/full-audit-method-data.cjs","scripts/full-audit-item-data.cjs","scripts/validate-full-audit-plan.py"]);
 const diff=cp.execFileSync("git",["diff","--name-only","ffdf647b2851a4d0239d4766ae0d162c281ea41e"],{cwd:root,encoding:"utf8"}).trim().split(/\r?\n/).filter(Boolean);
 for(const p of diff)assert(expected.has(p)||p.startsWith(base+"/"),"Unexpected tracked change "+p);
 const immutable=["src","tests","docs/checkpoints","docs/delivery/handbooks","docs/delivery/Audit_Mock_Consolidated_Remaining_Work_2026-11-18.md","AGENTS.md"];

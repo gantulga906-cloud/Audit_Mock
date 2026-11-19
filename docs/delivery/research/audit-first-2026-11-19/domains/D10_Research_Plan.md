@@ -1,5 +1,7 @@
 # D10 — Role configuration, review and quality management: dedicated research plan
 
+> **Current implementation design:** [D10 researched decisions, steps, data, cases and owning code](../results/FULL/D10_Implementation_Design.md). The original assignment below is retained; use the linked whole-scope result for the current handoff.
+
 **Status:** PLANNED; research questions and execution instructions, not professional approval or completed implementation. **As of:** 19 November 2026. **Parent:** [audit-first execution index](../README.md). **Priority:** required audit scope or explicitly conditional child applicability.
 
 ISQM obligations and cybersecurity controls have different authority; both need explicit research and evidence.

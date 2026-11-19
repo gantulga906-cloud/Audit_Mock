@@ -1,0 +1,206 @@
+{
+  "kind": "Executed elementary expected-value checks only;not tests of application implementation or professional method acceptance",
+  "checks": [
+    {
+      "id": "N01",
+      "title": "Signed control total",
+      "expected": "80",
+      "actual": "80",
+      "passed": true,
+      "scope": "M01 fictional CU"
+    },
+    {
+      "id": "N02",
+      "title": "Split primary allocation",
+      "expected": "100",
+      "actual": "100",
+      "passed": true,
+      "scope": "M02 note is nonadditive"
+    },
+    {
+      "id": "N03",
+      "title": "Materiality policy",
+      "expected": "50000",
+      "actual": "50000.00",
+      "passed": true,
+      "scope": "M03 fictional policy"
+    },
+    {
+      "id": "N04",
+      "title": "Performance amount",
+      "expected": "30000",
+      "actual": "30000.0",
+      "passed": true,
+      "scope": "M03 fictional policy"
+    },
+    {
+      "id": "N05",
+      "title": "Zero-acceptance size",
+      "expected": "59",
+      "actual": "59",
+      "passed": true,
+      "scope": "M05 illustrative binomial model only"
+    },
+    {
+      "id": "N06",
+      "title": "Ratio projection",
+      "expected": "50",
+      "actual": "50",
+      "passed": true,
+      "scope": "M06 point estimate without risk allowance"
+    },
+    {
+      "id": "N07",
+      "title": "Incremental+factual+specific",
+      "expected": "60",
+      "actual": "60",
+      "passed": true,
+      "scope": "M06 no double count"
+    },
+    {
+      "id": "N08",
+      "title": "Commercial net line",
+      "expected": "180",
+      "actual": "180.00",
+      "passed": true,
+      "scope": "M11 fictional CU"
+    },
+    {
+      "id": "N09",
+      "title": "Inventory quantity",
+      "expected": "7",
+      "actual": "7",
+      "passed": true,
+      "scope": "M14 integer units"
+    },
+    {
+      "id": "N10",
+      "title": "Periodic average/COS/closing",
+      "expected": "(Decimal('12'), Decimal('180'), Decimal('60'))",
+      "actual": "(Decimal('12'), Decimal('180'), Decimal('60'))",
+      "passed": true,
+      "scope": "M15 fictional CU/integer units"
+    },
+    {
+      "id": "N11",
+      "title": "NRV write-down",
+      "expected": "15",
+      "actual": "15",
+      "passed": true,
+      "scope": "M16 supplied estimates"
+    },
+    {
+      "id": "N12",
+      "title": "Asset carrying amount",
+      "expected": "730",
+      "actual": "730",
+      "passed": true,
+      "scope": "M17 before impairment"
+    },
+    {
+      "id": "N13",
+      "title": "Straight-line charge",
+      "expected": "300",
+      "actual": "300",
+      "passed": true,
+      "scope": "M18 full year"
+    },
+    {
+      "id": "N14",
+      "title": "Interest day count",
+      "expected": "10",
+      "actual": "10.00",
+      "passed": true,
+      "scope": "M20 fictional contractual inputs"
+    },
+    {
+      "id": "N15",
+      "title": "Lease PV",
+      "expected": "190.91",
+      "actual": "190.91",
+      "passed": true,
+      "scope": "M21 end-year payments/fictional annual rate"
+    },
+    {
+      "id": "N16",
+      "title": "FX difference",
+      "expected": "20",
+      "actual": "20.0",
+      "passed": true,
+      "scope": "M22 CU per foreign unit"
+    },
+    {
+      "id": "N17",
+      "title": "Provision matrix",
+      "expected": "70",
+      "actual": "70.00",
+      "passed": true,
+      "scope": "M24 supplied fictional loss rates"
+    },
+    {
+      "id": "N18",
+      "title": "Recoverable comparison",
+      "expected": "10",
+      "actual": "10",
+      "passed": true,
+      "scope": "M25 valuations supplied not validated"
+    },
+    {
+      "id": "N19",
+      "title": "Gross-to-net",
+      "expected": "850",
+      "actual": "850",
+      "passed": true,
+      "scope": "M26 fictional deductions"
+    },
+    {
+      "id": "N20",
+      "title": "Tax-inclusive extraction",
+      "expected": "10",
+      "actual": "10",
+      "passed": true,
+      "scope": "M27 fictional10% not Mongolian rate"
+    },
+    {
+      "id": "N21",
+      "title": "Deferred arithmetic",
+      "expected": "40",
+      "actual": "40.0",
+      "passed": true,
+      "scope": "M28 fictional20% conditional recognition"
+    },
+    {
+      "id": "N22",
+      "title": "Remaining error",
+      "expected": "40",
+      "actual": "40",
+      "passed": true,
+      "scope": "M33 actual verified correction basis"
+    },
+    {
+      "id": "N23",
+      "title": "Gross/net effects",
+      "expected": "(180, 20)",
+      "actual": "(180, 20)",
+      "passed": true,
+      "scope": "M33 neither implies materiality conclusion"
+    },
+    {
+      "id": "N24",
+      "title": "Capacity ratio",
+      "expected": "1.25",
+      "actual": "1.25",
+      "passed": true,
+      "scope": "M35 allocation/availability only"
+    },
+    {
+      "id": "N25",
+      "title": "Policy anniversary",
+      "expected": "2036-11-19",
+      "actual": "2036-11-19",
+      "passed": true,
+      "scope": "M34 fictional policy,not legal deadline"
+    }
+  ],
+  "passed": true
+}

@@ -1,5 +1,7 @@
 # D12 — Later facts, assembly, retention, custody and inspection: dedicated research plan
 
+> **Current implementation design:** [D12 researched decisions, steps, data, cases and owning code](../results/FULL/D12_Implementation_Design.md). The original assignment below is retained; use the linked whole-scope result for the current handoff.
+
 **Status:** PLANNED; research questions and execution instructions, not professional approval or completed implementation. **As of:** 19 November 2026. **Parent:** [audit-first execution index](../README.md). **Priority:** required audit scope or explicitly conditional child applicability.
 
 Deadlines and deletion rules require source-specific applicability; storage promises require actual owner evidence.

@@ -1,5 +1,7 @@
 # Audit-first research and implementation execution pack
 
+> **Current complete result (19 November 2026):** [Researched whole-scope implementation design](results/FULL/FULL_RESEARCH_AND_EXECUTION_PLAN.md) now supplies all60 task designs,36 methods,22 variants,58 minimums,20 dependencies,70 form contracts and the full B00-B14 plan. Earlier PLANNED registers below remain the historical assignment baseline; current design and actual implementation/acceptance states are separate.
+
 **As of:** 19 November 2026. **Status:** Research plan prepared; detailed methodology/legal research, implementation changes and independent professional acceptance remain open. **Baseline:** supplied planning branch at ffdf647b2851a4d0239d4766ae0d162c281ea41e, over recorded G01–G11. **Method:** requirements engineering + standards traceability + method validation.
 
 [Parent audit-first plan](../../Audit_Mock_Audit_First_Reprioritized_Plan_2026-11-19.md) retains product scope and execution order. This pack makes its research work concrete: **13 domain plans, 60 domain tasks, 36 calculation/rule research packs, all 22 original fieldwork variants, all 58 original automation minimums, all 20 confirmed dependencies, 30 source records and 12 accountable open decisions.** Counts describe planned research artifacts, not completion. Source-register entries distinguish retrieved overviews/national guidance from inaccessible legal text; they are not 30 full-standard validations.

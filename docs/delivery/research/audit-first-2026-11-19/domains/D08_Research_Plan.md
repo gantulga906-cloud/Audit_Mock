@@ -1,5 +1,7 @@
 # D08 — Fieldwork areas and all original automation minimums: dedicated research plan
 
+> **Current implementation design:** [D08 researched decisions, steps, data, cases and owning code](../results/FULL/D08_Implementation_Design.md). The original assignment below is retained; use the linked whole-scope result for the current handoff.
+
 **Status:** PLANNED; research questions and execution instructions, not professional approval or completed implementation. **As of:** 19 November 2026. **Parent:** [audit-first execution index](../README.md). **Priority:** required audit scope or explicitly conditional child applicability.
 
 The separate fieldwork and automation registers supply individual research work for each original item.

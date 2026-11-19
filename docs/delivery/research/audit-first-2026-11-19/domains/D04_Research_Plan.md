@@ -1,5 +1,7 @@
 # D04 — Risk assessment, controls, planning and materiality: dedicated research plan
 
+> **Current implementation design:** [D04 researched decisions, steps, data, cases and owning code](../results/FULL/D04_Implementation_Design.md). The original assignment below is retained; use the linked whole-scope result for the current handoff.
+
 **Status:** PLANNED; research questions and execution instructions, not professional approval or completed implementation. **As of:** 19 November 2026. **Parent:** [audit-first execution index](../README.md). **Priority:** required audit scope or explicitly conditional child applicability.
 
 Professional risk assessment is a recorded judgment; numeric scores require an approved policy basis.

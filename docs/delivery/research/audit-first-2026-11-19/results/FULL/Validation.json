@@ -1,0 +1,35 @@
+{
+  "as_of": "2026-11-19",
+  "kind": "Plan coverage/lineage consistency and elementary arithmetic only",
+  "passed": true,
+  "counts": {
+    "domains": 13,
+    "tasks": 60,
+    "methods": 36,
+    "variants": 22,
+    "automations": 58,
+    "dependencies": 20,
+    "forms": 70,
+    "candidate_fields": 1236,
+    "original_tasks": 128,
+    "original_obligations": 2247
+  },
+  "checks": [
+    "tasks: 60 exact original unique IDs",
+    "methods: 36 exact original unique IDs",
+    "variants: 22 exact original unique IDs",
+    "automations: 58 exact original unique IDs",
+    "dependencies: 20 exact original unique IDs",
+    "tasks dependency graph: referential/acyclic check",
+    "batches dependency graph: referential/acyclic check",
+    "Original_128_Task_Routing: exact original identity grain preserved",
+    "Original_2247_Obligation_Routing: exact original identity grain preserved",
+    "Five source hashes unchanged;70 form contracts and all candidate field keys accounted for",
+    "25 elementary independent numerical expectations passed;no application execution implied",
+    "Application,tests,checkpoints and original handbook registers unchanged from pinned starting commit"
+  ],
+  "errors": [],
+  "professional_acceptance": "NOT-PERFORMED",
+  "application_execution": "NOT-PERFORMED",
+  "release_ready_changed": false
+}

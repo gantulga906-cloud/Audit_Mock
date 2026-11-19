@@ -1,0 +1,49 @@
+{
+  "as_of": "2026-11-19",
+  "books": [
+    {
+      "file": "Audit_Stage_1_Repaired.xlsx",
+      "sha256": "5fde7db15e766cdb616cb816d25a8fe6a6d5718f9975d4c0f885c344b079602c",
+      "form_count": 11,
+      "formula_count": 9,
+      "validation_definitions": 349,
+      "source_unchanged": true
+    },
+    {
+      "file": "Audit_Stage_2_Repaired.xlsx",
+      "sha256": "9650b116e38f00c2a79f6fa28f1f4a4f695d5847279e99e5b52103a47e8d8d7e",
+      "form_count": 16,
+      "formula_count": 5,
+      "validation_definitions": 692,
+      "source_unchanged": true
+    },
+    {
+      "file": "Audit_Stage_3_Repaired.xlsx",
+      "sha256": "9cfe6c74f2659031f46243697308d809765f72175c49531363a73794ee64a2da",
+      "form_count": 31,
+      "formula_count": 233,
+      "validation_definitions": 1148,
+      "source_unchanged": true
+    },
+    {
+      "file": "Audit_Stage_4_Repaired.xlsx",
+      "sha256": "74676a901fc671e4e188d04dc7950937f2f9cd8d7cd2e4073e3b902148b7a2a7",
+      "form_count": 11,
+      "formula_count": 25,
+      "validation_definitions": 362,
+      "source_unchanged": true
+    },
+    {
+      "file": "Audit_Stage_5_Repaired.xlsx",
+      "sha256": "f812eb3d7e3f38e068389c3b5cfef1721611d6b04df85c3b92b66622e2513293",
+      "form_count": 1,
+      "formula_count": 0,
+      "validation_definitions": 33,
+      "source_unchanged": true
+    }
+  ],
+  "forms": 70,
+  "fields": 1236,
+  "source_cells_read": 18442,
+  "scope": "All selected catalogue form sheets; no formula execution, visual inspection or professional semantic acceptance implied."
+}
