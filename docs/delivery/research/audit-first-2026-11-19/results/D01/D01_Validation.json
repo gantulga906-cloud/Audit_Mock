@@ -1,6 +1,6 @@
 {
   "as_of": "2026-11-19",
-  "baseline_commit": "13322c8a6aaa3d0a4ebda56ba94086da62545712",
+  "baseline_commit": "4bf0fca0155144246e3d5ff6e082ae0298cd3646",
   "scope": "D01 / M36 research and specification only",
   "result": "PASS",
   "checks": {
@@ -13,20 +13,27 @@
     "rules": 25,
     "acceptance_scenarios": 44,
     "import_scenarios": 32,
-    "source_records": 13,
-    "open_decisions": 10,
+    "source_records": 21,
+    "historical_questions_with_explicit_dispositions": 10,
+    "open_user_decisions": 0,
     "field_definitions": 16,
+    "question_answer_contract_fields": 135,
+    "tenure_method_cases": 10,
+    "deployed_field_labels_compared": 147,
+    "explicit_instruction_table_mappings": 6,
     "engineering_tickets": 11,
-    "local_markdown_links": 20,
+    "local_markdown_links": 35,
     "original_work_case_role_locator_preserved": true,
     "dangling_cross_references": 0,
-    "all_rules_unapproved_draft": true,
-    "synthetic_package_and_template_structure": "PASS"
+    "all_rules_not_deployed_or_professionally_approved": true,
+    "synthetic_package_and_template_structure": "PASS",
+    "D01_only_scope": "PASS"
   },
   "limitations": [
     "Structural validation only; not application runtime tests",
-    "Not legal or professional approval",
+    "Not legal or professional release approval",
     "No importer implemented; expected scenarios are specifications",
-    "Local adoption and authoritative workbook edition remain unresolved"
+    "Historical registered workbook binary bytes not recovered; working baseline explicitly pinned",
+    "Exact ISA approval/amendment instruments not retrieved; versioned manual methodology confirmation specified"
   ]
 }

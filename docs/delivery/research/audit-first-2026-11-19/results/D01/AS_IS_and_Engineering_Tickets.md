@@ -2,6 +2,8 @@
 
 **Baseline:** 13322c8a6aaa3d0a4ebda56ba94086da62545712. Static inspection only; this pack changes no application behavior. Ticket IDs below are new D01 handoff IDs, not replacements for original RW/source IDs.
 
+**Current handoff:** the [resolved D01 design](D01_Resolved_Design.md) settles the earlier ten questions. The tickets below are implementation/verification work, not ten requests for user approval. Build the versioned/manual workflow without waiting for a universal legal engine. Actual methodology confirmation and engagement evidence remain attributable auditor work.
+
 ## Existing behavior to preserve
 
 | Inspected location | Evidence in current code | Implication |
@@ -19,15 +21,15 @@
 
 | ID | Change / exact handoff | Depends on | Definition of done | Disposition |
 | --- | --- | --- | --- | --- |
-| D01-T01 | Approve applicability and rule catalogue version; separate law, adopted ethics and firm policy | L01-L06, S01 | Approved source/edition and scope for each activated row; unresolved rows remain visible | Manual professional decision first |
-| D01-T02 | Add structured applicability/fact/result records around existing acceptance checks | T01 | Rule/version/evidence/actor persisted; unresolved applicable rule holds only affected positive action | Required bounded build |
+| D01-T01 | Implement versioned firm methodology profile and bounded manual checklist catalogue | Resolved design sections 1-3 and 7 | Local 2023 ethics basis/2018 reference represented; actual audit package recorded; comparison editions separate; no unsupported automatic-compliance claim | Ready to implement; firm confirms actual profile before use |
+| D01-T02 | Add structured applicability/fact/result records around existing acceptance checks | T01 | Rule/version/evidence/actor persisted; manual conclusions supported; unresolved applicable rule holds only affected positive action | Ready to implement |
 | D01-T03 | Add rule-specific not-applicable reasons, including firm-tenure exception | T01,T02 | Qualified exception passes; unknown category and generic N/A fail; predecessor N/A retained | Required bounded build |
-| D01-T04 | Normalize deployed source question meanings and qualified declarations | S01,S02,T01 | Original answers retained; polarity cases and five-year declaration tested | Required source repair + build |
+| D01-T04 | Implement the 135-field answer contract and explicit source mappings | Question_Answer_Contract.csv; working baseline; T01 | Original answers retained; grouped options, polarity, qualified declaration and six mapping differences tested | Ready to implement |
 | D01-T05 | Make declaration coverage attributable to actual acceptance participants | T04 | No blank/template role counts as a declaration; changed participant needs current D01 clearance | D01 validation only; D02 assignment engine deferred |
 | D01-T06 | Add explicit withdrawal/change-of-assurance decision records and legal-review handoff | T01,T02 | No unauthorized continuation/downgrade; manual communication evidence; issued history preserved | Required bounded build |
-| D01-T07 | Make acceptance-profile coverage explicit for new and continuing work | Product migration decision P01 | New supported cases cannot silently skip D01; existing legacy records preserved with explicit status | Required bounded build after migration decision |
-| D01-T08 | Add manual agreement-validity checklist to existing exact-version terms verification | L05 | Paper/electronic requirements and signer authority documented; upload hash not presented as authenticity proof | Manual evidence + bounded build |
-| D01-T09 | Implement previewed, reviewed client import through client-master services | Import schema/field dictionary; P02 | Atomic, idempotent, version-checked batch; import scenarios pass; no acceptance state imported | Later D01 build; specification delivered now |
+| D01-T07 | Require D01 for new/subsequent-period work and explicit legacy_unassessed treatment | Resolved design section 8 | New supported cases cannot silently skip D01; legacy records preserved; current clearance required before next positive progression | Ready to implement |
+| D01-T08 | Add manual agreement-validity checklist to existing exact-version terms verification | Resolved design section 5 | Paper/electronic requirements and signer authority documented; upload hash not presented as authenticity proof | Ready to implement |
+| D01-T09 | Implement previewed, reviewed client import through client-master services | Import schema/field dictionary; resolved design section 9 | Atomic, idempotent, version-checked batch; import scenarios pass; no acceptance state imported | Ready to implement |
 | D01-T10 | Review material-change dependency granularity | T02 | Demonstrate material change stales clearance; justify cosmetic-change policy without weakening current gates | Investigation; not a proven defect |
 | D01-T11 | Execute approved D01 scenario suite and reviewer signoff | T01-T10 as applicable | Store actual run IDs/results and professional acceptance; distinguish deferred tickets | Verification after implementation |
 
@@ -42,6 +44,8 @@
 
 ## Ticket review sequence
 
-Source owner chooses the authoritative source version; local/methodology reviewers approve applicable rules; product owner approves the bounded contracts; engineer implements one owning-command slice; independent tester records actual scenario results; authorized auditor signs off.
+Use the pinned working source and resolved contracts. Implement in the existing owning commands; T09 can proceed independently of statutory calendar interpretation. Test actual behavior against the recorded scenarios. The responsible firm confirms its real methodology profile and engagement conclusions; independent release verification follows implementation.
+
+The historical source-binary and exact ISA approval-instrument limits remain recorded in the resolved design. They do not justify waiting on unrelated implementation or claiming automatic compliance. The research pack does not confer real professional sign-off.
 
 No estimate, assignee identity or completion date is invented. Review meetings should assign a named person and due date to every open decision before scheduling blocked implementation.

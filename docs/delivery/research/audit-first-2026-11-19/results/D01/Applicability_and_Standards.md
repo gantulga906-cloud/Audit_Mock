@@ -1,6 +1,6 @@
 # D01 applicability and standards
 
-**Research date:** 19 November 2026. Sources and retrieval limits: [Sources.csv](Sources.csv). Rule identifiers: [Blocker_Register.csv](Blocker_Register.csv). All proposed software behavior below is product design inference pending methodology approval.
+**Research date:** 19 November 2026. Sources and retrieval limits: [Sources.csv](Sources.csv). Rule identifiers: [Blocker_Register.csv](Blocker_Register.csv). Read with the controlling [resolved D01 design](D01_Resolved_Design.md). Earlier open questions now have explicit dispositions; no professional sign-off is implied.
 
 ## Applicability record required before positive acceptance
 
@@ -23,7 +23,7 @@ Country, period and edition are separate fields. A legal entity's current classi
 
 ## Standards map: exact locator before implementation
 
-These are references to read, not a claim that every paragraph is locally adopted.
+These references support the versioned profile in the resolved design; 2026 material is not automatically local authority.
 
 | Work | International source / locator | Local status in this research |
 | --- | --- | --- |
@@ -33,7 +33,7 @@ These are references to read, not a claim that every paragraph is locally adopte
 | Ethics, judgment and documentation | 2026 ISA 200 paragraphs 16-18; ISA 230 paragraphs 7-10 | Paragraph numbers must travel with edition |
 | Limits of legal-compliance work | ISA 250 (Revised), paragraph 4 and relevant requirements | Does not justify a universal legal compliance engine |
 | Appointment / predecessor communication | IESBA 2018 and 2026 Section 320, including R320.6 and R320.8 | Communication facts and applicable edition required |
-| Independence / services / relationships | IESBA Part 4A; selected Sections 400, 410, 420, 510, 521, 522, 524, 540 and 600 | 2018 and 2026 texts inspected; current local edition unresolved |
+| Independence / services / relationships | IESBA Part 4A; selected Sections 400, 410, 420, 510, 521, 522, 524, 540 and 600 | Local 2023 code explicitly identifies the 2018 international reference; 2026 remains a comparison |
 | External expert objectivity, D01 declaration boundary | ISA 620 paragraph 9 in the relevant edition | No specialist planning/build performed |
 
 The 2026 handbook contains provisions with different effective dates. In particular, do not turn expert-related amendments or other future provisions into current mandatory controls merely because they appear in that volume. Confirm their individual effective and transitional provisions for the engagement.
@@ -64,4 +64,4 @@ The 17 June 2022 amendment removed valuation wording from article 9.5; its comme
 4. Partner approves the applicability conclusion, evidence versions and unresolved limits.
 5. Activation reads the approved version; a material fact/rule change opens a new assessment. Historical records retain the original basis.
 
-The IFAC member profile and Mongolian translation listing are useful leads, not substitute adoption instruments. This research did not establish a current legally adopted edition for every Mongolian engagement. No calculation of accounting recognition or measurement is needed in D01; framework selection is the accounting-standard dependency.
+The primary 2023 local ethics resolution/annex is now identified; see Sources.csv. IFAC reports ISA 2020 and quality-management adoption, corroborated by the institute publication report. Exact ISA approval/amendment instruments remain an explicit evidence limit. A versioned manual firm-methodology confirmation resolves the v1 product behavior; do not claim every engagement's historical applicability has been established. No calculation of accounting recognition or measurement is needed in D01; framework selection is the accounting-standard dependency.

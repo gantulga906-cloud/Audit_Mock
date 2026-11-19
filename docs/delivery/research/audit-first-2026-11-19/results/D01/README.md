@@ -1,31 +1,32 @@
 # D01 research results - acceptance, independence and client intake
 
-**As of:** 19 November 2026. **Scope:** D01 / M36 only. **Baseline:** repository commit `13322c8a6aaa3d0a4ebda56ba94086da62545712`. **Status:** research and specification drafted; professional approval and application implementation not performed.
+**As of:** 19 November 2026. **Scope:** D01 / M36 only. **State:** research/specification ready for implementation within the defined manual-review scope. Application implementation and runtime acceptance are not complete. No external professional approval is claimed.
 
-The established methods used here are requirements traceability, standards applicability analysis and decision-table testing. A completed template is evidence of work; it is not, by itself, an acceptance decision.
+The [resolved design](D01_Resolved_Design.md) is the implementation basis. The ten earlier questions have explicit research/design dispositions in [Decisions_Open.csv](Decisions_Open.csv); the filename is retained for link compatibility. They are not ten decisions awaiting the user.
 
-| Task | Delivered evidence | Current gate |
+| Task | Completed specification | Remaining product work |
 | --- | --- | --- |
-| R-D01-01 | [Applicability and standards](Applicability_and_Standards.md), [sources](Sources.csv) | Local edition/adoption instruments and firm approvals remain open |
-| R-D01-02 | [Rule register](Blocker_Register.csv), [M36 decision tables](Decision_Tables.md) | Legal facts and interpretations require authorized review before rule activation |
-| R-D01-03 | [29-step crosswalk](Source_and_Branch_Crosswalk.csv), [source findings](Source_Interpretation_Findings.md), [acceptance scenarios](Acceptance_Scenarios.csv) | Source edition selection and methodology approval remain open |
-| R-D01-04 | [Import specification](Client_Import_Specification.md), [field dictionary](Client_Fields.csv), [JSON schema](Client_Import_Schema.json), [examples](examples/README.md) | Ready for product/engineering review; no importer implemented |
+| R-D01-01 | [Applicability](Applicability_and_Standards.md), [primary sources](Sources.csv), verified local 2023 ethics basis and versioned audit-profile contract | Configure actual firm methodology evidence; implement profile records |
+| R-D01-02 | [25-rule register](Blocker_Register.csv), [M36 tables](Decision_Tables.md), explicit manual legal conclusions | Implement fact/result persistence and affected-action guards |
+| R-D01-03 | [29-step crosswalk](Source_and_Branch_Crosswalk.csv), [135-field answer contract](Question_Answer_Contract.csv), [source findings](Source_Interpretation_Findings.md), [44 acceptance cases](Acceptance_Scenarios.csv) | Implement targeted question/decision changes and run scenarios |
+| R-D01-04 | [Import specification](Client_Import_Specification.md), [field dictionary](Client_Fields.csv), [schema](Client_Import_Schema.json), [examples](examples/README.md), [32 import cases](Import_Scenarios.csv) | Implement importer and run actual transactions/tests |
 
-[Engineering handoff](AS_IS_and_Engineering_Tickets.md) identifies existing controls and bounded changes. [Open decisions](Decisions_Open.csv) identifies the responsible role, evidence needed and affected action. [Validation](D01_Validation.json) records structural checks, not professional approval or runtime test results.
+[Engineering handoff](AS_IS_and_Engineering_Tickets.md) preserves existing controls and identifies bounded changes. [Ten tenure-method cases](Tenure_Method_Cases.csv) define manual v1 treatment. [Workbook comparison](Workbook_Comparison.json) supports the selected working source and explicit field mappings.
 
-Reproduce structural checks from the repository root: `node docs/delivery/research/audit-first-2026-11-19/results/D01/validate.cjs`.
+## Findings resolved in this continuation
 
-## Findings that affect the design
+- Primary local ethics resolution/code found: 2023 resolution 23/14, with an explicit 2018 international-code reference. Newer international publications remain separately versioned comparisons.
+- Local legal cross-references for related parties and gift/donation definitions retrieved.
+- Credentials, local-rule interpretation, tenure conclusions, agreement validity and special dispositions have defined manual workflows. No live APIs or universal legal engine are prerequisites.
+- Working workbook selected for D01; deployed fields compared and six instruction/table-label mappings identified. Historical hashes retained.
+- New/continuing coverage, legacy handling, question polarity, qualified declarations and import transaction/review choices decided.
 
-- Mongolia's firm-tenure rule has an entity exception. Do not apply an unconditional five-year rule to every client or confuse it with individual partner rotation.
-- The current Mongolian text of article 9.5 covers tax/accounting consultancy. An older official-hosted English translation still includes valuation; it cannot determine today's local rule.
-- Several source questions use negative assertions, check-performed wording or broad service labels. A single Yes/No scoring convention would reverse some answers or invent prohibitions.
-- The expert declaration's five-year employment statement is source wording requiring a policy decision, not an established universal ISA/IESBA prohibition.
-- Existing code already supports firm-level enquiries, acceptance review, nonactivating conditional decisions, signed-term evidence and stale-decision checks. D01 needs targeted changes rather than replacement.
-- The inspected Stage 1 workbook has a different binary hash from both previously recorded variants. Preserve all versions and choose an authoritative source before promoting extracted questions.
+## Evidence limits and honest completion boundary
 
-## Delivery boundary
+Two limits remain: historical workbook binaries were not recovered; exact ISA approval/amendment instruments were not obtained. Their effects are contained by pinned source identities, explicit mappings, versioned firm-methodology evidence and manual applicability confirmation. No unsupported claim of automatic legal compliance is made.
 
-No D02-D13 research was executed by this result pack. References to staff, specialists, finance and later audit work identify D01 inputs or handoffs only. No application code, master source files, live client records, external services, messages, merges or deployment were changed.
+Engagement-specific evidence and auditor conclusions are normal product work. They are not unresolved software design questions. Independent release verification and actual test execution remain necessary after implementation.
 
-Research drafting is complete for the four D01 tasks. Their approval gates remain open because source selection, local adoption evidence and named professional decisions cannot be supplied by a document generator.
+Only D01 was worked on. Application code, original source files and other domains were unchanged by this research batch.
+
+[Validation](D01_Validation.json) is structural/source-traceability evidence, not application runtime or professional approval. Reproduce from repository root: `node docs/delivery/research/audit-first-2026-11-19/results/D01/validate.cjs`.

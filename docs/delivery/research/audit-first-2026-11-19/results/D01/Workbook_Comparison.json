@@ -1,0 +1,477 @@
+{
+  "as_of": "2026-11-19",
+  "scope": "D01 eight Stage 1 sheets only",
+  "method": "Read-only ZIP/XML; compare resolved nonempty cell values/formulas and validation definitions; no Excel execution",
+  "registered_sha256": "b2fd7ce85a9a9e63f600167a88e18e5f51c783272e8a29e12a8ab8e7179c0cf0",
+  "working_baseline_sha256": "5fde7db15e766cdb616cb816d25a8fe6a6d5718f9975d4c0f885c344b079602c",
+  "working_baseline_selected_for": "D01 research and targeted field mappings; no replacement of historical registered source",
+  "registered_bytes_recovered": false,
+  "comparison_base_sha256": "5fde7db15e766cdb616cb816d25a8fe6a6d5718f9975d4c0f885c344b079602c",
+  "observations": [
+    {
+      "path": "Historical registered original",
+      "available": false,
+      "reason": "Original path present but read denied; no access workaround attempted"
+    },
+    {
+      "path": "outputs/erd-repaired-2026-11-03/Audit_Stage_1_Repaired.xlsx",
+      "available": true,
+      "bytes": 136978,
+      "sha256": "5fde7db15e766cdb616cb816d25a8fe6a6d5718f9975d4c0f885c344b079602c",
+      "d01_cells_sha256": "eb7dd3a30ad9459ce826f0cb20a24e4202e926f944aa5a03e08684b3be788640",
+      "d01_validation_sha256": "3fff10ebb59403ea2b55c0a0742ca37483c4fa7a8bdd50cf9d8d71a6ca74d282",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 2215
+    },
+    {
+      "path": "work/figma-corpus/stages/Audit_Stage_1(1).xlsx",
+      "available": true,
+      "bytes": 48948,
+      "sha256": "3d90e73a8141cded99375f332bb013c0dde93f2c23ad7e71eb8f34dfe6888a79",
+      "d01_cells_sha256": "6e5436eace4460696d690bf459c429495079a9f336893e816a8d026a32a8a271",
+      "d01_validation_sha256": "630a12a131201b4d66247537fbc4fca8fc4ad3c7c3ffe02a56884d45232507e5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 440
+    },
+    {
+      "path": "work/atlas-rebuild/materials/package2/Audit_Stage_1(1).xlsx",
+      "available": true,
+      "bytes": 48948,
+      "sha256": "3d90e73a8141cded99375f332bb013c0dde93f2c23ad7e71eb8f34dfe6888a79",
+      "d01_cells_sha256": "6e5436eace4460696d690bf459c429495079a9f336893e816a8d026a32a8a271",
+      "d01_validation_sha256": "630a12a131201b4d66247537fbc4fca8fc4ad3c7c3ffe02a56884d45232507e5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 440
+    },
+    {
+      "path": "work/connections-match/artifact/stage1.xlsx",
+      "available": true,
+      "bytes": 31644,
+      "sha256": "e1f7ff97a94eeb647e05c5a855f041457864288fcd45645410923ad7fd1e97e6",
+      "d01_cells_sha256": "62ac97450e8a3a97a9e86d4bfaff4ceba6ee3431f74d6d094ea26ffec8145203",
+      "d01_validation_sha256": "630a12a131201b4d66247537fbc4fca8fc4ad3c7c3ffe02a56884d45232507e5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 231
+    },
+    {
+      "path": "work/erd-fix-2026-11-03/artifact/stage1.xlsx",
+      "available": true,
+      "bytes": 142999,
+      "sha256": "954cfb6bb5c1b29c715b41475ba40c33fdcbc16dcc36c2cc7a5b71ffda0ffd66",
+      "d01_cells_sha256": "9371441f03a33f40e89b49a58efbd09ad3c7174adaa4872c3455bbe2a7d922f2",
+      "d01_validation_sha256": "c9e92eff783e701d49ec455f19a4e04248898cb2eb1189796f51c70a316e32f5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 2215
+    },
+    {
+      "path": "work/erd-readable/artifact/stage1.xlsx",
+      "available": true,
+      "bytes": 41138,
+      "sha256": "e1e78d37d123bc289cdb882a4c0508ff616507ce742b31fde3da2372daa3cbf5",
+      "d01_cells_sha256": "775c4eccb6910344e1eccb86f0b780427fd55a577babf8160cb27f551fea8140",
+      "d01_validation_sha256": "630a12a131201b4d66247537fbc4fca8fc4ad3c7c3ffe02a56884d45232507e5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 239
+    },
+    {
+      "path": "work/excel-recovery-2026-11-03/artifact/stage1.xlsx",
+      "available": true,
+      "bytes": 138707,
+      "sha256": "1a407c3945583f43f7ed595ecc6f53031f85eff5417ce9487e02e7ee05a0d95b",
+      "d01_cells_sha256": "eb7dd3a30ad9459ce826f0cb20a24e4202e926f944aa5a03e08684b3be788640",
+      "d01_validation_sha256": "3fff10ebb59403ea2b55c0a0742ca37483c4fa7a8bdd50cf9d8d71a6ca74d282",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 2215
+    },
+    {
+      "path": "work/form-audit/artifact/stage1.xlsx",
+      "available": true,
+      "bytes": 42708,
+      "sha256": "103c9e1e258a028abb7c4cb7406150219d207d031f58f25f783e381123f639b7",
+      "d01_cells_sha256": "c41895eb77b4f0ce1165f28d53194891fc784c93702f4c3f4c742095cebc8648",
+      "d01_validation_sha256": "630a12a131201b4d66247537fbc4fca8fc4ad3c7c3ffe02a56884d45232507e5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 771
+    },
+    {
+      "path": "work/form-columns/artifact/stage1.xlsx",
+      "available": true,
+      "bytes": 122246,
+      "sha256": "15ada015872094fa30422229048617397d367b492bf446a6ec0d84b1387b12a0",
+      "d01_cells_sha256": "d7f76c89b4f7a155096594f844c7d2233e2b4fd374cb339c57298eee763d0e72",
+      "d01_validation_sha256": "630a12a131201b4d66247537fbc4fca8fc4ad3c7c3ffe02a56884d45232507e5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 2667
+    },
+    {
+      "path": "work/form-corrected/artifact/stage1.xlsx",
+      "available": true,
+      "bytes": 60459,
+      "sha256": "fef8e0c62f7bc2365cf5ed3cb447ba704f6e4c85f4db3255f952ad9977540f09",
+      "d01_cells_sha256": "44a2542705bc063f5bfacb0a60e16dcb2b042700027ce94ce01ff13c5443578a",
+      "d01_validation_sha256": "3a836ce9bd49388f86223e0f3bf65ae5234a90545711cd89ddf7710d703884dc",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 1856
+    },
+    {
+      "path": "work/references/Audit_Stages_1-5_Full_Package(20261016-064848)/Audit_Stage_1(1).xlsx",
+      "available": true,
+      "bytes": 48948,
+      "sha256": "3d90e73a8141cded99375f332bb013c0dde93f2c23ad7e71eb8f34dfe6888a79",
+      "d01_cells_sha256": "6e5436eace4460696d690bf459c429495079a9f336893e816a8d026a32a8a271",
+      "d01_validation_sha256": "630a12a131201b4d66247537fbc4fca8fc4ad3c7c3ffe02a56884d45232507e5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 440
+    },
+    {
+      "path": "outputs/erd-connections-2026-11-02/Audit_Stage_1_Connections.xlsx",
+      "available": true,
+      "bytes": 127226,
+      "sha256": "6f003959e6258a860a0dd8437fc21c5f7fc9bc1df9e0e87cb8fd9e37679b773c",
+      "d01_cells_sha256": "efa4662980d95c76b323068ec6d6a8baf691d980e06b1879fab8b27705816a91",
+      "d01_validation_sha256": "c9e92eff783e701d49ec455f19a4e04248898cb2eb1189796f51c70a316e32f5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 2454
+    },
+    {
+      "path": "outputs/erd-fixed-2026-11-03/Audit_Stage_1_Fixed.xlsx",
+      "available": true,
+      "bytes": 136978,
+      "sha256": "7e847e268abc36435fe6254b89e7e1f9442242c212d2c105f12cd082d896300b",
+      "d01_cells_sha256": "eb7dd3a30ad9459ce826f0cb20a24e4202e926f944aa5a03e08684b3be788640",
+      "d01_validation_sha256": "3fff10ebb59403ea2b55c0a0742ca37483c4fa7a8bdd50cf9d8d71a6ca74d282",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 2215
+    },
+    {
+      "path": "outputs/erd-readable-2026-11-02/Audit_Stage_1_ERD.xlsx",
+      "available": true,
+      "bytes": 145744,
+      "sha256": "b0e6018f700fe6b4d0be5c16164974667285eb106d5e71e3b8d44c733b2314ed",
+      "d01_cells_sha256": "58fa25b19d20db768f19a2502dc54b63bea9e2548061995f90032852c6fdced0",
+      "d01_validation_sha256": "c9e92eff783e701d49ec455f19a4e04248898cb2eb1189796f51c70a316e32f5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 2454
+    },
+    {
+      "path": "outputs/form-audit-2026-11-02/Audit_Stage_1_Reviewed.xlsx",
+      "available": true,
+      "bytes": 167319,
+      "sha256": "a7ce3119d67eecab9f6f492bb6f1fa089c06b0d63da2b65a90dbad3176ce99be",
+      "d01_cells_sha256": "cc23f8ae5b9e7dffcaefd9773633344aaf11bd57b77170324099b1eaabba8e9e",
+      "d01_validation_sha256": "630a12a131201b4d66247537fbc4fca8fc4ad3c7c3ffe02a56884d45232507e5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 3438
+    },
+    {
+      "path": "outputs/form-completion-2026-10-30/Audit_Stage_1_Completion_Details.xlsx",
+      "available": true,
+      "bytes": 135702,
+      "sha256": "e894c3115b424032dbe5df1529f8f6b52ecc7aeb195dec5510c63dac4357dbff",
+      "d01_cells_sha256": "d7f76c89b4f7a155096594f844c7d2233e2b4fd374cb339c57298eee763d0e72",
+      "d01_validation_sha256": "630a12a131201b4d66247537fbc4fca8fc4ad3c7c3ffe02a56884d45232507e5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 2667
+    },
+    {
+      "path": "outputs/form-entries-2026-11-02/Audit_Stage_1_Entries.xlsx",
+      "available": true,
+      "bytes": 109009,
+      "sha256": "458d6bbdb3c97d7fdf6ea61b3da20ff5399b02a9350a0a67ec811cbd4a90b68b",
+      "d01_cells_sha256": "4f22d58c2a8936838faf070a63774d3916941fcc7644474a79254d2b410fe8a2",
+      "d01_validation_sha256": "c9e92eff783e701d49ec455f19a4e04248898cb2eb1189796f51c70a316e32f5",
+      "forms": [
+        "1.1.1",
+        "1.4.1",
+        "1.4.2",
+        "1.4.3",
+        "1.4.4",
+        "1.4.5",
+        "1.4.6",
+        "1.4.7"
+      ],
+      "cell_count": 2296
+    }
+  ],
+  "comparisons": [
+    {
+      "against_sha256": "5fde7db15e766cdb616cb816d25a8fe6a6d5718f9975d4c0f885c344b079602c",
+      "cell_difference_count": 0,
+      "validation_equal": true
+    },
+    {
+      "against_sha256": "3d90e73a8141cded99375f332bb013c0dde93f2c23ad7e71eb8f34dfe6888a79",
+      "cell_difference_count": 1775,
+      "validation_equal": false
+    },
+    {
+      "against_sha256": "e1f7ff97a94eeb647e05c5a855f041457864288fcd45645410923ad7fd1e97e6",
+      "cell_difference_count": 2434,
+      "validation_equal": false
+    },
+    {
+      "against_sha256": "954cfb6bb5c1b29c715b41475ba40c33fdcbc16dcc36c2cc7a5b71ffda0ffd66",
+      "cell_difference_count": 2220,
+      "validation_equal": false
+    },
+    {
+      "against_sha256": "e1e78d37d123bc289cdb882a4c0508ff616507ce742b31fde3da2372daa3cbf5",
+      "cell_difference_count": 2434,
+      "validation_equal": false
+    },
+    {
+      "against_sha256": "1a407c3945583f43f7ed595ecc6f53031f85eff5417ce9487e02e7ee05a0d95b",
+      "cell_difference_count": 0,
+      "validation_equal": true
+    },
+    {
+      "against_sha256": "103c9e1e258a028abb7c4cb7406150219d207d031f58f25f783e381123f639b7",
+      "cell_difference_count": 2921,
+      "validation_equal": false
+    },
+    {
+      "against_sha256": "15ada015872094fa30422229048617397d367b492bf446a6ec0d84b1387b12a0",
+      "cell_difference_count": 3046,
+      "validation_equal": false
+    },
+    {
+      "against_sha256": "fef8e0c62f7bc2365cf5ed3cb447ba704f6e4c85f4db3255f952ad9977540f09",
+      "cell_difference_count": 2632,
+      "validation_equal": false
+    },
+    {
+      "against_sha256": "6f003959e6258a860a0dd8437fc21c5f7fc9bc1df9e0e87cb8fd9e37679b773c",
+      "cell_difference_count": 2349,
+      "validation_equal": false
+    },
+    {
+      "against_sha256": "7e847e268abc36435fe6254b89e7e1f9442242c212d2c105f12cd082d896300b",
+      "cell_difference_count": 0,
+      "validation_equal": true
+    },
+    {
+      "against_sha256": "b0e6018f700fe6b4d0be5c16164974667285eb106d5e71e3b8d44c733b2314ed",
+      "cell_difference_count": 2349,
+      "validation_equal": false
+    },
+    {
+      "against_sha256": "a7ce3119d67eecab9f6f492bb6f1fa089c06b0d63da2b65a90dbad3176ce99be",
+      "cell_difference_count": 3752,
+      "validation_equal": false
+    },
+    {
+      "against_sha256": "e894c3115b424032dbe5df1529f8f6b52ecc7aeb195dec5510c63dac4357dbff",
+      "cell_difference_count": 3046,
+      "validation_equal": false
+    },
+    {
+      "against_sha256": "458d6bbdb3c97d7fdf6ea61b3da20ff5399b02a9350a0a67ec811cbd4a90b68b",
+      "cell_difference_count": 2192,
+      "validation_equal": false
+    }
+  ],
+  "deployed_field_comparison": {
+    "total": 147,
+    "exact_whitespace_normalized": 141,
+    "differences": [
+      {
+        "form": "1.1.1",
+        "field_key": "r16",
+        "source_cell": "J16",
+        "registered_label": "Хүлээн авах / үргэлжлүүлэх үнэлгээ гүйцэтгэсэн эсэх, шийдвэрийн ишлэл",
+        "current_cell_text": "D16:F16 Хариулт /Тайлбар; G16 Нотлох баримтын ишлэл Acceptance/continuance assessment completion and exact decision reference.\n7 categorical possibilities in the dropdown (▼).",
+        "label_exact_whitespace_normalized": false
+      },
+      {
+        "form": "1.4.6",
+        "field_key": "r12",
+        "source_cell": "C12",
+        "registered_label": "Албан тушаал / Овог, нэр / Гарын үсэг / Огноо",
+        "current_cell_text": "Хяналтын Партнер",
+        "label_exact_whitespace_normalized": false
+      },
+      {
+        "form": "1.4.7",
+        "field_key": "r34",
+        "source_cell": "J34",
+        "registered_label": "Хамаатны овог, нэр / Хамаарлын түвшин / Байгууллага дахь албан тушаал",
+        "current_cell_text": "One actual relative: C identity; D:E relationship; F:G position/entity details and linked matter reference. Unused reserve rows are not a confirmed absence of relevant relatives.",
+        "label_exact_whitespace_normalized": false
+      },
+      {
+        "form": "1.4.7",
+        "field_key": "r38",
+        "source_cell": "J38",
+        "registered_label": "Бизнесийн хамаарал/сонирхлын шинж чанар/төрөл:",
+        "current_cell_text": "One business interest. C:H: relationship/interest detail. Nature of relationship, parties, amount or ownership where relevant and dates.",
+        "label_exact_whitespace_normalized": false
+      },
+      {
+        "form": "1.4.7",
+        "field_key": "r43",
+        "source_cell": "J43",
+        "registered_label": "Use actual ranges and real start",
+        "current_cell_text": "Use actual ranges and real start/end or justified partial-date interval, actual role/rule/assessment/evidence; unused row is not absence confirmation.",
+        "label_exact_whitespace_normalized": false
+      },
+      {
+        "form": "1.4.7",
+        "field_key": "r44",
+        "source_cell": "J44",
+        "registered_label": "Use actual ranges and real start",
+        "current_cell_text": "Use actual ranges and real start/end or justified partial-date interval, actual role/rule/assessment/evidence; unused row is not absence confirmation.",
+        "label_exact_whitespace_normalized": false
+      }
+    ],
+    "interpretation": "Six differences are an instruction-backed decision reference, a rendered declaration table label and four disclosure/instruction labels. Map explicitly; do not claim registered binary equivalence."
+  },
+  "limits": [
+    "Historical b2fd7ce8 and 44d89904 bytes not recovered in permitted references/archives",
+    "Comparison covers eight D01-related sheets, including staffing appointment context only",
+    "No original source or application data changed"
+  ]
+}

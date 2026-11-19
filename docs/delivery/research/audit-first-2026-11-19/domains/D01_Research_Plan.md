@@ -1,12 +1,12 @@
 # D01 — Client acceptance and independence: dedicated research plan
 
-**Status:** PLANNED; research questions and execution instructions, not professional approval or completed implementation. **As of:** 19 November 2026. **Parent:** [audit-first execution index](../README.md). **Priority:** required audit scope or explicitly conditional child applicability.
+**Status:** RESEARCH/SPECIFICATION READY within the documented manual-review scope; implementation and professional release verification remain separate. **As of:** 19 November 2026. **Parent:** [audit-first execution index](../README.md). **Priority:** required audit scope or explicitly conditional child applicability.
 
 Finish audit acceptance without attempting comprehensive legal automation.
 
 ## Execution results - 19 November 2026
 
-The [D01 research result pack](../results/D01/README.md) contains the applicability analysis, versioned blocker register, M36 decision tables, complete A01-A03 source crosswalk, source interpretation findings, acceptance/import scenarios, client-import specification and engineering handoff. Research/specification drafting is delivered for R-D01-01 through R-D01-04. Professional approval and implementation are not complete; see the [bounded open decisions](../results/D01/Decisions_Open.csv). The PLANNED status above preserves the original planning baseline; this execution note and the result index state current delivery status.
+The [D01 research result pack](../results/D01/README.md) contains the applicability analysis, versioned blocker register, M36 decision tables, complete A01-A03 source crosswalk, source interpretation findings, acceptance/import scenarios, client-import specification and engineering handoff. R-D01-01 through R-D01-04 are specified for implementation within the [resolved manual-review design](../results/D01/D01_Resolved_Design.md). The earlier ten questions now have [explicit dispositions](../results/D01/Decisions_Open.csv); engagement-specific evidence is normal auditor work. Historical workbook bytes and exact ISA approval instruments remain bounded evidence limits. Application implementation, actual scenario runs and professional release verification are not complete. The wider research-task register preserves its initial planning snapshot; this D01 execution note and result index state current delivery status.
 
 Only D01 was executed. No other domain's research status or application behavior is changed by this documentation batch.
 

@@ -1,6 +1,6 @@
 # M36 / D01 acceptance decision tables
 
-**Status:** implementation specification for review. Rule catalogue version D01-2026-11-19-draft1. [Rule register](Blocker_Register.csv), [scenarios](Acceptance_Scenarios.csv), [open decisions](Decisions_Open.csv).
+**Status:** specified for implementation within the [resolved manual-review design](D01_Resolved_Design.md); not deployed or professionally approved. Rule catalogue version D01-2026-11-19-spec2. [Rule register](Blocker_Register.csv), [scenarios](Acceptance_Scenarios.csv), [open decisions](Decisions_Open.csv).
 
 This is decision modelling, not a weighted acceptance score. Adverse reputation, a low proposed fee and going-concern uncertainty do not become prohibitions by adding points. Auditors reach and document the professional conclusion.
 
@@ -63,7 +63,7 @@ This product sequence requires the final positive decision after verified terms,
 
 No default financial score, formula, national identifier regex, legal calendar arithmetic or automated credential validation is approved. M36 is an explicit rules table evaluated against evidence.
 
-For tenure research retain service-by-year history, gaps, first/last dates, replacement reason and entity classification. Golden cases include fifth/sixth consecutive service year, a break in service, partial periods, an SME category change, and return immediately before/on/after the asserted cooling boundary. The local reviewer must decide counting conventions and dates before executable date arithmetic is approved.
+For tenure research retain service-by-year history, gaps, first/last dates, replacement reason and entity classification. Golden cases include fifth/sixth consecutive service year, a break in service, partial periods, an SME category change, and return immediately before/on/after the asserted cooling boundary. V1 stores a manual auditor conclusion and structured history; automatic statutory calendar interpretation is expressly excluded. See Tenure_Method_Cases.csv.
 
 For same-year services retain provider/recipient, actual work and covered financial year. A tax consultation for the audited year is not cleared merely because its invoice date falls in a different calendar year. Conversely, a generic service label alone does not establish overlap.
 

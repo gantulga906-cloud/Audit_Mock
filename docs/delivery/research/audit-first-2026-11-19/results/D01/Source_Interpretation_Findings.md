@@ -1,5 +1,7 @@
 # D01 source interpretation and conflicts
 
+The [resolved design](D01_Resolved_Design.md), [135-field answer contract](Question_Answer_Contract.csv) and [content comparison](Workbook_Comparison.json) now resolve the implementation treatment below. Historical observations remain visible.
+
 ## What was actually read
 
 The Stage 1 text guide was read in full: 80 nonempty paragraphs, no embedded media in that inspected DOCX. The Stage 1 workbook's A:H visible text was extracted for eight relevant sheets: scope, new/continuing acceptance, terms, appointment context and three declaration/questionnaire sheets. No workbook formulas were executed. Original A01-A03 register rows were traced separately. The lifecycle workbook is research synthesis, not independent legal authority.
@@ -15,7 +17,7 @@ Source paths are recorded in Sources.csv for reproducibility. Raw reference arch
 
 | ID | Locator | Finding | Required treatment / reviewer decision |
 | --- | --- | --- | --- |
-| SF01 | Workbook binary; G08 provenance | Inspected bytes differ from registered `b2fd7ce85a9a9e63f600167a88e18e5f51c783272e8a29e12a8ab8e7179c0cf0` and previously reported `44d89904490e8c9f1814b55e4f0dbd016fc1f03baf55ba327cae37c3d43efd81` | Preserve variants; source owner chooses authoritative edition. A hash difference alone does not prove content changed |
+| SF01 | Workbook binary; G08 provenance | Inspected bytes differ from registered `b2fd7ce85a9a9e63f600167a88e18e5f51c783272e8a29e12a8ab8e7179c0cf0` and previously reported `44d89904490e8c9f1814b55e4f0dbd016fc1f03baf55ba327cae37c3d43efd81` | D01 working baseline pinned to inspected 5fde7db1; historical identities preserved. Comparison and six explicit instruction/table-label mappings recorded; no registered-binary equivalence claimed |
 | SF02 | 1.4.1 rows 10-28; 1.4.2 | Reputation, management change, fees, deadline, going concern and predecessor matters require judgment | Do not make every adverse answer a statutory prohibition |
 | SF03 | 1.4.5 row 12 | Service-category list is presented too broadly as prohibited | Preserve wording; classify actual service, applicable ethical edition, entity and local rule before conclusion |
 | SF04 | 1.4.5 rows 10,14-16,18,22,24-26 | Negative assertions and checks-performed are mixed with substantive facts | Store response meaning per question: negative_assertion / fact / check_performed / conclusion; never global Yes=pass |
@@ -23,7 +25,7 @@ Source paths are recorded in Sources.csv for reproducibility. Raw reference arch
 | SF06 | 1.4.5 row 16 | Referral commission wording may imply a blanket ban | Assess actual fee arrangement and applicable ethical/local provision; do not invent a universal rule |
 | SF07 | 1.4.5 row 28 | Client-asset custody/lien question is not legal authorization to retain assets | Record facts and legal review where relevant; no collection/seizure feature |
 | SF08 | 1.4.6 | Preprinted roles are declaration slots | Require an attributable real person and current scope; blank slots are not signed declarations |
-| SF09 | 1.4.7 row 22 | Five-year no-employment assertion is template wording | Obtain firm-policy basis or allow a qualified declaration for review; do not label it a universal ISA/IESBA rule |
+| SF09 | 1.4.7 row 22 | Five-year no-employment assertion is template wording | Default qualified factual declaration; no universal five-year ban. Stricter policy is optional, explicit and versioned |
 | SF10 | 1.4.7 service choices | Other assurance/performance/compliance labels appear in template | Do not expand this financial-statement audit product's scope |
 | SF11 | Guide: recurring terms | Continuing engagements require reassessment of whether terms need revision | Do not require a brand-new letter solely because a new year starts; record applicable local-contract conclusion |
 | SF12 | Current law vs older English text | Article 9.5 valuation wording differs after amendment | Current Mongolian text is the current-law reference; historical dates require historical instruments |
@@ -36,4 +38,4 @@ Keep source ID, exact locator, original wording, original answer, normalized pro
 
 Example: a Yes to a question meaning "I have no financial interest" supports an absence assertion; a Yes to "Do you have a financial interest?" discloses a fact; a Yes to "Have you checked relatives?" proves only a check was recorded. None independently proves compliance.
 
-The eight inspected sheets do not establish completeness of every source in the broader project. D01 closure requires the source-owner decision SF01 and approved question-level interpretation for the forms actually deployed.
+The eight inspected sheets do not establish completeness of every source in the broader project. D01 now has a pinned working baseline and question-level answer contract. Exact historical source binaries remain a provenance limit; no application question repair or professional release acceptance is claimed.
